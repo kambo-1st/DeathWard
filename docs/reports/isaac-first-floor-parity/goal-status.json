@@ -677,6 +677,29 @@
     "compatibility": "opening-floor source-layout selection; excludes legacy objectives, mandatory keys and story/special roles; no reroll",
     "full_native_acceptance": false,
     "next": "Another compatible complete source content arrangement is proposed; full native acceptance remains open and unrelated bulk parity stays paused.",
-    "human_acceptance": "docs/reports/isaac-first-floor-parity/native-combat-rock-room/human-acceptance.json"
+    "human_acceptance": "docs/reports/isaac-first-floor-parity/native-combat-rock-room/human-acceptance.json",
+    "commit": "afbd2a68"
+  },
+  "native_four_gaper_room_checkpoint": {
+    "status": "enabled and developer-verified; scoped main-game playtest accepted",
+    "report": "docs/reports/isaac-first-floor-parity/native-four-gaper-room/README.md",
+    "validation": "docs/reports/isaac-first-floor-parity/native-four-gaper-room/validation.json",
+    "production_enabled": true,
+    "source_template": "1.108.0",
+    "source_difficulty": 5,
+    "rocks": 9,
+    "gapers": 4,
+    "initial_pickups": 0,
+    "preset_schema": 18,
+    "review": {
+      "seed": 117,
+      "template": 108,
+      "displayed_room": 6,
+      "selection_seed": 3854136427,
+      "spawn_seed": 4122658724
+    },
+    "full_native_acceptance": false,
+    "next": "Proposed: commit this accepted checkpoint, then another compatible complete source content arrangement. Unrelated bulk parity remains paused.",
+    "human_acceptance": "docs/reports/isaac-first-floor-parity/native-four-gaper-room/human-acceptance.json"
   }
 }

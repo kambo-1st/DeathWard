@@ -3,7 +3,7 @@
 #include "world/SourceRoomSelection.hpp"
 #include "world/SourceHeartRockRoom.hpp"
 #include "world/SourceHeartRockRoomData.hpp"
-#include "world/SourceCombatRockRoomData.hpp"
+#include "world/SourceCombatRockRooms.hpp"
 #include "combat/SourceRoomRewards.hpp"
 #include <span>
 #include <stdexcept>
@@ -81,12 +81,12 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode) {
             // The source record contains only rocks and pickups, no enemies.
             layout.kind=RoomKind::Empty;
         }
-        if(mode==1&&layout.sourceHeartTemplate==4&&index!=2&&index!=3&&
+        if(mode==1&&sourceCombatRockRoom(layout.sourceHeartTemplate)&&index!=2&&index!=3&&
            std::none_of(keys.begin(),keys.end(),[&](const auto &key){return key.room==index;})) {
-            // Complete two-Gaper / seventeen-rock record. Legacy miners/altar
+            // Complete selected Gaper/rock record. Legacy miners/altar
             // rooms and mandatory key sites retain their existing composition;
             // their selected metadata and RNG sequence are never rerolled.
-            layout.sourceCombatTemplate=layout.sourceObstacleTemplate=4;
+            layout.sourceCombatTemplate=layout.sourceObstacleTemplate=layout.sourceHeartTemplate;
             layout.kind=RoomKind::Combat;
         }
         if(mode==2)break;
@@ -97,7 +97,7 @@ void Arena::prepareSourceHeartRocks() {
         const auto &layout=rooms[size_t(index)];
         std::span<const std::array<int,2>> rocks;
         if(layout.sourceObstacleTemplate==91)rocks=Basement91Rocks;
-        else if(layout.sourceObstacleTemplate==4)rocks=Basement4Rocks;
+        else if(const auto *source=sourceCombatRockRoom(layout.sourceObstacleTemplate))rocks=source->rocks;
         else continue;
         const float half=sourceHeartCellSize(layout)*.5f;
         for(const auto &cell:rocks) {

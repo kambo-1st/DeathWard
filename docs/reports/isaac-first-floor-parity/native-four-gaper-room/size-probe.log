@@ -1,0 +1,5 @@
+size=0.75 range=7,9 room=6 cell=1.58769 path=2 path=3 path=3 path=2
+size=0.75 range=10,10 room=6 cell=1.98462 path=2 path=3 path=3 path=2
+size=1.1 range=7,9 room=6 cell=2.32862 path=4 path=3 path=3 path=4
+size=1.1 range=10,10 room=6 cell=2.91077 path=2 path=3 path=2 path=2
+size=1.5 range=5,5 room=6 cell=1.98462 path=2 path=3 path=3 path=2

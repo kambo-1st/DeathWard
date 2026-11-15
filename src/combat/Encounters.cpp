@@ -1,6 +1,6 @@
 #include "combat/Simulation.hpp"
 #include "world/SourceCombatRoom.hpp"
-#include "world/SourceCombatRockRoomData.hpp"
+#include "world/SourceCombatRockRooms.hpp"
 #include "world/SourceHeartRockRoom.hpp"
 #include <stdexcept>
 
@@ -220,11 +220,11 @@ void Simulation::spawnRoomEnemies() {
         }
         return;
     }
-    if(layout.sourceCombatTemplate==4) {
+    if(const auto *source=sourceCombatRockRoom(layout.sourceCombatTemplate)) {
         const auto id=monsterId(10,1);
         const auto *definition=content->monster(id);
         if(!definition)throw std::runtime_error("Recorded combat-room Gaper is unavailable");
-        for(const auto &cell:Basement4Gapers) {
+        for(const auto &cell:source->gapers) {
             const auto at=sourceHeartCell(layout,cell[0],cell[1]);
             if(arena.blocked(at,definition->radius)||!roomSpawnClear(at,definition->radius)||!spawnMonster(id,at))
                 throw std::runtime_error("Recorded rock combat-room placement is obstructed");

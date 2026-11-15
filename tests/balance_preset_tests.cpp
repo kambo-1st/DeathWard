@@ -100,6 +100,11 @@ int main() {
         check(v16.roomHeartLayouts==1&&v16.defaultZoomPercent==165&&v16.shotSpeed==.9f&&v16.routeLengthScale==.26f,
               "schema16 migrates complete combat content while retaining accepted settings");
         v16.save(file);check(BalancePreset::load(file,"2ccd5b1c274a302e").revision()==v16.revision(),"schema17 exports and reloads");
+        const auto v17=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/native-combat-rock-room/preset-v17.json","2ccd5b1c274a302e");
+        check(v17.roomHeartLayouts==1&&v17.defaultZoomPercent==165&&v17.shotSpeed==.9f&&v17.routeLengthScale==.26f,
+              "schema17 migrates added source108 content without changing accepted settings");
+        v17.save(file);check(BalancePreset::load(file,"2ccd5b1c274a302e").revision()==v17.revision(),"schema18 round-trip after migration");
         const auto v9=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
             "docs/reports/isaac-first-floor-parity/d07-damage-health/custom-combat.json","2ccd5b1c274a302e");
         check(v9.sourceCombatRoom&&v9.playerDamage==7&&v9.regularHealthMultiplier==.75f,"schema9 migrates combat plus source room");
@@ -153,7 +158,7 @@ int main() {
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 1.5"),
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": false"),
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 0"),
-            replaceOne(valid,"basement-native-descriptor-rooms4-91-v5","invalid-policy"),
+            replaceOne(valid,"basement-native-descriptor-rooms4-91-108-v6","invalid-policy"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 0"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 4.01"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 2"),
@@ -171,11 +176,11 @@ int main() {
             replaceOne(valid,"ordinary-normal-rare-gates-off-v1","unsupported-reward-policy"),
             replaceOne(valid,"\"player_luck\": 0","\"player_luck\": 21"),
             valid+"garbage", valid.substr(0,valid.size()-3),
-            replaceOne(valid,"\"schema_version\": 17","\"schema_version\": 18"),
+            replaceOne(valid,"\"schema_version\": 18","\"schema_version\": 19"),
             replaceOne(valid,"\"red_heart_appearance_speed\": 1","\"red_heart_appearance_speed\": 2"),
             replaceOne(valid,"appear33-drop25-collect12-30hz-v1","unverified-timing"),
-            replaceOne(valid,"\"schema_version\": 17","\"schema_version\": 17, \"schema_version\": 17"),
-            replaceOne(valid,"d09a-combat-rock-room-v17","future-contract"),
+            replaceOne(valid,"\"schema_version\": 18","\"schema_version\": 18, \"schema_version\": 18"),
+            replaceOne(valid,"d09a-four-gaper-room-v18","future-contract"),
             replaceOne(valid,"fixture-content","different-content"),
             replaceOne(valid,"Repentance 1.7.9b","Repentance 1.7.9a"),
             replaceOne(valid,"\"walking_pace_at_speed_one\": 4.8","\"walking_pace_at_speed_one\": 30"),

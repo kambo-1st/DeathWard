@@ -1,0 +1,33 @@
+{
+  "status": "developer checks passed; scoped main-game playtest accepted",
+  "source_template": "1.108.0",
+  "source_difficulty": 5,
+  "gapers": 4,
+  "rocks": 9,
+  "preset_schema": 18,
+  "source_extract_check": true,
+  "unique_focused_suites": 11,
+  "ctest_regression_suites": 10,
+  "ctest_failed": 0,
+  "seed117_size_range_cases": 9,
+  "seed117_natural_arrangements": 5,
+  "seed117_other_content_review_rejected": 4,
+  "minimum_size_case": {
+    "seed": 793,
+    "size": 0.75,
+    "minimum": 5,
+    "maximum": 5,
+    "natural_arrangement": true,
+    "player_click_movement": true,
+    "all_four_live_gaper_routes": true
+  },
+  "actual_game_renderer_mouse_apply_export_retry": true,
+  "source4_ui_regression": true,
+  "cli_schemas": [
+    5,
+    17,
+    18
+  ],
+  "full_native_acceptance": false,
+  "human_acceptance": "human-acceptance.json"
+}

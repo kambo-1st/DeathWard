@@ -25,4 +25,21 @@ inline constexpr std::array<std::array<int,2>,2> Basement4Gapers{{
     {10,1},
     {2,5},
 }};
+inline constexpr std::array<std::array<int,2>,9> Basement108Rocks{{
+    {5,1},
+    {6,1},
+    {7,1},
+    {4,3},
+    {6,3},
+    {8,3},
+    {5,5},
+    {6,5},
+    {7,5},
+}};
+inline constexpr std::array<std::array<int,2>,4> Basement108Gapers{{
+    {6,2},
+    {5,3},
+    {7,3},
+    {6,4},
+}};
 } // namespace dw

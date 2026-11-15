@@ -1,13 +1,16 @@
 #include "combat/Simulation.hpp"
+#include "world/SourceCombatRockRooms.hpp"
 
 namespace dw {
 EncounterPlan Simulation::floorEncounter(int index) const {
     EncounterPlan result;
     const auto &r=arena.rooms.at(size_t(index));const auto &p=arena.profile;
     if(!p.active()||r.kind!=RoomKind::Combat)return result;
-    if(r.sourceCombatTemplate==47||r.sourceCombatTemplate==4) {
-        result.monsters={monsterId(10,1),monsterId(10,1)};
-        result.originalMonsters=result.monsters;result.budget=result.spent=2;return result;
+    const auto *source=sourceCombatRockRoom(r.sourceCombatTemplate);
+    if(r.sourceCombatTemplate==47||source) {
+        const int count=source?int(source->gapers.size()):2;
+        result.monsters.assign(size_t(count),monsterId(10,1));
+        result.originalMonsters=result.monsters;result.budget=result.spent=count;return result;
     }
     Random rng(seed_^0x464c4f4f52475250ULL^(uint64_t(index+1)*0x9e3779b97f4a7c15ULL));
     int total=0;for(auto weight:p.patterns)total+=weight;

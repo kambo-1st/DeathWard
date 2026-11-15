@@ -1,0 +1,8 @@
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/core/BalancePreset.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/world/RoomHeartLayouts.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Simulation.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FloorEncounters.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Encounters.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Navigation.cpp.o
+[  5%] Linking CXX static library libdeathward_core.a
+[100%] Built target deathward_core

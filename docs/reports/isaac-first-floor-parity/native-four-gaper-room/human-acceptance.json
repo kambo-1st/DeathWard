@@ -1,0 +1,20 @@
+{
+  "recorded_at_utc": "2026-11-15T04:50:38.158331+00:00",
+  "user_feedback": "ok, looks good1",
+  "status": "scoped main-game playtest accepted",
+  "scope": "Basement1.108.0: four ordinary Gapers and nine plain rocks, naturally selected in seed117 displayed room6, with the accepted 165% zoom preset and normal health/damage.",
+  "review": "interactive-handoff.json",
+  "developer_validation": "validation.json",
+  "qualification": "Positive acknowledgment of the playable delivery; the user did not supply an itemized test checklist. This is not full native floor/actor/physics acceptance.",
+  "remaining": [
+    "wider complete source-room content coverage",
+    "native selection/factory/physical/drop equivalence"
+  ],
+  "retained_exceptions": [
+    "canyon room size and shape",
+    "canyon connections",
+    "eight-direction controls",
+    "universal dodge"
+  ],
+  "automatic_bulk_parity_resumed": false
+}

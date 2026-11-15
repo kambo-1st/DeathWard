@@ -434,31 +434,33 @@ void spiderBalanceInputCheck(const std::filesystem::path &directory) {
           "fresh Game restores independent enemy and accepted user settings");fresh.close();
     std::cout<<"PASS D05 actual Game encounter, UI mouse/keyboard, live edit, export/reload/rejection, map/floor/retry/fresh-session persistence\n";
 }
-void combatRockRoomInputCheck(const std::filesystem::path &directory) {
+void combatRockRoomInputCheck(const std::filesystem::path &directory,bool four=false) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
-    const auto save=directory/"combat-rock-room.save",file=directory/"combat-rock-room.json";
-    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="268";game.reviewSourceRoomTemplate=4;
+    const int variant=four?108:4,expectedRoom=four?5:4,count=four?4:2;
+    const std::string seed=four?"117":"268",prefix=four?"source-four-gaper":"source-combat-rock";
+    const auto save=directory/(prefix+".save"),file=directory/(prefix+".json");
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText=seed;game.reviewSourceRoomTemplate=variant;
     game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
-    check(game.run&&game.error.empty(),"source4 main-game launch");auto &run=*game.run;Renderer renderer;
-    check(run.room==4&&run.arena.rooms[4].sourceCombatTemplate==4&&run.livingEnemies()==2&&!run.godMode&&run.player.hp==6,"review starts inside natural ordinary two-Gaper fight");
-    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"source4 UI has no error");};
+    check(game.run&&game.error.empty(),"source combat-room main-game launch");auto &run=*game.run;Renderer renderer;
+    check(run.room==expectedRoom&&run.arena.rooms[size_t(expectedRoom)].sourceCombatTemplate==variant&&run.livingEnemies()==count&&!run.godMode&&run.player.hp==6,"review starts inside natural ordinary recorded Gaper fight");
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"source combat-room UI has no error");};
     const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
-    const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"capture source4 review");UnloadImage(im);EndDrawing();};
-    game.updateCamera(10);frame();capture("artifacts/source-combat-rock-room.png");
+    const auto capture=[&](const std::string &path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path.c_str()),"capture source combat-room review");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();capture("artifacts/"+prefix+"-room.png");
     click(374,642);click(575,143);click(975,189);check(game.balanceRoomHeartsOpen,"ROOM LAYOUTS opens by mouse");
     const auto terrain=run.arena.canyon.get();click(270,270);
     check(game.balanceDraft.roomHeartLayouts==0&&run.roomHeartLayouts==1&&game.hasPendingMapChanges()&&run.arena.canyon.get()==terrain,"OFF remains staged during active combat");
-    click(400,447);check(run.roomHeartLayouts==0&&run.arena.rooms[4].sourceCombatTemplate!=4,"Apply removes source4 during combat without restart");
-    click(500,270);click(400,447);check(run.roomHeartLayouts==1&&run.arena.rooms[4].sourceCombatTemplate==4,"SOURCE plus Apply restores complete arrangement");
+    click(400,447);check(run.roomHeartLayouts==0&&run.arena.rooms[size_t(expectedRoom)].sourceCombatTemplate!=variant,"Apply removes source combat-room during combat without restart");
+    click(500,270);click(400,447);check(run.roomHeartLayouts==1&&run.arena.rooms[size_t(expectedRoom)].sourceCombatTemplate==variant,"SOURCE plus Apply restores complete arrangement");
     check(run.player.walkingSpeed()==4.8f&&game.cameraZoomPercent()==165&&run.player.attributes.tearsPerSecond==1.9272734f&&run.routeLengthScale==.26f,"accepted movement/shooting/map/view retained");
-    game.exportBalancePreset();game.rememberBalancePreset();std::filesystem::copy_file(file,"artifacts/source-combat-rock-preset.json",std::filesystem::copy_options::overwrite_existing);
-    capture("artifacts/source-combat-rock-layouts.png");
-    run.finishDebug(false);game.retryExpedition();check(game.run->room==4&&game.run->livingEnemies()==2&&!game.run->godMode&&game.run->player.hp==6,"retry returns to the ordinary source4 encounter");
+    game.exportBalancePreset();game.rememberBalancePreset();std::filesystem::copy_file(file,"artifacts/"+prefix+"-preset.json",std::filesystem::copy_options::overwrite_existing);
+    capture("artifacts/"+prefix+"-layouts.png");
+    run.finishDebug(false);game.retryExpedition();check(game.run->room==expectedRoom&&game.run->livingEnemies()==count&&!game.run->godMode&&game.run->player.hp==6,"retry returns to the ordinary source combat-room encounter");
     game.close();renderer.unload();
-    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="268";fresh.reviewSourceRoomTemplate=4;fresh.loadBalancePreset(file);fresh.launch(true);
-    check(fresh.run&&fresh.run->room==4&&fresh.cameraZoomPercent()==165&&fresh.run->arena.rooms[4].sourceObstacleTemplate==4,"exported preset reloads complete encounter in fresh game");fresh.close();
-    std::cout<<"PASS actual Game/Renderer source4 natural entry, mouse OFF/SOURCE/Apply during combat, export/remember/reload and retry\n";
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText=seed;fresh.reviewSourceRoomTemplate=variant;fresh.loadBalancePreset(file);fresh.launch(true);
+    check(fresh.run&&fresh.run->room==expectedRoom&&fresh.cameraZoomPercent()==165&&fresh.run->arena.rooms[size_t(expectedRoom)].sourceObstacleTemplate==variant,"exported preset reloads complete encounter in fresh game");fresh.close();
+    std::cout<<"PASS actual Game/Renderer source"<<variant<<" natural entry, mouse OFF/SOURCE/Apply during combat, export/remember/reload and retry\n";
 }
 void heartRockRoomInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
@@ -1824,6 +1826,10 @@ int main(int argc, char **argv) {
         if(mode.empty()||mode=="--shooting-balance-only") {
             shootingBalanceInputCheck(directory);
             if(mode=="--shooting-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode.empty()||mode=="--four-gaper-room-only") {
+            combatRockRoomInputCheck(directory,true);
+            if(mode=="--four-gaper-room-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
         }
         if(mode.empty()||mode=="--combat-rock-room-only") {
             combatRockRoomInputCheck(directory);

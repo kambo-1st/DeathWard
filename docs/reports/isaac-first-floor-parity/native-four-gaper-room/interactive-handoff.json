@@ -1,0 +1,32 @@
+{
+  "launched_at": "2026-11-15T04:48:22.772750+00:00",
+  "pid": 21287,
+  "command": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "117",
+    "--review-source-room",
+    "108",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/native-four-gaper-room/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "log": "interactive-rerun.log",
+  "seed": 117,
+  "displayed_room": 6,
+  "source_template": 108,
+  "selection_seed": 3854136427,
+  "spawn_seed": 4122658724,
+  "health": 6,
+  "god_mode": false,
+  "zoom_percent": 165,
+  "status": "interactive review launched; scoped main-game playtest accepted",
+  "unfinished": [
+    "wider complete source contents",
+    "full native selection/factory/physical/drop equivalence"
+  ],
+  "human_acceptance": "human-acceptance.json"
+}

@@ -1,0 +1,29 @@
+{
+  "cases": [
+    {
+      "preset": "v5",
+      "verified": true,
+      "seed": 117,
+      "room": 6,
+      "template": 108,
+      "log": "cli-v5.log"
+    },
+    {
+      "preset": "v17",
+      "verified": true,
+      "seed": 117,
+      "room": 6,
+      "template": 108,
+      "log": "cli-v17.log"
+    },
+    {
+      "preset": "v18",
+      "verified": true,
+      "seed": 117,
+      "room": 6,
+      "template": 108,
+      "log": "cli-v18.log"
+    }
+  ],
+  "external_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf"
+}

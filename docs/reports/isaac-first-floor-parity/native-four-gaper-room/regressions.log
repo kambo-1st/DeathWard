@@ -1,0 +1,26 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start 141: combat_rock_room
+      Start 139: room_heart_layouts
+ 1/10 Test #141: combat_rock_room ..................   Passed    2.98 sec
+      Start 140: heart_rock_room
+ 2/10 Test #140: heart_rock_room ...................   Passed    1.84 sec
+      Start 145: source_combat_room
+ 3/10 Test #145: source_combat_room ................   Passed    5.39 sec
+      Start   8: expedition_destruction
+ 4/10 Test #139: room_heart_layouts ................   Passed   11.50 sec
+      Start 144: red_heart_reward_gameplay
+ 5/10 Test #144: red_heart_reward_gameplay .........   Passed    3.35 sec
+      Start 131: balance_preset_contract
+ 6/10 Test #131: balance_preset_contract ...........   Passed    0.18 sec
+      Start 129: core_contracts
+ 7/10 Test #129: core_contracts ....................   Passed    0.88 sec
+      Start  74: authored_rails
+ 8/10 Test  #74: authored_rails ....................   Passed    0.03 sec
+      Start 143: source_room_selection_reference
+ 9/10 Test #143: source_room_selection_reference ...   Passed    0.01 sec
+10/10 Test   #8: expedition_destruction ............   Passed   41.63 sec
+
+100% tests passed, 0 tests failed out of 10
+
+Total Test time (real) =  51.84 sec
