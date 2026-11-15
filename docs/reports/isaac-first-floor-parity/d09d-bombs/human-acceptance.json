@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-15",
+  "user_quote": "ok, looks good... Btw remove a dynamite throw",
+  "accepted": true,
+  "scope": "Scoped D09d main-game pickup review in source32, seed129. Does not establish full native equivalence.",
+  "followup_selected": "Remove ordinary inventory dynamite throwing; retain B/HUD ground placement.",
+  "full_native_acceptance": false,
+  "followup_acceptance": {
+    "date": "2026-11-15",
+    "user_quote": "nice it works, whats next?",
+    "scope": "Placement-only controls and shared pickup/placed dynamite model with retained effects",
+    "accepted": true,
+    "full_native_acceptance": false
+  }
+}

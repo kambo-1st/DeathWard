@@ -1684,13 +1684,13 @@ int main(int argc, char **argv) {
                 },
                 game.run ? game.run->arena.shopRoom : -1, game.run && game.run->shopOpen, shopPixel.x,
                 shopPixel.y, game.run ? int(game.run->moneySpent) : 0, game.run ? game.run->dynamite : 0,
-                game.dynamiteArmed,
+                false, // Legacy browser observer: ordinary dynamite no longer has an aiming mode.
                 game.run ? int(std::count_if(game.run->hazards.begin(), game.run->hazards.end(),
                                              [](const auto &hazard) {
                                                  return hazard.kind == dw::HazardKind::PlayerDynamite;
                                              }))
                          : 0,
-                game.run ? int(game.run->stats.explosions) : 0, game.dynamiteThrowMode,
+                game.run ? int(game.run->stats.explosions) : 0, false,
                 game.run ? int(std::count_if(game.run->hazards.begin(), game.run->hazards.end(),
                                              [](const auto &hazard) {
                                                  return hazard.kind == dw::HazardKind::PlayerDynamite &&

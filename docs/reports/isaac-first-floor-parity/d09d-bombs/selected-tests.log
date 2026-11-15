@@ -1,0 +1,12 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  28: player_dynamite
+    Start 131: balance_preset_contract
+    Start 148: preplaced_bomb_layout
+1/3 Test #131: balance_preset_contract ..........   Passed    0.09 sec
+2/3 Test  #28: player_dynamite ..................   Passed    1.19 sec
+3/3 Test #148: preplaced_bomb_layout ............   Passed    2.45 sec
+
+100% tests passed, 0 tests failed out of 3
+
+Total Test time (real) =   2.46 sec

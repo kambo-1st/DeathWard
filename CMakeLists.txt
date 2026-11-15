@@ -138,6 +138,7 @@ add_library(deathward_core
     src/world/CanyonRoad.cpp
     src/world/RoomGraph.cpp
     src/combat/Keys.cpp
+    src/combat/Bombs.cpp
     src/combat/Chests.cpp
     src/combat/RedHeartRewards.cpp
     src/combat/RoomHearts.cpp
@@ -1005,6 +1006,13 @@ if(BUILD_TESTING)
     add_executable(deathward_key_layout_tests tests/key_layout_tests.cpp)
     target_link_libraries(deathward_key_layout_tests PRIVATE deathward_core)
     add_test(NAME preplaced_key_layout COMMAND deathward_key_layout_tests)
+    add_executable(deathward_bomb_reward_tests tests/bomb_reward_tests.cpp)
+    target_link_libraries(deathward_bomb_reward_tests PRIVATE deathward_core)
+    add_test(NAME ordinary_bomb_gameplay COMMAND deathward_bomb_reward_tests)
+    add_executable(deathward_bomb_layout_tests tests/bomb_layout_tests.cpp)
+    target_link_libraries(deathward_bomb_layout_tests PRIVATE deathward_core)
+    add_test(NAME preplaced_bomb_layout COMMAND deathward_bomb_layout_tests)
+
     add_executable(deathward_coin_layout_tests tests/coin_layout_tests.cpp)
     target_link_libraries(deathward_coin_layout_tests PRIVATE deathward_core)
     add_test(NAME preplaced_coin_layout COMMAND deathward_coin_layout_tests)

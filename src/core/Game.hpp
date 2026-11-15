@@ -61,7 +61,7 @@ enum class Action {
     BuyShop3,
     CloseShop,
     Dynamite,
-    DynamiteMode,
+    DynamiteMode, // Retired; keep the action ID stable for older automation.
     VegetationLess,
     VegetationMore,
     ToggleGroundDetail,
@@ -116,7 +116,7 @@ enum class Action {
     ToggleSourceCombatRoom,
     BalanceRewardsTab, BalanceRoomHeartsTab, BalanceClearHeartsTab,
     RoomHeartsOff, RoomHeartsSource, RoomHeartsTest,
-    ToggleRedHeartRewards, ToggleCoinRewards, ToggleChestRewards, ToggleKeyRewards,
+    ToggleRedHeartRewards, ToggleCoinRewards, ToggleChestRewards, ToggleKeyRewards, ToggleBombRewards,
     RewardLuckDown,
     RewardLuckUp,
     ResetRewardLuck, HeartAppearanceDown, HeartAppearanceUp, ResetHeartAppearance,
@@ -202,8 +202,6 @@ class Game {
     Screen screen = Screen::Hub;
     RunSummary lastSummary;
     Camera3D camera{};
-    bool dynamiteArmed = false;
-    bool dynamiteThrowMode = false;
     AudioSettings audioSettings;
     VisualSettings visualSettings;
     VisualStyle visualStyle = VisualStyle::Original;
@@ -249,7 +247,6 @@ class Game {
     EntityId attackTarget_ = 0;
     bool dodgeQueued_ = false, interactQueued_ = false;
     bool standStillQueued_ = false;
-    bool cancelFireHeld_ = false;
     Action keyboardFocus_ = Action::None;
     enum class Menu { None, Controls, Build, Journal, Letter, Dialogue, HubPause, ExpeditionPause, Missions, Shop, Reward, History, Summary, Balance, Death };
     Menu keyboardMenu_ = Menu::None;
@@ -264,7 +261,6 @@ class Game {
     std::optional<Vector3> dodgeAimQueued_;
     std::optional<Vector3> moveQueued_;
     std::optional<FireCommand> fireQueued_;
-    std::optional<Vector3> dynamiteQueued_;
     bool placeDynamiteQueued_ = false;
     std::optional<std::pair<int, int>> doorQueued_;
     float mouseMoveCooldown_ = 0;

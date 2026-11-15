@@ -9,7 +9,7 @@
 using namespace dw;
 void check(bool ok,const char *message){if(!ok)throw std::runtime_error(message);}
 std::string replaceOne(std::string s,const std::string &from,const std::string &to) {
-    auto at=s.find(from);check(at!=s.npos,"mutation exists");s.replace(at,from.size(),to);return s;
+    auto at=s.find(from);if(at==s.npos)throw std::runtime_error("Missing mutation fixture: "+from);s.replace(at,from.size(),to);return s;
 }
 int main() {
     const auto dir=std::filesystem::temp_directory_path()/
@@ -51,6 +51,13 @@ int main() {
         const auto v12=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
             "docs/reports/isaac-first-floor-parity/d09a-heart-timing/test-preset.json","2ccd5b1c274a302e");
         check(v12.roomHeartLayouts==1&&v12.redHeartAppearanceSpeed==.5f&&v12.defaultZoomPercent==165,"v12 migration retains timing/view and enables selected layout hearts");
+        {
+            const auto old=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d09c-keys/preset-v23-clear-off.json";
+            const auto p=BalancePreset::load(old,"2ccd5b1c274a302e");
+            check(p.bombClearRewards&&!p.keyClearRewards&&p.defaultZoomPercent==165&&p.roomSizeScale==1.1f,"schema23 migrates bombs preserving prior reward/map/view settings");
+            p.save(file);const auto q=BalancePreset::load(file,"2ccd5b1c274a302e");
+            check(q.revision()==p.revision()&&q.bombClearRewards,"schema24 migrated roundtrip");
+        }
         for(bool enabled:{false,true}) {
             BalancePreset p{1,"fixture-content"};p.chestClearRewards=enabled;p.save(file);
             const auto q=BalancePreset::load(file,"fixture-content");
@@ -71,9 +78,9 @@ int main() {
             check(q.coinClearRewards==p.coinClearRewards&&q.revision()==p.revision(),"new layout policy round-trip preserves clear-coin switch");
         }
         for(bool enabled:{false,true}) {
-            BalancePreset p{1,"fixture-content"};p.keyClearRewards=enabled;p.save(file);
+            BalancePreset p{1,"fixture-content"};p.keyClearRewards=enabled;p.bombClearRewards=!enabled;p.save(file);
             const auto q=BalancePreset::load(file,"fixture-content");
-            check(q.keyClearRewards==enabled&&q.revision()==p.revision(),"key switch roundtrip");
+            check(q.keyClearRewards==enabled&&q.bombClearRewards==!enabled&&q.revision()==p.revision(),"key switch roundtrip");
         }
         for(const auto *name:{"preset-v22-clear-off.json","preset-v22-layout-off.json"}) {
             const auto p=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
@@ -196,6 +203,8 @@ int main() {
         auto layouts=custom;layouts.roomHeartLayouts=2;
         const auto valid=custom.json();
         std::vector<std::string> invalid{
+            replaceOne(valid,"\"bomb_clear_rewards\": true","\"bomb_clear_rewards\": 1"),
+            replaceOne(valid,"\"bomb_clear_rewards\": true","\"bomb_clear_rewards\": false"),
             replaceOne(valid,"\"key_clear_rewards\": true","\"key_clear_rewards\": 1"),
             replaceOne(valid,"\"key_clear_rewards\": true","\"key_clear_rewards\": false"),
             replaceOne(valid,"ordinary-normal-charged-gate-off-v1","invalid-key-policy"),
@@ -203,7 +212,7 @@ int main() {
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 1.5"),
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": false"),
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 0"),
-            replaceOne(valid,"basement-native-descriptor-key214-v10","invalid-policy"),
+            replaceOne(valid,"basement-native-descriptor-bomb32-v11","invalid-policy"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 0"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 4.01"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 2"),
@@ -223,11 +232,11 @@ int main() {
             replaceOne(valid,"\"chest_clear_rewards\": true","\"chest_clear_rewards\": 1"),
             replaceOne(valid,"pickup-batches-adapted-v1","unverified-chest-policy"),
             valid+"garbage", valid.substr(0,valid.size()-3),
-            replaceOne(valid,"\"schema_version\": 23","\"schema_version\": 24"),
+            replaceOne(valid,"\"schema_version\": 24","\"schema_version\": 25"),
             replaceOne(valid,"\"red_heart_appearance_speed\": 1","\"red_heart_appearance_speed\": 2"),
             replaceOne(valid,"appear33-drop25-collect12-30hz-v1","unverified-timing"),
-            replaceOne(valid,"\"schema_version\": 23","\"schema_version\": 23, \"schema_version\": 23"),
-            replaceOne(valid,"d09c-ordinary-keys-v23","future-contract"),
+            replaceOne(valid,"\"schema_version\": 24","\"schema_version\": 24, \"schema_version\": 24"),
+            replaceOne(valid,"d09d-ordinary-bombs-v24","future-contract"),
             replaceOne(valid,"fixture-content","different-content"),
             replaceOne(valid,"Repentance 1.7.9b","Repentance 1.7.9a"),
             replaceOne(valid,"\"walking_pace_at_speed_one\": 4.8","\"walking_pace_at_speed_one\": 30"),

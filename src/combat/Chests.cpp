@@ -25,6 +25,7 @@ bool Simulation::spawnChest(Vector3 position,uint32_t seed) {
     for(const auto &pickup:moneyPickups)if(sphereBox(pickup.position,.4f,body))return false;
     for(const auto &pickup:heartPickups)if(sphereBox(pickup.position,.4f,body))return false;
     for(const auto &pickup:chestSupplies)if(sphereBox(pickup.position,.4f,body))return false;
+    for(const auto &pickup:bombPickups)if(sphereBox(pickup.position,.4f,body))return false;
     for(const auto &pickup:keyPickups)if(sphereBox(pickup.position,.4f,body))return false;
     for(const auto &key:arena.keys)if(!key.collected&&sphereBox(key.position,.6f,body))return false;
     ChestPickup chest;chest.position=position;chest.room=owner;chest.seed=seed;
@@ -62,7 +63,7 @@ void Simulation::updateChests(float dt) {
             auto &drop=chest.contents[i];if(drop.delivered)continue;
             if((drop.variant==20&&moneyPickups.size()>=1024)||
                (drop.variant==10&&heartPickups.size()>=1024)||
-               (drop.variant==30&&keyPickups.size()>=1024)||(drop.variant==40&&chestSupplies.size()>=1024))continue;
+               (drop.variant==30&&keyPickups.size()>=1024)||(drop.variant==40&&bombPickups.size()>=1024))continue;
             // Deterministic reachable scatter; do not lose or reroll a blocked
             // drop. Capacity/terrain failures retry this same drop later.
             std::optional<Vector3> position;
@@ -76,6 +77,7 @@ void Simulation::updateChests(float dt) {
                 if(std::any_of(moneyPickups.begin(),moneyPickups.end(),near)||
                    std::any_of(heartPickups.begin(),heartPickups.end(),near)||
                    std::any_of(chestSupplies.begin(),chestSupplies.end(),near)||
+                   std::any_of(bombPickups.begin(),bombPickups.end(),near)||
                    std::any_of(keyPickups.begin(),keyPickups.end(),near))continue;
                 bool gate=false;
                 for(int p:arena.rooms[size_t(room)].passages)for(auto box:arena.passages[size_t(p)].gates)
@@ -99,10 +101,9 @@ void Simulation::updateChests(float dt) {
                 heartPickups.back().timing.appear(chest.heartAppearanceSpeed);
             } else if(drop.variant==30) {
                 if(!spawnOrdinaryKey(*position,drop.subtype,chest.seed))continue;
-            } else {
-                ChestSupply pickup;pickup.position=*position;pickup.room=room;pickup.bomb=drop.variant==40;
-                pickup.timing.appear(1);chestSupplies.push_back(pickup);
-            }
+            } else if(drop.variant==40) {
+                if(!spawnOrdinaryBomb(*position,drop.subtype,chest.seed))continue;
+            } else continue;
             drop.delivered=true;checkpointNeeded=true;
         }
     }
@@ -114,7 +115,7 @@ void Simulation::updateChestSupplies(float dt) {
         if(pickup.room!=room)return false;
         pickup.timing.advance(dt);
         if(pickup.timing.phase==CoinTiming::Phase::Gone)return true;
-        // Uses the retained DeathWard inventories: keys99 / dynamite9.
+        // Legacy explicit fixture actors; normal chest births use shared key/bomb actors.
         // Coin timing is an explicit presentation adapter, not key/bomb parity.
         int &amount=pickup.bomb?dynamite:keys;
         if(!pickup.timing.collectible()||amount>=(pickup.bomb?MaxDynamite:99)||player.totalHealth()<=0||

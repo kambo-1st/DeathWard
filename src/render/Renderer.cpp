@@ -597,6 +597,20 @@ void enemyWarning(const Enemy &enemy, const Simulation &run) {
     DrawSphereEx(add(enemy.position, mul(direction, enemy.radius + 0.2f)), 0.1f + progress * 0.15f, 4, 6,
                  warning);
 }
+constexpr Vector3 DynamiteFuseTip{.63f,.12f,0};
+void dynamiteStick(Vector3 p,float scale=1) {
+    const auto end=add(p,Vector3{.45f*scale,0,0});
+    DrawCylinderEx(sub(p,Vector3{.45f*scale,0,0}),end,.15f*scale,.15f*scale,8,Rust);
+    for(float x:{-.25f,.25f})
+        DrawCylinderEx(add(p,{(x-.04f)*scale,0,0}),add(p,{(x+.04f)*scale,0,0}),
+                       .16f*scale,.16f*scale,8,Paper);
+    DrawCylinderEx(end,add(p,mul(DynamiteFuseTip,scale)),.025f*scale,.025f*scale,5,Gold);
+}
+void dynamiteTransform(const Hazard &hazard) {
+    rlTranslatef(hazard.position.x,hazard.position.y,hazard.position.z);
+    if(hazard.secondary)rlScalef(.7f,.7f,.7f);
+    rlRotatef(hazard.settled?25:hazard.age*210,0,1,0);
+}
 void drawHazard(const Hazard &hazard) {
     if(hazard.kind==HazardKind::FireWave) {
         const float span=planarDistance(hazard.origin,hazard.position);
@@ -649,18 +663,19 @@ void drawHazard(const Hazard &hazard) {
         }
         shadow(p, .45f);
         rlPushMatrix();
-        rlTranslatef(p.x, p.y, p.z);
-        if(hazard.secondary)rlScalef(.7f,.7f,.7f);
-        rlRotatef(hazard.settled ? 25 : hazard.age * 210, 0, 1, 0);
-        for (float z : {-.12f, .12f})
-            DrawCylinderEx({-.4f, 0, z}, {.4f, 0, z}, .12f, .12f, 8, Rust);
-        DrawCylinderEx({-.4f, .17f, 0}, {.4f, .17f, 0}, .12f, .12f, 8, Color{194, 63, 40, 255});
-        DrawCube({0, .055f, 0}, .14f, .38f, .5f, Paper);
-        DrawCylinderEx({.4f, .17f, 0}, {.58f, .3f, 0}, .025f, .02f, 4, Gold);
-        DrawSphereEx({.58f, .3f, 0}, .09f + .04f * std::sin(hazard.age * 65), 4, 6, Gold);
+        dynamiteTransform(hazard);
+        if(hazard.kind==HazardKind::BossCharge) {
+            for (float z : {-.12f, .12f})
+                DrawCylinderEx({-.4f, 0, z}, {.4f, 0, z}, .12f, .12f, 8, Rust);
+            DrawCylinderEx({-.4f, .17f, 0}, {.4f, .17f, 0}, .12f, .12f, 8, Color{194, 63, 40, 255});
+            DrawCube({0, .055f, 0}, .14f, .38f, .5f, Paper);
+            DrawCylinderEx({.4f, .17f, 0}, {.58f, .3f, 0}, .025f, .02f, 4, Gold);
+        } // Ordinary charge bodies use the shared pickup model in the scene color/shadow passes.
+        const auto tip=hazard.kind==HazardKind::BossCharge?Vector3{.58f,.3f,0}:DynamiteFuseTip;
+        DrawSphereEx(tip, .09f + .04f * std::sin(hazard.age * 65), 4, 6, Gold);
         for (int i = 0; i < 4; ++i) {
             const float phase = std::fmod(hazard.age * 4 + float(i) * .25f, 1.f);
-            DrawLine3D({.58f, .3f, 0}, {.58f + phase * .2f, .3f + phase * .55f, (float(i) - 1.5f) * .1f},
+            DrawLine3D(tip, add(tip,{phase * .2f,phase * .55f,(float(i) - 1.5f) * .1f}),
                        Gold);
         }
         rlPopMatrix();
@@ -774,7 +789,7 @@ std::optional<RayCollision> Renderer::pickScenery(const Simulation &run, const C
     return best;
 }
 void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool collisions,
-                         EntityId hoveredEnemy, float deathTime, bool dynamiteArmed, float sandstorm) {
+                         EntityId hoveredEnemy, float deathTime, float sandstorm) {
     playerModel_.artPoc = false;
     playerModel_.update(run, deathTime);
     if (!particlesAttempted_) { particlesAttempted_ = true; missionEffects_.load(); }
@@ -805,6 +820,27 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         }
     };
     auto solids = [&](bool depthOnly) {
+        // Pickups and deployed dynamite share geometry and scene lighting.
+        // Lit fuse effects and blast rings remain separate from these solid passes.
+        for(const auto &hazard:run.hazards)if(hazard.kind==HazardKind::PlayerDynamite&&hazard.alive) {
+            rlPushMatrix();
+            dynamiteTransform(hazard);
+            dynamiteStick({});
+            rlPopMatrix();
+        }
+        for(const auto &bomb:run.bombPickups)if(bomb.room==run.room) {
+            auto at=bomb.position;at.y=.42f;float scale=1;
+            if(bomb.timing.phase==BombTiming::Phase::Appear)
+                at.y+=.6f*(1-std::clamp(bomb.timing.frame/BombTiming::DropFrame,0.f,1.f));
+            else if(bomb.timing.phase==BombTiming::Phase::Collect) {
+                scale=std::max(0.f,1-bomb.timing.frame/bomb.timing.collectFrames);at.y+=(1-scale)*.6f;
+            } else if(bomb.timing.phase==BombTiming::Phase::Gone)continue;
+            if(scale<=0)continue;
+            for(int n=0;n<(bomb.sourceSubtype==2?2:1);++n) {
+                auto p=add(at,Vector3{0,0,n*.35f*scale});
+                dynamiteStick(p,scale);
+            }
+        }
         for(const auto &prop:run.arena.breakables)
             if(visible(prop.bounds)&&(depthOnly||!propOccludes(prop,camera,run.player.position)))
                 breakableModel(prop,float(run.stats.duration),Color{130,115,92,255},255,depthOnly);
@@ -1310,15 +1346,6 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             DrawCylinderEx(arm,add(arm,{0,.016f,0}),f.radius*.25f,f.radius*.25f,8,{34,31,43,190});
         }
         if(collisions)DrawSphereWires(f.position,f.radius,5,8,Teal);
-    }
-    if (dynamiteArmed) {
-        const auto trajectory = run.dynamiteTrajectory(run.player.aim);
-        for (size_t i = 1; i < trajectory.size(); ++i)
-            DrawLine3D(trajectory[i - 1], trajectory[i], Gold);
-        auto landing = trajectory.back();
-        DrawSphereWires(landing, .25f, 4, 8, Paper);
-        landing.y = .09f;
-        DrawCircle3D(landing, run.dynamiteBlastRadius(), {1, 0, 0}, 90, Gold);
     }
     if (playerModel_.loaded()) {
         if (!lighting.ready())
@@ -1845,7 +1872,7 @@ Action Renderer::buildDetails(const Game &game) {
 }
 Action Renderer::expedition(const Game &game) {
     const auto &run = *game.run;
-    drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy, game.deathTime, game.dynamiteArmed,
+    drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy, game.deathTime,
               sandstormStrength_);
     if(run.stats.duration-run.roomEnteredAt<3.0) {
         panel(24,22,292,34,Panel);
@@ -1930,10 +1957,9 @@ Action Renderer::expedition(const Game &game) {
         const auto control=[&](Action action,const std::string &label,Rectangle r,bool primary=false) {
             return button(action,label,r.x,r.y,r.width,r.height,primary);
         };
-        const auto bomb=expeditionHud::Dynamite,mode=expeditionHud::DynamiteMode;
-        if(control(Action::Dynamite,(game.dynamiteArmed?"CANCEL ":"DYNAMITE ")+std::to_string(run.dynamite),bomb,game.dynamiteArmed))
+        const auto bomb=expeditionHud::Dynamite;
+        if(control(Action::Dynamite,"DYNAMITE "+std::to_string(run.dynamite),bomb))
             controls=Action::Dynamite;
-        if(control(Action::DynamiteMode,game.dynamiteThrowMode?"THROW":"PLACE",mode))controls=Action::DynamiteMode;
         const auto dodge=expeditionHud::Dodge;
         if(control(Action::Dodge,"DODGE",dodge))controls=Action::Dodge;
         if(run.player.dodgeCooldown>0)
@@ -2038,7 +2064,7 @@ Action Renderer::expedition(const Game &game) {
         wrap("Retreat ends your build and changes the town. Closing the game also counts as retreat.", 436,
              326, 402, 17, Muted);
         text("WASD move / arrows fire / Space dodge", 436, 380, 12, Paper);
-        text("B dynamite / C mode / E or Enter interact", 436, 399, 12, Paper);
+        text("B place dynamite / E or Enter interact", 436, 399, 12, Paper);
         if (button(Action::Resume, "KEEP GOING   [ESC]", 436, 423, 408, 45, true))
             return Action::Resume;
         if (button(Action::Retreat, std::string("RETREAT TO ") + hubShortName(game.activeHub) + "   [T]",
@@ -2238,7 +2264,7 @@ Action Renderer::balancePanel(const Game &game) {
             text("Opening floor only. Room-clear rewards keep their separate settings.",205,364,14,Teal);
             std::string locations;
             if(game.run)for(int i=0;i<game.run->arena.roomCount();++i) {
-                if(!game.run->arena.rooms[size_t(i)].keySpawns.empty()||!game.run->arena.rooms[size_t(i)].coinSpawns.empty()||!game.run->arena.rooms[size_t(i)].chestSpawns.empty()||
+                if(!game.run->arena.rooms[size_t(i)].bombSpawns.empty()||!game.run->arena.rooms[size_t(i)].keySpawns.empty()||!game.run->arena.rooms[size_t(i)].coinSpawns.empty()||!game.run->arena.rooms[size_t(i)].chestSpawns.empty()||
                    std::any_of(game.run->heartPickups.begin(),game.run->heartPickups.end(),[&](const auto &h){return h.placedInLayout&&h.room==i;}))
                     locations+=(locations.empty()?"":", ")+std::to_string(i+1);
             }
@@ -2253,6 +2279,7 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::ToggleChestRewards,p.chestClearRewards?"CHESTS: ON":"CHESTS: OFF",855,224,220,40))return Action::ToggleChestRewards;
         text("Future clears/drops; initial piles change on floor regeneration. Existing pickups stay.",205,270,13,Teal);
         if(button(Action::ToggleKeyRewards,p.keyClearRewards?"KEYS: ON":"KEYS: OFF",945,284,130,40))return Action::ToggleKeyRewards;
+        if(button(Action::ToggleBombRewards,p.bombClearRewards?"DYNAMITE: ON":"DYNAMITE: OFF",945,363,130,40))return Action::ToggleBombRewards;
         text("LUCK",205,300,18,Paper);text(decimal(p.playerLuck),400,290,28,Paper);
         if(button(Action::RewardLuckDown,"- 1",650,284,130,40))return Action::RewardLuckDown;
         if(button(Action::RewardLuckUp,"+ 1",795,284,130,40))return Action::RewardLuckUp;
@@ -2502,14 +2529,14 @@ Action Renderer::draw(const Game &game) {
     if(game.controlsOpen) {
         panel(0,0,1280,800,{8,12,16,235});panel(235,80,810,650,Panel);
         text("KEYBOARD CONTROLS",267,110,30,Gold);
-        const std::array<std::pair<const char *,const char *>,14> rows{{
+        const std::array<std::pair<const char *,const char *>,13> rows{{
             {"W A S D","Move relative to the camera"},{"Arrow keys","Fire; combine two for diagonal shots"},
             {"Space","Dodge in your movement / facing direction"},{"E / Enter","Use nearby doors, evidence, trades and exits"},
-            {"B","Place dynamite; in Throw mode, throw ahead"},{"C","Switch Place / Throw (arrows aim throws)"},
+            {"B","Place dynamite at your feet"},
             {"Q / R","Rotate the camera"},{"Page Up / Down","Zoom in / out"},{"Insert / Delete","Tilt the camera"},
             {"J / L","Field journal / reread Eleanor's letter"},{"1 / 2 / 3 / 4","Choose a reward or buy a shop offer"},
             {"Tab during play","Inspect your build; Tab or Escape closes"},
-            {"Tab / arrows","Select menu buttons; Enter / Space confirms"},{"Escape","Close a panel, cancel a throw, or pause"}
+            {"Tab / arrows","Select menu buttons; Enter / Space confirms"},{"Escape","Close a panel or pause"}
         }};
         for(size_t i=0;i<rows.size();++i) {
             const float y=173+float(i)*32;

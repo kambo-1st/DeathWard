@@ -19,7 +19,7 @@
 
 namespace dw {
 namespace {
-constexpr const char *Contract = "d09c-ordinary-keys-v23";
+constexpr const char *Contract = "d09d-ordinary-bombs-v24";
 constexpr const char *Source = "The Binding of Isaac: Repentance 1.7.9b";
 constexpr const char *SourceHash = "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6";
 // Deliberately bounded JSON for this schema (objects, strings, finite numbers,
@@ -175,15 +175,16 @@ void BalancePreset::validate() const {
 }
 std::string BalancePreset::json() const {
     validate();std::ostringstream out;out.imbue(std::locale::classic());out<<std::setprecision(9);
-    out<<"{\n  \"format\": \"deathward.balance\",\n  \"schema_version\": 23,\n"
+    out<<"{\n  \"format\": \"deathward.balance\",\n  \"schema_version\": 24,\n"
        <<"  \"compatibility\": {\"contract\": "<<quoted(Contract)<<", \"content_version\": "<<quoted(ContentVersion)
        <<", \"mechanics_fingerprint\": "<<quoted(mechanicsFingerprint)<<"},\n"
        <<"  \"reference\": {\"source\": "<<quoted(Source)<<", \"executable_sha256\": "<<quoted(SourceHash)
-       <<", \"coverage\": \"Player, combat, enemy, map and camera configuration; native balance pending\", \"player_speed\": 1, \"walking_pace_at_speed_one\": 4.8, \"room_size_scale\": 1, \"room_size_baseline\": \"larger-compact-v1\", \"route_length_scale\": 1, \"default_zoom_percent\": 160, \"tears_per_second\": "<<numericText(ReferenceTears)<<", \"shot_speed\": 1, \"range_tiles\": 6.5, \"shooting_calibration\": \"accepted-independent-v1\", \"gaper_movement_multiplier\": 1, \"gaper_calibration\": \"player-relative-v1\", \"spider_movement_multiplier\": 1, \"spider_calibration\": \"player-relative-burst-v1\", \"pooter_movement_multiplier\": 1, \"pooter_shot_speed_multiplier\": 1, \"pooter_attack_interval_multiplier\": 1, \"pooter_calibration\": \"player-relative-mode0-v1\", \"player_damage\": 3.5, \"regular_health_multiplier\": 1, \"damage_calibration\": \"source-damage-internal-hp-v1\", \"health_units_per_source\": 3.2, \"combat_room_template\": \"basement-1.47.0-canyon-v1\", \"red_heart_reward_policy\": \"ordinary-normal-rare-gates-off-v1\", \"player_luck\": 0, \"red_heart_timing\": \"appear33-drop25-collect12-30hz-v1\", \"red_heart_appearance_speed\": 1, \"key_reward_policy\": \"ordinary-normal-charged-gate-off-v1\", \"chest_reward_policy\": \"pickup-batches-adapted-v1\", \"coin_reward_policy\": \"ordinary-normal-rare-gates-off-v1\", \"room_heart_layout_policy\": \"basement-native-descriptor-key214-v10\", \"room_heart_layouts\": 1},\n"
-       <<"  \"resolved\": {\"player_speed\": "<<numericText(playerSpeed)<<", \"room_size_scale\": "<<numericText(roomSizeScale)<<", \"room_min_half_tiles\": "<<roomMinHalfTiles<<", \"room_max_half_tiles\": "<<roomMaxHalfTiles<<", \"route_length_scale\": "<<numericText(routeLengthScale)<<", \"default_zoom_percent\": "<<numericText(defaultZoomPercent)<<", \"tears_per_second\": "<<numericText(tearsPerSecond)<<", \"shot_speed\": "<<numericText(shotSpeed)<<", \"range_tiles\": "<<numericText(rangeTiles)<<", \"gaper_movement_multiplier\": "<<numericText(gaperMovementMultiplier)<<", \"spider_movement_multiplier\": "<<numericText(spiderMovementMultiplier)<<", \"pooter_movement_multiplier\": "<<numericText(pooterMovementMultiplier)<<", \"pooter_shot_speed_multiplier\": "<<numericText(pooterShotSpeedMultiplier)<<", \"pooter_attack_interval_multiplier\": "<<numericText(pooterAttackIntervalMultiplier)<<", \"player_damage\": "<<numericText(playerDamage)<<", \"regular_health_multiplier\": "<<numericText(regularHealthMultiplier)<<", \"source_combat_room\": "<<(sourceCombatRoom?"true":"false")<<", \"red_heart_clear_rewards\": "<<(redHeartClearRewards?"true":"false")<<", \"player_luck\": "<<numericText(playerLuck)<<", \"red_heart_appearance_speed\": "<<numericText(redHeartAppearanceSpeed)<<", \"room_heart_layouts\": "<<roomHeartLayouts<<", \"coin_clear_rewards\": "<<(coinClearRewards?"true":"false")<<", \"key_clear_rewards\": "<<(keyClearRewards?"true":"false")<<", \"chest_clear_rewards\": "<<(chestClearRewards?"true":"false")<<"},\n  \"overrides\": {";
+       <<", \"coverage\": \"Player, combat, enemy, map and camera configuration; native balance pending\", \"player_speed\": 1, \"walking_pace_at_speed_one\": 4.8, \"room_size_scale\": 1, \"room_size_baseline\": \"larger-compact-v1\", \"route_length_scale\": 1, \"default_zoom_percent\": 160, \"tears_per_second\": "<<numericText(ReferenceTears)<<", \"shot_speed\": 1, \"range_tiles\": 6.5, \"shooting_calibration\": \"accepted-independent-v1\", \"gaper_movement_multiplier\": 1, \"gaper_calibration\": \"player-relative-v1\", \"spider_movement_multiplier\": 1, \"spider_calibration\": \"player-relative-burst-v1\", \"pooter_movement_multiplier\": 1, \"pooter_shot_speed_multiplier\": 1, \"pooter_attack_interval_multiplier\": 1, \"pooter_calibration\": \"player-relative-mode0-v1\", \"player_damage\": 3.5, \"regular_health_multiplier\": 1, \"damage_calibration\": \"source-damage-internal-hp-v1\", \"health_units_per_source\": 3.2, \"combat_room_template\": \"basement-1.47.0-canyon-v1\", \"red_heart_reward_policy\": \"ordinary-normal-rare-gates-off-v1\", \"player_luck\": 0, \"red_heart_timing\": \"appear33-drop25-collect12-30hz-v1\", \"red_heart_appearance_speed\": 1, \"bomb_reward_policy\": \"ordinary-normal-golden-gate-off-cap99-v1\", \"key_reward_policy\": \"ordinary-normal-charged-gate-off-v1\", \"chest_reward_policy\": \"pickup-batches-adapted-v1\", \"coin_reward_policy\": \"ordinary-normal-rare-gates-off-v1\", \"room_heart_layout_policy\": \"basement-native-descriptor-bomb32-v11\", \"room_heart_layouts\": 1},\n"
+       <<"  \"resolved\": {\"player_speed\": "<<numericText(playerSpeed)<<", \"room_size_scale\": "<<numericText(roomSizeScale)<<", \"room_min_half_tiles\": "<<roomMinHalfTiles<<", \"room_max_half_tiles\": "<<roomMaxHalfTiles<<", \"route_length_scale\": "<<numericText(routeLengthScale)<<", \"default_zoom_percent\": "<<numericText(defaultZoomPercent)<<", \"tears_per_second\": "<<numericText(tearsPerSecond)<<", \"shot_speed\": "<<numericText(shotSpeed)<<", \"range_tiles\": "<<numericText(rangeTiles)<<", \"gaper_movement_multiplier\": "<<numericText(gaperMovementMultiplier)<<", \"spider_movement_multiplier\": "<<numericText(spiderMovementMultiplier)<<", \"pooter_movement_multiplier\": "<<numericText(pooterMovementMultiplier)<<", \"pooter_shot_speed_multiplier\": "<<numericText(pooterShotSpeedMultiplier)<<", \"pooter_attack_interval_multiplier\": "<<numericText(pooterAttackIntervalMultiplier)<<", \"player_damage\": "<<numericText(playerDamage)<<", \"regular_health_multiplier\": "<<numericText(regularHealthMultiplier)<<", \"source_combat_room\": "<<(sourceCombatRoom?"true":"false")<<", \"red_heart_clear_rewards\": "<<(redHeartClearRewards?"true":"false")<<", \"player_luck\": "<<numericText(playerLuck)<<", \"red_heart_appearance_speed\": "<<numericText(redHeartAppearanceSpeed)<<", \"room_heart_layouts\": "<<roomHeartLayouts<<", \"coin_clear_rewards\": "<<(coinClearRewards?"true":"false")<<", \"bomb_clear_rewards\": "<<(bombClearRewards?"true":"false")<<", \"key_clear_rewards\": "<<(keyClearRewards?"true":"false")<<", \"chest_clear_rewards\": "<<(chestClearRewards?"true":"false")<<"},\n  \"overrides\": {";
     bool comma=false;
     const auto field=[&](const char *key,float value){out<<(comma?", ":"")<<quoted(key)<<": "<<numericText(value);comma=true;};
     if(!coinClearRewards){out<<"\"coin_clear_rewards\": false";comma=true;}
+    if(!bombClearRewards){out<<(comma?", ":"")<<"\"bomb_clear_rewards\": false";comma=true;}
     if(!keyClearRewards){out<<(comma?", ":"")<<"\"key_clear_rewards\": false";comma=true;}
     if(!chestClearRewards){out<<(comma?", ":"")<<"\"chest_clear_rewards\": false";comma=true;}
     if(!redHeartClearRewards){out<<(comma?", ":"")<<"\"red_heart_clear_rewards\": false";comma=true;}
@@ -241,17 +242,18 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     root.keys({"format","schema_version","compatibility","reference","resolved","overrides","exceptions"});
     root.at("format").equal("deathward.balance");
     const auto version=root.at("schema_version").numeric();
-    if(version!=1&&version!=2&&version!=3&&version!=4&&version!=5&&version!=6&&version!=7&&version!=8&&version!=9&&version!=10&&version!=11&&version!=12&&version!=13&&version!=14&&version!=15&&version!=16&&version!=17&&version!=18&&version!=19&&version!=20&&version!=21&&version!=22&&version!=23)throw std::runtime_error("Unsupported balance preset schema");
+    if(version!=1&&version!=2&&version!=3&&version!=4&&version!=5&&version!=6&&version!=7&&version!=8&&version!=9&&version!=10&&version!=11&&version!=12&&version!=13&&version!=14&&version!=15&&version!=16&&version!=17&&version!=18&&version!=19&&version!=20&&version!=21&&version!=22&&version!=23&&version!=24)throw std::runtime_error("Unsupported balance preset schema");
     const bool legacy=version==1;
     const auto &compat=root.at("compatibility");compat.keys({"contract","content_version","mechanics_fingerprint"});
-    compat.at("contract").equal(legacy?"d01-speed-v1":version==2?"d02-room-size-v2":version==3?"d02-map-v3":version==4?"d02-view-v4":version==5?"d03-shooting-v5":version==6?"d04-gaper-v6":version==7?"d05-spider-v7":version==8?"d06-pooter-v8":version==9?"d07-combat-v9":version==10?"d08-source-room-v10":version==11?"d09a-red-hearts-v11":version==12?"d09a-heart-timing-v12":version==13?"d09a-room-hearts-v13":version==14?"d09a-room-selection-v14":version==15?"d09a-heart-rock-room-v15":version==16?"d09a-room-descriptor-v16":version==17?"d09a-combat-rock-room-v17":version==18?"d09a-four-gaper-room-v18":version==19?"d09b-ordinary-coins-v19":version==20?"ordinary-chests-v20":version==21?"preplaced-chests-v21":version==22?"preplaced-coins-v22":Contract);compat.at("content_version").equal(ContentVersion);
+    compat.at("contract").equal(legacy?"d01-speed-v1":version==2?"d02-room-size-v2":version==3?"d02-map-v3":version==4?"d02-view-v4":version==5?"d03-shooting-v5":version==6?"d04-gaper-v6":version==7?"d05-spider-v7":version==8?"d06-pooter-v8":version==9?"d07-combat-v9":version==10?"d08-source-room-v10":version==11?"d09a-red-hearts-v11":version==12?"d09a-heart-timing-v12":version==13?"d09a-room-hearts-v13":version==14?"d09a-room-selection-v14":version==15?"d09a-heart-rock-room-v15":version==16?"d09a-room-descriptor-v16":version==17?"d09a-combat-rock-room-v17":version==18?"d09a-four-gaper-room-v18":version==19?"d09b-ordinary-coins-v19":version==20?"ordinary-chests-v20":version==21?"preplaced-chests-v21":version==22?"preplaced-coins-v22":version==23?"d09c-ordinary-keys-v23":Contract);compat.at("content_version").equal(ContentVersion);
     compat.at("mechanics_fingerprint").equal(fingerprint.c_str());
     auto ref=root.at("reference");
+    if(version>=24){ref.at("bomb_reward_policy").equal("ordinary-normal-golden-gate-off-cap99-v1");ref.fields.erase("bomb_reward_policy");}
     if(version>=23){ref.at("key_reward_policy").equal("ordinary-normal-charged-gate-off-v1");ref.fields.erase("key_reward_policy");}
     if(version>=20){ref.at("chest_reward_policy").equal("pickup-batches-adapted-v1");ref.fields.erase("chest_reward_policy");}
     if(version>=19){ref.at("coin_reward_policy").equal("ordinary-normal-rare-gates-off-v1");ref.fields.erase("coin_reward_policy");}
     if(version>=13) {
-        ref.at("room_heart_layout_policy").equal(version==13?"basement-normal-1to5-heart-layer-v1":version==14?"basement-normal-1to5-native-selector-v2":version==15?"basement-native-selector-rock-room91-v3":version==16?"basement-native-descriptor-rock-room91-v4":version==17?"basement-native-descriptor-rooms4-91-v5":version==18?"basement-native-descriptor-rooms4-91-108-v6":version<=20?"basement-native-descriptor-gaper-rocks-v7":version==21?"basement-native-descriptor-chest31-v8":version==22?"basement-native-descriptor-coin30-v9":"basement-native-descriptor-key214-v10");
+        ref.at("room_heart_layout_policy").equal(version==13?"basement-normal-1to5-heart-layer-v1":version==14?"basement-normal-1to5-native-selector-v2":version==15?"basement-native-selector-rock-room91-v3":version==16?"basement-native-descriptor-rock-room91-v4":version==17?"basement-native-descriptor-rooms4-91-v5":version==18?"basement-native-descriptor-rooms4-91-108-v6":version<=20?"basement-native-descriptor-gaper-rocks-v7":version==21?"basement-native-descriptor-chest31-v8":version==22?"basement-native-descriptor-coin30-v9":version==23?"basement-native-descriptor-key214-v10":"basement-native-descriptor-bomb32-v11");
         if(ref.at("room_heart_layouts").numeric()!=1)throw std::runtime_error("Reference room-heart policy cannot change");
         ref.fields.erase("room_heart_layout_policy");ref.fields.erase("room_heart_layouts");
     }
@@ -324,6 +326,12 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
         heartAppearanceSpeed=resolved.at("red_heart_appearance_speed").numeric();
         if(heartAppearanceSpeed<MinHeartAppearanceSpeed||heartAppearanceSpeed>MaxHeartAppearanceSpeed)throw std::runtime_error("Heart appearance speed outside supported range");
         resolved.fields.erase("red_heart_appearance_speed");
+    }
+    bool bombRewards=true;
+    if(version>=24) {
+        const auto &entry=resolved.at("bomb_clear_rewards");
+        if(entry.kind!=Json::Boolean)throw std::runtime_error("Bomb rewards must be boolean");
+        bombRewards=entry.flag;resolved.fields.erase("bomb_clear_rewards");
     }
     bool keyRewards=true;
     if(version>=23) {
@@ -399,8 +407,12 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     const double speed=resolved.at("player_speed").numeric();
     if(speed<.1||speed>2)throw std::runtime_error("Speed must be between 0.10 and 2.00");
     const auto &overrides=root.at("overrides");
-    if(overrides.kind!=Json::Object||overrides.fields.size()!=size_t((speed!=1)+(!legacy&&roomScale!=1)+(minimum!=0?2:0)+(routeScale!=1)+(zoom!=ReferenceZoom)+customTears+(shotSpeed!=ReferenceShotSpeed)+(range!=ReferenceRange)+(gaper!=ReferenceGaperMovement)+(spider!=ReferenceSpiderMovement)+(pooterMove!=1)+(pooterShot!=1)+(pooterInterval!=1)+(damage!=ReferenceDamage)+(health!=1)+(!sourceRoom)+(!heartRewards)+(!coinRewards)+(!chestRewards)+(!keyRewards)+(luck!=ReferenceLuck)+(heartAppearanceSpeed!=1)+(heartLayouts!=1)))
+    if(overrides.kind!=Json::Object||overrides.fields.size()!=size_t((speed!=1)+(!legacy&&roomScale!=1)+(minimum!=0?2:0)+(routeScale!=1)+(zoom!=ReferenceZoom)+customTears+(shotSpeed!=ReferenceShotSpeed)+(range!=ReferenceRange)+(gaper!=ReferenceGaperMovement)+(spider!=ReferenceSpiderMovement)+(pooterMove!=1)+(pooterShot!=1)+(pooterInterval!=1)+(damage!=ReferenceDamage)+(health!=1)+(!sourceRoom)+(!heartRewards)+(!coinRewards)+(!chestRewards)+(!keyRewards)+(!bombRewards)+(luck!=ReferenceLuck)+(heartAppearanceSpeed!=1)+(heartLayouts!=1)))
         throw std::runtime_error("Unexpected preset overrides");
+    if(!bombRewards) {
+        const auto &entry=overrides.at("bomb_clear_rewards");
+        if(entry.kind!=Json::Boolean||entry.flag)throw std::runtime_error("Bomb reward override disagrees");
+    }
     if(!keyRewards) {
         const auto &entry=overrides.at("key_clear_rewards");
         if(entry.kind!=Json::Boolean||entry.flag)throw std::runtime_error("Key reward override disagrees");
@@ -458,6 +470,6 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     exceptions.keys({"isometric","eight_direction_controls","universal_dodge","immediate_stopping"});
     for(const auto &[name,entry]:exceptions.fields)
         if(entry.kind!=Json::Boolean||!entry.flag)throw std::runtime_error("Retained control exception cannot change: "+name);
-    BalancePreset preset{float(speed),fingerprint,float(roomScale),int(minimum),int(maximum),float(routeScale),float(zoom),float(tears),float(shotSpeed),float(range),float(gaper),float(spider),float(pooterMove),float(pooterShot),float(pooterInterval),float(damage),float(health),sourceRoom,heartRewards,float(luck),float(heartAppearanceSpeed),int(heartLayouts),coinRewards,chestRewards,keyRewards};preset.validate();return preset;
+    BalancePreset preset{float(speed),fingerprint,float(roomScale),int(minimum),int(maximum),float(routeScale),float(zoom),float(tears),float(shotSpeed),float(range),float(gaper),float(spider),float(pooterMove),float(pooterShot),float(pooterInterval),float(damage),float(health),sourceRoom,heartRewards,float(luck),float(heartAppearanceSpeed),int(heartLayouts),coinRewards,chestRewards,keyRewards,bombRewards};preset.validate();return preset;
 }
 } // namespace dw

@@ -5,6 +5,7 @@
 #include "world/SourceChestRockRoomData.hpp"
 #include "world/SourceCoinRockRoomData.hpp"
 #include "world/SourceKeyRockRoomData.hpp"
+#include "world/SourceBombRockRoomData.hpp"
 #include <map>
 #include <queue>
 
@@ -140,7 +141,8 @@ std::vector<Vector3> Arena::path(Vector3 from, Vector3 target, float radius) con
             const auto sourceRoom=[&](int i){return i>=0&&(sourceCombatRockRoom(rooms[size_t(i)].sourceObstacleTemplate)||
                 rooms[size_t(i)].sourceObstacleTemplate==SourceChestRockRoom||
                 rooms[size_t(i)].sourceObstacleTemplate==SourceCoinRockRoom||
-                rooms[size_t(i)].sourceObstacleTemplate==SourceKeyRockRoom);};
+                rooms[size_t(i)].sourceObstacleTemplate==SourceKeyRockRoom||
+                rooms[size_t(i)].sourceObstacleTemplate==SourceBombRockRoom);};
             const bool sourceStart=sourceRoom(start),sourceGoal=sourceRoom(goal);
             if(sourceStart&&start==goal)return sourceRockPath(*this,start,from,target,radius);
             if(sourceStart||sourceGoal) {

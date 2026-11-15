@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-15",
+  "request": "Use the pickup dynamite model for placed charges; keep the same particle effects.",
+  "status": "implemented-developer-verified-scoped-human-accepted",
+  "shared_geometry": "Single red stick, two pale bands and curved-looking angled fuse; shared dynamiteStick draw helper in scene color and shadow passes.",
+  "preserved": "Existing fuse glow and four spark strokes retain timing, color, size and drift; origin follows the shared fuse tip. Explosion particle renderer, manifest, sounds, damage, fuse duration and collision are unchanged. Boss/supplied bombs retain their models.",
+  "additional_cleanup": "Removed stale C mode reminder from pause panel.",
+  "checks": [
+    {
+      "check": "dynamite",
+      "exit_code": 0,
+      "log": "dynamite.log"
+    },
+    {
+      "check": "bombs",
+      "exit_code": 0,
+      "log": "bombs.log"
+    }
+  ],
+  "native_build": true,
+  "web_runtime_verified": false,
+  "sha256": {
+    "src/render/Renderer.cpp": "244ee25b941ea774b20129e588a7bf62629074ea264eb6cac7d37f523c39ae23",
+    "src/render/ParticleEffects.cpp": "e15e149b2bd36ff1dec1b8fc9e8b32b2fd0fd49d15362d3002154f3a6340d0ca",
+    "assets/particles/combat-manifest.json": "634649927a7b4ffb36ee598085aced0cc87c639e93aefab74a820583323190ed",
+    "build/deathward": "ee85d0b3873eca67488995ab902fba2c9daac15b805974c2df1115af00ce35ee"
+  },
+  "remaining": [
+    "browser runtime verification",
+    "D09d broader native coverage and gameplay save continuity as already documented"
+  ],
+  "human_acceptance_record": "../human-acceptance.json"
+}

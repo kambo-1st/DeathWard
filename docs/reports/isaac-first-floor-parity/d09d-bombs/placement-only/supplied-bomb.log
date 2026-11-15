@@ -1,0 +1,2 @@
+BALANCE speed=1 room_size=1 routes=1 zoom=160 tears=2.72727 shot_speed=1 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=790cc268942f2045 profile=reference-partial
+PASS native supplied bomb mouse approach, empty-ground throw, arrows over HUD, B placement and zero-inventory HUD placement

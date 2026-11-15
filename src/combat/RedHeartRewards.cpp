@@ -8,7 +8,7 @@ void Simulation::resolveRedHeartClearAward() {
     // First-clear only. This delivery is ordinary opening-floor combat, excluding
     // bosses, story sites, tutorial and other special-room/reward policies.
     const auto &layout=arena.rooms[size_t(room)];
-    if((!redHeartClearRewards&&!coinClearRewards&&!chestClearRewards&&!keyClearRewards)||progress.redHeartAward||!progress.cleared||floor!=0||surveyTutorial||
+    if((!redHeartClearRewards&&!coinClearRewards&&!chestClearRewards&&!keyClearRewards&&!bombClearRewards)||progress.redHeartAward||!progress.cleared||floor!=0||surveyTutorial||
        !arena.profile.active()||arena.theme!=MissionTheme::Canyon||layout.kind!=RoomKind::Combat||
        layout.story!=StoryRoom::None||debugScenario||progress.trapOnly||progress.plateObjective)return;
     // Explicit DW room-seed adapter, isolated from combat/loot/order of discovery.
@@ -17,7 +17,7 @@ void Simulation::resolveRedHeartClearAward() {
     RedHeartClearAward result;result.seed=uint32_t(seed.next());if(!result.seed)result.seed=1;
     result.luck=player.attributes.luck;
     SourceAwardRng rng{result.seed};result.variant=sourceOrdinaryRoomAward(rng,result.luck);
-    if(result.variant==10||result.variant==20||result.variant==30) {
+    if(result.variant==10||result.variant==20||result.variant==30||result.variant==40) {
         // Ordinary native spawning draws the pickup init seed after selection
         // (7b903a..7b9064). Full native wrapper/placement remains unaccepted.
         result.pickupSeed=rng.next();
@@ -26,7 +26,8 @@ void Simulation::resolveRedHeartClearAward() {
         result.pending=choice.resolved&&(result.variant==10
             ? redHeartClearRewards&&(choice.subtype==1||choice.subtype==2||choice.subtype==5)
             : result.variant==20?coinClearRewards&&sourceOrdinaryCoinValue(choice.subtype)>0
-            : keyClearRewards&&sourceOrdinaryKeyValue(choice.subtype)>0);
+            : result.variant==30?keyClearRewards&&sourceOrdinaryKeyValue(choice.subtype)>0
+            : bombClearRewards&&sourceOrdinaryBombValue(choice.subtype)>0);
     }
     if(result.variant==50) {
         result.pickupSeed=rng.next();result.subtype=1;result.pending=chestClearRewards;
@@ -38,8 +39,8 @@ void Simulation::resolveRedHeartClearAward() {
 void Simulation::deliverRedHeartClearAward() {
     auto &award=rooms[size_t(room)].redHeartAward;
     if(!award||!award->pending||award->delivered||dead||finished)return;
-    const bool coin=award->variant==20,chest=award->variant==50,key=award->variant==30;
-    if(chest?chests.size()>=128:(key?keyPickups.size():coin?moneyPickups.size():heartPickups.size())>=1024)return;
+    const bool coin=award->variant==20,chest=award->variant==50,key=award->variant==30,bomb=award->variant==40;
+    if(chest?chests.size()>=128:(bomb?bombPickups.size():key?keyPickups.size():coin?moneyPickups.size():heartPickups.size())>=1024)return;
     const auto &layout=arena.rooms[size_t(room)];
     const int amount=award->subtype==2?1:award->subtype==5?4:2;
     auto safe=[&](Vector3 at) {
@@ -51,6 +52,7 @@ void Simulation::deliverRedHeartClearAward() {
             for(const auto &pickup:moneyPickups)if(sphereBox(pickup.position,.4f,body))return false;
             for(const auto &pickup:heartPickups)if(sphereBox(pickup.position,.4f,body))return false;
             for(const auto &pickup:chestSupplies)if(sphereBox(pickup.position,.4f,body))return false;
+            for(const auto &pickup:bombPickups)if(sphereBox(pickup.position,.4f,body))return false;
             for(const auto &pickup:keyPickups)if(sphereBox(pickup.position,.4f,body))return false;
             for(const auto &key:arena.keys)if(!key.collected&&sphereBox(key.position,.6f,body))return false;
         }
@@ -70,6 +72,8 @@ void Simulation::deliverRedHeartClearAward() {
     if(!std::isfinite(best))return;
     if(chest) {
         if(!spawnChest(position,award->pickupSeed))return;
+    } else if(bomb) {
+        if(!spawnOrdinaryBomb(position,award->subtype,award->pickupSeed))return;
     } else if(key) {
         if(!spawnOrdinaryKey(position,award->subtype,award->pickupSeed))return;
     } else if(coin) {

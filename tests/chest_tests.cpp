@@ -40,12 +40,12 @@ void natural(uint64_t seed) {
     advance(r,1.5f);check(c.opened&&r.keys==keys&&c.seed==seedSnapshot,"free touch opening, independent of later policy/Luck");
     check(c.contents.size()==drops.size()&&std::all_of(c.contents.begin(),c.contents.end(),[](auto &d){return d.delivered;}),"all snapshotted contents scatter once");
     auto verify=[&](const auto &p){check(r.arena.roomAt(p.position)==1&&!r.arena.blocked(p.position,.48f)&&!r.arena.path(r.player.position,p.position,.48f).empty(),"loot stays reachable and in owner room");};
-    for(auto &p:r.moneyPickups)verify(p);for(auto &p:r.heartPickups)verify(p);for(auto &p:r.chestSupplies)verify(p);for(auto &p:r.keyPickups)verify(p);
+    for(auto &p:r.moneyPickups)verify(p);for(auto &p:r.heartPickups)verify(p);for(auto &p:r.bombPickups)verify(p);for(auto &p:r.keyPickups)verify(p);
     check(planarDistance(r.player.position,c.position)>=chestGeometry::StopZ-.001f,"solid chest keeps player outside the smaller box");
-    r.moneyPickups.clear();r.heartPickups.clear();r.chestSupplies.clear();r.keyPickups.clear();
+    r.moneyPickups.clear();r.heartPickups.clear();r.bombPickups.clear();r.keyPickups.clear();
     r.jumpDebug(0);r.jumpDebug(1);r.player.position=add(c.position,{0,0,chestGeometry::StopZ+.04f});advance(r,2);
-    check(c.opened&&r.moneyPickups.empty()&&r.heartPickups.empty()&&r.chestSupplies.empty()&&r.keyPickups.empty(),"opened chest cannot repay after revisit");
-    r.resizeRooms(1.2f,7,9,.26f);check(!r.chestClearRewards&&r.chests.empty()&&r.chestSupplies.empty()&&r.keyPickups.empty(),"Apply retains option and explicitly resets floor actors");
+    check(c.opened&&r.moneyPickups.empty()&&r.heartPickups.empty()&&r.bombPickups.empty()&&r.keyPickups.empty(),"opened chest cannot repay after revisit");
+    r.resizeRooms(1.2f,7,9,.26f);check(!r.chestClearRewards&&r.chests.empty()&&r.bombPickups.empty()&&r.keyPickups.empty(),"Apply retains option and explicitly resets floor actors");
     std::cout<<"CHEST seed="<<seed<<" room=2 init="<<seedSnapshot<<" drops=";
     for(auto &d:drops)std::cout<<d.variant<<'.'<<d.subtype<<' ';std::cout<<'\n';
 }
@@ -58,9 +58,9 @@ void capacity(uint64_t seed) {
     const auto elsewhere=r.arena.rooms[0].center;
     r.moneyPickups.assign(1024,MoneyPickup{elsewhere,1,0,false});
     r.heartPickups.assign(1024,HeartPickup{elsewhere,HeartKind::Red,2,0});
-    r.chestSupplies.assign(1024,ChestSupply{elsewhere,0});r.keyPickups.assign(1024,OrdinaryKeyPickup{elsewhere,0});
+    r.bombPickups.assign(1024,OrdinaryBombPickup{elsewhere,0});r.keyPickups.assign(1024,OrdinaryKeyPickup{elsewhere,0});
     advance(r,2);check(c.opened&&std::none_of(c.contents.begin(),c.contents.end(),[](auto &d){return d.delivered;}),"full pickup stores retain chest loot");
-    r.moneyPickups.clear();r.heartPickups.clear();r.chestSupplies.clear();r.keyPickups.clear();r.step({});
+    r.moneyPickups.clear();r.heartPickups.clear();r.bombPickups.clear();r.keyPickups.clear();r.step({});
     check(std::all_of(c.contents.begin(),c.contents.end(),[](auto &d){return d.delivered;}),"pending contents recover without reroll");
     for(auto &p:r.moneyPickups)check(p.timing.frame==0,"actual deferred loot birth starts at zero");
     const auto age=c.openAge;r.rewardOpen=true;advance(r,1);check(c.openAge==age,"paused chest frozen");r.rewardOpen=false;
@@ -86,16 +86,16 @@ void supplies(uint64_t seed) {
         check(r.spawnChest(at,lootSeed),"resource-bearing chest admission");
         auto &c=r.chests[0];c.opened=true;r.player.position=add(at,{4,0,0});advance(r,.5f);
         const auto expected=std::count_if(c.contents.begin(),c.contents.end(),[](auto &d){return d.variant==30||d.variant==40;});
-        check(r.chestSupplies.size()+r.keyPickups.size()==size_t(expected)&&std::any_of(r.chestSupplies.begin(),r.chestSupplies.end(),[](auto &p){return p.bomb;})&&
+        check(r.bombPickups.size()+r.keyPickups.size()==size_t(expected)&&std::any_of(r.bombPickups.begin(),r.bombPickups.end(),[](auto &p){return sourceOrdinaryBombValue(p.sourceSubtype)>0;})&&
               !r.keyPickups.empty(),"chest emits both ordinary key and dynamite actors");
     }
     for(bool bomb:{false,true})for(bool full:{false,true}) {
         auto r=create(seed);clear(r);r.chests.clear();
-        ChestSupply p;p.position=r.player.position;p.room=r.room;p.bomb=bomb;p.timing.appear(1);
-        r.chestSupplies.push_back(p);int &amount=bomb?r.dynamite:r.keys;amount=full?(bomb?MaxDynamite:99):0;
-        advance(r,2);check(amount==(full?(bomb?MaxDynamite:99):1),"supply increments retained resource once");
-        check(r.chestSupplies.empty()!=full,"full inventory leaves supply on floor");
-        if(full){--amount;advance(r,2);check(r.chestSupplies.empty()&&amount==(bomb?MaxDynamite:99),"refused supply collectible after spending");}
+        int &amount=bomb?r.dynamite:r.keys;amount=full?99:0;
+        check(bomb?r.spawnOrdinaryBomb(r.player.position,1,42):r.spawnOrdinaryKey(r.player.position,1,42),"shared supply admission");
+        advance(r,2);check(amount==(full?99:1),"shared supply increments resource once");
+        check((bomb?r.bombPickups.empty():r.keyPickups.empty())!=full,"full inventory leaves supply on floor");
+        if(full){--amount;advance(r,2);check((bomb?r.bombPickups.empty():r.keyPickups.empty())&&amount==99,"refused supply collectible after spending");}
     }
     auto off=create(seed);off.chestClearRewards=false;clear(off);off.chestClearRewards=true;advance(off,1);
     check(off.chests.empty()&&off.rooms[1].redHeartAward&&!off.rooms[1].redHeartAward->pending,"no retroactive clear chest after enabling");

@@ -37,7 +37,7 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Propose D09d ordinary bomb/dynamite pickups: natural clear rewards and one compatible complete layout, collection/inventory/timing, live tuning/export/load and a short main-game check. D09d is not selected. Broader native coverage and gameplay save continuity remain open.",
+  "next_work": "Selected D10a: verify ordinary bomb fuse, radius, outgoing and incoming damage, wire live/export/load in the main game, then short human review. Keep placement only and current effects. Broader special bombs and full native/save acceptance remain open.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-12",
     "status": "Ordinary caller/descriptor and direct-entry delivery accepted; next complete-room continuation selected",
@@ -371,7 +371,7 @@
     "production_default_changed": false,
     "full_native_acceptance": false
   },
-  "current_delivery_summary": "D09c accepted and committed as b466b5a3. Corridor arrow/post and supply-cache removal is implemented, developer-verified and scoped-human-accepted; this checkpoint includes the requested cleanup commit.",
+  "current_delivery_summary": "D09d ordinary pickups, placement-only controls and shared dynamite model are developer-verified and human-accepted; included in this checkpoint. D10a fuse/blast/self-damage is now separately selected.",
   "room_scale_timing_checkpoint": {
     "status": "selected step1 verified for native shape1 geometry and ordinary horizontal base-Isaac live motion; shared spatial rollout pending",
     "evidence": "docs/reports/isaac-first-floor-parity/room-scale-timing/README.md",
@@ -712,5 +712,43 @@
     "validation": "Build; 256 generated floor route/prop checks; buzzing flies; actual Game/Renderer keys and keyboard/doors; demolition smoke",
     "interactive_handoff": "docs/reports/isaac-first-floor-parity/expedition-presentation-cleanup/interactive-handoff.json",
     "cleanup_committed": true
-  }
+  },
+  "d09d_bombs_checkpoint": {
+    "selected": "2026-11-15",
+    "status": "enabled-developer-verified-scoped-human-accepted",
+    "report": "docs/reports/isaac-first-floor-parity/d09d-bombs/README.md",
+    "schema": 24,
+    "source_layout": "1.32.0",
+    "scope": "Ordinary single/double clear/chest/layout bomb actors,99-cap,live export/load; preserve starting3 and existing blast mechanics",
+    "native_resolver_cases_passed": 1036,
+    "remaining": [
+      "special bombs and wider layouts",
+      "full native seed/factory/physics/profile/modifier/scheduler equivalence",
+      "gameplay save continuity"
+    ],
+    "full_native_acceptance": false,
+    "developer_validation": "11 focused suites; 3 natural size witnesses; normal-health Game/Renderer access/collection/UI/retry; 4 CLI loads",
+    "review": {
+      "seed": 129,
+      "room": 2,
+      "source_template": 32,
+      "zoom": 165,
+      "hp": 6,
+      "god": false,
+      "dynamite_spent": 2,
+      "final_dynamite": 4
+    },
+    "human_acceptance": {
+      "date": "2026-11-15",
+      "user_quote": "ok, looks good... Btw remove a dynamite throw",
+      "accepted": true,
+      "scope": "Scoped D09d main-game pickup review in source32, seed129. Does not establish full native equivalence.",
+      "followup_selected": "Remove ordinary inventory dynamite throwing; retain B/HUD ground placement.",
+      "full_native_acceptance": false
+    },
+    "committed": false,
+    "placement_only_followup": "implemented; native build and seven checks pass; scoped human-accepted",
+    "shared_model_followup": "shared pickup/placed model; native build and two input checks pass; scoped human-accepted"
+  },
+  "d10a_selected": "2026-11-15; fuse/blast/self-damage only, live tuning/export/load and a short main-game check"
 }

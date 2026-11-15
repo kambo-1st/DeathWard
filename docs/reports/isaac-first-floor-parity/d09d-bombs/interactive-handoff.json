@@ -1,0 +1,27 @@
+{
+  "pid": 133242,
+  "command": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "129",
+    "--review-source-room",
+    "32",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/d09d-bombs/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "seed": 129,
+  "displayed_room": 2,
+  "source_template": 32,
+  "normal_health": 6,
+  "god": false,
+  "zoom": 165,
+  "preplaced_bombs": 3,
+  "starting_dynamite": 3,
+  "tested_dynamite_spent": 2,
+  "tested_final_dynamite": 4,
+  "manual_check": "B at the starting rock edge; retreat before the blast. Move one cell into the breach, place another charge and retreat. Walk back toward the opening, collect the three sticks, then revisit without duplicates. DYNAMITE should finish at4 if exactly two charges were used. Death retry returns to the fresh room."
+}

@@ -57,11 +57,11 @@ void verify(uint64_t seed,float size,int lo,int hi,bool lifecycle) {
     check(r.arena.blocked(at,.48f),"opened chest retains collision"+tag);
     for(const auto &p:r.moneyPickups)if(p.room==index)check(!r.arena.path(r.player.position,p.position,.48f).empty(),"coins reachable after demolition"+tag);
     for(const auto &p:r.heartPickups)if(p.room==index)check(!r.arena.path(r.player.position,p.position,.48f).empty(),"hearts reachable after demolition"+tag);
-    for(const auto &p:r.chestSupplies)if(p.room==index)check(!r.arena.path(r.player.position,p.position,.48f).empty(),"supplies reachable after demolition"+tag);
-    const auto count=r.chests.size(),coins=r.moneyPickups.size(),hearts=r.heartPickups.size(),supplies=r.chestSupplies.size();
+    for(const auto &p:r.bombPickups)if(p.room==index)check(!r.arena.path(r.player.position,p.position,.48f).empty(),"supplies reachable after demolition"+tag);
+    const auto count=r.chests.size(),coins=r.moneyPickups.size(),hearts=r.heartPickups.size(),supplies=r.bombPickups.size();
     const auto cleared=r.stats.rooms;r.jumpDebug(0);r.jumpDebug(index);advance(r,120);
     check(r.chests.size()==count&&r.chests[0].opened&&r.chests[0].seed==state,"revisit retains chest identity and open state"+tag);
-    check(r.moneyPickups.size()==coins&&r.heartPickups.size()==hearts&&r.chestSupplies.size()==supplies&&r.stats.rooms==cleared,"no duplicate loot or clear"+tag);
+    check(r.moneyPickups.size()==coins&&r.heartPickups.size()==hearts&&r.bombPickups.size()==supplies&&r.stats.rooms==cleared,"no duplicate loot or clear"+tag);
     if(lifecycle) {
         const auto id=r.summary().id;r.player.hp=4;r.player.attributes.speed=.8f;
         r.resizeRooms(size,lo,hi,.26f,std::nullopt,0);

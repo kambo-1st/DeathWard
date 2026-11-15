@@ -11,7 +11,7 @@
 
 namespace dw {
 inline constexpr const char *ContentVersion = "deathward-m1-61";
-inline constexpr int StartingDynamite = 3, MaxDynamite = 9;
+inline constexpr int StartingDynamite = 3, MaxDynamite = 99;
 inline constexpr float DynamiteFuse = 2, DynamiteRange = 12, DynamiteRadius = 4.5f;
 inline constexpr float DynamiteDamage = 100, DynamiteSelfDamage = 25;
 inline constexpr float DynamiteGravity = 18;

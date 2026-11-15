@@ -7,6 +7,7 @@
 #include "world/SourceChestRockRoomData.hpp"
 #include "world/SourceCoinRockRoomData.hpp"
 #include "world/SourceKeyRockRoomData.hpp"
+#include "world/SourceBombRockRoomData.hpp"
 #include "combat/SourceRoomRewards.hpp"
 #include <span>
 #include <stdexcept>
@@ -58,6 +59,8 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode) {
                 std::none_of(keys.begin(),keys.end(),[&](const auto &key){return key.room==index;});
             const bool completeKeys=selected.variant==SourceKeyRockRoom&&index!=2&&index!=3&&
                 std::none_of(keys.begin(),keys.end(),[&](const auto &key){return key.room==index;});
+            const bool completeBombs=selected.variant==SourceBombRockRoom&&index!=2&&index!=3&&
+                std::none_of(keys.begin(),keys.end(),[&](const auto &key){return key.room==index;});
             layout.sourceHeartTemplate=selected.variant;
             layout.sourceRoomSelectionSeed=selectionSeed;
             layout.sourceRoomSpawnSeed=sourceRoomDescriptorSeeds(selectionSeed).spawn;
@@ -82,6 +85,10 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode) {
                     const int subtype=slot.subtype==0?sourceOrdinaryPickup(spawnState,30,{}).subtype:slot.subtype;
                     layout.keySpawns.push_back({heartCell(layout,slot.x,slot.y),spawnState,slot.x,slot.y,ordinal,slot.subtype,subtype});
                 }
+                if(completeBombs)for(const auto &slot:Basement32Bombs)if(slot.ordinal==ordinal) {
+                    const int subtype=slot.subtype==0?sourceOrdinaryPickup(spawnState,40,{}).subtype:slot.subtype;
+                    layout.bombSpawns.push_back({heartCell(layout,slot.x,slot.y),spawnState,slot.x,slot.y,ordinal,slot.subtype,subtype});
+                }
                 if(nextSlot>=selected.slotCount)continue;
                 const auto &slot=BasementHeartSlots[size_t(selected.firstSlot+nextSlot)];
                 if(slot.ordinal!=ordinal)continue;
@@ -102,6 +109,10 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode) {
             }
             if(completeKeys) {
                 layout.sourceObstacleTemplate=SourceKeyRockRoom;
+                layout.kind=RoomKind::Empty;
+            }
+            if(completeBombs) {
+                layout.sourceObstacleTemplate=SourceBombRockRoom;
                 layout.kind=RoomKind::Empty;
             }
             if(completeCoins) {
@@ -132,6 +143,7 @@ void Arena::prepareSourceHeartRocks() {
         if(layout.sourceObstacleTemplate==91)rocks=Basement91Rocks;
         else if(layout.sourceObstacleTemplate==SourceChestRockRoom)rocks=Basement31Rocks;
         else if(layout.sourceObstacleTemplate==SourceKeyRockRoom)rocks=Basement214Rocks;
+        else if(layout.sourceObstacleTemplate==SourceBombRockRoom)rocks=Basement32Rocks;
         else if(layout.sourceObstacleTemplate==SourceCoinRockRoom)rocks=Basement30Rocks;
         else if(const auto *source=sourceCombatRockRoom(layout.sourceObstacleTemplate))rocks=source->rocks;
         else continue;

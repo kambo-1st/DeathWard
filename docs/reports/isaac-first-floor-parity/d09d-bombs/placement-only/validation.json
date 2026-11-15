@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-15",
+  "status": "implemented-developer-verified-scoped-human-accepted",
+  "native_build": true,
+  "checks": [
+    {
+      "check": "physics",
+      "exit_code": 0,
+      "log": "physics.log"
+    },
+    {
+      "check": "dynamite",
+      "exit_code": 0,
+      "log": "dynamite.log"
+    },
+    {
+      "check": "keyboard",
+      "exit_code": 0,
+      "log": "keyboard.log"
+    },
+    {
+      "check": "arrows",
+      "exit_code": 0,
+      "log": "arrows.log"
+    },
+    {
+      "check": "hud",
+      "exit_code": 0,
+      "log": "hud.log"
+    },
+    {
+      "check": "supplied-bomb",
+      "exit_code": 0,
+      "log": "supplied-bomb.log"
+    },
+    {
+      "check": "bombs",
+      "exit_code": 0,
+      "log": "bombs.log"
+    }
+  ],
+  "scope": "Ordinary inventory dynamite is placement-only through B and HUD. No C switch or aiming preview. Separate supplied-bomb attacks and existing fuse/blast/kick mechanics retained.",
+  "human_acceptance_of_D09d_pickups": true,
+  "human_acceptance_of_new_controls": true,
+  "web_runtime_verified": false,
+  "initial_failures": "Duplicate local test variable corrected. HUD assertion corrected to consume button release on next simulation tick; gameplay timing unchanged.",
+  "sha256": {
+    "src/core/Game.cpp": "2eb32533e67789cb22410a1974b1e002195bc089aae05fe55cdc77953b2d6232",
+    "src/core/Game.hpp": "83540464f5609dafb6cc5b5ce4c6a0bd6e762163bf7f379ffbf3b22b0a65456c",
+    "src/core/ExpeditionHud.hpp": "f7f555e19440713117432eaf89dd68d58ad7e67a30dbf5deae5e5612e9d7df89",
+    "src/render/Renderer.cpp": "55e99d0ba92bb8333aeeb62c364a62333c5a739428472e19bcc41ed069658e8c",
+    "src/render/Renderer.hpp": "187d77ef696cf76ef04491bf44080a36f4f5bf4d2f147e9ac4f70d9aff46341f",
+    "src/main.cpp": "26c426c8841c819364b165ccc347e46f1aeac7d9d9d748641d2f67083dabc359",
+    "tests/input_tests.cpp": "8299a1b9a37f3418adeaddb122e0e86b98412c8ba6d85a9fb6ad1489d3a66c64",
+    "build/deathward": "2ed70e389b93cfc760e1e89447771eee13525b0a0acff8963417dc96ceb5f9f0"
+  },
+  "human_acceptance_record": "../human-acceptance.json"
+}

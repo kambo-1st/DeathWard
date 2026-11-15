@@ -1,0 +1,8 @@
+BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=5f9db7983069b66f profile=custom
+ROOM_REVIEW requested=32 room=2 template=32 selection_seed=3325565276 spawn_seed=3857519545 chest_slots=0 chests=0 bomb_slots=3 layout_bombs=3 key_slots=0 layout_keys=0 coin_slots=0 layout_coins=0 hp=6 god=0
+BOMB_COLLECTION expected=4 actual=1 left=3 room=1 paused=1 balance=0 position=33.9495,-47.1897
+LEFT 42.1225,-43.12 screen=790.492,732.298 distance=9.13014 route=2
+LEFT 44.16,-43.12 screen=878.807,806.062 distance=10.9916 route=2
+LEFT 46.1975,-43.12 screen=978.459,889.296 distance=12.9064 route=2
+FAIL: all bombs collected once
+Temporary campaign: "/tmp/deathward-input-27873796197500"

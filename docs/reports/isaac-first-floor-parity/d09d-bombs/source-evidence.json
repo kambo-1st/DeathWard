@@ -1,0 +1,33 @@
+{
+  "target": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "native_bomb_subtype_cases": 1036,
+  "ordinary_no_golden_inventory_cases": 8,
+  "resolver": "6b5caf..6b5d52: bounded7 double, bounded100 golden gate, bounded50 supertroll/golden troll, bounded10 troll/golden troll. All four draws preserved.",
+  "gameplay_golden_gate": false,
+  "supported_subtypes": {
+    "1": 1,
+    "2": 2
+  },
+  "unsupported_without_reroll": [
+    3,
+    4,
+    5,
+    6
+  ],
+  "inventory": "Source AddBombs clamps0..99; DW retains starting3. Full-count refusal/contact remains an explicit pickup adapter.",
+  "timing": "Highest installed overrides: Appear35/Drop25; Collect16 single,13 double. Active-room30Hz adapter; full scheduler/physics unaccepted.",
+  "source_files": {
+    "docs/reports/isaac-first-floor-parity/room-awards/native-awards.csv": "d89fab7250594fafd9d78d2a2cda770dd370d675787f511e990a7269fa9a6a09",
+    "docs/reports/isaac-first-floor-parity/room-awards/native-pickups.csv": "7d67dc16fef2fce8429856fa7b11ef7cd34910a2165c80d7f56127d1f9d7a3ac",
+    "docs/reports/isaac-first-floor-parity/room-awards/pickup_resolver.asm": "d6d157ab6e4b9a0caad127e78f62376f22769a09986067a70faa4ad6530627f1",
+    "docs/reports/isaac-first-floor-parity/resources/native-collection.csv": "cf39af52b0261a734d349f0d00d211b19903f6c5c3d31eab6973090909729bfd",
+    "docs/reports/isaac-first-floor-parity/resources/bomb_collection.asm": "116cfae21adaeb5e381e16b82d48da3f7a9f39b12def98727ad51ba0b933d843",
+    "docs/reports/isaac-first-floor-parity/resources/add_bombs.asm": "3478366d28b8b56f061ce0dcf7c18ad3d7e0ad7b1a1a91a3cffc82fcfc78c59d"
+  },
+  "limits": [
+    "Native admitted collection capture excludes collision eligibility prechecks.",
+    "Special bombs/unlocks/profile/modifiers and native factory/physics/scheduler remain open.",
+    "Layout/descriptor/slot data retained; floor selection seeds, canyon geometry, pickup contact and current dynamite mechanics remain adapters."
+  ]
+}

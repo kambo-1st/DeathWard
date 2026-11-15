@@ -4,6 +4,7 @@
 #include "world/SourceChestRockRoomData.hpp"
 #include "world/SourceCoinRockRoomData.hpp"
 #include "world/SourceKeyRockRoomData.hpp"
+#include "world/SourceBombRockRoomData.hpp"
 #include "world/SourceHeartRockRoom.hpp"
 #include "combat/LobFlight.hpp"
 #include "combat/PlayerShooting.hpp"
@@ -157,7 +158,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     next.gaperMovementMultiplier=gaperMovementMultiplier;
     next.spiderMovementMultiplier=spiderMovementMultiplier;
     next.pooterTuning=pooterTuning;
-    next.keyClearRewards=keyClearRewards;next.chestClearRewards=chestClearRewards;next.coinClearRewards=coinClearRewards;next.redHeartClearRewards=redHeartClearRewards;next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
+    next.bombClearRewards=bombClearRewards;next.keyClearRewards=keyClearRewards;next.chestClearRewards=chestClearRewards;next.coinClearRewards=coinClearRewards;next.redHeartClearRewards=redHeartClearRewards;next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
     next.audioEpoch=audioEpoch+1;next.checkpointNeeded=true;
     *this=std::move(next); // Same expedition ID, seed, timer and player; no campaign restart/consequences.
 }
@@ -170,7 +171,7 @@ bool Simulation::advanceFloor() {
     next.gaperMovementMultiplier=gaperMovementMultiplier;
     next.spiderMovementMultiplier=spiderMovementMultiplier;
     next.pooterTuning=pooterTuning;
-    next.keyClearRewards=keyClearRewards;next.chestClearRewards=chestClearRewards;next.coinClearRewards=coinClearRewards;next.redHeartClearRewards=redHeartClearRewards;next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
+    next.bombClearRewards=bombClearRewards;next.keyClearRewards=keyClearRewards;next.chestClearRewards=chestClearRewards;next.coinClearRewards=coinClearRewards;next.redHeartClearRewards=redHeartClearRewards;next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
     const auto spawn=next.player;
     next.player=player;next.player.position=spawn.position;next.player.aim=spawn.aim;next.player.facing=spawn.facing;
     next.player.velocity={};next.player.shootPose=next.player.dodge=next.player.pullTime=next.player.hurt=0;
@@ -415,6 +416,7 @@ void Simulation::enterRoom(int index) {
     deliverRoomChests(room);
     deliverRoomCoins(room);
     deliverRoomKeys(room);
+    deliverRoomBombs(room);
     checkpointNeeded = true;
 }
 void Simulation::clearRoom() {
@@ -580,7 +582,7 @@ bool Simulation::enterSourceRoomReview(int variant) {
         // does not contain the complete combat record and cannot review it.
         if(sourceCombatRockRoom(variant)&&layout.sourceCombatTemplate!=variant)continue;
         if(variant==SourceChestRockRoom&&layout.sourceObstacleTemplate!=variant)continue;
-        if((variant==SourceCoinRockRoom||variant==SourceKeyRockRoom)&&layout.sourceObstacleTemplate!=variant)continue;
+        if((variant==SourceCoinRockRoom||variant==SourceKeyRockRoom||variant==SourceBombRockRoom)&&layout.sourceObstacleTemplate!=variant)continue;
         auto reviewStart=layout.entry;
         if(variant==SourceCoinRockRoom) {
             // Review-only approach keeps the four coins visible at the user's
@@ -590,6 +592,10 @@ bool Simulation::enterSourceRoomReview(int variant) {
         }
         if(variant==SourceKeyRockRoom) {
             const auto near=sourceHeartCell(layout,1,2);
+            if(!arena.blocked(near,.48f)&&!arena.path(layout.entry,near,.48f).empty())reviewStart=near;
+        }
+        if(variant==SourceBombRockRoom) {
+            const auto near=sourceHeartCell(layout,5,0);
             if(!arena.blocked(near,.48f)&&!arena.path(layout.entry,near,.48f).empty())reviewStart=near;
         }
         cancelMove();player.position=reviewStart;
@@ -1661,6 +1667,7 @@ void Simulation::step(const Input &input, float dt) {
     updateMoney(dt);
     updateHeartPickups(dt);
     updateOrdinaryKeys(dt);
+    updateOrdinaryBombs(dt);
     updateChestSupplies(dt);
     updateChests(dt);
     updateBlueFlies(dt);

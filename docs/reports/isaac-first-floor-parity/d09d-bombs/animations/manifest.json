@@ -1,0 +1,145 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "scope": "Highest available DLC override before base animation metadata. No sprite artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/005.041_Bomb.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d09d-bombs/animations/005.041_Bomb.anm2",
+      "sha256": "090400250d74c8522dc06fdc2c3d63dd89b85dcffce1aa5245e7004246ee96d6",
+      "checksum": "0xe394a1b",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "28/07/2015 6:40:47 PM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "16",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "35",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "25"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Pulse",
+            "FrameNum": "59",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Explode",
+            "FrameNum": "46",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/005.042_Double Bomb.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d09d-bombs/animations/005.042_Double Bomb.anm2",
+      "sha256": "c3e3e2a9dfca61c6ddb68169cb8411d9a010cee1d8b0d91d355b2302e61c207a",
+      "checksum": "0x3695abd1",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "7/11/2022 12:28:30 PM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "13",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "35",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "25"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Pulse",
+            "FrameNum": "58",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Explode",
+            "FrameNum": "45",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

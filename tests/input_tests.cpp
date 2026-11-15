@@ -436,6 +436,73 @@ void spiderBalanceInputCheck(const std::filesystem::path &directory) {
           "fresh Game restores independent enemy and accepted user settings");fresh.close();
     std::cout<<"PASS D05 actual Game encounter, UI mouse/keyboard, live edit, export/reload/rejection, map/floor/retry/fresh-session persistence\n";
 }
+void bombInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"bombs.save",preset=directory/"bombs.json",sourcePreset=directory/"bombs-source.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="129";game.reviewSourceRoomTemplate=32;
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
+    if(!game.run||!game.error.empty())throw std::runtime_error("direct bomb room launch: "+game.error);auto &run=*game.run;const int owner=run.room;
+    check(run.bombPickups.size()==3&&run.bombClearRewards&&run.player.hp==6&&!run.godMode&&run.dynamite==3,"three natural bombs and normal starting player");
+    const auto layout=run.arena.rooms[size_t(owner)];Renderer renderer;
+    const auto frame=[&](bool draw=true){game.update(Tick);BeginDrawing();const auto action=draw?renderer.draw(game):Action::None;EndDrawing();game.perform(action);check(game.error.empty(),"bomb UI no errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto floorClick=[&](Vector3 p){p.y=0;auto screen=GetWorldToScreen(p,game.camera);click(int(screen.x),int(screen.y));};
+    const auto key=[&](int k){mouseEvent(KeyDown,k);frame();mouseEvent(KeyUp,k);frame();};
+    const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"bomb screenshot");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();check(renderer.missionShadowsReady(),"bomb scene shadows loaded");capture("artifacts/bombs-room.png");
+    floorClick(layout.bombSpawns[1].preferred);for(int n=0;n<90;++n)frame(n%30==0);check(run.dynamite==3,"cannot collect through rocks");
+    click(374,642);click(575,143);click(1010,383);
+    check(!run.bombClearRewards&&run.bombPickups.size()==3,"AFTER CLEAR DYNAMITE independent of preplaced actors");
+    for(int n=0;n<40&&game.keyboardFocus()!=Action::ToggleBombRewards;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::ToggleBombRewards,"bomb keyboard focus");key(KEY_ENTER);check(run.bombClearRewards,"keyboard bomb toggle");click(1010,383);
+    capture("artifacts/bombs-rewards-panel.png");game.exportBalancePreset();std::filesystem::copy_file(preset,sourcePreset,std::filesystem::copy_options::overwrite_existing);
+    click(970,190);click(275,270);check(game.hasPendingMapChanges()&&run.bombPickups.size()==3,"layout OFF staged");
+    click(415,446);check(run.bombPickups.empty()&&run.roomHeartLayouts==0,"Apply removes bomb layout");
+    game.exportBalancePreset();std::filesystem::copy_file(preset,"artifacts/bombs-layout-off-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.balanceFile=sourcePreset.string();click(605,606);check(game.hasPendingMapChanges()&&run.roomHeartLayouts==0&&!run.bombClearRewards,"Load stages map and restores live policy");
+    click(415,446);check(run.bombPickups.size()==3&&run.roomHeartLayouts==1&&!run.bombClearRewards,"Apply restores layout independent of clear switch");
+    game.balanceFile=preset.string();game.exportBalancePreset();game.rememberBalancePreset();
+    std::filesystem::copy_file(preset,"artifacts/bombs-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.perform(Action::CloseBalance);game.paused=false;
+    int spent=0;
+    for(int row=0;row<=2;++row) {
+        if(!run.arena.path(run.player.position,layout.bombSpawns[1].preferred,.48f).empty())break;
+        game.updateCamera(10);frame();const auto approach=sourceHeartCell(layout,5,row);
+        floorClick(approach);for(int n=0;n<480;++n)frame(n%30==0);
+        check(planarDistance(run.player.position,approach)<.15f,"mouse reaches bomb-room demolition approach");
+        game.updateCamera(10);frame();key(KEY_B);++spent;
+        const auto retreat=sourceHeartCell(layout,1,1);floorClick(retreat);
+        for(int n=0;n<300;++n)frame(n%30==0);
+        if(run.player.hp!=6||run.room!=owner) {capture("artifacts/bombs-retreat-check.png");std::cerr<<"BOMB_RETREAT row="<<row<<" hp="<<run.player.hp<<" room="<<run.room<<" distance="<<planarDistance(run.player.position,approach)<<std::endl;}
+        check(!run.dead&&run.player.hp==6&&run.room==owner,"normal-health retreat from real dynamite");
+    }
+    check(!run.arena.path(run.player.position,layout.bombSpawns[1].preferred,.48f).empty(),"real dynamite opens pocket");
+    // Walk back toward the breach before targeting its interior: from the far
+    // retreat point at165%, the bomb projections fall behind the bottom HUD.
+    for(const auto cell:{std::array<int,2>{3,0},{5,0},{5,1}}) {
+        game.updateCamera(10);frame();const auto at=sourceHeartCell(layout,cell[0],cell[1]);floorClick(at);
+        for(int n=0;n<360;++n)frame(n%30==0);
+        check(!game.paused&&planarDistance(run.player.position,at)<.15f,"visible mouse waypoints return to breach");
+    }
+    int expected=3-spent;for(const auto &p:layout.bombSpawns)expected+=sourceOrdinaryBombValue(p.subtype);
+    for(const auto &p:layout.bombSpawns) {
+        game.updateCamera(10);frame();floorClick(p.preferred);
+        for(int n=0;n<600;++n){frame(n%30==0);check(!run.arena.blocked(run.player.position,.48f),"bomb mouse path physically clear");}
+    }
+    capture("artifacts/bombs-collected.png");
+    if(run.dynamite!=expected||!run.bombPickups.empty()) {
+        std::cerr<<"BOMB_COLLECTION expected="<<expected<<" actual="<<run.dynamite<<" left="<<run.bombPickups.size()<<" room="<<run.room<<" paused="<<game.paused<<" balance="<<game.balanceOpen<<" position="<<run.player.position.x<<","<<run.player.position.z<<std::endl;
+        for(const auto &p:run.bombPickups) {const auto screen=GetWorldToScreen(p.position,game.camera);std::cerr<<"LEFT "<<p.position.x<<","<<p.position.z<<" screen="<<screen.x<<","<<screen.y<<" distance="<<planarDistance(p.position,run.player.position)<<" route="<<run.arena.path(run.player.position,p.position,.48f).size()<<std::endl;}
+    }
+    check(run.dynamite==expected&&run.bombPickups.empty(),"all bombs collected once");
+    run.jumpDebug(0);run.jumpDebug(owner);frame();check(run.dynamite==expected&&run.bombPickups.empty(),"revisit no duplicate bombs");
+    run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->room==owner&&game.run->bombPickups.size()==3&&game.run->player.hp==6&&!game.run->godMode&&!game.run->bombClearRewards,"retry retains config with fresh actors and starting health");
+    game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="129";fresh.reviewSourceRoomTemplate=32;fresh.loadBalancePreset(preset);fresh.launch(true);
+    check(fresh.run&&fresh.run->bombPickups.size()==3&&!fresh.run->bombClearRewards&&fresh.cameraZoomPercent()==165&&fresh.run->player.walkingSpeed()==4.8f,"fresh bomb preset retains accepted map/view/feel");fresh.close();
+    std::cout<<"PASS main-game bombs, normal-health mouse rock access, keyboard demolition/live policy, Apply/export/load, revisit/retry and fresh preset; spent="<<spent<<" collected_inventory="<<expected<<'\n';
+}
 void keyInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
@@ -721,7 +788,7 @@ void heartRockRoomInputCheck(const std::filesystem::path &directory) {
     run.player.position=point(3,3);auto health=run.player.sourceHealth();health.addRed(-3);run.player.setSourceHealth(health);
     game.updateCamera(10);frame();capture("artifacts/source-heart-rock-room-closed.png");
     check(run.roomClear&&run.livingEnemies()==0&&run.heartPickups.size()==2,"ordinary obstacle room has two preplaced pickups and no enemies");
-    game.dynamiteThrowMode=false;game.perform(Action::Dynamite);frame();
+    game.perform(Action::Dynamite);frame();
     check(run.dynamite==StartingDynamite-1,"normal PLACE action spends dynamite");
     for(int n=0;n<240;++n)frame();capture("artifacts/source-heart-rock-room-open.png");
     const auto target=point(5,3);check(!run.arena.path(run.player.position,target,.48f).empty(),"rendered room opening has matching navigation");
@@ -1061,7 +1128,7 @@ void hudInputCheck(const std::filesystem::path &directory) {
         UnloadImage(image);EndDrawing();
     };
     // Former buttons must leave no invisible mouse blockers after they shrink.
-    for(const auto p:{Vector2{160,608},Vector2{850,711},Vector2{420,700},Vector2{480,736}}) {
+    for(const auto p:{Vector2{160,608},Vector2{850,711},Vector2{420,700},Vector2{480,736},Vector2{248,640}}) {
         mouseEvent(MousePosition,int(p.x),int(p.y));frame();
         check(!game.pointerOverControls(),"freed HUD space accepts world input");
         run.player.fireCooldown=0;const auto shots=run.stats.shots;
@@ -1069,11 +1136,11 @@ void hudInputCheck(const std::filesystem::path &directory) {
         check(run.stats.shots>shots,"right-click fires through freed HUD space");
     }
     const auto shots=run.stats.shots;
-    click(248,640);check(game.dynamiteThrowMode,"compact mode button switches to throwing");
-    click(160,640);check(game.dynamiteArmed,"compact dynamite button arms a throw");
-    check(game.expeditionNotice().find("landing point")!=std::string::npos,"armed throw shows aiming hint");
-    click(248,640);check(!game.dynamiteThrowMode&&!game.dynamiteArmed,"mode switch cancels aiming");
-    check(game.expeditionNotice().find("landing point")==std::string::npos,"cancelled throw leaves no stale aiming hint");
+    run.dynamiteCooldown=0;
+    const auto placementAmmo=run.dynamite;
+    click(160,640);frame();
+    check(run.dynamite==placementAmmo-1&&run.hazards.back().settled,"compact dynamite button places immediately");
+    check(game.expeditionNotice().find("landing point")==std::string::npos,"placement never enters throw aiming");
     click(754,736);check(game.paused,"compact Pause button works");
     capture("artifacts/expedition-mission-details.png");key(KEY_ESCAPE);
     check(!game.paused&&run.stats.shots==shots,"HUD clicks never fire into the world");
@@ -1142,16 +1209,16 @@ void keyboardInputCheck(const std::filesystem::path &directory) {
     frame();
     check(run.dynamite==ammo-1&&run.hazards.back().settled,"B places dynamite even with cursor over HUD and cheats off");
     run.clearRoomDebug();run.dynamiteCooldown=0;
-    key(KEY_C);check(game.dynamiteThrowMode,"C switches to throwing without a mouse");
-    const auto f=dw::unit(Vector3{game.camera.target.x-game.camera.position.x,0,game.camera.target.z-game.camera.position.z});
-    const Vector3 right{-f.z,0,f.x};const auto shots=run.stats.shots;
+    key(KEY_C);
+    const auto shots=run.stats.shots;
     mouseEvent(KeyDown,KEY_RIGHT);mouseEvent(KeyDown,KEY_B);frame();
-    check(run.dynamite==ammo-2&&!run.hazards.back().settled&&run.stats.shots==shots,
-          "B plus arrow throws without also firing a bullet");
-    auto velocity=run.hazards.back().velocity;velocity.y=0;
-    check(dw::dot(dw::unit(velocity),right)>.99f,"keyboard throw follows the selected screen-relative direction");
+    const auto &charge=run.hazards.back();
+    check(run.dynamite==ammo-2&&charge.settled&&run.stats.shots==shots,
+          "C cannot enable throwing; B plus arrow places without firing a bullet");
+    check(charge.position.x==run.player.position.x&&charge.position.z==run.player.position.z&&
+          dw::length(charge.velocity)==0,"arrow aiming cannot launch ordinary dynamite");
     mouseEvent(KeyUp,KEY_RIGHT);mouseEvent(KeyUp,KEY_B);frame();
-    run.clearRoomDebug();run.dynamiteCooldown=0;key(KEY_C);
+    run.clearRoomDebug();run.dynamiteCooldown=0;
     const auto oldAngle=dw::unit(dw::sub(game.camera.position,game.camera.target));
     mouseEvent(KeyDown,KEY_Q);for(int i=0;i<15;++i)frame();mouseEvent(KeyUp,KEY_Q);frame();
     check(dw::distance(oldAngle,dw::unit(dw::sub(game.camera.position,game.camera.target)))>.1f,
@@ -1376,11 +1443,7 @@ void arrowInputCheck(const std::filesystem::path &directory, dw::MissionTheme th
     modalGuard(game.journalOpen);
     modalGuard(game.buildOpen);
     const auto beforeDynamite = run.stats.shots;
-    game.dynamiteArmed = true;
     mouseEvent(KeyDown, KEY_UP);
-    frame();
-    check(run.stats.shots == beforeDynamite, "dynamite targeting blocks keyboard gunfire");
-    game.dynamiteArmed = false;
     mouseEvent(KeyDown, KEY_B);
     frame();
     mouseEvent(KeyUp, KEY_B);
@@ -1496,7 +1559,6 @@ void dynamiteInputCheck(const std::filesystem::path &directory, dw::MissionTheme
     game.launch();
     auto &run = *game.run;
     run.godMode = true;
-    check(!game.dynamiteThrowMode, "dynamite defaults to ground placement");
     game.updateCamera(10);
     dw::Renderer renderer;
     const dw::Game::SceneryPicker picker = [&](const auto &simulation, const auto &camera, Ray ray) {
@@ -1591,35 +1653,21 @@ void dynamiteInputCheck(const std::filesystem::path &directory, dw::MissionTheme
     capture("blast");
     for (int i = 0; i < 40; ++i)
         frame(x, y);
-    click(248, 640);
-    check(game.dynamiteThrowMode && run.dynamite == 2 && run.stats.shots == 0,
-          "the mode switch enables throwing without spending ammo or firing");
-    click(160, 640);
-    check(game.dynamiteArmed && run.dynamite == 2, "the HUD button arms aiming without spending ammo");
-    frame(x, y);
-    capture("preview");
-    const auto before = run.player.position;
-    frame(x, y);
-    frame(x, y, true);
-    for (int i = 0; i < 12; ++i)
-        frame(x, y, true);
-    frame(x, y);
-    check(!game.dynamiteArmed && run.dynamite == 1 && run.stats.shots == 0 &&
-              dw::distance(before, run.player.position) < .001f,
-          "mouse targeting throws once without a movement order or revolver shot");
-    click(160, 640);
-    for (int i = 0; i < 8; ++i)
-        frame(x, y, false, true);
-    frame(x, y);
-    check(!game.dynamiteArmed && run.dynamite == 1 && run.stats.shots == 0,
-          "holding the right button after cancel never fires through the cancellation");
-    click(160, 640);
-    mouseEvent(KeyDown, KEY_ESCAPE);
-    frame(x, y);
-    mouseEvent(KeyUp, KEY_ESCAPE);
-    frame(x, y);
-    check(!game.dynamiteArmed && !game.paused && run.dynamite == 1,
-          "Escape cancels targeting without pausing or spending ammo");
+    frame(248,640);
+    check(!game.pointerOverControls(),"removed mode button leaves no invisible input blocker");
+    game.perform(dw::Action::DynamiteMode);
+    mouseEvent(KeyDown,KEY_C);frame(x,y);mouseEvent(KeyUp,KEY_C);frame(x,y);
+    const auto before=run.player.position;
+    click(160,640);frame(160,640); // Buttons dispatch on release; consume the queued placement next tick.
+    check(run.dynamite==1&&run.hazards.back().settled&&run.stats.shots==0&&
+          dw::distance(before,run.player.position)<.001f,
+          "retired mode action and C cannot turn the HUD placement into a throw");
+    mouseEvent(KeyDown,KEY_ESCAPE);frame(x,y);mouseEvent(KeyUp,KEY_ESCAPE);frame(x,y);
+    check(game.paused&&run.dynamite==1,"Escape pauses directly after placement");
+    click(160,640);
+    check(run.dynamite==1,"paused HUD cannot place another charge");
+    game.perform(dw::Action::Resume);
+    run.hazards.clear();run.dynamiteCooldown=0;
     mouseEvent(KeyDown, KEY_LEFT_SHIFT);
     mouseEvent(KeyDown, KEY_B);
     frame(x, y);
@@ -1628,16 +1676,11 @@ void dynamiteInputCheck(const std::filesystem::path &directory, dw::MissionTheme
     frame(x, y);
     check(run.dynamite == dw::MaxDynamite, "Shift+B refills dynamite for testing without throwing");
     click(160, 640);
-    check(game.dynamiteArmed, "refilled dynamite can target a throw");
-    click(248, 640);
-    check(!game.dynamiteThrowMode && !game.dynamiteArmed && run.dynamite == dw::MaxDynamite,
-          "switching to placement cancels an armed throw without spending ammo");
-    click(160, 640);
     frame(160, 640);
     const auto &placed = run.hazards.back();
     check(run.dynamite == dw::MaxDynamite - 1 && placed.settled &&
               placed.position.x == run.player.position.x && placed.position.z == run.player.position.z &&
-              !game.dynamiteArmed && run.stats.shots == 0,
+              run.stats.shots == 0,
           "the Place Dynamite button immediately places at the player's feet without a targeting click");
     capture("placed");
     const auto placedAt = placed.position;
@@ -1679,7 +1722,7 @@ void dynamiteInputCheck(const std::filesystem::path &directory, dw::MissionTheme
     game.close();
     std::cout
         << "PASS " << name
-        << " dynamite ground placement, WASD/mouse contact kicks, throws, pause, cancellation and refill\n";
+        << " dynamite placement only, WASD/mouse contact kicks, retired throw controls, pause and refill\n";
 }
 void boundaryRiverInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
@@ -2019,12 +2062,10 @@ void suppliedBombInputCheck(const std::filesystem::path &directory) {
           "Arrow throws held bomb while cursor is over HUD");
     takeStock();mouseEvent(KeyDown,KEY_B);frame();mouseEvent(KeyUp,KEY_B);frame();
     check(!run.carriedBomb()&&run.suppliedBombs[0].charge.settled&&run.dynamite==0,"B places held bomb with zero ordinary inventory");
-    takeStock();game.dynamiteThrowMode=true;game.perform(Action::Dynamite);
-    check(game.dynamiteArmed,"HUD throw button accepts carried supply with zero ordinary inventory");
-    game.updateCamera(10);click(add(run.player.position,{5,0,0}));
-    check(!run.carriedBomb()&&!game.dynamiteArmed&&!run.suppliedBombs[0].charge.settled&&run.dynamite==0,
-          "Armed mouse throw consumes held supply and preserves inventory");
-    game.close();std::cout<<"PASS native supplied bomb mouse approach, empty-ground throw, arrows over HUD, B placement and zero-inventory HUD throw\n";
+    takeStock();game.perform(Action::Dynamite);frame();
+    check(!run.carriedBomb()&&run.suppliedBombs[0].charge.settled&&run.dynamite==0,
+          "HUD places carried supplier bomb with zero ordinary inventory");
+    game.close();std::cout<<"PASS native supplied bomb mouse approach, empty-ground throw, arrows over HUD, B placement and zero-inventory HUD placement\n";
 }
 void flightInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
@@ -2063,6 +2104,9 @@ int main(int argc, char **argv) {
         if(mode.empty()||mode=="--shooting-balance-only") {
             shootingBalanceInputCheck(directory);
             if(mode=="--shooting-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode=="--bombs-only") {
+            bombInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--keys-only") {
             keyInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

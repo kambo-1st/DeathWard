@@ -1,0 +1,178 @@
+Consolidate compiler generated dependencies of target deathward_core
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FloorEncounters.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/CanyonBoss.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/world/RoomHeartLayouts.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FrontierBoss.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonTerrain.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonAppearance.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CliffWallTopology.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CliffFacetRefinement.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonRiver.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonRoad.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/world/RoomGraph.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Keys.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Bombs.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Chests.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/RedHeartRewards.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/RoomHearts.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/PlayerHealth.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Simulation.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Loot.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Shop.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Services.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Dynamite.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SuppliedBombs.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FlyBombs.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnemyBombs.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Destruction.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ProjectileMotion.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Enemies.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Encounters.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Monsters.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterMovement.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Formations.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Navigation.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/items/Items.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/items/ItemPools.cpp.o
+[ 26%] Linking CXX static library libdeathward_core.a
+[ 94%] Built target deathward_core
+[100%] Building CXX object CMakeFiles/deathward_bomb_layout_tests.dir/tests/bomb_layout_tests.cpp.o
+[100%] Linking CXX executable deathward_bomb_layout_tests
+[100%] Built target deathward_bomb_layout_tests
+Consolidate compiler generated dependencies of target deathward_core
+[100%] Built target deathward_core
+[100%] Building CXX object CMakeFiles/deathward_bomb_reward_tests.dir/tests/bomb_reward_tests.cpp.o
+[100%] Linking CXX executable deathward_bomb_reward_tests
+[100%] Built target deathward_bomb_reward_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_balance_preset_tests
+[100%] Building CXX object CMakeFiles/deathward_balance_preset_tests.dir/tests/balance_preset_tests.cpp.o
+[100%] Linking CXX executable deathward_balance_preset_tests
+[100%] Built target deathward_balance_preset_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_chest_tests
+[100%] Building CXX object CMakeFiles/deathward_chest_tests.dir/tests/chest_tests.cpp.o
+[100%] Linking CXX executable deathward_chest_tests
+[100%] Built target deathward_chest_tests
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_chest_layout_tests
+[100%] Building CXX object CMakeFiles/deathward_chest_layout_tests.dir/tests/chest_layout_tests.cpp.o
+[100%] Linking CXX executable deathward_chest_layout_tests
+[100%] Built target deathward_chest_layout_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_key_reward_tests
+[100%] Building CXX object CMakeFiles/deathward_key_reward_tests.dir/tests/key_reward_tests.cpp.o
+[100%] Linking CXX executable deathward_key_reward_tests
+[100%] Built target deathward_key_reward_tests
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_key_layout_tests
+[ 94%] Building CXX object CMakeFiles/deathward_key_layout_tests.dir/tests/key_layout_tests.cpp.o
+[100%] Linking CXX executable deathward_key_layout_tests
+[100%] Built target deathward_key_layout_tests
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_coin_reward_tests
+[ 94%] Building CXX object CMakeFiles/deathward_coin_reward_tests.dir/tests/coin_reward_tests.cpp.o
+[100%] Linking CXX executable deathward_coin_reward_tests
+[100%] Built target deathward_coin_reward_tests
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FloorEncounters.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Simulation.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/world/RoomHeartLayouts.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Encounters.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Navigation.cpp.o
+[ 11%] Linking CXX static library libdeathward_core.a
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_coin_layout_tests
+[100%] Building CXX object CMakeFiles/deathward_coin_layout_tests.dir/tests/coin_layout_tests.cpp.o
+[100%] Linking CXX executable deathward_coin_layout_tests
+[100%] Built target deathward_coin_layout_tests
+Consolidate compiler generated dependencies of target glfw
+[ 11%] Built target glfw
+Consolidate compiler generated dependencies of target raylib
+[ 14%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 81%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_skinning
+[ 81%] Building CXX object CMakeFiles/deathward_cloth.dir/src/render/FlagCloth.cpp.o
+[ 81%] Building CXX object CMakeFiles/deathward_skinning.dir/src/render/SkinnedModel.cpp.o
+[ 81%] Linking CXX static library libdeathward_cloth.a
+[ 81%] Built target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_particles
+[ 85%] Building CXX object CMakeFiles/deathward_particles.dir/src/render/ParticleEffects.cpp.o
+[ 85%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward_mission_lighting
+[ 85%] Building CXX object CMakeFiles/deathward_mission_lighting.dir/src/render/MissionLighting.cpp.o
+[ 88%] Building CXX object CMakeFiles/deathward_skinning.dir/src/render/ArtWardrobe.cpp.o
+[ 88%] Building CXX object CMakeFiles/deathward_mission_lighting.dir/src/render/GroundSurface.cpp.o
+[ 88%] Linking CXX static library libdeathward_skinning.a
+[ 88%] Built target deathward_skinning
+[ 88%] Building CXX object CMakeFiles/deathward_mission_lighting.dir/src/render/CanyonWater.cpp.o
+[ 88%] Building CXX object CMakeFiles/deathward_particles.dir/src/render/RedstoneArt.cpp.o
+[ 92%] Linking CXX static library libdeathward_mission_lighting.a
+[ 92%] Built target deathward_mission_lighting
+[ 92%] Linking CXX static library libdeathward_particles.a
+[ 92%] Built target deathward_particles
+Consolidate compiler generated dependencies of target deathward
+[ 92%] Building CXX object CMakeFiles/deathward.dir/src/main.cpp.o
+[ 92%] Building CXX object CMakeFiles/deathward.dir/src/core/FrontEnd.cpp.o
+[ 92%] Building CXX object CMakeFiles/deathward.dir/src/audio/AudioSystem.cpp.o
+[ 92%] Building CXX object CMakeFiles/deathward.dir/src/audio/MusicDirector.cpp.o
+In file included from /home/kambo/workspace/DeathWard/src/render/Renderer.hpp:10,
+                 from /home/kambo/workspace/DeathWard/src/main.cpp:7:
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp: In member function ‘bool dw::KeyModel::prepare()’:
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp:31:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   31 |         if(attempted_)return ready();attempted_=true;
+      |         ^~
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp:31:38: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   31 |         if(attempted_)return ready();attempted_=true;
+      |                                      ^~~~~~~~~~
+[ 92%] Building CXX object CMakeFiles/deathward.dir/src/cinematic/CinematicAudio.cpp.o
+[ 92%] Building CXX object CMakeFiles/deathward.dir/src/editor/CinematicEditor.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditor.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorAnimals.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorNavigation.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward.dir/src/render/Renderer.cpp.o
+In file included from /home/kambo/workspace/DeathWard/src/render/Renderer.hpp:10,
+                 from /home/kambo/workspace/DeathWard/src/render/Renderer.cpp:1:
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp: In member function ‘bool dw::KeyModel::prepare()’:
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp:31:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   31 |         if(attempted_)return ready();attempted_=true;
+      |         ^~
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp:31:38: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   31 |         if(attempted_)return ready();attempted_=true;
+      |                                      ^~~~~~~~~~
+[ 96%] Building CXX object CMakeFiles/deathward.dir/src/render/PlayerModel.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward.dir/src/render/AnimalModels.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward.dir/src/render/WesternScene.cpp.o
+[100%] Building CXX object CMakeFiles/deathward.dir/src/render/CanyonScene.cpp.o
+[100%] Building CXX object CMakeFiles/deathward.dir/src/render/TownScene.cpp.o
+[100%] Building CXX object CMakeFiles/deathward.dir/src/core/Game.cpp.o
+[100%] Building CXX object CMakeFiles/deathward.dir/src/core/GameTuning.cpp.o
+[100%] Building CXX object CMakeFiles/deathward.dir/src/core/GameQuest.cpp.o
+[100%] Linking CXX executable deathward
+[100%] Built target deathward
+[ 11%] Built target glfw
+[ 14%] Built target raylib
+[ 81%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_skinning
+Consolidate compiler generated dependencies of target deathward_cloth
+[ 85%] Built target deathward_cloth
+[ 85%] Built target deathward_skinning
+Consolidate compiler generated dependencies of target deathward_particles
+Consolidate compiler generated dependencies of target deathward_mission_lighting
+[ 88%] Built target deathward_mission_lighting
+[ 92%] Built target deathward_particles
+[ 92%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward_input_tests
+[ 92%] Building CXX object CMakeFiles/deathward_input_tests.dir/tests/input_tests.cpp.o
+[ 92%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/core/GameTuning.cpp.o
+[ 92%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/core/Game.cpp.o
+[ 92%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/core/GameQuest.cpp.o
+[ 92%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/Renderer.cpp.o
+[ 92%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/PlayerModel.cpp.o
+[ 92%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/AnimalModels.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/WesternScene.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/CanyonScene.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/TownScene.cpp.o
+[ 96%] Linking CXX executable deathward_input_tests
+[100%] Built target deathward_input_tests

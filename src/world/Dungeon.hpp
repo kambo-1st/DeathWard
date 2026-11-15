@@ -37,6 +37,7 @@ struct RoomCoinSpawn {
     uint32_t pickupSeed=0;
     int x=0,y=0,ordinal=0,sourceSubtype=0,subtype=0;
 };
+using RoomBombSpawn = RoomCoinSpawn;
 using RoomKeySpawn = RoomCoinSpawn; // Same original-cell/ordinal/identity descriptor.
 struct RoomLayout {
     Box bounds;
@@ -57,6 +58,7 @@ struct RoomLayout {
     std::vector<RoomChestSpawn> chestSpawns;
     std::vector<RoomCoinSpawn> coinSpawns;
     std::vector<RoomKeySpawn> keySpawns;
+    std::vector<RoomBombSpawn> bombSpawns;
     Vector3 reward{};
     std::vector<int> passages;
     std::vector<Box> floors, obstacles;

@@ -1,0 +1,89 @@
+{
+  "status": "enabled-developer-verified-scoped-human-accepted",
+  "committed": true,
+  "schema": 24,
+  "native_bomb_resolver_cases": 1036,
+  "native_admitted_no_golden_quantity_cases": 8,
+  "source_layout": "1.32.0",
+  "source_rocks": 34,
+  "source_bomb_slots": 3,
+  "inventory_cap": 99,
+  "starting_dynamite": 3,
+  "timing": "Appear35/Drop25/Collect16(single),13(double)",
+  "focused_suites_passed": [
+    "red_heart_reward_reference",
+    "ordinary_bomb_gameplay",
+    "preplaced_bomb_layout",
+    "balance_preset_contract",
+    "chest_gameplay",
+    "preplaced_chest_layout",
+    "ordinary_key_gameplay",
+    "preplaced_key_layout",
+    "coin_reward_gameplay",
+    "preplaced_coin_layout",
+    "player_dynamite"
+  ],
+  "natural_size_cases": [
+    [
+      1027,
+      0.75,
+      5,
+      5
+    ],
+    [
+      129,
+      1.1,
+      7,
+      9
+    ],
+    [
+      1027,
+      1.5,
+      10,
+      10
+    ]
+  ],
+  "actual_game_renderer_input": true,
+  "normal_health_after_demolition": 6,
+  "review_dynamite_spent": 2,
+  "review_final_dynamite": 4,
+  "cli_cases": 4,
+  "original_preset_unchanged": true,
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "human_acceptance": true,
+  "full_native_acceptance": false,
+  "sha256": {
+    "src/combat/Bombs.cpp": "716c9cba8c586308e30a4af00797abe44cef5aacf12e8f162ef7165fdcbc7f22",
+    "src/combat/BombTiming.hpp": "fbffe24bcf7f497f50f0c37a2a21af0edab94d0ef38e177ee1b762fa4df8da79",
+    "src/combat/SourceRoomRewards.hpp": "e3192268db2fd8dab654607d26f8be958834118ef3455298a35a50c122827f24",
+    "src/core/Types.hpp": "22b29b4fe312ce8c8d7012e43dea3b732a40be75df1dee2676da15cc48f94fdc",
+    "src/core/BalancePreset.cpp": "3d6d7dd81a429af46977dd0e2a516b6c600d0cc833c120e7689fb664f3b9e2f0",
+    "src/world/RoomHeartLayouts.cpp": "137aed0c42eb67220c34ece809d1a3ed5d477b60ca50f3935f5645d43f196f26",
+    "src/world/SourceBombRockRoomData.hpp": "9ceb9c95066ee781119397fd2f23aa2c2f55bc82fda662106926014762569cbd",
+    "src/render/Renderer.cpp": "b0b770eda880bd72db43b3979664c8148dbd7c46f0ac4ea1d8d575ef5e7086d2",
+    "build/deathward": "7f835962820c005f9888d5593e79a9fed76c9bb76bb16aa81f3b691aa693b4ac"
+  },
+  "remaining": [
+    "special bombs and wider layouts",
+    "full native seed/factory/physics/profile/modifier/scheduler equivalence",
+    "gameplay save continuity"
+  ],
+  "next_unselected": "D10a fuse/blast/self-damage review as a separate manually selected delivery",
+  "human_acceptance_record": "human-acceptance.json",
+  "placement_only_followup": {
+    "selected": true,
+    "implemented": true,
+    "checks": "7 passed; native build passed",
+    "report": "placement-only/validation.json",
+    "human_review": "accepted",
+    "web_runtime": "unverified"
+  },
+  "shared_dynamite_model_followup": {
+    "selected": true,
+    "implemented": true,
+    "native_build": true,
+    "checks": "dynamite input (canyon/mine) and D09d pickup input passed",
+    "human_visual_review": true,
+    "report": "shared-dynamite-model/validation.json"
+  }
+}
