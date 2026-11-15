@@ -24,8 +24,7 @@
     "Native inventory/cache/modifier order and complete item synergies",
     "Full treasure pool eligibility/selection/exhaustion/RNG and D6/active items",
     "Native pedestal/pickup factory, animation and physics",
-    "Browser runtime and gameplay-save continuity",
-    "D12 source shop stock, prices and purchases (not started)"
+    "Browser runtime and gameplay-save continuity"
   ],
   "centered_pedestal": {
     "implemented": true,
@@ -56,5 +55,8 @@
     ],
     "new_tunables": false,
     "original_model_retained": true
-  }
+  },
+  "committed": true,
+  "commit": "7d97f72d",
+  "subsequent_shop_report": "docs/reports/isaac-first-floor-parity/d12a-shop-heart/README.md"
 }

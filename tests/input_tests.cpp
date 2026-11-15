@@ -824,6 +824,92 @@ void treasureUpgradeInputCheck(const std::filesystem::path &directory) {
     std::cout<<"PASS D11a actual Game/Renderer mouse collection, keyboard/live/staged settings, Apply/load/export/remember/retry; seed=69 room="<<owner+1<<'\n';
 }
 
+void shopHeartInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"shop-heart.save",file=directory/"shop-heart.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="69";game.reviewShopPurchase=true;
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.error.empty(),"shop heart review launch");auto &run=*game.run;const int owner=run.room;
+    check(run.hasSourceShop(owner)&&run.player.hp==4&&run.money()==3&&!run.godMode,"explicit labelled review start only");
+    Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"shop heart UI no errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"shop heart capture");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();check(game.cameraZoomPercent()==165&&run.player.walkingSpeed()==4.8f,"accepted view and walking retained");
+    capture("artifacts/shop-heart-before.png");mouseWalk(game,frame,run.shopHeartPosition(),.3f);
+    check(run.shopHeartSold&&run.player.hp==6&&run.money()==0&&run.moneySpent==3&&!run.shopOpen,"mouse touch buys once with exact debit/heal and no menu");
+    for(int n=0;n<35;++n)frame();capture("artifacts/shop-heart-sold.png");
+    run.jumpDebug(0);run.jumpDebug(owner);frame();
+    check(run.shopHeartSold&&std::none_of(run.heartPickups.begin(),run.heartPickups.end(),[](const auto &h){return h.shopStock;}),"sold pickup absent on revisit");
+    click(374,642);click(575,143);click(545,189);
+    check(game.balanceRewardsOpen&&game.balanceShopOpen,"shop page accessible by mouse");
+    auto terrain=run.arena.canyon.get();click(430,270);click(1010,330);
+    check(game.hasPendingMapChanges()&&run.sourceShopHeart&&run.shopHeartPrice==4&&run.shopHeartSold&&run.arena.canyon.get()==terrain,"stock toggle staged, price live, sold state retained");
+    click(335,605);auto exported=BalancePreset::load(file,run.content->fingerprint());
+    check(!exported.sourceShopHeart&&exported.shopHeartPrice==4&&exported.defaultZoomPercent==165,"export staged policy/live price and accepted settings");
+    for(int n=0;n<35&&game.keyboardFocus()!=Action::ResetShopHeartPrice;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::ResetShopHeartPrice,"shop price keyboard accessible");key(KEY_ENTER);check(run.shopHeartPrice==3,"keyboard price reset");
+    click(380,465);check(!run.sourceShopHeart&&!game.hasPendingMapChanges(),"Apply disables source shop");
+    click(430,270);click(380,465);check(run.sourceShopHeart&&!run.shopHeartSold&&run.moneySpent==3,"Apply resets stock and keeps spending");
+    click(600,605);check(game.hasPendingMapChanges()&&!game.balanceDraft.sourceShopHeart&&run.sourceShopHeart&&run.shopHeartPrice==4,"Load stages policy and applies price");
+    click(430,270);click(380,415);check(!game.hasPendingMapChanges()&&run.shopHeartPrice==3,"restore enabled reference price");
+    click(1010,330);check(run.shopHeartPrice==4,"custom price for reload/retry proof");
+    game.exportBalancePreset();game.rememberBalancePreset();capture("artifacts/shop-heart-panel.png");
+    std::filesystem::copy_file(file,"artifacts/shop-heart-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.perform(Action::CloseBalance);run.finishDebug(false);game.retryExpedition();
+    check(game.run&&game.run->room==owner&&game.run->player.hp==4&&game.run->money()>=3&&!game.run->shopHeartSold&&game.run->shopHeartPrice==4,"explicit shop review retry repeats setup");
+    game.close();renderer.unload();
+    Game fresh(directory/"shop-fresh.save");fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="69";fresh.loadBalancePreset(file);fresh.launch(true);
+    check(fresh.run&&fresh.run->room==0&&fresh.run->player.hp==6&&fresh.run->money()==0&&fresh.run->sourceShopHeart&&fresh.run->shopHeartPrice==4&&fresh.cameraZoomPercent()==165,"ordinary next launch keeps preset without review resources/travel");fresh.close();
+    std::cout<<"PASS D12a actual Game/Renderer purchase, sold revisit, mouse/keyboard tuning, staged Apply/load/export/remember/retry and ordinary fresh launch; seed69 shop="<<owner+1<<'\n';
+}
+
+void shopKeyInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"shop-key.save",file=directory/"shop-key.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="69";game.reviewShopKeyPurchase=true;
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.error.empty(),"shop key review launch");auto &run=*game.run;const int owner=run.room;
+    check(run.hasSourceShop(owner)&&run.player.hp==4&&run.money()==8&&run.keys==0&&!run.godMode,"explicit labelled review start only");
+    Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"shop key UI no errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"shop key capture");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();check(game.cameraZoomPercent()==165&&run.player.walkingSpeed()==4.8f,"accepted view and walking retained");
+    capture("artifacts/shop-key-before.png");mouseWalk(game,frame,run.shopKeyPosition(),.3f);
+    check(run.shopKeySold&&run.keys==1&&run.player.hp==4&&run.money()==3&&run.moneySpent==5&&!run.shopOpen,"mouse touch buys once with exact debit/heal and no menu");
+    for(int n=0;n<35;++n)frame();capture("artifacts/shop-key-sold.png");
+    mouseWalk(game,frame,run.shopHeartPosition(),.3f);
+    check(run.shopHeartSold&&run.shopKeySold&&run.player.hp==6&&run.keys==1&&run.money()==0&&run.moneySpent==8,"key and heart purchase independently");
+    run.jumpDebug(0);run.jumpDebug(owner);frame();
+    check(run.shopKeySold&&std::none_of(run.keyPickups.begin(),run.keyPickups.end(),[](const auto &h){return h.shopStock;}),"sold pickup absent on revisit");
+    click(374,642);click(575,143);click(545,189);click(990,270);
+    check(game.balanceRewardsOpen&&game.balanceShopOpen&&game.balanceShopKeyOpen,"shop page accessible by mouse");
+    auto terrain=run.arena.canyon.get();click(430,270);click(1010,330);
+    check(game.hasPendingMapChanges()&&run.sourceShopKey&&run.shopKeyPrice==6&&run.shopKeySold&&run.arena.canyon.get()==terrain,"stock toggle staged, price live, sold state retained");
+    click(335,605);auto exported=BalancePreset::load(file,run.content->fingerprint());
+    check(!exported.sourceShopKey&&exported.shopKeyPrice==6&&exported.defaultZoomPercent==165,"export staged policy/live price and accepted settings");
+    for(int n=0;n<35&&game.keyboardFocus()!=Action::ResetShopKeyPrice;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::ResetShopKeyPrice,"shop price keyboard accessible");key(KEY_ENTER);check(run.shopKeyPrice==5,"keyboard price reset");
+    click(380,465);check(!run.sourceShopKey&&!game.hasPendingMapChanges(),"Apply disables source shop");
+    click(430,270);click(380,465);check(run.sourceShopKey&&!run.shopKeySold&&run.moneySpent==8,"Apply resets stock and keeps spending");
+    click(600,605);check(game.hasPendingMapChanges()&&!game.balanceDraft.sourceShopKey&&run.sourceShopKey&&run.shopKeyPrice==6,"Load stages policy and applies price");
+    click(430,270);click(380,415);check(!game.hasPendingMapChanges()&&run.shopKeyPrice==5,"restore enabled reference price");
+    click(1010,330);check(run.shopKeyPrice==6,"custom price for reload/retry proof");
+    game.exportBalancePreset();game.rememberBalancePreset();capture("artifacts/shop-key-panel.png");
+    std::filesystem::copy_file(file,"artifacts/shop-key-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.perform(Action::CloseBalance);run.finishDebug(false);game.retryExpedition();
+    check(game.run&&game.run->room==owner&&game.run->player.hp==4&&game.run->money()>=8&&!game.run->shopKeySold&&game.run->shopKeyPrice==6,"explicit shop review retry repeats setup");
+    game.close();renderer.unload();
+    Game fresh(directory/"shop-fresh.save");fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="69";fresh.loadBalancePreset(file);fresh.launch(true);
+    check(fresh.run&&fresh.run->room==0&&fresh.run->player.hp==6&&fresh.run->money()==0&&fresh.run->sourceShopKey&&fresh.run->shopKeyPrice==6&&fresh.cameraZoomPercent()==165,"ordinary next launch keeps preset without review resources/travel");fresh.close();
+    std::cout<<"PASS D12b actual Game/Renderer purchase, sold revisit, mouse/keyboard tuning, staged Apply/load/export/remember/retry and ordinary fresh launch; seed69 shop="<<owner+1<<'\n';
+}
+
 void coinLayoutInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto seed=review::seed(30);
@@ -1459,6 +1545,11 @@ void hudInputCheck(const std::filesystem::path &directory) {
 }
 void keyboardInputCheck(const std::filesystem::path &directory) {
     dw::Game game(directory/"keyboard.save");
+    // This broad control fixture exercises legacy menus and a first-floor lock.
+    // Source stage-one entrances are free; the source policy has dedicated checks.
+    auto legacyShop=game.balancePreset;legacyShop.sourceShopHeart=false;legacyShop.sourceRoomLocks=false;
+    legacyShop.save(directory/"keyboard-legacy-shop.json");
+    game.loadBalancePreset(directory/"keyboard-legacy-shop.json");game.rememberBalancePreset();
     game.debug=false;game.seedText="1866";game.themeChoice=dw::ThemeChoice::Canyon;
     auto frame=[&](float dt=dw::Tick) {
         game.update(dt);BeginDrawing();EndDrawing();
@@ -1516,12 +1607,20 @@ void keyboardInputCheck(const std::filesystem::path &directory) {
     run.player.facing={1,0,0};run.player.dodgeCooldown=0;key(KEY_SPACE);
     check(run.player.dodgeDirection.x>.99f,"stationary keyboard dodge follows facing, not the parked mouse");
     run.healDebug();run.clearRoomDebug();
-    const auto gate=std::find_if(run.arena.passages.begin(),run.arena.passages.end(),[](const auto &p){return p.locked;});
+    const auto gate=std::find_if(run.arena.passages.begin(),run.arena.passages.end(),[&](const auto &p){
+        return p.locked&&(run.arena.rooms[size_t(p.rooms[0])].kind==dw::RoomKind::Power||
+                         run.arena.rooms[size_t(p.rooms[1])].kind==dw::RoomKind::Power);
+    });
     check(gate!=run.arena.passages.end(),"keyboard fixture has an optional locked door");
     const int passage=int(gate-run.arena.passages.begin());
     const int side=run.arena.rooms[size_t(gate->rooms[0])].kind==dw::RoomKind::Power?1:0;
     run.jumpDebug(gate->rooms[size_t(side)]);run.clearRoomDebug();
+    // Door admission is checked with supplied inventory, without a nearby
+    // generated key being collected between the key-down and key-up frames.
+    for(auto &pickup:run.arena.keys)pickup.collected=true;
+    run.keyPickups.clear();
     run.player.position=run.arena.doorApproach(passage,side);run.player.position.y=.85f;run.keys=0;
+    check(gate->locked,"keyboard fixture approaches a still-locked treasure door");
     key(KEY_E);check(gate->locked,"E cannot unlock a door without its key");
     run.keys=1;key(KEY_E);check(!gate->locked&&run.keys==0,"E opens a locked door and spends exactly one key");
     run.jumpDebug(run.arena.shopRoom);run.clearRoomDebug();run.moneyCollected=100;
@@ -1740,6 +1839,8 @@ void arrowInputCheck(const std::filesystem::path &directory, dw::MissionTheme th
 void shopInputCheck(const std::filesystem::path &directory, dw::MissionTheme theme) {
     const std::string name = theme == dw::MissionTheme::Canyon ? "canyon" : "mine";
     dw::Game game(directory / ("shop-" + name + ".save"));
+    auto legacyShop=game.balancePreset;legacyShop.sourceShopHeart=false;legacyShop.save(directory/("shop-legacy-"+name+".json"));
+    game.loadBalancePreset(directory/("shop-legacy-"+name+".json"));game.rememberBalancePreset();
     game.campaign.begin(1);
     auto funding = *game.campaign.data().pending;
     funding.moneyCollected = 100;
@@ -2403,6 +2504,12 @@ int main(int argc, char **argv) {
         }
         if(mode=="--keys-only") {
             keyInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--shop-key-only") {
+            shopKeyInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--shop-heart-only") {
+            shopHeartInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--treasure-upgrade-only") {
             treasureUpgradeInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

@@ -217,7 +217,9 @@ void Game::launch(bool freeMission) {
                                                   nextBalancePreset?nextBalancePreset->roomHeartLayouts:1,
                                                   nextBalancePreset?nextBalancePreset->coinClearRewards:true,
                                                   nextBalancePreset?nextBalancePreset->sourceRoomLocks:true,
-                                                  nextBalancePreset?nextBalancePreset->sourceTreasureUpgrade:true);
+                                                  nextBalancePreset?nextBalancePreset->sourceTreasureUpgrade:true,
+                                                  nextBalancePreset?nextBalancePreset->sourceShopHeart:true,
+                                                  nextBalancePreset?nextBalancePreset->sourceShopKey:true);
     startExpedition(std::move(candidate));
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
     if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
@@ -265,7 +267,7 @@ void Game::perform(Action action) {
     try {
         if(balanceOpen&&action!=Action::None&&action!=Action::Quit&&
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
-           (action<Action::BalanceDamageHealthTab||action>Action::ResetSadOnion))return;
+           (action<Action::BalanceDamageHealthTab||action>Action::ResetShopKeyPrice))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -282,7 +284,28 @@ void Game::perform(Action action) {
         case Action::BalanceWorldTab:balanceRewardsOpen=balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
         case Action::BalanceShootingTab:balanceTreasureOpen=false;balanceShootingOpen=true;balanceEnemiesOpen=balanceRewardsOpen=balanceCombatOpen=false;break;
         case Action::BalanceEnemiesTab:balanceEnemiesOpen=true;balanceShootingOpen=balanceRewardsOpen=balanceCombatOpen=false;balancePooterOpen=false;break;
-        case Action::BalanceRewardsTab:balanceRewardsOpen=true;balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
+        case Action::BalanceRewardsTab:balanceShopOpen=false;balanceRewardsOpen=true;balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
+        case Action::BalanceShopTab:balanceShopOpen=true;balanceShopKeyOpen=false;break;
+        case Action::BalanceShopHeartTab:balanceShopKeyOpen=false;break;
+        case Action::BalanceShopKeyTab:balanceShopKeyOpen=true;break;
+        case Action::ToggleShopKey:
+            balanceDraft.sourceShopKey=!balanceDraft.sourceShopKey;
+            balanceNotice="Key stock pending. APPLY MAP CHANGES resets floor purchases; player/build retained.";break;
+        case Action::ShopKeyPriceDown:case Action::ShopKeyPriceUp:case Action::ResetShopKeyPrice: {
+            auto preset=balancePreset;
+            preset.shopKeyPrice=action==Action::ResetShopKeyPrice?5:std::clamp(preset.shopKeyPrice+(action==Action::ShopKeyPriceUp?1:-1),0,15);
+            applyBalance(std::move(preset));
+            balanceNotice="Unsold key price updated. Sold stock stays sold. Export or Use next expedition to keep edits.";break;
+        }
+        case Action::ToggleShopHeart:
+            balanceDraft.sourceShopHeart=!balanceDraft.sourceShopHeart;
+            balanceNotice="Shop stock pending. APPLY MAP CHANGES resets floor purchases; player/build retained.";break;
+        case Action::ShopHeartPriceDown:case Action::ShopHeartPriceUp:case Action::ResetShopHeartPrice: {
+            auto preset=balancePreset;
+            preset.shopHeartPrice=action==Action::ResetShopHeartPrice?3:std::clamp(preset.shopHeartPrice+(action==Action::ShopHeartPriceUp?1:-1),0,15);
+            applyBalance(std::move(preset));
+            balanceNotice="Unsold heart price updated. Sold stock stays sold. Export or Use next expedition to keep edits.";break;
+        }
         case Action::BalanceTreasureTab:balanceTreasureOpen=true;break;
         case Action::ToggleTreasureUpgrade:
             balanceDraft.sourceTreasureUpgrade=!balanceDraft.sourceTreasureUpgrade;
@@ -293,8 +316,8 @@ void Game::perform(Action action) {
             applyBalance(std::move(preset));
             balanceNotice="Owned Sad Onion: next firing interval. Current wait and emitted shots retained.";break;
         }
-        case Action::BalanceRoomHeartsTab:balanceRoomHeartsOpen=true;break;
-        case Action::BalanceClearHeartsTab:balanceRoomHeartsOpen=false;break;
+        case Action::BalanceRoomHeartsTab:balanceShopOpen=false;balanceRoomHeartsOpen=true;break;
+        case Action::BalanceClearHeartsTab:balanceShopOpen=false;balanceRoomHeartsOpen=false;break;
         case Action::RoomHeartsOff:setRoomHeartLayouts(0);break;
         case Action::RoomHeartsSource:setRoomHeartLayouts(1);break;
         case Action::RoomHeartsTest:setRoomHeartLayouts(2);break;
@@ -900,7 +923,14 @@ std::vector<Action> Game::menuActions() const {
     if(context==Menu::Balance) {
         std::vector<Action> actions{Action::CloseBalance,Action::BalanceWorldTab,Action::BalanceShootingTab,Action::BalanceCombatTab,Action::BalanceEnemiesTab,Action::BalanceRewardsTab};
         if(balanceEnemiesOpen){actions.push_back(Action::BalanceChasersTab);actions.push_back(Action::BalancePooterTab);}
-        const std::vector<Action> page=balanceRewardsOpen&&balanceRoomHeartsOpen?
+        if(balanceRewardsOpen)actions.push_back(Action::BalanceShopTab);
+        const std::vector<Action> page=balanceRewardsOpen&&balanceShopOpen?
+            std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::BalanceShopHeartTab,Action::BalanceShopKeyTab,
+                balanceShopKeyOpen?Action::ToggleShopKey:Action::ToggleShopHeart,
+                balanceShopKeyOpen?Action::ShopKeyPriceDown:Action::ShopHeartPriceDown,
+                balanceShopKeyOpen?Action::ShopKeyPriceUp:Action::ShopHeartPriceUp,
+                balanceShopKeyOpen?Action::ResetShopKeyPrice:Action::ResetShopHeartPrice,Action::ApplyMapChanges}:
+            balanceRewardsOpen&&balanceRoomHeartsOpen?
             std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::RoomHeartsOff,Action::RoomHeartsSource,Action::RoomHeartsTest,Action::ApplyMapChanges}:
             balanceRewardsOpen?
             std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::ToggleRedHeartRewards,Action::ToggleCoinRewards,Action::ToggleChestRewards,Action::ToggleKeyRewards,Action::ToggleBombRewards,Action::RewardLuckDown,Action::RewardLuckUp,Action::ResetRewardLuck,Action::HeartAppearanceDown,Action::HeartAppearanceUp,Action::ResetHeartAppearance}:

@@ -19,8 +19,8 @@
 
 namespace dw {
 Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, MissionTheme theme,
-                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library, float requestedRoomScale, int roomMinimum, int roomMaximum, float requestedRouteScale, bool requestedSourceRoom, int requestedHeartLayouts, bool requestedCoins, bool requestedRoomLocks, bool requestedTreasureUpgrade)
-    : content(library ? std::move(library) : defaultMechanics()), expedition(seed,tutorial,account,pacing),floor(level),roomSizeScale(requestedRoomScale),routeLengthScale(requestedRouteScale),sourceRoomLocks(requestedRoomLocks),sourceTreasureUpgrade(requestedTreasureUpgrade),sourceCombatRoom(requestedSourceRoom),roomHeartLayouts(requestedHeartLayouts),roomMinHalfTiles(roomMinimum),roomMaxHalfTiles(roomMaximum),
+                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library, float requestedRoomScale, int roomMinimum, int roomMaximum, float requestedRouteScale, bool requestedSourceRoom, int requestedHeartLayouts, bool requestedCoins, bool requestedRoomLocks, bool requestedTreasureUpgrade, bool requestedShopHeart, bool requestedShopKey)
+    : content(library ? std::move(library) : defaultMechanics()), expedition(seed,tutorial,account,pacing),floor(level),roomSizeScale(requestedRoomScale),routeLengthScale(requestedRouteScale),sourceRoomLocks(requestedRoomLocks),sourceTreasureUpgrade(requestedTreasureUpgrade),sourceShopHeart(requestedShopHeart),sourceShopKey(requestedShopKey),sourceCombatRoom(requestedSourceRoom),roomHeartLayouts(requestedHeartLayouts),roomMinHalfTiles(roomMinimum),roomMaxHalfTiles(roomMaximum),
       arena(expedition.floorSeed(level), theme, canyonRiver, tutorial, expedition.storyAt(level),
             expedition.roomsOnFloor(level),[&]{auto dimensions=expedition.dimensionsOnFloor(level);
                 dimensions.roomSizeScale=roomSizeScale;dimensions.routeLengthScale=routeLengthScale;
@@ -99,16 +99,18 @@ bool Simulation::canUseFloorExit() const {
 bool Simulation::canResizeRooms() const {
     return !arena.rooms.empty(); // Explicit testing control; exploration/combat do not lock it.
 }
-void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScale,std::optional<bool> sourceRoom,std::optional<int> heartLayouts,std::optional<bool> roomLocks,std::optional<bool> treasureUpgrade) {
+void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScale,std::optional<bool> sourceRoom,std::optional<int> heartLayouts,std::optional<bool> roomLocks,std::optional<bool> treasureUpgrade, std::optional<bool> shopHeart, std::optional<bool> shopKey) {
     const bool treasure=treasureUpgrade.value_or(sourceTreasureUpgrade);
+    const bool shop=shopHeart.value_or(sourceShopHeart);
+    const bool keyStock=shopKey.value_or(sourceShopKey);
     const bool locks=roomLocks.value_or(sourceRoomLocks);
     const bool enabled=sourceRoom.value_or(sourceCombatRoom);
     const int heartMode=heartLayouts.value_or(roomHeartLayouts);
-    if(treasure==sourceTreasureUpgrade&&locks==sourceRoomLocks&&heartMode==roomHeartLayouts&&enabled==sourceCombatRoom&&scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
+    if(keyStock==sourceShopKey&&shop==sourceShopHeart&&treasure==sourceTreasureUpgrade&&locks==sourceRoomLocks&&heartMode==roomHeartLayouts&&enabled==sourceCombatRoom&&scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
     if(!canResizeRooms())throw std::runtime_error("No floor to resize");
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
-                    expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure);
-    next.sadOnionStrength=sadOnionStrength;
+                    expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock);
+    next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;
     const int targetRoom=std::clamp(room,0,next.finalRoom());
     next.items=items;next.keys=keys;next.powerUpsTaken=powerUpsTaken;
     next.dynamite=dynamite;next.dynamiteCooldown=dynamiteCooldown;
@@ -183,8 +185,8 @@ bool Simulation::advanceFloor() {
     if(!floorExitRequested||lastFloor()||dead||!canUseFloorExit())return false;
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
-                    expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade);
-    next.sadOnionStrength=sadOnionStrength;
+                    expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey);
+    next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;
     next.canonicalShooting=canonicalShooting;
     next.gaperMovementMultiplier=gaperMovementMultiplier;
     next.spiderMovementMultiplier=spiderMovementMultiplier;
@@ -463,6 +465,7 @@ void Simulation::enterRoom(int index) {
         arena.sealRoom(-1);
     }
     deliverRoomHearts(room);
+    deliverShopHeart();deliverShopKey();
     deliverRoomChests(room);
     deliverRoomCoins(room);
     deliverRoomKeys(room);

@@ -1882,6 +1882,16 @@ Action Renderer::expedition(const Game &game) {
     const auto &run = *game.run;
     drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy, game.deathTime,
               sandstormStrength_);
+    if(!game.balanceOpen&&!game.buildOpen&&!game.paused) {
+        const auto priceTag=[&](Vector3 at,int price) {
+            at.y=.1f;const auto screen=GetWorldToScreen(at,game.camera);
+            const float x=screen.x/sx_-44,y=screen.y/sy_+12;
+            panel(x,y,88,25,Panel);
+            text(price==0?"FREE":std::to_string(price)+" COINS",x+8,y+5,14,Gold);
+        };
+        for(const auto &heart:run.heartPickups)if(heart.shopStock&&heart.room==run.room&&heart.timing.collectible())priceTag(heart.position,run.shopHeartPrice);
+        for(const auto &key:run.keyPickups)if(key.shopStock&&key.room==run.room&&key.timing.collectible())priceTag(key.position,run.shopKeyPrice);
+    }
     if(run.stats.duration-run.roomEnteredAt<3.0) {
         panel(24,22,292,34,Panel);
         text(run.roomName(),40,31,18,Paper,260);
@@ -2263,9 +2273,27 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::BalancePooterTab,"POOTER",905,175,170,28,game.balancePooterOpen))return Action::BalancePooterTab;
     }
     if(game.balanceRewardsOpen) {
-        if(button(Action::BalanceClearHeartsTab,"AFTER CLEAR",650,175,200,28,!game.balanceRoomHeartsOpen))return Action::BalanceClearHeartsTab;
+        if(button(Action::BalanceShopTab,"SHOP",470,175,150,28,game.balanceShopOpen))return Action::BalanceShopTab;
+        if(button(Action::BalanceClearHeartsTab,"AFTER CLEAR",650,175,200,28,!game.balanceRoomHeartsOpen&&!game.balanceShopOpen))return Action::BalanceClearHeartsTab;
         if(button(Action::BalanceRoomHeartsTab,"ROOM LAYOUTS",875,175,200,28,game.balanceRoomHeartsOpen))return Action::BalanceRoomHeartsTab;
-        if(game.balanceRoomHeartsOpen) {
+        if(game.balanceShopOpen) {
+            const bool key=game.balanceShopKeyOpen;
+            text(key?"SHOP KEY":"SHOP HEART",205,184,22,Gold);
+            text(key?(game.balanceDraft.sourceShopHeart?"One ordinary key. Walk up to buy; capacity 99 keys.":"Enable the source shop on the HEART tab to display key stock."):"Opening-floor red heart. Walk up to buy when you need healing.",205,221,14,Paper);
+            if(button(Action::BalanceShopHeartTab,"HEART",715,252,170,40,!key))return Action::BalanceShopHeartTab;
+            if(button(Action::BalanceShopKeyTab,"KEY",905,252,170,40,key))return Action::BalanceShopKeyTab;
+            const auto toggle=key?Action::ToggleShopKey:Action::ToggleShopHeart;
+            const bool enabled=key?game.balanceDraft.sourceShopKey:game.balanceDraft.sourceShopHeart;
+            if(button(toggle,key?(enabled?"KEY ON DISPLAY":"NO KEY OFFER"):(enabled?"SOURCE SHOP":"LEGACY SHOP MENU"),205,252,490,40,enabled))return toggle;
+            text("PRICE",205,324,18,Paper);text(std::to_string(key?game.balancePreset.shopKeyPrice:game.balancePreset.shopHeartPrice)+" COINS",405,318,24,Paper);
+            const auto down=key?Action::ShopKeyPriceDown:Action::ShopHeartPriceDown,up=key?Action::ShopKeyPriceUp:Action::ShopHeartPriceUp,reset=key?Action::ResetShopKeyPrice:Action::ResetShopHeartPrice;
+            if(button(down,"- 1",795,310,130,40))return down;
+            if(button(up,"+ 1",945,310,130,40))return up;
+            text(key?"Reference: 5 coins. Other prices, including free, are testing overrides.":"Reference: 3 coins. Other prices, including free, are testing overrides.",205,370,14,Teal);
+            if(button(reset,key?"RESET PRICE TO 5":"RESET PRICE TO 3",205,399,350,36))return reset;
+            if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,449,350,36))return Action::ApplyMapChanges;
+            text(game.hasPendingMapChanges()?"PENDING / RESETS THIS FLOOR":"MAP SETTINGS APPLIED",585,461,14,Muted);
+        } else if(game.balanceRoomHeartsOpen) {
             const int mode=game.balanceDraft.roomHeartLayouts;
             text("SOURCE ROOM LAYOUTS",205,184,22,Gold);
             text("Placed hearts, coins, keys and chests, plus rocks and combat.",205,221,14,Paper);

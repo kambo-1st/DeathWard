@@ -3,7 +3,7 @@
   "status": "paused",
   "paused_at_utc": "2026-11-08T08:08:31Z",
   "pause_reason": "User stopped the bulk effort,requested rollback and manual selection of each specific future difference.",
-  "implementation_state": "scoped_health_speed_shooting_D04_D06_enemy_movement_and_D07_damage_hp_enabled_D07_scoped_accepted_D08_selected",
+  "implementation_state": "selected_deliveries_through_D12b_enabled_developer_verified_human_key_shop_review_pending_bulk_paused",
   "baseline_commit": "28023a49dbd8712820ba6953219cfdb7866bdcb6",
   "automatic_implementation_authorized": false,
   "accepted_exceptions": [
@@ -37,10 +37,10 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Selected seed-based review refresh is in progress, followed by selected D11a one real treasure upgrade. Nine rebuilt suites exposed stale witnesses. No D12/bulk resumption.",
+  "next_work": "Selected D12c: verify native shop stock rules and integrate one supported variation with live/export/load and direct review. Bulk parity remains paused.",
   "first_floor_delivery_plan_checkpoint": {
-    "recorded_date": "2026-11-12",
-    "status": "Ordinary caller/descriptor and direct-entry delivery accepted; next complete-room continuation selected",
+    "recorded_date": "2026-11-15",
+    "status": "D12a acknowledged; selected D12b developer-verified, human review pending",
     "report": "docs/isaac_first_floor_delivery_plan.md",
     "delivery_location": "main DeathWard executable, ordinary Game/Simulation and expedition paths",
     "cumulative_gameplay_integration_required": true,
@@ -49,7 +49,7 @@
     "preset_format": "versioned self-contained JSON with reference provenance and custom overrides",
     "preset_export_and_fresh_launch_reload_required": true,
     "explicit_application_boundaries_required": true,
-    "next_proposed_delivery": "Expand complete compatible source enemy/obstacle/pickup arrangements in ordinary generation, with direct main-game review. Retain canyon size/shape and physical connections; resolve selection/factory dependencies required by the next layout. Unrelated bulk parity remains paused.",
+    "next_proposed_delivery": "Short D12b key/heart purchase and sold revisit review, then source-based shop stock selection if selected. No bulk resumption.",
     "new_gameplay_implemented": true,
     "new_bulk_selection": false,
     "selected_deliveries": [
@@ -61,14 +61,24 @@
       "D06",
       "D07",
       "D08",
-      "D09a"
+      "D09a",
+      "D09b",
+      "D09c",
+      "D09d",
+      "D10a",
+      "D10b",
+      "D10c",
+      "D10d",
+      "D11a",
+      "D12a",
+      "D12b"
     ],
-    "human_acceptance": "User accepted the scoped playtest and requested commit/continuation on 2026-11-12.",
-    "implementation_report": "docs/reports/isaac-first-floor-parity/native-room-eligibility/README.md",
-    "validation": "docs/reports/isaac-first-floor-parity/native-room-eligibility/validation.json",
+    "human_acceptance": "D12a scoped acknowledgment; D12b pending",
+    "implementation_report": "docs/reports/isaac-first-floor-parity/d12b-shop-key/README.md",
+    "validation": "docs/reports/isaac-first-floor-parity/d12b-shop-key/validation.json",
     "previous_committed_delivery": {
-      "id": "native-room-selection-slot-sequence",
-      "commit": "ca239ff9"
+      "id": "D11a treasure upgrade and seed refresh",
+      "commit": "7d97f72d"
     },
     "d03_scope": {
       "enabled": "independent live Tears/Shot Speed/Range controls, exact baseline reset, upgrade-aware display, schema-5 export/load/remember and schemas 1-4 migration",
@@ -79,7 +89,7 @@
       "damage_hp_changed": false,
       "preset_backup": "docs/reports/isaac-first-floor-parity/d03-shooting/preset-backup.json"
     },
-    "implementation_checkpoint": "Current native caller/descriptor delivery; preceding source-rock commit37e4c4c2",
+    "implementation_checkpoint": "D12a/D12b uncommitted after D11a7d97f72d",
     "d04_scope": {
       "enemy": "10.1.0 ordinary Gaper",
       "status": "enabled, developer-verified and positively acknowledged",
@@ -371,7 +381,7 @@
     "production_default_changed": false,
     "full_native_acceptance": false
   },
-  "current_delivery_summary": "D09d committed as12eccfa1. D10a ordinary dynamite/schema25 is developer-verified and scoped human-accepted; included in this checkpoint. Full native bomb acceptance remains open.",
+  "current_delivery_summary": "D12a/D12b scoped acknowledgment and commit authorized; included in this checkpoint. D12c stock selection selected, research/implementation pending.",
   "room_scale_timing_checkpoint": {
     "status": "selected step1 verified for native shape1 geometry and ordinary horizontal base-Isaac live motion; shared spatial rollout pending",
     "evidence": "docs/reports/isaac-first-floor-parity/room-scale-timing/README.md",
@@ -875,7 +885,9 @@
     "remaining": [
       "Human replay of refreshed witnesses",
       "Broader native selection/contents/physics acceptance"
-    ]
+    ],
+    "committed": true,
+    "commit": "7d97f72d"
   },
   "d11a_treasure_upgrade": {
     "selected": true,
@@ -896,8 +908,7 @@
       "Native inventory/cache/modifier order and complete item synergies",
       "Full treasure pool eligibility/selection/exhaustion/RNG and D6/active items",
       "Native pedestal/pickup factory, animation and physics",
-      "Browser runtime and gameplay-save continuity",
-      "D12 source shop stock, prices and purchases (not started)"
+      "Browser runtime and gameplay-save continuity"
     ],
     "centered_pedestal": true,
     "pedestal_clearance_floor_configurations": 36,
@@ -923,6 +934,138 @@
       ],
       "new_tunables": false,
       "original_model_retained": true
-    }
+    },
+    "committed": true,
+    "commit": "7d97f72d"
+  },
+  "d12a_shop_heart": {
+    "date": "2026-11-15",
+    "selected": true,
+    "enabled": true,
+    "developer_verified": true,
+    "human_accepted": true,
+    "full_native_acceptance": false,
+    "committed": true,
+    "previous_checkpoint": "7d97f72d",
+    "preset_schema": 30,
+    "source_template": "special 2.0.0 Shop L1",
+    "source_slot": [
+      7,
+      4
+    ],
+    "stock_resolution": "Explicit full-red-heart override of second generic shop slot; full source stock/pool unimplemented",
+    "reference_price": 3,
+    "healing_half_hearts": 2,
+    "native_price_cases": 60,
+    "native_admission_cases": 49,
+    "generated_size_route_cases": 27,
+    "core_suites": [
+      "source_shop_heart",
+      "treasure_upgrade",
+      "balance_preset_contract",
+      "room_lock_policy",
+      "mission_shop"
+    ],
+    "game_renderer": {
+      "source_purchase_tuning_persistence": "passed",
+      "treasure_upgrade_regression": "passed",
+      "legacy_shop_regression": "passed",
+      "broad_keyboard_regression": "passed with explicit legacy lock/menu policies and isolated door inventory"
+    },
+    "cli_schemas_passed": [
+      5,
+      29,
+      30
+    ],
+    "review": {
+      "seed": 69,
+      "displayed_room": 7,
+      "health_half_hearts": 4,
+      "coins": 3,
+      "price": 3,
+      "zoom_percent": 165,
+      "god_mode": false,
+      "test_resources_explicit": true
+    },
+    "normal_launch_review_resources": false,
+    "earned_coin_purchase_checked": true,
+    "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+    "remaining": [
+      "Full native shop-level/profile/eligibility and stock-pool selection, remaining offering and item effects",
+      "Discounts/sales, Restock and alternate-character/item interactions",
+      "Donation machine, native shop actors/scenery, full pickup factory/scheduling/physics",
+      "Browser runtime and gameplay-save continuity"
+    ],
+    "report": "docs/reports/isaac-first-floor-parity/d12a-shop-heart/README.md",
+    "acceptance_scope": "User acknowledgment and continuation; no separately observed new playtest or full native acceptance",
+    "acceptance_record": "docs/reports/isaac-first-floor-parity/d12a-shop-heart/human-acceptance.json",
+    "included_in_this_checkpoint": true
+  },
+  "d12b_shop_key": {
+    "date": "2026-11-15",
+    "selected": true,
+    "enabled": true,
+    "developer_verified": true,
+    "human_accepted": true,
+    "full_native_acceptance": false,
+    "committed": true,
+    "preset_schema": 31,
+    "source_template": "special 2.0.0 Shop L1",
+    "source_slot": [
+      5,
+      4
+    ],
+    "stock_resolution": "Pinned ordinary-key outcome; full generic shop selection remains unimplemented",
+    "native_price_cases": 30,
+    "reference_price": 5,
+    "key_quantity": 1,
+    "key_cap": 99,
+    "generated_size_route_cases": 27,
+    "core_suites": [
+      "source_shop_key",
+      "source_shop_heart",
+      "balance_preset_contract",
+      "ordinary_key_gameplay",
+      "room_lock_policy",
+      "mission_shop"
+    ],
+    "game_renderer_modes": [
+      "shop-key-only",
+      "shop-heart-only",
+      "shop-only (Mine and Canyon)"
+    ],
+    "cli_schemas_passed": [
+      5,
+      30,
+      31
+    ],
+    "review": {
+      "seed": 69,
+      "displayed_room": 7,
+      "key_price": 5,
+      "heart_price": 3,
+      "coins": 8,
+      "keys": 0,
+      "health_half_hearts": 4,
+      "zoom_percent": 165,
+      "god_mode": false,
+      "explicit_test_resources": true
+    },
+    "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+    "remaining": [
+      "Full native shop stock RNG, eligibility/profile and shop-level selection; other stock types and item effects",
+      "Sales/discounts, Restock, donation machine and native shop actors/scenery",
+      "Full pickup factory/scheduling/physics, browser runtime and gameplay-save continuity"
+    ],
+    "report": "docs/reports/isaac-first-floor-parity/d12b-shop-key/README.md",
+    "included_in_this_checkpoint": true
+  },
+  "d12c_shop_stock": {
+    "selected": true,
+    "enabled": false,
+    "developer_verified": false,
+    "human_accepted": false,
+    "full_native_acceptance": false,
+    "status": "selected_pending_research_and_implementation"
   }
 }

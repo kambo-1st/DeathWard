@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-15",
+  "selected": true,
+  "enabled": true,
+  "developer_verified": true,
+  "human_accepted": true,
+  "full_native_acceptance": false,
+  "committed": true,
+  "preset_schema": 31,
+  "source_template": "special 2.0.0 Shop L1",
+  "source_slot": [
+    5,
+    4
+  ],
+  "stock_resolution": "Pinned ordinary-key outcome; full generic shop selection remains unimplemented",
+  "native_price_cases": 30,
+  "reference_price": 5,
+  "key_quantity": 1,
+  "key_cap": 99,
+  "generated_size_route_cases": 27,
+  "core_suites": [
+    "source_shop_key",
+    "source_shop_heart",
+    "balance_preset_contract",
+    "ordinary_key_gameplay",
+    "room_lock_policy",
+    "mission_shop"
+  ],
+  "game_renderer_modes": [
+    "shop-key-only",
+    "shop-heart-only",
+    "shop-only (Mine and Canyon)"
+  ],
+  "cli_schemas_passed": [
+    5,
+    30,
+    31
+  ],
+  "review": {
+    "seed": 69,
+    "displayed_room": 7,
+    "key_price": 5,
+    "heart_price": 3,
+    "coins": 8,
+    "keys": 0,
+    "health_half_hearts": 4,
+    "zoom_percent": 165,
+    "god_mode": false,
+    "explicit_test_resources": true
+  },
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "remaining": [
+    "Full native shop stock RNG, eligibility/profile and shop-level selection; other stock types and item effects",
+    "Sales/discounts, Restock, donation machine and native shop actors/scenery",
+    "Full pickup factory/scheduling/physics, browser runtime and gameplay-save continuity"
+  ],
+  "included_in_this_checkpoint": true,
+  "acceptance_scope": "Scoped user acknowledgment and commit/continuation authorization; no separately observed new playtest or full native acceptance"
+}

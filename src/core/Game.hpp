@@ -135,7 +135,7 @@ enum class Action {
     BalanceDamageHealthTab, BalanceBombsTab, BombFuseDown, BombFuseUp,
     BombRadiusDown, BombRadiusUp, BombDamageDown, BombDamageUp,
     BombSelfDamageDown, BombSelfDamageUp, ResetInventoryBombs, ToggleRockBlastShielding,
-    BalanceDoorsTab, DoorKeyCostDown, DoorKeyCostUp, ResetKeyedDoors, ToggleSourceRoomLocks, BalanceTreasureTab, ToggleTreasureUpgrade, SadOnionDown, SadOnionUp, ResetSadOnion
+    BalanceDoorsTab, DoorKeyCostDown, DoorKeyCostUp, ResetKeyedDoors, ToggleSourceRoomLocks, BalanceTreasureTab, ToggleTreasureUpgrade, SadOnionDown, SadOnionUp, ResetSadOnion, BalanceShopTab, ToggleShopHeart, ShopHeartPriceDown, ShopHeartPriceUp, ResetShopHeartPrice, BalanceShopHeartTab, BalanceShopKeyTab, ToggleShopKey, ShopKeyPriceDown, ShopKeyPriceUp, ResetShopKeyPrice
 };
 class Game {
   public:
@@ -164,7 +164,7 @@ class Game {
     bool controlsOpen = false;
     bool buildOpen = false;
     bool balanceOpen = false, balancePathEditing = false, balanceShootingOpen = false;
-    bool balanceEnemiesOpen = false, balancePooterOpen = false, balanceCombatOpen = false, balanceRewardsOpen = false, balanceRoomHeartsOpen = false, balanceTreasureOpen = false;
+    bool balanceEnemiesOpen = false, balancePooterOpen = false, balanceCombatOpen = false, balanceRewardsOpen = false, balanceRoomHeartsOpen = false, balanceTreasureOpen = false, balanceShopOpen=false, balanceShopKeyOpen=false;
     bool balanceBombsOpen=false, balanceDoorsOpen=false;
     BalancePreset balancePreset, balanceDraft;
     std::optional<BalancePreset> nextBalancePreset;
@@ -218,6 +218,8 @@ class Game {
     uint64_t audioContext = 0;
     std::string seedText = "1866", error;
     std::optional<int> reviewRoomIndex; // Zero-based generated room; normal health/damage.
+    bool reviewShopKeyPurchase=false; // Explicit key/heart review: eight coins and zero keys.
+    bool reviewShopPurchase=false; // Explicit review start: shop, two red hearts, at least three coins.
     std::optional<int> reviewSourceRoomTemplate; // Launch/retry aid; not a balance override.
     ThemeChoice themeChoice = ThemeChoice::Canyon;
     ExpeditionPacing expeditionPacing = ExpeditionPacing::Compact;

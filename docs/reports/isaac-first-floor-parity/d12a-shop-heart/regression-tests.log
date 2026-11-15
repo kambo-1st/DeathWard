@@ -1,0 +1,16 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  30: treasure_upgrade
+1/5 Test  #30: treasure_upgrade .................   Passed   15.35 sec
+    Start  31: source_shop_heart
+2/5 Test  #31: source_shop_heart ................   Passed   12.47 sec
+    Start  33: room_lock_policy
+3/5 Test  #33: room_lock_policy .................   Passed   38.23 sec
+    Start  34: mission_shop
+4/5 Test  #34: mission_shop .....................   Passed    3.12 sec
+    Start 136: balance_preset_contract
+5/5 Test #136: balance_preset_contract ..........   Passed    0.56 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =  69.74 sec

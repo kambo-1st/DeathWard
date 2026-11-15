@@ -1,0 +1,8 @@
+{
+  "command": "./build/deathward --expedition --seed 69 --review-shop-purchase --mute --save /home/kambo/.local/share/deathward/reviews/d12a-shop-heart/campaign.save --balance-preset /home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+  "started": true,
+  "startup_verified": "SHOP_REVIEW room=7 hp=4 coins=3 price=3 god=0",
+  "tool_session": 50558,
+  "human_accepted": false,
+  "test_resources": "Explicit shop-review flag starts with 2 full red hearts and at least3 coins; ordinary launch unchanged"
+}

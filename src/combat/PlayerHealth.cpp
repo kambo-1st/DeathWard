@@ -123,7 +123,14 @@ void Simulation::updateHeartPickups(float dt) {
         pickup.timing.advance(dt);
         if(pickup.timing.phase==RedHeartTiming::Phase::Gone)return true;
         if(!pickup.timing.collectible()||distance(player.position,pickup.position)>=1||
-           !arena.clear(player.position,pickup.position,.1f)||!collectHeart(pickup.kind,pickup.amount))return false;
+           !arena.clear(player.position,pickup.position,.1f))return false;
+        if(pickup.shopStock&&(!hasSourceShop(room)||shopHeartSold||!roomClear||roomThreats()||
+           shopHeartPrice<0||shopHeartPrice>15||money()<uint64_t(shopHeartPrice)))return false;
+        if(!collectHeart(pickup.kind,pickup.amount))return false;
+        if(pickup.shopStock) {
+            moneySpent+=uint64_t(shopHeartPrice);shopHeartSold=true;checkpointNeeded=true;
+            announce("RED HEART / "+std::to_string(shopHeartPrice)+" COINS",2);
+        }
         // Health changes once at admission; the source-duration collection
         // presentation cannot pay again, including after leaving/re-entering.
         if(pickup.sourceSubtype){pickup.timing.collect();return false;}
@@ -131,6 +138,7 @@ void Simulation::updateHeartPickups(float dt) {
     });
     // A deferred actor is born after this update, with no retroactive age.
     deliverRoomHearts(room);
+    deliverShopHeart();
     deliverRedHeartClearAward();
 }
 } // namespace dw

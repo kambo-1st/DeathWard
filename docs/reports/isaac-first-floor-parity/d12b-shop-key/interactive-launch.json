@@ -1,0 +1,8 @@
+{
+  "command": "./build/deathward --expedition --seed 69 --review-shop-key --mute --save /home/kambo/.local/share/deathward/reviews/d12b-shop-key/campaign.save --balance-preset /home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+  "started": true,
+  "startup_verified": "SHOP_KEY_REVIEW room=7 keys=0 coins=8 key_price=5 heart_price=3 god=0",
+  "tool_session": 14593,
+  "human_accepted": false,
+  "test_resources": "Explicit review flag only: 8 coins, zero keys, two full red hearts"
+}

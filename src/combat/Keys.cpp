@@ -24,10 +24,17 @@ void Simulation::updateOrdinaryKeys(float dt) {
         if(p.timing.phase==KeyTiming::Phase::Gone)return true;
         if(!p.timing.collectible()||dead||player.totalHealth()<=0||keys>=99||
            planarDistance(player.position,p.position)>=1||!arena.clear(player.position,p.position,.1f))return false;
+        if(p.shopStock&&(!hasSourceShop(room)||!sourceShopKey||shopKeySold||!roomClear||roomThreats()||
+           shopKeyPrice<0||shopKeyPrice>15||money()<uint64_t(shopKeyPrice)))return false;
         keys=std::min(99,keys+sourceOrdinaryKeyValue(p.sourceSubtype));
+        if(p.shopStock) {
+            moneySpent+=uint64_t(shopKeyPrice);shopKeySold=true;
+            announce("KEY / "+std::to_string(shopKeyPrice)+" COINS",2);
+        }
         p.timing.collect();audioCues.push(AudioCueKind::Pickup,p.position);
         checkpointNeeded=true;return false;
     });
     deliverRoomKeys(room); // Deferred births never consume elapsed time retroactively.
+    deliverShopKey();
 }
 } // namespace dw

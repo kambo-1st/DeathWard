@@ -1,6 +1,6 @@
 # D11a — The Sad Onion in ordinary treasure rooms
 
-Selected by “ok, continue” after checkpoint `10a1176b`, following the seed-review refresh. Implementation is enabled and developer-verified. Human acceptance remains pending. This delivery covers one eligible source item, not the full treasure pool or D12 shops.
+Selected by “ok, continue” after checkpoint `10a1176b`, following the seed-review refresh. Implementation is enabled and developer-verified; this checkpoint is committed as `7d97f72d`. Human acceptance remains pending. This delivery covers one eligible source item, not the full treasure pool or D12 shops.
 
 ## Behavior and boundaries
 
@@ -68,3 +68,5 @@ Human review, full native inventory/cache order and item synergies, complete tre
 ## Checkpoint and selected continuation
 
 The user authorized this checkpoint and D12a on2026-11-15 (“ok, lets go!”), following the proposed commit and first source shop/red-heart purchase. The seed refresh, D11a, centered placement and retained-model collision are included in this checkpoint. This acknowledgment does not establish a separate observed new playtest or full native acceptance. [Authorization record](checkpoint-authorization.json). D12a is the next selected delivery.
+
+Subsequent selected D12a shop-heart implementation and remaining shop scope are tracked in [its report](../d12a-shop-heart/README.md). Historical “D12 not started” notes describe the preceding checkpoint.

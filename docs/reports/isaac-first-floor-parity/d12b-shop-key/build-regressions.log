@@ -1,0 +1,15 @@
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_key_reward_tests
+[100%] Building CXX object CMakeFiles/deathward_key_reward_tests.dir/tests/key_reward_tests.cpp.o
+[100%] Linking CXX executable deathward_key_reward_tests
+[100%] Built target deathward_key_reward_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_room_lock_policy_tests
+[100%] Building CXX object CMakeFiles/deathward_room_lock_policy_tests.dir/tests/room_lock_policy_tests.cpp.o
+[100%] Linking CXX executable deathward_room_lock_policy_tests
+[100%] Built target deathward_room_lock_policy_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_shop_tests
+[100%] Building CXX object CMakeFiles/deathward_shop_tests.dir/tests/shop_tests.cpp.o
+[100%] Linking CXX executable deathward_shop_tests
+[100%] Built target deathward_shop_tests

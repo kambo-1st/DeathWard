@@ -1088,7 +1088,7 @@ struct ChestSupply {
 };
 struct OrdinaryKeyPickup {
     Vector3 position{};int room=-1,sourceSubtype=1;uint32_t seed=0;
-    KeyTiming timing{};bool placedInLayout=false;
+    KeyTiming timing{};bool placedInLayout=false,shopStock=false;
 };
 struct OrdinaryBombPickup {
     Vector3 position{};int room=-1,sourceSubtype=1;uint32_t seed=0;
@@ -1115,7 +1115,7 @@ struct ServiceOffer {
 };
 
 enum class HeartKind { Red, Soul, Black, Eternal, Golden, Bone, Rotten, Blended, Scared };
-struct HeartPickup {Vector3 position{};HeartKind kind=HeartKind::Red;int amount=2,room=0;int sourceSubtype=0;RedHeartTiming timing{};bool placedInLayout=false;};
+struct HeartPickup {Vector3 position{};HeartKind kind=HeartKind::Red;int amount=2,room=0;int sourceSubtype=0;RedHeartTiming timing{};bool placedInLayout=false,shopStock=false;};
 struct BlueFlyRuntime {
     EntityId id=0,target=0;
     Vector3 position{},previous{},nativeVelocity{};
@@ -1131,7 +1131,7 @@ class Simulation {
                MissionTheme theme = MissionTheme::Mine, bool canyonRiver = true, bool tutorial = false,
                WitnessAccount account = WitnessAccount::None, int floor = 0,
                ExpeditionPacing pacing = ExpeditionPacing::Compact,
-               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics(), float roomSizeScale = 1, int roomMinHalfTiles = 0, int roomMaxHalfTiles = 0, float routeLengthScale = 1, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool coinClearRewards = false, bool sourceRoomLocks = false, bool sourceTreasureUpgrade = false);
+               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics(), float roomSizeScale = 1, int roomMinHalfTiles = 0, int roomMaxHalfTiles = 0, float routeLengthScale = 1, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool coinClearRewards = false, bool sourceRoomLocks = false, bool sourceTreasureUpgrade = false, bool sourceShopHeart = false, bool sourceShopKey = false);
     std::shared_ptr<const MechanicsLibrary> content;
     ExpeditionPlan expedition;
     int floor = 0;
@@ -1139,6 +1139,13 @@ class Simulation {
     bool sourceRoomLocks = false; // Staged generation setting; legacy direct fixtures stay unchanged.
     bool sourceTreasureUpgrade = false;
     float sadOnionStrength = 1;
+    bool sourceShopHeart=false, shopHeartDelivered=false, shopHeartSold=false;
+    bool sourceShopKey=false, shopKeyDelivered=false, shopKeySold=false;
+    int shopKeyPrice=5;
+    int shopHeartPrice=3; // Live transaction price; zero is a labelled testing override.
+    bool hasSourceShop(int index) const;
+    Vector3 shopHeartPosition() const;
+    Vector3 shopKeyPosition() const;
     bool hasSourceTreasure(int index) const;
     bool collectTreasureUpgrade();
     SourcePlayerStats effectivePlayerStats() const;
@@ -1226,7 +1233,7 @@ class Simulation {
     bool canUseFloorExit() const;
     bool advanceFloor();
     bool canResizeRooms() const;
-    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1, std::optional<bool> sourceRoom = std::nullopt, std::optional<int> heartLayouts = std::nullopt, std::optional<bool> roomLocks = std::nullopt, std::optional<bool> treasureUpgrade = std::nullopt);
+    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1, std::optional<bool> sourceRoom = std::nullopt, std::optional<int> heartLayouts = std::nullopt, std::optional<bool> roomLocks = std::nullopt, std::optional<bool> treasureUpgrade = std::nullopt, std::optional<bool> shopHeart = std::nullopt, std::optional<bool> shopKey = std::nullopt);
     int finalRoom() const { return arena.roomCount()-1; }
     Vector3 surveyPosition() const { return arena.rooms.back().objective; }
     bool canReturn() const { return lastFloor()&&canUseFloorExit(); }
@@ -1669,6 +1676,8 @@ class Simulation {
     void updateChestSupplies(float dt);
     void prepareRoomHearts();
     void deliverRoomHearts(int index);
+    void deliverShopHeart();
+    void deliverShopKey();
     void deliverRoomChests(int index);
     void deliverRoomCoins(int index);
     void deliverRoomKeys(int index);

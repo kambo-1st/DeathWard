@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-15",
+  "selected": true,
+  "enabled": true,
+  "developer_verified": true,
+  "human_accepted": true,
+  "full_native_acceptance": false,
+  "committed": true,
+  "previous_checkpoint": "7d97f72d",
+  "preset_schema": 30,
+  "source_template": "special 2.0.0 Shop L1",
+  "source_slot": [
+    7,
+    4
+  ],
+  "stock_resolution": "Explicit full-red-heart override of second generic shop slot; full source stock/pool unimplemented",
+  "reference_price": 3,
+  "healing_half_hearts": 2,
+  "native_price_cases": 60,
+  "native_admission_cases": 49,
+  "generated_size_route_cases": 27,
+  "core_suites": [
+    "source_shop_heart",
+    "treasure_upgrade",
+    "balance_preset_contract",
+    "room_lock_policy",
+    "mission_shop"
+  ],
+  "game_renderer": {
+    "source_purchase_tuning_persistence": "passed",
+    "treasure_upgrade_regression": "passed",
+    "legacy_shop_regression": "passed",
+    "broad_keyboard_regression": "passed with explicit legacy lock/menu policies and isolated door inventory"
+  },
+  "cli_schemas_passed": [
+    5,
+    29,
+    30
+  ],
+  "review": {
+    "seed": 69,
+    "displayed_room": 7,
+    "health_half_hearts": 4,
+    "coins": 3,
+    "price": 3,
+    "zoom_percent": 165,
+    "god_mode": false,
+    "test_resources_explicit": true
+  },
+  "normal_launch_review_resources": false,
+  "earned_coin_purchase_checked": true,
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "remaining": [
+    "Full native shop-level/profile/eligibility and stock-pool selection, remaining offering and item effects",
+    "Discounts/sales, Restock and alternate-character/item interactions",
+    "Donation machine, native shop actors/scenery, full pickup factory/scheduling/physics",
+    "Browser runtime and gameplay-save continuity"
+  ],
+  "acceptance_scope": "Scoped user acknowledgment and commit/continuation authorization; no separately observed new playtest or full native acceptance",
+  "acceptance_record": "docs/reports/isaac-first-floor-parity/d12a-shop-heart/human-acceptance.json",
+  "included_in_this_checkpoint": true
+}

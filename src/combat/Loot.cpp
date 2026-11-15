@@ -51,6 +51,7 @@ void Simulation::prepareMoney() {
                 break;
             }
     }
+    if(hasSourceShop(arena.shopRoom))std::erase_if(moneyPickups,[&](const auto &coin){return arena.roomAt(coin.position)==arena.shopRoom;});
 }
 void Simulation::dropMoney(const Enemy &enemy) {
     const auto &layout=arena.rooms[size_t(room)];

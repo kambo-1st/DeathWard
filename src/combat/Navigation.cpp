@@ -339,7 +339,7 @@ void Simulation::requestMove(Vector3 target, bool interactAtDestination) {
         target=site.objective;interactOnArrival_=true;
     } else if(surveyTutorial && room==finalRoom() && roomClear && distance(target,surveyPosition())<2.4f) {
         target=surveyPosition();interactOnArrival_=true;
-    } else if ((room == arena.shopRoom || site.kind==RoomKind::Service) && distance(target, arena.rooms[size_t(room)].objective) < 2.4f) {
+    } else if (((room == arena.shopRoom&&!hasSourceShop(room)) || site.kind==RoomKind::Service) && distance(target, arena.rooms[size_t(room)].objective) < 2.4f) {
         target = arena.rooms[size_t(room)].objective;
         interactOnArrival_ = true;
     } else if (legacyObjectives() && !rescued && distance(target, arena.miners) < 2.4f) {
@@ -360,11 +360,20 @@ void Simulation::requestMove(Vector3 target, bool interactAtDestination) {
 }
 std::string Simulation::nearbyInteraction() const {
     const auto &site=arena.rooms[size_t(room)];
+    if(hasSourceShop(room)&&sourceShopKey&&!shopKeySold&&planarDistance(player.position,shopKeyPosition())<2.6f&&
+       (shopHeartSold||planarDistance(player.position,shopKeyPosition())<planarDistance(player.position,shopHeartPosition()))) {
+        if(keys>=99)return "KEY / INVENTORY FULL";
+        return "KEY / "+std::to_string(shopKeyPrice)+" COINS / WALK UP TO BUY";
+    }
+    if(hasSourceShop(room)&&!shopHeartSold&&planarDistance(player.position,shopHeartPosition())<2.6f) {
+        if(player.hp>=player.redHealthCapacity())return "RED HEART / HEALTH FULL";
+        return "RED HEART / "+std::to_string(shopHeartPrice)+" COINS / WALK UP TO BUY";
+    }
     if(site.story!=StoryRoom::None&&roomClear&&distance(player.position,site.objective)<2.6f&&arena.sight(player.position,site.objective))
         return "EXAMINE SITE";
     if(surveyTutorial && room==finalRoom() && roomClear && distance(player.position,surveyPosition())<2.6f &&
        arena.sight(player.position,surveyPosition()))return surveyRecovered?"READ LETTER":"RECOVER RECORDS";
-    if ((room == arena.shopRoom || site.kind==RoomKind::Service) && distance(player.position, arena.rooms[size_t(room)].objective) <= 2.6f &&
+    if (((room == arena.shopRoom&&!hasSourceShop(room)) || site.kind==RoomKind::Service) && distance(player.position, arena.rooms[size_t(room)].objective) <= 2.6f &&
         arena.sight(player.position, arena.rooms[size_t(room)].objective))
         return "TRADE";
     if (rewardAvailable(room)&&distance(player.position,rewardPosition(room))<2.6f&&arena.sight(player.position,rewardPosition(room)))
