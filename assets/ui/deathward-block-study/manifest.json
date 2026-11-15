@@ -1,0 +1,88 @@
+{
+  "family": "DeathWard Block Study",
+  "font": "DeathWardBlockStudy-Regular.otf",
+  "sha256": "afd71ee3e263bee4d13cc2d9c95f431d80e50d4124905888fe7152affb9fe016",
+  "base": "../deathward-block/DeathWardBlock-Regular.otf",
+  "base_commit": "149fea6b",
+  "base_sha256": "7e9e9cfd2cc96f10edb59958d586aeaa03edb3d6bdbb919815386bf5d200d7d5",
+  "base_unchanged": true,
+  "scope": "Six uppercase structural studies only; hand-authored guides followed by light edge wear.",
+  "edited_glyphs": 6,
+  "unedited_glyphs_unchanged": true,
+  "all_metrics_preserved": true,
+  "unicode_mappings": 978,
+  "glyph_count": 1326,
+  "overlap_note": "Diagnostic shape comparison only, not an originality or legal assessment.",
+  "glyphs": [
+    {
+      "character": "A",
+      "glyph": "A",
+      "structural_change": "Left-offset flat crown, kinked right shoulder, unequal feet and higher crossbar.",
+      "counters": 1,
+      "advance": 1207,
+      "shape_overlap": 0.8488465656746368,
+      "outer_contour_overlap": 0.8873693601197647
+    },
+    {
+      "character": "B",
+      "glyph": "B",
+      "structural_change": "Shorter upper bowl, raised waist, heavier lower bowl and unequal bracket feet.",
+      "counters": 2,
+      "advance": 1295,
+      "shape_overlap": 0.846980683251489,
+      "outer_contour_overlap": 0.9120338793021684
+    },
+    {
+      "character": "D",
+      "glyph": "D",
+      "structural_change": "Sloping upper shoulder, long tapered right flank and asymmetric lower shoulder.",
+      "counters": 1,
+      "advance": 1167,
+      "shape_overlap": 0.8852942752584142,
+      "outer_contour_overlap": 0.9239967447321203
+    },
+    {
+      "character": "G",
+      "glyph": "G",
+      "structural_change": "Longer upper arm, recessed inner bar, shallow sloping jaw and clipped left heel.",
+      "counters": 0,
+      "advance": 1502,
+      "shape_overlap": 0.8345103035599256,
+      "outer_contour_overlap": 0.8345103035599256
+    },
+    {
+      "character": "R",
+      "glyph": "R",
+      "structural_change": "Cut upper shoulder and an inward leg attachment with wider diagonal splay.",
+      "counters": 1,
+      "advance": 1175,
+      "shape_overlap": 0.8823292733803734,
+      "outer_contour_overlap": 0.9012475599332225
+    },
+    {
+      "character": "S",
+      "glyph": "S",
+      "structural_change": "Narrower upper block, offset middle step, broader lower body and short bottom return.",
+      "counters": 0,
+      "advance": 1199,
+      "shape_overlap": 0.8772059622723362,
+      "outer_contour_overlap": 0.8772059622723362
+    }
+  ],
+  "freetype_all_mapped_characters_rendered": 978,
+  "sizes_checked": [
+    16,
+    24,
+    48,
+    96,
+    220
+  ],
+  "human_visual_acceptance": true,
+  "game_integrated": false,
+  "remaining": [
+    "Selected main-font game integration and visual verification",
+    "Broader inherited Unicode and combining-mark layout remain outside this Latin display delivery"
+  ],
+  "human_acceptance_quote": "Nice that's it!",
+  "full_font_continuation": "../deathward-display/README.md"
+}

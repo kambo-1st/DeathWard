@@ -1,0 +1,33 @@
+{
+  "font": "DeathWardBlockStudy-Regular.otf",
+  "sha256": "afd71ee3e263bee4d13cc2d9c95f431d80e50d4124905888fe7152affb9fe016",
+  "base_sha256": "7e9e9cfd2cc96f10edb59958d586aeaa03edb3d6bdbb919815386bf5d200d7d5",
+  "base_unchanged": true,
+  "edited_glyphs": 6,
+  "unedited_glyphs_unchanged": true,
+  "all_metrics_preserved": true,
+  "unicode_mappings": 978,
+  "glyph_count": 1326,
+  "freetype_all_mapped_characters_rendered": 978,
+  "sizes_checked": [
+    16,
+    24,
+    48,
+    96,
+    220
+  ],
+  "human_visual_acceptance": true,
+  "game_integrated": false,
+  "remaining": [
+    "Selected main-font game integration and visual verification",
+    "Broader inherited Unicode and combining-mark layout remain outside this Latin display delivery"
+  ],
+  "cff_reload_and_all_tables_decompiled": true,
+  "edited_characters": "ABDGRS",
+  "bundled_stb_printable_ascii_glyphs_rendered": 94,
+  "comparison_visually_inspected": true,
+  "specimen_visually_inspected": true,
+  "committed": true,
+  "human_acceptance_quote": "Nice that's it!",
+  "full_font_continuation": "../deathward-display/README.md"
+}

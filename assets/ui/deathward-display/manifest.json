@@ -1,0 +1,51 @@
+{
+  "family": "DeathWard Display",
+  "font": "DeathWardDisplay-Regular.otf",
+  "sha256": "8a959b9e8bbaed9dbd02e3dc284389c303ae6ee358b0a5d9102b270a75be8ae9",
+  "approved_study_sha256": "afd71ee3e263bee4d13cc2d9c95f431d80e50d4124905888fe7152affb9fe016",
+  "previous_block_sha256": "7e9e9cfd2cc96f10edb59958d586aeaa03edb3d6bdbb919815386bf5d200d7d5",
+  "approved_capitals_preserved_exactly": "ABDGRS",
+  "source_fonts_unchanged": true,
+  "redesigned_or_approved_characters": 648,
+  "changed_glyphs_from_study": 642,
+  "inherited_characters": 330,
+  "unicode_mappings": 978,
+  "glyph_count": 1326,
+  "scope": "Full ASCII Latin display set plus matching precomposed Latin accents and common punctuation/currency. Lowercase is alternate capitals.",
+  "freeType_all_mapped_rendered": 978,
+  "redesigned_sizes_rendered": [
+    16,
+    24,
+    32,
+    48,
+    96,
+    220
+  ],
+  "minimum_alphanumeric_vector_ink_gap_units": 156.0,
+  "spacing_checks": [
+    {
+      "font_px": 24,
+      "minimum_50pct_ink_gap_px": 1.5
+    },
+    {
+      "font_px": 32,
+      "minimum_50pct_ink_gap_px": 1.75
+    },
+    {
+      "font_px": 48,
+      "minimum_50pct_ink_gap_px": 3.359375
+    },
+    {
+      "font_px": 96,
+      "minimum_50pct_ink_gap_px": 7.203125
+    }
+  ],
+  "human_six_letter_direction_accepted": true,
+  "human_full_font_acceptance": true,
+  "game_integrated": false,
+  "remaining": [
+    "Selected main-font game integration and visual verification",
+    "Broader inherited Unicode and combining-mark layout remain outside this Latin display delivery"
+  ],
+  "human_full_font_acceptance_quote": "Nice commit and use it as a main font"
+}
