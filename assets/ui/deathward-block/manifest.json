@@ -1,0 +1,828 @@
+{
+  "family": "DeathWard Block",
+  "base": "../deathward-rough/DeathWardRough-Regular.otf",
+  "base_commit": "6997ff36",
+  "base_sha256": "78d1c51e780d237f6847f8a0fd3b103169c1911ce8788b61209493acddae75f7",
+  "reference": "reference.png",
+  "reference_sha256": "b6596b601eeb028342f26cfb07d9b6f01caa0b7462f96e93ee5aee82c848d955",
+  "output": "DeathWardBlock-Regular.otf",
+  "output_sha256": "7e9e9cfd2cc96f10edb59958d586aeaa03edb3d6bdbb919815386bf5d200d7d5",
+  "traced_characters": 62,
+  "glyph_count": 1326,
+  "unicode_mappings": 978,
+  "format": "OpenType CFF / OTTO; vector outlines, no bitmap or color layers",
+  "lowercase": "a-z use the second cap alphabet shown in the reference",
+  "other_characters": "Retained from the committed Anton-derived candidate; not traced from the reference",
+  "spacing": "78-unit sidebearings; proportional widths derived from the reference; no inherited positioning or substitution tables",
+  "validation": "All tables decompiled; glyph order/cmap preserved; counters preserved through contour simplification; all 978 mapped characters rasterized with FreeType",
+  "human_visual_acceptance": false,
+  "game_integrated": false,
+  "changed_glyphs": [
+    {
+      "character": "A",
+      "glyph": "A",
+      "reference_box": [
+        27,
+        52,
+        159,
+        280
+      ],
+      "points": 208,
+      "mask_area_difference": 0.0021115056838367898,
+      "counters": 1
+    },
+    {
+      "character": "B",
+      "glyph": "B",
+      "reference_box": [
+        179,
+        52,
+        322,
+        280
+      ],
+      "points": 234,
+      "mask_area_difference": 0.0016941143830728385,
+      "counters": 2
+    },
+    {
+      "character": "C",
+      "glyph": "C",
+      "reference_box": [
+        341,
+        52,
+        471,
+        280
+      ],
+      "points": 98,
+      "mask_area_difference": 0.0015477046876314726,
+      "counters": 0
+    },
+    {
+      "character": "D",
+      "glyph": "D",
+      "reference_box": [
+        491,
+        52,
+        618,
+        280
+      ],
+      "points": 232,
+      "mask_area_difference": 0.0019730833601661847,
+      "counters": 1
+    },
+    {
+      "character": "E",
+      "glyph": "E",
+      "reference_box": [
+        638,
+        52,
+        754,
+        280
+      ],
+      "points": 118,
+      "mask_area_difference": 0.002603833465184713,
+      "counters": 0
+    },
+    {
+      "character": "F",
+      "glyph": "F",
+      "reference_box": [
+        773,
+        52,
+        891,
+        280
+      ],
+      "points": 116,
+      "mask_area_difference": 0.00044311997926924074,
+      "counters": 0
+    },
+    {
+      "character": "G",
+      "glyph": "G",
+      "reference_box": [
+        910,
+        52,
+        1079,
+        280
+      ],
+      "points": 164,
+      "mask_area_difference": 0.0016509789606328374,
+      "counters": 0
+    },
+    {
+      "character": "H",
+      "glyph": "H",
+      "reference_box": [
+        1099,
+        52,
+        1252,
+        280
+      ],
+      "points": 92,
+      "mask_area_difference": 0.0025795617971047483,
+      "counters": 0
+    },
+    {
+      "character": "I",
+      "glyph": "I",
+      "reference_box": [
+        1272,
+        52,
+        1361,
+        280
+      ],
+      "points": 106,
+      "mask_area_difference": 0.0012598965610216442,
+      "counters": 0
+    },
+    {
+      "character": "J",
+      "glyph": "J",
+      "reference_box": [
+        1380,
+        52,
+        1516,
+        280
+      ],
+      "points": 134,
+      "mask_area_difference": 0.0017939134711298724,
+      "counters": 0
+    },
+    {
+      "character": "K",
+      "glyph": "K",
+      "reference_box": [
+        1536,
+        52,
+        1701,
+        280
+      ],
+      "points": 368,
+      "mask_area_difference": 0.004400839727942526,
+      "counters": 0
+    },
+    {
+      "character": "L",
+      "glyph": "L",
+      "reference_box": [
+        1722,
+        52,
+        1850,
+        280
+      ],
+      "points": 120,
+      "mask_area_difference": 0.0007375967152220802,
+      "counters": 0
+    },
+    {
+      "character": "M",
+      "glyph": "M",
+      "reference_box": [
+        1870,
+        52,
+        2028,
+        280
+      ],
+      "points": 260,
+      "mask_area_difference": 0.0016386725139727071,
+      "counters": 0
+    },
+    {
+      "character": "N",
+      "glyph": "N",
+      "reference_box": [
+        2047,
+        52,
+        2185,
+        280
+      ],
+      "points": 248,
+      "mask_area_difference": 0.0007279787333674328,
+      "counters": 0
+    },
+    {
+      "character": "O",
+      "glyph": "O",
+      "reference_box": [
+        119,
+        320,
+        242,
+        568
+      ],
+      "points": 134,
+      "mask_area_difference": 0.001143871635011331,
+      "counters": 1
+    },
+    {
+      "character": "P",
+      "glyph": "P",
+      "reference_box": [
+        261,
+        320,
+        391,
+        568
+      ],
+      "points": 126,
+      "mask_area_difference": 0.0007446164773872626,
+      "counters": 1
+    },
+    {
+      "character": "Q",
+      "glyph": "Q",
+      "reference_box": [
+        411,
+        320,
+        558,
+        568
+      ],
+      "points": 270,
+      "mask_area_difference": 0.0007622251617130495,
+      "counters": 1
+    },
+    {
+      "character": "R",
+      "glyph": "R",
+      "reference_box": [
+        578,
+        320,
+        706,
+        568
+      ],
+      "points": 226,
+      "mask_area_difference": 0.0016338516417139836,
+      "counters": 1
+    },
+    {
+      "character": "S",
+      "glyph": "S",
+      "reference_box": [
+        726,
+        320,
+        857,
+        568
+      ],
+      "points": 152,
+      "mask_area_difference": 0.0027801744870020054,
+      "counters": 0
+    },
+    {
+      "character": "T",
+      "glyph": "T",
+      "reference_box": [
+        876,
+        320,
+        1020,
+        568
+      ],
+      "points": 62,
+      "mask_area_difference": 0.0018108284150837354,
+      "counters": 0
+    },
+    {
+      "character": "U",
+      "glyph": "U",
+      "reference_box": [
+        1039,
+        320,
+        1163,
+        568
+      ],
+      "points": 180,
+      "mask_area_difference": 0.0030595842388874664,
+      "counters": 0
+    },
+    {
+      "character": "V",
+      "glyph": "V",
+      "reference_box": [
+        1183,
+        320,
+        1329,
+        568
+      ],
+      "points": 278,
+      "mask_area_difference": 0.003798548841228661,
+      "counters": 1
+    },
+    {
+      "character": "W",
+      "glyph": "W",
+      "reference_box": [
+        1349,
+        320,
+        1549,
+        568
+      ],
+      "points": 186,
+      "mask_area_difference": 0.0024752358555398934,
+      "counters": 0
+    },
+    {
+      "character": "X",
+      "glyph": "X",
+      "reference_box": [
+        1568,
+        320,
+        1747,
+        568
+      ],
+      "points": 576,
+      "mask_area_difference": 0.006450523471800057,
+      "counters": 0
+    },
+    {
+      "character": "Y",
+      "glyph": "Y",
+      "reference_box": [
+        1768,
+        320,
+        1947,
+        568
+      ],
+      "points": 318,
+      "mask_area_difference": 0.005938920486991468,
+      "counters": 0
+    },
+    {
+      "character": "Z",
+      "glyph": "Z",
+      "reference_box": [
+        1967,
+        320,
+        2094,
+        568
+      ],
+      "points": 260,
+      "mask_area_difference": 0.0033397196977965754,
+      "counters": 0
+    },
+    {
+      "character": "a",
+      "glyph": "a",
+      "reference_box": [
+        28,
+        592,
+        161,
+        818
+      ],
+      "points": 204,
+      "mask_area_difference": 0.002531002630722562,
+      "counters": 2
+    },
+    {
+      "character": "b",
+      "glyph": "b",
+      "reference_box": [
+        179,
+        592,
+        321,
+        818
+      ],
+      "points": 276,
+      "mask_area_difference": 0.0010625343194449863,
+      "counters": 2
+    },
+    {
+      "character": "c",
+      "glyph": "c",
+      "reference_box": [
+        340,
+        592,
+        467,
+        818
+      ],
+      "points": 102,
+      "mask_area_difference": 0.0013777617994713304,
+      "counters": 0
+    },
+    {
+      "character": "d",
+      "glyph": "d",
+      "reference_box": [
+        484,
+        592,
+        616,
+        818
+      ],
+      "points": 218,
+      "mask_area_difference": 0.0015326698278483838,
+      "counters": 1
+    },
+    {
+      "character": "e",
+      "glyph": "e",
+      "reference_box": [
+        634,
+        592,
+        751,
+        818
+      ],
+      "points": 106,
+      "mask_area_difference": 0.00249332013552423,
+      "counters": 0
+    },
+    {
+      "character": "f",
+      "glyph": "f",
+      "reference_box": [
+        771,
+        592,
+        892,
+        818
+      ],
+      "points": 101,
+      "mask_area_difference": 0.0017949031368930833,
+      "counters": 0
+    },
+    {
+      "character": "g",
+      "glyph": "g",
+      "reference_box": [
+        911,
+        592,
+        1079,
+        818
+      ],
+      "points": 154,
+      "mask_area_difference": 0.002089081339323745,
+      "counters": 0
+    },
+    {
+      "character": "h",
+      "glyph": "h",
+      "reference_box": [
+        1099,
+        592,
+        1252,
+        818
+      ],
+      "points": 106,
+      "mask_area_difference": 0.0016981155715932443,
+      "counters": 0
+    },
+    {
+      "character": "i",
+      "glyph": "i",
+      "reference_box": [
+        1271,
+        592,
+        1362,
+        818
+      ],
+      "points": 112,
+      "mask_area_difference": 0.0008440821619618832,
+      "counters": 0
+    },
+    {
+      "character": "j",
+      "glyph": "j",
+      "reference_box": [
+        1381,
+        592,
+        1516,
+        818
+      ],
+      "points": 132,
+      "mask_area_difference": 0.0026333680407235427,
+      "counters": 0
+    },
+    {
+      "character": "k",
+      "glyph": "k",
+      "reference_box": [
+        1535,
+        592,
+        1701,
+        818
+      ],
+      "points": 386,
+      "mask_area_difference": 0.0034796432294449493,
+      "counters": 0
+    },
+    {
+      "character": "l",
+      "glyph": "l",
+      "reference_box": [
+        1720,
+        592,
+        1848,
+        818
+      ],
+      "points": 118,
+      "mask_area_difference": 0.000661914694736453,
+      "counters": 0
+    },
+    {
+      "character": "m",
+      "glyph": "m",
+      "reference_box": [
+        1868,
+        592,
+        2025,
+        818
+      ],
+      "points": 258,
+      "mask_area_difference": 0.0019487536824022247,
+      "counters": 0
+    },
+    {
+      "character": "n",
+      "glyph": "n",
+      "reference_box": [
+        2045,
+        592,
+        2183,
+        818
+      ],
+      "points": 276,
+      "mask_area_difference": 0.00031267026598642844,
+      "counters": 0
+    },
+    {
+      "character": "o",
+      "glyph": "o",
+      "reference_box": [
+        119,
+        861,
+        242,
+        1113
+      ],
+      "points": 154,
+      "mask_area_difference": 0.001354434635084896,
+      "counters": 1
+    },
+    {
+      "character": "p",
+      "glyph": "p",
+      "reference_box": [
+        259,
+        861,
+        390,
+        1113
+      ],
+      "points": 114,
+      "mask_area_difference": 0.0016217460946643897,
+      "counters": 1
+    },
+    {
+      "character": "q",
+      "glyph": "q",
+      "reference_box": [
+        406,
+        861,
+        556,
+        1113
+      ],
+      "points": 230,
+      "mask_area_difference": 0.0011639361256471348,
+      "counters": 1
+    },
+    {
+      "character": "r",
+      "glyph": "r",
+      "reference_box": [
+        576,
+        861,
+        704,
+        1113
+      ],
+      "points": 204,
+      "mask_area_difference": 0.0016612600126790014,
+      "counters": 1
+    },
+    {
+      "character": "s",
+      "glyph": "s",
+      "reference_box": [
+        723,
+        861,
+        851,
+        1113
+      ],
+      "points": 102,
+      "mask_area_difference": 0.0025393040830796656,
+      "counters": 0
+    },
+    {
+      "character": "t",
+      "glyph": "t",
+      "reference_box": [
+        870,
+        861,
+        1017,
+        1113
+      ],
+      "points": 122,
+      "mask_area_difference": 0.0012062895277106646,
+      "counters": 0
+    },
+    {
+      "character": "u",
+      "glyph": "u",
+      "reference_box": [
+        1035,
+        861,
+        1160,
+        1113
+      ],
+      "points": 206,
+      "mask_area_difference": 0.0008675799752674696,
+      "counters": 0
+    },
+    {
+      "character": "v",
+      "glyph": "v",
+      "reference_box": [
+        1178,
+        861,
+        1324,
+        1113
+      ],
+      "points": 264,
+      "mask_area_difference": 0.0028941999457908108,
+      "counters": 0
+    },
+    {
+      "character": "w",
+      "glyph": "w",
+      "reference_box": [
+        1344,
+        861,
+        1543,
+        1113
+      ],
+      "points": 184,
+      "mask_area_difference": 0.0015000108706973512,
+      "counters": 0
+    },
+    {
+      "character": "x",
+      "glyph": "x",
+      "reference_box": [
+        1561,
+        861,
+        1743,
+        1113
+      ],
+      "points": 568,
+      "mask_area_difference": 0.006615581098339706,
+      "counters": 0
+    },
+    {
+      "character": "y",
+      "glyph": "y",
+      "reference_box": [
+        1762,
+        861,
+        1942,
+        1113
+      ],
+      "points": 352,
+      "mask_area_difference": 0.004887153365373762,
+      "counters": 0
+    },
+    {
+      "character": "z",
+      "glyph": "z",
+      "reference_box": [
+        1962,
+        861,
+        2092,
+        1113
+      ],
+      "points": 250,
+      "mask_area_difference": 0.0044599890980466916,
+      "counters": 0
+    },
+    {
+      "character": "0",
+      "glyph": "zero",
+      "reference_box": [
+        344,
+        1134,
+        483,
+        1358
+      ],
+      "points": 216,
+      "mask_area_difference": 0.0016987804706774501,
+      "counters": 2
+    },
+    {
+      "character": "1",
+      "glyph": "one",
+      "reference_box": [
+        502,
+        1134,
+        589,
+        1358
+      ],
+      "points": 88,
+      "mask_area_difference": 0.0030644400754433194,
+      "counters": 0
+    },
+    {
+      "character": "2",
+      "glyph": "two",
+      "reference_box": [
+        609,
+        1134,
+        744,
+        1358
+      ],
+      "points": 380,
+      "mask_area_difference": 0.002551642757782424,
+      "counters": 0
+    },
+    {
+      "character": "3",
+      "glyph": "three",
+      "reference_box": [
+        763,
+        1134,
+        889,
+        1358
+      ],
+      "points": 236,
+      "mask_area_difference": 0.0016986215169213221,
+      "counters": 0
+    },
+    {
+      "character": "4",
+      "glyph": "four",
+      "reference_box": [
+        908,
+        1134,
+        1056,
+        1358
+      ],
+      "points": 162,
+      "mask_area_difference": 0.0030243751486393176,
+      "counters": 0
+    },
+    {
+      "character": "5",
+      "glyph": "five",
+      "reference_box": [
+        1075,
+        1134,
+        1208,
+        1358
+      ],
+      "points": 170,
+      "mask_area_difference": 0.002325813271728213,
+      "counters": 0
+    },
+    {
+      "character": "6",
+      "glyph": "six",
+      "reference_box": [
+        1228,
+        1134,
+        1378,
+        1358
+      ],
+      "points": 204,
+      "mask_area_difference": 0.0012090002048161025,
+      "counters": 1
+    },
+    {
+      "character": "7",
+      "glyph": "seven",
+      "reference_box": [
+        1397,
+        1134,
+        1529,
+        1358
+      ],
+      "points": 286,
+      "mask_area_difference": 0.0014006995209441876,
+      "counters": 0
+    },
+    {
+      "character": "8",
+      "glyph": "eight",
+      "reference_box": [
+        1547,
+        1134,
+        1690,
+        1358
+      ],
+      "points": 208,
+      "mask_area_difference": 0.0014904078310869937,
+      "counters": 2
+    },
+    {
+      "character": "9",
+      "glyph": "nine",
+      "reference_box": [
+        1710,
+        1134,
+        1865,
+        1358
+      ],
+      "points": 270,
+      "mask_area_difference": 0.0032253891372743806,
+      "counters": 1
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "font": "DeathWardBlock-Regular.otf",
+  "sha256": "7e9e9cfd2cc96f10edb59958d586aeaa03edb3d6bdbb919815386bf5d200d7d5",
+  "previous_candidate_commit": "6997ff36",
+  "previous_candidate_unchanged": true,
+  "original_anton_unchanged": true,
+  "format": "OpenType CFF / OTTO",
+  "traced_glyphs": 62,
+  "counters_preserved": 24,
+  "max_mask_area_difference": 0.006615581098339706,
+  "freetype_mapped_characters_rendered": 978,
+  "rebuilt_glyph_sizes_checked": [
+    16,
+    24,
+    48,
+    96,
+    220
+  ],
+  "bundled_stb_printable_ascii_glyphs_rendered": 94,
+  "specimen_visually_inspected": true,
+  "comparison_visually_inspected": true,
+  "human_visual_acceptance": false,
+  "committed": true,
+  "game_integrated": false,
+  "remaining": [
+    "Distinct redesign requested; this traced version is a preserved comparison candidate."
+  ],
+  "feedback": "Commit this candidate, but it is too similar to the reference. Keep the silhouette style and create a distinct redesign."
+}
