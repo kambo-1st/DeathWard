@@ -215,8 +215,9 @@ void Simulation::updateHazards(float dt) {
         const float previousAge = hazard.age;
         if (hazard.kind == HazardKind::PlayerDynamite || hazard.kind == HazardKind::BossCharge)
             advanceDynamite(hazard, arena, std::min(dt, std::max(0.f, hazard.delay - hazard.age)));
-        hazard.age += dt;
-        if (hazard.age < hazard.delay)
+        if(hazard.tunedInventoryBomb)hazard.age=float(hazard.inventoryBombElapsed+=double(dt));
+        else hazard.age += dt;
+        if (hazard.age + (hazard.tunedInventoryBomb?1e-6f:0.f) < hazard.delay)
             continue;
         const bool expired=hazard.ownedBeam?hazard.age>hazard.delay+hazard.duration+1e-6f:
             hazard.age>=hazard.delay+hazard.duration;

@@ -35,6 +35,7 @@ void Game::applyBalance(BalancePreset preset) {
     balancePreset=std::move(preset);balanceDraft.playerSpeed=balancePreset.playerSpeed;
     balanceDraft.tearsPerSecond=balancePreset.tearsPerSecond;balanceDraft.shotSpeed=balancePreset.shotSpeed;
     balanceDraft.rangeTiles=balancePreset.rangeTiles;
+    balanceDraft.inventoryBombs=balancePreset.inventoryBombs;
     balanceDraft.redHeartAppearanceSpeed=balancePreset.redHeartAppearanceSpeed;
     balanceDraft.bombClearRewards=balancePreset.bombClearRewards;balanceDraft.keyClearRewards=balancePreset.keyClearRewards;balanceDraft.chestClearRewards=balancePreset.chestClearRewards;balanceDraft.coinClearRewards=balancePreset.coinClearRewards;balanceDraft.redHeartClearRewards=balancePreset.redHeartClearRewards;balanceDraft.playerLuck=balancePreset.playerLuck;
     balanceDraft.playerDamage=balancePreset.playerDamage;balanceDraft.regularHealthMultiplier=balancePreset.regularHealthMultiplier;
@@ -48,6 +49,7 @@ void Game::applyBalance(BalancePreset preset) {
     if(zoomChanged)useDefaultZoom();
     if(run) {
         run->applyCombatBalance(balancePreset.playerDamage,balancePreset.regularHealthMultiplier);
+        run->inventoryBombTuning=balancePreset.inventoryBombs;
         playerDamage=run->player.shotDamage;
         run->redHeartAppearanceSpeed=balancePreset.redHeartAppearanceSpeed;
         run->bombClearRewards=balancePreset.bombClearRewards;run->keyClearRewards=balancePreset.keyClearRewards;run->chestClearRewards=balancePreset.chestClearRewards;run->coinClearRewards=balancePreset.coinClearRewards;run->redHeartClearRewards=balancePreset.redHeartClearRewards;run->player.attributes.luck=balancePreset.playerLuck;
@@ -87,6 +89,10 @@ void Game::setSpiderMovement(float multiplier) {
 void Game::setCombatBalance(float damage,float regularHealth) {
     auto preset=balancePreset;preset.playerDamage=damage;preset.regularHealthMultiplier=regularHealth;applyBalance(std::move(preset));
     balanceNotice="Damage: next attacks. Regular HP: applied proportionally to living enemies and future spawns. Boss HP retained.";
+}
+void Game::setInventoryBombs(InventoryBombTuning tuning) {
+    auto preset=balancePreset;preset.inventoryBombs=tuning;applyBalance(std::move(preset));
+    balanceNotice="Dynamite applied to new charges. Lit charges keep their fuse, radius and damage. Export or Use next expedition to keep edits.";
 }
 void Game::setPooterTuning(float movement,float shotSpeed,float interval) {
     auto preset=balancePreset;preset.pooterMovementMultiplier=movement;preset.pooterShotSpeedMultiplier=shotSpeed;
@@ -160,7 +166,7 @@ void Game::loadBalancePreset(const std::filesystem::path &path) {
     auto candidate=BalancePreset::load(path,defaultMechanics()->fingerprint());
     const auto filename=path.string();
     auto live=balancePreset;live.playerSpeed=candidate.playerSpeed;live.defaultZoomPercent=candidate.defaultZoomPercent;
-    live.tearsPerSecond=candidate.tearsPerSecond;live.shotSpeed=candidate.shotSpeed;live.rangeTiles=candidate.rangeTiles;
+    live.tearsPerSecond=candidate.tearsPerSecond;live.shotSpeed=candidate.shotSpeed;live.rangeTiles=candidate.rangeTiles;live.inventoryBombs=candidate.inventoryBombs;
     live.redHeartAppearanceSpeed=candidate.redHeartAppearanceSpeed;live.bombClearRewards=candidate.bombClearRewards;live.keyClearRewards=candidate.keyClearRewards;live.chestClearRewards=candidate.chestClearRewards;live.coinClearRewards=candidate.coinClearRewards;live.redHeartClearRewards=candidate.redHeartClearRewards;live.playerLuck=candidate.playerLuck;
     live.playerDamage=candidate.playerDamage;live.regularHealthMultiplier=candidate.regularHealthMultiplier;
     live.gaperMovementMultiplier=candidate.gaperMovementMultiplier;
@@ -191,6 +197,7 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     preset.validate();archiveBalance(preset);
     candidate->tunePlayer(playerHealth,playerDamage);
     candidate->applyCombatBalance(preset.playerDamage,preset.regularHealthMultiplier);
+    candidate->inventoryBombTuning=preset.inventoryBombs;
     playerDamage=candidate->player.shotDamage;
     candidate->redHeartAppearanceSpeed=preset.redHeartAppearanceSpeed;
     candidate->bombClearRewards=preset.bombClearRewards;candidate->keyClearRewards=preset.keyClearRewards;candidate->chestClearRewards=preset.chestClearRewards;candidate->coinClearRewards=preset.coinClearRewards;candidate->redHeartClearRewards=preset.redHeartClearRewards;candidate->player.attributes.luck=preset.playerLuck;
@@ -225,7 +232,7 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     missionMenu=walkingToMission=false;town.stop();screen=Screen::Expedition;
     deathTime=0;paused=false;accumulator=0;error.clear();resetArmed=false;
     useDefaultZoom();resetPointerInput();
-    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" gaper_movement="<<balancePreset.gaperMovementMultiplier<<" spider_movement="<<balancePreset.spiderMovementMultiplier<<" pooter_movement="<<balancePreset.pooterMovementMultiplier<<" pooter_shot="<<balancePreset.pooterShotSpeedMultiplier<<" pooter_delay="<<balancePreset.pooterAttackIntervalMultiplier<<" damage="<<balancePreset.playerDamage<<" regular_hp="<<balancePreset.regularHealthMultiplier<<" bomb_rewards="<<balancePreset.bombClearRewards<<" key_rewards="<<balancePreset.keyClearRewards<<" chest_rewards="<<balancePreset.chestClearRewards<<" coin_rewards="<<balancePreset.coinClearRewards<<" red_heart_rewards="<<balancePreset.redHeartClearRewards<<" heart_appearance="<<balancePreset.redHeartAppearanceSpeed<<" luck="<<balancePreset.playerLuck<<" room_hearts="<<balancePreset.roomHeartLayouts<<" source_room="<<balancePreset.sourceCombatRoom<<" revision="<<balancePreset.revision()
+    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" gaper_movement="<<balancePreset.gaperMovementMultiplier<<" spider_movement="<<balancePreset.spiderMovementMultiplier<<" pooter_movement="<<balancePreset.pooterMovementMultiplier<<" pooter_shot="<<balancePreset.pooterShotSpeedMultiplier<<" pooter_delay="<<balancePreset.pooterAttackIntervalMultiplier<<" damage="<<balancePreset.playerDamage<<" regular_hp="<<balancePreset.regularHealthMultiplier<<" bomb_fuse="<<balancePreset.inventoryBombs.fuseMultiplier<<" bomb_radius="<<balancePreset.inventoryBombs.radiusMultiplier<<" bomb_damage="<<balancePreset.inventoryBombs.damage<<" bomb_self="<<balancePreset.inventoryBombs.selfDamageHalfHearts<<" bomb_rewards="<<balancePreset.bombClearRewards<<" key_rewards="<<balancePreset.keyClearRewards<<" chest_rewards="<<balancePreset.chestClearRewards<<" coin_rewards="<<balancePreset.coinClearRewards<<" red_heart_rewards="<<balancePreset.redHeartClearRewards<<" heart_appearance="<<balancePreset.redHeartAppearanceSpeed<<" luck="<<balancePreset.playerLuck<<" room_hearts="<<balancePreset.roomHeartLayouts<<" source_room="<<balancePreset.sourceCombatRoom<<" revision="<<balancePreset.revision()
              <<" profile="<<(balancePreset.custom()?"custom":"reference-partial")<<'\n';
     if(reviewRoomIndex)std::cout<<"ROOM_REVIEW room="<<run->room+1<<" hp="<<run->player.hp<<" god="<<run->godMode<<'\n';
     if(reviewSourceRoomTemplate) {

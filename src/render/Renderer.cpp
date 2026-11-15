@@ -2245,6 +2245,10 @@ Action Renderer::balancePanel(const Game &game) {
     if(button(Action::BalanceShootingTab,"SHOOTING",645,128,130,30,game.balanceShootingOpen))return Action::BalanceShootingTab;
     if(button(Action::BalanceCombatTab,"COMBAT",795,128,90,30,game.balanceCombatOpen))return Action::BalanceCombatTab;
     if(button(Action::BalanceEnemiesTab,"ENEMIES",905,128,170,30,game.balanceEnemiesOpen))return Action::BalanceEnemiesTab;
+    if(game.balanceCombatOpen) {
+        if(button(Action::BalanceDamageHealthTab,"DAMAGE / HP",650,175,200,28,!game.balanceBombsOpen))return Action::BalanceDamageHealthTab;
+        if(button(Action::BalanceBombsTab,"DYNAMITE",875,175,200,28,game.balanceBombsOpen))return Action::BalanceBombsTab;
+    }
     if(game.balanceEnemiesOpen) {
         if(button(Action::BalanceChasersTab,"GAPER / SPIDER",645,175,240,28,!game.balancePooterOpen))return Action::BalanceChasersTab;
         if(button(Action::BalancePooterTab,"POOTER",905,175,170,28,game.balancePooterOpen))return Action::BalancePooterTab;
@@ -2294,6 +2298,23 @@ Action Renderer::balancePanel(const Game &game) {
         const auto next=game.nextBalancePreset.value_or(BalancePreset{});
         text("Next: Luck "+decimal(next.playerLuck)+" / appear "+decimal(next.redHeartAppearanceSpeed)+"x",795,478,12,Teal);
         }
+    } else if(game.balanceCombatOpen&&game.balanceBombsOpen) {
+        const auto &t=game.balancePreset.inventoryBombs;
+        text("ORDINARY DYNAMITE",205,185,22,Gold);
+        const auto row=[&](const char *label,const std::string &value,float y,Action down,Action up,const char *step) {
+            text(label,205,y+12,17,Paper);text(value,435,y+9,21,Paper);
+            if(button(down,std::string("- ")+step,795,y,130,40))return down;
+            if(button(up,std::string("+ ")+step,945,y,130,40))return up;
+            return Action::None;
+        };
+        auto action=row("FUSE",decimal(t.fuseMultiplier*100)+"% / "+decimal(t.fuseSeconds())+"s",220,Action::BombFuseDown,Action::BombFuseUp,"5%");if(action!=Action::None)return action;
+        action=row("BLAST SIZE",decimal(t.radiusMultiplier*100)+"%",272,Action::BombRadiusDown,Action::BombRadiusUp,"5%");if(action!=Action::None)return action;
+        action=row("ENEMY DAMAGE",decimal(t.damage),324,Action::BombDamageDown,Action::BombDamageUp,"5");if(action!=Action::None)return action;
+        action=row("SELF DAMAGE",(t.selfDamageHalfHearts<0?"AUTO / ":"")+decimal(float(t.selfDamage())*.5f)+" HEARTS",376,Action::BombSelfDamageDown,Action::BombSelfDamageUp,"0.5");if(action!=Action::None)return action;
+        text("New charges only. Lit charges keep their selected settings.",205,429,14,Teal);
+        text("Blast size follows damage thresholds. Braid keeps its own behavior.",205,449,13,Muted);
+        if(button(Action::ResetInventoryBombs,"RESET DYNAMITE",205,472,320,30))return Action::ResetInventoryBombs;
+        text("Self damage: Auto follows damage; 0 is available for testing.",545,482,12,Teal);
     } else if(game.balanceCombatOpen) {
         const auto &p=game.balancePreset;
         text("DAMAGE AND ENEMY HEALTH",205,185,22,Gold);

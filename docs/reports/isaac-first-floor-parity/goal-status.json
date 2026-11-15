@@ -37,7 +37,7 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Selected D10a: verify ordinary bomb fuse, radius, outgoing and incoming damage, wire live/export/load in the main game, then short human review. Keep placement only and current effects. Broader special bombs and full native/save acceptance remain open.",
+  "next_work": "Propose one ordinary destructible interaction (D10b), then keyed-door spending. Separate user selection is required. Full native bomb timing/physics/items/profile, browser runtime and gameplay save continuity remain open.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-12",
     "status": "Ordinary caller/descriptor and direct-entry delivery accepted; next complete-room continuation selected",
@@ -371,7 +371,7 @@
     "production_default_changed": false,
     "full_native_acceptance": false
   },
-  "current_delivery_summary": "D09d ordinary pickups, placement-only controls and shared dynamite model are developer-verified and human-accepted; included in this checkpoint. D10a fuse/blast/self-damage is now separately selected.",
+  "current_delivery_summary": "D09d committed as12eccfa1. D10a ordinary dynamite/schema25 is developer-verified and scoped human-accepted; included in this checkpoint. Full native bomb acceptance remains open.",
   "room_scale_timing_checkpoint": {
     "status": "selected step1 verified for native shape1 geometry and ordinary horizontal base-Isaac live motion; shared spatial rollout pending",
     "evidence": "docs/reports/isaac-first-floor-parity/room-scale-timing/README.md",
@@ -750,5 +750,21 @@
     "placement_only_followup": "implemented; native build and seven checks pass; scoped human-accepted",
     "shared_model_followup": "shared pickup/placed model; native build and two input checks pass; scoped human-accepted"
   },
-  "d10a_selected": "2026-11-15; fuse/blast/self-damage only, live tuning/export/load and a short main-game check"
+  "d10a_selected": "2026-11-15; fuse/blast/self-damage only, live tuning/export/load and a short main-game check",
+  "d10a_checkpoint": {
+    "selected": "2026-11-15",
+    "status": "enabled-developer-verified-scoped-human-accepted",
+    "report": "docs/reports/isaac-first-floor-parity/d10a-dynamite/README.md",
+    "schema": 25,
+    "human_acceptance": true,
+    "committed": true,
+    "full_native_acceptance": false,
+    "remaining": [
+      "independent live-native bomb factory/update timing and complete collision/recipient/physics equivalence",
+      "special bomb flags/items/characters and full native profile/seed behavior",
+      "browser runtime verification",
+      "gameplay save continuity"
+    ],
+    "human_acceptance_record": "docs/reports/isaac-first-floor-parity/d10a-dynamite/human-acceptance.json"
+  }
 }

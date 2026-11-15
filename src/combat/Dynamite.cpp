@@ -88,6 +88,15 @@ Hazard Simulation::makeDynamite(Vector3 target) const {
     charge.braidCopies=std::min(4,int(itemStacks(ItemId::Braid)));
     charge.braidDirection=length(offset)>.01f?unit(offset):player.facing;
     charge.braidDirection.y=0;
+    if(inventoryBombTuning&&!charge.braidCopies) {
+        // Ordinary charges snapshot all four controls. Custom Braid retains its
+        // existing item contract; this delivery does not redesign item bombs.
+        const auto &t=*inventoryBombTuning;t.validate();
+        charge.tunedInventoryBomb=true;
+        charge.delay=t.fuseSeconds();charge.radius=t.radius();
+        charge.blastDamage=t.internalDamage();
+        charge.damage=float(t.selfDamage())*10; // Existing incoming half-heart boundary, not outgoing HP units.
+    }
     if(charge.braidCopies) {
         const float copies=float(charge.braidCopies-1);
         charge.blastDamage=70*(1+.1f*copies);charge.radius=3.3f;

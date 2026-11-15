@@ -262,7 +262,8 @@ void Game::close() {
 void Game::perform(Action action) {
     try {
         if(balanceOpen&&action!=Action::None&&action!=Action::Quit&&
-           (action<Action::CloseBalance||action>Action::EditBalancePath))return;
+           (action<Action::CloseBalance||action>Action::EditBalancePath)&&
+           (action<Action::BalanceDamageHealthTab||action>Action::ResetInventoryBombs))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -308,7 +309,25 @@ void Game::perform(Action action) {
             setRedHeartAppearanceSpeed(std::clamp(balancePreset.redHeartAppearanceSpeed+(action==Action::HeartAppearanceUp?.05f:-.05f),BalancePreset::MinHeartAppearanceSpeed,BalancePreset::MaxHeartAppearanceSpeed));break;
         case Action::ResetHeartAppearance:setRedHeartAppearanceSpeed(1);break;
         case Action::ResetRewardLuck:setRedHeartRewards(balancePreset.redHeartClearRewards,BalancePreset::ReferenceLuck);break;
-        case Action::BalanceCombatTab:balanceCombatOpen=true;balanceShootingOpen=balanceEnemiesOpen=balanceRewardsOpen=false;break;
+        case Action::BalanceCombatTab:balanceCombatOpen=true;balanceBombsOpen=false;balanceShootingOpen=balanceEnemiesOpen=balanceRewardsOpen=false;break;
+        case Action::BalanceDamageHealthTab:balanceBombsOpen=false;break;
+        case Action::BalanceBombsTab:balanceBombsOpen=true;break;
+        case Action::BombFuseDown:case Action::BombFuseUp:
+        case Action::BombRadiusDown:case Action::BombRadiusUp:
+        case Action::BombDamageDown:case Action::BombDamageUp:
+        case Action::BombSelfDamageDown:case Action::BombSelfDamageUp: {
+            auto t=balancePreset.inventoryBombs;
+            const auto adjust=[](float value,float step,float lo,float hi){return std::clamp(std::round((value+step)*100)/100,lo,hi);};
+            if(action==Action::BombFuseDown||action==Action::BombFuseUp)
+                t.fuseMultiplier=adjust(t.fuseMultiplier,action==Action::BombFuseUp?.05f:-.05f,.25f,4);
+            else if(action==Action::BombRadiusDown||action==Action::BombRadiusUp)
+                t.radiusMultiplier=adjust(t.radiusMultiplier,action==Action::BombRadiusUp?.05f:-.05f,.25f,3);
+            else if(action==Action::BombDamageDown||action==Action::BombDamageUp)
+                t.damage=std::clamp(t.damage+(action==Action::BombDamageUp?5:-5),1.f,500.f);
+            else t.selfDamageHalfHearts=std::clamp(t.selfDamageHalfHearts+(action==Action::BombSelfDamageUp?1:-1),-1,12);
+            setInventoryBombs(t);break;
+        }
+        case Action::ResetInventoryBombs:setInventoryBombs({});break;
         case Action::CombatDamageDown:case Action::CombatDamageUp:
             setCombatBalance(std::clamp(std::round((balancePreset.playerDamage+(action==Action::CombatDamageUp?.1f:-.1f))*10)/10,
                              BalancePreset::MinDamage,BalancePreset::MaxDamage),balancePreset.regularHealthMultiplier);break;
@@ -860,8 +879,10 @@ std::vector<Action> Game::menuActions() const {
             std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::RoomHeartsOff,Action::RoomHeartsSource,Action::RoomHeartsTest,Action::ApplyMapChanges}:
             balanceRewardsOpen?
             std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::ToggleRedHeartRewards,Action::ToggleCoinRewards,Action::ToggleChestRewards,Action::ToggleKeyRewards,Action::ToggleBombRewards,Action::RewardLuckDown,Action::RewardLuckUp,Action::ResetRewardLuck,Action::HeartAppearanceDown,Action::HeartAppearanceUp,Action::ResetHeartAppearance}:
+            balanceCombatOpen&&balanceBombsOpen?
+            std::vector<Action>{Action::BalanceDamageHealthTab,Action::BalanceBombsTab,Action::BombFuseDown,Action::BombFuseUp,Action::BombRadiusDown,Action::BombRadiusUp,Action::BombDamageDown,Action::BombDamageUp,Action::BombSelfDamageDown,Action::BombSelfDamageUp,Action::ResetInventoryBombs}:
             balanceCombatOpen?
-            std::vector<Action>{Action::CombatDamageDown,Action::CombatDamageUp,Action::RegularHealthDown,Action::RegularHealthUp,Action::ResetCombat}:
+            std::vector<Action>{Action::BalanceDamageHealthTab,Action::BalanceBombsTab,Action::CombatDamageDown,Action::CombatDamageUp,Action::RegularHealthDown,Action::RegularHealthUp,Action::ResetCombat}:
             balanceEnemiesOpen&&balancePooterOpen?
             std::vector<Action>{Action::PooterMovementDown,Action::PooterMovementUp,Action::PooterShotDown,Action::PooterShotUp,Action::PooterDelayDown,Action::PooterDelayUp,Action::ResetPooter}:
             balanceEnemiesOpen?

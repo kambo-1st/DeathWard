@@ -1,0 +1,75 @@
+{
+  "cases": [
+    {
+      "name": "schema5",
+      "command": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "129",
+        "--review-source-room",
+        "32",
+        "--mute",
+        "--save",
+        "/tmp/deathward-d10a-cli-4hs1skp2/schema5.save",
+        "--balance-preset",
+        "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+      ],
+      "passed": true,
+      "startup": [
+        "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=1ec95d139de7ccac profile=custom",
+        "ROOM_REVIEW requested=32 room=2 template=32 selection_seed=3325565276 spawn_seed=3857519545 chest_slots=0 chests=0 bomb_slots=3 layout_bombs=3 key_slots=0 layout_keys=0 coin_slots=0 layout_coins=0 hp=6 god=0"
+      ],
+      "log": "cli-schema5.log",
+      "intentional_exit": "terminated after successful startup validation"
+    },
+    {
+      "name": "schema24",
+      "command": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "129",
+        "--review-source-room",
+        "32",
+        "--mute",
+        "--save",
+        "/tmp/deathward-d10a-cli-4hs1skp2/schema24.save",
+        "--balance-preset",
+        "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d09d-bombs/preset-v24-clear-off.json"
+      ],
+      "passed": true,
+      "startup": [
+        "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 bomb_rewards=0 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=e6855b5d86b3f84f profile=custom",
+        "ROOM_REVIEW requested=32 room=2 template=32 selection_seed=3325565276 spawn_seed=3857519545 chest_slots=0 chests=0 bomb_slots=3 layout_bombs=3 key_slots=0 layout_keys=0 coin_slots=0 layout_coins=0 hp=6 god=0"
+      ],
+      "log": "cli-schema24.log",
+      "intentional_exit": "terminated after successful startup validation"
+    },
+    {
+      "name": "schema25",
+      "command": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "129",
+        "--review-source-room",
+        "32",
+        "--mute",
+        "--save",
+        "/tmp/deathward-d10a-cli-4hs1skp2/schema25.save",
+        "--balance-preset",
+        "/tmp/deathward-d10a-input-2lcd8w0z/artifacts/d10a-preset.json"
+      ],
+      "passed": true,
+      "startup": [
+        "BALANCE speed=1 room_size=1.11 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1.05 bomb_radius=0.95 bomb_damage=110 bomb_self=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=58d67030ea6e83e5 profile=custom",
+        "ROOM_REVIEW requested=32 room=2 template=32 selection_seed=3325565276 spawn_seed=3857519545 chest_slots=0 chests=0 bomb_slots=3 layout_bombs=3 key_slots=0 layout_keys=0 coin_slots=0 layout_coins=0 hp=6 god=0"
+      ],
+      "log": "cli-schema25.log",
+      "intentional_exit": "terminated after successful startup validation"
+    }
+  ],
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "original_preset_unchanged": true
+}

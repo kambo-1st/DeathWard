@@ -1,0 +1,89 @@
+{
+  "date": "2026-11-15",
+  "status": "enabled-developer-verified-scoped-human-accepted",
+  "accepted_previous_commit": "12eccfa1",
+  "committed": true,
+  "schema": 25,
+  "native_reference_script": "scripts/isaac-reference/analyze-player-bombs.py --check",
+  "native_case_counts": {
+    "initialization": 48,
+    "countdown": 82,
+    "radius": 12,
+    "incoming_amount": 21,
+    "historical_inheritance_research_only": 6,
+    "historical_motion_research_only": 72
+  },
+  "runtime_source_matrix_subset": {
+    "radius": 12,
+    "ordinary_admitted_incoming_amount": 6
+  },
+  "fuse_partitions_hz": [
+    30,
+    60,
+    120
+  ],
+  "ordinary_reference": {
+    "source_countdown": 45,
+    "detonation_invocation": 46,
+    "adapter_clock_hz": 30,
+    "adapter_fuse_seconds": 1.5333333333333334,
+    "source_damage": 100,
+    "internal_damage": 320,
+    "source_base_radius": 75,
+    "world_radius": 3.173076923076923,
+    "world_per_source_coordinate": 0.04230769230769231,
+    "self_damage_half_hearts": 2
+  },
+  "focused_core_suites": [
+    "inventory_bomb_tuning",
+    "balance_preset_contract"
+  ],
+  "actual_game_renderer_checks": [
+    {
+      "check": "dynamite-balance",
+      "exit_code": 0,
+      "log": "dynamite-balance.log"
+    },
+    {
+      "check": "bombs",
+      "exit_code": 0,
+      "log": "bombs.log"
+    },
+    {
+      "check": "dynamite",
+      "exit_code": 0,
+      "log": "dynamite.log"
+    }
+  ],
+  "cli_cases": 3,
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "original_preset_unchanged": true,
+  "human_acceptance": true,
+  "web_runtime_verified": false,
+  "full_native_acceptance": false,
+  "corrected_findings": [
+    "30/60Hz passed initially but120Hz float accumulation delayed one substep; a double-precision age accumulator fixes default and longest fuses across partitions.",
+    "Existing tuning action guard excluded appended controls; explicitly admitted the new action range.",
+    "New UI reset row overlapped the preset footer; compacted rows and visually inspected final capture.",
+    "Invalid-preset fixture correctly paused the game; the test now explicitly resumes before subsequent placement. No gameplay unpausing behavior was changed."
+  ],
+  "remaining": [
+    "independent live-native bomb factory/update timing and complete collision/recipient/physics equivalence",
+    "special bomb flags/items/characters and full native profile/seed behavior",
+    "browser runtime verification",
+    "gameplay save continuity"
+  ],
+  "next_unselected": "Broader ordinary destructibles and keyed doors, followed by later delivery families.",
+  "sha256": {
+    "src/combat/InventoryBombTuning.hpp": "fc4ffa7898608e0c09ebb51197c2c23767eddc67cca44cc495d93668e00bb181",
+    "src/combat/Dynamite.cpp": "2b13a9c742fd73a59f47e1ec874ba3e0fa46694254112f73cac4312fc78a22e1",
+    "src/combat/Enemies.cpp": "129dd55cc942dc13651bdb52e767a2573d83612516943d6a1826291894db8aa8",
+    "src/core/BalancePreset.cpp": "15f062a830952ca5c89b098a465b0305ed20ee322906450861c0806cb55dfd91",
+    "src/core/GameTuning.cpp": "7bd3e6c20bcfc6ec524ba4050e60deea7e56473a69e3524e1922fb1c9f59d446",
+    "src/render/Renderer.cpp": "ff560b5b675dbe8dae81b16bf14ed8beb355f8b185436aa785ca00f45dfbbb03",
+    "src/render/ParticleEffects.cpp": "e15e149b2bd36ff1dec1b8fc9e8b32b2fd0fd49d15362d3002154f3a6340d0ca",
+    "assets/particles/combat-manifest.json": "634649927a7b4ffb36ee598085aced0cc87c639e93aefab74a820583323190ed",
+    "build/deathward": "51c8d051690afd31f3e47dca731329529be5f4364dc2fea9220dcad9fbc395df"
+  },
+  "human_acceptance_record": "human-acceptance.json"
+}

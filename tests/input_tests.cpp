@@ -436,6 +436,58 @@ void spiderBalanceInputCheck(const std::filesystem::path &directory) {
           "fresh Game restores independent enemy and accepted user settings");fresh.close();
     std::cout<<"PASS D05 actual Game encounter, UI mouse/keyboard, live edit, export/reload/rejection, map/floor/retry/fresh-session persistence\n";
 }
+void dynamiteBalanceInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"dynamite-balance.save",preset=directory/"dynamite.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="129";game.reviewSourceRoomTemplate=32;
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
+    check(game.run&&game.error.empty(),"D10a main-game launch");auto &run=*game.run;Renderer renderer;
+    const auto frame=[&] {game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"D10a UI errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int k){mouseEvent(KeyDown,k);frame();mouseEvent(KeyUp,k);frame();};
+    const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"D10a capture");UnloadImage(im);EndDrawing();};
+    check(run.inventoryBombTuning&&!run.inventoryBombTuning->custom()&&run.player.hp==6&&!run.godMode&&game.cameraZoomPercent()==165,
+          "old accepted preset migrates with D10a references and normal hearts/view");
+    game.updateCamera(10);frame();key(KEY_B);
+    check(run.hazards.size()==1&&run.hazards[0].tunedInventoryBomb&&run.dynamite==2,"B creates calibrated ordinary charge");
+    click(374,642);click(835,143);click(975,189);check(game.balanceBombsOpen&&game.balanceCombatOpen,"COMBAT DYNAMITE subtab opens");
+    const auto birth=run.hazards[0];
+    click(1000,240);click(850,292);click(1000,344);click(1000,396);
+    const auto tune=*run.inventoryBombTuning;
+    check(tune.fuseMultiplier==1.05f&&tune.radiusMultiplier==.95f&&tune.damage==105&&tune.selfDamageHalfHearts==0,
+          "mouse edits four independent bomb controls, including zero self damage");
+    check(run.hazards[0].delay==birth.delay&&run.hazards[0].radius==birth.radius&&run.hazards[0].blastDamage==birth.blastDamage&&run.hazards[0].damage==birth.damage&&run.hazards[0].age==birth.age,
+          "open tuning pauses the fuse; edits retain lit charge birth settings");
+    for(int n=0;n<40&&game.keyboardFocus()!=Action::BombDamageUp;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::BombDamageUp,"new controls enter keyboard navigation");key(KEY_ENTER);
+    check(run.inventoryBombTuning->damage==110,"keyboard edits next charge damage");
+    game.setRoomSize(1.11f);check(game.hasPendingMapChanges()&&run.roomSizeScale==1.1f,"map edit still waits for Apply");
+    click(330,605);click(900,605);capture("artifacts/d10a-dynamite-panel.png");
+    const auto exported=BalancePreset::load(preset,run.content->fingerprint());
+    check(exported.inventoryBombs.damage==110&&exported.inventoryBombs.selfDamageHalfHearts==0&&exported.roomSizeScale==1.11f&&exported.defaultZoomPercent==165,
+          "export and remember include all bomb edits, staged map and accepted view");
+    const auto invalid=directory/"invalid-dynamite.json";auto json=exported.json();const auto at=json.find("\"fuse_multiplier\": 1.05");check(at!=json.npos,"invalid bomb preset fixture");json.replace(at,std::string("\"fuse_multiplier\": 1.05").size(),"\"fuse_multiplier\": 0.01");
+    {std::ofstream out(invalid);out<<json;}
+    const auto revision=game.balancePreset.revision(),draft=game.balanceDraft.revision();game.balanceFile=invalid.string();game.perform(Action::LoadBalance);
+    check(!game.error.empty()&&game.balancePreset.revision()==revision&&game.balanceDraft.revision()==draft&&run.inventoryBombTuning->damage==110,"invalid load cannot partially change live/map/charge settings");
+    game.balanceFile=preset.string();game.perform(Action::LoadBalance);check(game.error.empty(),"valid preset restores after error");
+    click(350,487);check(!run.inventoryBombTuning->custom(),"reset affects only next ordinary charges");
+    click(600,605);check(run.inventoryBombTuning->damage==110&&game.hasPendingMapChanges()&&run.hazards[0].damage==birth.damage,"load preserves lit charge and map boundary");
+    game.applyMapChanges();check(run.hazards.empty()&&run.inventoryBombTuning->damage==110&&run.roomSizeScale==1.11f&&run.player.hp==6,"testing Apply clears old hazards and retains new bomb configuration");
+    game.perform(Action::CloseBalance);game.perform(Action::Resume);run.dynamiteCooldown=0;key(KEY_B);
+    check(run.hazards.size()==1&&run.hazards[0].damage==0&&std::abs(run.hazards[0].blastDamage-352)<.001f&&std::abs(run.hazards[0].delay-46.f/30*1.05f)<.001f,"new B placement consumes loaded snapshot");
+    capture("artifacts/d10a-new-charge.png");
+    run.jumpDebug(run.finalRoom());run.clearRoomDebug();run.floorExitRequested=true;
+    check(run.advanceFloor()&&run.inventoryBombTuning->damage==110,"next floor retains bomb configuration");
+    run.finishDebug(false);game.retryExpedition();
+    check(game.run&&game.run->inventoryBombTuning->damage==110&&game.run->inventoryBombTuning->selfDamageHalfHearts==0&&game.run->player.hp==6,"death retry retains edits with normal health");
+    std::filesystem::copy_file(preset,"artifacts/d10a-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.launch(true);
+    check(fresh.run&&fresh.run->inventoryBombTuning->damage==110&&fresh.run->inventoryBombTuning->fuseMultiplier==1.05f&&fresh.cameraZoomPercent()==165,"fresh session loads remembered bomb settings");fresh.close();
+    std::cout<<"PASS D10a actual Game/Renderer mouse and keyboard, birth snapshots, reset, rejected load, staged Apply, export/load/remember, floor/retry/fresh-session\n";
+}
 void bombInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
@@ -2104,6 +2156,9 @@ int main(int argc, char **argv) {
         if(mode.empty()||mode=="--shooting-balance-only") {
             shootingBalanceInputCheck(directory);
             if(mode=="--shooting-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode=="--dynamite-balance-only") {
+            dynamiteBalanceInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--bombs-only") {
             bombInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

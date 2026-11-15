@@ -158,6 +158,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     next.gaperMovementMultiplier=gaperMovementMultiplier;
     next.spiderMovementMultiplier=spiderMovementMultiplier;
     next.pooterTuning=pooterTuning;
+    next.inventoryBombTuning=inventoryBombTuning;
     next.bombClearRewards=bombClearRewards;next.keyClearRewards=keyClearRewards;next.chestClearRewards=chestClearRewards;next.coinClearRewards=coinClearRewards;next.redHeartClearRewards=redHeartClearRewards;next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
     next.audioEpoch=audioEpoch+1;next.checkpointNeeded=true;
     *this=std::move(next); // Same expedition ID, seed, timer and player; no campaign restart/consequences.
@@ -171,6 +172,7 @@ bool Simulation::advanceFloor() {
     next.gaperMovementMultiplier=gaperMovementMultiplier;
     next.spiderMovementMultiplier=spiderMovementMultiplier;
     next.pooterTuning=pooterTuning;
+    next.inventoryBombTuning=inventoryBombTuning;
     next.bombClearRewards=bombClearRewards;next.keyClearRewards=keyClearRewards;next.chestClearRewards=chestClearRewards;next.coinClearRewards=coinClearRewards;next.redHeartClearRewards=redHeartClearRewards;next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
     const auto spawn=next.player;
     next.player=player;next.player.position=spawn.position;next.player.aim=spawn.aim;next.player.facing=spawn.facing;

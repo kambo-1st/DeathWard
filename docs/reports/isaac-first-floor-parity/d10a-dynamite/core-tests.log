@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  29: inventory_bomb_tuning
+1/2 Test  #29: inventory_bomb_tuning ............   Passed    0.19 sec
+    Start 132: balance_preset_contract
+2/2 Test #132: balance_preset_contract ..........   Passed    0.31 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   0.51 sec

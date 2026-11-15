@@ -1,0 +1,85 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "initialization_cases": 48,
+  "countdown_cases": 82,
+  "inheritance_cases": 6,
+  "free_motion_states": 72,
+  "radius_cases": 12,
+  "incoming_player_cases": 21,
+  "ordinary_placement_cooldown": 30,
+  "entity_xml_sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "ordinary_entity": {
+    "anm2path": "004.000_Bomb.anm2",
+    "baseHP": "0",
+    "boss": "0",
+    "champion": "0",
+    "collisionDamage": "0",
+    "collisionMass": "6",
+    "collisionRadius": "16",
+    "friction": "1",
+    "id": "4",
+    "name": "Bomb",
+    "numGridCollisionPoints": "12",
+    "shadowSize": "13",
+    "stageHP": "0",
+    "variant": "0"
+  },
+  "windows": [
+    {
+      "name": "entity_seed_initialization",
+      "start": "0x6819e6",
+      "end_exclusive": "0x681a26",
+      "sha256": "5b105469121a283b4a723b32fc2e362246722c15db49502580b85655f0fd3a66"
+    },
+    {
+      "name": "initialization",
+      "start": "0x67abbd",
+      "end_exclusive": "0x67ad37",
+      "sha256": "5adfd8022a1ad89344332ceb11490633ddab3dc48a3a0371e9f570763bbfbd2c"
+    },
+    {
+      "name": "countdown",
+      "start": "0x67caf0",
+      "end_exclusive": "0x67cb58",
+      "sha256": "83fd5b6575c07842a3a76e11a898d782738bb07f16ae85719b2cfff556d5bee5"
+    },
+    {
+      "name": "inventory_placement",
+      "start": "0x74a12f",
+      "end_exclusive": "0x74a7cd",
+      "sha256": "90aeec3d8fa70d3087c1c7c51e8f934068805f05cf295db03652f990bca7d33e"
+    },
+    {
+      "name": "explosion_call",
+      "start": "0x67cca9",
+      "end_exclusive": "0x67cda0",
+      "sha256": "66c3b2702dfc672ec887701c1d33263d9092caf2aba6a9d144e60f7662f9ae2d"
+    },
+    {
+      "name": "explosion_radius",
+      "start": "0x6d26e0",
+      "end_exclusive": "0x6d2752",
+      "sha256": "821e6c738f8966039037b54b4155680129396edadb8757c97b05e13a803610b4"
+    },
+    {
+      "name": "radius_application",
+      "start": "0x6d28bb",
+      "end_exclusive": "0x6d294e",
+      "sha256": "64f8a392ed0a7505b849b4442a11ff89be32bbf946b24a43c1ac25591dfb7dd0"
+    },
+    {
+      "name": "incoming_player_amount",
+      "start": "0x6d205b",
+      "end_exclusive": "0x6d20c4",
+      "sha256": "bb486d1cc8b713567d09bf7ce0fdb334f04185c84b43faa34683e056d0681a08"
+    },
+    {
+      "name": "base_physics",
+      "start": "0x686406",
+      "end_exclusive": "0x686497",
+      "sha256": "8aa58bee7866dda1c899c521ab22f0ae7ac378a07817f277bb1ff1e08ab7e2cf"
+    }
+  ],
+  "scope": "Original bounded calculations; supplied variant, nonzero InitSeed, velocity, damage and flags. Actual Entity::Init copies InitSeed and initializes shifts4/3/17 before bomb initialization. No game calculation hooks, patched instructions or substituted RNG/math. Initialization excludes other constructor/configuration/visual setup. Free motion executes base physics with friction1/timeScale1 after inherited velocity. Countdown excludes modifiers/freeze/remote detonation. Radius captures the base threshold before flag/radius multipliers; incoming amount excludes recipient eligibility, earlier flags and TakeDamage. Inventory placement disassembly distinguishes ordinary bombs from FireBomb weapon API. Native scheduler, collision impulses/grid, global spawn seed selection, item/character modifiers and full actor acceptance remain open.",
+  "full_acceptance": false
+}

@@ -131,7 +131,10 @@ enum class Action {
     LoadBalance,
     RememberBalance,
     EditBalancePath,
-    RetryExpedition
+    RetryExpedition,
+    BalanceDamageHealthTab, BalanceBombsTab, BombFuseDown, BombFuseUp,
+    BombRadiusDown, BombRadiusUp, BombDamageDown, BombDamageUp,
+    BombSelfDamageDown, BombSelfDamageUp, ResetInventoryBombs
 };
 class Game {
   public:
@@ -161,6 +164,7 @@ class Game {
     bool buildOpen = false;
     bool balanceOpen = false, balancePathEditing = false, balanceShootingOpen = false;
     bool balanceEnemiesOpen = false, balancePooterOpen = false, balanceCombatOpen = false, balanceRewardsOpen = false, balanceRoomHeartsOpen = false;
+    bool balanceBombsOpen=false;
     BalancePreset balancePreset, balanceDraft;
     std::optional<BalancePreset> nextBalancePreset;
     std::filesystem::path balanceDirectory;
@@ -172,6 +176,7 @@ class Game {
     void setSpiderMovement(float multiplier);
     void setCombatBalance(float damage,float regularHealth);
     void setPooterTuning(float movement,float shotSpeed,float interval);
+    void setInventoryBombs(InventoryBombTuning tuning);
     void setDefaultZoom(float percent);
     void setRoomSize(float scale);
     void setRouteLength(float scale);

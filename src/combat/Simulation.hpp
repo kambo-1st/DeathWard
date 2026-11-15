@@ -3,6 +3,7 @@
 #include "combat/CoinTiming.hpp"
 #include "combat/KeyTiming.hpp"
 #include "combat/BombTiming.hpp"
+#include "combat/InventoryBombTuning.hpp"
 #include "combat/ChestLoot.hpp"
 #include "audio/AudioState.hpp"
 #include "combat/Monsters.hpp"
@@ -834,6 +835,8 @@ struct Hazard {
     bool settled = false;
     bool playerContact = false;
     float blastDamage = DynamiteDamage;
+    bool tunedInventoryBomb=false; // Birth snapshot; live edits never change an already lit charge.
+    double inventoryBombElapsed=0; // Avoid accumulating float error across 30/60/120 Hz partitions.
     int braidCopies = 0;
     bool secondary = false, kicked = false;
     Vector3 braidDirection{1,0,0};
@@ -1195,6 +1198,7 @@ class Simulation {
     std::optional<float> spiderMovementMultiplier;
     bool tunedSpider(const Enemy &e) const { return spiderMovementMultiplier && e.monster==monsterId(85); }
     std::optional<PooterTuning> pooterTuning;
+    std::optional<InventoryBombTuning> inventoryBombTuning; // Main-game D10a; historical fixtures opt in.
     float redHeartAppearanceSpeed=1; // Snapshotted when an ordinary red-heart actor is admitted.
     bool bombClearRewards=false; // Selected D09d; legacy Simulation fixtures opt in.
     bool keyClearRewards=false; // Selected D09c; legacy Simulation fixtures opt in.
@@ -1291,7 +1295,7 @@ class Simulation {
     bool buyShop(int index);
     bool throwDynamite(Vector3 target);
     bool placeDynamite();
-    float dynamiteBlastRadius() const { return itemStacks(ItemId::Braid)?3.3f:DynamiteRadius; }
+    float dynamiteBlastRadius() const { return itemStacks(ItemId::Braid)?3.3f:inventoryBombTuning?inventoryBombTuning->radius():DynamiteRadius; }
     std::vector<Vector3> dynamiteTrajectory(Vector3 target) const;
     std::string shopUnavailable(int index) const;
     ServiceOffer serviceOffer(int index) const;

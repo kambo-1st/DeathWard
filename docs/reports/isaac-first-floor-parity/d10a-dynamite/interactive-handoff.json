@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-15",
+  "command": [
+    "./build/deathward",
+    "--expedition",
+    "--seed",
+    "129",
+    "--review-source-room",
+    "32",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/d10a-dynamite/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "room": 2,
+  "source_template": 32,
+  "seed": 129,
+  "zoom": 165,
+  "health_half_hearts": 6,
+  "god_mode": false,
+  "dynamite": 3,
+  "bomb_settings": {
+    "fuse_multiplier": 1,
+    "radius_multiplier": 1,
+    "source_damage": 100,
+    "self_damage": "Auto / two half-hearts"
+  },
+  "user_review": "scoped accepted on 2026-11-15",
+  "process": "503281 ./build/deathward --expedition --seed 129 --review-source-room 32 --mute --save /home/kambo/.local/share/deathward/reviews/d10a-dynamite/campaign.save --balance-preset /home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+  "human_acceptance_record": "human-acceptance.json"
+}
