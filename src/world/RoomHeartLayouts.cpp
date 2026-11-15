@@ -5,6 +5,7 @@
 #include "world/SourceHeartRockRoomData.hpp"
 #include "world/SourceCombatRockRooms.hpp"
 #include "world/SourceChestRockRoomData.hpp"
+#include "world/SourceCoinRockRoomData.hpp"
 #include "combat/SourceRoomRewards.hpp"
 #include <span>
 #include <stdexcept>
@@ -52,6 +53,8 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode) {
             const auto &selected=BasementHeartLayouts[size_t(selectedIndex)];
             const bool completeChest=selected.variant==SourceChestRockRoom&&index!=2&&index!=3&&
                 std::none_of(keys.begin(),keys.end(),[&](const auto &key){return key.room==index;});
+            const bool completeCoins=selected.variant==SourceCoinRockRoom&&index!=2&&index!=3&&
+                std::none_of(keys.begin(),keys.end(),[&](const auto &key){return key.room==index;});
             layout.sourceHeartTemplate=selected.variant;
             layout.sourceRoomSelectionSeed=selectionSeed;
             layout.sourceRoomSpawnSeed=sourceRoomDescriptorSeeds(selectionSeed).spawn;
@@ -67,6 +70,10 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode) {
                 if(completeChest&&ordinal==Basement31ChestOrdinal) {
                     const auto cell=Basement31ChestCell;
                     layout.chestSpawns.push_back({heartCell(layout,cell[0],cell[1]),spawnState,cell[0],cell[1],ordinal});
+                }
+                if(completeCoins)for(const auto &slot:Basement30Coins)if(slot.ordinal==ordinal) {
+                    const int subtype=slot.subtype==0?sourceOrdinaryPickup(spawnState,20,{}).subtype:slot.subtype;
+                    layout.coinSpawns.push_back({heartCell(layout,slot.x,slot.y),spawnState,slot.x,slot.y,ordinal,slot.subtype,subtype});
                 }
                 if(nextSlot>=selected.slotCount)continue;
                 const auto &slot=BasementHeartSlots[size_t(selected.firstSlot+nextSlot)];
@@ -84,6 +91,10 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode) {
             }
             if(completeChest) {
                 layout.sourceObstacleTemplate=SourceChestRockRoom;
+                layout.kind=RoomKind::Empty;
+            }
+            if(completeCoins) {
+                layout.sourceObstacleTemplate=SourceCoinRockRoom;
                 layout.kind=RoomKind::Empty;
             }
         }
@@ -109,6 +120,7 @@ void Arena::prepareSourceHeartRocks() {
         std::span<const std::array<int,2>> rocks;
         if(layout.sourceObstacleTemplate==91)rocks=Basement91Rocks;
         else if(layout.sourceObstacleTemplate==SourceChestRockRoom)rocks=Basement31Rocks;
+        else if(layout.sourceObstacleTemplate==SourceCoinRockRoom)rocks=Basement30Rocks;
         else if(const auto *source=sourceCombatRockRoom(layout.sourceObstacleTemplate))rocks=source->rocks;
         else continue;
         const float half=sourceHeartCellSize(layout)*.5f;

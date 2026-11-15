@@ -1,0 +1,39 @@
+{
+  "pid": 100092,
+  "command": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "1063",
+    "--review-source-room",
+    "30",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/preplaced-coins/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "seed": 1063,
+  "displayed_room": 2,
+  "source_template": "1.30.0",
+  "rocks": 1,
+  "preplaced_coins": 4,
+  "expected_coin_values": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "hp": 6,
+  "god_mode": false,
+  "zoom": 165,
+  "preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "human_acceptance": {
+    "date": "2026-11-15",
+    "feedback": "yes, nice, it works! Whats are next steps?",
+    "scope": "accepted source30 preplaced-coin playtest; full native coin/economy parity remains open"
+  },
+  "log": "interactive-rerun-1.log",
+  "review_start": "clear source cell4,4; launch aid only",
+  "check": "Collect the four coins around the central rock; money increases by4. Leave/revisit: coins stay collected. No dynamite is needed. Death retry returns here."
+}

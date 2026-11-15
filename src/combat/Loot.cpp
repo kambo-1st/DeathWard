@@ -1,6 +1,22 @@
 #include "combat/Simulation.hpp"
 
 namespace dw {
+void Simulation::deliverRoomCoins(int index) {
+    const auto &spawns=arena.rooms[size_t(index)].coinSpawns;
+    auto &delivered=rooms[size_t(index)].roomCoinsDelivered;
+    delivered.resize(spawns.size(),false);
+    if(dead||finished||moneyPickups.size()>=1024)return;
+    for(size_t i=0;i<spawns.size()&&moneyPickups.size()<1024;++i) {
+        const auto &spawn=spawns[i];
+        if(delivered[i]||spawn.subtype<1||spawn.subtype>3||arena.roomAt(spawn.preferred)!=index||
+           arena.blocked(spawn.preferred,.48f))continue;
+        // Keep the original cell and resolved identity on blocked/capacity
+        // retries. Preplaced coins start idle, without a clear-reward birth gate.
+        MoneyPickup coin{spawn.preferred,sourceOrdinaryCoinValue(spawn.subtype)};
+        coin.sourceSubtype=spawn.subtype;coin.room=index;coin.placedInLayout=true;
+        moneyPickups.push_back(coin);delivered[i]=true;checkpointNeeded=true;
+    }
+}
 void Simulation::prepareMoney() {
     // A separate stream keeps loot from changing room layouts, groups or attacks.
     Random rng(seed_ ^ 0x4d4f4e4559475244ULL);
@@ -100,5 +116,6 @@ void Simulation::updateMoney(float dt) {
     // Keep encounter instructions visible; the wallet itself updates immediately.
     if (collected)
         checkpointNeeded = true;
+    deliverRoomCoins(room); // Deferred admission cannot collect retroactively.
 }
 } // namespace dw

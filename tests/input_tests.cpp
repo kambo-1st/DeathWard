@@ -436,6 +436,49 @@ void spiderBalanceInputCheck(const std::filesystem::path &directory) {
           "fresh Game restores independent enemy and accepted user settings");fresh.close();
     std::cout<<"PASS D05 actual Game encounter, UI mouse/keyboard, live edit, export/reload/rejection, map/floor/retry/fresh-session persistence\n";
 }
+void coinLayoutInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    constexpr int seed=1063;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"coin-layout.save",preset=directory/"coin-layout.json",sourcePreset=directory/"coin-layout-source.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText=std::to_string(seed);game.reviewSourceRoomTemplate=30;
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
+    check(game.run&&game.error.empty(),"direct coin layout launch");auto &run=*game.run;const int owner=run.room;
+    auto count=[&]{return std::count_if(run.moneyPickups.begin(),run.moneyPickups.end(),[&](const auto &p){return p.placedInLayout&&p.room==owner;});};
+    check(owner==1&&count()==4&&run.arena.rooms[size_t(owner)].sourceObstacleTemplate==30&&run.roomClear&&run.player.hp==6&&!run.godMode,"natural room2 has four ready coins with normal health");
+    int expected=0;std::vector<Vector3> positions;
+    for(const auto &coin:run.moneyPickups)if(coin.placedInLayout&&coin.room==owner){expected+=coin.value;positions.push_back(coin.position);check(coin.timing.phase==CoinTiming::Phase::Idle&&coin.timing.collectible(),"preplaced coins idle at launch");}
+    Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"coin layout UI has no errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto clickFloor=[&](Vector3 p){p.y=0;auto screen=GetWorldToScreen(p,game.camera);click(int(screen.x),int(screen.y));};
+    const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"coin layout capture");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();capture("artifacts/coin-layout-room.png");
+    click(374,642);click(575,143);click(680,244);
+    check(!run.coinClearRewards&&count()==4,"clear coin switch leaves existing layout coins intact");
+    game.exportBalancePreset();std::filesystem::copy_file(preset,sourcePreset,std::filesystem::copy_options::overwrite_existing);
+    click(970,190);click(275,270);check(game.hasPendingMapChanges()&&count()==4,"OFF staged without removing layout coins");
+    click(415,446);check(count()==0&&run.roomHeartLayouts==0,"mouse Apply removes source coin layout");
+    game.exportBalancePreset();std::filesystem::copy_file(preset,"artifacts/coin-layout-off-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.balanceFile=sourcePreset.string();click(605,606);
+    check(game.hasPendingMapChanges()&&run.roomHeartLayouts==0&&game.balanceDraft.roomHeartLayouts==1&&count()==0,"mouse Load stages source map without recreating coins early");
+    click(415,446);check(count()==4&&run.roomHeartLayouts==1&&!run.coinClearRewards,"loaded SOURCE Apply restores layout independently of clear coins");
+    game.balanceFile=preset.string();game.exportBalancePreset();game.rememberBalancePreset();capture("artifacts/coin-layout-panel.png");
+    std::filesystem::copy_file(preset,"artifacts/coin-layout-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.perform(Action::CloseBalance);game.paused=false;const auto before=run.money();
+    for(auto point:positions) {
+        game.updateCamera(10);frame();clickFloor(point);
+        for(int n=0;n<360;++n){frame();check(!run.arena.blocked(run.player.position,.48f),"actual mouse navigation respects central rock");}
+    }
+    check(count()==0&&run.money()==before+expected&&run.dynamite==StartingDynamite,"actual mouse collects exact total without dynamite");capture("artifacts/coin-layout-collected.png");
+    run.jumpDebug(0);run.jumpDebug(owner);frame();check(count()==0&&run.money()==before+expected,"revisit does not regenerate collected coins");
+    run.finishDebug(false);game.retryExpedition();
+    check(game.run&&game.run->room==owner&&game.run->player.hp==6&&!game.run->godMode&&!game.run->coinClearRewards&&std::count_if(game.run->moneyPickups.begin(),game.run->moneyPickups.end(),[&](const auto &p){return p.placedInLayout&&p.room==owner;})==4,"retry returns to original four coins at normal health");
+    game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText=std::to_string(seed);fresh.reviewSourceRoomTemplate=30;fresh.loadBalancePreset(preset);fresh.launch(true);
+    check(fresh.run&&fresh.run->room==owner&&fresh.cameraZoomPercent()==165&&fresh.run->player.walkingSpeed()==4.8f&&!fresh.run->coinClearRewards&&std::count_if(fresh.run->moneyPickups.begin(),fresh.run->moneyPickups.end(),[&](const auto &p){return p.placedInLayout&&p.room==owner;})==4,"fresh schema22 load retains layout, independent rewards and accepted feel");fresh.close();
+    std::cout<<"PASS actual Game/Renderer preplaced coins, mouse toggle/Apply/staged Load/collection, revisit/retry and preset reload\n";
+}
 void chestLayoutInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     constexpr int seed=375; // Natural complete source31 room at the accepted preset.
@@ -1962,6 +2005,9 @@ int main(int argc, char **argv) {
         if(mode.empty()||mode=="--shooting-balance-only") {
             shootingBalanceInputCheck(directory);
             if(mode=="--shooting-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode=="--coin-layout-only") {
+            coinLayoutInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--chest-layout-only") {
             chestLayoutInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

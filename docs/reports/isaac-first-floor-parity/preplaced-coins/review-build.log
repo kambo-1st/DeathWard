@@ -1,0 +1,27 @@
+[ 13%] Built target glfw
+[ 17%] Built target raylib
+[ 17%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Simulation.cpp.o
+[ 17%] Built target deathward_runtime_assets
+[ 17%] Linking CXX static library libdeathward_core.a
+[ 91%] Built target deathward_core
+[ 91%] Built target deathward_cloth
+[ 91%] Built target deathward_skinning
+[ 91%] Built target deathward_particles
+[ 91%] Built target deathward_mission_lighting
+[ 91%] Linking CXX executable deathward
+[100%] Built target deathward
+Consolidate compiler generated dependencies of target deathward_core
+[100%] Built target deathward_core
+[100%] Building CXX object CMakeFiles/deathward_coin_layout_tests.dir/tests/coin_layout_tests.cpp.o
+[100%] Linking CXX executable deathward_coin_layout_tests
+[100%] Built target deathward_coin_layout_tests
+[ 13%] Built target glfw
+[ 17%] Built target raylib
+[ 91%] Built target deathward_core
+[ 91%] Built target deathward_skinning
+[ 91%] Built target deathward_cloth
+[ 91%] Built target deathward_particles
+[ 91%] Built target deathward_mission_lighting
+[ 91%] Built target deathward_runtime_assets
+[ 91%] Linking CXX executable deathward_input_tests
+[100%] Built target deathward_input_tests

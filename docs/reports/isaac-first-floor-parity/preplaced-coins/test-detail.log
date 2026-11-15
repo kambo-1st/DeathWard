@@ -1,0 +1,145 @@
+Start testing: Nov 15 10:10 CET
+----------------------------------------------------------
+131/164 Testing: balance_preset_contract
+131/164 Test: balance_preset_contract
+Command: "/home/kambo/workspace/DeathWard/build/deathward_balance_preset_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"balance_preset_contract" start time: Nov 15 10:10 CET
+Output:
+----------------------------------------------------------
+PASS preset round-trip, schema migrations and rejection cases, invalid-export protection and atomic replacement failure
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"balance_preset_contract" end time: Nov 15 10:10 CET
+"balance_preset_contract" time elapsed: 00:00:00
+----------------------------------------------------------
+
+140/164 Testing: heart_rock_room
+140/164 Test: heart_rock_room
+Command: "/home/kambo/workspace/DeathWard/build/deathward_heart_rock_room_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"heart_rock_room" start time: Nov 15 10:10 CET
+Output:
+----------------------------------------------------------
+PASS source91 closed/open pockets, physical movement, doors and real dynamite size=0.750000 cell=1.323077
+PASS source91 closed/open pockets, physical movement, doors and real dynamite size=0.750000 cell=1.389231
+PASS source91 closed/open pockets, physical movement, doors and real dynamite size=0.750000 cell=1.984615
+PASS source91 closed/open pockets, physical movement, doors and real dynamite size=1.100000 cell=1.455385
+PASS source91 closed/open pockets, physical movement, doors and real dynamite size=1.100000 cell=2.037539
+PASS source91 closed/open pockets, physical movement, doors and real dynamite size=1.100000 cell=2.910769
+PASS source91 closed/open pockets, physical movement, doors and real dynamite size=1.500000 cell=1.984615
+PASS source91 closed/open pockets, physical movement, doors and real dynamite size=1.500000 cell=2.778461
+PASS source91 closed/open pockets, physical movement, doors and real dynamite size=1.500000 cell=3.969231
+<end of output>
+Test time =   2.09 sec
+----------------------------------------------------------
+Test Passed.
+"heart_rock_room" end time: Nov 15 10:10 CET
+"heart_rock_room" time elapsed: 00:00:02
+----------------------------------------------------------
+
+142/164 Testing: source_room_coverage
+142/164 Test: source_room_coverage
+Command: "/home/kambo/workspace/DeathWard/build/deathward_room_coverage_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"source_room_coverage" start time: Nov 15 10:10 CET
+Output:
+----------------------------------------------------------
+PASS source=109 seed=70 size=0.750000 room=7 gapers=5 rocks=8 live=1
+PASS source=547 seed=860 size=0.750000 room=5 gapers=2 rocks=39 live=1
+PASS source=548 seed=6 size=0.750000 room=7 gapers=1 rocks=52 live=1
+PASS source=550 seed=737 size=0.750000 room=5 gapers=2 rocks=33 live=1
+PASS source=547 seed=860 size=1.100000 room=5 gapers=2 rocks=39 live=0
+PASS source=548 seed=6 size=1.100000 room=7 gapers=1 rocks=52 live=0
+PASS source=109 seed=2942 size=1.100000 room=7 gapers=5 rocks=8 live=0
+PASS source=550 seed=2704 size=1.100000 room=5 gapers=2 rocks=33 live=0
+PASS source=109 seed=2530 size=1.500000 room=6 gapers=5 rocks=8 live=0
+PASS source=547 seed=841 size=1.500000 room=7 gapers=2 rocks=39 live=0
+PASS source=548 seed=6 size=1.500000 room=7 gapers=1 rocks=52 live=0
+PASS source=550 seed=447 size=1.500000 room=2 gapers=2 rocks=33 live=0
+PASS actual shots/cover/deaths/successors/seals/rewards/demolition/revisit/Apply; shots=33 kills=5
+<end of output>
+Test time =   3.52 sec
+----------------------------------------------------------
+Test Passed.
+"source_room_coverage" end time: Nov 15 10:11 CET
+"source_room_coverage" time elapsed: 00:00:03
+----------------------------------------------------------
+
+143/164 Testing: chest_gameplay
+143/164 Test: chest_gameplay
+Command: "/home/kambo/workspace/DeathWard/build/deathward_chest_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"chest_gameplay" start time: Nov 15 10:11 CET
+Output:
+----------------------------------------------------------
+CHEST seed=50 room=2 init=929161651 drops=20.1 20.1 10.2 20.1 
+PASS capacity/backpressure, actual birth, snapshot, pause and regeneration
+PASS key/dynamite caps, refusal/recovery, once-only collection, live toggle and floor scope
+PASS closed/open walking+dodge from four sides at30/60/120Hz; click routes, edge opening, occupied birth and revisit
+<end of output>
+Test time =  14.71 sec
+----------------------------------------------------------
+Test Passed.
+"chest_gameplay" end time: Nov 15 10:11 CET
+"chest_gameplay" time elapsed: 00:00:14
+----------------------------------------------------------
+
+144/164 Testing: preplaced_chest_layout
+144/164 Test: preplaced_chest_layout
+Command: "/home/kambo/workspace/DeathWard/build/deathward_chest_layout_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"preplaced_chest_layout" start time: Nov 15 10:11 CET
+Output:
+----------------------------------------------------------
+PASS exact source chest/rocks/seed, demolition, click opening, solid body, loot and revisit seed=669 size=0.750000 range=5,5
+PASS exact source chest/rocks/seed, demolition, click opening, solid body, loot and revisit seed=375 size=1.100000 range=7,9
+PASS exact source chest/rocks/seed, demolition, click opening, solid body, loot and revisit seed=375 size=1.500000 range=10,10
+PASS deferred exact admission, OFF/test/later-floor exclusions
+<end of output>
+Test time =   2.22 sec
+----------------------------------------------------------
+Test Passed.
+"preplaced_chest_layout" end time: Nov 15 10:11 CET
+"preplaced_chest_layout" time elapsed: 00:00:02
+----------------------------------------------------------
+
+145/164 Testing: preplaced_coin_layout
+145/164 Test: preplaced_coin_layout
+Command: "/home/kambo/workspace/DeathWard/build/deathward_coin_layout_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"preplaced_coin_layout" start time: Nov 15 10:11 CET
+Output:
+----------------------------------------------------------
+PASS exact source slots/seeds/rock, idle coins, physical click collection, values, revisit/Apply seed=1063 scale=1.100000 range=7,9 total=4
+PASS capacity/blocked identity, partial revisit/inactive clock, all three coin values/caps and scope exclusions
+<end of output>
+Test time =   3.96 sec
+----------------------------------------------------------
+Test Passed.
+"preplaced_coin_layout" end time: Nov 15 10:11 CET
+"preplaced_coin_layout" time elapsed: 00:00:03
+----------------------------------------------------------
+
+146/164 Testing: coin_reward_gameplay
+146/164 Test: coin_reward_gameplay
+Command: "/home/kambo/workspace/DeathWard/build/deathward_coin_reward_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"coin_reward_gameplay" start time: Nov 15 10:11 CET
+Output:
+----------------------------------------------------------
+COIN seed=20 room=2 subtype=1 value=1
+COIN seed=0 room=2 subtype=2 value=5
+COIN seed=1506 room=2 subtype=3 value=10
+PASS source timing at30/60/120Hz, capacity, inactive/pause, live edits, no reroll/retroactive reward, floor boundary
+<end of output>
+Test time =   3.49 sec
+----------------------------------------------------------
+Test Passed.
+"coin_reward_gameplay" end time: Nov 15 10:11 CET
+"coin_reward_gameplay" time elapsed: 00:00:03
+----------------------------------------------------------
+
+End testing: Nov 15 10:11 CET

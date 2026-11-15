@@ -1,0 +1,22 @@
+Start testing: Nov 15 10:15 CET
+----------------------------------------------------------
+145/164 Testing: preplaced_coin_layout
+145/164 Test: preplaced_coin_layout
+Command: "/home/kambo/workspace/DeathWard/build/deathward_coin_layout_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"preplaced_coin_layout" start time: Nov 15 10:15 CET
+Output:
+----------------------------------------------------------
+PASS exact source slots/seeds/rock, idle coins, physical click collection, values, revisit/Apply seed=1322 scale=0.750000 range=5,5 total=13
+PASS exact source slots/seeds/rock, idle coins, physical click collection, values, revisit/Apply seed=1063 scale=1.100000 range=7,9 total=4
+PASS exact source slots/seeds/rock, idle coins, physical click collection, values, revisit/Apply seed=1063 scale=1.500000 range=10,10 total=4
+PASS capacity/blocked identity, partial revisit/inactive clock, all three coin values/caps and scope exclusions
+<end of output>
+Test time =   3.49 sec
+----------------------------------------------------------
+Test Passed.
+"preplaced_coin_layout" end time: Nov 15 10:15 CET
+"preplaced_coin_layout" time elapsed: 00:00:03
+----------------------------------------------------------
+
+End testing: Nov 15 10:15 CET

@@ -1,0 +1,29 @@
+[
+  {
+    "preset": "v21",
+    "room": 2,
+    "zoom": 165,
+    "hp": 6,
+    "god": false,
+    "preplaced_coins": 4,
+    "log": "cli-v21.log"
+  },
+  {
+    "preset": "v22-clear-off",
+    "room": 2,
+    "zoom": 165,
+    "hp": 6,
+    "god": false,
+    "preplaced_coins": 4,
+    "log": "cli-v22-clear-off.log"
+  },
+  {
+    "preset": "v22-layout-off",
+    "room": 2,
+    "zoom": 165,
+    "hp": 6,
+    "god": false,
+    "preplaced_coins": 0,
+    "log": "cli-v22-layout-off.log"
+  }
+]

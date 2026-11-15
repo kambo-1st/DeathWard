@@ -37,7 +37,7 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Recommend committing the accepted source31 delivery, then preplaced ordinary coin slots in one complete source layout with staged Apply/export/load. This next delivery has not started. Other chest layouts, full native loot/physics and prior room/coin gaps remain open.",
+  "next_work": "Recommend committing the accepted coin delivery, then D09c ordinary keys as the next pickup family. D09c is proposed, not selected or started. Wider coin/room coverage, full native coin/chest parity and gameplay save continuity remain open.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-12",
     "status": "Ordinary caller/descriptor and direct-entry delivery accepted; next complete-room continuation selected",
@@ -268,7 +268,7 @@
   "rollback_smoke": "passed:eight-frame empty canyon scene",
   "rollback_verified_at_utc": "2026-11-08T08:14:57Z",
   "rollback_validation": "docs/reports/isaac-first-floor-parity/rollback-20261108/validation.json",
-  "current_application_sha256": "ec854cb02158b6e76ef97cca0dd93ee6c64538a8e8b5dff577b5c188d298fea7",
+  "current_application_sha256": "3effdf636983f9252cc129a34188e891ce6bebab054c9a098be2057b6a5f49c5",
   "shop_upgrade_count_placement_native_verified": false,
   "selected_difference_status": "implemented",
   "selected_difference_scope": "Three full red starting hearts/six half-heart health units;preserve dodge;no other differences.",
@@ -371,7 +371,7 @@
     "production_default_changed": false,
     "full_native_acceptance": false
   },
-  "current_delivery_summary": "Accepted room/coin/chest checkpoint committed as c00b87a3. Complete source31 preplaced chest/rock arrangement enabled and developer-verified; user acknowledged its scoped playtest on 2026-11-15. This new delivery remains uncommitted.",
+  "current_delivery_summary": "Accepted chest room committed as 3dee8d4f. Source30 preplaced coin/rock layout enabled and developer-verified; user accepted its scoped playtest on 2026-11-15. This coin delivery remains uncommitted.",
   "room_scale_timing_checkpoint": {
     "status": "selected step1 verified for native shape1 geometry and ordinary horizontal base-Isaac live motion; shared spatial rollout pending",
     "evidence": "docs/reports/isaac-first-floor-parity/room-scale-timing/README.md",
@@ -636,6 +636,32 @@
       "native chest factory/RNG/physics/timing/profile/modifier equivalence",
       "full expedition gameplay save/restore",
       "prior native room/coin gaps"
+    ],
+    "commit": "3dee8d4f"
+  },
+  "preplaced_coins_checkpoint": {
+    "selected": "2026-11-15",
+    "status": "enabled-developer-verified-scoped-human-accepted",
+    "scope": "complete source1.30.0 four-coin/one-rock arrangement through retained canyon adapter",
+    "report": "docs/reports/isaac-first-floor-parity/preplaced-coins/README.md",
+    "schema": 22,
+    "human_acceptance": {
+      "date": "2026-11-15",
+      "feedback": "yes, nice, it works! Whats are next steps?",
+      "scope": "accepted source30 preplaced-coin playtest; full native coin/economy parity remains open"
+    },
+    "review": {
+      "seed": 1063,
+      "room": 2,
+      "hp": 6,
+      "god": false,
+      "zoom": 165
+    },
+    "remaining": [
+      "other preplaced coin layouts and special coins",
+      "full native seed/factory/physical/profile/modifier/economy equivalence",
+      "full expedition gameplay save/restore",
+      "previous chest loot/physics and broader room gaps"
     ]
   }
 }

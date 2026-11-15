@@ -2235,19 +2235,20 @@ Action Renderer::balancePanel(const Game &game) {
         if(game.balanceRoomHeartsOpen) {
             const int mode=game.balanceDraft.roomHeartLayouts;
             text("SOURCE ROOM LAYOUTS",205,184,22,Gold);
-            text("Placed hearts and chests, rock enclosures and combat arrangements.",205,221,14,Paper);
+            text("Placed hearts, coins and chests, rocks and combat arrangements.",205,221,14,Paper);
             if(button(Action::RoomHeartsOff,"OFF",205,250,150,40,mode==0))return Action::RoomHeartsOff;
             if(button(Action::RoomHeartsSource,"SOURCE LAYOUTS",375,250,300,40,mode==1))return Action::RoomHeartsSource;
             if(button(Action::RoomHeartsTest,"FULL + HALF TEST",695,250,380,40,mode==2))return Action::RoomHeartsTest;
-            text("Source layouts include hearts, enclosed chests and enemies among rocks.",205,312,14,Muted);
+            text("Source layouts include pickups, enclosed chests and enemies among rocks.",205,312,14,Muted);
             text("Full + half test: puts both in one nearby room. This is a testing override.",205,338,14,Muted);
             text("Opening floor only. Room-clear rewards keep their separate settings.",205,364,14,Teal);
             std::string locations;
             if(game.run)for(int i=0;i<game.run->arena.roomCount();++i) {
-                if(std::any_of(game.run->heartPickups.begin(),game.run->heartPickups.end(),[&](const auto &h){return h.placedInLayout&&h.room==i;}))
+                if(!game.run->arena.rooms[size_t(i)].coinSpawns.empty()||!game.run->arena.rooms[size_t(i)].chestSpawns.empty()||
+                   std::any_of(game.run->heartPickups.begin(),game.run->heartPickups.end(),[&](const auto &h){return h.placedInLayout&&h.room==i;}))
                     locations+=(locations.empty()?"":", ")+std::to_string(i+1);
             }
-            text(locations.empty()?"Current floor: no uncollected layout hearts.":"Current floor: layout hearts in room(s) "+locations,205,395,14,Paper);
+            text(locations.empty()?"Current floor: no placed pickup rooms.":"Current floor: placed pickup room(s) "+locations,205,395,14,Paper);
             if(button(Action::ApplyMapChanges,game.hasPendingMapChanges()?"APPLY MAP CHANGES":"MAP SETTINGS APPLIED",205,427,420,40,game.hasPendingMapChanges()))return Action::ApplyMapChanges;
             text("Apply resets floor encounters/pickups; keeps your player and build.",205,480,13,Muted);
         } else {

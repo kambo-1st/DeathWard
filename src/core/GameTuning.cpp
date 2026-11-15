@@ -234,6 +234,7 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
                  <<" template="<<(layout.sourceHeartTemplate>=0?layout.sourceHeartTemplate:layout.sourceCombatTemplate)
                  <<" selection_seed="<<layout.sourceRoomSelectionSeed<<" spawn_seed="<<layout.sourceRoomSpawnSeed
                  <<" chest_slots="<<layout.chestSpawns.size()<<" chests="<<run->chests.size()
+                 <<" coin_slots="<<layout.coinSpawns.size()<<" layout_coins="<<std::count_if(run->moneyPickups.begin(),run->moneyPickups.end(),[&](const auto &coin){return coin.placedInLayout&&coin.room==run->room;})
                  <<" hp="<<run->player.hp<<" god="<<run->godMode<<'\n';
     }
 }

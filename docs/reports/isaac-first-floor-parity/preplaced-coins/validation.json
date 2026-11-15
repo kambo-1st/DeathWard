@@ -1,0 +1,88 @@
+{
+  "status": "enabled-developer-verified-scoped-human-accepted",
+  "previous_chest_commit": "3dee8d4f",
+  "new_delivery_committed": false,
+  "source_record": "1.30.0",
+  "source_sha256": "524406fcb10c6275995292c0bd024cfc43d3d30c32b233e55d4d514573d963b0",
+  "source_extraction": "extract-room-heart-layouts.py --check passes",
+  "tests_pass": [
+    "preplaced_coin_layout",
+    "balance_preset_contract",
+    "coin_reward_gameplay",
+    "preplaced_chest_layout",
+    "chest_gameplay",
+    "source_room_coverage",
+    "heart_rock_room"
+  ],
+  "size_cases": [
+    {
+      "seed": 1322,
+      "scale": 0.75,
+      "range": [
+        5,
+        5
+      ],
+      "values": [
+        1,
+        1,
+        1,
+        10
+      ]
+    },
+    {
+      "seed": 1063,
+      "scale": 1.1,
+      "range": [
+        7,
+        9
+      ],
+      "values": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "seed": 1063,
+      "scale": 1.5,
+      "range": [
+        10,
+        10
+      ],
+      "values": [
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "checks": [
+    "four source cells and exact descriptor/ordinal seeds including rock RNG step",
+    "shared ordinary subtype resolver with rare gates off",
+    "one central rock, no extra enemies/cache/piles/combat-clear award",
+    "idle on entry and physical click paths around rock",
+    "exact collection and partial/complete revisit without duplication",
+    "capacity and blocked position retain identity/location",
+    "penny/nickel/dime cap admission and clipping at99",
+    "OFF/SOURCE Apply keeps player/build/wallet/expedition and safe spawn",
+    "actual Game mouse toggle/Apply/staged Load/collection/export/retry",
+    "fresh schema21 and22 CLI loads; clear-coin switch independent",
+    "accepted165% preset bytes unchanged"
+  ],
+  "test_scope": "Three boundary/reference dimension cases, not an exhaustive random-floor sweep. Cap tests use explicit actor-consumer subtype fixtures; natural baseline is four pennies and minimum case includes a dime. Temporary seed searches inspect metadata; all recorded size cases are verified in the unmodified actual Simulation path.",
+  "human_acceptance": {
+    "date": "2026-11-15",
+    "feedback": "yes, nice, it works! Whats are next steps?",
+    "scope": "accepted source30 preplaced-coin playtest; full native coin/economy parity remains open"
+  },
+  "native_full_parity": false,
+  "user_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "unfinished": [
+    "other preplaced coin layouts and special coins",
+    "full native seed/factory/physical/profile/modifier/economy equivalence",
+    "full expedition gameplay save/restore",
+    "previous chest loot/physics and broader room gaps"
+  ]
+}

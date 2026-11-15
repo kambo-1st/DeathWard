@@ -2,6 +2,8 @@
 #include "combat/ChestGeometry.hpp"
 #include "world/SourceCombatRockRooms.hpp"
 #include "world/SourceChestRockRoomData.hpp"
+#include "world/SourceCoinRockRoomData.hpp"
+#include "world/SourceHeartRockRoom.hpp"
 #include "combat/LobFlight.hpp"
 #include "combat/PlayerShooting.hpp"
 #include "combat/SourceTime.hpp"
@@ -410,6 +412,7 @@ void Simulation::enterRoom(int index) {
     }
     deliverRoomHearts(room);
     deliverRoomChests(room);
+    deliverRoomCoins(room);
     checkpointNeeded = true;
 }
 void Simulation::clearRoom() {
@@ -575,7 +578,15 @@ bool Simulation::enterSourceRoomReview(int variant) {
         // does not contain the complete combat record and cannot review it.
         if(sourceCombatRockRoom(variant)&&layout.sourceCombatTemplate!=variant)continue;
         if(variant==SourceChestRockRoom&&layout.sourceObstacleTemplate!=variant)continue;
-        cancelMove();player.position=layout.entry;
+        if(variant==SourceCoinRockRoom&&layout.sourceObstacleTemplate!=variant)continue;
+        auto reviewStart=layout.entry;
+        if(variant==SourceCoinRockRoom) {
+            // Review-only approach keeps the four coins visible at the user's
+            // retained zoom, without starting within their collection radius.
+            const auto near=sourceHeartCell(layout,4,4);
+            if(!arena.blocked(near,.48f)&&!arena.path(layout.entry,near,.48f).empty())reviewStart=near;
+        }
+        cancelMove();player.position=reviewStart;
         enterRoom(i);player.aim=layout.exit;
         announce("ROOM REVIEW / Source "+std::to_string(variant)+" / "+roomName(),6);
         return true;

@@ -1055,6 +1055,7 @@ struct RoomProgress {
     std::optional<RedHeartClearAward> redHeartAward;
     std::vector<bool> roomHeartsDelivered;
     std::vector<bool> roomChestsDelivered;
+    std::vector<bool> roomCoinsDelivered;
     std::array<ItemKey, 2> offers{};
     std::array<bool,2> serviceSold{};
     // The active room uses Simulation::enemies; other rooms keep their actual group here.
@@ -1083,6 +1084,7 @@ struct MoneyPickup {
     bool dropped = false;
     int sourceSubtype=0,room=-1;
     CoinTiming timing{};
+    bool placedInLayout=false;
 };
 enum class ShopOfferKind { Power, Medicine, Dynamite };
 struct ShopOffer {
@@ -1637,6 +1639,7 @@ class Simulation {
     void prepareRoomHearts();
     void deliverRoomHearts(int index);
     void deliverRoomChests(int index);
+    void deliverRoomCoins(int index);
     void resolveRedHeartClearAward();
     void deliverRedHeartClearAward();
     bool hurtPlayer(float damage, const Context &context = {}, bool hostile = true);

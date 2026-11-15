@@ -1,6 +1,6 @@
 # Preplaced ordinary chest — source room 1.31.0
 
-Selected on 2026-11-15 after the user accepted the corrected chest and approved the proposed commit and preplaced-layout continuation. The earlier room/coin/chest checkpoint is committed as `c00b87a3`. **The preplaced chest is enabled and developer-verified. The user positively acknowledged the scoped playtest on 2026-11-15 ("ok, cool, whats next???").** This new continuation remains uncommitted.
+Selected on 2026-11-15 after the user accepted the corrected chest and approved the proposed commit and preplaced-layout continuation. The earlier room/coin/chest checkpoint is committed as `c00b87a3`. **The preplaced chest is enabled and developer-verified. The user positively acknowledged the scoped playtest on 2026-11-15 ("ok, cool, whats next???").** This delivery is committed as `3dee8d4f`.
 
 ## Playable check
 
@@ -37,4 +37,4 @@ Five focused suites pass: preplaced chest layout, preset contracts, existing che
 
 The actual Game/Renderer check uses mouse OFF/SOURCE/Apply, normal-health keyboard dynamite placement and retreat, mouse chest opening, revisit, death retry, export/remember and a fresh load. Three CLI launches cover schema20 with clear-chests off, schema21 enabled, and schema21 source layouts off. Closed/open renders were inspected at165%. [Validation](validation.json), [tests](tests.log), [detailed size checks](test-detail.log), [actual input workflow](input.log), [CLI loads](cli-validation.json).
 
-Recommended next steps: commit this accepted delivery, then return to preplaced ordinary coin slots in one complete compatible source arrangement, retaining its obstacles/access restrictions and the SOURCE LAYOUTS Apply/export/load controls. This next delivery is proposed, not started. Remaining work includes other preplaced chest templates, full native loot distribution/pills/trinkets/nested/special chests, native factory/RNG/pushing/timing/profile/modifiers, full gameplay save continuity and the earlier room/coin gaps. Exact Isaac size/shape/connections remain excluded; bulk parity stays paused.
+The accepted delivery is committed as `3dee8d4f`. The user subsequently selected [preplaced ordinary coins](../preplaced-coins/README.md) in one complete compatible source arrangement. Remaining work includes other preplaced chest templates, full native loot distribution/pills/trinkets/nested/special chests, native factory/RNG/pushing/timing/profile/modifiers, full gameplay save continuity and the earlier room/coin gaps. Exact Isaac size/shape/connections remain excluded; bulk parity stays paused.

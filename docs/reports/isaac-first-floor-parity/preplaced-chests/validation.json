@@ -1,7 +1,7 @@
 {
   "status": "developer-verified-scoped-human-acknowledgment",
   "accepted_checkpoint_commit": "c00b87a3",
-  "new_delivery_committed": false,
+  "new_delivery_committed": true,
   "source_extraction": "Pinned Basement STB SHA and complete 1.31.0 record verified by extractor --check",
   "source_sha256": "524406fcb10c6275995292c0bd024cfc43d3d30c32b233e55d4d514573d963b0",
   "tests_pass": [
@@ -65,5 +65,6 @@
     "native chest factory/RNG/physics/timing/profile/modifier equivalence",
     "full expedition gameplay save/restore",
     "prior native room/coin gaps"
-  ]
+  ],
+  "commit": "3dee8d4f"
 }
