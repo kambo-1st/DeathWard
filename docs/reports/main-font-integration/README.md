@@ -4,6 +4,11 @@ The user accepted the finished font and requested: "Nice commit and use it as a
 main font." The font and six-letter study are preserved in commit `32991e0d`.
 This checkpoint enables the accepted face in the native game.
 
+The user accepted the native interactive font review after launch ("nice
+commit..."). The font implementation is committed as `53c10729`; this follow-up
+records that acceptance. It does not accept or commit the separate D09d gameplay
+delivery visible in the same working build.
+
 `MainFont` provides shared drawing and width measurement for the front-end title,
 save-slot screen, settings, gameplay HUD, pause/tuning/build/journal screens and
 runtime cinematic text. It normalizes size against the actual capital height,
@@ -62,8 +67,7 @@ Run from the repository root:
 build/deathward --expedition --mute
 ```
 
-Remaining: the user's in-game visual acceptance, plus a browser-specific visual
-check (web assets are configured but a browser build/playtest was not performed
+Remaining: a browser-specific visual check (web assets are configured but a browser build/playtest was not performed
 for this checkpoint). Less-common inherited Unicode forms and combining-mark
 layout retain the documented font scope; no gameplay/balance changes are part
 of this delivery.

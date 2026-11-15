@@ -34,9 +34,10 @@
   },
   "browser_assets_included": true,
   "browser_visual_check": false,
-  "human_in_game_acceptance": false,
+  "human_in_game_acceptance": true,
   "remaining": [
-    "Human in-game visual review",
     "Browser-specific visual verification"
-  ]
+  ],
+  "font_integration_commit": "53c10729",
+  "human_in_game_acceptance_quote": "nice commit..."
 }

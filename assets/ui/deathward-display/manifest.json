@@ -44,10 +44,10 @@
   "human_full_font_acceptance": true,
   "game_integrated": true,
   "remaining": [
-    "Human in-game visual review",
     "Browser-specific visual verification",
     "Broader inherited Unicode and combining-mark layout remain outside this Latin display delivery"
   ],
   "human_full_font_acceptance_quote": "Nice commit and use it as a main font",
-  "integration_report": "../../../docs/reports/main-font-integration/README.md"
+  "integration_report": "../../../docs/reports/main-font-integration/README.md",
+  "human_native_in_game_acceptance": true
 }

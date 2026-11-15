@@ -452,7 +452,8 @@ def main():
                 'minimum_alphanumeric_vector_ink_gap_units': vector_gap,
                 'spacing_checks': spacing, 'human_six_letter_direction_accepted': True,
                 'human_full_font_acceptance': True, 'game_integrated': True,
-                'remaining': ['Human in-game visual review and browser-specific visual verification',
+                'human_native_in_game_acceptance': True,
+                'remaining': ['Browser-specific visual verification',
                               'Broader inherited Unicode redesign and combining-mark layout are outside this Latin display delivery']}
     (HERE / 'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
     (HERE / 'OFL.txt').write_bytes((STUDY_DIR / 'OFL.txt').read_bytes())

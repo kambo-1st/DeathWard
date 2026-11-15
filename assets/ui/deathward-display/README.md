@@ -8,7 +8,8 @@ hand-cut style, with sparse deterministic edge wear applied afterward.
 
 **Status:** the user accepted the complete font ("Nice commit and use it as a
 main font"). The accepted artifact and six-letter study are committed as
-`32991e0d`. Main-game integration is now enabled and developer-verified; see
+`32991e0d`. Main-game integration is committed as `53c10729`, developer-verified
+and accepted by the user after the native interactive launch; see
 `../../../docs/reports/main-font-integration/README.md` for the scope and screenshots.
 
 ## Files
@@ -84,7 +85,7 @@ helpers, the previous `deathward-block` OTF for comparison, and `assets/ui/body.
 for specimen labels. It writes only this artifact directory. The original Anton
 attribution/license is retained; the font uses its own family/PostScript names.
 
-Remaining: the user's in-game visual acceptance and browser-specific visual
-verification. Broader inherited Unicode redesign and combining-mark layout remain
+Remaining: browser-specific visual verification. Broader inherited Unicode
+redesign and combining-mark layout remain
 outside this Latin display delivery. Native title, settings, HUD, tuning and
 runtime dialogue have been checked with the integrated font.
