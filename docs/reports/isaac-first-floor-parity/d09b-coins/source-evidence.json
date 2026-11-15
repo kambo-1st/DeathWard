@@ -1,0 +1,37 @@
+{
+  "target": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "verified_preserved_evidence": {
+    "docs/reports/isaac-first-floor-parity/room-awards/native-awards.csv": "d89fab7250594fafd9d78d2a2cda770dd370d675787f511e990a7269fa9a6a09",
+    "docs/reports/isaac-first-floor-parity/room-awards/native-pickups.csv": "7d67dc16fef2fce8429856fa7b11ef7cd34910a2165c80d7f56127d1f9d7a3ac",
+    "docs/reports/isaac-first-floor-parity/room-awards/award_selector.asm": "f5132020448ccc277d64e378639d35e061b29b8f632e25306763790e3a9200c2",
+    "docs/reports/isaac-first-floor-parity/room-awards/award_spawn.asm": "cb0863174cd02cf6ce4814c432d8b708c69f821565478c797ba2a5d4a171aa70",
+    "docs/reports/isaac-first-floor-parity/room-awards/pickup_resolver.asm": "d6d157ab6e4b9a0caad127e78f62376f22769a09986067a70faa4ad6530627f1",
+    "docs/reports/isaac-first-floor-parity/coins/native-values.csv": "bab7a42aad2a7e608e9c3741d45d8b080dce4e3540fa78a9be16e6625bdd6c39",
+    "docs/reports/isaac-first-floor-parity/coins/native-wallet.csv": "0f4b9d78b16987aa8c6a13762ae7b579a39104f04937a6dca0c324e7e9c3ec59",
+    "docs/reports/isaac-first-floor-parity/coins/coin_value.asm": "9644ddfd3f3e320c45403e8daabaf9d9bae6461b7e8b582c7d51a72284380a93",
+    "docs/reports/isaac-first-floor-parity/coins/add_coins.asm": "dde35e70f988b51df3f5b1af596a87e39dd1f580ecf5f2517514e88730a5511d",
+    "docs/reports/isaac-first-floor-parity/coins/animations/producer-coins/005.021_Penny.anm2": "0da6694ba1dc68b210413af8f5b707de15bffe5554de3b1603ad9149ed926387",
+    "docs/reports/isaac-first-floor-parity/coins/animations/producer-coins/005.022_Nickel.anm2": "5396097ac3172ee4ffe0309ada5af70d5cf041bdceb9cd6caffaa112910a431f",
+    "docs/reports/isaac-first-floor-parity/coins/animations/producer-coins/005.023_Dime.anm2": "afe7e2ad7b4cefeb20c18c8737d32e69379dc96b2eebbe281dfc52fa3b26ac8b"
+  },
+  "native_coin_resolver_cases": 1036,
+  "ordinary_generated_subtypes": {
+    "1": 1,
+    "2": 5,
+    "3": 10
+  },
+  "rare_gates": {
+    "sticky": false,
+    "lucky": false,
+    "goldenCoin": false
+  },
+  "scope": "Ordinary Normal empty-inventory award/resolver, explicit rare gates off; preserved evidence, not a new live game capture. Full profile/factory/physical scheduling unaccepted.",
+  "timing": {
+    "appear": 33,
+    "drop": 23,
+    "collect": 14,
+    "adapter_hz": 30
+  },
+  "wallet": "Source coin admits below99, consumes whole value clipped at99; retained shared DW wallet and legacy producers are not a full source economy."
+}

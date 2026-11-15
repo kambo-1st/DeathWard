@@ -1,0 +1,515 @@
+{
+  "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/01.basement.stb",
+  "sha256": "524406fcb10c6275995292c0bd024cfc43d3d30c32b233e55d4d514573d963b0",
+  "template": "1.547.0",
+  "metadata": {
+    "index": 547,
+    "type": 1,
+    "variant": 547,
+    "subtype": 0,
+    "difficulty": 1,
+    "shape": 1,
+    "doors": 5,
+    "weight": 1.0,
+    "spawnCount": 41,
+    "slots": []
+  },
+  "slots": [
+    {
+      "x": 0,
+      "y": 0,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 4,
+      "y": 0,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 9,
+      "y": 0,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 10,
+      "y": 0,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 11,
+      "y": 0,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 12,
+      "y": 0,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 12,
+      "y": 1,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "choices": [
+        {
+          "type": 10,
+          "variant": 1,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "choices": [
+        {
+          "type": 10,
+          "variant": 1,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 9,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 10,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 11,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 12,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 9,
+      "y": 6,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 10,
+      "y": 6,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 11,
+      "y": 6,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "x": 12,
+      "y": 6,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    }
+  ],
+  "rock_count": 39,
+  "gapers": 2,
+  "pickups": 0,
+  "scope": "Complete source content record. Canyon size, shape and connections are retained; native runtime grid substitution, actor AI, drops and physics are separate verification."
+}

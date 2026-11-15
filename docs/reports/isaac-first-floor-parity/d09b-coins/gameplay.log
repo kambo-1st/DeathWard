@@ -1,0 +1,4 @@
+COIN seed=20 room=2 subtype=1 value=1
+COIN seed=0 room=2 subtype=2 value=5
+COIN seed=1506 room=2 subtype=3 value=10
+PASS source timing at30/60/120Hz, capacity, inactive/pause, live edits, no reroll/retroactive reward, floor boundary

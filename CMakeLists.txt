@@ -137,6 +137,7 @@ add_library(deathward_core
     src/world/CanyonRiver.cpp
     src/world/CanyonRoad.cpp
     src/world/RoomGraph.cpp
+    src/combat/Chests.cpp
     src/combat/RedHeartRewards.cpp
     src/combat/RoomHearts.cpp
     src/combat/PlayerHealth.cpp
@@ -254,6 +255,9 @@ function(deathward_assets target)
         COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:deathward>/assets/bandit"
         COMMAND ${CMAKE_COMMAND} -E copy_if_different "${bandit_asset}" "$<TARGET_FILE_DIR:deathward>/assets/bandit/bandit.glb"
         VERBATIM)
+    add_custom_command(TARGET deathward_runtime_assets POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/pickups" "$<TARGET_FILE_DIR:deathward>/assets/pickups"
+        VERBATIM)
     foreach(western_file western.glb western.catalog)
         set(western_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/western/${western_file}")
         add_custom_command(TARGET deathward_runtime_assets POST_BUILD
@@ -330,6 +334,7 @@ if(EMSCRIPTEN)
     list(APPEND web_assets ${web_audio})
     file(GLOB web_cast CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "assets/cinematic_cast/*.glb")
     list(APPEND web_assets ${web_cast} assets/train_opening/arrival.cinematic)
+    list(APPEND web_assets assets/pickups/chest/base.glb assets/pickups/chest/lid.glb)
     foreach(asset IN LISTS web_assets)
         target_link_options(deathward PRIVATE "SHELL:--preload-file '${CMAKE_CURRENT_SOURCE_DIR}/${asset}@/${asset}'")
         set_property(TARGET deathward APPEND PROPERTY LINK_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${asset}")
@@ -981,6 +986,15 @@ if(BUILD_TESTING)
     add_executable(deathward_combat_rock_room_tests tests/combat_rock_room_tests.cpp)
     target_link_libraries(deathward_combat_rock_room_tests PRIVATE deathward_core)
     add_test(NAME combat_rock_room COMMAND deathward_combat_rock_room_tests)
+    add_executable(deathward_room_coverage_tests tests/room_coverage_tests.cpp)
+    target_link_libraries(deathward_room_coverage_tests PRIVATE deathward_core)
+    add_test(NAME source_room_coverage COMMAND deathward_room_coverage_tests)
+    add_executable(deathward_chest_tests tests/chest_tests.cpp)
+    target_link_libraries(deathward_chest_tests PRIVATE deathward_core)
+    add_test(NAME chest_gameplay COMMAND deathward_chest_tests)
+    add_executable(deathward_coin_reward_tests tests/coin_reward_tests.cpp)
+    target_link_libraries(deathward_coin_reward_tests PRIVATE deathward_core)
+    add_test(NAME coin_reward_gameplay COMMAND deathward_coin_reward_tests)
     add_executable(deathward_four_gaper_room_tests tests/four_gaper_room_tests.cpp)
     target_link_libraries(deathward_four_gaper_room_tests PRIVATE deathward_core)
     add_test(NAME four_gaper_room COMMAND deathward_four_gaper_room_tests)

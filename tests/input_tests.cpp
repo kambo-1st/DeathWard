@@ -1,6 +1,7 @@
 #include "core/Game.hpp"
 #include "render/Renderer.hpp"
 #include "items/Items.hpp"
+#include "combat/ChestGeometry.hpp"
 #include "rlgl.h"
 #include <chrono>
 #include <fstream>
@@ -434,11 +435,101 @@ void spiderBalanceInputCheck(const std::filesystem::path &directory) {
           "fresh Game restores independent enemy and accepted user settings");fresh.close();
     std::cout<<"PASS D05 actual Game encounter, UI mouse/keyboard, live edit, export/reload/rejection, map/floor/retry/fresh-session persistence\n";
 }
-void combatRockRoomInputCheck(const std::filesystem::path &directory,bool four=false) {
+void chestInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
-    const int variant=four?108:4,expectedRoom=four?5:4,count=four?4:2;
-    const std::string seed=four?"117":"268",prefix=four?"source-four-gaper":"source-combat-rock";
+    const auto save=directory/"chests.save",preset=directory/"chests.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="50";game.reviewRoomIndex=1;
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
+    check(game.run&&game.error.empty()&&game.run->room==1&&game.run->chestClearRewards&&!game.run->godMode&&game.run->player.hp==6,"normal-health chest encounter and legacy preset migration");
+    auto &run=*game.run;Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"chest UI has no errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"chest screenshot");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();click(374,642);click(575,143);check(game.balanceRewardsOpen,"reward panel by mouse");
+    click(965,244);check(!run.chestClearRewards&&run.coinClearRewards&&run.redHeartClearRewards,"chest toggle independent of existing rewards");
+    game.setRoomHeartLayouts(0);click(965,244);
+    check(run.chestClearRewards&&run.roomHeartLayouts==1&&game.hasPendingMapChanges(),"chest toggle retains staged map edits");
+    game.exportBalancePreset();game.rememberBalancePreset();
+    check(BalancePreset::load(preset,run.content->fingerprint()).chestClearRewards,"chest preset export");
+    game.setRoomHeartLayouts(1);game.exportBalancePreset();game.rememberBalancePreset();
+    std::filesystem::copy_file(preset,"artifacts/chest-preset.json",std::filesystem::copy_options::overwrite_existing);
+    capture("artifacts/chest-panel.png");game.perform(Action::CloseBalance);game.paused=false;run.clearRoomDebug();
+    check(run.chests.size()==1&&!run.chests[0].opened,"natural reward chest generated");
+    const auto at=run.chests[0].position;run.player.position=add(at,{3,0,0});
+    check(!run.arena.blocked(run.player.position,.48f),"approach fixture is clear");
+    game.updateCamera(10);frame();check(renderer.chestModelReady(),"both textured chest model parts loaded");capture("artifacts/chest-closed.png");
+    const auto clickFloor=[&](Vector3 point){point.y=0;auto screen=GetWorldToScreen(point,game.camera);click(int(screen.x),int(screen.y));};
+    const auto keys=run.keys;const auto money=run.money();clickFloor(at);
+    for(int n=0;n<180;++n)frame();
+    check(run.chests[0].opened&&run.keys==keys,"actual mouse approach opens chest without key");
+    check(std::all_of(run.chests[0].contents.begin(),run.chests[0].contents.end(),[](auto &d){return d.delivered;}),"all chest drops delivered in actual game");
+    capture("artifacts/chest-open.png");
+    run.player.position=add(at,{3,0,0});game.updateCamera(10);
+    // Far enough beyond the scattered coins that their normal click targets
+    // cannot intercept this ground-navigation check.
+    const auto beyond=add(at,{-5,0,0});clickFloor(beyond);
+    const auto clickedDestination=run.moveDestination();
+    for(int n=0;n<240;++n) {
+        frame();check(!sphereBox(run.player.position,.48f,chestGeometry::body(at)),"actual mouse route respects opened chest collision");
+    }
+    if(planarDistance(run.player.position,beyond)>=.15f) {
+        std::cout<<"CHEST_ROUTE target="<<beyond.x<<','<<beyond.z<<" player="<<run.player.position.x<<','<<run.player.position.z;
+        if(clickedDestination)std::cout<<" requested="<<clickedDestination->x<<','<<clickedDestination->z;
+        std::cout<<" moving="<<bool(run.moveDestination())<<" paused="<<game.paused<<" distance="<<planarDistance(run.player.position,beyond)<<'\n';
+        capture("artifacts/chest-collision-route.png");
+    }
+    check(planarDistance(run.player.position,beyond)<.15f,"actual mouse click beyond opened chest routes around it");
+    std::vector<Vector3> coins;for(auto &coin:run.moneyPickups)if(coin.sourceSubtype&&coin.room==run.room)coins.push_back(coin.position);
+    for(auto pos:coins){clickFloor(pos);for(int n=0;n<120;++n)frame();}
+    check(run.money()==money+3,"three penny contents collected exactly once with mouse");
+    run.jumpDebug(0);run.jumpDebug(1);frame();check(run.chests[0].opened&&run.money()==money+3,"actual revisit retains opened state and money");
+    run.finishDebug(false);game.retryExpedition();check(game.run->room==1&&game.run->chestClearRewards&&game.run->chests.empty()&&!game.run->godMode,"retry returns to original encounter, no stale chest");
+    game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="50";fresh.reviewRoomIndex=1;fresh.loadBalancePreset(preset);fresh.launch(true);
+    check(fresh.run&&fresh.run->chestClearRewards&&fresh.cameraZoomPercent()==165&&fresh.run->player.walkingSpeed()==4.8f,"fresh preset load preserves chest and accepted feel");fresh.close();
+    std::cout<<"PASS actual Game/Renderer chest, mouse controls/collection, staged map boundary, export/remember/fresh load, revisit/retry\n";
+}
+void coinRewardInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"coins.save",preset=directory/"coins.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="20";game.reviewRoomIndex=1;
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
+    check(game.run&&game.error.empty()&&game.run->room==1&&game.run->coinClearRewards&&!game.run->godMode&&game.run->player.hp==6,"direct coin encounter with normal health and schema5 migration");
+    auto &run=*game.run;Renderer renderer;
+    for(const auto &coin:run.moneyPickups)check(run.arena.roomAt(coin.position)!=1,"ordinary new room has no legacy random piles");
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"coin UI has no errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"coin UI capture");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();click(374,642);click(575,143);
+    check(game.balanceRewardsOpen&&!game.balanceRoomHeartsOpen,"reward panel opens by mouse");
+    click(680,244);check(!run.coinClearRewards&&run.redHeartClearRewards,"coins switch independent of hearts");
+    click(680,244);check(run.coinClearRewards,"coin switch enables future clears");
+    game.setRoomHeartLayouts(0);click(680,244);
+    check(!run.coinClearRewards&&run.roomHeartLayouts==1&&game.hasPendingMapChanges(),"live coin edit preserves pending map edits");
+    game.exportBalancePreset();game.rememberBalancePreset();capture("artifacts/coin-rewards-panel.png");
+    check(!BalancePreset::load(preset,run.content->fingerprint()).coinClearRewards,"disabled coin setting exported");
+    click(680,244);game.setRoomHeartLayouts(1);game.exportBalancePreset();game.rememberBalancePreset();
+    std::filesystem::copy_file(preset,"artifacts/coin-rewards-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.perform(Action::CloseBalance);game.paused=false;run.clearRoomDebug();
+    const auto &award=run.rooms[1].redHeartAward;check(award&&award->variant==20&&award->subtype==1&&award->delivered,"natural ordinary first clear pays source penny");
+    auto coin=std::find_if(run.moneyPickups.begin(),run.moneyPickups.end(),[](const auto &c){return c.sourceSubtype==1;});check(coin!=run.moneyPickups.end(),"coin rendered actor exists");
+    auto at=coin->position;run.player.position=add(at,{2,0,0});game.updateCamera(10);frame();capture("artifacts/coin-reward-appear.png");
+    const auto before=run.money();run.player.position=at;for(int n=0;n<100;++n)frame();
+    check(run.money()==before+1&&std::none_of(run.moneyPickups.begin(),run.moneyPickups.end(),[](const auto &c){return c.sourceSubtype!=0;}),"real Game updates collect once and remove presentation");
+    run.jumpDebug(0);run.jumpDebug(1);frame();check(run.money()==before+1,"revisit preserves collection");
+    run.finishDebug(false);game.retryExpedition();check(game.run->room==1&&game.run->coinClearRewards&&!game.run->godMode&&game.run->player.hp==6,"death retry returns to coin encounter");
+    game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="20";fresh.reviewRoomIndex=1;fresh.loadBalancePreset(preset);fresh.launch(true);
+    check(fresh.run&&fresh.run->coinClearRewards&&fresh.run->room==1&&fresh.cameraZoomPercent()==165&&fresh.run->player.walkingSpeed()==4.8f,"fresh main-game preset reload preserves accepted settings and coins");fresh.close();
+    std::cout<<"PASS actual Game/Renderer ordinary coins, mouse toggle, pending map boundary, export/remember/reload, collection/revisit/retry\n";
+}
+void combatRockRoomInputCheck(const std::filesystem::path &directory,int variant=4) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const int expectedRoom=variant==109?6:variant==108?5:4,count=variant==109?5:variant==108?4:2;
+    const std::string seed=variant==109?"2942":variant==108?"117":"268",prefix=variant==109?"source-five-gaper":variant==108?"source-four-gaper":"source-combat-rock";
     const auto save=directory/(prefix+".save"),file=directory/(prefix+".json");
     Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText=seed;game.reviewSourceRoomTemplate=variant;
     game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
@@ -1827,8 +1918,17 @@ int main(int argc, char **argv) {
             shootingBalanceInputCheck(directory);
             if(mode=="--shooting-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
         }
+        if(mode=="--chests-only") {
+            chestInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--coin-rewards-only") {
+            coinRewardInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--five-gaper-room-only") {
+            combatRockRoomInputCheck(directory,109);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
         if(mode.empty()||mode=="--four-gaper-room-only") {
-            combatRockRoomInputCheck(directory,true);
+            combatRockRoomInputCheck(directory,108);
             if(mode=="--four-gaper-room-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
         }
         if(mode.empty()||mode=="--combat-rock-room-only") {

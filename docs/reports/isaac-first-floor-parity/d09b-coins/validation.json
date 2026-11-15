@@ -1,0 +1,28 @@
+{
+  "status": "enabled and developer-verified; scoped ordinary penny playtest accepted",
+  "native_award_cases": 2196,
+  "native_heart_cases": 1036,
+  "native_coin_cases": 1036,
+  "ordinary_values": [
+    1,
+    5,
+    10
+  ],
+  "runtime_witnesses": {
+    "penny": 20,
+    "nickel": 0,
+    "dime": 1506
+  },
+  "timing_hz_partitions": [
+    30,
+    60,
+    120
+  ],
+  "unique_focused_suites": 14,
+  "game_ui": true,
+  "prior_heart_ui": true,
+  "cli_launches": 6,
+  "preset_schema": 19,
+  "full_native_acceptance": false,
+  "human_acceptance": "human-acceptance.json"
+}

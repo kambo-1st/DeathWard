@@ -103,8 +103,9 @@ struct Arena {
     std::vector<KeyPickup> keys;
     int shopRoom = -1;
     std::vector<Box> floors, boundaryWalls, obstacles, walls;
-    // Solid actor footprints affect navigation, not world-ray hits. Projectiles
-    // still reach the actual hazard entity and its invulnerability/item hooks.
+    // Solid actor/prop footprints affect movement and navigation, not world-ray
+    // hits. Statues still receive their actual projectile/entity damage hooks;
+    // chest bodies do not become bullet cover merely by blocking characters.
     std::vector<Box> movementBodies;
     std::vector<Box> flightWalls, flightCover;
     bool flightCollisionPrepared = false;

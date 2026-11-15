@@ -1,0 +1,13 @@
+PASS source=109 seed=70 size=0.750000 room=7 gapers=5 rocks=8 live=1
+PASS source=547 seed=860 size=0.750000 room=5 gapers=2 rocks=39 live=1
+PASS source=548 seed=6 size=0.750000 room=7 gapers=1 rocks=52 live=1
+PASS source=550 seed=737 size=0.750000 room=5 gapers=2 rocks=33 live=1
+PASS source=547 seed=860 size=1.100000 room=5 gapers=2 rocks=39 live=0
+PASS source=548 seed=6 size=1.100000 room=7 gapers=1 rocks=52 live=0
+PASS source=109 seed=2942 size=1.100000 room=7 gapers=5 rocks=8 live=0
+PASS source=550 seed=2704 size=1.100000 room=5 gapers=2 rocks=33 live=0
+PASS source=109 seed=2530 size=1.500000 room=6 gapers=5 rocks=8 live=0
+PASS source=547 seed=841 size=1.500000 room=7 gapers=2 rocks=39 live=0
+PASS source=548 seed=6 size=1.500000 room=7 gapers=1 rocks=52 live=0
+PASS source=550 seed=447 size=1.500000 room=2 gapers=2 rocks=33 live=0
+PASS actual shots/cover/deaths/successors/seals/rewards/demolition/revisit/Apply; shots=33 kills=5

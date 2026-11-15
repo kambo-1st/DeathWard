@@ -51,6 +51,14 @@ int main() {
         const auto v12=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
             "docs/reports/isaac-first-floor-parity/d09a-heart-timing/test-preset.json","2ccd5b1c274a302e");
         check(v12.roomHeartLayouts==1&&v12.redHeartAppearanceSpeed==.5f&&v12.defaultZoomPercent==165,"v12 migration retains timing/view and enables selected layout hearts");
+        for(bool enabled:{false,true}) {
+            BalancePreset p{1,"fixture-content"};p.chestClearRewards=enabled;p.save(file);
+            const auto q=BalancePreset::load(file,"fixture-content");
+            check(q.chestClearRewards==enabled&&q.revision()==p.revision(),"chest option export/load and revision");
+        }
+        const auto previousCoins=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/d09b-coins/preset-v19.json","2ccd5b1c274a302e");
+        check(previousCoins.chestClearRewards&&previousCoins.defaultZoomPercent==165,"schema19 migration enables selected chests and preserves view");
         const auto legacy=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
             "docs/reports/isaac-first-floor-parity/d01-live-tuning/speed-080.json","2ccd5b1c274a302e");
         check(legacy.playerSpeed==.8f&&legacy.roomSizeScale==1&&legacy.roomMinHalfTiles==0&&legacy.defaultZoomPercent==160,"D01 migration preserves speed and selects automatic room sizes");
@@ -105,6 +113,14 @@ int main() {
         check(v17.roomHeartLayouts==1&&v17.defaultZoomPercent==165&&v17.shotSpeed==.9f&&v17.routeLengthScale==.26f,
               "schema17 migrates added source108 content without changing accepted settings");
         v17.save(file);check(BalancePreset::load(file,"2ccd5b1c274a302e").revision()==v17.revision(),"schema18 round-trip after migration");
+        auto v18=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/native-four-gaper-room/preset-v18.json","2ccd5b1c274a302e");
+        check(v18.coinClearRewards&&v18.defaultZoomPercent==165&&v18.shotSpeed==.9f,"schema18 migrates coin policy preserving accepted settings");
+        for(bool enabled:{false,true}) {
+            v18.coinClearRewards=enabled;v18.redHeartClearRewards=false;v18.save(file);
+            auto loaded=BalancePreset::load(file,"2ccd5b1c274a302e");
+            check(loaded.coinClearRewards==enabled&&!loaded.redHeartClearRewards&&loaded.revision()==v18.revision(),"independent coin/heart toggles round-trip");
+        }
         const auto v9=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
             "docs/reports/isaac-first-floor-parity/d07-damage-health/custom-combat.json","2ccd5b1c274a302e");
         check(v9.sourceCombatRoom&&v9.playerDamage==7&&v9.regularHealthMultiplier==.75f,"schema9 migrates combat plus source room");
@@ -158,7 +174,7 @@ int main() {
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 1.5"),
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": false"),
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 0"),
-            replaceOne(valid,"basement-native-descriptor-rooms4-91-108-v6","invalid-policy"),
+            replaceOne(valid,"basement-native-descriptor-gaper-rocks-v7","invalid-policy"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 0"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 4.01"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 2"),
@@ -175,12 +191,14 @@ int main() {
             replaceOne(valid,"\"red_heart_clear_rewards\": true","\"red_heart_clear_rewards\": 1"),
             replaceOne(valid,"ordinary-normal-rare-gates-off-v1","unsupported-reward-policy"),
             replaceOne(valid,"\"player_luck\": 0","\"player_luck\": 21"),
+            replaceOne(valid,"\"chest_clear_rewards\": true","\"chest_clear_rewards\": 1"),
+            replaceOne(valid,"pickup-batches-adapted-v1","unverified-chest-policy"),
             valid+"garbage", valid.substr(0,valid.size()-3),
-            replaceOne(valid,"\"schema_version\": 18","\"schema_version\": 19"),
+            replaceOne(valid,"\"schema_version\": 20","\"schema_version\": 21"),
             replaceOne(valid,"\"red_heart_appearance_speed\": 1","\"red_heart_appearance_speed\": 2"),
             replaceOne(valid,"appear33-drop25-collect12-30hz-v1","unverified-timing"),
-            replaceOne(valid,"\"schema_version\": 18","\"schema_version\": 18, \"schema_version\": 18"),
-            replaceOne(valid,"d09a-four-gaper-room-v18","future-contract"),
+            replaceOne(valid,"\"schema_version\": 20","\"schema_version\": 20, \"schema_version\": 20"),
+            replaceOne(valid,"ordinary-chests-v20","future-contract"),
             replaceOne(valid,"fixture-content","different-content"),
             replaceOne(valid,"Repentance 1.7.9b","Repentance 1.7.9a"),
             replaceOne(valid,"\"walking_pace_at_speed_one\": 4.8","\"walking_pace_at_speed_one\": 30"),

@@ -1,0 +1,99 @@
+Start testing: Nov 15 08:47 CET
+----------------------------------------------------------
+8/162 Testing: expedition_destruction
+8/162 Test: expedition_destruction
+Command: "/home/kambo/workspace/DeathWard/build/deathward_destruction_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"expedition_destruction" start time: Nov 15 08:47 CET
+Output:
+----------------------------------------------------------
+Placement: 256 floors, 191 complete single-room clusters
+PASS destruction, cover snapshot, permissions, fuses, seeded loot and optional-cache reachability
+<end of output>
+Test time =  44.00 sec
+----------------------------------------------------------
+Test Passed.
+"expedition_destruction" end time: Nov 15 08:48 CET
+"expedition_destruction" time elapsed: 00:00:43
+----------------------------------------------------------
+
+68/162 Testing: room_statues
+68/162 Test: room_statues
+Command: "/home/kambo/workspace/DeathWard/build/deathward_statue_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"room_statues" start time: Nov 15 08:48 CET
+Output:
+----------------------------------------------------------
+STATUE_AIMED single=1 triple=3 ballistic=1 ordinary_immune=1 cleared_body_retained=1
+STATUE_LIFETIME last_enemy_clear=1 inactive_reentry=1 exceptional_respawn=1 eye_removal=1
+STATUE_PLATES persistent_combat_fire=1 all_plates=1 immediate_beam_stop=1 saved_plate_state=1 plate_objective=1
+STATUE_CROSS alternating_axes=1 subtype_phase=1 always_on=1 objective_free_trap=1
+STATUE_PHYSICS walking=1 flight=1 swept_dodge=1 mouse_path=1 ray_aim=1 exceptional_collider_removal=1
+PASS configurable Grimace attacks, completion, plate state, re-entry and collision
+<end of output>
+Test time =   0.50 sec
+----------------------------------------------------------
+Test Passed.
+"room_statues" end time: Nov 15 08:48 CET
+"room_statues" time elapsed: 00:00:00
+----------------------------------------------------------
+
+143/162 Testing: chest_gameplay
+143/162 Test: chest_gameplay
+Command: "/home/kambo/workspace/DeathWard/build/deathward_chest_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"chest_gameplay" start time: Nov 15 08:48 CET
+Output:
+----------------------------------------------------------
+CHEST seed=50 room=2 init=929161651 drops=20.1 20.1 10.2 20.1 
+PASS capacity/backpressure, actual birth, snapshot, pause and regeneration
+PASS key/dynamite caps, refusal/recovery, once-only collection, live toggle and floor scope
+PASS closed/open walking+dodge from four sides at30/60/120Hz; click routes, edge opening, occupied birth and revisit
+<end of output>
+Test time =  11.83 sec
+----------------------------------------------------------
+Test Passed.
+"chest_gameplay" end time: Nov 15 08:48 CET
+"chest_gameplay" time elapsed: 00:00:11
+----------------------------------------------------------
+
+144/162 Testing: coin_reward_gameplay
+144/162 Test: coin_reward_gameplay
+Command: "/home/kambo/workspace/DeathWard/build/deathward_coin_reward_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"coin_reward_gameplay" start time: Nov 15 08:48 CET
+Output:
+----------------------------------------------------------
+COIN seed=20 room=2 subtype=1 value=1
+COIN seed=0 room=2 subtype=2 value=5
+COIN seed=1506 room=2 subtype=3 value=10
+PASS source timing at30/60/120Hz, capacity, inactive/pause, live edits, no reroll/retroactive reward, floor boundary
+<end of output>
+Test time =   2.90 sec
+----------------------------------------------------------
+Test Passed.
+"coin_reward_gameplay" end time: Nov 15 08:48 CET
+"coin_reward_gameplay" time elapsed: 00:00:02
+----------------------------------------------------------
+
+147/162 Testing: red_heart_reward_gameplay
+147/162 Test: red_heart_reward_gameplay
+Command: "/home/kambo/workspace/DeathWard/build/deathward_red_heart_reward_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"red_heart_reward_gameplay" start time: Nov 15 08:48 CET
+Output:
+----------------------------------------------------------
+HEART seed=69 room=3 subtype=1 healed=2
+HEART seed=1 room=2 subtype=2 healed=1
+HEART seed=355 room=3 subtype=5 healed=4
+PASS capacity/backpressure, room ownership, committed edits, no retroactive rewards, unsupported families, Luck and floor/config boundaries
+PASS native birth/collection boundaries at 30/60/120 Hz, live birth snapshots, pause/inactive ownership and deferred admission
+<end of output>
+Test time =   3.46 sec
+----------------------------------------------------------
+Test Passed.
+"red_heart_reward_gameplay" end time: Nov 15 08:48 CET
+"red_heart_reward_gameplay" time elapsed: 00:00:03
+----------------------------------------------------------
+
+End testing: Nov 15 08:48 CET

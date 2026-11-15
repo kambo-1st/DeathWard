@@ -37,7 +37,7 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Expand complete compatible source enemy/obstacle/pickup arrangements in ordinary generation, with direct main-game review. Retain canyon size/shape and physical connections; resolve selection/factory dependencies required by the next layout. Unrelated bulk parity remains paused.",
+  "next_work": "Propose committing the accepted chest checkpoint, then a manually selected continuation; native loot/physics and prior room/coin gaps remain open.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-12",
     "status": "Ordinary caller/descriptor and direct-entry delivery accepted; next complete-room continuation selected",
@@ -371,160 +371,7 @@
     "production_default_changed": false,
     "full_native_acceptance": false
   },
-  "current_delivery_summary": {
-    "recorded_at_utc": "2026-11-11T19:54:14.190987+00:00",
-    "total_entries": 123,
-    "scoped_production_enabled": {
-      "count": 35,
-      "ids": [
-        "H01",
-        "H02",
-        "H03",
-        "H04",
-        "H05",
-        "H06",
-        "H07",
-        "H08",
-        "H09",
-        "H10",
-        "H11",
-        "H12",
-        "H13",
-        "H14",
-        "H16",
-        "H17",
-        "H18",
-        "S02",
-        "S04",
-        "S07",
-        "S08",
-        "S09",
-        "E11",
-        "E12",
-        "S01",
-        "S03",
-        "E01",
-        "E02",
-        "E03",
-        "E04",
-        "E05",
-        "E06",
-        "E07",
-        "E08",
-        "E09"
-      ],
-      "E11_scope": "ordinary Gaper10.1.0, Spider85.0.0 and Pooter14.0.0 movement; full native actor acceptance open",
-      "E12_scope": "ordinary Pooter14.0.0 attack timing only; other actors/full native scheduler acceptance open",
-      "D07_scope": "Canonical ordinary Damage/shared HP units and selected body relationships, with source values/adaptations separate; full actor/item/cache/DPS acceptance pending"
-    },
-    "private_review_only": {
-      "count": 2,
-      "ids": [
-        "S05",
-        "R06"
-      ]
-    },
-    "retained_exceptions": {
-      "count": 3,
-      "ids": [
-        "H15",
-        "S06",
-        "S13"
-      ]
-    },
-    "pending_or_unselected": {
-      "count": 83,
-      "ids": [
-        "B01",
-        "B02",
-        "B03",
-        "B04",
-        "B05",
-        "B06",
-        "B07",
-        "B08",
-        "B09",
-        "B10",
-        "B11",
-        "B12",
-        "B13",
-        "C01",
-        "C02",
-        "C03",
-        "C04",
-        "C05",
-        "C06",
-        "C07",
-        "C08",
-        "C09",
-        "E10",
-        "E13",
-        "E14",
-        "E15",
-        "E16",
-        "P01",
-        "P02",
-        "P03",
-        "P04",
-        "P05",
-        "P06",
-        "P07",
-        "P08",
-        "P09",
-        "P10",
-        "P11",
-        "P12",
-        "P13",
-        "P14",
-        "P15",
-        "P16",
-        "P17",
-        "P18",
-        "R01",
-        "R02",
-        "R03",
-        "R04",
-        "R05",
-        "R07",
-        "R08",
-        "R09",
-        "R10",
-        "R11",
-        "R12",
-        "R13",
-        "R14",
-        "R15",
-        "R16",
-        "R17",
-        "R18",
-        "R19",
-        "R20",
-        "R21",
-        "R22",
-        "R23",
-        "S10",
-        "S11",
-        "S12",
-        "S14",
-        "S15",
-        "S16",
-        "S17",
-        "S18",
-        "S19",
-        "S20",
-        "S21",
-        "S22",
-        "S23",
-        "X01",
-        "X02",
-        "X03"
-      ]
-    },
-    "fully_accepted_broad_areas": 0,
-    "total_broad_areas": 6,
-    "completion_percentage": null,
-    "scope": "Entry counts are delivery status, not equal effort, verified native fidelity, or a count of confirmed mismatches. Pending rows may include existing baseline behavior and verification-only requirements. Review work does not select or authorize production rollout."
-  },
+  "current_delivery_summary": "Smaller scene-lit ordinary chests retain shared world collision in both states; developer movement/dodge/pathfinding and actual mouse checks pass. User acknowledged the corrected chest on 2026-11-15. Full native loot/physics remain unfinished; bulk parity stays paused.",
   "room_scale_timing_checkpoint": {
     "status": "selected step1 verified for native shape1 geometry and ordinary horizontal base-Isaac live motion; shared spatial rollout pending",
     "evidence": "docs/reports/isaac-first-floor-parity/room-scale-timing/README.md",
@@ -700,6 +547,68 @@
     },
     "full_native_acceptance": false,
     "next": "Proposed: commit this accepted checkpoint, then another compatible complete source content arrangement. Unrelated bulk parity remains paused.",
-    "human_acceptance": "docs/reports/isaac-first-floor-parity/native-four-gaper-room/human-acceptance.json"
+    "human_acceptance": "docs/reports/isaac-first-floor-parity/native-four-gaper-room/human-acceptance.json",
+    "commit": "b8c3c4f7"
+  },
+  "native_room_coverage_checkpoint": {
+    "status": "enabled and developer-verified; source109 enemies accepted; other room reviews pending",
+    "templates": [
+      109,
+      547,
+      548,
+      550
+    ],
+    "report": "docs/reports/isaac-first-floor-parity/native-room-coverage/README.md",
+    "preset_schema": 19,
+    "next": "Preplaced coin layouts and another supported complete room family; other added layouts/interactions remain open",
+    "full_native_acceptance": false,
+    "human_acceptance": "docs/reports/isaac-first-floor-parity/native-room-coverage/human-acceptance.json"
+  },
+  "d09b_coins_checkpoint": {
+    "status": "selected, enabled and developer-verified; scoped ordinary penny playtest accepted",
+    "report": "docs/reports/isaac-first-floor-parity/d09b-coins/README.md",
+    "preset_schema": 19,
+    "native_coin_cases": 1036,
+    "ordinary_coin_values": [
+      1,
+      5,
+      10
+    ],
+    "full_native_acceptance": false,
+    "next": "Preplaced source coin layouts and another supported complete room family; special coin actors/economy remain open",
+    "human_acceptance": "docs/reports/isaac-first-floor-parity/d09b-coins/human-acceptance.json"
+  },
+  "ordinary_chests_checkpoint": {
+    "selected": "2026-11-15",
+    "status": "enabled-developer-verified-scoped-human-acknowledgment",
+    "scope": "ordinary unlocked chest; pickup batches adaptation; not full native loot",
+    "report": "docs/reports/isaac-first-floor-parity/ordinary-chests/README.md",
+    "human_acceptance": {
+      "date": "2026-11-15",
+      "feedback": "ok, cool!",
+      "scope": "positive acknowledgment of corrected playable chest including collision; not full native parity"
+    },
+    "remaining": [
+      "pills/trinkets/nested/special chests and full loot distribution",
+      "native chest wrapper/RNG/factory/timing/pushing/modifiers/profile",
+      "preplaced chest layout slots",
+      "full expedition gameplay save/restore"
+    ],
+    "review": {
+      "seed": 50,
+      "room": 2,
+      "schema": 20
+    },
+    "size_render_correction": {
+      "model_scale": 0.9,
+      "status": "developer-verified-scoped-human-acknowledgment",
+      "source": "existing Fort Mercy chest mesh/material",
+      "rendering": "scene lighting and dynamic shadows"
+    },
+    "collision_correction": {
+      "status": "developer-verified-scoped-human-acknowledgment",
+      "scope": "shared movementBodies for both states; approach/pathfinding and occupied-birth checks",
+      "native_physics_verified": false
+    }
   }
 }

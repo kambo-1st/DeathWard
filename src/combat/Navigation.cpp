@@ -1,4 +1,5 @@
 #include "combat/Simulation.hpp"
+#include "combat/ChestGeometry.hpp"
 #include "world/SourceHeartRockRoom.hpp"
 #include "world/SourceCombatRockRooms.hpp"
 #include <map>
@@ -275,6 +276,29 @@ void Simulation::requestMove(Vector3 target, bool interactAtDestination) {
     // shop or cache happens to lie near the approach. Ground clicks may interact.
     if(!interactAtDestination) {
         movePath_=arena.path(player.position,target,.48f);
+        return;
+    }
+    // A chest click means approach its reachable edge, not its blocked center.
+    // Choose by actual path length so cover and other bodies still participate.
+    for(const auto &chest:chests)if(chest.room==room&&
+        std::abs(target.x-chest.position.x)<=chestGeometry::HalfWidth+.35f&&
+        std::abs(target.z-chest.position.z)<=chestGeometry::HalfDepth+.35f) {
+        const float x=chestGeometry::StopX+.04f,z=chestGeometry::StopZ+.04f;
+        const auto at=chest.position;
+        const float alignX=std::clamp(player.position.x,at.x-chestGeometry::HalfWidth,at.x+chestGeometry::HalfWidth);
+        const float alignZ=std::clamp(player.position.z,at.z-chestGeometry::HalfDepth,at.z+chestGeometry::HalfDepth);
+        const std::array<Vector3,4> approaches{{{at.x-x,target.y,alignZ},{at.x+x,target.y,alignZ},
+                                              {alignX,target.y,at.z-z},{alignX,target.y,at.z+z}}};
+        float best=std::numeric_limits<float>::infinity();
+        for(auto point:approaches) {
+            if(arena.blocked(point,chestGeometry::PlayerRadius))continue;
+            auto route=arena.path(player.position,point,chestGeometry::PlayerRadius);
+            if(route.empty())continue;
+            float cost=0;auto previous=player.position;
+            for(auto next:route){cost+=planarDistance(previous,next);previous=next;}
+            if(cost<best){best=cost;movePath_=std::move(route);}
+        }
+        if(movePath_.empty())announce("That chest cannot be reached.",2);
         return;
     }
     for(const auto &bomb:suppliedBombs)if(bomb.room==room&&bomb.state==SuppliedBombState::Pickup&&

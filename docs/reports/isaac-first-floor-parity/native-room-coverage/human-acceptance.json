@@ -1,0 +1,16 @@
+{
+  "recorded_at_utc": "2026-11-15T06:41:46.832792+00:00",
+  "user_feedback": "enemies looks good!",
+  "status": "source109 enemy encounter accepted",
+  "scope": "Five ordinary Gapers in source1.109.0, seed2942 displayed room7, with the accepted165% preset.",
+  "review": "interactive-handoff.json",
+  "qualification": "Positive enemy feedback for the launched encounter. No itemized demolition/revisit checklist was supplied; this does not accept the other added room layouts, coins, or full native actor/physical behavior.",
+  "remaining": [
+    "human coin review",
+    "human review of source547/548/550 and other unconfirmed room interactions",
+    "wider mixed complete source-room contents",
+    "preplaced source coins and special coin actors/producers",
+    "full native selection/factory/physical/economy and gameplay-save acceptance"
+  ],
+  "automatic_bulk_parity_resumed": false
+}

@@ -13,7 +13,7 @@ SHA='524406fcb10c6275995292c0bd024cfc43d3d30c32b233e55d4d514573d963b0'
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--check',action='store_true');args=parser.parse_args()
     data=SOURCE.read_bytes();assert hashlib.sha256(data).hexdigest()==SHA
-    magic,count=struct.unpack_from('<4sI',data);assert magic==b'STB1';offset=8;pool=[];rock_room=[];combat_rooms={4:[],108:[]}
+    magic,count=struct.unpack_from('<4sI',data);assert magic==b'STB1';offset=8;pool=[];rock_room=[];combat_rooms={v:[] for v in (4,108,109,547,548,550)}
     def take(fmt):
         nonlocal offset
         result=struct.unpack_from(fmt,data,offset);offset+=struct.calcsize(fmt);return result
@@ -72,14 +72,17 @@ struct SourceRoomHeartChoice {int type,variant,subtype;float weight;};
         gapers=[(s['x'],s['y']) for s in combat_room if s['choices']==[dict(type=10,variant=1,subtype=0,weight=1.0)]]
         if variant==4:
             assert len(combat_room)==19 and len(combat_rocks)==17 and gapers==[(10,1),(2,5)]
+        elif variant==108:
+            assert len(combat_room)==13 and len(combat_rocks)==9 and gapers==[(6,2),(5,3),(7,3),(6,4)]
         else:
-            assert variant==108 and len(combat_room)==13 and len(combat_rocks)==9 and gapers==[(6,2),(5,3),(7,3),(6,4)]
+            expected={109:(5,8),547:(2,39),548:(1,52),550:(2,33)}[variant]
+            assert (len(gapers),len(combat_rocks))==expected and len(combat_room)==sum(expected)
         for name,rows in [(f'Basement{variant}Rocks',combat_rocks),(f'Basement{variant}Gapers',gapers)]:
             combat_header+=f'inline constexpr std::array<std::array<int,2>,{len(rows)}> {name}{{{{\n'
             combat_header+=''.join(f'    {{{x},{y}}},\n' for x,y in rows)+'}};\n'
         metadata=next(r for r in pool if (r['type'],r['variant'],r['subtype'])==(1,variant,0))
         combat_manifest=dict(source=str(SOURCE.relative_to(ROOT)),sha256=SHA,template=f'1.{variant}.0',metadata=metadata,slots=combat_room,rock_count=len(combat_rocks),gapers=len(gapers),pickups=0,scope='Complete source content record. Canyon size, shape and connections are retained; native runtime grid substitution, actor AI, drops and physics are separate verification.')
-        destination='native-combat-rock-room' if variant==4 else 'native-four-gaper-room'
+        destination='native-combat-rock-room' if variant==4 else 'native-four-gaper-room' if variant==108 else f'native-room-coverage/room-{variant}'
         combat_outputs.append((OUT.parent/destination/'source-room.json',json.dumps(combat_manifest,indent=2)+'\n'))
     combat_header+='} // namespace dw\n'
     for path,content in [(OUT/'source-layouts.json',json.dumps(manifest,indent=2)+'\n'),(ROOT/'src/world/SourceRoomHeartsData.hpp',header),(ROOT/'src/world/SourceHeartRockRoomData.hpp',rock_header),(OUT.parent/'native-heart-rock-room/source-room.json',json.dumps(rock_manifest,indent=2)+'\n'),(ROOT/'src/world/SourceCombatRockRoomData.hpp',combat_header),*combat_outputs]:

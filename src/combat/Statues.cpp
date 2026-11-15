@@ -1,4 +1,5 @@
 #include "combat/Simulation.hpp"
+#include "combat/ChestGeometry.hpp"
 
 namespace dw {
 bool Simulation::platesComplete() const {
@@ -65,7 +66,7 @@ void Simulation::updatePressurePlates() {
     }
     if(changed){refreshStatues();checkpointNeeded=true;}
 }
-void Simulation::syncStatueBodies() {
+void Simulation::syncMovementBodies() {
     arena.movementBodies.clear();
     auto append=[&](const auto &actors) {
         for(const auto &e:actors)if(e.alive&&content->statue(e.monster)) {
@@ -76,6 +77,7 @@ void Simulation::syncStatueBodies() {
     };
     append(enemies);
     for(size_t n=0;n<rooms.size();++n)if(int(n)!=room)append(rooms[n].residents);
+    for(const auto &chest:chests)arena.movementBodies.push_back(chestGeometry::body(chest.position));
     refreshStatueAttraction();
 }
 void Simulation::updateStatue(Enemy &e,float dt) {

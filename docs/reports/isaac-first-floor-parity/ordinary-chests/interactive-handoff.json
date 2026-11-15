@@ -1,0 +1,38 @@
+{
+  "pid": 60657,
+  "command": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "50",
+    "--review-room",
+    "2",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/ordinary-chests/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "seed": 50,
+  "displayed_room": 2,
+  "hp": 6,
+  "god_mode": false,
+  "zoom": 165,
+  "chest_clear_rewards": true,
+  "expected_contents": [
+    "penny",
+    "penny",
+    "half red heart",
+    "penny"
+  ],
+  "human_acceptance": {
+    "date": "2026-11-15",
+    "feedback": "ok, cool!",
+    "scope": "positive acknowledgment of corrected playable chest including collision; not full native parity"
+  },
+  "accepted_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "model_scale": 0.9,
+  "rendering": "scene-library mesh/material with shared lighting and dynamic shadows",
+  "log": "interactive-collision.log",
+  "collision": "shared solid movement bodies; closed and opened; mouse routes around"
+}

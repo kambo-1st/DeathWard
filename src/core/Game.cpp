@@ -214,7 +214,8 @@ void Game::launch(bool freeMission) {
                                                   nextBalancePreset?nextBalancePreset->roomMaxHalfTiles:0,
                                                   nextBalancePreset?nextBalancePreset->routeLengthScale:1,
                                                   nextBalancePreset?nextBalancePreset->sourceCombatRoom:true,
-                                                  nextBalancePreset?nextBalancePreset->roomHeartLayouts:1);
+                                                  nextBalancePreset?nextBalancePreset->roomHeartLayouts:1,
+                                                  nextBalancePreset?nextBalancePreset->coinClearRewards:true);
     startExpedition(std::move(candidate));
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
     if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
@@ -286,6 +287,14 @@ void Game::perform(Action action) {
         case Action::RoomHeartsOff:setRoomHeartLayouts(0);break;
         case Action::RoomHeartsSource:setRoomHeartLayouts(1);break;
         case Action::RoomHeartsTest:setRoomHeartLayouts(2);break;
+        case Action::ToggleChestRewards: {
+            auto preset=balancePreset;preset.chestClearRewards=!preset.chestClearRewards;applyBalance(std::move(preset));
+            balanceNotice="Applies to future first clears. Existing chests and their contents stay fixed.";break;
+        }
+        case Action::ToggleCoinRewards: {
+            auto preset=balancePreset;preset.coinClearRewards=!preset.coinClearRewards;applyBalance(std::move(preset));
+            balanceNotice="Coins: future clears/drops; initial piles change on floor regeneration. Existing pickups stay.";break;
+        }
         case Action::ToggleRedHeartRewards:setRedHeartRewards(!balancePreset.redHeartClearRewards,balancePreset.playerLuck);break;
         case Action::RewardLuckDown:case Action::RewardLuckUp:
             setRedHeartRewards(balancePreset.redHeartClearRewards,std::clamp(balancePreset.playerLuck+(action==Action::RewardLuckUp?1.f:-1.f),BalancePreset::MinLuck,BalancePreset::MaxLuck));break;

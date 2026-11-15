@@ -32,8 +32,13 @@ inline int sourceOrdinaryRoomAward(SourceAwardRng &rng,float luck=0,bool prevent
 // These are explicit achievement-gate inputs, not a complete save/unlock profile.
 struct SourcePickupGates {
     bool rotten=false,scared=false,halfSoul=false,bone=false,goldenHeart=false;
-    static SourcePickupGates representedEnabled(){return {true,true,true,true,true};}
+    bool sticky=false,lucky=false,goldenCoin=false;
+    static SourcePickupGates representedEnabled(){return {true,true,true,true,true,true,true,true};}
 };
+// Ordinary native coin values; special coin behavior is outside this delivery.
+inline int sourceOrdinaryCoinValue(int subtype) {
+    switch(subtype){case 1:return 1;case 2:return 5;case 3:return 10;case 4:return 2;default:return 0;}
+}
 struct SourcePickupChoice {int variant=0,subtype=0;bool resolved=false;};
 // Native6b48b0 scoped ordinary room/type1, ordinary Isaac, empty inventory,
 // Normal mode, input subtype0. No world actor/collection acceptance is implied.
@@ -54,6 +59,14 @@ inline SourcePickupChoice sourceOrdinaryPickup(uint32_t seed,int variant,SourceP
             rng.bounded(5); // Forgotten/Soul player-type override is absent here.
         }
         if(rng.bounded(160)==0&&gates.goldenHeart)subtype=7;
+    } else if(variant==20) {
+        if(rng.bounded(20)==0) {
+            subtype=2;
+            if(rng.bounded(20)==0&&gates.sticky)subtype=6;
+        }
+        if(rng.bounded(100)==0)subtype=3;
+        else if(subtype==1&&rng.bounded(100)==0&&gates.lucky)subtype=5;
+        if(rng.bounded(200)==0&&gates.goldenCoin)subtype=7;
     } else return {variant,0}; // Unresolved families are not rerolled or substituted.
     return {variant,subtype,true};
 }

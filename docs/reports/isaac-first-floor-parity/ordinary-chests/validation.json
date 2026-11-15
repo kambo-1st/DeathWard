@@ -1,0 +1,112 @@
+{
+  "status": "developer-checks-pass-scoped-human-acknowledgment",
+  "tests": [
+    "chest_gameplay",
+    "balance_preset_contract",
+    "coin_reward_gameplay",
+    "red_heart_reward_gameplay",
+    "red_heart_reward_reference"
+  ],
+  "gui": [
+    "chests-only: actual mouse opening/collection, model, toggle, map staging, export/remember/reload/revisit/retry",
+    "coin-rewards-only regression"
+  ],
+  "cli": [
+    "schema20 on",
+    "schema20 off",
+    "original schema5 interactive"
+  ],
+  "review": {
+    "seed": 50,
+    "room": 2,
+    "expected_loot": "3 pennies and half red heart"
+  },
+  "native_chest_full_parity": false,
+  "source_asset_unchanged": true,
+  "user_preset_unchanged": true,
+  "model_assets": {
+    "source_model": "assets/frontier/town.glb",
+    "source_sha256": "3d55bed81ff81654d82bb8126d13d3b734a477a12e7527f3b12c8a5bbb411c19",
+    "source_asset": "part_0273",
+    "fort_mercy_asset": "frontier_part_0273",
+    "texture_sha256": "45216099e741cbb598daeef1c9b2f5bc261e99fc9b1efd5a966f785c66997547",
+    "seam_y": 0.48,
+    "hinge": [
+      0,
+      0.48,
+      -0.29
+    ],
+    "adaptation": "Existing scene-library mesh split at lid seam; original glTF UVs/material/embedded texture preserved. Interior lining is baked mesh; runtime only poses the lid.",
+    "outputs": {
+      "base": {
+        "triangles": 340,
+        "sha256": "7e907dee17190e08e721d51a360d2268081cf67ba5daf4f174279c86c0552bf3"
+      },
+      "lid": {
+        "triangles": 258,
+        "sha256": "b11acb85b75246e0a4d0b46a131b92aeab85cd7396a983664da3d961dffcdf1b"
+      }
+    }
+  },
+  "unfinished": [
+    "full native ordinary chest loot table and missing pills/trinkets/nested/locked chest dependencies",
+    "native chest factory/RNG/pushing/timing/modifiers/profile",
+    "preplaced chest slots",
+    "full expedition gameplay save/restore"
+  ],
+  "storage_note": "A transient ENOSPC interrupted one rebuild; storage was checked, retry and final builds passed; no unrelated files were deleted.",
+  "size_render_correction": {
+    "status": "developer-verified-scoped-human-acknowledgment",
+    "feedback": [
+      "chest much too big",
+      "separate implementation unlike Black Creek/Fort Mercy"
+    ],
+    "old_scale": 1.8,
+    "new_scale": 0.9,
+    "source": "frontier scene-library part_0273 / Fort Mercy frontier_part_0273",
+    "rendering": "scene-supplied mesh shader, material and shadow texture; identical posed meshes in color/depth passes",
+    "checks": [
+      "existing chest gameplay including old-distance refusal",
+      "actual mouse/Renderer/preset/revisit/retry workflow",
+      "closed/open165% visual review",
+      "normalized glTF normals"
+    ],
+    "unfinished": "earlier native loot/physics/timing gaps unchanged"
+  },
+  "collision_correction": {
+    "status": "developer-verified-scoped-human-acknowledgment",
+    "world_path": "Arena movementBodies with swept movement and path clearance",
+    "states": [
+      "closed",
+      "opened"
+    ],
+    "checks": [
+      "four-direction walking and dodge at30/60/120Hz",
+      "opposite-side click destinations in both states",
+      "direct chest clicks approach legal edge",
+      "minimum/maximum room sizing",
+      "occupied player position rejected",
+      "debug revisit retains legal spawn and collision",
+      "in-flight click path reroutes after chest birth",
+      "actual Game mouse route around opened chest",
+      "existing statue/coin/heart/destruction suites"
+    ],
+    "tests": "collision-tests.log",
+    "ui": "collision-input.log",
+    "unmodified": [
+      "accepted movement/shooting/dodge settings",
+      "loot selection and collection",
+      "accepted preset bytes"
+    ],
+    "limitations": [
+      "movement collider; not bullet cover",
+      "static chest body; native pickup pushing/physics unverified",
+      "full native chest loot still unfinished"
+    ]
+  },
+  "human_acceptance": {
+    "date": "2026-11-15",
+    "feedback": "ok, cool!",
+    "scope": "positive acknowledgment of corrected playable chest including collision; not full native parity"
+  }
+}

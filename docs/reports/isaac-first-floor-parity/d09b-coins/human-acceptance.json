@@ -1,0 +1,15 @@
+{
+  "recorded_at_utc": "2026-11-15T06:45:50.176866+00:00",
+  "user_feedback": "ok, good it is... Reiterate how the conins works in bingin of isaac.",
+  "status": "scoped ordinary coin playtest accepted",
+  "scope": "D09b launched penny encounter: seed20 displayed room2, accepted165% preset, normal health/damage.",
+  "review": "interactive-handoff.json",
+  "qualification": "Positive acknowledgment of the launched penny review. No itemized checklist was supplied; nickel/dime and other boundary cases retain developer verification, not separate human acceptance. Does not accept preplaced/special coins or full source economy.",
+  "remaining": [
+    "preplaced native coin layout slots",
+    "special coin actors and other native producers",
+    "full native seed/factory/physical/profile/item/economy equivalence",
+    "full expedition gameplay-save continuity"
+  ],
+  "automatic_bulk_parity_resumed": false
+}

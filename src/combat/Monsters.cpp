@@ -97,7 +97,7 @@ EntityId Simulation::spawnMonster(MonsterId id, Vector3 position,EntityId owner,
             e.facing=e.statueFacing=axes[size_t(s->quakeAxis)];
         }
         e.cooldown=s->interval*.5f;
-        syncStatueBodies();
+        syncMovementBodies();
     }
     if(content->component(id)||(flyBomb&&flyBomb->orbitOwner)) {
         e.componentOwner=owner;e.componentSlot=slot;

@@ -205,7 +205,7 @@ void Simulation::prepareRoomEnemies(int index) {
     player.position = previousPosition;
     encounterRng = previousRng;
     pendingMonsters_ = std::move(pending);
-    syncStatueBodies();
+    syncMovementBodies();
 }
 
 void Simulation::spawnRoomEnemies() {

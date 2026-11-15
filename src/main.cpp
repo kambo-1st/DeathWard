@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
     std::filesystem::path slotsDirectory;
     std::filesystem::path balancePresetPath;
     std::string expeditionSeedText;
-    std::optional<int> reviewSourceRoom;
+    std::optional<int> reviewSourceRoom,reviewRoom;
     std::optional<float> cinematicTime;
     std::string screenshot, scene = "combat";
     std::optional<dw::MonsterId> enemyScene;
@@ -104,6 +104,14 @@ int main(int argc, char **argv) {
             if(parsed.ec!=std::errc{}||parsed.ptr!=expeditionSeedText.data()+expeditionSeedText.size()) {
                 std::cerr<<"--seed needs an unsigned whole number\n";return 2;
             }
+        }
+        else if (arg == "--review-room" && i + 1 < argc) {
+            const std::string value=argv[++i];int number=0;
+            const auto parsed=std::from_chars(value.data(),value.data()+value.size(),number);
+            if(parsed.ec!=std::errc{}||parsed.ptr!=value.data()+value.size()||number<1) {
+                std::cerr<<"--review-room needs a positive displayed room number\n";return 2;
+            }
+            reviewRoom=number-1;
         }
         else if (arg == "--review-source-room" && i + 1 < argc) {
             const std::string value=argv[++i];int variant=-1;
@@ -327,6 +335,7 @@ int main(int argc, char **argv) {
                          "Town pack to edit (with --editor)\n  --save PATH          Separate campaign file\n "
                          " --balance-preset PATH  Load and remember player/enemy/view/map settings\n "
                          " --seed NUMBER        Repeatable expedition seed\n "
+                         " --review-room N         Enter displayed generated room N on launch/retry\n"
                          " --review-source-room N  Enter an existing generated source room on expedition launch/retry\n "
                          " --theme NAME         seeded, mine or canyon (default)\n  --hub NAME           "
                          "black-creek"
@@ -376,8 +385,9 @@ int main(int argc, char **argv) {
             return 2;
         }
     }
-    if(reviewSourceRoom&&(!startExpedition||fullExperience||startEditor||startCinematic||intro||benchmark||practiceBatch||smoke)) {
-        std::cerr<<"--review-source-room requires --expedition without other launch modes\n";return 2;
+    if(reviewSourceRoom&&reviewRoom){std::cerr<<"Choose one review room option\n";return 2;}
+    if((reviewSourceRoom||reviewRoom)&&(!startExpedition||fullExperience||startEditor||startCinematic||intro||benchmark||practiceBatch||smoke)) {
+        std::cerr<<"Room review requires --expedition without other launch modes\n";return 2;
     }
     if(practiceBatch&&(fullExperience||startEditor||startCinematic||intro||benchmark)){std::cerr<<"Practice mode requires ordinary gameplay or smoke capture\n";return 2;}
     if(practiceBatch&&!explicitSave)save=std::filesystem::temp_directory_path()/("deathward-batch"+std::to_string(practiceBatch)+"-practice.save");
@@ -523,7 +533,7 @@ int main(int argc, char **argv) {
         game.expeditionPacing = expeditionPacing;
         if (smoke || benchmark) game.seedText = "1866";
         if(!expeditionSeedText.empty())game.seedText=expeditionSeedText;
-        game.reviewSourceRoomTemplate=reviewSourceRoom;
+        game.reviewSourceRoomTemplate=reviewSourceRoom;game.reviewRoomIndex=reviewRoom;
         game.audioSettings = audioSettings; game.visualSettings = visualSettings; game.audioStatus = audioStatus;
         game.visualStyle = styleChoice.value_or(dw::VisualStyle::Original);
         auto savedAudioSettings = audioSettings;

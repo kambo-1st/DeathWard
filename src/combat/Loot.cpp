@@ -6,6 +6,8 @@ void Simulation::prepareMoney() {
     Random rng(seed_ ^ 0x4d4f4e4559475244ULL);
     for (int index = 0; index < arena.roomCount(); ++index) {
         const auto &layout = arena.rooms[size_t(index)];
+        if(coinClearRewards&&floor==0&&!surveyTutorial&&arena.profile.active()&&arena.theme==MissionTheme::Canyon&&
+           layout.kind==RoomKind::Combat&&layout.story==StoryRoom::None)continue;
         if(layout.sourceCombatTemplate>=0||layout.sourceObstacleTemplate>=0)continue;
         const int maximum = std::clamp(int(layout.usableArea() / 260), 1, 4);
         const int count = index == 0 ? 1 + int(rng.bounded(2)) : int(rng.bounded(maximum + 1));
@@ -35,6 +37,9 @@ void Simulation::prepareMoney() {
     }
 }
 void Simulation::dropMoney(const Enemy &enemy) {
+    const auto &layout=arena.rooms[size_t(room)];
+    if(coinClearRewards&&floor==0&&!surveyTutorial&&arena.profile.active()&&arena.theme==MissionTheme::Canyon&&
+       layout.kind==RoomKind::Combat&&layout.story==StoryRoom::None&&!debugScenario) return; // Source ordinary kills have no generic money roll.
     if(canyonBoss(enemy.bossKind))return; // Dedicated, once-only boss payout.
     const auto *definition = content->monster(enemy.monster);
     // Summoned offspring and permanent hazards must not become an infinite farm.
@@ -54,11 +59,10 @@ void Simulation::dropMoney(const Enemy &enemy) {
                 continue;
             // Bound long cheat/stress sessions by stacking nearby drops when full.
             if (moneyPickups.size() >= 1024) {
-                auto nearest = std::min_element(
-                    moneyPickups.begin(), moneyPickups.end(), [&](const auto &a, const auto &b) {
-                        return distance(a.position, point) < distance(b.position, point);
-                    });
-                nearest->value = std::min(1000000, nearest->value + value);
+                auto nearest=moneyPickups.end();
+                for(auto it=moneyPickups.begin();it!=moneyPickups.end();++it)
+                    if(!it->sourceSubtype&&(nearest==moneyPickups.end()||distance(it->position,point)<distance(nearest->position,point)))nearest=it;
+                if(nearest!=moneyPickups.end())nearest->value=std::min(1000000,nearest->value+value);
             } else
                 moneyPickups.push_back({point, value, 0, true});
             return;
@@ -67,6 +71,17 @@ void Simulation::dropMoney(const Enemy &enemy) {
 void Simulation::updateMoney(float dt) {
     uint64_t collected = 0;
     for (auto &coin : moneyPickups) {
+        if(coin.sourceSubtype) {
+            if(coin.room!=room)continue;
+            coin.age+=dt;coin.timing.advance(dt);
+            if(!coin.timing.collectible()||player.totalHealth()<=0||money()>=99||
+               distance(player.position,coin.position)>1.25f||!arena.clear(player.position,coin.position,.1f))continue;
+            const auto amount=std::min({uint64_t(coin.value),uint64_t(99)-money(),MaxMoney-moneyCollected});
+            if(!amount)continue;
+            moneyCollected+=amount;collected+=amount;coin.timing.collect();
+            audioCues.push(AudioCueKind::Pickup,coin.position);effectVisual(coin.position,.45f,0,.3f);
+            continue; // Entire source coin is consumed, including value clipped at 99.
+        }
         coin.age += dt;
         if (player.totalHealth() <= 0 || (coin.dropped && coin.age < .45f) ||
             distance(player.position, coin.position) > 1.25f ||
@@ -81,7 +96,7 @@ void Simulation::updateMoney(float dt) {
         audioCues.push(AudioCueKind::Pickup, coin.position);
         effectVisual(coin.position, .45f, 0, .3f);
     }
-    std::erase_if(moneyPickups, [](const auto &coin) { return coin.value == 0; });
+    std::erase_if(moneyPickups, [](const auto &coin) { return coin.sourceSubtype?coin.timing.phase==CoinTiming::Phase::Gone:coin.value==0; });
     // Keep encounter instructions visible; the wallet itself updates immediately.
     if (collected)
         checkpointNeeded = true;

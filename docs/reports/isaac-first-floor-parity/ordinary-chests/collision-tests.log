@@ -1,0 +1,16 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start   8: expedition_destruction
+1/5 Test   #8: expedition_destruction ...........   Passed   44.00 sec
+    Start  68: room_statues
+2/5 Test  #68: room_statues .....................   Passed    0.50 sec
+    Start 143: chest_gameplay
+3/5 Test #143: chest_gameplay ...................   Passed   11.83 sec
+    Start 144: coin_reward_gameplay
+4/5 Test #144: coin_reward_gameplay .............   Passed    2.90 sec
+    Start 147: red_heart_reward_gameplay
+5/5 Test #147: red_heart_reward_gameplay ........   Passed    3.46 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =  62.68 sec

@@ -910,6 +910,13 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             }
         }
     };
+    if(!run.chests.empty())chestModel_.prepare();
+    const auto drawChests=[&](Shader shader,Texture2D shadowMap) {
+        for(const auto &chest:run.chests)if(chest.room==run.room) {
+            const float t=chest.opened?std::clamp(chest.openAge/.4f,0.f,1.f):0;
+            chestModel_.draw(chest.position,t*t*(3-2*t),shader,shadowMap);
+        }
+    };
     westernScene_.prepareLighting(camera, [&](Shader meshDepth, Shader primitiveDepth) {
         BeginShaderMode(primitiveDepth);
         solids(true);
@@ -928,6 +935,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         else
             cowboy(run.player.position, run.player.facing, WHITE, 1, false, false);
         EndShaderMode();
+        drawChests(meshDepth,{});
     });
     postProcess_.begin(WorldSky, distance(camera.position, camera.target), false, visualStyle);
     BeginMode3D(camera);
@@ -1044,6 +1052,24 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             }
         }
     }
+    if(!lighting.ready())for(const auto &chest:run.chests)if(chest.room==run.room)
+        shadow(chest.position,chestGeometry::ShadowRadius);
+    drawChests(lighting.actorShader(),lighting.texture());
+    for(const auto &supply:run.chestSupplies)if(supply.room==run.room) {
+        auto p=supply.position;p.y=.5f;
+        const bool collecting=supply.timing.phase==CoinTiming::Phase::Collect;
+        const float scale=collecting?std::max(0.f,1-supply.timing.frame/CoinTiming::CollectFrames):1;
+        if(collecting)p.y+=(1-scale)*.6f;
+        shadow(p,.35f*scale);
+        if(supply.bomb) {
+            DrawCylinderEx(add(p,{0,-.25f*scale,0}),add(p,{0,.25f*scale,0}),.14f*scale,.14f*scale,8,ColorAlpha(Rust,scale));
+            DrawLine3D(add(p,{0,.25f*scale,0}),add(p,{.16f*scale,.42f*scale,0}),Gold);
+        } else {
+            DrawCircle3D(p,.2f*scale,{0,1,0},0,ColorAlpha(Gold,scale));
+            DrawCubeV(add(p,{.32f*scale,0,0}),{.5f*scale,.1f*scale,.1f*scale},ColorAlpha(Gold,scale));
+            DrawCubeV(add(p,{.5f*scale,-.1f*scale,0}),{.1f*scale,.2f*scale,.1f*scale},ColorAlpha(Gold,scale));
+        }
+    }
     for(const auto &pickup:run.heartPickups)if(pickup.room==run.room) {
         Color color=Rust;
         switch(pickup.kind) {
@@ -1080,20 +1106,23 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         DrawSphere(add(fly.position,{.14f,.1f,0}),.1f,ColorAlpha(Paper,.6f));
     }
     for (const auto &coin : run.moneyPickups) {
-        if (distance(run.player.position, coin.position) > 60)
+        if ((coin.sourceSubtype&&coin.room!=run.room)||distance(run.player.position, coin.position) > 60)
             continue;
         const float phase = float(run.stats.duration) * 2 + coin.position.x + coin.position.z;
         const float bounce = coin.dropped && coin.age < .45f
                                  ? std::abs(std::sin(coin.age / .45f * 2 * Pi)) * (1 - coin.age / .45f) * 1.1f
                                  : 0;
         DrawCircle3D({coin.position.x, .07f, coin.position.z}, .45f, {1, 0, 0}, 90, Color{234, 187, 75, 150});
-        for (int i = 0; i < std::min(coin.value, 3); ++i) {
+        const bool collecting=coin.sourceSubtype&&coin.timing.phase==CoinTiming::Phase::Collect;
+        const float alpha=collecting?std::max(0.f,1-coin.timing.frame/CoinTiming::CollectFrames):1;
+        const Color color=coin.sourceSubtype==2?Color{188,196,205,255}:coin.sourceSubtype==3?Color{215,229,240,255}:Gold;
+        for (int i = 0; i < (coin.sourceSubtype?1:std::min(coin.value, 3)); ++i) {
             Vector3 center = add(coin.position, {float(i - 1) * .18f, 0, float(i % 2) * .12f});
-            center.y = .4f + bounce + .05f * std::sin(phase + float(i));
+            center.y = .4f + bounce + .05f * std::sin(phase + float(i))+(collecting?coin.timing.frame*.06f:0);
             const Vector3 axis{std::cos(phase), 0, std::sin(phase)};
             const auto front = add(center, mul(axis, .07f));
-            DrawCylinderEx(sub(center, mul(axis, .07f)), front, .25f, .25f, 12, Gold);
-            DrawCylinderEx(front, add(front, mul(axis, .015f)), .16f, .16f, 12, Color{255, 225, 132, 255});
+            DrawCylinderEx(sub(center, mul(axis, .07f)), front, .25f, .25f, 12, ColorAlpha(color,alpha));
+            DrawCylinderEx(front, add(front, mul(axis, .015f)), .16f, .16f, 12, ColorAlpha(Color{255,225,132,255},alpha));
         }
     }
     for (const auto &key : run.arena.keys) {
@@ -2223,9 +2252,11 @@ Action Renderer::balancePanel(const Game &game) {
             text("Apply resets floor encounters/pickups; keeps your player and build.",205,480,13,Muted);
         } else {
         const auto &p=game.balancePreset;
-        text("RED HEARTS AFTER ROOM CLEAR",205,184,22,Gold);
-        if(button(Action::ToggleRedHeartRewards,p.redHeartClearRewards?"ENABLED":"DISABLED",205,224,300,40))return Action::ToggleRedHeartRewards;
-        text("Applies to future first clears on the opening floor.",535,238,14,Teal);
+        text("ROOM-CLEAR REWARDS",205,184,22,Gold);
+        if(button(Action::ToggleRedHeartRewards,p.redHeartClearRewards?"RED HEARTS: ON":"RED HEARTS: OFF",205,224,300,40))return Action::ToggleRedHeartRewards;
+        if(button(Action::ToggleCoinRewards,p.coinClearRewards?"COINS: ON":"COINS: OFF",535,224,300,40))return Action::ToggleCoinRewards;
+        if(button(Action::ToggleChestRewards,p.chestClearRewards?"CHESTS: ON":"CHESTS: OFF",855,224,220,40))return Action::ToggleChestRewards;
+        text("Future clears/drops; initial piles change on floor regeneration. Existing pickups stay.",205,270,13,Teal);
         text("LUCK",205,300,18,Paper);text(decimal(p.playerLuck),400,290,28,Paper);
         if(button(Action::RewardLuckDown,"- 1",650,284,130,40))return Action::RewardLuckDown;
         if(button(Action::RewardLuckUp,"+ 1",795,284,130,40))return Action::RewardLuckUp;
@@ -2234,7 +2265,7 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::HeartAppearanceDown,"- 0.05",650,363,130,40))return Action::HeartAppearanceDown;
         if(button(Action::HeartAppearanceUp,"+ 0.05",795,363,130,40))return Action::HeartAppearanceUp;
         text("New hearts only. Base: 1x; faster appearance makes them collectible sooner.",205,422,13,Teal);
-        text("Full / half / double red hearts. Other reward families are still pending.",205,445,13,Muted);
+        text("Chests open on touch and scatter supplies. Rare chest contents are pending.",205,445,13,Muted);
         if(button(Action::ResetRewardLuck,"RESET LUCK",205,465,250,36))return Action::ResetRewardLuck;
         if(button(Action::ResetHeartAppearance,"RESET APPEAR SPEED",475,465,300,36))return Action::ResetHeartAppearance;
         const auto next=game.nextBalancePreset.value_or(BalancePreset{});

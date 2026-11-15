@@ -36,7 +36,7 @@ void Game::applyBalance(BalancePreset preset) {
     balanceDraft.tearsPerSecond=balancePreset.tearsPerSecond;balanceDraft.shotSpeed=balancePreset.shotSpeed;
     balanceDraft.rangeTiles=balancePreset.rangeTiles;
     balanceDraft.redHeartAppearanceSpeed=balancePreset.redHeartAppearanceSpeed;
-    balanceDraft.redHeartClearRewards=balancePreset.redHeartClearRewards;balanceDraft.playerLuck=balancePreset.playerLuck;
+    balanceDraft.chestClearRewards=balancePreset.chestClearRewards;balanceDraft.coinClearRewards=balancePreset.coinClearRewards;balanceDraft.redHeartClearRewards=balancePreset.redHeartClearRewards;balanceDraft.playerLuck=balancePreset.playerLuck;
     balanceDraft.playerDamage=balancePreset.playerDamage;balanceDraft.regularHealthMultiplier=balancePreset.regularHealthMultiplier;
     balanceDraft.gaperMovementMultiplier=balancePreset.gaperMovementMultiplier;
     balanceDraft.spiderMovementMultiplier=balancePreset.spiderMovementMultiplier;
@@ -50,7 +50,7 @@ void Game::applyBalance(BalancePreset preset) {
         run->applyCombatBalance(balancePreset.playerDamage,balancePreset.regularHealthMultiplier);
         playerDamage=run->player.shotDamage;
         run->redHeartAppearanceSpeed=balancePreset.redHeartAppearanceSpeed;
-        run->redHeartClearRewards=balancePreset.redHeartClearRewards;run->player.attributes.luck=balancePreset.playerLuck;
+        run->chestClearRewards=balancePreset.chestClearRewards;run->coinClearRewards=balancePreset.coinClearRewards;run->redHeartClearRewards=balancePreset.redHeartClearRewards;run->player.attributes.luck=balancePreset.playerLuck;
         run->player.attributes.speed=balancePreset.playerSpeed;
         // New shots resolve these base attributes with owned-item modifiers.
         // Leave existing projectile birth specs and the current cooldown intact.
@@ -161,7 +161,7 @@ void Game::loadBalancePreset(const std::filesystem::path &path) {
     const auto filename=path.string();
     auto live=balancePreset;live.playerSpeed=candidate.playerSpeed;live.defaultZoomPercent=candidate.defaultZoomPercent;
     live.tearsPerSecond=candidate.tearsPerSecond;live.shotSpeed=candidate.shotSpeed;live.rangeTiles=candidate.rangeTiles;
-    live.redHeartAppearanceSpeed=candidate.redHeartAppearanceSpeed;live.redHeartClearRewards=candidate.redHeartClearRewards;live.playerLuck=candidate.playerLuck;
+    live.redHeartAppearanceSpeed=candidate.redHeartAppearanceSpeed;live.chestClearRewards=candidate.chestClearRewards;live.coinClearRewards=candidate.coinClearRewards;live.redHeartClearRewards=candidate.redHeartClearRewards;live.playerLuck=candidate.playerLuck;
     live.playerDamage=candidate.playerDamage;live.regularHealthMultiplier=candidate.regularHealthMultiplier;
     live.gaperMovementMultiplier=candidate.gaperMovementMultiplier;
     live.spiderMovementMultiplier=candidate.spiderMovementMultiplier;
@@ -193,7 +193,7 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     candidate->applyCombatBalance(preset.playerDamage,preset.regularHealthMultiplier);
     playerDamage=candidate->player.shotDamage;
     candidate->redHeartAppearanceSpeed=preset.redHeartAppearanceSpeed;
-    candidate->redHeartClearRewards=preset.redHeartClearRewards;candidate->player.attributes.luck=preset.playerLuck;
+    candidate->chestClearRewards=preset.chestClearRewards;candidate->coinClearRewards=preset.coinClearRewards;candidate->redHeartClearRewards=preset.redHeartClearRewards;candidate->player.attributes.luck=preset.playerLuck;
     candidate->player.attributes.speed=preset.playerSpeed;
     candidate->player.attributes.tearsPerSecond=preset.tearsPerSecond;
     candidate->player.attributes.shotSpeed=preset.shotSpeed;
@@ -205,6 +205,16 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
         if(!retry)throw std::runtime_error("Source room "+std::to_string(*reviewSourceRoomTemplate)+" is absent from this generated floor. Use the recorded review seed and enable SOURCE LAYOUTS or SOURCE COMBAT ROOM.");
         candidate->announce("ROOM REVIEW / Requested template is absent with these map settings; starting at the entrance.",8);
     }
+    if(reviewRoomIndex) {
+        if(*reviewRoomIndex>=candidate->arena.roomCount()||*reviewRoomIndex<0) {
+            if(!retry)throw std::runtime_error("Requested review room is absent from this generated floor");
+            candidate->announce("ROOM REVIEW / Requested room is absent; starting at the entrance.",8);
+        } else {
+            candidate->player.position=candidate->arena.rooms[size_t(*reviewRoomIndex)].entry;
+            candidate->enterRoom(*reviewRoomIndex);
+            candidate->announce("ROOM REVIEW / Room "+std::to_string(*reviewRoomIndex+1),6);
+        }
+    }
     const RetrySetup setup{candidate->expedition.seed,candidate->arena.theme,visualSettings.canyonRiver,
                            candidate->surveyTutorial,candidate->expedition.account,candidate->expedition.pacing};
     campaign.begin(setup.seed,candidate->summary().expedition,setup.pacing);
@@ -215,8 +225,9 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     missionMenu=walkingToMission=false;town.stop();screen=Screen::Expedition;
     deathTime=0;paused=false;accumulator=0;error.clear();resetArmed=false;
     useDefaultZoom();resetPointerInput();
-    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" gaper_movement="<<balancePreset.gaperMovementMultiplier<<" spider_movement="<<balancePreset.spiderMovementMultiplier<<" pooter_movement="<<balancePreset.pooterMovementMultiplier<<" pooter_shot="<<balancePreset.pooterShotSpeedMultiplier<<" pooter_delay="<<balancePreset.pooterAttackIntervalMultiplier<<" damage="<<balancePreset.playerDamage<<" regular_hp="<<balancePreset.regularHealthMultiplier<<" red_heart_rewards="<<balancePreset.redHeartClearRewards<<" heart_appearance="<<balancePreset.redHeartAppearanceSpeed<<" luck="<<balancePreset.playerLuck<<" room_hearts="<<balancePreset.roomHeartLayouts<<" source_room="<<balancePreset.sourceCombatRoom<<" revision="<<balancePreset.revision()
+    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" gaper_movement="<<balancePreset.gaperMovementMultiplier<<" spider_movement="<<balancePreset.spiderMovementMultiplier<<" pooter_movement="<<balancePreset.pooterMovementMultiplier<<" pooter_shot="<<balancePreset.pooterShotSpeedMultiplier<<" pooter_delay="<<balancePreset.pooterAttackIntervalMultiplier<<" damage="<<balancePreset.playerDamage<<" regular_hp="<<balancePreset.regularHealthMultiplier<<" chest_rewards="<<balancePreset.chestClearRewards<<" coin_rewards="<<balancePreset.coinClearRewards<<" red_heart_rewards="<<balancePreset.redHeartClearRewards<<" heart_appearance="<<balancePreset.redHeartAppearanceSpeed<<" luck="<<balancePreset.playerLuck<<" room_hearts="<<balancePreset.roomHeartLayouts<<" source_room="<<balancePreset.sourceCombatRoom<<" revision="<<balancePreset.revision()
              <<" profile="<<(balancePreset.custom()?"custom":"reference-partial")<<'\n';
+    if(reviewRoomIndex)std::cout<<"ROOM_REVIEW room="<<run->room+1<<" hp="<<run->player.hp<<" god="<<run->godMode<<'\n';
     if(reviewSourceRoomTemplate) {
         const auto &layout=run->arena.rooms[size_t(run->room)];
         std::cout<<"ROOM_REVIEW requested="<<*reviewSourceRoomTemplate<<" room="<<run->room+1
@@ -233,7 +244,7 @@ void Game::retryExpedition() {
     const auto setup=*retrySetup_;
     if(run)finish(EndReason::Death); // Resolve consequences once; never reset the campaign.
     auto candidate=std::make_unique<Simulation>(setup.seed,campaign.data().nextRunId,campaign.data().world,
-        setup.theme,setup.river,setup.tutorial,setup.account,0,setup.pacing,defaultMechanics(),balancePreset.roomSizeScale,balancePreset.roomMinHalfTiles,balancePreset.roomMaxHalfTiles,balancePreset.routeLengthScale,balancePreset.sourceCombatRoom,balancePreset.roomHeartLayouts);
+        setup.theme,setup.river,setup.tutorial,setup.account,0,setup.pacing,defaultMechanics(),balancePreset.roomSizeScale,balancePreset.roomMinHalfTiles,balancePreset.roomMaxHalfTiles,balancePreset.routeLengthScale,balancePreset.sourceCombatRoom,balancePreset.roomHeartLayouts,balancePreset.coinClearRewards);
     startExpedition(std::move(candidate),true);
     balanceNotice="Retried the same expedition seed with the applied player, enemy, view and map settings.";
 }

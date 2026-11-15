@@ -1,0 +1,18 @@
+{
+  "status": "enabled and developer-verified; source109 enemies accepted; other room reviews pending",
+  "templates": [
+    109,
+    547,
+    548,
+    550
+  ],
+  "natural_size_cases": 12,
+  "minimum_size_live_route_cases": 4,
+  "live_route_scope": "Arriving actors are retired to isolate physical routing from crowd blocking. No full native crowd acceptance.",
+  "source109_real_shooting_demolition_clear_revisit_apply": true,
+  "unique_focused_suites": 14,
+  "game_ui_source109": true,
+  "preset_schema": 19,
+  "full_native_acceptance": false,
+  "human_acceptance": "human-acceptance.json"
+}

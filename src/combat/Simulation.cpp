@@ -1,4 +1,5 @@
 #include "combat/Simulation.hpp"
+#include "combat/ChestGeometry.hpp"
 #include "world/SourceCombatRockRooms.hpp"
 #include "combat/LobFlight.hpp"
 #include "combat/PlayerShooting.hpp"
@@ -11,7 +12,7 @@
 
 namespace dw {
 Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, MissionTheme theme,
-                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library, float requestedRoomScale, int roomMinimum, int roomMaximum, float requestedRouteScale, bool requestedSourceRoom, int requestedHeartLayouts)
+                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library, float requestedRoomScale, int roomMinimum, int roomMaximum, float requestedRouteScale, bool requestedSourceRoom, int requestedHeartLayouts, bool requestedCoins)
     : content(library ? std::move(library) : defaultMechanics()), expedition(seed,tutorial,account,pacing),floor(level),roomSizeScale(requestedRoomScale),routeLengthScale(requestedRouteScale),sourceCombatRoom(requestedSourceRoom),roomHeartLayouts(requestedHeartLayouts),roomMinHalfTiles(roomMinimum),roomMaxHalfTiles(roomMaximum),
       arena(expedition.floorSeed(level), theme, canyonRiver, tutorial, expedition.storyAt(level),
             expedition.roomsOnFloor(level),[&]{auto dimensions=expedition.dimensionsOnFloor(level);
@@ -29,6 +30,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
       runId_(runId), canyonRiver_(canyonRiver), startingWorld_(world) {
     if(account!=WitnessAccount::None&&account!=WitnessAccount::Rourke)
         throw std::invalid_argument("This testimony has not been authored yet.");
+    coinClearRewards=requestedCoins;
     surveyTutorial=tutorial;
     rooms.resize(arena.rooms.size());
     rescued = world.minersRescued;
@@ -96,7 +98,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     if(heartMode==roomHeartLayouts&&enabled==sourceCombatRoom&&scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
     if(!canResizeRooms())throw std::runtime_error("No floor to resize");
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
-                    expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode);
+                    expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards);
     const int targetRoom=std::clamp(room,0,next.finalRoom());
     next.items=items;next.keys=keys;next.powerUpsTaken=powerUpsTaken;
     next.dynamite=dynamite;next.dynamiteCooldown=dynamiteCooldown;
@@ -150,7 +152,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     next.gaperMovementMultiplier=gaperMovementMultiplier;
     next.spiderMovementMultiplier=spiderMovementMultiplier;
     next.pooterTuning=pooterTuning;
-    next.redHeartClearRewards=redHeartClearRewards;next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
+    next.chestClearRewards=chestClearRewards;next.coinClearRewards=coinClearRewards;next.redHeartClearRewards=redHeartClearRewards;next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
     next.audioEpoch=audioEpoch+1;next.checkpointNeeded=true;
     *this=std::move(next); // Same expedition ID, seed, timer and player; no campaign restart/consequences.
 }
@@ -158,12 +160,12 @@ bool Simulation::advanceFloor() {
     if(!floorExitRequested||lastFloor()||dead||!canUseFloorExit())return false;
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
-                    expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts);
+                    expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards);
     next.canonicalShooting=canonicalShooting;
     next.gaperMovementMultiplier=gaperMovementMultiplier;
     next.spiderMovementMultiplier=spiderMovementMultiplier;
     next.pooterTuning=pooterTuning;
-    next.redHeartClearRewards=redHeartClearRewards;next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
+    next.chestClearRewards=chestClearRewards;next.coinClearRewards=coinClearRewards;next.redHeartClearRewards=redHeartClearRewards;next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
     const auto spawn=next.player;
     next.player=player;next.player.position=spawn.position;next.player.aim=spawn.aim;next.player.facing=spawn.facing;
     next.player.velocity={};next.player.shootPose=next.player.dodge=next.player.pullTime=next.player.hurt=0;
@@ -376,7 +378,7 @@ void Simulation::enterRoom(int index) {
     for(auto &e:enemies)if(const auto *s=content->statue(e.monster);s&&!e.alive) {
         e.alive=true;e.hp=e.maxHp;e.state=EnemyState::Ready;e.cooldown=s->interval*.5f;
     }
-    refreshStatues();syncStatueBodies();
+    refreshStatues();syncMovementBodies();
     rewardOpen = shopOpen = false;
     projectiles.clear();
     clearHazards();
@@ -603,6 +605,8 @@ void Simulation::jumpDebug(int index, bool restart) {
             player.position = arena.rooms[size_t(index)].entry;
             break;
         }
+    if(arena.blocked(player.position,chestGeometry::PlayerRadius))
+        player.position=arena.rooms[size_t(index)].entry;
     enterRoom(index);
     player.aim = arena.rooms[size_t(index)].exit;
     // Keep the build, keys, unlocked doors and claimed rewards when replaying.
@@ -993,7 +997,7 @@ void Simulation::process(const Event &e) {
                 }
             }
             if(content->statue(target->monster)) {
-                hit.type=EventType::RoomHazardDestroyed;emit(hit,e.context);syncStatueBodies();
+                hit.type=EventType::RoomHazardDestroyed;emit(hit,e.context);syncMovementBodies();
                 if(const auto *s=content->statue(target->monster);s->attack==StatueAttack::Supply) {
                     target->supplyDeathPending=std::min(32,target->supplyDeathPending+s->supply.deathDrops);
                     target->supplyCooldown=0;
@@ -1612,7 +1616,7 @@ void Simulation::step(const Input &input, float dt) {
     if (rewardOpen || shopOpen || letterOpen || storyOpen!=StoryRoom::None || floorExitRequested || finished || dead)
         return;
     stats.duration += dt;
-    syncStatueBodies();
+    syncMovementBodies();
     refreshStatueAttraction(dt);
     for (auto &burst : particleBursts) burst.age += dt;
     std::erase_if(particleBursts, [](const auto &burst) { return burst.age >= 3; });
@@ -1635,6 +1639,8 @@ void Simulation::step(const Input &input, float dt) {
     collectKeys();
     updateMoney(dt);
     updateHeartPickups(dt);
+    updateChestSupplies(dt);
+    updateChests(dt);
     updateBlueFlies(dt);
     // After the room transition, each actor advances either its idle or combat
     // clock exactly once. Ambient animation never runs attacks or summons.

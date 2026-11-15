@@ -1,0 +1,32 @@
+{
+  "launched_at_utc": "2026-11-15T06:42:10.136040+00:00",
+  "pid": 40170,
+  "command": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "20",
+    "--review-room",
+    "2",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/d09b-coins/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "log": "interactive.log",
+  "seed": 20,
+  "displayed_room": 2,
+  "health": 6,
+  "god_mode": false,
+  "zoom_percent": 165,
+  "coin_rewards": true,
+  "expected_first_clear": "one penny at baseline Luck0",
+  "expected_collection": "+1 money once; stays collected on revisit",
+  "status": "scoped ordinary penny playtest accepted",
+  "unfinished": [
+    "preplaced source coin layouts and special coin actors/producers",
+    "full native seed/factory/physical/economy and gameplay-save acceptance"
+  ],
+  "human_acceptance": "human-acceptance.json"
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "preset": "preset-v20",
+    "chest_rewards": true,
+    "zoom": 165,
+    "hp": 6,
+    "god": false,
+    "room": 2,
+    "log": "preset-v20-cli.log"
+  },
+  {
+    "preset": "preset-v20-off",
+    "chest_rewards": false,
+    "zoom": 165,
+    "hp": 6,
+    "god": false,
+    "room": 2,
+    "log": "preset-v20-off-cli.log"
+  }
+]

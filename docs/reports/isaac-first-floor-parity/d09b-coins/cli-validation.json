@@ -1,0 +1,66 @@
+{
+  "launches": [
+    {
+      "preset": "v5",
+      "seed": 2942,
+      "room": 7,
+      "normal_health": 6,
+      "god_mode": false,
+      "zoom": 165,
+      "coin_rewards": true,
+      "log": "cli-v5-2942.log"
+    },
+    {
+      "preset": "v18",
+      "seed": 2942,
+      "room": 7,
+      "normal_health": 6,
+      "god_mode": false,
+      "zoom": 165,
+      "coin_rewards": true,
+      "log": "cli-v18-2942.log"
+    },
+    {
+      "preset": "v19",
+      "seed": 2942,
+      "room": 7,
+      "normal_health": 6,
+      "god_mode": false,
+      "zoom": 165,
+      "coin_rewards": true,
+      "log": "cli-v19-2942.log"
+    },
+    {
+      "preset": "v5",
+      "seed": 20,
+      "room": 2,
+      "normal_health": 6,
+      "god_mode": false,
+      "zoom": 165,
+      "coin_rewards": true,
+      "log": "cli-v5-20.log"
+    },
+    {
+      "preset": "v19",
+      "seed": 20,
+      "room": 2,
+      "normal_health": 6,
+      "god_mode": false,
+      "zoom": 165,
+      "coin_rewards": true,
+      "log": "cli-v19-20.log"
+    },
+    {
+      "preset": "v19-off",
+      "seed": 20,
+      "room": 2,
+      "normal_health": 6,
+      "god_mode": false,
+      "zoom": 165,
+      "coin_rewards": false,
+      "log": "cli-v19-off-20.log"
+    }
+  ],
+  "invalid_review_options_rejected": 2,
+  "accepted_preset_unchanged": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf"
+}

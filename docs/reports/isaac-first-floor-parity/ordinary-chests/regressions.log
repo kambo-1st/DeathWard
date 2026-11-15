@@ -1,0 +1,16 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 131: balance_preset_contract
+1/5 Test #131: balance_preset_contract ..........   Passed    0.06 sec
+    Start 137: red_heart_reward_reference
+2/5 Test #137: red_heart_reward_reference .......   Passed    0.01 sec
+    Start 143: chest_gameplay
+3/5 Test #143: chest_gameplay ...................   Passed    1.71 sec
+    Start 144: coin_reward_gameplay
+4/5 Test #144: coin_reward_gameplay .............   Passed    2.81 sec
+    Start 147: red_heart_reward_gameplay
+5/5 Test #147: red_heart_reward_gameplay ........   Passed    3.29 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =   7.88 sec
