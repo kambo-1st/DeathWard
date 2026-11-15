@@ -1,0 +1,15 @@
+{
+  "font": "DeathWardRough-Regular.otf",
+  "sha256": "78d1c51e780d237f6847f8a0fd3b103169c1911ce8788b61209493acddae75f7",
+  "source_unchanged": true,
+  "format": "OpenType CFF / OTTO",
+  "font_tables_decompiled": true,
+  "unicode_mappings_preserved": 978,
+  "freetype_mapped_characters_rendered": 978,
+  "bundled_stb_printable_ascii_glyphs_rendered": 94,
+  "specimen_visually_inspected": true,
+  "comparison_visually_inspected": true,
+  "human_visual_acceptance": false,
+  "game_integration": "Not part of this font-only request.",
+  "checkpoint_request": "User requested committing this candidate, then trying a closer match to the supplied reference. This is not final typography acceptance."
+}

@@ -1,0 +1,19 @@
+{
+  "family": "DeathWard Rough",
+  "version": "1.000",
+  "source": "../../Anton-Regular.ttf",
+  "source_sha256": "97aae409210d255fb3b92f18c8af2ed14941e10a1ee134a35bb91f52086de1d0",
+  "output": "DeathWardRough-Regular.otf",
+  "output_sha256": "78d1c51e780d237f6847f8a0fd3b103169c1911ce8788b61209493acddae75f7",
+  "format": "OpenType CFF (OTTO); vector contours, no bitmap/color layers",
+  "glyphs": 1326,
+  "mapped_characters": 978,
+  "preserved_layout_tables": [
+    "GDEF",
+    "GPOS",
+    "GSUB"
+  ],
+  "empty_glyphs_preserved": 9,
+  "scope": "Modified font artifact only. No game font wiring, source overwrite, outline or background.",
+  "validation": "CFF roundtrip, complete glyph order and cmap, valid polygons, no lost visible glyphs; Pillow/FreeType specimen render."
+}
