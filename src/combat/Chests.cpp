@@ -2,6 +2,18 @@
 #include "combat/ChestGeometry.hpp"
 
 namespace dw {
+void Simulation::deliverRoomChests(int index) {
+    const auto &spawns=arena.rooms[size_t(index)].chestSpawns;
+    auto &delivered=rooms[size_t(index)].roomChestsDelivered;
+    delivered.resize(spawns.size(),false);
+    for(size_t i=0;i<spawns.size();++i) {
+        if(delivered[i]||!spawnChest(spawns[i].preferred,spawns[i].pickupSeed))continue;
+        // Already present on entry: no clear-reward birth wait. Keep the source
+        // cell even when enclosed by rocks; never move it onto reachable floor.
+        auto &chest=chests.back();chest.age=.8f;chest.placedInLayout=true;
+        delivered[i]=true;
+    }
+}
 bool Simulation::spawnChest(Vector3 position,uint32_t seed) {
     if(!seed||dead||finished||chests.size()>=128||!std::isfinite(position.x)||
        !std::isfinite(position.y)||!std::isfinite(position.z)||arena.blocked(position,chestGeometry::PlacementRadius))return false;
@@ -90,6 +102,7 @@ void Simulation::updateChests(float dt) {
             drop.delivered=true;checkpointNeeded=true;
         }
     }
+    deliverRoomChests(room); // Deferred admission gets no retroactive update.
 }
 
 void Simulation::updateChestSupplies(float dt) {

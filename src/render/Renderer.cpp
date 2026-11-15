@@ -2235,11 +2235,11 @@ Action Renderer::balancePanel(const Game &game) {
         if(game.balanceRoomHeartsOpen) {
             const int mode=game.balanceDraft.roomHeartLayouts;
             text("SOURCE ROOM LAYOUTS",205,184,22,Gold);
-            text("Placed hearts, rock enclosures and supported combat arrangements.",205,221,14,Paper);
+            text("Placed hearts and chests, rock enclosures and combat arrangements.",205,221,14,Paper);
             if(button(Action::RoomHeartsOff,"OFF",205,250,150,40,mode==0))return Action::RoomHeartsOff;
             if(button(Action::RoomHeartsSource,"SOURCE LAYOUTS",375,250,300,40,mode==1))return Action::RoomHeartsSource;
             if(button(Action::RoomHeartsTest,"FULL + HALF TEST",695,250,380,40,mode==2))return Action::RoomHeartsTest;
-            text("Source layouts: some rooms have hearts; others have enemies among rocks.",205,312,14,Muted);
+            text("Source layouts include hearts, enclosed chests and enemies among rocks.",205,312,14,Muted);
             text("Full + half test: puts both in one nearby room. This is a testing override.",205,338,14,Muted);
             text("Opening floor only. Room-clear rewards keep their separate settings.",205,364,14,Teal);
             std::string locations;

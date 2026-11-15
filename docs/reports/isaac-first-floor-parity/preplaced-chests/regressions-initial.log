@@ -1,0 +1,20 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 131: balance_preset_contract
+1/4 Test #131: balance_preset_contract ..........***Failed    0.07 sec
+mutation exists
+
+    Start 140: heart_rock_room
+2/4 Test #140: heart_rock_room ..................   Passed    1.98 sec
+    Start 142: source_room_coverage
+3/4 Test #142: source_room_coverage .............   Passed    3.36 sec
+    Start 143: chest_gameplay
+4/4 Test #143: chest_gameplay ...................   Passed   12.88 sec
+
+75% tests passed, 1 tests failed out of 4
+
+Total Test time (real) =  18.29 sec
+
+The following tests FAILED:
+	131 - balance_preset_contract (Failed)
+Errors while running CTest

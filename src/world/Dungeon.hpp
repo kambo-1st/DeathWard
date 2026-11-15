@@ -27,6 +27,11 @@ struct RoomHeartSpawn {
     uint32_t pickupSeed=0;
     int x=0,y=0,sourceSubtype=0,subtype=0;
 };
+struct RoomChestSpawn {
+    Vector3 preferred{};
+    uint32_t pickupSeed=0;
+    int x=0,y=0,ordinal=0;
+};
 struct RoomLayout {
     Box bounds;
     Vector3 center{}, entry{}, exit{}, objective{}, bossSpawn{};
@@ -43,6 +48,7 @@ struct RoomLayout {
     int sourceObstacleTemplate=-1; // Selected complete rock/pickup arrangement.
     uint32_t sourceRoomSelectionSeed=0, sourceRoomSpawnSeed=0;
     std::vector<RoomHeartSpawn> heartSpawns;
+    std::vector<RoomChestSpawn> chestSpawns;
     Vector3 reward{};
     std::vector<int> passages;
     std::vector<Box> floors, obstacles;

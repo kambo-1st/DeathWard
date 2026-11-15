@@ -1054,6 +1054,7 @@ struct RoomProgress {
     bool visited = false, cleared = false, rewardTaken = false, bossPaid = false;
     std::optional<RedHeartClearAward> redHeartAward;
     std::vector<bool> roomHeartsDelivered;
+    std::vector<bool> roomChestsDelivered;
     std::array<ItemKey, 2> offers{};
     std::array<bool,2> serviceSold{};
     // The active room uses Simulation::enemies; other rooms keep their actual group here.
@@ -1070,6 +1071,7 @@ struct ChestPickup {
     Vector3 position{};int room=-1;uint32_t seed=0;
     bool opened=false;float age=0,openAge=0,heartAppearanceSpeed=1;
     std::vector<ChestDrop> contents;
+    bool placedInLayout=false;
 };
 struct ChestSupply {
     Vector3 position{};int room=-1;bool bomb=false;CoinTiming timing{};
@@ -1634,6 +1636,7 @@ class Simulation {
     void updateChestSupplies(float dt);
     void prepareRoomHearts();
     void deliverRoomHearts(int index);
+    void deliverRoomChests(int index);
     void resolveRedHeartClearAward();
     void deliverRedHeartClearAward();
     bool hurtPlayer(float damage, const Context &context = {}, bool hostile = true);

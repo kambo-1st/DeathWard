@@ -1,0 +1,38 @@
+Start testing: Nov 15 09:14 CET
+----------------------------------------------------------
+131/163 Testing: balance_preset_contract
+131/163 Test: balance_preset_contract
+Command: "/home/kambo/workspace/DeathWard/build/deathward_balance_preset_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"balance_preset_contract" start time: Nov 15 09:14 CET
+Output:
+----------------------------------------------------------
+PASS preset round-trip, schema migrations and rejection cases, invalid-export protection and atomic replacement failure
+<end of output>
+Test time =   0.07 sec
+----------------------------------------------------------
+Test Passed.
+"balance_preset_contract" end time: Nov 15 09:14 CET
+"balance_preset_contract" time elapsed: 00:00:00
+----------------------------------------------------------
+
+144/163 Testing: preplaced_chest_layout
+144/163 Test: preplaced_chest_layout
+Command: "/home/kambo/workspace/DeathWard/build/deathward_chest_layout_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"preplaced_chest_layout" start time: Nov 15 09:14 CET
+Output:
+----------------------------------------------------------
+PASS exact source chest/rocks/seed, demolition, click opening, solid body, loot and revisit seed=669 size=0.750000 range=5,5
+PASS exact source chest/rocks/seed, demolition, click opening, solid body, loot and revisit seed=375 size=1.100000 range=7,9
+PASS exact source chest/rocks/seed, demolition, click opening, solid body, loot and revisit seed=375 size=1.500000 range=10,10
+PASS deferred exact admission, OFF/test/later-floor exclusions
+<end of output>
+Test time =   1.69 sec
+----------------------------------------------------------
+Test Passed.
+"preplaced_chest_layout" end time: Nov 15 09:14 CET
+"preplaced_chest_layout" time elapsed: 00:00:01
+----------------------------------------------------------
+
+End testing: Nov 15 09:14 CET

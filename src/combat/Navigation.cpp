@@ -2,6 +2,7 @@
 #include "combat/ChestGeometry.hpp"
 #include "world/SourceHeartRockRoom.hpp"
 #include "world/SourceCombatRockRooms.hpp"
+#include "world/SourceChestRockRoomData.hpp"
 #include <map>
 #include <queue>
 
@@ -134,7 +135,8 @@ std::vector<Vector3> Arena::path(Vector3 from, Vector3 target, float radius) con
         auto route=floorPath(*this,from,target,radius,floorCells);
         if(route.empty()) {
             const int start=roomAt(from),goal=roomAt(target);
-            const auto sourceRoom=[&](int i){return i>=0&&sourceCombatRockRoom(rooms[size_t(i)].sourceObstacleTemplate);};
+            const auto sourceRoom=[&](int i){return i>=0&&(sourceCombatRockRoom(rooms[size_t(i)].sourceObstacleTemplate)||
+                rooms[size_t(i)].sourceObstacleTemplate==SourceChestRockRoom);};
             const bool sourceStart=sourceRoom(start),sourceGoal=sourceRoom(goal);
             if(sourceStart&&start==goal)return sourceRockPath(*this,start,from,target,radius);
             if(sourceStart||sourceGoal) {

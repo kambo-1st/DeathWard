@@ -1,0 +1,29 @@
+[
+  {
+    "preset": "v20-clear-off",
+    "room": 6,
+    "zoom": 165,
+    "hp": 6,
+    "god": false,
+    "preplaced_chest": true,
+    "log": "cli-v20-clear-off.log"
+  },
+  {
+    "preset": "v21",
+    "room": 6,
+    "zoom": 165,
+    "hp": 6,
+    "god": false,
+    "preplaced_chest": true,
+    "log": "cli-v21.log"
+  },
+  {
+    "preset": "v21-layout-off",
+    "room": 6,
+    "zoom": 165,
+    "hp": 6,
+    "god": false,
+    "preplaced_chest": false,
+    "log": "cli-v21-layout-off.log"
+  }
+]

@@ -1,0 +1,69 @@
+{
+  "status": "developer-verified-scoped-human-acknowledgment",
+  "accepted_checkpoint_commit": "c00b87a3",
+  "new_delivery_committed": false,
+  "source_extraction": "Pinned Basement STB SHA and complete 1.31.0 record verified by extractor --check",
+  "source_sha256": "524406fcb10c6275995292c0bd024cfc43d3d30c32b233e55d4d514573d963b0",
+  "tests_pass": [
+    "preplaced_chest_layout",
+    "balance_preset_contract",
+    "chest_gameplay",
+    "source_room_coverage",
+    "heart_rock_room"
+  ],
+  "size_cases": [
+    {
+      "seed": 669,
+      "scale": 0.75,
+      "range": [
+        5,
+        5
+      ]
+    },
+    {
+      "seed": 375,
+      "scale": 1.1,
+      "range": [
+        7,
+        9
+      ]
+    },
+    {
+      "seed": 375,
+      "scale": 1.5,
+      "range": [
+        10,
+        10
+      ]
+    }
+  ],
+  "checks": [
+    "exact twelve rocks, chest cell and descriptor/ordinal seed",
+    "no unrelated enemies, coin piles or combat-clear award",
+    "enclosure prevents opening; real dynamite opens access",
+    "actual Simulation click reaches chest and retains open collision",
+    "reachable fixed loot and no duplicate on revisit",
+    "capacity defers exact source chest",
+    "staged OFF/SOURCE Apply retains player/build/expedition and relocates outside reclosed enclosure",
+    "actual Game/Renderer mouse controls, normal-health keyboard bomb/retreat, opening, revisit/retry",
+    "schema20 migration and schema21 export/remember/fresh CLI reload",
+    "existing clear chest toggle remains independent of preplaced chest"
+  ],
+  "gui": "input.log",
+  "cli": "cli-validation.json",
+  "test_note": "Initial preset invalid-policy test still expected the old policy name; corrected fixture passes in tests.log. The other three regression suites passed in regressions-initial.log. Boundary fixtures use independently selected natural seeds; no source room is forced by testing. Three boundary/reference size combinations are verified, not an exhaustive random-floor sweep.",
+  "human_acceptance": {
+    "date": "2026-11-15",
+    "feedback": "ok, cool, whats next???",
+    "scope": "positive acknowledgment of the playable source31 chest room; full native parity remains open"
+  },
+  "native_chest_full_parity": false,
+  "user_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "unfinished": [
+    "other source chest layouts",
+    "full native chest loot distribution and missing pickup/special-chest dependencies",
+    "native chest factory/RNG/physics/timing/profile/modifier equivalence",
+    "full expedition gameplay save/restore",
+    "prior native room/coin gaps"
+  ]
+}

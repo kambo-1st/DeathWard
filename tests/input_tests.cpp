@@ -2,6 +2,7 @@
 #include "render/Renderer.hpp"
 #include "items/Items.hpp"
 #include "combat/ChestGeometry.hpp"
+#include "world/SourceHeartRockRoom.hpp"
 #include "rlgl.h"
 #include <chrono>
 #include <fstream>
@@ -434,6 +435,50 @@ void spiderBalanceInputCheck(const std::filesystem::path &directory) {
     check(fresh.run->spiderMovementMultiplier==.65f&&fresh.run->gaperMovementMultiplier==1&&fresh.cameraZoomPercent()==165&&fresh.run->player.attributes.tearsPerSecond==1.9272734f,
           "fresh Game restores independent enemy and accepted user settings");fresh.close();
     std::cout<<"PASS D05 actual Game encounter, UI mouse/keyboard, live edit, export/reload/rejection, map/floor/retry/fresh-session persistence\n";
+}
+void chestLayoutInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    constexpr int seed=375; // Natural complete source31 room at the accepted preset.
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"chest-layout.save",preset=directory/"chest-layout.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText=std::to_string(seed);game.reviewSourceRoomTemplate=31;
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
+    check(game.run&&game.error.empty(),"direct preplaced chest launch");auto &run=*game.run;
+    const int owner=run.room;check(run.arena.rooms[size_t(owner)].sourceObstacleTemplate==31&&run.chests.size()==1&&!run.chests[0].opened&&run.player.hp==6&&!run.godMode,"normal-health source31 chest ready at entry");
+    const auto at=run.chests[0].position;Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"chest layout UI has no errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto clickFloor=[&](Vector3 p){p.y=0;auto screen=GetWorldToScreen(p,game.camera);click(int(screen.x),int(screen.y));};
+    const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"chest layout capture");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();capture("artifacts/chest-layout-closed.png");
+    check(renderer.chestModelReady(),"accepted chest model loaded on first entry");
+    clickFloor(at);for(int n=0;n<90;++n)frame();check(!run.chests[0].opened,"mouse cannot open enclosed chest");
+    click(374,642);click(575,143);click(970,190);check(game.balanceRoomHeartsOpen,"room layouts tab opens with mouse");
+    click(275,270);check(game.hasPendingMapChanges()&&run.chests.size()==1,"OFF staged until Apply");
+    click(415,446);check(run.chests.empty()&&run.roomHeartLayouts==0,"mouse Apply removes arrangement");
+    game.exportBalancePreset();std::filesystem::copy_file(preset,"artifacts/chest-layout-off-preset.json",std::filesystem::copy_options::overwrite_existing);
+    click(510,270);check(game.hasPendingMapChanges()&&run.chests.empty(),"SOURCE staged until Apply");
+    click(415,446);check(run.chests.size()==1&&run.roomHeartLayouts==1&&run.room==owner,"mouse Apply restores closed chest in current room");
+    game.exportBalancePreset();game.rememberBalancePreset();capture("artifacts/chest-layout-panel.png");
+    std::filesystem::copy_file(preset,"artifacts/chest-layout-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.perform(Action::CloseBalance);game.paused=false;game.updateCamera(10);frame();
+    const auto approach=sourceHeartCell(run.arena.rooms[size_t(owner)],3,3);clickFloor(approach);
+    for(int n=0;n<480;++n)frame();check(planarDistance(run.player.position,approach)<.15f,"mouse reaches demolition approach");
+    // Normal keyboard bomb placement, then retreat beyond the retained blast.
+    mouseEvent(KeyDown,KEY_B);frame();mouseEvent(KeyUp,KEY_B);frame();
+    const auto retreat=add(approach,{-6,0,0});clickFloor(retreat);
+    for(int n=0;n<240;++n)frame();
+    check(!run.dead&&run.dynamite==StartingDynamite-1,"normal-health player uses and survives inventory dynamite");
+    check(std::any_of(run.arena.breakables.begin(),run.arena.breakables.end(),[&](const auto &b){return b.room==owner&&b.destroyed;}),"actual bomb opens enclosing rocks");
+    game.updateCamera(10);frame();clickFloor(at);for(int n=0;n<480;++n)frame();
+    check(run.chests.size()==1&&run.chests[0].opened&&!run.arena.blocked(run.player.position,.48f),"actual mouse route enters breach and opens solid chest");
+    check(std::all_of(run.chests[0].contents.begin(),run.chests[0].contents.end(),[](const auto &d){return d.delivered;}),"preplaced contents delivered once");capture("artifacts/chest-layout-open.png");
+    run.jumpDebug(0);run.jumpDebug(owner);frame();check(run.chests.size()==1&&run.chests[0].opened,"revisit retains opened layout chest");
+    run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->room==owner&&game.run->chests.size()==1&&!game.run->chests[0].opened&&!game.run->godMode&&game.run->player.hp==6,"death retry returns to fresh natural chest with normal health");
+    game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText=std::to_string(seed);fresh.reviewSourceRoomTemplate=31;fresh.loadBalancePreset(preset);fresh.launch(true);
+    check(fresh.run&&fresh.run->room==owner&&fresh.run->chests.size()==1&&fresh.cameraZoomPercent()==165&&fresh.run->player.walkingSpeed()==4.8f,"fresh exported preset retains arrangement and accepted feel");fresh.close();
+    std::cout<<"PASS actual Game/Renderer preplaced chest, mouse Apply/navigation/opening, keyboard demolition, revisit/retry and preset reload\n";
 }
 void chestInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
@@ -1917,6 +1962,9 @@ int main(int argc, char **argv) {
         if(mode.empty()||mode=="--shooting-balance-only") {
             shootingBalanceInputCheck(directory);
             if(mode=="--shooting-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode=="--chest-layout-only") {
+            chestLayoutInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--chests-only") {
             chestInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

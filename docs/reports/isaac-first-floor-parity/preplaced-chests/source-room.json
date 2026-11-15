@@ -1,0 +1,192 @@
+{
+  "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/01.basement.stb",
+  "sha256": "524406fcb10c6275995292c0bd024cfc43d3d30c32b233e55d4d514573d963b0",
+  "template": "1.31.0",
+  "metadata": {
+    "index": 31,
+    "type": 1,
+    "variant": 31,
+    "subtype": 0,
+    "difficulty": 1,
+    "shape": 1,
+    "doors": 15,
+    "weight": 1.0,
+    "spawnCount": 13,
+    "slots": []
+  },
+  "slots": [
+    {
+      "ordinal": 0,
+      "x": 5,
+      "y": 1,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 1,
+      "x": 6,
+      "y": 1,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 2,
+      "x": 7,
+      "y": 1,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 3,
+      "x": 4,
+      "y": 2,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 4,
+      "x": 8,
+      "y": 2,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 5,
+      "x": 4,
+      "y": 3,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 6,
+      "x": 6,
+      "y": 3,
+      "choices": [
+        {
+          "type": 5,
+          "variant": 50,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 7,
+      "x": 8,
+      "y": 3,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 8,
+      "x": 4,
+      "y": 4,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 9,
+      "x": 8,
+      "y": 4,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 10,
+      "x": 5,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 11,
+      "x": 6,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 12,
+      "x": 7,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    }
+  ],
+  "rock_count": 12,
+  "chests": 1,
+  "enemies": 0,
+  "scope": "Complete source content record. Ordinary chest contents/physics use the existing explicit DeathWard adaptation; source size/shape/connections remain excluded."
+}

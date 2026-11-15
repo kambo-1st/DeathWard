@@ -233,6 +233,7 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
         std::cout<<"ROOM_REVIEW requested="<<*reviewSourceRoomTemplate<<" room="<<run->room+1
                  <<" template="<<(layout.sourceHeartTemplate>=0?layout.sourceHeartTemplate:layout.sourceCombatTemplate)
                  <<" selection_seed="<<layout.sourceRoomSelectionSeed<<" spawn_seed="<<layout.sourceRoomSpawnSeed
+                 <<" chest_slots="<<layout.chestSpawns.size()<<" chests="<<run->chests.size()
                  <<" hp="<<run->player.hp<<" god="<<run->godMode<<'\n';
     }
 }

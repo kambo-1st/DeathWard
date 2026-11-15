@@ -56,6 +56,13 @@ int main() {
             const auto q=BalancePreset::load(file,"fixture-content");
             check(q.chestClearRewards==enabled&&q.revision()==p.revision(),"chest option export/load and revision");
         }
+        for(const auto *name:{"preset-v20.json","preset-v20-off.json"}) {
+            const auto p=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+                "docs/reports/isaac-first-floor-parity/ordinary-chests"/name,"2ccd5b1c274a302e");
+            check(p.roomHeartLayouts==1&&p.defaultZoomPercent==165&&p.shotSpeed==.9f,"schema20 migrates source chest layout policy preserving map/view/shooting");
+            p.save(file);const auto q=BalancePreset::load(file,"2ccd5b1c274a302e");
+            check(q.chestClearRewards==p.chestClearRewards&&q.revision()==p.revision(),"migrated layout policy preserves independent clear chest toggle");
+        }
         const auto previousCoins=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
             "docs/reports/isaac-first-floor-parity/d09b-coins/preset-v19.json","2ccd5b1c274a302e");
         check(previousCoins.chestClearRewards&&previousCoins.defaultZoomPercent==165,"schema19 migration enables selected chests and preserves view");
@@ -174,7 +181,7 @@ int main() {
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 1.5"),
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": false"),
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 0"),
-            replaceOne(valid,"basement-native-descriptor-gaper-rocks-v7","invalid-policy"),
+            replaceOne(valid,"basement-native-descriptor-chest31-v8","invalid-policy"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 0"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 4.01"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 2"),
@@ -194,11 +201,11 @@ int main() {
             replaceOne(valid,"\"chest_clear_rewards\": true","\"chest_clear_rewards\": 1"),
             replaceOne(valid,"pickup-batches-adapted-v1","unverified-chest-policy"),
             valid+"garbage", valid.substr(0,valid.size()-3),
-            replaceOne(valid,"\"schema_version\": 20","\"schema_version\": 21"),
+            replaceOne(valid,"\"schema_version\": 21","\"schema_version\": 22"),
             replaceOne(valid,"\"red_heart_appearance_speed\": 1","\"red_heart_appearance_speed\": 2"),
             replaceOne(valid,"appear33-drop25-collect12-30hz-v1","unverified-timing"),
-            replaceOne(valid,"\"schema_version\": 20","\"schema_version\": 20, \"schema_version\": 20"),
-            replaceOne(valid,"ordinary-chests-v20","future-contract"),
+            replaceOne(valid,"\"schema_version\": 21","\"schema_version\": 21, \"schema_version\": 21"),
+            replaceOne(valid,"preplaced-chests-v21","future-contract"),
             replaceOne(valid,"fixture-content","different-content"),
             replaceOne(valid,"Repentance 1.7.9b","Repentance 1.7.9a"),
             replaceOne(valid,"\"walking_pace_at_speed_one\": 4.8","\"walking_pace_at_speed_one\": 30"),

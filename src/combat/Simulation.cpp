@@ -1,6 +1,7 @@
 #include "combat/Simulation.hpp"
 #include "combat/ChestGeometry.hpp"
 #include "world/SourceCombatRockRooms.hpp"
+#include "world/SourceChestRockRoomData.hpp"
 #include "combat/LobFlight.hpp"
 #include "combat/PlayerShooting.hpp"
 #include "combat/SourceTime.hpp"
@@ -138,6 +139,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     }
     if(!std::isfinite(best))throw std::runtime_error("Resized room has no safe player position");
     next.player=player;next.player.position=position;next.player.aim=add(position,sub(player.aim,player.position));
+    next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
     next.enterRoom(targetRoom);
     next.player.velocity={};next.player.launch.reset();next.player.pullTime=0;
     next.stats=stats;next.roomEnteredAt=stats.duration;
@@ -407,6 +409,7 @@ void Simulation::enterRoom(int index) {
         arena.sealRoom(-1);
     }
     deliverRoomHearts(room);
+    deliverRoomChests(room);
     checkpointNeeded = true;
 }
 void Simulation::clearRoom() {
@@ -571,6 +574,7 @@ bool Simulation::enterSourceRoomReview(int variant) {
         // A known combat-record heart layer at a protected objective/key site
         // does not contain the complete combat record and cannot review it.
         if(sourceCombatRockRoom(variant)&&layout.sourceCombatTemplate!=variant)continue;
+        if(variant==SourceChestRockRoom&&layout.sourceObstacleTemplate!=variant)continue;
         cancelMove();player.position=layout.entry;
         enterRoom(i);player.aim=layout.exit;
         announce("ROOM REVIEW / Source "+std::to_string(variant)+" / "+roomName(),6);

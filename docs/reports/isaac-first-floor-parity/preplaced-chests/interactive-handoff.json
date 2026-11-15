@@ -1,0 +1,32 @@
+{
+  "pid": 66591,
+  "command": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "375",
+    "--review-source-room",
+    "31",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/preplaced-chests/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "seed": 375,
+  "displayed_room": 6,
+  "source_template": "1.31.0",
+  "rocks": 12,
+  "preplaced_chests": 1,
+  "hp": 6,
+  "god_mode": false,
+  "zoom": 165,
+  "preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "human_acceptance": {
+    "date": "2026-11-15",
+    "feedback": "ok, cool, whats next???",
+    "scope": "positive acknowledgment of the playable source31 chest room; full native parity remains open"
+  },
+  "log": "interactive.log",
+  "check": "Approach the rocks, press B to place dynamite, retreat, then click the chest through the opening. Revisit must retain the opened state; death retry returns here."
+}
