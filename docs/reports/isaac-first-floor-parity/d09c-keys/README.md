@@ -1,6 +1,6 @@
 # D09c — ordinary keys in the main game
 
-Selected 2026-11-15 after accepted preplaced coins, committed as `dadbc92b`. **Keys are enabled, developer-verified and accepted in the scoped human playtest on 2026-11-15 ("cool, it works!").** This delivery is not committed yet. The automatic bulk parity effort remains paused.
+Selected 2026-11-15 after accepted preplaced coins, committed as `dadbc92b`. **Keys are enabled, developer-verified and accepted in the scoped human playtest on 2026-11-15 ("cool, it works!").** This delivery is committed as `b466b5a3`. The automatic bulk parity effort remains paused.
 
 ## Playable result
 
@@ -42,6 +42,6 @@ The normal game opens directly in **displayed room6, seed285**, beside the first
 build/deathward --expedition --seed 285 --review-source-room 214 --mute --save /home/kambo/.local/share/deathward/reviews/d09c-keys/campaign.save --balance-preset /home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json
 ```
 
-Human check: inspect the new key's size/readability; press **B** beside an enclosure, retreat within the room, then walk through the breach. The counter increases by1 per key. Leave/revisit and check no duplicates. Review the live KEYS toggle/export/load if desired. The user accepted this scoped playtest. Recommended next: commit D09c, then separately select **D09d ordinary bomb/dynamite pickups**: natural clear rewards and one compatible complete layout, collection amounts/capacity/timing, revisit persistence and live/export/load settings. Follow with a short main-game check. Fuse/blast/self-damage and keyed-door spending remain separate D10 deliveries; this status question selects no new implementation.
+Human check: inspect the new key's size/readability; press **B** beside an enclosure, retreat within the room, then walk through the breach. The counter increases by1 per key. Leave/revisit and check no duplicates. Review the live KEYS toggle/export/load if desired. The user accepted this scoped playtest. D09c is committed as `b466b5a3`. The user selected corridor decoration and supply-cache removal next; see [cleanup progress](../expedition-presentation-cleanup/README.md). Subsequent proposal, requiring separate selection: **D09d ordinary bomb/dynamite pickups**: natural clear rewards and one compatible complete layout, collection amounts/capacity/timing, revisit persistence and live/export/load settings. Follow with a short main-game check. Fuse/blast/self-damage and keyed-door spending remain separate D10 deliveries; this status question selects no new implementation.
 
 Unfinished: broader key layouts, golden/charged keys, complete native seed/factory/physics/profile/modifier/scheduler equivalence, gameplay save continuity, and earlier chest loot/room gaps. Bomb/dynamite and door-spending changes require separate selection. Isaac size/shape/connections remain excluded; accepted movement, shooting, health/damage and universal dodge remain intact.

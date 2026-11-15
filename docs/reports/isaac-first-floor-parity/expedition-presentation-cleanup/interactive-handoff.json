@@ -1,0 +1,24 @@
+{
+  "pid": 118626,
+  "command": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "285",
+    "--review-source-room",
+    "214",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/expedition-presentation-cleanup/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "seed": 285,
+  "displayed_room": 6,
+  "source_template": 214,
+  "zoom": 165,
+  "god": false,
+  "normal_health": 6,
+  "manual_check": "Walk through a passage: the floor arrows and paired lantern posts are absent. Generated floors no longer contain the supply-cache enclosure. Ordinary source key rocks remain.",
+  "log": "launch.log"
+}

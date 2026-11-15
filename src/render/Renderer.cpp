@@ -816,8 +816,6 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             for (int end = 0; end < 2; ++end) {
                 const auto at = end == 0 ? passage.from : passage.to;
                 const Color color = passage.locked ? Gold : passage.closed(end) ? Rust : Teal;
-                lanternPost(add(at, mul(side, -3.5f)));
-                lanternPost(add(at, mul(side, 3.5f)));
                 if (!canyon)
                     DrawCube({at.x, 3.1f, at.z}, eastWest ? .5f : 8, .4f, eastWest ? 8 : .5f, theme.gate);
                 if (!passage.closed(end))
@@ -1043,20 +1041,6 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         for (int end = 0; end < 2; ++end) {
             const auto at = end == 0 ? passage.from : passage.to;
             const Color color = passage.locked ? Gold : passage.closed(end) ? Rust : Teal;
-            lantern(add(at, mul(side, -3.5f)), color, westernScene_.loaded());
-            lantern(add(at, mul(side, 3.5f)), color, westernScene_.loaded());
-            if (run.roomClear && passage.open() && passage.rooms[size_t(end)] == run.room &&
-                distance(run.player.position, at) < 26) {
-                // Small floor chevrons indicate open exits without floating instructions.
-                const Vector3 outward = mul(direction, end == 0 ? 1.0f : -1.0f);
-                for (float inset : {1.0f, 2.0f}) {
-                    Vector3 tip = sub(at, mul(outward, inset));
-                    tip.y = 0.075f;
-                    const Vector3 base = sub(tip, mul(outward, 0.7f));
-                    DrawLine3D(add(base, mul(side, 0.7f)), tip, Teal);
-                    DrawLine3D(sub(base, mul(side, 0.7f)), tip, Teal);
-                }
-            }
             if (passage.closed(end)) {
                 if (canyon) {
                     auto veil = color;

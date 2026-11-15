@@ -292,9 +292,6 @@ void contentAndPlacement() {
         }
     }
     check(fly&&pooter&&coexist,"seeded regular actors and real dung coexist");
-    Simulation cache(24,1,{},MissionTheme::Canyon,true,false,WitnessAccount::Rourke,0);
-    for(const auto &p:cache.arena.breakables)if(p.kind==BreakableKind::Dung)
-        check(!sphereBox(cache.arena.supplyCache.approach,1.5f,p.bounds),"seed24 cache approach excludes dung cover");
     for(bool tutorial:{false,true}) {
         Simulation s(1,1,{},tutorial?MissionTheme::Canyon:MissionTheme::Mine,true,tutorial);
         check(std::none_of(s.arena.breakables.begin(),s.arena.breakables.end(),[](const auto &p){return p.kind==BreakableKind::Dung;}),"Mine and tutorial unchanged by dung dressing");

@@ -37,7 +37,7 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Recommend committing the accepted coin delivery, then D09c ordinary keys as the next pickup family. D09c is proposed, not selected or started. Wider coin/room coverage, full native coin/chest parity and gameplay save continuity remain open.",
+  "next_work": "Propose D09d ordinary bomb/dynamite pickups: natural clear rewards and one compatible complete layout, collection/inventory/timing, live tuning/export/load and a short main-game check. D09d is not selected. Broader native coverage and gameplay save continuity remain open.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-12",
     "status": "Ordinary caller/descriptor and direct-entry delivery accepted; next complete-room continuation selected",
@@ -371,7 +371,7 @@
     "production_default_changed": false,
     "full_native_acceptance": false
   },
-  "current_delivery_summary": "Accepted chest room committed as 3dee8d4f. Source30 preplaced coin/rock layout enabled and developer-verified; user accepted its scoped playtest on 2026-11-15. This coin delivery remains uncommitted.",
+  "current_delivery_summary": "D09c accepted and committed as b466b5a3. Corridor arrow/post and supply-cache removal is implemented, developer-verified and scoped-human-accepted; this checkpoint includes the requested cleanup commit.",
   "room_scale_timing_checkpoint": {
     "status": "selected step1 verified for native shape1 geometry and ordinary horizontal base-Isaac live motion; shared spatial rollout pending",
     "evidence": "docs/reports/isaac-first-floor-parity/room-scale-timing/README.md",
@@ -690,7 +690,27 @@
       "god": false,
       "zoom": 165
     },
-    "next_proposed": "Commit the accepted D09c delivery, then separately select D09d ordinary bomb/dynamite pickups. Fuse/blast/self-damage and keyed-door behavior stay separate D10 deliveries.",
-    "next_delivery_selected": false
+    "next_proposed": "Cleanup accepted and included in this checkpoint. Next proposal is D09d ordinary bomb/dynamite pickups; separate selection is required.",
+    "next_delivery_selected": false,
+    "commit": "b466b5a3"
+  },
+  "expedition_presentation_cleanup": {
+    "selected": "2026-11-15",
+    "status": "implemented-developer-verified-scoped-human-accepted",
+    "report": "docs/reports/isaac-first-floor-parity/expedition-presentation-cleanup/README.md",
+    "scope": [
+      "corridor floor chevrons",
+      "paired doorway lantern posts and glows",
+      "generated optional supply-cache enclosure and reward producer"
+    ],
+    "remaining": [],
+    "human_acceptance": {
+      "date": "2026-11-15",
+      "feedback": "ok, commit next steps?",
+      "scope": "Scoped acknowledgment of corridor arrow/post and supply-cache removal, with explicit commit request. This does not select D09d or establish broader native parity."
+    },
+    "validation": "Build; 256 generated floor route/prop checks; buzzing flies; actual Game/Renderer keys and keyboard/doors; demolition smoke",
+    "interactive_handoff": "docs/reports/isaac-first-floor-parity/expedition-presentation-cleanup/interactive-handoff.json",
+    "cleanup_committed": true
   }
 }

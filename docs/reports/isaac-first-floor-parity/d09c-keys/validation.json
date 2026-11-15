@@ -1,7 +1,7 @@
 {
   "status": "enabled-developer-verified-scoped-human-accepted",
   "previous_coin_commit": "dadbc92b",
-  "new_delivery_committed": false,
+  "new_delivery_committed": true,
   "schema": 23,
   "native_key_resolver_cases": 1036,
   "native_single_double_quantity_cases": 16,
@@ -75,5 +75,6 @@
     "date": "2026-11-15",
     "feedback": "cool, it works! Whats next?",
     "scope": "Positive acknowledgment of the playable ordinary-key delivery and new model; full native key parity remains open."
-  }
+  },
+  "commit": "b466b5a3"
 }

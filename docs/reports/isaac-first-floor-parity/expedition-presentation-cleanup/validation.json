@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "prior_accepted_commit": "b466b5a3",
+  "cleanup_committed": true,
+  "human_acceptance": true,
+  "generated_floors": 256,
+  "suites": [
+    "expedition_destruction",
+    "buzzing_flies",
+    "deathward_input_tests --keys-only",
+    "deathward_input_tests --keyboard-only"
+  ],
+  "smoke": "demolition-open, 60 frames, exit 0",
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "sha256": {
+    "src/render/Renderer.cpp": "85dcac666b52f5fd08196fd469920ccc3d0868bb961553023edd2a496dd62c80",
+    "src/world/Breakables.cpp": "1d57bca30835060ee138f77ea560c7677c3456ef7772818077ff6f7fd07a5aac",
+    "src/main.cpp": "3429b4d50863a0859974d3e1fb5bd80d73895be8c2f63cffbb9d291870f56601",
+    "tests/destruction_tests.cpp": "cd15fe52ebe98cb1099df5a12f56e20321f1d519f29f853ff1dbf37360479fbb",
+    "tests/buzz_fly_tests.cpp": "a5941c6e0657552e0b1f7c16e3b982137e4dcda3325ff46228a0bdb118f77046",
+    "build/deathward": "fc9454a069e8230e4246927289a9920275156a7825a208fc6c29860a2def947a"
+  },
+  "remaining": [],
+  "next_unselected": "D09d ordinary bomb/dynamite pickups",
+  "human_acceptance_record": {
+    "date": "2026-11-15",
+    "feedback": "ok, commit next steps?",
+    "scope": "Scoped acknowledgment of corridor arrow/post and supply-cache removal, with explicit commit request. This does not select D09d or establish broader native parity."
+  }
+}

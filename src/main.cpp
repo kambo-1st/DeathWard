@@ -78,6 +78,8 @@ int main(int argc, char **argv) {
     std::optional<dw::BossForm> enemyBossForm;
     Vector3 probeStart{};
     dw::EntityId probeEnemy=0;
+    std::optional<Vector3> demolitionTarget;
+    [[maybe_unused]] uint64_t demolitionProp=0;
     struct EnemyHit {int frame;float damage;dw::DamageKind kind;bool execution=false,explosion=false,decoy=false,partner=false;};
     std::vector<EnemyHit> enemyHits;
     struct EnemyStatusEvent {int frame;dw::EnemyStatus status;int duration;};
@@ -798,12 +800,24 @@ int main(int argc, char **argv) {
                 for(auto item:build)game.run->grant(item);
             }
             if (smoke && (scene.starts_with("demolition")||scene=="build-braid")) {
-                const auto cache=game.run->arena.supplyCache;
-                if(cache.room<0)throw std::runtime_error("No supply cache on this floor");
-                game.run->jumpDebug(cache.room);game.run->clearRoomDebug();
-                game.run->player.position=cache.approach;
-                if(scene=="demolition-open")for(int i=0;i<2;++i) {
-                    dw::Event blast;blast.type=dw::EventType::Explosion;blast.position=cache.approach;
+                // Demonstrate retained demolition props; supply caches are no longer generated.
+                auto &arena=game.run->arena;
+                for(const auto &prop:arena.breakables) {
+                    if(prop.room==game.run->finalRoom()||prop.kind!=dw::BreakableKind::CrackedRock)continue;
+                    for(int step=0;step<16;++step) {
+                        const float angle=float(step)*dw::Pi/8;
+                        const auto approach=dw::add(prop.rewardPosition,Vector3{3*std::cos(angle),0,3*std::sin(angle)});
+                        if(arena.roomAt(approach)!=prop.room||arena.blocked(approach,.48f)||
+                           arena.path(arena.rooms[size_t(prop.room)].center,approach,.48f).empty())continue;
+                        demolitionTarget=prop.rewardPosition;demolitionProp=prop.id;
+                        game.run->jumpDebug(prop.room);game.run->clearRoomDebug();
+                        game.run->player.position=approach;break;
+                    }
+                    if(demolitionTarget)break;
+                }
+                if(!demolitionTarget)throw std::runtime_error("No accessible demolition rock on this floor");
+                if(scene=="demolition-open") {
+                    dw::Event blast;blast.type=dw::EventType::Explosion;blast.position=game.run->player.position;
                     blast.damage=100;blast.radius=4.5f;blast.demolition=dw::Demolition::SpentDynamite;
                     game.run->queueRoot(blast);game.run->drainEvents();
                 }
@@ -941,12 +955,12 @@ int main(int argc, char **argv) {
                     game.run->startStress();
                 if (!benchmark)
                     input.movement = {std::sin(float(frame) * 0.03f) * 0.3f, 0, 0};
-                if (scene.starts_with("demolition")||scene=="build-braid") {
+                if (demolitionTarget) {
                     input={};
-                    input.aim=game.run->arena.supplyCache.reward;
+                    input.aim=*demolitionTarget;
                     if(scene=="demolition-run") {
                         input.placeDynamite=frame==30||frame==190;
-                        if(frame==350)input.moveTarget=game.run->arena.supplyCache.reward;
+                        if(frame==350)input.moveTarget=*demolitionTarget;
                     }
                     if(scene=="build-braid")input.placeDynamite=frame==30;
                 }
@@ -1716,14 +1730,13 @@ int main(int argc, char **argv) {
                     int(game.run->items.size()),friendly,spikes,homing,returning,caps,children,int(game.run->stats.splits));
                 int health=-1,destroyed=0;
                 for(const auto &prop:game.run->arena.breakables) {
-                    if(prop.kind==dw::BreakableKind::CacheGate)health=std::max(0,prop.health);
+                    if(demolitionTarget&&prop.id==demolitionProp)health=std::max(0,prop.health);
                     if(prop.destroyed)++destroyed;
                 }
-                const auto cache=game.run->arena.supplyCache;
-                auto pixel=GetWorldToScreen(cache.reward,game.camera);
+                auto pixel=GetWorldToScreen(demolitionTarget.value_or(game.run->player.position),game.camera);
                 pixel.x*=1280.f/GetScreenWidth();pixel.y*=800.f/GetScreenHeight();
                 EM_ASM({if(Module.verify)Module.demolition=({props:$0,room:$1,health:$2,destroyed:$3,x:$4,y:$5,keys:$6});},
-                    int(game.run->arena.breakables.size()),cache.room,health,destroyed,pixel.x,pixel.y,game.run->keys);
+                    int(game.run->arena.breakables.size()),demolitionTarget?game.run->room:-1,health,destroyed,pixel.x,pixel.y,game.run->keys);
             }
             const auto questPixel=game.questMarkerScreen();
             EM_ASM({

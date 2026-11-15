@@ -39,8 +39,6 @@ void Arena::prepareBreakables(uint64_t seed) {
                     if (river.distance < river.width + 1) return false;
                 }
             }
-        if (supplyCache.room >= 0 && (overlaps(area,supplyCache.bounds,1.3f)||
-            sphereBox(supplyCache.approach,1.5f,area))) return false;
         for (const auto &prop : breakables) if (overlaps(area,prop.bounds,1.1f)) return false;
         return true;
     };
@@ -51,47 +49,6 @@ void Arena::prepareBreakables(uint64_t seed) {
         p.room=room;p.kind=kind;p.bounds=box;p.rewardPosition=reward;p.health=health;
         breakables.push_back(p);
     };
-    // A single optional alcove per floor. Protect every mandatory route before placing it.
-    for (int room : candidates) {
-        const auto &r=rooms[size_t(room)];
-        for (int attempt=0; attempt<700; ++attempt) {
-            Vector3 center{rng.real(r.bounds.min.x+4,r.bounds.max.x-4),.85f,
-                           rng.real(r.bounds.min.z+4,r.bounds.max.z-4)};
-            const int turn=int(rng.bounded(4));
-            const float scale=attempt<350?1.f:.8f;
-            auto transform=[&](Vector3 p) {return add(center,rotateY(mul(p,scale),float(turn)*Pi/2));};
-            auto box=[&](Vector3 a,Vector3 b) {
-                a=transform(a);b=transform(b);
-                return Box{{std::min(a.x,b.x),0,std::min(a.z,b.z)},
-                           {std::max(a.x,b.x),1.9f,std::max(a.z,b.z)}};
-            };
-            const Box footprint=box({-2.3f,0,-3.7f},{2.3f,0,2.3f});
-            if (!clearSite(room,footprint)) continue;
-            const auto approach=transform({0,0,-3.6f});
-            if (path(r.center,approach,.48f).empty()) continue;
-            const size_t before=breakables.size();
-            append(room,BreakableKind::CacheSide,box({-2.3f,0,-2.3f},{-1.45f,0,2.3f}),center);
-            append(room,BreakableKind::CacheSide,box({1.45f,0,-2.3f},{2.3f,0,2.3f}),center);
-            append(room,BreakableKind::CacheSide,box({-1.45f,0,1.45f},{1.45f,0,2.3f}),center);
-            append(room,BreakableKind::CacheGate,box({-1.45f,0,-2.3f},{1.45f,0,-1.45f}),center,2);
-            rebuildWalls();
-            // Verify the enclosure is sealed, and its opened entrance is genuinely traversable.
-            bool valid=path(approach,center,.48f).empty();
-            breakables.back().destroyed=true;rebuildWalls();
-            valid=valid&&!path(approach,center,.48f).empty();
-            breakables.back().destroyed=false;
-            if (!valid) {breakables.resize(before);rebuildWalls();continue;}
-            supplyCache={room,box({-2.3f,0,-2.3f},{2.3f,0,2.3f}),approach,center};
-            rebuildWalls();break;
-        }
-        if (supplyCache.room>=0) break;
-    }
-    // Prefer a compact, readable demonstration cluster in the cache room; if terrain
-    // leaves too little space, distribute the remaining props to other ordinary rooms.
-    if (supplyCache.room>=0) {
-        std::erase(candidates,supplyCache.room);
-        candidates.insert(candidates.begin(),supplyCache.room);
-    }
     std::vector<BreakableKind> mix{BreakableKind::CrackedRock,BreakableKind::CrackedRock,
                                   BreakableKind::OreSeam,BreakableKind::PowderBarrel};
     if(profile.active()) {

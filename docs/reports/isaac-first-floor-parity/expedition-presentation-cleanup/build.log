@@ -1,0 +1,198 @@
+-- Testing if -Werror=pointer-arith can be used -- compiles
+-- Testing if -Werror=implicit-function-declaration can be used -- compiles
+-- Testing if -fno-strict-aliasing can be used -- compiles
+-- Using raylib's GLFW
+-- Including X11 support
+-- Audio Backend: miniaudio
+-- Building raylib static library
+-- SUPPORT_MODULE_RSHAPES=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- SUPPORT_MODULE_RTEXT=ON
+-- SUPPORT_MODULE_RMODELS=ON
+-- SUPPORT_MODULE_RAUDIO=ON
+-- SUPPORT_CAMERA_SYSTEM=ON
+-- SUPPORT_GESTURES_SYSTEM=ON
+-- SUPPORT_RPRAND_GENERATOR=ON
+-- SUPPORT_MOUSE_GESTURES=ON
+-- SUPPORT_SSH_KEYBOARD_RPI=ON
+-- SUPPORT_WINMM_HIGHRES_TIMER=ON
+-- SUPPORT_PARTIALBUSY_WAIT_LOOP=ON
+-- SUPPORT_SCREEN_CAPTURE=ON
+-- SUPPORT_GIF_RECORDING=ON
+-- SUPPORT_COMPRESSION_API=ON
+-- SUPPORT_AUTOMATION_EVENTS=ON
+-- RL_SUPPORT_MESH_GPU_SKINNING=ON
+-- SUPPORT_QUADS_DRAW_MODE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_FILEFORMAT_GIF=ON
+-- SUPPORT_FILEFORMAT_QOI=ON
+-- SUPPORT_FILEFORMAT_DDS=ON
+-- SUPPORT_IMAGE_EXPORT=ON
+-- SUPPORT_IMAGE_GENERATION=ON
+-- SUPPORT_IMAGE_MANIPULATION=ON
+-- SUPPORT_DEFAULT_FONT=ON
+-- SUPPORT_FILEFORMAT_TTF=ON
+-- SUPPORT_FILEFORMAT_FNT=ON
+-- SUPPORT_TEXT_MANIPULATION=ON
+-- SUPPORT_FONT_ATLAS_WHITE_REC=ON
+-- SUPPORT_FILEFORMAT_OBJ=ON
+-- SUPPORT_FILEFORMAT_MTL=ON
+-- SUPPORT_FILEFORMAT_IQM=ON
+-- SUPPORT_FILEFORMAT_GLTF=ON
+-- SUPPORT_FILEFORMAT_VOX=ON
+-- SUPPORT_FILEFORMAT_M3D=ON
+-- SUPPORT_MESH_GENERATION=ON
+-- SUPPORT_FILEFORMAT_WAV=ON
+-- SUPPORT_FILEFORMAT_OGG=ON
+-- SUPPORT_FILEFORMAT_MP3=ON
+-- SUPPORT_FILEFORMAT_QOA=ON
+-- SUPPORT_FILEFORMAT_XM=ON
+-- SUPPORT_FILEFORMAT_MOD=ON
+-- SUPPORT_STANDARD_FILEIO=ON
+-- SUPPORT_TRACELOG=ON
+-- SUPPORT_CLIPBOARD_IMAGE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- Generated build type: Release
+-- Compiling with the flags:
+--   PLATFORM=PLATFORM_DESKTOP
+--   GRAPHICS=GRAPHICS_API_OPENGL_33
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/kambo/workspace/DeathWard/build
+Consolidate compiler generated dependencies of target glfw
+[ 11%] Built target glfw
+Consolidate compiler generated dependencies of target raylib
+[ 15%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Breakables.cpp.o
+[ 15%] Linking CXX static library libdeathward_core.a
+[ 80%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_skinning
+[ 84%] Built target deathward_cloth
+[ 88%] Built target deathward_skinning
+Consolidate compiler generated dependencies of target deathward_particles
+Consolidate compiler generated dependencies of target deathward_mission_lighting
+[ 88%] Built target deathward_mission_lighting
+[ 92%] Built target deathward_particles
+[ 92%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward
+[ 92%] Building CXX object CMakeFiles/deathward.dir/src/render/Renderer.cpp.o
+[ 92%] Building CXX object CMakeFiles/deathward.dir/src/main.cpp.o
+In file included from /home/kambo/workspace/DeathWard/src/render/Renderer.hpp:10,
+                 from /home/kambo/workspace/DeathWard/src/render/Renderer.cpp:1:
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp: In member function ‘bool dw::KeyModel::prepare()’:
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp:31:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   31 |         if(attempted_)return ready();attempted_=true;
+      |         ^~
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp:31:38: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   31 |         if(attempted_)return ready();attempted_=true;
+      |                                      ^~~~~~~~~~
+In file included from /home/kambo/workspace/DeathWard/src/render/Renderer.hpp:10,
+                 from /home/kambo/workspace/DeathWard/src/main.cpp:7:
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp: In member function ‘bool dw::KeyModel::prepare()’:
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp:31:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   31 |         if(attempted_)return ready();attempted_=true;
+      |         ^~
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp:31:38: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   31 |         if(attempted_)return ready();attempted_=true;
+      |                                      ^~~~~~~~~~
+/home/kambo/workspace/DeathWard/src/main.cpp: In function ‘int main(int, char**)’:
+/home/kambo/workspace/DeathWard/src/main.cpp:82:14: warning: variable ‘demolitionProp’ set but not used [-Wunused-but-set-variable]
+   82 |     uint64_t demolitionProp=0;
+      |              ^~~~~~~~~~~~~~
+[ 92%] Linking CXX executable deathward
+[100%] Built target deathward
+Consolidate compiler generated dependencies of target deathward_core
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_destruction_tests
+[100%] Building CXX object CMakeFiles/deathward_destruction_tests.dir/tests/destruction_tests.cpp.o
+[100%] Linking CXX executable deathward_destruction_tests
+[100%] Built target deathward_destruction_tests
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_buzz_fly_tests
+[ 94%] Building CXX object CMakeFiles/deathward_buzz_fly_tests.dir/tests/buzz_fly_tests.cpp.o
+[100%] Linking CXX executable deathward_buzz_fly_tests
+[100%] Built target deathward_buzz_fly_tests
+-- Testing if -Werror=pointer-arith can be used -- compiles
+-- Testing if -Werror=implicit-function-declaration can be used -- compiles
+-- Testing if -fno-strict-aliasing can be used -- compiles
+-- Using raylib's GLFW
+-- Including X11 support
+-- Audio Backend: miniaudio
+-- Building raylib static library
+-- SUPPORT_MODULE_RSHAPES=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- SUPPORT_MODULE_RTEXT=ON
+-- SUPPORT_MODULE_RMODELS=ON
+-- SUPPORT_MODULE_RAUDIO=ON
+-- SUPPORT_CAMERA_SYSTEM=ON
+-- SUPPORT_GESTURES_SYSTEM=ON
+-- SUPPORT_RPRAND_GENERATOR=ON
+-- SUPPORT_MOUSE_GESTURES=ON
+-- SUPPORT_SSH_KEYBOARD_RPI=ON
+-- SUPPORT_WINMM_HIGHRES_TIMER=ON
+-- SUPPORT_PARTIALBUSY_WAIT_LOOP=ON
+-- SUPPORT_SCREEN_CAPTURE=ON
+-- SUPPORT_GIF_RECORDING=ON
+-- SUPPORT_COMPRESSION_API=ON
+-- SUPPORT_AUTOMATION_EVENTS=ON
+-- RL_SUPPORT_MESH_GPU_SKINNING=ON
+-- SUPPORT_QUADS_DRAW_MODE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_FILEFORMAT_GIF=ON
+-- SUPPORT_FILEFORMAT_QOI=ON
+-- SUPPORT_FILEFORMAT_DDS=ON
+-- SUPPORT_IMAGE_EXPORT=ON
+-- SUPPORT_IMAGE_GENERATION=ON
+-- SUPPORT_IMAGE_MANIPULATION=ON
+-- SUPPORT_DEFAULT_FONT=ON
+-- SUPPORT_FILEFORMAT_TTF=ON
+-- SUPPORT_FILEFORMAT_FNT=ON
+-- SUPPORT_TEXT_MANIPULATION=ON
+-- SUPPORT_FONT_ATLAS_WHITE_REC=ON
+-- SUPPORT_FILEFORMAT_OBJ=ON
+-- SUPPORT_FILEFORMAT_MTL=ON
+-- SUPPORT_FILEFORMAT_IQM=ON
+-- SUPPORT_FILEFORMAT_GLTF=ON
+-- SUPPORT_FILEFORMAT_VOX=ON
+-- SUPPORT_FILEFORMAT_M3D=ON
+-- SUPPORT_MESH_GENERATION=ON
+-- SUPPORT_FILEFORMAT_WAV=ON
+-- SUPPORT_FILEFORMAT_OGG=ON
+-- SUPPORT_FILEFORMAT_MP3=ON
+-- SUPPORT_FILEFORMAT_QOA=ON
+-- SUPPORT_FILEFORMAT_XM=ON
+-- SUPPORT_FILEFORMAT_MOD=ON
+-- SUPPORT_STANDARD_FILEIO=ON
+-- SUPPORT_TRACELOG=ON
+-- SUPPORT_CLIPBOARD_IMAGE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- Generated build type: Release
+-- Compiling with the flags:
+--   PLATFORM=PLATFORM_DESKTOP
+--   GRAPHICS=GRAPHICS_API_OPENGL_33
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/kambo/workspace/DeathWard/build
+Consolidate compiler generated dependencies of target glfw
+[ 11%] Built target glfw
+Consolidate compiler generated dependencies of target raylib
+[ 15%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 80%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_skinning
+[ 84%] Built target deathward_cloth
+[ 88%] Built target deathward_skinning
+Consolidate compiler generated dependencies of target deathward_particles
+Consolidate compiler generated dependencies of target deathward_mission_lighting
+[ 88%] Built target deathward_mission_lighting
+[ 92%] Built target deathward_particles
+[ 92%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward_input_tests
+[ 92%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/Renderer.cpp.o
+[ 92%] Linking CXX executable deathward_input_tests
+[100%] Built target deathward_input_tests

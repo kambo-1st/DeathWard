@@ -127,19 +127,21 @@ void protectedInteriorAndChains() {
     check(run.stats.explosions==13&&run.chains.empty()&&run.queuedEvents()==0,"finite secondary sources finish exactly once without chain leaks");
 }
 void layouts() {
-    int total=0,clustered=0;
+    int total=0;
     for(uint64_t seed=0;seed<64;++seed)for(auto theme:{MissionTheme::Mine,MissionTheme::Canyon})for(bool final:{false,true}) {
         const int floor=final?ExpeditionPlan(seed,false,WitnessAccount::Rourke).floorCount-1:0;
         Simulation run(seed,1,{},theme,true,false,WitnessAccount::Rourke,floor);
         auto &a=run.arena;
         const std::string tag=" seed "+std::to_string(seed)+" theme "+std::to_string(int(theme))+" floor "+std::to_string(floor);
-        check(a.supplyCache.room>=0,"cache must have a safe placement"+tag);
+        check(a.supplyCache.room<0,"removed supply cache has no reserved enclosure"+tag);
+        check(std::none_of(a.breakables.begin(),a.breakables.end(),[](const auto &p){
+            return p.kind==BreakableKind::CacheGate||p.kind==BreakableKind::CacheSide;
+        }),"removed supply cache has no walls, gate or payout producer"+tag);
         // Dung is independently configured dressing. Preserve the strict count
-        // for the existing rocks, ore, powder and optional-cache structure.
+        // for the retained rocks, ore and powder.
         const int ordinary=int(std::count_if(a.breakables.begin(),a.breakables.end(),[&](const auto &p){return p.room!=run.finalRoom()&&p.kind!=BreakableKind::Dung;}));
-        const int expected=a.profile.active()?4+a.profile.rocks+a.profile.seams+a.profile.barrels:8;
-        check(ordinary==expected,"all profile destructibles and three cache sides fit"+tag);
-        if(std::all_of(a.breakables.begin(),a.breakables.end(),[&](const auto &p){return p.room==a.supplyCache.room||p.room==run.finalRoom();}))++clustered;
+        const int expected=a.profile.active()?a.profile.rocks+a.profile.seams+a.profile.barrels:4;
+        check(ordinary==expected,"all retained profile destructibles fit"+tag);
         for(const auto &p:a.breakables) {
             if(p.room==run.finalRoom())check(a.profile.active()&&p.kind==(a.profile.boss==BossKind::PowderForeman?BreakableKind::PowderBarrel:BreakableKind::CrackedRock)&&p.paid,"boss counterplay cover has no farmable payout");
             else check(p.room>0&&p.room<run.finalRoom()&&a.rooms[size_t(p.room)].story==StoryRoom::None,"ordinary demolition protects story and entrance");
@@ -150,21 +152,12 @@ void layouts() {
             for(int link:r.passages)check(!a.path(r.center,a.doorApproach(link,a.passages[size_t(link)].rooms[0]==int(&r-a.rooms.data())?0:1),.48f).empty(),"mandatory door approach reachable"+tag);
         }
         for(const auto &key:a.keys)check(!a.path(a.rooms[size_t(key.room)].center,key.position,.48f).empty(),"ordinary key remains free"+tag);
-        for(int i=0;i<a.roomCount();++i)for(const auto &e:run.roomEnemies(i))
-            check(!sphereBox(e.position,e.radius,a.supplyCache.bounds),"resident cannot be trapped in cache"+tag);
-        for(const auto &coin:run.moneyPickups)check(!sphereBox(coin.position,.1f,a.supplyCache.bounds),"ordinary money cannot spawn inside sealed cache");
-        check(a.path(a.supplyCache.approach,a.supplyCache.reward,.48f).empty(),"sealed cache cannot be bypassed"+tag);
-        run.player.position=a.supplyCache.approach;
-        const auto gate=std::find_if(a.breakables.begin(),a.breakables.end(),[](const auto &p){return p.kind==BreakableKind::CacheGate;});
-        blast(run,a.supplyCache.approach);check(gate->health==1,"cache approachable from outside for first blast"+tag);
-        blast(run,a.supplyCache.approach);check(gate->destroyed,"cache opens with exactly two charges"+tag);
-        check(!a.path(a.supplyCache.approach,a.supplyCache.reward,.48f).empty(),"cache loot reachable after opening"+tag);
         ++total;
     }
     Simulation classic(1,1,{},MissionTheme::Canyon,true,false,WitnessAccount::None,0,ExpeditionPacing::Classic);
     Simulation tutorial(1,1,{},MissionTheme::Canyon,true,true);
     check(classic.arena.breakables.empty()&&tutorial.arena.breakables.empty(),"Classic comparison and five-room tutorial unchanged");
-    std::cout<<"Placement: "<<total<<" floors, "<<clustered<<" complete single-room clusters\n";
+    std::cout<<"Placement: "<<total<<" floors without supply caches; retained props and mandatory routes verified\n";
 }
 }
-int main(){try{snapshot();permissions();barrels();seedLoot();protectedInteriorAndChains();layouts();std::cout<<"PASS destruction, cover snapshot, permissions, fuses, seeded loot and optional-cache reachability\n";}catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}
+int main(){try{snapshot();permissions();barrels();seedLoot();protectedInteriorAndChains();layouts();std::cout<<"PASS destruction, cover snapshot, permissions, fuses, seeded loot and cache-free floor reachability\n";}catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}
