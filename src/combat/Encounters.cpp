@@ -1,5 +1,7 @@
 #include "combat/Simulation.hpp"
 #include "world/SourceCombatRoom.hpp"
+#include "world/SourceCombatRockRoomData.hpp"
+#include "world/SourceHeartRockRoom.hpp"
 #include <stdexcept>
 
 namespace dw {
@@ -215,6 +217,17 @@ void Simulation::spawnRoomEnemies() {
             const auto at=sourceCombatSpawn(layout,slot);
             if(arena.blocked(at,.8f)||!roomSpawnClear(at,.8f)||!spawnMonster(monsterId(10,1),at))
                 throw std::runtime_error("Recorded combat-room placement is obstructed");
+        }
+        return;
+    }
+    if(layout.sourceCombatTemplate==4) {
+        const auto id=monsterId(10,1);
+        const auto *definition=content->monster(id);
+        if(!definition)throw std::runtime_error("Recorded combat-room Gaper is unavailable");
+        for(const auto &cell:Basement4Gapers) {
+            const auto at=sourceHeartCell(layout,cell[0],cell[1]);
+            if(arena.blocked(at,definition->radius)||!roomSpawnClear(at,definition->radius)||!spawnMonster(id,at))
+                throw std::runtime_error("Recorded rock combat-room placement is obstructed");
         }
         return;
     }

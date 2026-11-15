@@ -651,6 +651,32 @@
       "spawn_seed": 2844051982
     },
     "full_native_acceptance": false,
-    "human_acceptance": "docs/reports/isaac-first-floor-parity/native-room-eligibility/human-acceptance.json"
+    "human_acceptance": "docs/reports/isaac-first-floor-parity/native-room-eligibility/human-acceptance.json",
+    "commit": "cf466e90"
+  },
+  "native_combat_rock_room_checkpoint": {
+    "status": "enabled, developer-verified and scoped playtest accepted",
+    "report": "docs/reports/isaac-first-floor-parity/native-combat-rock-room/README.md",
+    "validation": "docs/reports/isaac-first-floor-parity/native-combat-rock-room/validation.json",
+    "production_enabled": true,
+    "source_template": "1.4.0",
+    "rocks": 17,
+    "enemies": [
+      "10.1.0",
+      "10.1.0"
+    ],
+    "initial_pickups": 0,
+    "preset_schema": 17,
+    "review": {
+      "seed": 268,
+      "template": 4,
+      "displayed_room": 5,
+      "selection_seed": 3126245951,
+      "spawn_seed": 4153270430
+    },
+    "compatibility": "opening-floor source-layout selection; excludes legacy objectives, mandatory keys and story/special roles; no reroll",
+    "full_native_acceptance": false,
+    "next": "Another compatible complete source content arrangement is proposed; full native acceptance remains open and unrelated bulk parity stays paused.",
+    "human_acceptance": "docs/reports/isaac-first-floor-parity/native-combat-rock-room/human-acceptance.json"
   }
 }

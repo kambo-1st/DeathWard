@@ -1,0 +1,28 @@
+{
+  "resumed_at_utc": "2026-11-15T03:31:18.338892+00:00",
+  "pid": 2759,
+  "args": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "268",
+    "--review-source-room",
+    "4",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/native-combat-rock-room/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "log": "/home/kambo/.local/share/deathward/reviews/native-combat-rock-room/interactive-20261115T033117Z.log",
+  "seed": 268,
+  "source_template": 4,
+  "displayed_room": 5,
+  "normal_hp": 6,
+  "god_mode": false,
+  "default_zoom_percent": 165,
+  "preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "build_check": "passed",
+  "human_acceptance": "pending",
+  "next": "Short human room4-template playtest, then commit when requested and expand compatible complete content. Full native acceptance remains open."
+}

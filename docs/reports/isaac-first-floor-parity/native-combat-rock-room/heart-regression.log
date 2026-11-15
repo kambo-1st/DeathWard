@@ -1,0 +1,9 @@
+BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=5f1adc39fe34500a profile=custom
+ROOM_REVIEW requested=91 room=4 template=91 selection_seed=1277566494 spawn_seed=2844051982 hp=6 god=0
+BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=5f1adc39fe34500a profile=custom
+ROOM_REVIEW requested=91 room=4 template=91 selection_seed=1277566494 spawn_seed=2844051982 hp=6 god=0
+BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=0 source_room=1 revision=79b391783d8dea4b profile=custom
+ROOM_REVIEW requested=91 room=1 template=-1 selection_seed=0 spawn_seed=0 hp=6 god=0
+BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=5f1adc39fe34500a profile=custom
+ROOM_REVIEW requested=91 room=4 template=91 selection_seed=1277566494 spawn_seed=2844051982 hp=6 god=0
+PASS actual Game/Renderer source91, PLACE action, both pickups, revisit, staged OFF/Apply and accepted settings

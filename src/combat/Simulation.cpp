@@ -565,6 +565,9 @@ bool Simulation::enterSourceRoomReview(int variant) {
     for(int i=1;i<arena.roomCount();++i) {
         const auto &layout=arena.rooms[size_t(i)];
         if(layout.sourceHeartTemplate!=variant&&layout.sourceCombatTemplate!=variant)continue;
+        // A source4 heart-layer selection at a protected objective/key site
+        // does not contain the complete combat record and cannot review it.
+        if(variant==4&&layout.sourceCombatTemplate!=4)continue;
         cancelMove();player.position=layout.entry;
         enterRoom(i);player.aim=layout.exit;
         announce("ROOM REVIEW / Source "+std::to_string(variant)+" / "+roomName(),6);

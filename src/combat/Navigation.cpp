@@ -1,4 +1,5 @@
 #include "combat/Simulation.hpp"
+#include "world/SourceHeartRockRoom.hpp"
 #include <map>
 #include <queue>
 
@@ -8,10 +9,10 @@ Vector3 center(FloorCell c, float y, float step=FloorTile) {
     return {(float(c.first) + 0.5f) * step, y, (float(c.second) + 0.5f) * step};
 }
 std::vector<Vector3> floorPath(const Arena &arena, Vector3 from, Vector3 target, float radius,
-                             const std::set<FloorCell> &cells, int flightRoom=-1, float step=FloorTile,bool swimming=false) {
+                             const std::set<FloorCell> &cells, int flightRoom=-1, float step=FloorTile,bool swimming=false,Vector3 origin={}) {
     auto blocked=[&](Vector3 p){return swimming?arena.swimBlocked(p,radius,flightRoom):flightRoom<0?arena.blocked(p,radius):arena.flightBlocked(p,radius,flightRoom);};
     auto clear=[&](Vector3 a,Vector3 b){return swimming?arena.swimClear(a,b,radius,flightRoom):flightRoom<0?arena.clear(a,b,radius):arena.flightClear(a,b,radius,flightRoom);};
-    auto atCell=[&](FloorCell c){return center(c,from.y,step);};
+    auto atCell=[&](FloorCell c){return add(center(c,from.y,step),origin);};
     const bool targetWasBlocked = blocked(target);
     // A demolished source-rock pocket can fit the player between coarse grid
     // nodes. Accept a physically clear segment before requiring grid anchors.
@@ -94,6 +95,19 @@ std::vector<Vector3> floorPath(const Arena &arena, Vector3 from, Vector3 target,
     }
     return path;
 }
+// Source4's staggered rocks leave real aisles between the ordinary two-unit
+// navigation samples. Align a bounded fallback to the placed source cells.
+// This is canyon navigation, not native AI; every edge retains full collision.
+std::vector<Vector3> sourceRockPath(const Arena &arena,int index,Vector3 from,Vector3 target,float radius) {
+    const auto &layout=arena.rooms[size_t(index)];
+    const float step=sourceHeartCellSize(layout)*.5f;
+    const Vector3 origin{layout.center.x-step*.5f,0,layout.center.z-step*.5f};
+    std::set<FloorCell> cells;
+    for(int x=int(std::floor((layout.bounds.min.x-origin.x-FloorTile)/step));x<int(std::ceil((layout.bounds.max.x-origin.x+FloorTile)/step));++x)
+        for(int z=int(std::floor((layout.bounds.min.z-origin.z-FloorTile)/step));z<int(std::ceil((layout.bounds.max.z-origin.z+FloorTile)/step));++z)
+            cells.insert({x,z});
+    return floorPath(arena,from,target,radius,cells,-1,step,false,origin);
+}
 } // namespace
 std::vector<Vector3> Arena::flightPath(Vector3 from,Vector3 target,float radius,int room) const {
     target.y=from.y;
@@ -116,6 +130,37 @@ std::vector<Vector3> Arena::path(Vector3 from, Vector3 target, float radius) con
     target.y = from.y;
     if (!floorCells.empty()) {
         auto route=floorPath(*this,from,target,radius,floorCells);
+        if(route.empty()) {
+            const int start=roomAt(from),goal=roomAt(target);
+            const auto sourceRoom=[&](int i){return i>=0&&rooms[size_t(i)].sourceObstacleTemplate==4;};
+            const bool sourceStart=sourceRoom(start),sourceGoal=sourceRoom(goal);
+            if(sourceStart&&start==goal)return sourceRockPath(*this,start,from,target,radius);
+            if(sourceStart||sourceGoal) {
+                struct Port {Vector3 point;std::vector<Vector3> path;};
+                auto ports=[&](int index,Vector3 point,bool outgoing) {
+                    std::vector<Port> result;
+                    if(!sourceRoom(index)){result.push_back({point,{}});return result;}
+                    for(int p:rooms[size_t(index)].passages) {
+                        const auto at=doorApproach(p,passages[size_t(p)].rooms[0]==index?0:1);
+                        auto local=outgoing?sourceRockPath(*this,index,point,at,radius):sourceRockPath(*this,index,at,point,radius);
+                        if(!local.empty())result.push_back({at,std::move(local)});
+                    }
+                    return result;
+                };
+                float best=std::numeric_limits<float>::infinity();
+                const auto starts=ports(start,from,true),goals=ports(goal,target,false);
+                for(const auto &a:starts)for(const auto &b:goals) {
+                    auto middle=floorPath(*this,a.point,b.point,radius,floorCells);
+                    if(middle.empty())continue;
+                    auto combined=a.path;combined.insert(combined.end(),middle.begin(),middle.end());
+                    combined.insert(combined.end(),b.path.begin(),b.path.end());
+                    float cost=0;auto previous=from;
+                    for(auto at:combined){cost+=planarDistance(previous,at);previous=at;}
+                    if(cost<best){best=cost;route=std::move(combined);}
+                }
+                return route;
+            }
+        }
         auto inRails=[&](Vector3 p) {return rails&&p.x>=rails->bounds.min.x&&p.x<=rails->bounds.max.x&&
             p.z>=rails->bounds.min.z&&p.z<=rails->bounds.max.z;};
         if(!route.empty()||!inRails(from)||!inRails(target))return route;

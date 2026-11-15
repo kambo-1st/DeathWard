@@ -1,0 +1,22 @@
+{
+  "status": "developer checks passed; scoped user playtest accepted",
+  "source_template": "1.4.0",
+  "preset_schema": 17,
+  "source_extract_check": true,
+  "ctest_suites": 10,
+  "ctest_failed": 0,
+  "size_range_cases": 9,
+  "naturally_selected_complete_cases": 6,
+  "other_content_review_rejected": 3,
+  "actual_small_room_click_and_live_gaper_navigation": true,
+  "actual_projectile_cover_damage_clear_revisit": true,
+  "actual_game_renderer_mouse_apply_export_retry": true,
+  "prior_source91_game_regression": true,
+  "cli_schemas": [
+    5,
+    16,
+    17
+  ],
+  "full_native_acceptance": false,
+  "human_acceptance": "human-acceptance.json"
+}

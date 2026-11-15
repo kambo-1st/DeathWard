@@ -5,7 +5,7 @@ EncounterPlan Simulation::floorEncounter(int index) const {
     EncounterPlan result;
     const auto &r=arena.rooms.at(size_t(index));const auto &p=arena.profile;
     if(!p.active()||r.kind!=RoomKind::Combat)return result;
-    if(r.sourceCombatTemplate>=0) {
+    if(r.sourceCombatTemplate==47||r.sourceCombatTemplate==4) {
         result.monsters={monsterId(10,1),monsterId(10,1)};
         result.originalMonsters=result.monsters;result.budget=result.spent=2;return result;
     }

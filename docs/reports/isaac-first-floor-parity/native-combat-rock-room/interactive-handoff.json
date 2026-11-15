@@ -1,0 +1,24 @@
+{
+  "pid": 836438,
+  "args": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "268",
+    "--review-source-room",
+    "4",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/native-combat-rock-room/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "log": "/home/kambo/.local/share/deathward/reviews/native-combat-rock-room/interactive.log",
+  "seed": 268,
+  "template": 4,
+  "displayed_room": 5,
+  "normal_hp": 6,
+  "god_mode": false,
+  "human_acceptance": "pending",
+  "death_retry_returns_to_review": true
+}

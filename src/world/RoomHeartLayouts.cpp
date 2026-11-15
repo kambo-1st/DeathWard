@@ -3,7 +3,9 @@
 #include "world/SourceRoomSelection.hpp"
 #include "world/SourceHeartRockRoom.hpp"
 #include "world/SourceHeartRockRoomData.hpp"
+#include "world/SourceCombatRockRoomData.hpp"
 #include "combat/SourceRoomRewards.hpp"
+#include <span>
 #include <stdexcept>
 namespace dw {
 namespace {
@@ -79,14 +81,26 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode) {
             // The source record contains only rocks and pickups, no enemies.
             layout.kind=RoomKind::Empty;
         }
+        if(mode==1&&layout.sourceHeartTemplate==4&&index!=2&&index!=3&&
+           std::none_of(keys.begin(),keys.end(),[&](const auto &key){return key.room==index;})) {
+            // Complete two-Gaper / seventeen-rock record. Legacy miners/altar
+            // rooms and mandatory key sites retain their existing composition;
+            // their selected metadata and RNG sequence are never rerolled.
+            layout.sourceCombatTemplate=layout.sourceObstacleTemplate=4;
+            layout.kind=RoomKind::Combat;
+        }
         if(mode==2)break;
     }
 }
 void Arena::prepareSourceHeartRocks() {
     for(int index=0;index<roomCount();++index) {
-        const auto &layout=rooms[size_t(index)];if(layout.sourceObstacleTemplate!=91)continue;
+        const auto &layout=rooms[size_t(index)];
+        std::span<const std::array<int,2>> rocks;
+        if(layout.sourceObstacleTemplate==91)rocks=Basement91Rocks;
+        else if(layout.sourceObstacleTemplate==4)rocks=Basement4Rocks;
+        else continue;
         const float half=sourceHeartCellSize(layout)*.5f;
-        for(const auto &cell:Basement91Rocks) {
+        for(const auto &cell:rocks) {
             const auto at=sourceHeartCell(layout,cell[0],cell[1]);
             Breakable rock;rock.room=index;rock.kind=BreakableKind::CrackedRock;
             rock.sourceGridIndex=(cell[1]+1)*15+cell[0]+1;

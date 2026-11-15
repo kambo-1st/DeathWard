@@ -2205,12 +2205,12 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::BalanceRoomHeartsTab,"ROOM LAYOUTS",875,175,200,28,game.balanceRoomHeartsOpen))return Action::BalanceRoomHeartsTab;
         if(game.balanceRoomHeartsOpen) {
             const int mode=game.balanceDraft.roomHeartLayouts;
-            text("HEARTS IN ROOM LAYOUTS",205,184,22,Gold);
-            text("Already present on entry. Full hearts heal 2 halves; half hearts heal 1.",205,221,14,Paper);
+            text("SOURCE ROOM LAYOUTS",205,184,22,Gold);
+            text("Placed hearts, rock enclosures and supported combat arrangements.",205,221,14,Paper);
             if(button(Action::RoomHeartsOff,"OFF",205,250,150,40,mode==0))return Action::RoomHeartsOff;
             if(button(Action::RoomHeartsSource,"SOURCE LAYOUTS",375,250,300,40,mode==1))return Action::RoomHeartsSource;
             if(button(Action::RoomHeartsTest,"FULL + HALF TEST",695,250,380,40,mode==2))return Action::RoomHeartsTest;
-            text("Source layouts: some rooms contain hearts; many contain none.",205,312,14,Muted);
+            text("Source layouts: some rooms have hearts; others have enemies among rocks.",205,312,14,Muted);
             text("Full + half test: puts both in one nearby room. This is a testing override.",205,338,14,Muted);
             text("Opening floor only. Room-clear rewards keep their separate settings.",205,364,14,Teal);
             std::string locations;
@@ -2336,7 +2336,7 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::ToggleSourceCombatRoom,game.balanceDraft.sourceCombatRoom?"SOURCE COMBAT ROOM: ON":"SOURCE COMBAT ROOM: OFF",205,462,380,34))return Action::ToggleSourceCombatRoom;
         std::string sourceRoom="Opening floor / two Gapers / pending until Apply";
         if(game.run)for(size_t i=0;i<game.run->arena.rooms.size();++i)
-            if(game.run->arena.rooms[i].sourceCombatTemplate>=0)sourceRoom="Active: room "+std::to_string(i+1)+" / two Gapers";
+            if(game.run->arena.rooms[i].sourceCombatTemplate==47)sourceRoom="Active: room "+std::to_string(i+1)+" / two Gapers";
         text(sourceRoom,610,474,13,Teal);
     } else {
         const auto &preset=game.balancePreset;
