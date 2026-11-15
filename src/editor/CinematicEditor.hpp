@@ -3,6 +3,7 @@
 #include "cinematic/CinematicCast.hpp"
 #include "render/AnimalModels.hpp"
 #include "render/PostProcess.hpp"
+#include "render/MainFont.hpp"
 #include "render/TownActorModels.hpp"
 #include "render/TownScene.hpp"
 #include "world/TownNavigation.hpp"
@@ -42,6 +43,7 @@ class CinematicEditor {
     float previewTrainSpeed() const { return active&&!world_.paths.empty()?player_.animation().pathSpeed():0.f; }
 
   private:
+    MainFont mainFont_;
     TownDocument world_;
     TownNavigation navigation_;
     TownScene scene_;

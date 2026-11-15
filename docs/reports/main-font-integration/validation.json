@@ -1,0 +1,42 @@
+{
+  "font_asset_commit": "32991e0d",
+  "font_sha256": "8a959b9e8bbaed9dbd02e3dc284389c303ae6ee358b0a5d9102b270a75be8ae9",
+  "native_staged_bytes_match": true,
+  "runtime_cmap_entries": 978,
+  "native_build": "passed",
+  "font_load_reload_actual_ui": "passed",
+  "window_sizes": [
+    [
+      1280,
+      800
+    ],
+    [
+      1024,
+      640
+    ]
+  ],
+  "screens": [
+    "title",
+    "slots",
+    "settings",
+    "expedition",
+    "tuning",
+    "rewards",
+    "pause",
+    "runtime intro dialogue"
+  ],
+  "keyboard_only": "passed",
+  "legacy_balance_only": {
+    "status": "blocked by existing assertion",
+    "test_expects": "/balance-v11:",
+    "current_game_writes": "/balance-v13:",
+    "font_related": false
+  },
+  "browser_assets_included": true,
+  "browser_visual_check": false,
+  "human_in_game_acceptance": false,
+  "remaining": [
+    "Human in-game visual review",
+    "Browser-specific visual verification"
+  ]
+}

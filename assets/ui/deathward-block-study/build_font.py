@@ -275,7 +275,7 @@ def main():
               'human_acceptance_quote': "Nice that's it!",
               'full_font_continuation': '../deathward-display/README.md',
               'game_integrated': False,
-              'remaining': ['Full DeathWard Display visual review', 'Game integration']}
+              'remaining': ['Human in-game visual review of DeathWard Display', 'Browser-specific visual verification']}
     (HERE / 'manifest.json').write_text(json.dumps(result, indent=2)+'\n')
     print(json.dumps({'edited': CHARS, 'sha256': result['sha256'],
                       'unchanged_glyphs': len(order)-len(changed_names),

@@ -55,6 +55,8 @@ python3 assets/ui/deathward-block-study/build_font.py
 
 The remaining alphabet, alternate-cap lowercase, numerals, punctuation and
 precomposed Latin accents have been completed in **DeathWard Display**, with
-spacing/readability checks. Full-font visual review and game integration remain
-unfinished. This study is uncommitted. Game assets in use, renderer, gameplay,
-presets and build configuration are untouched by this font study.
+spacing/readability checks. The user accepted that full font, committed with this
+study as `32991e0d`, and selected main-game integration, which is now enabled.
+In-game human visual acceptance and browser verification remain; see
+`../../../docs/reports/main-font-integration/README.md`. This study OTF remains a
+preserved comparison artifact; the game uses the completed Display OTF.

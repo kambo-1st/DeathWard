@@ -80,8 +80,8 @@
   "human_visual_acceptance": true,
   "game_integrated": false,
   "remaining": [
-    "Selected main-font game integration and visual verification",
-    "Broader inherited Unicode and combining-mark layout remain outside this Latin display delivery"
+    "Human in-game visual review of DeathWard Display",
+    "Browser-specific visual verification"
   ],
   "human_acceptance_quote": "Nice that's it!",
   "full_font_continuation": "../deathward-display/README.md"

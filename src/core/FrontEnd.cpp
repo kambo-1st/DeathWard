@@ -15,30 +15,14 @@ Vector2 offset() { const auto s = scale(); return {(GetScreenWidth()-1280*s)/2, 
 Vector2 mouse() { const auto o=offset(); const auto s=scale(); return {(GetMouseX()-o.x)/s,(GetMouseY()-o.y)/s}; }
 bool hit(Rectangle r) { return CheckCollisionPointRec(mouse(),r); }
 float fade(float time, float duration) { return std::min(std::clamp(time/.55f,0.f,1.f),std::clamp((duration-time)/.55f,0.f,1.f)); }
-Font loadFont(const char *name, int size) {
-#ifdef __EMSCRIPTEN__
-    const auto path=std::filesystem::path("/assets/ui")/name;
-#else
-    auto path=std::filesystem::path(GetApplicationDirectory())/"assets/ui"/name;
-    if(!std::filesystem::exists(path))path=sourceAssetDirectory()/"ui"/name;
-#endif
-    auto font=LoadFontEx(path.string().c_str(),size,nullptr,0);
-    if(!font.texture.id)font=GetFontDefault();
-    SetTextureFilter(font.texture,TEXTURE_FILTER_BILINEAR);
-    return font;
-}
 }
 FrontEnd::FrontEnd(std::filesystem::path slots,std::filesystem::path audioFile,
                    std::filesystem::path visualFile,AudioSettings audio,VisualSettings visual,AudioStatus status)
     : audioSettings(audio),visualSettings(visual),store_(std::move(slots)),audioFile_(std::move(audioFile)),
       visualFile_(std::move(visualFile)),audioStatus_(status) {
-    titleFont_=loadFont("title.ttf",110);bodyFont_=loadFont("body.ttf",32);
     refresh();
 }
-FrontEnd::~FrontEnd() {
-    if(titleFont_.texture.id!=GetFontDefault().texture.id)UnloadFont(titleFont_);
-    if(bodyFont_.texture.id!=GetFontDefault().texture.id)UnloadFont(bodyFont_);
-}
+FrontEnd::~FrontEnd() = default;
 void FrontEnd::refresh() { for(size_t i=0;i<slots_.size();++i)slots_[i]=store_.inspect(i); }
 void FrontEnd::openSettings() {
     beforeAudio_=audioSettings;beforeVisual_=visualSettings;
@@ -124,10 +108,10 @@ void FrontEnd::update(float dt) {
         }
     }
 }
-void FrontEnd::text(const std::string &label,float x,float y,float size,Color color,bool center,bool display) const {
-    const auto font=display?titleFont_:bodyFont_;
-    if(center)x-=MeasureTextEx(font,label.c_str(),size,1).x/2;
-    DrawTextEx(font,label.c_str(),{x,y},size,1,color);
+void FrontEnd::text(const std::string &label,float x,float y,float size,Color color,bool center,bool /*display*/,float maxWidth) const {
+    while(maxWidth>0&&size>10&&font_.width(label.c_str(),size)>maxWidth)size-=1;
+    if(center)x-=font_.width(label.c_str(),size)/2;
+    font_.draw(label.c_str(),{x,y},size,color);
 }
 void FrontEnd::title(float y,float size,float opacity) const {
     text("DEATHWARD",640,y+3,size,Fade(Ink,opacity),true,true);
@@ -198,8 +182,8 @@ void FrontEnd::draw() const {
                 text("0"+std::to_string(i+1),r.x+22,r.y+18,34,selected?Gold:Muted,false,true);
                 text(slot.state==SlotState::Empty?"EMPTY SLOT":slot.state==SlotState::Ready?"SAVED JOURNEY":"UNAVAILABLE",r.x+84,r.y+31,13,Muted);
                 DrawLineEx({r.x+22,r.y+75},{r.x+298,r.y+75},1,Border);
-                text(slot.chapter,r.x+22,r.y+100,21,Paper,false,true);
-                text(slot.detail,r.x+22,r.y+139,13,Muted);
+                text(slot.chapter,r.x+22,r.y+100,21,Paper,false,true,r.width-44);
+                text(slot.detail,r.x+22,r.y+139,13,Muted,false,false,r.width-44);
                 const auto note=slot.state==SlotState::Empty?"The west is waiting.":slot.state==SlotState::Unavailable?"This slot cannot be overwritten.":std::to_string(slot.expeditions)+" expeditions recorded";
                 text(note,r.x+22,r.y+193,13,selected?Gold:Muted);
                 if(selected)DrawPoly({r.x+291,r.y+36},4,5,0,Gold);

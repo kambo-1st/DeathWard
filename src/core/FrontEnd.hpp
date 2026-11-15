@@ -1,6 +1,7 @@
 #pragma once
 #include "audio/AudioSystem.hpp"
 #include "core/VisualSettings.hpp"
+#include "render/MainFont.hpp"
 #include "world/SaveSlots.hpp"
 
 namespace dw {
@@ -29,7 +30,7 @@ class FrontEnd {
     AudioSettings beforeAudio_;
     VisualSettings beforeVisual_;
     AudioStatus audioStatus_;
-    Font titleFont_{}, bodyFont_{};
+    MainFont font_;
     int selected_ = 0, focus_ = 0, dragging_ = -1;
     float elapsed_ = 0, time_ = 0;
     std::string error_;
@@ -40,7 +41,7 @@ class FrontEnd {
     void background() const;
     void title(float y, float size, float opacity = 1) const;
     void text(const std::string &label, float x, float y, float size, Color color, bool center = false,
-              bool display = false) const;
+              bool display = false, float maxWidth = 0) const;
     void button(Rectangle rect, const char *label, bool focused, bool enabled = true) const;
 };
 }

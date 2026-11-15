@@ -84,6 +84,7 @@ bool CinematicEditor::open(const std::filesystem::path &directory, Camera3D view
     } catch (const std::exception &e) { status = e.what(); active = false; return false; }
 }
 void CinematicEditor::unload() {
+    mainFont_.unload();
     endingScene_.unload();ending_=false;
     audio_.stop(); castModels_.unload(); scene_.unload(); post_.unload(); characterModels_.unload(); animalModels_.unload();
     active = false;
@@ -283,6 +284,10 @@ void CinematicEditor::attachCamera(int direction) {
 }
 Vector2 CinematicEditor::mouse() const { auto p=GetMousePosition();return {p.x/sx_,p.y/sy_}; }
 void CinematicEditor::label(const std::string &text,float x,float y,int size,Color color) const {
+    if(runtimeIntro_||cleanPreview_) {
+        mainFont_.draw(text.c_str(),{x*sx_,y*sy_},std::max(9.f,size*sy_),color);
+        return;
+    }
     DrawText(text.c_str(),int(x*sx_),int(y*sy_),std::max(9,int(size*sy_)),color);
 }
 void CinematicEditor::panel(Rectangle r,Color color) const {
@@ -562,15 +567,27 @@ void CinematicEditor::wrapped(const std::string &text,float x,float y,float widt
     std::istringstream words(text);std::string word,line;
     while(words>>word) {
         auto next=line.empty()?word:line+" "+word;
-        if(!line.empty()&&MeasureText(next.c_str(),int(size*sy_))>width*sx_) {label(line,x,y,size,color);y+=size+5;line=word;}
+        const float measured=(runtimeIntro_||cleanPreview_)?mainFont_.width(next.c_str(),std::max(9.f,size*sy_)):
+            float(MeasureText(next.c_str(),int(size*sy_)));
+        if(!line.empty()&&measured>width*sx_) {label(line,x,y,size,color);y+=size+5;line=word;}
         else line=next;
     }
     if(!line.empty())label(line,x,y,size,color);
 }
 void CinematicEditor::subtitles() {
     const auto *line=document_.line(player_.time());if(!line)return;
-    const float y=cleanPreview_?722.f:462.f;
-    panel({180,y,860,109},{12,18,22,225});
+    float height=109;
+    if(runtimeIntro_||cleanPreview_) {
+        std::istringstream words(line->text);std::string word,current;int count=1;
+        while(words>>word) {
+            const auto next=current.empty()?word:current+" "+word;
+            if(!current.empty()&&mainFont_.width(next.c_str(),std::max(9.f,21*sy_))>816*sx_) {++count;current=word;}
+            else current=next;
+        }
+        height=std::max(height,52.f+26*count);
+    }
+    const float y=(cleanPreview_?722.f:462.f)-(height-109);
+    panel({180,y,860,height},{12,18,22,225});
     label(document_.speakerName(line->speaker),202,y+13,16,Gold);
     wrapped(line->text,202,y+39,816,21,Paper);
 }

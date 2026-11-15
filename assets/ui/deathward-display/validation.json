@@ -42,9 +42,10 @@
   ],
   "human_six_letter_direction_accepted": true,
   "human_full_font_acceptance": true,
-  "game_integrated": false,
+  "game_integrated": true,
   "remaining": [
-    "Selected main-font game integration and visual verification",
+    "Human in-game visual review",
+    "Browser-specific visual verification",
     "Broader inherited Unicode and combining-mark layout remain outside this Latin display delivery"
   ],
   "bundled_stb_styled_characters_rasterized": 648,
@@ -53,5 +54,6 @@
   "comparison_visually_inspected": true,
   "readability_visually_inspected": true,
   "committed": true,
-  "human_full_font_acceptance_quote": "Nice commit and use it as a main font"
+  "human_full_font_acceptance_quote": "Nice commit and use it as a main font",
+  "integration_report": "../../../docs/reports/main-font-integration/README.md"
 }

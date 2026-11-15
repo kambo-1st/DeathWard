@@ -216,10 +216,12 @@ function(deathward_assets target)
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/mechanics" "$<TARGET_FILE_DIR:deathward>/assets/mechanics"
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/visual" "$<TARGET_FILE_DIR:deathward>/assets/visual"
         VERBATIM)
-    foreach(ui_file title.ttf body.ttf LICENSE.txt)
+    foreach(ui_file title.ttf body.ttf LICENSE.txt
+            deathward-display/DeathWardDisplay-Regular.otf deathward-display/OFL.txt)
         set(ui_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/ui/${ui_file}")
+        get_filename_component(ui_directory "${ui_file}" DIRECTORY)
         add_custom_command(TARGET deathward_runtime_assets POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:deathward>/assets/ui"
+            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:deathward>/assets/ui/${ui_directory}"
             COMMAND ${CMAKE_COMMAND} -E copy_if_different "${ui_asset}" "$<TARGET_FILE_DIR:deathward>/assets/ui/${ui_file}"
             VERBATIM)
     endforeach()
@@ -315,6 +317,7 @@ if(EMSCRIPTEN)
         -lidbfs.js "SHELL:--shell-file '${CMAKE_CURRENT_SOURCE_DIR}/web/shell.html'")
     set(web_assets
         assets/ui/title.ttf assets/ui/body.ttf assets/ui/LICENSE.txt
+        assets/ui/deathward-display/DeathWardDisplay-Regular.otf assets/ui/deathward-display/OFL.txt
         assets/bandit/bandit.glb assets/cowgirl/cowgirl.glb assets/western/western.glb assets/western/western.catalog)
     file(GLOB mechanics_assets CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "assets/mechanics/*.mechanics")
     list(APPEND web_assets ${mechanics_assets} assets/visual/canyon.cfg assets/visual/canyon-legacy.cfg)

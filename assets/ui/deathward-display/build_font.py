@@ -451,8 +451,8 @@ def main():
                 'freeType_all_mapped_rendered': len(cmap), 'redesigned_sizes_rendered': [16, 24, 32, 48, 96, 220],
                 'minimum_alphanumeric_vector_ink_gap_units': vector_gap,
                 'spacing_checks': spacing, 'human_six_letter_direction_accepted': True,
-                'human_full_font_acceptance': True, 'game_integrated': False,
-                'remaining': ['Selected main-font game integration and visual verification',
+                'human_full_font_acceptance': True, 'game_integrated': True,
+                'remaining': ['Human in-game visual review and browser-specific visual verification',
                               'Broader inherited Unicode redesign and combining-mark layout are outside this Latin display delivery']}
     (HERE / 'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
     (HERE / 'OFL.txt').write_bytes((STUDY_DIR / 'OFL.txt').read_bytes())

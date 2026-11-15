@@ -8,6 +8,7 @@
 #include "render/WesternScene.hpp"
 #include "render/ChestModel.hpp"
 #include "render/KeyModel.hpp"
+#include "render/MainFont.hpp"
 
 namespace dw {
 class Renderer {
@@ -17,6 +18,7 @@ class Renderer {
     VisualStyle visualStyle = VisualStyle::Original;
     void setSandstormStrength(float strength) { sandstormStrength_=std::clamp(strength,0.f,1.f); }
     bool keyModelReady() const { return keyModel_.ready(); }
+    bool mainFontReady() const { return mainFont_.ready(); }
     bool chestModelReady() const { return chestModel_.ready(); }
     bool missionShadowsReady() const {
         return westernScene_.lighting().ready();
@@ -41,6 +43,7 @@ class Renderer {
     void drawWorld(const Simulation &run, const Camera3D &camera, bool collisions, EntityId hoveredEnemy = 0,
                    float deathTime = 0, bool dynamiteArmed = false, float sandstorm = 0);
     void unload() {
+        mainFont_.unload();
         keyModel_.unload();
         chestModel_.unload();
         playerModel_.unload();
@@ -55,6 +58,7 @@ class Renderer {
     }
 
   private:
+    MainFont mainFont_;
     float sx_ = 1, sy_ = 1;
     float sandstormStrength_ = 0;
     Action keyboardFocus_ = Action::None;
@@ -69,7 +73,7 @@ class Renderer {
     ParticleEffects missionEffects_;
     bool particlesAttempted_ = false;
     std::optional<HubKind> loadedHub_;
-    void text(const std::string &value, float x, float y, int size, Color color) const;
+    void text(const std::string &value, float x, float y, int size, Color color, float maxWidth = 0) const;
     void wrap(const std::string &value, float x, float y, float width, int size, Color color) const;
     void panel(float x, float y, float w, float h, Color color) const;
     bool button(Action action, const std::string &title, float x, float y, float w, float h, bool primary = false) const;

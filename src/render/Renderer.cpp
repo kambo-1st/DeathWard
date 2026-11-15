@@ -723,16 +723,17 @@ void drawHazard(const Hazard &hazard) {
         DrawCircle3D(add(ground, {0, 0.18f, 0}), radius, {1, 0, 0}, 90, Rust);
 }
 } // namespace
-void Renderer::text(const std::string &value, float x, float y, int size, Color color) const {
-    DrawText(value.c_str(), int(x * sx_), int(y * sy_), int(float(size) * std::min(sx_, sy_)), color);
+void Renderer::text(const std::string &value, float x, float y, int size, Color color, float maxWidth) const {
+    while(maxWidth>0&&size>10&&mainFont_.width(value.c_str(),size*std::min(sx_,sy_))>maxWidth*sx_)--size;
+    mainFont_.draw(value.c_str(), {x * sx_, y * sy_}, float(size) * std::min(sx_, sy_), color);
 }
 void Renderer::wrap(const std::string &value, float x, float y, float width, int size, Color color) const {
     std::istringstream words(value);
     std::string word, line;
-    const int font = int(float(size) * std::min(sx_, sy_));
+    const float font = float(size) * std::min(sx_, sy_);
     while (words >> word) {
         std::string next = line.empty() ? word : line + " " + word;
-        if (!line.empty() && MeasureText(next.c_str(), font) > int(width * sx_)) {
+        if (!line.empty() && mainFont_.width(next.c_str(), font) > width * sx_) {
             text(line, x, y, size, color);
             y += float(size + 7);
             line = word;
@@ -753,7 +754,7 @@ bool Renderer::button(Action action, const std::string &title, float x, float y,
     DrawRectangleRec(rect, primary ? (hover ? Paper : Gold) : (hover ? Color{49, 63, 63, 255} : Panel));
     DrawRectangleLinesEx(rect, 1, primary ? Gold : Border);
     int fontSize=18;
-    while(fontSize>10&&MeasureText(title.c_str(),int(fontSize*std::min(sx_,sy_)))>(w-36)*sx_)--fontSize;
+    while(fontSize>10&&mainFont_.width(title.c_str(),fontSize*std::min(sx_,sy_))>(w-36)*sx_)--fontSize;
     text(title, x + 18, y + (h - fontSize) / 2, fontSize, primary ? Ink : Paper);
     if(action!=Action::None&&action==keyboardFocus_) {
         DrawRectangleLinesEx({rect.x-4*sx_,rect.y-4*sy_,rect.width+8*sx_,rect.height+8*sy_},
@@ -1534,7 +1535,7 @@ Action Renderer::hub(const Game &game) {
         if (nearest) {
             const auto point = GetWorldToScreen(add(nearest->position, {0,2.6f,0}), game.camera);
             if (point.x > 0 && point.y > 0 && point.x < GetScreenWidth() && point.y < GetScreenHeight()) {
-                const float width = MeasureText(caption, int(12 * sy_)) / sx_ + 20;
+                const float width = mainFont_.width(caption, 12 * std::min(sx_, sy_)) / sx_ + 20;
                 panel(point.x / sx_ - width / 2, point.y / sy_ - 8, width, 25, Panel);
                 text(caption, point.x / sx_ - width / 2 + 10, point.y / sy_ - 2, 12, Paper);
             }
@@ -1848,7 +1849,7 @@ Action Renderer::expedition(const Game &game) {
               sandstormStrength_);
     if(run.stats.duration-run.roomEnteredAt<3.0) {
         panel(24,22,292,34,Panel);
-        text(run.roomName(),40,31,18,Paper);
+        text(run.roomName(),40,31,18,Paper,260);
     }
     panel(964, 22, 292, 131, Panel);
     if(run.surveyTutorial) {
@@ -1872,14 +1873,14 @@ Action Renderer::expedition(const Game &game) {
     text(run.arena.theme == MissionTheme::Canyon
              ? (run.arena.profile.active()?(run.bossKilled?"[+] Canyon guardian defeated":"[ ] Defeat the canyon guardian"):(run.bossKilled ? "[+] Infested Mesa cleared" : "[ ] Clear the Infested Mesa"))
              : (run.bossKilled ? "[+] Sheriff defeated" : "[ ] Sheriff / locked court"),
-         982, 117, 15, run.bossKilled ? Teal : Muted);
+         982, 117, 15, run.bossKilled ? Teal : Muted,256);
     }
     dungeonMap(game);
     floorExitMarker(game);
     if (const auto *boss = run.boss()) {
         panel(412, 24, 476, 70, Panel);
         const auto bossLabel=boss->bossKind==BossKind::Isaac?run.content->monster(boss->monster)->name:std::string(bossName(boss->bossKind));
-        text(bossLabel+(boss->segmentedEncounter?"":" / PHASE " + std::to_string(boss->phase + 1)), 429, 37, 14, Paper);
+        text(bossLabel+(boss->segmentedEncounter?"":" / PHASE " + std::to_string(boss->phase + 1)), 429, 37, 14, Paper,442);
         if(canyonBoss(boss->bossKind))text(bossHint(*boss),429,53,10,Gold);
         panel(429, 66, 442, 9, Ink);
         DrawRectangle(int(429 * sx_), int(66 * sy_), int(442 * sx_ * run.bossHealthFraction(*boss)),
@@ -1944,12 +1945,12 @@ Action Renderer::expedition(const Game &game) {
     const auto warning=run.demolitionWarning();
     const std::string notice=game.expeditionNotice();
     if(!notice.empty()&&!game.paused&&!game.buildOpen&&!run.rewardOpen&&!run.shopOpen) {
-        const int font=int(14*std::min(sx_,sy_));
-        const float width=std::clamp(float(MeasureText(notice.c_str(),font))/sx_+32,180.f,560.f);
+        const float font=14*std::min(sx_,sy_);
+        const float width=std::clamp(mainFont_.width(notice.c_str(),font)/sx_+32,180.f,560.f);
         int lines=1;std::string line,word;std::istringstream words(notice);
         while(words>>word) {
             const auto next=line.empty()?word:line+" "+word;
-            if(!line.empty()&&MeasureText(next.c_str(),font)>(width-32)*sx_) {++lines;line=word;} else line=next;
+            if(!line.empty()&&mainFont_.width(next.c_str(),font)>(width-32)*sx_) {++lines;line=word;} else line=next;
         }
         const float height=18+21*float(lines),x=640-width*.5f,y=(run.surveyTutorial?550.f:660.f)-height;
         panel(x,y,width,height,Panel);

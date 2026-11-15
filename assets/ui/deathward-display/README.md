@@ -7,9 +7,9 @@ and punctuation have their own structural drawings in the same heavy, uneven,
 hand-cut style, with sparse deterministic edge wear applied afterward.
 
 **Status:** the user accepted the complete font ("Nice commit and use it as a
-main font"). This checkpoint preserves the accepted artifact and the six-letter
-study. Main-game integration is selected and in progress; it is not yet enabled
-by this artifact alone.
+main font"). The accepted artifact and six-letter study are committed as
+`32991e0d`. Main-game integration is now enabled and developer-verified; see
+`../../../docs/reports/main-font-integration/README.md` for the scope and screenshots.
 
 ## Files
 
@@ -65,9 +65,10 @@ matching drawings. Spaces retain their existing advance.
 - The full alphabet, comparison and reading-size sheets were visually inspected.
   The heavy display forms retain more detail at 24–32 px and larger; 16 px is a
   rendering check, not acceptance of this face for small body text.
-- The preferred Block and approved study OTFs remain byte-identical. The game
-  renderer, active font files, gameplay, presets and build configuration were not
-  changed for this font artifact.
+- The preferred Block and approved study OTFs remain byte-identical. The selected
+  integration now uses this OTF through the shared main-font loader; its scope
+  and runtime checks are recorded in the integration report. Gameplay and presets
+  are outside the font change.
 
 ## Rebuild
 
@@ -83,6 +84,7 @@ helpers, the previous `deathward-block` OTF for comparison, and `assets/ui/body.
 for specimen labels. It writes only this artifact directory. The original Anton
 attribution/license is retained; the font uses its own family/PostScript names.
 
-Remaining: implement and verify the selected main-font integration. Broader
-inherited Unicode redesign and combining-mark layout remain outside this Latin
-display delivery; actual small-UI readability will be checked during integration.
+Remaining: the user's in-game visual acceptance and browser-specific visual
+verification. Broader inherited Unicode redesign and combining-mark layout remain
+outside this Latin display delivery. Native title, settings, HUD, tuning and
+runtime dialogue have been checked with the integrated font.
