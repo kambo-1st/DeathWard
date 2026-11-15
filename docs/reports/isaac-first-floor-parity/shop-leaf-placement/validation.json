@@ -1,0 +1,23 @@
+{
+  "status": "enabled-developer-verified-scoped-user-acknowledged",
+  "committed": true,
+  "baseline_commit": "bc1651ec",
+  "graph_cases": 7168,
+  "generated_floors": 48,
+  "size_route_cases": 9,
+  "native_ordinary_lock_cases": 576,
+  "game_renderer_modes": 2,
+  "cli_cases": 3,
+  "full_suite_run": false,
+  "human_accepted": true,
+  "source_layout_seed_compatibility": "not retained; old seed-specific handoffs need revalidation",
+  "sha256": {
+    "src/world/RoomGraph.cpp": "db98dce6272821147c04925b230b65a9d809993ff49ab20c8370fdd29d74c2fe",
+    "src/world/Dungeon.cpp": "1348836e4ffa082660ab1ea16cb84a019387872fc44b4bd27c4bb1ac828ccc87",
+    "src/world/Dungeon.hpp": "8b2645763abbb61c680cb4b856fdd33ab19f2daf6740c2cb5ae36e6379fe72ed",
+    "tests/room_lock_policy_tests.cpp": "985d0d74c5874d5de9be466de72e2c7e684f856d3b7cc653de4071978ed48a96",
+    "tests/input_tests.cpp": "beb1115b84ac97ff3b41b1c28eeb2e1c606b3cb9319f874de6dd1391f987305e",
+    "build/deathward": "8dfb97311ffe453a6e8ea9a9c6e0642baf39bdff5565f26fc3e09bf2435397a1"
+  },
+  "acceptance_report": "human-acceptance.json"
+}

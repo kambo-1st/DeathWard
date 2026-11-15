@@ -1,0 +1,33 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "cases": 864,
+  "windows": [
+    {
+      "name": "ordinary-lock-policy",
+      "start": "0x6e1947",
+      "end": "0x6e1a69",
+      "sha256": "8468f8d52e44e77d5f11245db228ac0c6a2805a83368cb6035b3778de2819ed5"
+    },
+    {
+      "name": "stage-type",
+      "start": "0x718ae0",
+      "end": "0x718af3",
+      "sha256": "6b5dd1862b7dd28ad7f1d2fbc390919afcb813cdc1a2079a53f9f6e1675678de"
+    },
+    {
+      "name": "greed-mode",
+      "start": "0x6cba40",
+      "end": "0x6cba56",
+      "sha256": "bae4129c4d8ebb20d0ebc68393b4e7ebb855fc6ebed719d878482c66d1dd982f"
+    },
+    {
+      "name": "player-type-query",
+      "start": "0x5ef580",
+      "end": "0x5ef5b4",
+      "sha256": "ca5338d6ba16c0c2a3353e5ea1824246d4cab6d65be53940b578365a1f4756cc"
+    }
+  ],
+  "method": "Original decision instructions and helper calls; supplied ordinary room metadata/Normal-Hard mode/stage/type. Stop hooks only at decision boundaries.",
+  "scope": "Ordinary Isaac, no special challenge, red/secret connections, previously opened state, Greed, item overrides or world/animation callbacks. Types4/5 are contrast cases; DW enables only its ordinary mapped stage family.",
+  "full_native_acceptance": false
+}

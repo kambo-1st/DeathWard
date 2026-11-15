@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-15",
+  "command": [
+    "./build/deathward",
+    "--expedition",
+    "--seed",
+    "99",
+    "--review-room",
+    "5",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/d10d-room-locks/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "seed": 99,
+  "displayed_room": 5,
+  "zoom": 165,
+  "health_half_hearts": 6,
+  "source_room_locks": true,
+  "key_cost": 1,
+  "keys_granted": 0,
+  "god_mode": false,
+  "user_review": "pending",
+  "check": "Clear room5 and enter adjacent P treasure room without spending a key; first-floor S shop is also free. Later-stage locks have developer checks; human acceptance remains pending."
+}

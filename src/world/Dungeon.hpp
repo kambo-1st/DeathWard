@@ -20,8 +20,9 @@ struct RoomGraph {
     std::vector<FloorCell> cells = std::vector<FloorCell>(RoomCount);
     std::vector<std::array<int, 2>> links;
     int powerRooms = 1;
+    int shopRoom = -1; // Reserved optional leaf; -1 retains historical role allocation.
 };
-RoomGraph generateRoomGraph(uint64_t seed, bool tutorial = false, int rooms = RoomCount);
+RoomGraph generateRoomGraph(uint64_t seed, bool tutorial = false, int rooms = RoomCount, bool reserveShop = false);
 struct RoomHeartSpawn {
     Vector3 preferred{};
     uint32_t pickupSeed=0;
@@ -134,7 +135,9 @@ struct Arena {
     Arena() = default;
     explicit Arena(uint64_t seed, MissionTheme missionTheme = MissionTheme::Mine, bool canyonRiver = true,
                    bool tutorial = false, StoryRoom story = StoryRoom::None, int rooms = RoomCount,
-                   FloorDimensions dimensions = {}, FloorProfile profile = {}, bool sourceCombatRoom = false, int roomHeartLayouts = 0);
+                   FloorDimensions dimensions = {}, FloorProfile profile = {}, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool sourceRoomLocks = false);
+    bool sourceRoomLocks = false; // Ordinary source lock policy adapted to canyon connections.
+    void applyRoomLockPolicy();
     void prepareRoomHeartLayouts(uint64_t seed,int mode);
     void prepareSourceHeartRocks();
     bool ordinaryRockBlastClear(Vector3 from, Vector3 to) const;

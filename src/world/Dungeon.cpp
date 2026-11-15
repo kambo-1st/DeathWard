@@ -82,7 +82,7 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
 } // namespace
 
 Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tutorial, StoryRoom story,
-             int requestedRooms, FloorDimensions dimensions, FloorProfile floorProfile, bool sourceCombatRoom,int roomHeartLayouts)
+             int requestedRooms, FloorDimensions dimensions, FloorProfile floorProfile, bool sourceCombatRoom,int roomHeartLayouts,bool requestedRoomLocks)
     : visualSeed(seed), theme(missionTheme), profile(floorProfile) {
     if(roomHeartLayouts<0||roomHeartLayouts>2)throw std::invalid_argument("Invalid room-heart layout mode");
     if(dimensions.minHalfTiles<5||dimensions.maxHalfTiles<dimensions.minHalfTiles||dimensions.maxHalfTiles>10||
@@ -94,7 +94,8 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
         throw std::invalid_argument("Room size must be between 75% and 150%");
     Random layout(seed ^ 0x4c41594f55544d31ULL);
     std::set<std::pair<int, int>> usedSizes;
-    const auto graph = generateRoomGraph(seed,tutorial,requestedRooms);
+    const auto graph = generateRoomGraph(seed,tutorial,requestedRooms,
+        theme==MissionTheme::Canyon&&profile.active());
     rooms.resize(graph.cells.size());
     const int powerRooms = graph.powerRooms;
     if(!tutorial)rooms.back().kind = RoomKind::Boss;
@@ -385,8 +386,8 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
     }
     // Small floors reserve a shop before allocating keys/quiet rooms. Otherwise
     // those roles can consume the last eligible ordinary room. Classic stays exact.
-    int reservedShop = -1;
-    if (!tutorial && roomCount() < RoomCount) {
+    int reservedShop = graph.shopRoom;
+    if (reservedShop < 0 && !tutorial && roomCount() < RoomCount) {
         std::vector<int> sites;
         for (int i = 4; i < roomCount(); ++i)
             if (rooms[size_t(i)].kind == RoomKind::Combat) sites.push_back(i);
@@ -465,6 +466,8 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
             exit=rooms.back().exit=add(rooms.back().center,mul(unit(sub(rooms.back().center,rooms.back().objective)),2.f));
     }
     if(profile.active())allocateServices();
+    sourceRoomLocks=requestedRoomLocks&&!tutorial&&theme==MissionTheme::Canyon&&profile.active();
+    if(sourceRoomLocks)applyRoomLockPolicy();
     if(sourceCombatRoom&&!tutorial&&theme==MissionTheme::Canyon&&profile.active()&&profile.floor==0) {
         // Keep story, key, shop and service roles. Prefer the earliest available combat room.
         int chosen=-1;
@@ -484,6 +487,51 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
     if(profile.active()) { dressFloor(); prepareBossArena(); }
     if(profile.bossRails)prepareRailArena();
     prepareSourceHeartRocks();
+}
+void Arena::applyRoomLockPolicy() {
+    // Ordinary source family: both room types are free on source stage1.
+    // Keep the existing room identities, geometry and graph exactly as generated.
+    for(auto &p:passages) {
+        const auto a=rooms[size_t(p.rooms[0])].kind,b=rooms[size_t(p.rooms[1])].kind;
+        if(a==RoomKind::Shop||b==RoomKind::Shop||a==RoomKind::Power||b==RoomKind::Power)
+            p.locked=profile.sourceStage>1;
+    }
+    // Canyon shops can be transit rooms. Retain the existing guaranteed-key
+    // count, relocating only keys behind a new lock into the open network.
+    std::set<int> reachable{0};std::queue<int> pending;pending.push(0);
+    while(!pending.empty()) {
+        const int at=pending.front();pending.pop();
+        for(int i:rooms[size_t(at)].passages) {
+            const auto &p=passages[size_t(i)];if(p.locked)continue;
+            const int next=p.rooms[0]==at?p.rooms[1]:p.rooms[0];
+            if(reachable.insert(next).second)pending.push(next);
+        }
+    }
+    for(auto &key:keys) {
+        if(reachable.contains(key.room))continue;
+        int site=-1;
+        for(int pass=0;pass<2&&site<0;++pass)for(int candidate:reachable) {
+            const auto &r=rooms[size_t(candidate)];
+            if(r.kind==RoomKind::Shop||r.kind==RoomKind::Power||r.kind==RoomKind::Boss)continue;
+            if(pass==0&&(candidate==0||candidate==2||candidate==3||r.story!=StoryRoom::None))continue;
+            if(std::any_of(keys.begin(),keys.end(),[&](const auto &k){return k.room==candidate;}))continue;
+            site=candidate;break;
+        }
+        if(site>=0){key.room=site;key.position=rooms[size_t(site)].objective;continue;}
+        // A transit shop can leave fewer open rooms than guaranteed keys.
+        // Use a distinct protected anchor instead of rejecting that seed.
+        bool placed=false;
+        for(int candidate:reachable) {
+            const auto &r=rooms[size_t(candidate)];
+            if(r.kind==RoomKind::Shop||r.kind==RoomKind::Power||r.kind==RoomKind::Boss)continue;
+            for(auto point:{r.center,r.entry}) {
+                if(std::any_of(keys.begin(),keys.end(),[&](const auto &k){return distance(k.position,point)<3;}))continue;
+                key.room=candidate;key.position=point;placed=true;break;
+            }
+            if(placed)break;
+        }
+        if(!placed)throw std::runtime_error("Room locks leave no distinct accessible key anchor");
+    }
 }
 void Arena::rebuildWalls() {
     flightCollisionPrepared = true;

@@ -1,0 +1,34 @@
+[
+  {
+    "case": "schema5",
+    "passed": true,
+    "source_room_locks": true,
+    "key_cost": 1,
+    "zoom": 165,
+    "displayed_room": 5
+  },
+  {
+    "case": "schema27",
+    "passed": true,
+    "source_room_locks": true,
+    "key_cost": 3,
+    "zoom": 165,
+    "displayed_room": 5
+  },
+  {
+    "case": "schema28-source",
+    "passed": true,
+    "source_room_locks": true,
+    "key_cost": 1,
+    "zoom": 165,
+    "displayed_room": 5
+  },
+  {
+    "case": "schema28-legacy",
+    "passed": true,
+    "source_room_locks": false,
+    "key_cost": 1,
+    "zoom": 165,
+    "displayed_room": 5
+  }
+]

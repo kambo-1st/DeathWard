@@ -215,7 +215,8 @@ void Game::launch(bool freeMission) {
                                                   nextBalancePreset?nextBalancePreset->routeLengthScale:1,
                                                   nextBalancePreset?nextBalancePreset->sourceCombatRoom:true,
                                                   nextBalancePreset?nextBalancePreset->roomHeartLayouts:1,
-                                                  nextBalancePreset?nextBalancePreset->coinClearRewards:true);
+                                                  nextBalancePreset?nextBalancePreset->coinClearRewards:true,
+                                                  nextBalancePreset?nextBalancePreset->sourceRoomLocks:true);
     startExpedition(std::move(candidate));
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
     if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
@@ -263,7 +264,7 @@ void Game::perform(Action action) {
     try {
         if(balanceOpen&&action!=Action::None&&action!=Action::Quit&&
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
-           (action<Action::BalanceDamageHealthTab||action>Action::ResetKeyedDoors))return;
+           (action<Action::BalanceDamageHealthTab||action>Action::ToggleSourceRoomLocks))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -313,6 +314,9 @@ void Game::perform(Action action) {
         case Action::BalanceDamageHealthTab:balanceBombsOpen=balanceDoorsOpen=false;break;
         case Action::BalanceBombsTab:balanceBombsOpen=true;balanceDoorsOpen=false;break;
         case Action::BalanceDoorsTab:balanceDoorsOpen=true;balanceBombsOpen=false;break;
+        case Action::ToggleSourceRoomLocks:
+            balanceDraft.sourceRoomLocks=!balanceDraft.sourceRoomLocks;
+            balanceNotice="Room lock rules pending. APPLY MAP CHANGES resets this floor; player/build retained.";break;
         case Action::DoorKeyCostDown:case Action::DoorKeyCostUp:case Action::ResetKeyedDoors: {
             auto preset=balancePreset;
             preset.keyedDoorCost=action==Action::ResetKeyedDoors?1:std::clamp(preset.keyedDoorCost+(action==Action::DoorKeyCostUp?1:-1),0,5);
@@ -890,7 +894,7 @@ std::vector<Action> Game::menuActions() const {
             balanceRewardsOpen?
             std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::ToggleRedHeartRewards,Action::ToggleCoinRewards,Action::ToggleChestRewards,Action::ToggleKeyRewards,Action::ToggleBombRewards,Action::RewardLuckDown,Action::RewardLuckUp,Action::ResetRewardLuck,Action::HeartAppearanceDown,Action::HeartAppearanceUp,Action::ResetHeartAppearance}:
             balanceCombatOpen&&balanceDoorsOpen?
-            std::vector<Action>{Action::BalanceDamageHealthTab,Action::BalanceBombsTab,Action::BalanceDoorsTab,Action::DoorKeyCostDown,Action::DoorKeyCostUp,Action::ResetKeyedDoors}:
+            std::vector<Action>{Action::BalanceDamageHealthTab,Action::BalanceBombsTab,Action::BalanceDoorsTab,Action::DoorKeyCostDown,Action::DoorKeyCostUp,Action::ToggleSourceRoomLocks,Action::ApplyMapChanges,Action::ResetKeyedDoors}:
             balanceCombatOpen&&balanceBombsOpen?
             std::vector<Action>{Action::BalanceDamageHealthTab,Action::BalanceBombsTab,Action::BalanceDoorsTab,Action::BombFuseDown,Action::BombFuseUp,Action::BombRadiusDown,Action::BombRadiusUp,Action::BombDamageDown,Action::BombDamageUp,Action::BombSelfDamageDown,Action::BombSelfDamageUp,Action::ToggleRockBlastShielding,Action::ResetInventoryBombs}:
             balanceCombatOpen?

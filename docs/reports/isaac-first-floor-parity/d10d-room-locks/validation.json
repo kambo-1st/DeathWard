@@ -1,0 +1,67 @@
+{
+  "status": "enabled-developer-verified-human-review-pending",
+  "human_acceptance": false,
+  "full_native_acceptance": false,
+  "committed": false,
+  "accepted_checkpoint": "bc1651ec",
+  "schema": 28,
+  "native_cases": 864,
+  "enabled_ordinary_family_cases": 576,
+  "excluded_alternate_family_cases": 288,
+  "generated_floor_cases": 48,
+  "relocated_keys_in_coverage": 10,
+  "dynamic_size_route_cases": 9,
+  "narrow_network_fallback": true,
+  "core_suites": [
+    "room_lock_policy",
+    "balance_preset_contract",
+    "keyed_door_spending",
+    "generated_dungeons"
+  ],
+  "game_renderer": [
+    "--room-locks-only",
+    "--keyed-doors-only (legacy placement regression)"
+  ],
+  "cli_cases": [
+    "schema5",
+    "schema27",
+    "schema28-source",
+    "schema28-legacy"
+  ],
+  "review": {
+    "seed": 99,
+    "displayed_room": 5,
+    "zoom": 165,
+    "health_half_hearts": 6,
+    "keys_granted": 0,
+    "source_room_locks": true,
+    "key_cost": 1,
+    "god_mode": false
+  },
+  "remaining": [
+    "Scoped human D10d review",
+    "Special locks, characters and item exceptions; alternate and Greed modes",
+    "Native room counts, eligibility/selection/placement/profile rules beyond this lock decision",
+    "Full factory, animation and physics equivalence",
+    "Browser runtime",
+    "Gameplay-save continuity"
+  ],
+  "files_sha256": {
+    "src/world/Dungeon.cpp": "62683612331eb70af0997a88662c4ea5c7eab546cac46dc6b989bd870b664658",
+    "src/world/Dungeon.hpp": "9f2f20b0673100d64c898691649a059a2405bae06d5387e772af17d51abb4a81",
+    "src/combat/Simulation.cpp": "b7f7dcedc2c5fb228b601b9d499c102b400686c226eabf16beb933a9abaeb105",
+    "src/combat/Simulation.hpp": "8ef6717b95f533a5a2b6802e6786b08ef875cae0e2227fdf65b73e3bdb4e0a3b",
+    "src/core/BalancePreset.cpp": "8b00f543e692ea81da9770beb0bfbc112e49f43cc805001b234d8815f9909147",
+    "src/core/BalancePreset.hpp": "3a86926f8886a06bf942f9bd6658b9a5a279cc85a8e4a3383407f8d78dcf66a1",
+    "src/core/Game.cpp": "ce78003cc11214113659328f45fc2e53300b40a2c52056a5a7fe69cee8ed813d",
+    "src/core/Game.hpp": "b9fd578dcf250408e3b56ab0358be9f82d5412796be902cb20312b74bbd04fa5",
+    "src/core/GameTuning.cpp": "c5be393d07e0453929adb3859dee2f9def150214690eaa465d6688b9df42f32b",
+    "src/render/Renderer.cpp": "fb72dccc1981319455a1155f6a0f03436572d7fce6ef391222015db65f8bd5b1",
+    "tests/room_lock_policy_tests.cpp": "18773ed8409c03df930e6b7a6387918588e8b58ba7b5ecf4271ed373d1e837c3",
+    "tests/input_tests.cpp": "1a63a141629fdb78307e518f835df3d89a1f606febd81c4e72a7d62ce49043d8",
+    "tests/balance_preset_tests.cpp": "96912cf8deddac148a15e03582a5b22e4f566983350c2f2a059fdc184a62cdfe",
+    "scripts/isaac-reference/capture-room-lock-policy.py": "cfac2ae738b93121c69706ff4ad77dcd49483dec8efdc88073771181ae670cd1",
+    "build/deathward": "6246c5ffb44607501811b512cb786e791cac925137d6a58f886229a2b71ffc31",
+    "build/deathward_input_tests": "7f75a7262f2c41b48eca67fa631282a3cadcbac21870db0790865d2fb1a80dcf"
+  }
+}

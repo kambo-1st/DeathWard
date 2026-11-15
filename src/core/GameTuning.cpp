@@ -29,8 +29,8 @@ void Game::archiveBalance(const BalancePreset &preset) const {
 void Game::applyBalance(BalancePreset preset) {
     preset.validate();archiveBalance(preset); // No partial runtime update on validation/write failure.
     const bool zoomChanged=preset.defaultZoomPercent!=balancePreset.defaultZoomPercent;
-    const bool resize=run&&(preset.roomSizeScale!=run->roomSizeScale||preset.roomMinHalfTiles!=run->roomMinHalfTiles||preset.roomMaxHalfTiles!=run->roomMaxHalfTiles||preset.routeLengthScale!=run->routeLengthScale||preset.sourceCombatRoom!=run->sourceCombatRoom||preset.roomHeartLayouts!=run->roomHeartLayouts);
-    if(resize)run->resizeRooms(preset.roomSizeScale,preset.roomMinHalfTiles,preset.roomMaxHalfTiles,preset.routeLengthScale,preset.sourceCombatRoom,preset.roomHeartLayouts); // Constructs first; an invalid/unsafe edit leaves the expedition intact.
+    const bool resize=run&&(preset.roomSizeScale!=run->roomSizeScale||preset.roomMinHalfTiles!=run->roomMinHalfTiles||preset.roomMaxHalfTiles!=run->roomMaxHalfTiles||preset.routeLengthScale!=run->routeLengthScale||preset.sourceCombatRoom!=run->sourceCombatRoom||preset.roomHeartLayouts!=run->roomHeartLayouts||preset.sourceRoomLocks!=run->sourceRoomLocks);
+    if(resize)run->resizeRooms(preset.roomSizeScale,preset.roomMinHalfTiles,preset.roomMaxHalfTiles,preset.routeLengthScale,preset.sourceCombatRoom,preset.roomHeartLayouts,preset.sourceRoomLocks); // Constructs first; an invalid/unsafe edit leaves the expedition intact.
     if(!run){preset.save(balanceDirectory/"next.json");nextBalancePreset=preset;}
     balancePreset=std::move(preset);balanceDraft.playerSpeed=balancePreset.playerSpeed;
     balanceDraft.tearsPerSecond=balancePreset.tearsPerSecond;balanceDraft.shotSpeed=balancePreset.shotSpeed;
@@ -118,7 +118,7 @@ bool Game::hasPendingMapChanges() const {
     return balanceDraft.roomSizeScale!=balancePreset.roomSizeScale||
         balanceDraft.roomMinHalfTiles!=balancePreset.roomMinHalfTiles||
         balanceDraft.roomMaxHalfTiles!=balancePreset.roomMaxHalfTiles||
-        balanceDraft.routeLengthScale!=balancePreset.routeLengthScale||balanceDraft.sourceCombatRoom!=balancePreset.sourceCombatRoom||balanceDraft.roomHeartLayouts!=balancePreset.roomHeartLayouts;
+        balanceDraft.routeLengthScale!=balancePreset.routeLengthScale||balanceDraft.sourceCombatRoom!=balancePreset.sourceCombatRoom||balanceDraft.roomHeartLayouts!=balancePreset.roomHeartLayouts||balanceDraft.sourceRoomLocks!=balancePreset.sourceRoomLocks;
 }
 void Game::setRoomSizeRange(int minimum,int maximum) {
     auto preset=balanceDraft;preset.roomMinHalfTiles=minimum;preset.roomMaxHalfTiles=maximum;preset.validate();
@@ -235,7 +235,7 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     missionMenu=walkingToMission=false;town.stop();screen=Screen::Expedition;
     deathTime=0;paused=false;accumulator=0;error.clear();resetArmed=false;
     useDefaultZoom();resetPointerInput();
-    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" gaper_movement="<<balancePreset.gaperMovementMultiplier<<" spider_movement="<<balancePreset.spiderMovementMultiplier<<" pooter_movement="<<balancePreset.pooterMovementMultiplier<<" pooter_shot="<<balancePreset.pooterShotSpeedMultiplier<<" pooter_delay="<<balancePreset.pooterAttackIntervalMultiplier<<" damage="<<balancePreset.playerDamage<<" regular_hp="<<balancePreset.regularHealthMultiplier<<" bomb_fuse="<<balancePreset.inventoryBombs.fuseMultiplier<<" bomb_radius="<<balancePreset.inventoryBombs.radiusMultiplier<<" bomb_damage="<<balancePreset.inventoryBombs.damage<<" bomb_self="<<balancePreset.inventoryBombs.selfDamageHalfHearts<<" key_cost="<<balancePreset.keyedDoorCost<<" rock_shielding="<<balancePreset.inventoryBombs.rocksBlockBlast<<" bomb_rewards="<<balancePreset.bombClearRewards<<" key_rewards="<<balancePreset.keyClearRewards<<" chest_rewards="<<balancePreset.chestClearRewards<<" coin_rewards="<<balancePreset.coinClearRewards<<" red_heart_rewards="<<balancePreset.redHeartClearRewards<<" heart_appearance="<<balancePreset.redHeartAppearanceSpeed<<" luck="<<balancePreset.playerLuck<<" room_hearts="<<balancePreset.roomHeartLayouts<<" source_room="<<balancePreset.sourceCombatRoom<<" revision="<<balancePreset.revision()
+    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" gaper_movement="<<balancePreset.gaperMovementMultiplier<<" spider_movement="<<balancePreset.spiderMovementMultiplier<<" pooter_movement="<<balancePreset.pooterMovementMultiplier<<" pooter_shot="<<balancePreset.pooterShotSpeedMultiplier<<" pooter_delay="<<balancePreset.pooterAttackIntervalMultiplier<<" damage="<<balancePreset.playerDamage<<" regular_hp="<<balancePreset.regularHealthMultiplier<<" bomb_fuse="<<balancePreset.inventoryBombs.fuseMultiplier<<" bomb_radius="<<balancePreset.inventoryBombs.radiusMultiplier<<" bomb_damage="<<balancePreset.inventoryBombs.damage<<" bomb_self="<<balancePreset.inventoryBombs.selfDamageHalfHearts<<" room_locks="<<balancePreset.sourceRoomLocks<<" key_cost="<<balancePreset.keyedDoorCost<<" rock_shielding="<<balancePreset.inventoryBombs.rocksBlockBlast<<" bomb_rewards="<<balancePreset.bombClearRewards<<" key_rewards="<<balancePreset.keyClearRewards<<" chest_rewards="<<balancePreset.chestClearRewards<<" coin_rewards="<<balancePreset.coinClearRewards<<" red_heart_rewards="<<balancePreset.redHeartClearRewards<<" heart_appearance="<<balancePreset.redHeartAppearanceSpeed<<" luck="<<balancePreset.playerLuck<<" room_hearts="<<balancePreset.roomHeartLayouts<<" source_room="<<balancePreset.sourceCombatRoom<<" revision="<<balancePreset.revision()
              <<" profile="<<(balancePreset.custom()?"custom":"reference-partial")<<'\n';
     if(reviewRoomIndex)std::cout<<"ROOM_REVIEW room="<<run->room+1<<" hp="<<run->player.hp<<" god="<<run->godMode<<'\n';
     if(reviewSourceRoomTemplate) {
@@ -258,7 +258,7 @@ void Game::retryExpedition() {
     const auto setup=*retrySetup_;
     if(run)finish(EndReason::Death); // Resolve consequences once; never reset the campaign.
     auto candidate=std::make_unique<Simulation>(setup.seed,campaign.data().nextRunId,campaign.data().world,
-        setup.theme,setup.river,setup.tutorial,setup.account,0,setup.pacing,defaultMechanics(),balancePreset.roomSizeScale,balancePreset.roomMinHalfTiles,balancePreset.roomMaxHalfTiles,balancePreset.routeLengthScale,balancePreset.sourceCombatRoom,balancePreset.roomHeartLayouts,balancePreset.coinClearRewards);
+        setup.theme,setup.river,setup.tutorial,setup.account,0,setup.pacing,defaultMechanics(),balancePreset.roomSizeScale,balancePreset.roomMinHalfTiles,balancePreset.roomMaxHalfTiles,balancePreset.routeLengthScale,balancePreset.sourceCombatRoom,balancePreset.roomHeartLayouts,balancePreset.coinClearRewards,balancePreset.sourceRoomLocks);
     startExpedition(std::move(candidate),true);
     balanceNotice="Retried the same expedition seed with the applied player, enemy, view and map settings.";
 }

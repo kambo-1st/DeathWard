@@ -3,7 +3,7 @@
 #include <stdexcept>
 
 namespace dw {
-RoomGraph generateRoomGraph(uint64_t seed, bool tutorial, int roomCount) {
+RoomGraph generateRoomGraph(uint64_t seed, bool tutorial, int roomCount, bool reserveShop) {
     if (!tutorial && (roomCount < MinFloorRooms || roomCount > RoomCount))
         throw std::invalid_argument("Floor room count must be between 9 and 15");
     Random rng(seed ^ 0x544f504f4c4f4759ULL);
@@ -26,6 +26,10 @@ RoomGraph generateRoomGraph(uint64_t seed, bool tutorial, int roomCount) {
     graph.powerRooms = 1 + int(rng.bounded(2));
     if (roomCount < 12) graph.powerRooms = 1;
     const int ordinary = roomCount - graph.powerRooms - 1;
+    // Allocate the shop outside the through-route network. Attaching it after
+    // shortcuts and other special rooms prevents any route from depending on it.
+    const int backbone = ordinary - int(reserveShop);
+    if (reserveShop) graph.shopRoom = backbone;
     const std::array<FloorCell, 4> directions{{{0, -1}, {1, 0}, {0, 1}, {-1, 0}}};
     auto shuffle = [&](auto &values) {
         for (size_t i = values.size(); i > 1; --i)
@@ -65,7 +69,7 @@ RoomGraph generateRoomGraph(uint64_t seed, bool tutorial, int roomCount) {
     // Coordinates are allocated as needed; there is no predefined rectangular footprint.
     const int continuation = 2 + int(rng.bounded(7));
     const int compactness = 1 + int(rng.bounded(4));
-    for (int next = exits + 1; next < ordinary; ++next) {
+    for (int next = exits + 1; next < backbone; ++next) {
         auto options = openings(next);
         std::vector<uint32_t> weights;
         uint32_t total = 0;
@@ -93,8 +97,8 @@ RoomGraph generateRoomGraph(uint64_t seed, bool tutorial, int roomCount) {
     // Neighboring branches sometimes reconnect. Zero to three loops gives both
     // tree-like expeditions and maps with alternate routes; locked rooms stay leaves.
     std::vector<std::array<int, 2>> shortcuts;
-    for (int a = 1; a < ordinary; ++a)
-        for (int b = a + 1; b < ordinary; ++b) {
+    for (int a = 1; a < backbone; ++a)
+        for (int b = a + 1; b < backbone; ++b) {
             const auto [ax, az] = graph.cells[size_t(a)];
             const auto [bx, bz] = graph.cells[size_t(b)];
             const bool linked = std::any_of(graph.links.begin(), graph.links.end(), [&](auto edge) {
@@ -123,7 +127,7 @@ RoomGraph generateRoomGraph(uint64_t seed, bool tutorial, int roomCount) {
             }
         }
     }
-    auto bossOptions = openings(ordinary);
+    auto bossOptions = openings(backbone);
     int deepest = 0;
     for (const auto &[parent, cell] : bossOptions)
         deepest = std::max(deepest, depth[size_t(parent)]);
@@ -132,7 +136,7 @@ RoomGraph generateRoomGraph(uint64_t seed, bool tutorial, int roomCount) {
     const auto boss = bossOptions[rng.bounded(uint32_t(bossOptions.size()))];
     place(roomCount - 1, boss.first, boss.second);
     for (int i = 0; i < graph.powerRooms; ++i) {
-        auto options = openings(ordinary);
+        auto options = openings(backbone);
         // At least one cache branches off a route, keeping a genuine junction
         // even in seeds whose ordinary network grew as a long winding path.
         if (i == 0 && std::any_of(options.begin(), options.end(),
@@ -146,15 +150,20 @@ RoomGraph generateRoomGraph(uint64_t seed, bool tutorial, int roomCount) {
         const auto cache = options[rng.bounded(uint32_t(options.size()))];
         place(roomCount - 2 - i, cache.first, cache.second);
     }
+    if (reserveShop) {
+        const auto options = openings(backbone);
+        const auto shop = options[rng.bounded(uint32_t(options.size()))];
+        place(graph.shopRoom, shop.first, shop.second);
+    }
 
     // Room identity and objective placement do not dictate the growth order.
     std::vector<int> ids;
-    for (int i = 1; i < ordinary; ++i)
+    for (int i = 1; i < backbone; ++i)
         ids.push_back(i);
     shuffle(ids);
     std::vector<int> remap(size_t(roomCount), 0);
     for (int i = 0; i < roomCount; ++i)
-        remap[size_t(i)] = i > 0 && i < ordinary ? ids[size_t(i - 1)] : i;
+        remap[size_t(i)] = i > 0 && i < backbone ? ids[size_t(i - 1)] : i;
     const auto cells = graph.cells;
     for (int i = 0; i < roomCount; ++i)
         graph.cells[size_t(remap[size_t(i)])] = cells[size_t(i)];

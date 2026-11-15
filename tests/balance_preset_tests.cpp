@@ -221,11 +221,21 @@ int main() {
         const auto v26=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
             "docs/reports/isaac-first-floor-parity/d10b-rock-demolition/custom-test-preset.json","2ccd5b1c274a302e");
         check(v26.keyedDoorCost==1&&v26.inventoryBombs.rocksBlockBlast&&v26.defaultZoomPercent==165,"schema26 migrates one-key baseline retaining bomb/view settings");
+        const auto v27=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/d10c-keyed-doors/custom-test-preset.json","2ccd5b1c274a302e");
+        check(v27.sourceRoomLocks&&v27.keyedDoorCost==3&&v27.defaultZoomPercent==165,"schema27 adds source lock placement preserving custom cost/view");
+        for(bool locks:{false,true}) {
+            auto p=v27;p.sourceRoomLocks=locks;p.save(file);
+            check(BalancePreset::load(file,"2ccd5b1c274a302e").revision()==p.revision(),"room lock mode roundtrip");
+        }
         custom.save(file);
         auto costly=custom;costly.keyedDoorCost=3;
         const auto valid=custom.json();
         auto customBomb=custom;customBomb.inventoryBombs={1.5f,1.25f,150,0};
         std::vector<std::string> invalid{
+            replaceOne(valid,"ordinary-stage1-free-shops-treasure-v1","invalid-lock-policy"),
+            replaceOne(valid,"\"source_room_locks\": true","\"source_room_locks\": 1"),
+            replaceOne(valid,"\"source_room_locks\": true","\"source_room_locks\": false"),
             replaceOne(valid,"ordinary-one-key-v1","unsupported-door-policy"),
             replaceOne(valid,"\"keyed_door_cost\": 1","\"keyed_door_cost\": 0"),
             replaceOne(costly.json(),"\"keyed_door_cost\": 3","\"keyed_door_cost\": -1"),
@@ -270,11 +280,11 @@ int main() {
             replaceOne(valid,"\"chest_clear_rewards\": true","\"chest_clear_rewards\": 1"),
             replaceOne(valid,"pickup-batches-adapted-v1","unverified-chest-policy"),
             valid+"garbage", valid.substr(0,valid.size()-3),
-            replaceOne(valid,"\"schema_version\": 27","\"schema_version\": 28"),
+            replaceOne(valid,"\"schema_version\": 28","\"schema_version\": 29"),
             replaceOne(valid,"\"red_heart_appearance_speed\": 1","\"red_heart_appearance_speed\": 2"),
             replaceOne(valid,"appear33-drop25-collect12-30hz-v1","unverified-timing"),
-            replaceOne(valid,"\"schema_version\": 27","\"schema_version\": 27, \"schema_version\": 27"),
-            replaceOne(valid,"d10c-keyed-doors-v27","future-contract"),
+            replaceOne(valid,"\"schema_version\": 28","\"schema_version\": 28, \"schema_version\": 28"),
+            replaceOne(valid,"d10d-room-locks-v28","future-contract"),
             replaceOne(valid,"fixture-content","different-content"),
             replaceOne(valid,"Repentance 1.7.9b","Repentance 1.7.9a"),
             replaceOne(valid,"\"walking_pace_at_speed_one\": 4.8","\"walking_pace_at_speed_one\": 30"),

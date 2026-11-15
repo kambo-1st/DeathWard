@@ -2307,9 +2307,11 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::DoorKeyCostDown,"- 1",795,224,130,40))return Action::DoorKeyCostDown;
         if(button(Action::DoorKeyCostUp,"+ 1",945,224,130,40))return Action::DoorKeyCostUp;
         text("Reference: 1 key. Other costs, including free, are testing overrides.",205,290,14,Teal);
-        text("Applies when the next door unlocks, including a queued approach.",205,325,14,Paper);
-        text("Opened doors stay open. Revisiting never spends another key.",205,359,14,Paper);
-        text("Blocked or sealed passages keep your keys and remain locked.",205,393,14,Muted);
+        text("ROOM LOCK RULES",205,326,18,Paper);
+        if(button(Action::ToggleSourceRoomLocks,game.balanceDraft.sourceRoomLocks?"SOURCE STAGE RULES":"LEGACY COMPARISON",575,312,500,36,game.balanceDraft.sourceRoomLocks))return Action::ToggleSourceRoomLocks;
+        text("Source: first stage free; later shops / treasure rooms locked.",205,365,14,Paper);
+        if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,389,320,36))return Action::ApplyMapChanges;
+        text(game.hasPendingMapChanges()?"PENDING / RESETS THIS FLOOR":"MAP SETTINGS APPLIED",555,402,14,Muted);
         if(button(Action::ResetKeyedDoors,"RESET KEY COST",205,438,320,40))return Action::ResetKeyedDoors;
     } else if(game.balanceCombatOpen&&game.balanceBombsOpen) {
         const auto &t=game.balancePreset.inventoryBombs;

@@ -1,0 +1,5 @@
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_room_lock_policy_tests
+[100%] Building CXX object CMakeFiles/deathward_room_lock_policy_tests.dir/tests/room_lock_policy_tests.cpp.o
+[100%] Linking CXX executable deathward_room_lock_policy_tests
+[100%] Built target deathward_room_lock_policy_tests

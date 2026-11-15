@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-15",
+  "user_statement": "cool, commit, whats next?",
+  "status": "scoped user acknowledgment and commit authorization",
+  "scope": "Optional single-entrance shops and accompanying D10d shop/treasure lock rules.",
+  "developer_verification": "7168 graph cases, 48 generated floors, 9 size/route combinations, bounded native lock comparisons, focused regressions, two Game/Renderer modes and three CLI loads passed.",
+  "full_native_acceptance": false,
+  "separate_new_human_playtest_observed": false,
+  "remaining": [
+    "Revalidate older seed-specific room review fixtures and handoffs after generation change",
+    "Broader native generation/profile, special locks/items and physics equivalence",
+    "Browser runtime and gameplay-save continuity"
+  ],
+  "next_proposed": "Refresh affected seed-based review cases, then D11a one named real treasure upgrade. Neither is started by this commit request."
+}

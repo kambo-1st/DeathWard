@@ -1,0 +1,3 @@
+shop_leaf_graphs=7168 (1024 seeds x room counts9-15)
+generated_maps=48 relocated_keys=0
+PASS optional single-entrance shops, source room lock policy, mapped stages, key reachability, shop exits, revisit and regeneration

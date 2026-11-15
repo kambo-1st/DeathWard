@@ -135,7 +135,7 @@ enum class Action {
     BalanceDamageHealthTab, BalanceBombsTab, BombFuseDown, BombFuseUp,
     BombRadiusDown, BombRadiusUp, BombDamageDown, BombDamageUp,
     BombSelfDamageDown, BombSelfDamageUp, ResetInventoryBombs, ToggleRockBlastShielding,
-    BalanceDoorsTab, DoorKeyCostDown, DoorKeyCostUp, ResetKeyedDoors
+    BalanceDoorsTab, DoorKeyCostDown, DoorKeyCostUp, ResetKeyedDoors, ToggleSourceRoomLocks
 };
 class Game {
   public:

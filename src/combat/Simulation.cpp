@@ -17,8 +17,8 @@
 
 namespace dw {
 Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, MissionTheme theme,
-                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library, float requestedRoomScale, int roomMinimum, int roomMaximum, float requestedRouteScale, bool requestedSourceRoom, int requestedHeartLayouts, bool requestedCoins)
-    : content(library ? std::move(library) : defaultMechanics()), expedition(seed,tutorial,account,pacing),floor(level),roomSizeScale(requestedRoomScale),routeLengthScale(requestedRouteScale),sourceCombatRoom(requestedSourceRoom),roomHeartLayouts(requestedHeartLayouts),roomMinHalfTiles(roomMinimum),roomMaxHalfTiles(roomMaximum),
+                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library, float requestedRoomScale, int roomMinimum, int roomMaximum, float requestedRouteScale, bool requestedSourceRoom, int requestedHeartLayouts, bool requestedCoins, bool requestedRoomLocks)
+    : content(library ? std::move(library) : defaultMechanics()), expedition(seed,tutorial,account,pacing),floor(level),roomSizeScale(requestedRoomScale),routeLengthScale(requestedRouteScale),sourceRoomLocks(requestedRoomLocks),sourceCombatRoom(requestedSourceRoom),roomHeartLayouts(requestedHeartLayouts),roomMinHalfTiles(roomMinimum),roomMaxHalfTiles(roomMaximum),
       arena(expedition.floorSeed(level), theme, canyonRiver, tutorial, expedition.storyAt(level),
             expedition.roomsOnFloor(level),[&]{auto dimensions=expedition.dimensionsOnFloor(level);
                 dimensions.roomSizeScale=roomSizeScale;dimensions.routeLengthScale=routeLengthScale;
@@ -28,7 +28,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
                     dimensions.smallerRooms=true;dimensions.minHalfTiles=roomMinHalfTiles;dimensions.maxHalfTiles=roomMaxHalfTiles;
                 }
                 return dimensions;}(),
-            theme==MissionTheme::Canyon?content->configureFloor(expedition.profileOnFloor(level),expedition.floorSeed(level)):FloorProfile{},sourceCombatRoom,roomHeartLayouts),
+            theme==MissionTheme::Canyon?content->configureFloor(expedition.profileOnFloor(level),expedition.floorSeed(level)):FloorProfile{},sourceCombatRoom,roomHeartLayouts,sourceRoomLocks),
       encounterRng(expedition.floorSeed(level) ^ 0x454e434f554e5445ULL),
       rewardRng(expedition.floorSeed(level) ^ 0x5245574152445354ULL),
       combatRng(expedition.floorSeed(level) ^ 0x434f4d424154524eULL), seed_(expedition.floorSeed(level)),
@@ -97,13 +97,14 @@ bool Simulation::canUseFloorExit() const {
 bool Simulation::canResizeRooms() const {
     return !arena.rooms.empty(); // Explicit testing control; exploration/combat do not lock it.
 }
-void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScale,std::optional<bool> sourceRoom,std::optional<int> heartLayouts) {
+void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScale,std::optional<bool> sourceRoom,std::optional<int> heartLayouts,std::optional<bool> roomLocks) {
+    const bool locks=roomLocks.value_or(sourceRoomLocks);
     const bool enabled=sourceRoom.value_or(sourceCombatRoom);
     const int heartMode=heartLayouts.value_or(roomHeartLayouts);
-    if(heartMode==roomHeartLayouts&&enabled==sourceCombatRoom&&scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
+    if(locks==sourceRoomLocks&&heartMode==roomHeartLayouts&&enabled==sourceCombatRoom&&scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
     if(!canResizeRooms())throw std::runtime_error("No floor to resize");
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
-                    expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards);
+                    expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks);
     const int targetRoom=std::clamp(room,0,next.finalRoom());
     next.items=items;next.keys=keys;next.powerUpsTaken=powerUpsTaken;
     next.dynamite=dynamite;next.dynamiteCooldown=dynamiteCooldown;
@@ -145,6 +146,16 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     next.player=player;next.player.position=position;next.player.aim=add(position,sub(player.aim,player.position));
     next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
     next.enterRoom(targetRoom);
+    // Testing regeneration retains the player inside an already admitted room.
+    // Never strand that player behind a freshly reset special-room lock.
+    const auto targetKind=next.arena.rooms[size_t(targetRoom)].kind;
+    if(targetKind==RoomKind::Power||targetKind==RoomKind::Shop) {
+        for(int link:next.arena.rooms[size_t(targetRoom)].passages) {
+            auto &p=next.arena.passages[size_t(link)];const int other=p.rooms[0]==targetRoom?p.rooms[1]:p.rooms[0];
+            if(targetKind==RoomKind::Power||next.arena.rooms[size_t(other)].kind!=RoomKind::Power)p.locked=false;
+        }
+        next.arena.rebuildWalls();
+    }
     next.player.velocity={};next.player.launch.reset();next.player.pullTime=0;
     next.stats=stats;next.roomEnteredAt=stats.duration;
     for(auto &progress:next.rooms)for(auto &enemy:progress.residents)enemy.observedShots=stats.shots;
@@ -168,7 +179,7 @@ bool Simulation::advanceFloor() {
     if(!floorExitRequested||lastFloor()||dead||!canUseFloorExit())return false;
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
-                    expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards);
+                    expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks);
     next.canonicalShooting=canonicalShooting;
     next.gaperMovementMultiplier=gaperMovementMultiplier;
     next.spiderMovementMultiplier=spiderMovementMultiplier;
@@ -401,6 +412,16 @@ void Simulation::enterRoom(int index) {
     visuals.clear();
     particleBursts.clear();
     const auto kind = arena.rooms[size_t(room)].kind;
+    // Source ordinary exits are not keyed from inside a shop/treasure room.
+    // DW retains multi-connection shops: entering admits all their exits once,
+    // so a paid entrance cannot trap the player behind another toll.
+    if(arena.sourceRoomLocks&&(kind==RoomKind::Shop||kind==RoomKind::Power))
+        for(int link:arena.rooms[size_t(room)].passages) {
+            auto &p=arena.passages[size_t(link)];
+            const int other=p.rooms[0]==room?p.rooms[1]:p.rooms[0];
+            const auto target=arena.rooms[size_t(other)].kind;
+            if(target!=RoomKind::Shop&&target!=RoomKind::Power)p.locked=false;
+        }
     if (kind == RoomKind::Power || kind == RoomKind::Empty || kind == RoomKind::Shop || kind==RoomKind::Service) {
         if (!progress.cleared) {
             progress.cleared = true;

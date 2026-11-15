@@ -436,12 +436,80 @@ void spiderBalanceInputCheck(const std::filesystem::path &directory) {
           "fresh Game restores independent enemy and accepted user settings");fresh.close();
     std::cout<<"PASS D05 actual Game encounter, UI mouse/keyboard, live edit, export/reload/rejection, map/floor/retry/fresh-session persistence\n";
 }
+void roomLockInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto leafShop=[](const Arena &arena) {
+        check(arena.shopRoom>=4&&arena.rooms[size_t(arena.shopRoom)].passages.size()==1,
+              "main-game shop stays an optional single-entrance branch");
+    };
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"room-locks.save",legacy=directory/"legacy-locks.json",native=directory/"source-locks.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="99";
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.launch(true);check(game.run&&game.error.empty(),"D10d main-game launch");
+    auto &run=*game.run;Renderer renderer;
+    const auto frame=[&](bool draw=true){game.update(Tick);BeginDrawing();const auto action=draw?renderer.draw(game):Action::None;EndDrawing();game.perform(action);check(game.error.empty(),"D10d UI errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int k){mouseEvent(KeyDown,k);frame();mouseEvent(KeyUp,k);frame();};
+    const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"room locks screenshot");UnloadImage(im);EndDrawing();};
+    const auto cross=[&](int target,bool expectedLocked) {
+        const int link=run.arena.rooms[size_t(target)].passages.front();const auto door=run.arena.passages[size_t(link)];const int side=door.rooms[0]==target?1:0,outside=door.rooms[size_t(side)];
+        // Fixture clears unrelated combat; inventory comes only from natural key collection below.
+        run.jumpDebug(outside);run.clearRoomDebug();run.player.position=run.arena.doorApproach(link,side);run.player.position.y=.85f;game.updateCamera(10);frame();
+        check(run.arena.passages[size_t(link)].locked==expectedLocked,"expected generated room access");const int before=run.keys;
+        auto at=run.arena.doorApproach(link,side);at.y=1.5f;auto screen=GetWorldToScreen(at,game.camera);click(int(screen.x),int(screen.y));
+        for(int n=0;n<1200&&run.room!=target;++n)frame(n%60==0);
+        check(run.room==target&&run.keys==before-int(expectedLocked),"mouse entrance pays only when locked");
+        for(int n=0;n<240;++n)frame(false);
+        run.player.position=run.arena.doorApproach(link,1-side);run.player.position.y=.85f;game.updateCamera(10);frame();key(KEY_E);
+        for(int n=0;n<1200&&run.room!=outside;++n)frame(n%60==0);
+        check(run.room==outside&&run.keys==before-int(expectedLocked),"keyboard return is free");
+        for(int n=0;n<240;++n)frame(false);
+    };
+    check(run.sourceRoomLocks&&run.arena.sourceRoomLocks&&run.keys==0&&run.player.hp==6&&game.cameraZoomPercent()==165,"old preset enables source rules retaining normal player/view");
+    leafShop(run.arena);cross(run.arena.shopRoom,false);cross(run.arena.roomCount()-2,false);
+    check(run.keys==0,"both opening-floor rooms are freely entered with zero keys");capture("artifacts/d10d-free-entrance.png");
+    click(374,642);click(835,143);click(995,189);click(815,328);
+    check(!game.balanceDraft.sourceRoomLocks&&run.sourceRoomLocks&&game.hasPendingMapChanges(),"room rule edit is staged");
+    click(350,407);check(!run.sourceRoomLocks&&!run.arena.sourceRoomLocks,"Apply selects legacy mode without restarting expedition");leafShop(run.arena);
+    game.balanceFile=legacy.string();game.exportBalancePreset();game.rememberBalancePreset();
+    const auto exported=BalancePreset::load(legacy,run.content->fingerprint());check(!exported.sourceRoomLocks&&exported.defaultZoomPercent==165,"export retains mode and view");
+    auto bad=exported.json();const auto at=bad.find("\"source_room_locks\": false");check(at!=bad.npos,"invalid lock fixture");bad.replace(at,std::string("\"source_room_locks\": false").size(),"\"source_room_locks\": 7");
+    const auto invalid=directory/"invalid-locks.json";{std::ofstream out(invalid);out<<bad;}
+    const auto before=game.balancePreset.revision();game.balanceFile=invalid.string();game.perform(Action::LoadBalance);
+    check(!game.error.empty()&&game.balancePreset.revision()==before&&!run.sourceRoomLocks,"invalid policy load is atomic");game.balanceFile=legacy.string();game.perform(Action::LoadBalance);
+    for(int n=0;n<40&&game.keyboardFocus()!=Action::ToggleSourceRoomLocks;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::ToggleSourceRoomLocks,"room rules reachable by keyboard");key(KEY_ENTER);
+    check(game.balanceDraft.sourceRoomLocks&&!run.sourceRoomLocks,"keyboard also stages policy");
+    game.balanceFile=native.string();game.exportBalancePreset();game.rememberBalancePreset();click(350,407);check(run.sourceRoomLocks,"source restored through Apply");
+    game.balanceFile=legacy.string();click(600,605);check(!game.balanceDraft.sourceRoomLocks&&run.sourceRoomLocks&&game.hasPendingMapChanges(),"loading legacy stages without relocking doors");
+    capture("artifacts/d10d-room-locks-panel.png");game.balanceFile=native.string();click(600,605);check(!game.hasPendingMapChanges()&&run.sourceRoomLocks,"source load cancels pending legacy change");
+    game.perform(Action::CloseBalance);game.perform(Action::Resume);
+    run.jumpDebug(run.finalRoom());run.clearRoomDebug();run.floorExitRequested=true;check(run.advanceFloor()&&run.sourceRoomLocks&&run.arena.profile.sourceStage>1,"next floor keeps source lock policy and mapped stage");
+    auto &pickup=run.arena.keys.front();run.jumpDebug(pickup.room);run.clearRoomDebug();run.player.position=run.arena.rooms[size_t(pickup.room)].center;run.player.position.y=.85f;game.updateCamera(10);frame();
+    auto screen=GetWorldToScreen({pickup.position.x,1.2f,pickup.position.z},game.camera);click(int(screen.x),int(screen.y));
+    for(int n=0;n<900&&!pickup.collected;++n)frame(n%30==0);
+    check(pickup.collected&&run.keys==1,"later-floor natural key accessible without paying a lock");
+    leafShop(run.arena);const int shop=run.arena.shopRoom;cross(shop,true);check(run.keys==0,"later shop costs exactly one natural key");
+    for(int link:run.arena.rooms[size_t(shop)].passages) {
+        const auto &p=run.arena.passages[size_t(link)];const int other=p.rooms[0]==shop?p.rooms[1]:p.rooms[0];
+        if(run.arena.rooms[size_t(other)].kind!=RoomKind::Power)check(!p.locked,"visited shop ordinary exits stay open");
+    }
+    capture("artifacts/d10d-later-shop.png");run.finishDebug(false);game.retryExpedition();
+    check(game.run&&game.run->floor==0&&game.run->sourceRoomLocks&&game.run->keys==0&&game.run->player.hp==6,"retry keeps source policy and normal initial inventory");
+    for(const auto &p:game.run->arena.passages)check(!p.locked,"retry restores first-stage free entry");
+    leafShop(game.run->arena);
+    std::filesystem::copy_file(native,"artifacts/d10d-source-preset.json",std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(legacy,"artifacts/d10d-legacy-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.close();renderer.unload();Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.launch(true);
+    check(fresh.run&&fresh.run->sourceRoomLocks&&fresh.cameraZoomPercent()==165,"fresh session restores source mode/view");leafShop(fresh.run->arena);fresh.close();
+    std::cout<<"PASS D10d actual Game/Renderer free first-floor shop/treasure, later natural-key shop, return/revisit, staged mouse/keyboard/Apply, strict export/load/remember, floor/retry/fresh-session\n";
+}
 void keyedDoorInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"doors.save",preset=directory/"doors.json";
     Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="99";
-    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
+    game.loadBalancePreset(source);game.balanceDraft.sourceRoomLocks=false;game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
     check(game.run&&game.error.empty(),"D10c main-game launch");auto &run=*game.run;Renderer renderer;
     const auto frame=[&](bool draw=true){game.update(Tick);BeginDrawing();const auto action=draw?renderer.draw(game):Action::None;EndDrawing();game.perform(action);check(game.error.empty(),"D10c UI errors");};
     const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
@@ -2221,6 +2289,9 @@ int main(int argc, char **argv) {
         if(mode.empty()||mode=="--shooting-balance-only") {
             shootingBalanceInputCheck(directory);
             if(mode=="--shooting-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode=="--room-locks-only") {
+            roomLockInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--keyed-doors-only") {
             keyedDoorInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

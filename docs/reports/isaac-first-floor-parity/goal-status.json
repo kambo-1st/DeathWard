@@ -37,7 +37,7 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Commit accepted D10b/D10c checkpoint, then implement newly selected shop and treasure-room lock placement. Other bulk parity stays paused.",
+  "next_work": "User acknowledged optional single-entrance shops/D10d and requested this commit. Next proposed: revalidate older seed-specific room review fixtures and handoffs, then D11a one named real treasure upgrade. No new implementation selected; bulk parity stays paused.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-12",
     "status": "Ordinary caller/descriptor and direct-entry delivery accepted; next complete-room continuation selected",
@@ -358,7 +358,7 @@
     "historical_review_executable": "/home/kambo/.local/share/deathward/reviews/damage-health-retry-20261108T175053Z/deathward_damage_health_review"
   },
   "enemy_movement_checkpoint": {
-    "status": "D04\u2013D06 movement and Pooter shots enabled, developer-verified and scoped playtest accepted; D07 damage/HP now enabled; full native acceptance open",
+    "status": "D04–D06 movement and Pooter shots enabled, developer-verified and scoped playtest accepted; D07 damage/HP now enabled; full native acceptance open",
     "scope": "encounter roster conversion and native movement verification first",
     "evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/validation.json",
     "corrected_candidate_enabled": true,
@@ -821,5 +821,48 @@
       "god_mode": false
     },
     "human_acceptance_record": "docs/reports/isaac-first-floor-parity/d10c-keyed-doors/human-acceptance.json"
+  },
+  "d10d_room_locks": {
+    "selected": true,
+    "implemented": true,
+    "developer_verified": true,
+    "human_accepted": true,
+    "preset_schema": 28,
+    "prior_commit": "bc1651ec",
+    "report": "docs/reports/isaac-first-floor-parity/d10d-room-locks/README.md",
+    "full_native_acceptance": false,
+    "remaining": [
+      "Special locks, characters and item exceptions; alternate and Greed modes",
+      "Native room counts, eligibility/selection/placement/profile rules beyond this lock decision",
+      "Full factory, animation and physics equivalence",
+      "Browser runtime",
+      "Gameplay-save continuity"
+    ],
+    "native_cases": 864,
+    "ordinary_cases": 576,
+    "generated_floor_cases": 48,
+    "size_route_cases": 9,
+    "game_renderer_modes": 2,
+    "cli_cases": 4,
+    "acceptance_scope": "User acknowledgment of corrected checkpoint; no separately observed new playtest or full native acceptance",
+    "included_in_this_checkpoint": true
+  },
+  "shop_leaf_placement": {
+    "selected": true,
+    "enabled": true,
+    "developer_verified": true,
+    "human_accepted": true,
+    "committed": true,
+    "report": "docs/reports/isaac-first-floor-parity/shop-leaf-placement/README.md",
+    "remaining": [
+      "Revalidate older seed-specific room review fixtures and handoffs",
+      "Broader native generation/profile/physics and gameplay-save continuity"
+    ],
+    "graph_cases": 7168,
+    "generated_floor_cases": 48,
+    "size_route_cases": 9,
+    "game_renderer_modes": 2,
+    "cli_cases": 3,
+    "acceptance_report": "docs/reports/isaac-first-floor-parity/shop-leaf-placement/human-acceptance.json"
   }
 }
