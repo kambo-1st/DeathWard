@@ -89,6 +89,64 @@ void snapshotsAndOverrides() {
         longFuse.step({},1.f/float(hz));check(longFuse.stats.explosions==1,"upper fuse bound preserves partition timing");
     }
 }
+Breakable rock(uint64_t id,float x) {
+    Breakable p;p.id=id;p.room=0;p.paid=true;p.sourceGridIndex=int(id);
+    p.bounds={{x-.3f,0,-.5f},{x+.3f,1.35f,.5f}};p.rewardPosition={x,.85f,0};return p;
 }
-int main() {try {sourceMatrices();countdownAndDamage();snapshotsAndOverrides();std::cout<<"PASS D10a native matrices, clock partitions, source thresholds, actual damage, birth snapshots, dodge, Braid and legacy isolation\n";}
+void rockDemolition() {
+    for(bool shielding:{false,true})for(bool reverse:{false,true}) {
+        auto r=fixture();r.inventoryBombTuning->rocksBlockBlast=shielding;r.moneyPickups.clear();
+        r.arena.breakables={rock(1,1.2f),rock(2,2.5f),rock(3,4.5f)};
+        if(reverse)std::reverse(r.arena.breakables.begin(),r.arena.breakables.end());
+        r.arena.rebuildWalls();
+        check(r.arena.blocked({1.2f,.85f,0},.48f)&&!r.arena.sight(r.player.position,{3,.85f,0}),"intact rocks block movement and ordinary shots");
+        Input shots;shots.fire=true;shots.aim={5,.85f,0};
+        for(int i=0;i<60;++i)r.step(shots);
+        check(std::none_of(r.arena.breakables.begin(),r.arena.breakables.end(),[](const auto &p){return p.destroyed;}),"ordinary shooting cannot demolish plain rock");
+        for(int i=0;i<30;++i)r.step({}); // Let the last bullet hit before isolating blast debris.
+        check(r.placeDynamite(),"ordinary charge admitted at rock barrier");
+        check(r.hazards.back().ordinaryRockBlast==!shielding,"rock policy snapshots on placement");
+        r.inventoryBombTuning->rocksBlockBlast=!shielding;
+        r.player.position={-8,.85f,0};r.particleBursts.clear();
+        for(int i=0;i<92;++i)r.step({});
+        for(const auto &p:r.arena.breakables)
+            check(p.destroyed==(p.id==1||(!shielding&&p.id==2)),"one charge resolves nearby rocks without order dependence; live edits cannot alter lit charge");
+        check(r.stats.explosions==1&&r.dynamite==2&&r.player.hp==6,"one resource spent, safe retreat and one detonation");
+        check(r.moneyPickups.empty(),"source rocks do not add custom coin loot");
+        check(!r.arena.blocked({1.2f,.85f,0},.48f)&&r.arena.blocked({4.5f,.85f,0},.48f),"collision disappears only for destroyed rocks");
+        check(std::count_if(r.particleBursts.begin(),r.particleBursts.end(),[](const auto &p){return p.kind==ParticleEffect::Stone;})==(shielding?1:2),
+              "each paid source rock emits exactly one destruction burst");
+        const auto destroyed=std::count_if(r.arena.breakables.begin(),r.arena.breakables.end(),[](const auto &p){return p.destroyed;});
+        r.enterRoom(1);r.enterRoom(0);
+        check(std::count_if(r.arena.breakables.begin(),r.arena.breakables.end(),[](const auto &p){return p.destroyed;})==destroyed&&r.moneyPickups.empty(),"revisit retains destroyed collision and no duplicate loot");
+    }
+    for(bool structural:{false,true}) {
+        auto r=fixture();r.arena.breakables={rock(1,2.5f)};
+        if(structural)r.arena.boundaryWalls.push_back({{1,0,-2},{1.5f,3,2}});
+        else {auto seam=rock(2,1.2f);seam.kind=BreakableKind::OreSeam;r.arena.breakables.push_back(seam);}
+        r.arena.rebuildWalls();check(r.placeDynamite(),"shielding fixture charge");r.player.position={-8,.85f,0};
+        for(int i=0;i<92;++i)r.step({});
+        check(!r.arena.breakables.front().destroyed,"structural walls and unselected prop types retain shielding");
+    }
+}
+void nativeRockLines() {
+    const auto path=std::filesystem::path(__FILE__).parent_path().parent_path()/
+        "docs/reports/isaac-first-floor-parity/d10b-rock-demolition/source/native-lines.csv";
+    std::ifstream in(path);check(bool(in),"native rock-line evidence available");std::string line;std::getline(in,line);int cases=0;
+    while(std::getline(in,line)) {
+        std::replace(line.begin(),line.end(),',',' ');std::istringstream row(line);
+        std::string name;int kind,collision,layers,clear;float x,y,tx,ty;
+        row>>name>>kind>>collision>>layers>>x>>y>>tx>>ty>>clear;check(bool(row),"native rock-line row");
+        Arena a;
+        for(int col=7;col<7+layers;++col)for(int r=1;r<8;++r) {
+            Box box{{float(col*40+20),0,float(r*40+100)},{float(col*40+60),2,float(r*40+140)}};
+            if(kind==15)a.boundaryWalls.push_back(box);
+            if(kind==2||kind==3){Breakable p;p.bounds=box;p.kind=kind==2?BreakableKind::CrackedRock:BreakableKind::PowderBarrel;a.breakables.push_back(p);}
+        }
+        check(a.ordinaryRockBlastClear({x,.85f,y},{tx,.85f,ty})==bool(clear),"adapted ordinary-rock/wall classification matches native CheckLine matrix");++cases;
+    }
+    check(cases==32,"all native rock-line comparisons consumed");
+}
+}
+int main() {try {sourceMatrices();countdownAndDamage();snapshotsAndOverrides();nativeRockLines();rockDemolition();std::cout<<"PASS D10a and D10b native matrices, timing, damage, snapshots, rock demolition/shielding/debris/revisit, dodge, Braid and legacy isolation\n";}
 catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

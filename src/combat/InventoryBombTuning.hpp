@@ -13,7 +13,8 @@ struct InventoryBombTuning {
     static constexpr float WorldPerSourceCoordinate=11.f/260.f;
     float fuseMultiplier=1, radiusMultiplier=1, damage=SourceDamage;
     int selfDamageHalfHearts=-1; // -1: source amount from blast damage; 0+: explicit testing override.
-    bool custom() const {return fuseMultiplier!=1||radiusMultiplier!=1||damage!=SourceDamage||selfDamageHalfHearts!=-1;}
+    bool rocksBlockBlast=false; // Testing override: retain historical rock-to-rock shielding.
+    bool custom() const {return rocksBlockBlast||fuseMultiplier!=1||radiusMultiplier!=1||damage!=SourceDamage||selfDamageHalfHearts!=-1;}
     void validate() const {
         if(!std::isfinite(fuseMultiplier)||fuseMultiplier<.25f||fuseMultiplier>4||
            !std::isfinite(radiusMultiplier)||radiusMultiplier<.25f||radiusMultiplier>3||

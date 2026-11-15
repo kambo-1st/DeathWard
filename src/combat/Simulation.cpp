@@ -159,6 +159,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     next.spiderMovementMultiplier=spiderMovementMultiplier;
     next.pooterTuning=pooterTuning;
     next.inventoryBombTuning=inventoryBombTuning;
+    next.keyedDoorCost=keyedDoorCost;
     next.bombClearRewards=bombClearRewards;next.keyClearRewards=keyClearRewards;next.chestClearRewards=chestClearRewards;next.coinClearRewards=coinClearRewards;next.redHeartClearRewards=redHeartClearRewards;next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
     next.audioEpoch=audioEpoch+1;next.checkpointNeeded=true;
     *this=std::move(next); // Same expedition ID, seed, timer and player; no campaign restart/consequences.
@@ -173,6 +174,7 @@ bool Simulation::advanceFloor() {
     next.spiderMovementMultiplier=spiderMovementMultiplier;
     next.pooterTuning=pooterTuning;
     next.inventoryBombTuning=inventoryBombTuning;
+    next.keyedDoorCost=keyedDoorCost;
     next.bombClearRewards=bombClearRewards;next.keyClearRewards=keyClearRewards;next.chestClearRewards=chestClearRewards;next.coinClearRewards=coinClearRewards;next.redHeartClearRewards=redHeartClearRewards;next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
     const auto spawn=next.player;
     next.player=player;next.player.position=spawn.position;next.player.aim=spawn.aim;next.player.facing=spawn.facing;
@@ -458,31 +460,51 @@ void Simulation::collectKeys() {
     }
 }
 bool Simulation::useDoor(int passage, int side) {
-    if (passage < 0 || passage >= int(arena.passages.size()) || side < 0 || side > 1)
+    if (dead||finished||shopOpen||rewardOpen||player.totalHealth()<=0||
+        passage < 0 || passage >= int(arena.passages.size()) || side < 0 || side > 1)
         return false;
     auto &door = arena.passages[size_t(passage)];
-    if (distance(player.position, arena.doorApproach(passage, side)) > 3 || !roomClear || door.sealed[0] ||
-        door.sealed[1]) {
+    if(door.rooms[size_t(side)]!=room)return false;
+    if(!roomClear||door.sealed[0]||door.sealed[1]) {
         announce("Clear the room before leaving.", 2);
         return false;
     }
+    auto approach=arena.doorApproach(passage,side);approach.y=player.position.y;
+    if(distance(player.position,approach)>3||!arena.clear(player.position,approach,.48f))return false;
     if (door.locked) {
-        if (keys == 0) {
-            announce("A key is needed. Search the open passages.", 3);
+        if(keyedDoorCost<0||keyedDoorCost>5)return false;
+        if (keys < keyedDoorCost) {
+            announce(std::to_string(keyedDoorCost)+(keyedDoorCost==1?" key needed.":" keys needed.")+" Search the open passages.", 3);
             return false;
         }
-        --keys;
+        // Prepare the opened collision and route before spending anything.
+        // Canyon navigation is an adaptation: an unusable crossing must not
+        // consume a key or leave a half-applied unlock.
+        auto opened=arena;opened.passages[size_t(passage)].locked=false;opened.rebuildWalls();
+        auto target=opened.doorApproach(passage,1-side);target.y=player.position.y;
+        auto route=opened.path(player.position,target,.48f);
+        if(route.empty()||distance(route.back(),target)>.05f) {
+            announce("The passage is blocked. No key spent.",3);return false;
+        }
+        keys-=keyedDoorCost;
+        door.locked=false;
+        arena.walls.swap(opened.walls);arena.flightWalls.swap(opened.flightWalls);
+        cancelMove();movePath_.swap(route);
+        checkpointNeeded=true;
         audioCues.push(AudioCueKind::Door, player.position);
-        door.locked = false;
-        arena.rebuildWalls();
+        announce(keyedDoorCost==0?"Door unlocked. No key spent.":
+                 "Door unlocked. "+std::to_string(keyedDoorCost)+(keyedDoorCost==1?" key spent.":" keys spent."),2);
+        return true;
     }
     requestMove(arena.doorApproach(passage, 1 - side),false);
     return true;
 }
 void Simulation::requestDoor(int passage, int side) {
-    if (passage < 0 || passage >= int(arena.passages.size()) || side < 0 || side > 1)
+    if (dead||finished||shopOpen||rewardOpen||player.totalHealth()<=0||
+        passage < 0 || passage >= int(arena.passages.size()) || side < 0 || side > 1)
         return;
     const auto &door = arena.passages[size_t(passage)];
+    if(door.rooms[size_t(side)]!=room)return;
     if (!roomClear || door.sealed[0] || door.sealed[1]) {
         announce("Clear the room before leaving.", 2);
         return;
@@ -729,7 +751,7 @@ void Simulation::interact() {
     }
     for (size_t i = 0; i < arena.passages.size(); ++i)
         for (int side = 0; side < 2; ++side)
-            if (distance(player.position, arena.doorApproach(int(i), side)) < 2.8f) {
+            if (arena.passages[i].rooms[size_t(side)]==room&&distance(player.position, arena.doorApproach(int(i), side)) < 2.8f) {
                 useDoor(int(i), side);
                 return;
             }

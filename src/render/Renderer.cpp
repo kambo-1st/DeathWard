@@ -2246,8 +2246,9 @@ Action Renderer::balancePanel(const Game &game) {
     if(button(Action::BalanceCombatTab,"COMBAT",795,128,90,30,game.balanceCombatOpen))return Action::BalanceCombatTab;
     if(button(Action::BalanceEnemiesTab,"ENEMIES",905,128,170,30,game.balanceEnemiesOpen))return Action::BalanceEnemiesTab;
     if(game.balanceCombatOpen) {
-        if(button(Action::BalanceDamageHealthTab,"DAMAGE / HP",650,175,200,28,!game.balanceBombsOpen))return Action::BalanceDamageHealthTab;
-        if(button(Action::BalanceBombsTab,"DYNAMITE",875,175,200,28,game.balanceBombsOpen))return Action::BalanceBombsTab;
+        if(button(Action::BalanceDamageHealthTab,"DAMAGE / HP",560,175,165,28,!game.balanceBombsOpen&&!game.balanceDoorsOpen))return Action::BalanceDamageHealthTab;
+        if(button(Action::BalanceBombsTab,"DYNAMITE",740,175,165,28,game.balanceBombsOpen))return Action::BalanceBombsTab;
+        if(button(Action::BalanceDoorsTab,"DOORS",920,175,155,28,game.balanceDoorsOpen))return Action::BalanceDoorsTab;
     }
     if(game.balanceEnemiesOpen) {
         if(button(Action::BalanceChasersTab,"GAPER / SPIDER",645,175,240,28,!game.balancePooterOpen))return Action::BalanceChasersTab;
@@ -2298,6 +2299,18 @@ Action Renderer::balancePanel(const Game &game) {
         const auto next=game.nextBalancePreset.value_or(BalancePreset{});
         text("Next: Luck "+decimal(next.playerLuck)+" / appear "+decimal(next.redHeartAppearanceSpeed)+"x",795,478,12,Teal);
         }
+    } else if(game.balanceCombatOpen&&game.balanceDoorsOpen) {
+        const auto cost=game.balancePreset.keyedDoorCost;
+        text("KEYED DOORS",205,185,22,Gold);
+        text("KEYS PER LOCK",205,242,18,Paper);
+        text(cost==0?"FREE":std::to_string(cost),480,232,28,Paper);
+        if(button(Action::DoorKeyCostDown,"- 1",795,224,130,40))return Action::DoorKeyCostDown;
+        if(button(Action::DoorKeyCostUp,"+ 1",945,224,130,40))return Action::DoorKeyCostUp;
+        text("Reference: 1 key. Other costs, including free, are testing overrides.",205,290,14,Teal);
+        text("Applies when the next door unlocks, including a queued approach.",205,325,14,Paper);
+        text("Opened doors stay open. Revisiting never spends another key.",205,359,14,Paper);
+        text("Blocked or sealed passages keep your keys and remain locked.",205,393,14,Muted);
+        if(button(Action::ResetKeyedDoors,"RESET KEY COST",205,438,320,40))return Action::ResetKeyedDoors;
     } else if(game.balanceCombatOpen&&game.balanceBombsOpen) {
         const auto &t=game.balancePreset.inventoryBombs;
         text("ORDINARY DYNAMITE",205,185,22,Gold);
@@ -2312,9 +2325,10 @@ Action Renderer::balancePanel(const Game &game) {
         action=row("ENEMY DAMAGE",decimal(t.damage),324,Action::BombDamageDown,Action::BombDamageUp,"5");if(action!=Action::None)return action;
         action=row("SELF DAMAGE",(t.selfDamageHalfHearts<0?"AUTO / ":"")+decimal(float(t.selfDamage())*.5f)+" HEARTS",376,Action::BombSelfDamageDown,Action::BombSelfDamageUp,"0.5");if(action!=Action::None)return action;
         text("New charges only. Lit charges keep their selected settings.",205,429,14,Teal);
-        text("Blast size follows damage thresholds. Braid keeps its own behavior.",205,449,13,Muted);
+        if(button(Action::ToggleRockBlastShielding,t.rocksBlockBlast?"ROCK SHIELDING: ON":"ROCK SHIELDING: OFF",650,449,425,30))return Action::ToggleRockBlastShielding;
+        text("Off: nearby plain rocks break together. Walls still block.",205,453,12,Muted);
         if(button(Action::ResetInventoryBombs,"RESET DYNAMITE",205,472,320,30))return Action::ResetInventoryBombs;
-        text("Self damage: Auto follows damage; 0 is available for testing.",545,482,12,Teal);
+        text("Rock shielding: On restores the old rock-to-rock protection.",545,486,12,Teal);
     } else if(game.balanceCombatOpen) {
         const auto &p=game.balancePreset;
         text("DAMAGE AND ENEMY HEALTH",205,185,22,Gold);

@@ -245,6 +245,7 @@ void Simulation::updateHazards(float dt) {
             blast.radius = hazard.radius;
             blast.areaDamage = true;
             blast.demolition = Demolition::SpentDynamite;
+            blast.ordinaryRockBlast=hazard.ordinaryRockBlast;
             blast.ignoreAdaptiveArmor=true;
             blast.playerDamage = hazard.damage;
             emit(blast, hazard.context);

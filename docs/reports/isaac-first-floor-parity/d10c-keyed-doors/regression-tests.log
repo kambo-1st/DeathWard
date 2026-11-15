@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  29: inventory_bomb_tuning
+1/2 Test  #29: inventory_bomb_tuning ............   Passed    0.32 sec
+    Start 169: generated_dungeons
+2/2 Test #169: generated_dungeons ...............   Passed   23.24 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =  23.56 sec

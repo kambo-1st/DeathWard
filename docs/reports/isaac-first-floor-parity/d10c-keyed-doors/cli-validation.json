@@ -1,0 +1,23 @@
+[
+  {
+    "case": "schema5",
+    "passed": true,
+    "key_cost": 1,
+    "zoom": 165,
+    "room": 6
+  },
+  {
+    "case": "schema26",
+    "passed": true,
+    "key_cost": 1,
+    "zoom": 165,
+    "room": 6
+  },
+  {
+    "case": "schema27",
+    "passed": true,
+    "key_cost": 3,
+    "zoom": 165,
+    "room": 5
+  }
+]

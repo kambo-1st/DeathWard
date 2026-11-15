@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-15",
+  "command": [
+    "./build/deathward",
+    "--expedition",
+    "--seed",
+    "129",
+    "--review-source-room",
+    "32",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/d10b-rock-demolition/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "source_template": 32,
+  "displayed_room": 2,
+  "seed": 129,
+  "zoom": 165,
+  "health_half_hearts": 6,
+  "dynamite": 3,
+  "god_mode": false,
+  "rock_shielding": false,
+  "user_review": "accepted: it works move to a next thing",
+  "next_selected": "D10c now enabled/developer-verified and scoped human-accepted"
+}

@@ -201,8 +201,8 @@ int main() {
         BalancePreset custom{.8f,"fixture-content"};custom.save(file);
         auto appearance=custom;appearance.redHeartAppearanceSpeed=.5f;
         auto layouts=custom;layouts.roomHeartLayouts=2;
-        for(float fuse:{.25f,1.f,4.f})for(float radius:{.25f,1.f,3.f})for(int self:{-1,0,1,12}) {
-            auto p=custom;p.inventoryBombs={fuse,radius,175,self};p.coinClearRewards=false;p.save(file);
+        for(float fuse:{.25f,1.f,4.f})for(float radius:{.25f,1.f,3.f})for(int self:{-1,0,1,12})for(bool shielding:{false,true}) {
+            auto p=custom;p.inventoryBombs={fuse,radius,175,self,shielding};p.coinClearRewards=false;p.save(file);
             check(BalancePreset::load(file,"fixture-content").revision()==p.revision(),"D10a independent controls and zero/Auto round-trip");
         }
         for(const auto name:{"preset-v24-clear-off.json","preset-v24-layout-off.json"}) {
@@ -210,9 +210,31 @@ int main() {
                 "docs/reports/isaac-first-floor-parity/d09d-bombs"/name,"2ccd5b1c274a302e");
             check(!p.inventoryBombs.custom()&&p.defaultZoomPercent==165&&p.shotSpeed==.9f,"schema24 adds D10a baseline, retaining accepted preset");
         }
+        const auto v25=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/d10a-dynamite/custom-test-preset.json","2ccd5b1c274a302e");
+        check(!v25.inventoryBombs.rocksBlockBlast&&v25.inventoryBombs.damage==110&&v25.defaultZoomPercent==165,"schema25 retains custom bomb/view and adds baseline rock shielding");
+        for(int cost=0;cost<=5;++cost) {
+            auto p=v5;p.keyedDoorCost=cost;p.save(file);
+            const auto q=BalancePreset::load(file,"2ccd5b1c274a302e");
+            check(q.keyedDoorCost==cost&&q.revision()==p.revision()&&q.defaultZoomPercent==165,"key cost roundtrip preserves accepted settings");
+        }
+        const auto v26=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/d10b-rock-demolition/custom-test-preset.json","2ccd5b1c274a302e");
+        check(v26.keyedDoorCost==1&&v26.inventoryBombs.rocksBlockBlast&&v26.defaultZoomPercent==165,"schema26 migrates one-key baseline retaining bomb/view settings");
+        custom.save(file);
+        auto costly=custom;costly.keyedDoorCost=3;
         const auto valid=custom.json();
         auto customBomb=custom;customBomb.inventoryBombs={1.5f,1.25f,150,0};
         std::vector<std::string> invalid{
+            replaceOne(valid,"ordinary-one-key-v1","unsupported-door-policy"),
+            replaceOne(valid,"\"keyed_door_cost\": 1","\"keyed_door_cost\": 0"),
+            replaceOne(costly.json(),"\"keyed_door_cost\": 3","\"keyed_door_cost\": -1"),
+            replaceOne(costly.json(),"\"keyed_door_cost\": 3","\"keyed_door_cost\": 6"),
+            replaceOne(costly.json(),"\"keyed_door_cost\": 3","\"keyed_door_cost\": 1.5"),
+            replaceOne(costly.json(),"\"keyed_door_cost\": 3","\"keyed_door_cost\": true"),
+            replaceOne(costly.json(),"\"keyed_door_cost\": 3","\"keyed_door_cost\": 2"),
+            replaceOne(valid,"\"rocks_block_blast\": false","\"rocks_block_blast\": 0"),
+            replaceOne(valid,"\"rocks_block_blast\": false","\"rocks_block_blast\": true"),
             replaceOne(valid,"source-countdown-shooting-space-v1","invalid-bomb-model"),
             replaceOne(valid,"\"self_damage_half_hearts\": -1","\"self_damage_half_hearts\": -0.5"),
             replaceOne(valid,"\"damage\": 100","\"damage\": 101"),
@@ -248,11 +270,11 @@ int main() {
             replaceOne(valid,"\"chest_clear_rewards\": true","\"chest_clear_rewards\": 1"),
             replaceOne(valid,"pickup-batches-adapted-v1","unverified-chest-policy"),
             valid+"garbage", valid.substr(0,valid.size()-3),
-            replaceOne(valid,"\"schema_version\": 25","\"schema_version\": 26"),
+            replaceOne(valid,"\"schema_version\": 27","\"schema_version\": 28"),
             replaceOne(valid,"\"red_heart_appearance_speed\": 1","\"red_heart_appearance_speed\": 2"),
             replaceOne(valid,"appear33-drop25-collect12-30hz-v1","unverified-timing"),
-            replaceOne(valid,"\"schema_version\": 25","\"schema_version\": 25, \"schema_version\": 25"),
-            replaceOne(valid,"d10a-inventory-bombs-v25","future-contract"),
+            replaceOne(valid,"\"schema_version\": 27","\"schema_version\": 27, \"schema_version\": 27"),
+            replaceOne(valid,"d10c-keyed-doors-v27","future-contract"),
             replaceOne(valid,"fixture-content","different-content"),
             replaceOne(valid,"Repentance 1.7.9b","Repentance 1.7.9a"),
             replaceOne(valid,"\"walking_pace_at_speed_one\": 4.8","\"walking_pace_at_speed_one\": 30"),

@@ -1,0 +1,10 @@
+[ 11%] Built target glfw
+[ 15%] Built target raylib
+[ 80%] Built target deathward_core
+[ 84%] Built target deathward_skinning
+[ 84%] Built target deathward_cloth
+[ 88%] Built target deathward_particles
+[ 92%] Built target deathward_mission_lighting
+[ 92%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward
+[100%] Built target deathward

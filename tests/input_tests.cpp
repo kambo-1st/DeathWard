@@ -373,7 +373,7 @@ void spiderBalanceInputCheck(const std::filesystem::path &directory) {
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/
         "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"spider.save",file=directory/"spider-export.json";
-    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="0";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="99";
     game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
     check(game.run&&game.run->spiderMovementMultiplier==1&&game.run->gaperMovementMultiplier==1,"main Game enables both selected ordinary movement consumers");
     auto &run=*game.run;run.godMode=true;Renderer renderer;
@@ -436,6 +436,69 @@ void spiderBalanceInputCheck(const std::filesystem::path &directory) {
           "fresh Game restores independent enemy and accepted user settings");fresh.close();
     std::cout<<"PASS D05 actual Game encounter, UI mouse/keyboard, live edit, export/reload/rejection, map/floor/retry/fresh-session persistence\n";
 }
+void keyedDoorInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"doors.save",preset=directory/"doors.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="99";
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
+    check(game.run&&game.error.empty(),"D10c main-game launch");auto &run=*game.run;Renderer renderer;
+    const auto frame=[&](bool draw=true){game.update(Tick);BeginDrawing();const auto action=draw?renderer.draw(game):Action::None;EndDrawing();game.perform(action);check(game.error.empty(),"D10c UI errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int k){mouseEvent(KeyDown,k);frame();mouseEvent(KeyUp,k);frame();};
+    const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"door screenshot");UnloadImage(im);EndDrawing();};
+    check(run.keyedDoorCost==1&&run.keys==0&&run.player.hp==6&&!run.godMode&&game.cameraZoomPercent()==165,"old preset retains baseline door cost, health and view");
+    int index=-1,side=-1,keyIndex=-1;
+    for(size_t i=0;i<run.arena.passages.size();++i) {
+        const auto &p=run.arena.passages[i];if(!p.locked)continue;
+        const int s=run.arena.rooms[size_t(p.rooms[0])].kind==RoomKind::Power?1:0;
+        for(size_t k=0;k<run.arena.keys.size();++k)if(run.arena.keys[k].room==p.rooms[size_t(s)]){index=int(i);side=s;keyIndex=int(k);break;}
+        if(index>=0)break;
+    }
+    check(index>=0,"natural door with key in its outside room");
+    const int outside=run.arena.passages[size_t(index)].rooms[size_t(side)],inside=run.arena.passages[size_t(index)].rooms[size_t(1-side)];
+    // Combat is cleared only to isolate input assertions; the human launch uses normal combat.
+    run.jumpDebug(outside);run.clearRoomDebug();run.player.position=run.arena.doorApproach(index,side);run.player.position.y=.85f;game.updateCamera(10);frame();
+    key(KEY_E);check(run.arena.passages[size_t(index)].locked&&run.keys==0,"E without a key does not open or spend");
+    auto &pickup=run.arena.keys[size_t(keyIndex)];run.player.position=run.arena.rooms[size_t(outside)].center;run.player.position.y=.85f;game.updateCamera(10);frame();
+    auto screen=GetWorldToScreen({pickup.position.x,1.2f,pickup.position.z},game.camera);click(int(screen.x),int(screen.y));
+    for(int n=0;n<900&&!pickup.collected;++n)frame(n%30==0);
+    check(pickup.collected&&run.keys==1,"mouse collects actual naturally generated key");
+    for(int n=0;n<240;++n)frame(false);run.player.position=run.arena.doorApproach(index,side);run.player.position.y=.85f;game.updateCamera(10);frame();
+    auto at=run.arena.doorApproach(index,side);at.y=1.5f;screen=GetWorldToScreen(at,game.camera);click(int(screen.x),int(screen.y));
+    for(int n=0;n<900&&run.room!=inside;++n)frame(n%30==0);
+    check(!run.arena.passages[size_t(index)].locked&&run.keys==0&&run.room==inside,"mouse pays one key and physically enters generated room");
+    capture("artifacts/d10c-open-door.png");
+    for(int n=0;n<240;++n)frame(false);run.player.position=run.arena.doorApproach(index,1-side);run.player.position.y=.85f;game.updateCamera(10);frame();key(KEY_E);
+    for(int n=0;n<900&&run.room!=outside;++n)frame(n%30==0);
+    check(run.room==outside&&run.keys==0&&!run.arena.passages[size_t(index)].locked&&pickup.collected,"keyboard return is free and cannot respawn key");
+    for(int n=0;n<240;++n)frame(false);click(374,642);click(835,143);click(995,189);
+    check(game.balanceDoorsOpen&&game.balanceCombatOpen,"mouse opens COMBAT DOORS");click(1000,244);
+    check(run.keyedDoorCost==2,"mouse raises live cost by one");
+    for(int n=0;n<40&&game.keyboardFocus()!=Action::DoorKeyCostUp;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::DoorKeyCostUp,"door controls reachable by keyboard");key(KEY_ENTER);
+    check(run.keyedDoorCost==3,"keyboard edits next unlock cost");
+    game.setRoomSize(1.11f);click(330,605);click(900,605);capture("artifacts/d10c-doors-panel.png");
+    const auto exported=BalancePreset::load(preset,run.content->fingerprint());
+    check(exported.keyedDoorCost==3&&exported.roomSizeScale==1.11f&&exported.defaultZoomPercent==165&&run.roomSizeScale==1.1f,"export includes cost and staged map while preserving view");
+    auto bad=exported.json();auto pos=bad.find("\"keyed_door_cost\": 3");check(pos!=bad.npos,"invalid cost fixture");bad.replace(pos,20,"\"keyed_door_cost\": 6");
+    const auto invalid=directory/"bad-doors.json";{std::ofstream out(invalid);out<<bad;}
+    const auto live=game.balancePreset.revision(),draft=game.balanceDraft.revision();game.balanceFile=invalid.string();game.perform(Action::LoadBalance);
+    check(!game.error.empty()&&game.balancePreset.revision()==live&&game.balanceDraft.revision()==draft&&run.keyedDoorCost==3,"invalid cost load rejected without partial application");
+    game.balanceFile=preset.string();game.perform(Action::LoadBalance);check(game.error.empty(),"valid load after invalid cost");
+    click(350,455);check(run.keyedDoorCost==1&&!run.arena.passages[size_t(index)].locked,"reset keeps opened door open");
+    click(600,605);check(run.keyedDoorCost==3&&game.hasPendingMapChanges(),"load applies cost while staging map");
+    game.applyMapChanges();check(run.keyedDoorCost==3&&run.roomSizeScale==1.11f,"map regeneration retains key cost");
+    game.perform(Action::CloseBalance);game.perform(Action::Resume);
+    run.jumpDebug(run.finalRoom());run.clearRoomDebug();run.floorExitRequested=true;
+    check(run.advanceFloor()&&run.keyedDoorCost==3,"next floor retains key cost");
+    run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->keyedDoorCost==3&&game.run->player.hp==6&&game.run->keys==0,"retry retains cost and starting inventory");
+    std::filesystem::copy_file(preset,"artifacts/d10c-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.launch(true);
+    check(fresh.run&&fresh.run->keyedDoorCost==3&&fresh.cameraZoomPercent()==165&&fresh.run->roomSizeScale==1.11f,"fresh session restores remembered cost/map/view");fresh.close();
+    std::cout<<"PASS D10c actual Game/Renderer natural key mouse collection/unlock, keyboard return, cost controls, atomic invalid load, reset/export/load/remember/map/floor/retry/fresh-session\n";
+}
 void dynamiteBalanceInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
@@ -451,9 +514,11 @@ void dynamiteBalanceInputCheck(const std::filesystem::path &directory) {
           "old accepted preset migrates with D10a references and normal hearts/view");
     game.updateCamera(10);frame();key(KEY_B);
     check(run.hazards.size()==1&&run.hazards[0].tunedInventoryBomb&&run.dynamite==2,"B creates calibrated ordinary charge");
-    click(374,642);click(835,143);click(975,189);check(game.balanceBombsOpen&&game.balanceCombatOpen,"COMBAT DYNAMITE subtab opens");
+    click(374,642);click(835,143);click(820,189);check(game.balanceBombsOpen&&game.balanceCombatOpen,"COMBAT DYNAMITE subtab opens");
     const auto birth=run.hazards[0];
     click(1000,240);click(850,292);click(1000,344);click(1000,396);
+    click(850,463);
+    check(run.inventoryBombTuning->rocksBlockBlast&&run.hazards[0].ordinaryRockBlast,"rock shielding toggle applies only to new charges");
     const auto tune=*run.inventoryBombTuning;
     check(tune.fuseMultiplier==1.05f&&tune.radiusMultiplier==.95f&&tune.damage==105&&tune.selfDamageHalfHearts==0,
           "mouse edits four independent bomb controls, including zero self damage");
@@ -463,9 +528,9 @@ void dynamiteBalanceInputCheck(const std::filesystem::path &directory) {
     check(game.keyboardFocus()==Action::BombDamageUp,"new controls enter keyboard navigation");key(KEY_ENTER);
     check(run.inventoryBombTuning->damage==110,"keyboard edits next charge damage");
     game.setRoomSize(1.11f);check(game.hasPendingMapChanges()&&run.roomSizeScale==1.1f,"map edit still waits for Apply");
-    click(330,605);click(900,605);capture("artifacts/d10a-dynamite-panel.png");
+    click(330,605);click(900,605);capture("artifacts/d10b-dynamite-panel.png");
     const auto exported=BalancePreset::load(preset,run.content->fingerprint());
-    check(exported.inventoryBombs.damage==110&&exported.inventoryBombs.selfDamageHalfHearts==0&&exported.roomSizeScale==1.11f&&exported.defaultZoomPercent==165,
+    check(exported.inventoryBombs.rocksBlockBlast&&exported.inventoryBombs.damage==110&&exported.inventoryBombs.selfDamageHalfHearts==0&&exported.roomSizeScale==1.11f&&exported.defaultZoomPercent==165,
           "export and remember include all bomb edits, staged map and accepted view");
     const auto invalid=directory/"invalid-dynamite.json";auto json=exported.json();const auto at=json.find("\"fuse_multiplier\": 1.05");check(at!=json.npos,"invalid bomb preset fixture");json.replace(at,std::string("\"fuse_multiplier\": 1.05").size(),"\"fuse_multiplier\": 0.01");
     {std::ofstream out(invalid);out<<json;}
@@ -476,16 +541,16 @@ void dynamiteBalanceInputCheck(const std::filesystem::path &directory) {
     click(600,605);check(run.inventoryBombTuning->damage==110&&game.hasPendingMapChanges()&&run.hazards[0].damage==birth.damage,"load preserves lit charge and map boundary");
     game.applyMapChanges();check(run.hazards.empty()&&run.inventoryBombTuning->damage==110&&run.roomSizeScale==1.11f&&run.player.hp==6,"testing Apply clears old hazards and retains new bomb configuration");
     game.perform(Action::CloseBalance);game.perform(Action::Resume);run.dynamiteCooldown=0;key(KEY_B);
-    check(run.hazards.size()==1&&run.hazards[0].damage==0&&std::abs(run.hazards[0].blastDamage-352)<.001f&&std::abs(run.hazards[0].delay-46.f/30*1.05f)<.001f,"new B placement consumes loaded snapshot");
-    capture("artifacts/d10a-new-charge.png");
+    check(run.hazards.size()==1&&!run.hazards[0].ordinaryRockBlast&&run.hazards[0].damage==0&&std::abs(run.hazards[0].blastDamage-352)<.001f&&std::abs(run.hazards[0].delay-46.f/30*1.05f)<.001f,"new B placement consumes loaded snapshot");
+    capture("artifacts/d10b-new-charge.png");
     run.jumpDebug(run.finalRoom());run.clearRoomDebug();run.floorExitRequested=true;
-    check(run.advanceFloor()&&run.inventoryBombTuning->damage==110,"next floor retains bomb configuration");
+    check(run.advanceFloor()&&run.inventoryBombTuning->rocksBlockBlast&&run.inventoryBombTuning->damage==110,"next floor retains bomb configuration");
     run.finishDebug(false);game.retryExpedition();
-    check(game.run&&game.run->inventoryBombTuning->damage==110&&game.run->inventoryBombTuning->selfDamageHalfHearts==0&&game.run->player.hp==6,"death retry retains edits with normal health");
-    std::filesystem::copy_file(preset,"artifacts/d10a-preset.json",std::filesystem::copy_options::overwrite_existing);
+    check(game.run&&game.run->inventoryBombTuning->rocksBlockBlast&&game.run->inventoryBombTuning->damage==110&&game.run->inventoryBombTuning->selfDamageHalfHearts==0&&game.run->player.hp==6,"death retry retains edits with normal health");
+    std::filesystem::copy_file(preset,"artifacts/d10b-preset.json",std::filesystem::copy_options::overwrite_existing);
     game.close();renderer.unload();
     Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.launch(true);
-    check(fresh.run&&fresh.run->inventoryBombTuning->damage==110&&fresh.run->inventoryBombTuning->fuseMultiplier==1.05f&&fresh.cameraZoomPercent()==165,"fresh session loads remembered bomb settings");fresh.close();
+    check(fresh.run&&fresh.run->inventoryBombTuning->rocksBlockBlast&&fresh.run->inventoryBombTuning->damage==110&&fresh.run->inventoryBombTuning->fuseMultiplier==1.05f&&fresh.cameraZoomPercent()==165,"fresh session loads remembered bomb settings");fresh.close();
     std::cout<<"PASS D10a actual Game/Renderer mouse and keyboard, birth snapshots, reset, rejected load, staged Apply, export/load/remember, floor/retry/fresh-session\n";
 }
 void bombInputCheck(const std::filesystem::path &directory) {
@@ -2156,6 +2221,9 @@ int main(int argc, char **argv) {
         if(mode.empty()||mode=="--shooting-balance-only") {
             shootingBalanceInputCheck(directory);
             if(mode=="--shooting-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode=="--keyed-doors-only") {
+            keyedDoorInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--dynamite-balance-only") {
             dynamiteBalanceInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

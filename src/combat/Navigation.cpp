@@ -362,8 +362,9 @@ std::string Simulation::nearbyInteraction() const {
     if (roomClear)
         for (size_t i = 0; i < arena.passages.size(); ++i)
             for (int side = 0; side < 2; ++side)
-                if (distance(player.position, arena.doorApproach(int(i), side)) < 2.8f)
-                    return arena.passages[i].locked ? "UNLOCK (1 KEY)" : "ENTER";
+                if (arena.passages[i].rooms[size_t(side)]==room&&distance(player.position, arena.doorApproach(int(i), side)) < 2.8f)
+                    return arena.passages[i].locked ? keyedDoorCost==0?"UNLOCK (FREE)":
+                        "UNLOCK ("+std::to_string(keyedDoorCost)+(keyedDoorCost==1?" KEY)":" KEYS)") : "ENTER";
     return {};
 }
 std::string Simulation::demolitionWarning() const {

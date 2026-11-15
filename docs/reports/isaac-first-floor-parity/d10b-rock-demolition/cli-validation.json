@@ -1,0 +1,46 @@
+[
+  {
+    "name": "schema25",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--expedition",
+      "--seed",
+      "129",
+      "--review-source-room",
+      "32",
+      "--mute",
+      "--save",
+      "/tmp/deathward-d10b-cli-d51v686q/schema25.save",
+      "--balance-preset",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d10a-dynamite/custom-test-preset.json"
+    ],
+    "passed": true,
+    "startup": [
+      "BALANCE speed=1 room_size=1.11 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1.05 bomb_radius=0.95 bomb_damage=110 bomb_self=0 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=ef1246b159d8fe2c profile=custom",
+      "ROOM_REVIEW requested=32 room=2 template=32 selection_seed=3325565276 spawn_seed=3857519545 chest_slots=0 chests=0 bomb_slots=3 layout_bombs=3 key_slots=0 layout_keys=0 coin_slots=0 layout_coins=0 hp=6 god=0"
+    ],
+    "intentional_exit": "terminated only this test process after startup check"
+  },
+  {
+    "name": "schema26",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--expedition",
+      "--seed",
+      "129",
+      "--review-source-room",
+      "32",
+      "--mute",
+      "--save",
+      "/tmp/deathward-d10b-cli-d51v686q/schema26.save",
+      "--balance-preset",
+      "/home/kambo/workspace/DeathWard/artifacts/d10b-preset.json"
+    ],
+    "passed": true,
+    "startup": [
+      "BALANCE speed=1 room_size=1.11 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1.05 bomb_radius=0.95 bomb_damage=110 bomb_self=0 rock_shielding=1 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=318bc3e5ceeedab6 profile=custom",
+      "ROOM_REVIEW requested=32 room=2 template=32 selection_seed=3325565276 spawn_seed=3857519545 chest_slots=0 chests=0 bomb_slots=3 layout_bombs=3 key_slots=0 layout_keys=0 coin_slots=0 layout_coins=0 hp=6 god=0"
+    ],
+    "intentional_exit": "terminated only this test process after startup check"
+  }
+]

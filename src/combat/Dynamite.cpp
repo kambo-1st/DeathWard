@@ -93,6 +93,7 @@ Hazard Simulation::makeDynamite(Vector3 target) const {
         // existing item contract; this delivery does not redesign item bombs.
         const auto &t=*inventoryBombTuning;t.validate();
         charge.tunedInventoryBomb=true;
+        charge.ordinaryRockBlast=!t.rocksBlockBlast;
         charge.delay=t.fuseSeconds();charge.radius=t.radius();
         charge.blastDamage=t.internalDamage();
         charge.damage=float(t.selfDamage())*10; // Existing incoming half-heart boundary, not outgoing HP units.

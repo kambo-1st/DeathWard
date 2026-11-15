@@ -122,6 +122,12 @@ void Simulation::hitBreakable(Breakable &prop,float damage,bool hard) {
         return;
     }
     prop.destroyed=true;
+    // Source-layout rocks suppress the custom coin producer (paid at birth),
+    // but destruction must still show debris and invalidate the checkpoint.
+    if(prop.paid) {
+        particleEffect(ParticleEffect::Stone,mul(add(prop.bounds.min,prop.bounds.max),.5f),{0,1,0},.65f);
+        checkpointNeeded=true;
+    }
 }
 void Simulation::resolveExplosion(const Event &e) {
     igniteGas(e.position,e.radius);
@@ -142,13 +148,16 @@ void Simulation::resolveExplosion(const Event &e) {
     for(size_t i=0;i<arena.breakables.size();++i) {
         const auto &p=arena.breakables[i];
         if(!p.solid()||p.kind==BreakableKind::CacheSide)continue;
+        const bool ordinary=e.ordinaryRockBlast&&e.demolition==Demolition::SpentDynamite&&p.kind==BreakableKind::CrackedRock;
+        if(ordinary&&p.room!=room)continue;
         const Vector3 surface{std::clamp(e.position.x,p.bounds.min.x,p.bounds.max.x),
                               std::clamp(e.position.y,p.bounds.min.y,p.bounds.max.y),
                               std::clamp(e.position.z,p.bounds.min.z,p.bounds.max.z)};
         const float dist=distance(surface,e.position);
         // Stop just outside the nearest surface, so the target cannot block its own ray.
         const auto endpoint=dist>.025f?sub(surface,mul(unit(sub(surface,e.position)),.025f)):e.position;
-        if(dist<e.radius && (!e.explosionLineCheck||dist<.001f||arena.sight(e.position,endpoint)))props.push_back(i);
+        if(dist<e.radius && (!e.explosionLineCheck||dist<.001f||
+           (ordinary?arena.ordinaryRockBlastClear(e.position,endpoint):arena.sight(e.position,endpoint))))props.push_back(i);
     }
     for(auto id:victims) {
         if(auto *eye=findEnemy(id))if(const auto *rule=content->component(eye->monster)) {

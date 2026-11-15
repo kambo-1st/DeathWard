@@ -781,6 +781,7 @@ struct Event {
     bool returning = false, explosiveHit = false, compactBlast = false;
     EntityId projectile = 0;
     bool explosionLineCheck=true; // Source blasts may explicitly bypass cover.
+    bool ordinaryRockBlast=false; // D10b: ordinary rocks do not shield other ordinary rocks.
     EntityId explosionIgnore=0; // Explicit producer immunity, distinct from ordnance attribution.
 };
 enum class HazardKind {
@@ -836,6 +837,7 @@ struct Hazard {
     bool playerContact = false;
     float blastDamage = DynamiteDamage;
     bool tunedInventoryBomb=false; // Birth snapshot; live edits never change an already lit charge.
+    bool ordinaryRockBlast=false; // Snapshotted with the ordinary inventory charge.
     double inventoryBombElapsed=0; // Avoid accumulating float error across 30/60/120 Hz partitions.
     int braidCopies = 0;
     bool secondary = false, kicked = false;
@@ -1199,6 +1201,7 @@ class Simulation {
     bool tunedSpider(const Enemy &e) const { return spiderMovementMultiplier && e.monster==monsterId(85); }
     std::optional<PooterTuning> pooterTuning;
     std::optional<InventoryBombTuning> inventoryBombTuning; // Main-game D10a; historical fixtures opt in.
+    int keyedDoorCost=1; // D10c: live next-unlock override; opened doors never charge again.
     float redHeartAppearanceSpeed=1; // Snapshotted when an ordinary red-heart actor is admitted.
     bool bombClearRewards=false; // Selected D09d; legacy Simulation fixtures opt in.
     bool keyClearRewards=false; // Selected D09c; legacy Simulation fixtures opt in.

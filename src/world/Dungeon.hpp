@@ -137,6 +137,7 @@ struct Arena {
                    FloorDimensions dimensions = {}, FloorProfile profile = {}, bool sourceCombatRoom = false, int roomHeartLayouts = 0);
     void prepareRoomHeartLayouts(uint64_t seed,int mode);
     void prepareSourceHeartRocks();
+    bool ordinaryRockBlastClear(Vector3 from, Vector3 to) const;
     void sealRoom(int index);
     Vector3 doorPosition(int passage, int side) const;
     Vector3 doorApproach(int passage, int side) const;

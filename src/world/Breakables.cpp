@@ -7,6 +7,21 @@ bool overlaps(Box a, Box b, float margin = 0) {
            a.min.z < b.max.z + margin && a.max.z > b.min.z - margin;
 }
 }
+bool Arena::ordinaryRockBlastClear(Vector3 from, Vector3 to) const {
+    // Native explosion CheckLine mode 2 passes ordinary rocks. Retain the
+    // canyon's physical walls, terrain and every unselected prop kind.
+    if(canyon&&canyon->trace(from,to).hit)return false;
+    const auto blocks=[&](Box box){return segmentBox(from,to,box).hit;};
+    for(const auto &box:boundaryWalls)if(blocks(box))return false;
+    for(const auto &box:obstacles)if(blocks(box))return false;
+    for(const auto &prop:storyProps)if(prop.bounds.max.y>.45f&&blocks(prop.bounds))return false;
+    for(const auto &prop:floorProps)if(prop.bounds.max.y>.45f&&blocks(prop.bounds))return false;
+    for(const auto &prop:breakables)
+        if(prop.solid()&&prop.kind!=BreakableKind::CrackedRock&&blocks(prop.bounds))return false;
+    for(const auto &passage:passages)for(int side=0;side<2;++side)
+        if(passage.closed(side)&&blocks(passage.gates[size_t(side)]))return false;
+    return true;
+}
 void Arena::prepareBreakables(uint64_t seed) {
     // Runtime props are deliberately created AFTER the canyon height field and story dressing.
     // Independent placement/loot streams never consume layout, combat or reward randomness.

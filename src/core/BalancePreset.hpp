@@ -40,7 +40,8 @@ struct BalancePreset {
     bool keyClearRewards=true;
     bool bombClearRewards=true;
     InventoryBombTuning inventoryBombs{};
-    bool custom() const { return inventoryBombs.custom() || !bombClearRewards || !keyClearRewards || !chestClearRewards || !coinClearRewards || roomHeartLayouts!=1 || redHeartAppearanceSpeed!=1 || !redHeartClearRewards || playerLuck!=ReferenceLuck || !sourceCombatRoom || playerDamage != ReferenceDamage || regularHealthMultiplier != ReferenceRegularHealth || playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange || gaperMovementMultiplier != ReferenceGaperMovement || spiderMovementMultiplier != ReferenceSpiderMovement || pooterMovementMultiplier != 1 || pooterShotSpeedMultiplier != 1 || pooterAttackIntervalMultiplier != 1; }
+    int keyedDoorCost=1;
+    bool custom() const { return keyedDoorCost!=1 || inventoryBombs.custom() || !bombClearRewards || !keyClearRewards || !chestClearRewards || !coinClearRewards || roomHeartLayouts!=1 || redHeartAppearanceSpeed!=1 || !redHeartClearRewards || playerLuck!=ReferenceLuck || !sourceCombatRoom || playerDamage != ReferenceDamage || regularHealthMultiplier != ReferenceRegularHealth || playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange || gaperMovementMultiplier != ReferenceGaperMovement || spiderMovementMultiplier != ReferenceSpiderMovement || pooterMovementMultiplier != 1 || pooterShotSpeedMultiplier != 1 || pooterAttackIntervalMultiplier != 1; }
     void validate() const;
     std::string json() const;
     std::string revision() const;

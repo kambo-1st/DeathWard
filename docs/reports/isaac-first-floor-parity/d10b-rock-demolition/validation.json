@@ -1,0 +1,58 @@
+{
+  "status": "enabled-developer-verified-scoped-human-accepted",
+  "human_acceptance": true,
+  "full_native_acceptance": false,
+  "committed": true,
+  "native_lines": 32,
+  "core_suites": [
+    "inventory_bomb_tuning",
+    "balance_preset_contract",
+    "expedition_destruction"
+  ],
+  "game_renderer": [
+    "--dynamite-balance-only",
+    "--bombs-only"
+  ],
+  "cli": [
+    "schema25",
+    "schema26"
+  ],
+  "review": {
+    "seed": 129,
+    "source_room": 32,
+    "displayed_room": 2,
+    "normal_health_half_hearts": 6,
+    "zoom": 165,
+    "breach_charges": 1,
+    "inventory_after_collection": 5
+  },
+  "remaining": [
+    "Native radial grid sampling and full rock drop/factory/physics/item/profile acceptance",
+    "Browser runtime",
+    "Gameplay-save continuity"
+  ],
+  "files_sha256": {
+    "src/combat/Destruction.cpp": "255395b22ffeb47c81f02387067084ac495e3ff04181afde298d95b8d96c41b8",
+    "src/combat/Dynamite.cpp": "f635ffcc18eeb467b1a5e79dbbab2ca64a946cf52632d833eca769a4cfaa8cae",
+    "src/combat/Enemies.cpp": "697528ba373e4e864913d63635c19959ac9588023afcc1a99265794e1faf7c85",
+    "src/combat/InventoryBombTuning.hpp": "38890843e4dc983362dc1912790103baed811645ed16cfb11406c88fe167ff8d",
+    "src/combat/Simulation.hpp": "e487201a5367e9505650bdb26121a8f408a4e4012dd32a4fa5f2bf0d002411e9",
+    "src/core/BalancePreset.cpp": "efd9299df728ed2b6fa1e5506822048394ee3125ec43ba5a21c19ec1a1401d0c",
+    "src/core/Game.cpp": "b0cc719279923ac25af73fcf342c0faabafc67abd849a3d62601ae98c5c6d6fb",
+    "src/core/Game.hpp": "e512d58259fd62757f5b3c95948e1d9b42bf9da89fc013fafd42a74842dddc7a",
+    "src/core/GameTuning.cpp": "11a0f3bac700e35a2b71eaeb965959362d7c5576f76005b4e422d706a42ca8db",
+    "src/render/Renderer.cpp": "6ee7b4f65bfff64f11fbbbfa63b8b3868dee9d47e7097b75ebec84ba39d4d68c",
+    "src/world/Breakables.cpp": "254e02cd503cfe5952a433f4455aaac0e189451eaca924bed0b9ef637e678c38",
+    "src/world/Dungeon.hpp": "60c83637491fa361d47eadb08dddecf5cced1333e2b4bd533a9e535c05bedfa7",
+    "tests/balance_preset_tests.cpp": "149a7419edc79297225e07eedb7b896a8c9d46095abb1122a4b837ede04339cb",
+    "tests/input_tests.cpp": "9a2dd1822b60914f3f8d5c6496e9c66a0fb4882456eed5043d70d63318d09c28",
+    "tests/inventory_bomb_tuning_tests.cpp": "545b4dabd274e1b2c55eb9421a96966d6d955ebd3fdd3a0343303e8ed98e3a05",
+    "scripts/isaac-reference/capture-ordinary-rock-blast.py": "a6b7c17d555f66f657399912d15d2b8e21946508744249cac95aedd8173e5305",
+    "build/deathward": "84cf12a7bb74f3be4a9b51b3f0d2908d3ee46abf7f8833701c479abe11dc71f3",
+    "build/deathward_input_tests": "9b500aaa045a3398d2c0884cfc1eec995e6572d5f17ffc194abf5aecdd11829f",
+    "build/deathward_inventory_bomb_tuning_tests": "d1456713f7ba781818c2aa3f4d4252afc0350e5fe6121c3b996e831c95daef6a",
+    "build/deathward_balance_preset_tests": "ce615a4c9faec075fc856d2f3b12fd1152c1411e6724eb5b56f264e2a8413352",
+    "build/deathward_destruction_tests": "2934886c909ca12c4d3912855adf40303363abf7e49b00ddc3d9c764d483b3c1"
+  },
+  "commit_note": "Included in the accepted D10b/D10c checkpoint requested by the user."
+}

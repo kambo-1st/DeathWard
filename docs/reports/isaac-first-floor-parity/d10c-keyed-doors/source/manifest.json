@@ -1,0 +1,31 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "spend_cases": 8,
+  "door_cases": 24,
+  "windows": [
+    {
+      "name": "use-key",
+      "start": "0x726070",
+      "end": "0x726181",
+      "sha256": "8ec320476c20a390e52dc2bdeaab81d8cf2dea7620e27e811c5781430584c314",
+      "scope": "complete ordinary helper"
+    },
+    {
+      "name": "door-admission",
+      "start": "0x6e112e",
+      "end": "0x6e124c",
+      "sha256": "7a64777b31d59e839613d3be74195f35b8571d8db2d24d843c01b7e7af383de6",
+      "scope": "bounded admitted ordinary branch"
+    },
+    {
+      "name": "door-context",
+      "start": "0x6e0bc0",
+      "end": "0x6e13ac",
+      "sha256": "23bc0ce8ba82c60b8fea7472723d3df8555a7c1842a93a67ad6dda700211a7da",
+      "scope": "static full caller context"
+    }
+  ],
+  "method": "Original x86 code and native key/bookkeeping/trinket-count helpers; memory imports hosted by existing ordinary empty-inventory fixture. Stop hooks only at branch boundaries.",
+  "scope": "Ordinary finite keys, golden flag off, force off, no item overrides; door kind1/subtype4, no special flags. No animation/collision/factory or source floor-lock policy acceptance.",
+  "full_native_acceptance": false
+}

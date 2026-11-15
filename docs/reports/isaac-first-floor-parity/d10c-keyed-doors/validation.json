@@ -1,0 +1,66 @@
+{
+  "status": "enabled-developer-verified-scoped-human-accepted",
+  "human_acceptance": true,
+  "full_native_acceptance": false,
+  "committed": true,
+  "native_spend_cases": 8,
+  "native_door_admission_cases": 24,
+  "core_suites": [
+    "keyed_door_spending",
+    "balance_preset_contract",
+    "generated_dungeons",
+    "inventory_bomb_tuning"
+  ],
+  "door_checks": {
+    "cost_inventory_cases": 48,
+    "rejection_cases": 13,
+    "generated_size_route_cases": 27,
+    "queued_live_edits": 2,
+    "repeat_and_other_side_revisit": true
+  },
+  "game_renderer": [
+    "--keyed-doors-only",
+    "--dynamite-balance-only"
+  ],
+  "cli": [
+    "schema5",
+    "schema26",
+    "schema27"
+  ],
+  "review": {
+    "seed": 99,
+    "displayed_room": 5,
+    "enemies": 3,
+    "key_granted": false,
+    "key_cost": 1,
+    "zoom": 165,
+    "health_half_hearts": 6,
+    "god_mode": false
+  },
+  "remaining": [
+    "Source floor-specific lock placement, free first-floor treasure and shop-lock policy",
+    "Golden/double/coin/special locks and item overrides",
+    "Full native animation/factory/physics/profile/generation equivalence",
+    "Browser runtime",
+    "Gameplay-save continuity"
+  ],
+  "files_sha256": {
+    "src/combat/Simulation.cpp": "f9651cbe6c27bb4a9aa3d2562d74684955782ebf2c4f7c0b8339ee3c6a6b9ac7",
+    "src/combat/Simulation.hpp": "fad80f3e35fa1b4d26f1514203e8a414ca8ec73ffcc0cd6fdad38548671de9f3",
+    "src/combat/Navigation.cpp": "307a856eed3147f2eb1b5f8a5f33100031f2af743b6385489f5e3f66b0df715d",
+    "src/core/BalancePreset.cpp": "f61a5f02a3dc3d25622ec1b3edaae0f09f7cd5b64fb5314b1476e33c1f90825a",
+    "src/core/BalancePreset.hpp": "51b058656653034b7fa8c470a990e9db418a0b12b9064746a2e5b8f6272d476f",
+    "src/core/Game.cpp": "60f08c4cc46c44eba760229be2852890aefd42a7eb1b28bfab3f286a769f2a39",
+    "src/core/Game.hpp": "02c03ce1a69bc13b3161a9657a2ba53c12d6fe27775b104e72b0f72a26f06b08",
+    "src/core/GameTuning.cpp": "a49b64e39a5203bf54d3a61c03f91aa4bf666f400620221eb3ceffeefb3fc623",
+    "src/render/Renderer.cpp": "63687656e96eaab881983cebe22692aeca69a36d212aff43fae7d1345b6307e8",
+    "tests/keyed_door_tests.cpp": "709f53628d5eb4401f68d3fd4e4fa75a52fec858385bcf99f8f7da819ae95d68",
+    "tests/balance_preset_tests.cpp": "f3c50e164f2a55b05c8736ae84d0f975bf617c3f4542a1b8b2ee527f83c96958",
+    "tests/input_tests.cpp": "3b07caba2d06dc4dab8bcee79970d27fd75f9d7c75b878e13d239ca8fdd0560e",
+    "scripts/isaac-reference/capture-keyed-door-spending.py": "c0cd6429e32f27aa2d68ff980ddef14e89caafe2adb067ce99d5266fa55c6f74",
+    "build/deathward": "670bd6278618e24eef414221173f239c5bfbe8e7b1f4a58877e7405ad120434c",
+    "build/deathward_input_tests": "85a4da159d4dc070bd72895fa0d3292e4b4a084bfc2efe1fdfed84194861fe76"
+  },
+  "human_acceptance_record": "human-acceptance.json",
+  "commit_note": "Included in the accepted D10b/D10c checkpoint requested by the user."
+}

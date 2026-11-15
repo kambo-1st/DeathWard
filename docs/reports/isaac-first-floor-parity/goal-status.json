@@ -37,7 +37,7 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Propose one ordinary destructible interaction (D10b), then keyed-door spending. Separate user selection is required. Full native bomb timing/physics/items/profile, browser runtime and gameplay save continuity remain open.",
+  "next_work": "Commit accepted D10b/D10c checkpoint, then implement newly selected shop and treasure-room lock placement. Other bulk parity stays paused.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-12",
     "status": "Ordinary caller/descriptor and direct-entry delivery accepted; next complete-room continuation selected",
@@ -766,5 +766,60 @@
       "gameplay save continuity"
     ],
     "human_acceptance_record": "docs/reports/isaac-first-floor-parity/d10a-dynamite/human-acceptance.json"
+  },
+  "d10b_rock_demolition": {
+    "selected": true,
+    "implemented": true,
+    "developer_verified": true,
+    "human_accepted": true,
+    "preset_schema": 26,
+    "native_line_cases": 32,
+    "report": "docs/reports/isaac-first-floor-parity/d10b-rock-demolition/README.md",
+    "keyed_door_spending": "D10c enabled/developer-verified and scoped human-accepted",
+    "full_native_acceptance": false,
+    "verification": {
+      "core_suites": 3,
+      "native_lines": 32,
+      "game_renderer_modes": 2,
+      "cli_loads": 2,
+      "review_seed": 129,
+      "displayed_room": 2,
+      "breach_charges": 1,
+      "collected_inventory": 5
+    }
+  },
+  "d10c_keyed_doors": {
+    "selected": true,
+    "implemented": true,
+    "developer_verified": true,
+    "human_accepted": true,
+    "preset_schema": 27,
+    "report": "docs/reports/isaac-first-floor-parity/d10c-keyed-doors/README.md",
+    "full_native_acceptance": false,
+    "remaining": [
+      "Source floor-specific lock placement, free first-floor treasure and shop-lock policy",
+      "Golden/double/coin/special locks and item overrides",
+      "Full native animation/factory/physics/profile/generation equivalence",
+      "Browser runtime",
+      "Gameplay-save continuity"
+    ],
+    "verification": {
+      "cost_inventory_cases": 48,
+      "rejection_cases": 13,
+      "generated_size_route_cases": 27,
+      "queued_live_edits": 2,
+      "repeat_and_other_side_revisit": true
+    },
+    "review": {
+      "seed": 99,
+      "displayed_room": 5,
+      "enemies": 3,
+      "key_granted": false,
+      "key_cost": 1,
+      "zoom": 165,
+      "health_half_hearts": 6,
+      "god_mode": false
+    },
+    "human_acceptance_record": "docs/reports/isaac-first-floor-parity/d10c-keyed-doors/human-acceptance.json"
   }
 }
