@@ -43,7 +43,7 @@ void ghost(Simulation &run,const Event &e,const ItemKey &owner) {
     shot.ghost=true;shot.returning=false;shot.explosiveHit=false;
     // Shotless kills (dynamite/barrels) repeat one current weapon projectile.
     // Bullet-derived explosions instead preserve the actual birth specification.
-    if(!e.attack&&run.canonicalShooting&&!AcceptedPlayerShooting.resolve(run.player.attributes).enabled())return;
+    if(!e.attack&&run.canonicalShooting&&!AcceptedPlayerShooting.resolve(run.effectivePlayerStats()).enabled())return;
     shot.attack=e.attack?*e.attack:primaryPlayerAttack(run,run.player.shotDamage,e.lastRound);
     shot.damage=shot.attack->damage;shot.direction=e.attack?e.attack->heading:unit(e.direction);
     shot.demolition=Demolition::Soft;shot.playerDamage=0;
@@ -71,7 +71,7 @@ AttackSpec playerAttack(const Simulation &run,float damage,bool sixth,float spee
 AttackSpec primaryPlayerAttack(const Simulation &run,float damage,bool sixth) {
     auto spec=playerAttack(run,damage,sixth);
     if(!run.canonicalShooting)return spec;
-    const auto source=AcceptedPlayerShooting.resolve(run.player.attributes);
+    const auto source=AcceptedPlayerShooting.resolve(run.effectivePlayerStats());
     const auto empty=run.content->resolve({},damage,26,false);
     const float authoredSpeed=spec.speed,authoredLife=spec.life;
     spec.canonicalFlight=true;
@@ -93,7 +93,7 @@ float primaryCadence(const Simulation &run) {
     const float authored=run.content->resolve(run.items,run.player.shotDamage,26,false)[BuildStat::Cadence];
     if(!run.canonicalShooting)return authored;
     const float baseline=run.content->resolve({},run.player.shotDamage,26,false)[BuildStat::Cadence];
-    return AcceptedPlayerShooting.resolve(run.player.attributes).intervalSeconds*authored/baseline;
+    return AcceptedPlayerShooting.resolve(run.effectivePlayerStats()).intervalSeconds*authored/baseline;
 }
 std::span<const ItemDefinition> itemDefinitions() { return defaultMechanics()->items(); }
 const ItemDefinition &itemDefinition(const ItemKey &key,const MechanicsLibrary &content) {

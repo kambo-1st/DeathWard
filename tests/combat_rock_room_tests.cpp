@@ -1,3 +1,4 @@
+#include "RoomReviewSeeds.hpp"
 #include "combat/Simulation.hpp"
 #include "world/SourceHeartRockRoom.hpp"
 #include "world/SourceCombatRockRoomData.hpp"
@@ -6,7 +7,7 @@
 using namespace dw;
 void check(bool ok,const std::string &why){if(!ok)throw std::runtime_error(why);}
 Simulation create(float size=1.1f,int lo=7,int hi=9,float route=.26f,int mode=1,bool d08=true,int floor=0) {
-    Simulation r(268,1,{},MissionTheme::Canyon,true,false,WitnessAccount::None,floor,ExpeditionPacing::Compact,defaultMechanics(),size,lo,hi,route,d08,mode);
+    Simulation r(review::seed(4,size,lo,hi),1,{},MissionTheme::Canyon,true,false,WitnessAccount::None,floor,ExpeditionPacing::Compact,defaultMechanics(),size,lo,hi,route,d08,mode);
     r.applyCombatBalance(3.5f,1);r.canonicalShooting=true;r.gaperMovementMultiplier=1;r.redHeartClearRewards=true;
     return r;
 }
@@ -44,7 +45,7 @@ void verify(Simulation &r,int index) {
     std::cout<<"PASS exact source4 content, physical routes and door access "<<tag<<'\n';
 }
 void fightAndRevisit() {
-    auto r=create();const int index=owner(r);check(index==4,"natural seed268 selects displayed room5");
+    auto r=create();const int index=owner(r);check(index==review::room(4),"recorded natural source4 review room");
     check(r.enterSourceRoomReview(4)&&r.room==index&&!r.godMode&&r.player.hp==6,"direct ordinary launch has no cheats");
     r.godMode=true;
     check(!r.roomClear&&r.livingEnemies()==2,"fight begins on entry");
@@ -111,7 +112,7 @@ int main(){try{
         if(i>=0){verify(r,i);++arrangements;}
         else check(!r.enterSourceRoomReview(4),"geometry-dependent selection is not fabricated for review");
     }
-    check(arrangements>=6,"six natural size/range content cases");
+    check(arrangements==9,"nine natural size/range content cases");
     fightAndRevisit();movement();
     auto off=create(1.1f,7,9,.26f,0);check(owner(off)<0,"OFF restores ordinary generation");
     auto test=create(1.1f,7,9,.26f,2);check(owner(test)<0,"full/half testing override stays independent");

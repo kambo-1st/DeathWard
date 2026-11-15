@@ -1,4 +1,5 @@
 #include "world/Dungeon.hpp"
+#include "world/PedestalGeometry.hpp"
 #include "world/SourceCombatRoom.hpp"
 #include <map>
 #include <queue>
@@ -487,6 +488,10 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
     if(profile.active()) { dressFloor(); prepareBossArena(); }
     if(profile.bossRails)prepareRailArena();
     prepareSourceHeartRocks();
+    // Treasure pedestals always use the reserved room center. Do this after
+    // seeded layout/terrain placement so moving the offering cannot reroll
+    // other room contents. Center clearance is shared with terrain and decor.
+    for(auto &room:rooms)if(room.kind==RoomKind::Power)room.objective=room.center;
 }
 void Arena::applyRoomLockPolicy() {
     // Ordinary source family: both room types are free on source stage1.
@@ -664,6 +669,8 @@ bool Arena::contains(Vector3 p) const {
     return floorCells.contains({int(std::floor(p.x / FloorTile)), int(std::floor(p.z / FloorTile))});
 }
 bool Arena::blocked(Vector3 p, float radius) const {
+    for(const auto &room:rooms)if(room.kind==RoomKind::Power&&
+        pedestalGeometry::intersects(p,p,room.objective,radius))return true;
     if(rails)for(auto pit:rails->pits){pit.min.y=-100;pit.max.y=100;if(sphereBox(p,radius,pit))return true;}
     for(const auto &body:movementBodies)if(sphereBox(p,radius,body))return true;
     if (canyon && canyon->blocked(p, radius))
@@ -676,6 +683,9 @@ bool Arena::blocked(Vector3 p, float radius) const {
     return false;
 }
 bool Arena::clear(Vector3 from, Vector3 to, float radius) const {
+    // Low treasure pedestals block grounded bodies, like chests, not sight/tears.
+    if(radius>.25f)for(const auto &room:rooms)if(room.kind==RoomKind::Power&&
+        pedestalGeometry::intersects(from,to,room.objective,radius))return false;
     if(radius>.25f&&rails)for(auto pit:rails->pits){pit.min.y=-100;pit.max.y=100;if(segmentBox(from,to,pit,radius).hit)return false;}
     if(radius>.25f)for(const auto &body:movementBodies)
         if(segmentBox(from,to,body,radius).hit)return false;

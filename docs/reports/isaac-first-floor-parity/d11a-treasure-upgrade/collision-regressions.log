@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  30: treasure_upgrade
+1/4 Test  #30: treasure_upgrade .................   Passed   12.03 sec
+    Start  33: mission_shop
+2/4 Test  #33: mission_shop .....................   Passed    2.41 sec
+    Start 147: chest_gameplay
+3/4 Test #147: chest_gameplay ...................   Passed   11.84 sec
+    Start 148: preplaced_chest_layout
+4/4 Test #148: preplaced_chest_layout ...........   Passed    1.83 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =  28.11 sec

@@ -1,5 +1,6 @@
 #include "combat/Simulation.hpp"
 #include "combat/ChestGeometry.hpp"
+#include "world/PedestalGeometry.hpp"
 #include "world/SourceHeartRockRoom.hpp"
 #include "world/SourceCombatRockRooms.hpp"
 #include "world/SourceChestRockRoomData.hpp"
@@ -188,6 +189,9 @@ std::vector<Vector3> Arena::path(Vector3 from, Vector3 target, float radius) con
     const float margin = radius + 0.08f;
     auto navigationWalls=walls;
     navigationWalls.insert(navigationWalls.end(),movementBodies.begin(),movementBodies.end());
+    // Bounding corners supply route candidates; clearance uses the octagon.
+    for(const auto &room:rooms)if(room.kind==RoomKind::Power)
+        navigationWalls.push_back(pedestalGeometry::bounds(room.objective));
     auto valid = [&](Vector3 p) { return contains(p) && !blocked(p, radius); };
     // A click on solid cover lands at its nearest walkable edge.
     if (blocked(target, radius)) {
@@ -216,10 +220,7 @@ std::vector<Vector3> Arena::path(Vector3 from, Vector3 target, float radius) con
         target = *nearest;
     }
     auto clear = [&](Vector3 a, Vector3 b) {
-        for (const auto &wall : navigationWalls)
-            if (segmentBox(a, b, wall, radius).hit)
-                return false;
-        return true;
+        return this->clear(a,b,radius);
     };
     if (clear(from, target))
         return {target};
@@ -315,6 +316,25 @@ void Simulation::requestMove(Vector3 target, bool interactAtDestination) {
         movePath_=arena.path(player.position,target,.48f);return;
     }
     const auto &site=arena.rooms[size_t(room)];
+    // The stone stays solid after collection. Clicking it approaches a legal
+    // edge; source collectibles pay on contact, legacy relics retain their menu.
+    if(site.kind==RoomKind::Power&&planarDistance(target,site.objective)<2.4f) {
+        float best=std::numeric_limits<float>::infinity();
+        auto consider=[&](Vector3 direction) {
+            const auto point=pedestalGeometry::approach(site.objective,direction,target.y);
+            if(arena.blocked(point,pedestalGeometry::PlayerRadius))return;
+            auto route=arena.path(player.position,point,pedestalGeometry::PlayerRadius);
+            if(route.empty())return;
+            float cost=0;auto previous=player.position;
+            for(auto next:route){cost+=planarDistance(previous,next);previous=next;}
+            if(cost<best){best=cost;movePath_=std::move(route);}
+        };
+        consider(sub(player.position,site.objective));
+        for(auto normal:pedestalGeometry::Normals)consider(normal);
+        interactOnArrival_=!movePath_.empty()&&rewardAvailable(room)&&!hasSourceTreasure(room);
+        if(movePath_.empty())announce("That pedestal cannot be reached.",2);
+        return;
+    }
     if(site.story!=StoryRoom::None&&roomClear&&distance(target,site.objective)<2.4f) {
         target=site.objective;interactOnArrival_=true;
     } else if(surveyTutorial && room==finalRoom() && roomClear && distance(target,surveyPosition())<2.4f) {
@@ -330,10 +350,6 @@ void Simulation::requestMove(Vector3 target, bool interactAtDestination) {
         interactOnArrival_ = true;
     } else if (canUseFloorExit() && distance(target, arena.exit) < 2.4f) {
         target = arena.exit;
-        interactOnArrival_ = true;
-    } else if (arena.rooms[size_t(room)].kind == RoomKind::Power && !rooms[size_t(room)].rewardTaken &&
-               distance(target, arena.rooms[size_t(room)].objective) < 2.4f) {
-        target = arena.rooms[size_t(room)].objective;
         interactOnArrival_ = true;
     }
     movePath_ = arena.path(player.position, target, 0.48f);
@@ -352,7 +368,7 @@ std::string Simulation::nearbyInteraction() const {
         arena.sight(player.position, arena.rooms[size_t(room)].objective))
         return "TRADE";
     if (rewardAvailable(room)&&distance(player.position,rewardPosition(room))<2.6f&&arena.sight(player.position,rewardPosition(room)))
-        return "CLAIM POWER";
+        return hasSourceTreasure(room)?"THE SAD ONION / TOUCH TO COLLECT":"CLAIM POWER";
     if (legacyObjectives() && !rescued && distance(player.position, arena.miners) < 2.6f)
         return "FREE MINERS";
     if (legacyObjectives() && !altarDestroyed && distance(player.position, arena.altar) < 2.6f)

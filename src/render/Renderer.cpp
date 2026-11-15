@@ -4,6 +4,7 @@
 #include "combat/PlayerShooting.hpp"
 #include "render/MonsterVisuals.hpp"
 #include "render/WorldPalette.hpp"
+#include "world/PedestalGeometry.hpp"
 #include "raymath.h"
 #include "rlgl.h"
 #include <iomanip>
@@ -921,7 +922,14 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             if ((room.kind!=RoomKind::Power&&!run.rewardAvailable(i))||distance(run.player.position,run.rewardPosition(i))>60)
                 continue;
             const auto p=run.rewardPosition(i);
-            DrawCylinder({p.x, 0, p.z}, 0.8f, 1, 0.7f, 8, Border);
+            DrawCylinder({p.x, 0, p.z},pedestalGeometry::TopRadius,pedestalGeometry::BaseRadius,
+                         pedestalGeometry::Height,pedestalGeometry::Sides,Border);
+            if(run.hasSourceTreasure(i)&&run.rewardAvailable(i)) {
+                const float y=1.35f+.07f*std::sin(float(run.stats.duration)*2);
+                DrawSphereEx({p.x,y,p.z},.43f,8,10,Color{209,171,115,255});
+                DrawCylinderEx({p.x,y+.24f,p.z},{p.x+.05f,y+.65f,p.z},.20f,.06f,7,Color{224,193,143,255});
+                DrawCylinderEx({p.x+.05f,y+.62f,p.z},{p.x+.18f,y+.87f,p.z+.06f},.055f,.025f,5,Color{121,145,72,255});
+            }
         }
         if (run.legacyObjectives() && distance(run.player.position, run.arena.miners) < 60) {
             Vector3 p = run.arena.miners;
@@ -1167,7 +1175,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         }
     }
     for (int i = 0; i < run.arena.roomCount(); ++i) {
-        if (run.rewardAvailable(i)&&distance(run.player.position,run.rewardPosition(i))<60) {
+        if (!run.hasSourceTreasure(i)&&run.rewardAvailable(i)&&distance(run.player.position,run.rewardPosition(i))<60) {
             const auto p=run.rewardPosition(i);
             DrawSphere({p.x, 1.3f, p.z}, .45f, Teal);
             DrawSphereWires({p.x, 1.3f, p.z}, .7f, 6, 8, Gold);
@@ -2429,8 +2437,23 @@ Action Renderer::balancePanel(const Game &game) {
         if(game.run)for(size_t i=0;i<game.run->arena.rooms.size();++i)
             if(game.run->arena.rooms[i].sourceCombatTemplate==47)sourceRoom="Active: room "+std::to_string(i+1)+" / two Gapers";
         text(sourceRoom,610,474,13,Teal);
+    } else if(game.balanceTreasureOpen) {
+        text("TREASURE / THE SAD ONION",205,182,22,Gold);
+        text("A single Tears upgrade in opening-floor treasure rooms. Touch it to collect once.",205,220,14,Paper);
+        if(button(Action::ToggleTreasureUpgrade,game.balanceDraft.sourceTreasureUpgrade?"SAD ONION PEDESTAL":"LEGACY RELIC CHOICES",205,252,490,40,game.balanceDraft.sourceTreasureUpgrade))return Action::ToggleTreasureUpgrade;
+        text("Offering changes wait for Apply.",720,266,14,Muted);
+        text("UPGRADE STRENGTH",205,324,18,Gold);
+        text(decimal(game.balancePreset.sadOnionStrength*100)+"%",470,319,24,Paper);
+        if(button(Action::SadOnionDown,"- 5%",650,310,130,40))return Action::SadOnionDown;
+        if(button(Action::SadOnionUp,"+ 5%",795,310,130,40))return Action::SadOnionUp;
+        text("Live for owned copies. Current firing wait and flying shots keep their settings.",205,367,14,Muted);
+        if(button(Action::ResetSadOnion,"RESET STRENGTH TO 100%",205,391,490,36))return Action::ResetSadOnion;
+        if(game.run)text("OWNED "+std::to_string(game.run->itemStacks({"isaac",ItemKind::Collectible,1}))+" / NEXT VOLLEY "+decimal(1/primaryCadence(*game.run))+" /s",720,402,14,Teal);
+        if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,441,350,40))return Action::ApplyMapChanges;
+        text(game.hasPendingMapChanges()?"PENDING / resets floor rewards; keeps build":"APPLIED / no pending map changes",580,452,13,game.hasPendingMapChanges()?Gold:Teal);
     } else {
         const auto &preset=game.balancePreset;
+        if(button(Action::BalanceTreasureTab,"TREASURE",945,169,130,40))return Action::BalanceTreasureTab;
         text("TEARS",205,183,18,Gold);text(decimal(preset.tearsPerSecond)+" /s",400,174,28,Paper);
         if(button(Action::TearsDown,"- 0.10",650,169,130,40))return Action::TearsDown;
         if(button(Action::TearsUp,"+ 0.10",795,169,130,40))return Action::TearsUp;

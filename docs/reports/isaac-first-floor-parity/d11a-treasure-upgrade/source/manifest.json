@@ -1,0 +1,50 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "version": "Repentance 1.7.9b",
+  "item": {
+    "cache": "firedelay",
+    "description": "#THE_SAD_ONION_DESCRIPTION",
+    "gfx": "Collectibles_001_TheSadOnion.png",
+    "id": "1",
+    "name": "#THE_SAD_ONION_NAME"
+  },
+  "treasure_pool_entry": {
+    "Id": "1",
+    "Weight": "1",
+    "DecreaseBy": "1",
+    "RemoveOn": "0.1"
+  },
+  "xml_sha256": {
+    "items.xml": "ee567ed920b1bcada61f2a2d65e48563286fe7e8bf00363ad763ac2aa3ae64b7",
+    "itempools.xml": "da5391ba59626b0fe349fa6d143df82cd7c19c648f04311d8e21a441d5aa502c"
+  },
+  "windows": [
+    {
+      "name": "sad-onion-query",
+      "start": "0x72f97a",
+      "end": "0x72f9bb",
+      "sha256": "380b3b4bebe66b63a6b629908cea093ad3b7ae687a75e7c30e1b8218ed067360"
+    },
+    {
+      "name": "tear-stat-weight",
+      "start": "0x72fb55",
+      "end": "0x72fb7c",
+      "sha256": "a366d3bed67ebf93027168d06cf012ff4584be095a389dc46a60f0ed35ef03c5"
+    },
+    {
+      "name": "ordinary-delay-curve",
+      "start": "0x73006a",
+      "end": "0x730143",
+      "sha256": "3704b8e20e6209cf978acac5c8105c3f70752547ea0187a8f65b5d3f2f025552"
+    },
+    {
+      "name": "sqrt",
+      "start": "0x4228f0",
+      "end": "0x42291e",
+      "sha256": "8d01ec9edfd5f3a16b9a4efc21e16510feb8f71e64bd452d87944debd1e8c3b1"
+    }
+  ],
+  "cases": 60,
+  "scope": "Original SSE contribution and ordinary rate curve including original min/max/sqrt helpers. Supplied owned-count result and base tear stat; ordinary character, no other modifiers. Full inventory query/cache order, item interactions, pool RNG and pickup factory/animation are not accepted.",
+  "full_native_acceptance": false
+}

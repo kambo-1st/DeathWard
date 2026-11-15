@@ -1,0 +1,27 @@
+{
+  "dedicated_stone_pedestal_found": false,
+  "inspection": "Local source filenames, town/frontier manifests and rendered asset-browser FBX previews; previews show geometry without authored materials.",
+  "candidates": [
+    {
+      "asset": "assets/frontier/source/Models/SM_Env_TreeStump_01.fbx",
+      "preview": "tree-stump.png",
+      "assessment": "Low rustic stump; best existing canyon-themed base. Its uneven top may need a small flattening adjustment."
+    },
+    {
+      "asset": "assets/town/source/Models/SM_Prop_Church_Podium_01.fbx",
+      "preview": "church-podium.png",
+      "assessment": "Formal pedestal-like base, but sloped lectern top. Needs adaptation for a level display surface."
+    },
+    {
+      "asset": "assets/town/source/Models/SM_Prop_Table_Small_01.fbx",
+      "preview": "small-table.png",
+      "assessment": "Flat-top small wooden table, usable as-is as a display stand; visibly furniture."
+    },
+    {
+      "asset": "assets/frontier/source/Models/SM_Env_Tree_Stump_01.fbx",
+      "preview": "cut-stump.png",
+      "assessment": "Tall broken trunk; unsuitable as-is."
+    }
+  ],
+  "replacement_selected": false
+}

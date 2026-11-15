@@ -1,5 +1,7 @@
+#include "items/SadOnion.hpp"
 #include "combat/Simulation.hpp"
 #include "combat/ChestGeometry.hpp"
+#include "world/PedestalGeometry.hpp"
 #include "world/SourceCombatRockRooms.hpp"
 #include "world/SourceChestRockRoomData.hpp"
 #include "world/SourceCoinRockRoomData.hpp"
@@ -17,8 +19,8 @@
 
 namespace dw {
 Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, MissionTheme theme,
-                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library, float requestedRoomScale, int roomMinimum, int roomMaximum, float requestedRouteScale, bool requestedSourceRoom, int requestedHeartLayouts, bool requestedCoins, bool requestedRoomLocks)
-    : content(library ? std::move(library) : defaultMechanics()), expedition(seed,tutorial,account,pacing),floor(level),roomSizeScale(requestedRoomScale),routeLengthScale(requestedRouteScale),sourceRoomLocks(requestedRoomLocks),sourceCombatRoom(requestedSourceRoom),roomHeartLayouts(requestedHeartLayouts),roomMinHalfTiles(roomMinimum),roomMaxHalfTiles(roomMaximum),
+                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library, float requestedRoomScale, int roomMinimum, int roomMaximum, float requestedRouteScale, bool requestedSourceRoom, int requestedHeartLayouts, bool requestedCoins, bool requestedRoomLocks, bool requestedTreasureUpgrade)
+    : content(library ? std::move(library) : defaultMechanics()), expedition(seed,tutorial,account,pacing),floor(level),roomSizeScale(requestedRoomScale),routeLengthScale(requestedRouteScale),sourceRoomLocks(requestedRoomLocks),sourceTreasureUpgrade(requestedTreasureUpgrade),sourceCombatRoom(requestedSourceRoom),roomHeartLayouts(requestedHeartLayouts),roomMinHalfTiles(roomMinimum),roomMaxHalfTiles(roomMaximum),
       arena(expedition.floorSeed(level), theme, canyonRiver, tutorial, expedition.storyAt(level),
             expedition.roomsOnFloor(level),[&]{auto dimensions=expedition.dimensionsOnFloor(level);
                 dimensions.roomSizeScale=roomSizeScale;dimensions.routeLengthScale=routeLengthScale;
@@ -97,14 +99,16 @@ bool Simulation::canUseFloorExit() const {
 bool Simulation::canResizeRooms() const {
     return !arena.rooms.empty(); // Explicit testing control; exploration/combat do not lock it.
 }
-void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScale,std::optional<bool> sourceRoom,std::optional<int> heartLayouts,std::optional<bool> roomLocks) {
+void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScale,std::optional<bool> sourceRoom,std::optional<int> heartLayouts,std::optional<bool> roomLocks,std::optional<bool> treasureUpgrade) {
+    const bool treasure=treasureUpgrade.value_or(sourceTreasureUpgrade);
     const bool locks=roomLocks.value_or(sourceRoomLocks);
     const bool enabled=sourceRoom.value_or(sourceCombatRoom);
     const int heartMode=heartLayouts.value_or(roomHeartLayouts);
-    if(locks==sourceRoomLocks&&heartMode==roomHeartLayouts&&enabled==sourceCombatRoom&&scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
+    if(treasure==sourceTreasureUpgrade&&locks==sourceRoomLocks&&heartMode==roomHeartLayouts&&enabled==sourceCombatRoom&&scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
     if(!canResizeRooms())throw std::runtime_error("No floor to resize");
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
-                    expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks);
+                    expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure);
+    next.sadOnionStrength=sadOnionStrength;
     const int targetRoom=std::clamp(room,0,next.finalRoom());
     next.items=items;next.keys=keys;next.powerUpsTaken=powerUpsTaken;
     next.dynamite=dynamite;next.dynamiteCooldown=dynamiteCooldown;
@@ -179,7 +183,8 @@ bool Simulation::advanceFloor() {
     if(!floorExitRequested||lastFloor()||dead||!canUseFloorExit())return false;
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
-                    expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks);
+                    expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade);
+    next.sadOnionStrength=sadOnionStrength;
     next.canonicalShooting=canonicalShooting;
     next.gaperMovementMultiplier=gaperMovementMultiplier;
     next.spiderMovementMultiplier=spiderMovementMultiplier;
@@ -342,6 +347,25 @@ void Simulation::tunePlayer(float baseHealth, float shotDamage) {
     }
     player.shotDamage = shotDamage;
 }
+bool Simulation::hasSourceTreasure(int index) const {
+    return sourceTreasureUpgrade&&floor==0&&!surveyTutorial&&arena.theme==MissionTheme::Canyon&&
+        arena.profile.active()&&index>=0&&index<arena.roomCount()&&arena.rooms[size_t(index)].kind==RoomKind::Power;
+}
+SourcePlayerStats Simulation::effectivePlayerStats() const {
+    auto result=player.attributes;
+    result.tearsPerSecond=sadOnionTears(result.tearsPerSecond,itemStacks({"isaac",ItemKind::Collectible,1}),sadOnionStrength);
+    return result;
+}
+bool Simulation::collectTreasureUpgrade() {
+    if(!hasSourceTreasure(room)||!rewardAvailable(room)||dead||finished||!roomClear||
+       shopOpen||rewardOpen||player.totalHealth()<=0||items.size()>=256)return false;
+    const auto at=rewardPosition(room);
+    if(!pedestalGeometry::touching(player.position,at)||!arena.sight(player.position,at))return false;
+    const ItemKey item{"isaac",ItemKind::Collectible,1};
+    if(!content->item(item))return false;
+    rooms[size_t(room)].rewardTaken=true;++powerUpsTaken;grant(item);
+    announce("THE SAD ONION / TEARS UP",3);return true;
+}
 bool Simulation::rewardAvailable(int index) const {
     const auto &site=arena.rooms.at(size_t(index));const auto &progress=rooms.at(size_t(index));
     return !progress.rewardTaken&&(site.kind==RoomKind::Power||
@@ -352,6 +376,7 @@ Vector3 Simulation::rewardPosition(int index) const {
     return site.kind==RoomKind::Boss?site.reward:site.objective;
 }
 void Simulation::offerReward() {
+    if(hasSourceTreasure(room)){collectTreasureUpgrade();return;}
     const auto &progress = rooms[size_t(room)];
     if (!rewardAvailable(room))
         return;
@@ -360,7 +385,7 @@ void Simulation::offerReward() {
 }
 void Simulation::chooseReward(int index) {
     auto &progress = rooms[size_t(room)];
-    if (!rewardOpen || index < 0 || index >= int(offers.size()) || progress.rewardTaken ||
+    if (hasSourceTreasure(room)||!rewardOpen || index < 0 || index >= int(offers.size()) || progress.rewardTaken ||
         !rewardAvailable(room)||items.size()>=256||!roomClear||
         distance(player.position,rewardPosition(room))>=2.6f||!arena.sight(player.position,rewardPosition(room)))
         return;
@@ -670,8 +695,12 @@ void Simulation::jumpDebug(int index, bool restart) {
     }
     healDebug();
     // Debug travel must not land inside a group that already occupies the room.
-    player.position =
-        index == finalRoom()||arena.rooms[size_t(index)].sourceObstacleTemplate>=0 ? arena.rooms[size_t(index)].entry : arena.rooms[size_t(index)].center;
+    const auto &destination=arena.rooms[size_t(index)];
+    player.position = index==finalRoom()||destination.sourceObstacleTemplate>=0
+        ? destination.entry : destination.center;
+    // Keep direct treasure review clear of the pickup and doorway click targets.
+    if(destination.kind==RoomKind::Power)
+        player.position=add(destination.center,mul(unit(sub(destination.entry,destination.center)),3.f));
     for (const auto &enemy : roomEnemies(index))
         if (enemy.alive && distance(player.position, enemy.position) < 6) {
             player.position = arena.rooms[size_t(index)].entry;
@@ -1179,7 +1208,7 @@ void Simulation::collectChains() {
 }
 void Simulation::updatePlayer(const Input &input, float dt) {
     const float walkSpeed = player.walkingSpeed();
-    const auto shooting = canonicalShooting ? AcceptedPlayerShooting.resolve(player.attributes)
+    const auto shooting = canonicalShooting ? AcceptedPlayerShooting.resolve(effectivePlayerStats())
                                            : ResolvedPlayerShooting{0,0,0};
     const Vector3 previousPosition = player.position;
     playerStepStart_=previousPosition;
@@ -1212,7 +1241,8 @@ void Simulation::updatePlayer(const Input &input, float dt) {
             cancelMove();
             useDoor(target.first, target.second);
         }
-        if (!movePath_.empty() && interactOnArrival_ && distance(player.position, movePath_.back()) < 2.0f &&
+        if (!movePath_.empty() && interactOnArrival_ &&
+            distance(player.position,arena.rooms[size_t(room)].kind==RoomKind::Power?rewardPosition(room):movePath_.back())<2.0f &&
             arena.sight(player.position, movePath_.back())) {
             interact();
         }
@@ -1709,6 +1739,7 @@ void Simulation::step(const Input &input, float dt) {
             enterRoom(location);
     }
     collectKeys();
+    collectTreasureUpgrade();
     updateMoney(dt);
     updateHeartPickups(dt);
     updateOrdinaryKeys(dt);

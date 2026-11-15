@@ -1,0 +1,31 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 143: heart_rock_room
+    Start 144: combat_rock_room
+    Start 154: four_gaper_room
+    Start 157: source_combat_room
+1/4 Test #143: heart_rock_room ..................   Passed    2.51 sec
+2/4 Test #154: four_gaper_room ..................***Failed    2.61 sec
+PASS exact source108 content, physical routes and door access size=0.750000 range=5 cell=1.323077
+PASS exact source108 content, physical routes and door access size=0.750000 range=7 cell=1.389231
+PASS exact source108 content, physical routes and door access size=0.750000 range=10 cell=1.984615
+PASS exact source108 content, physical routes and door access size=1.100000 range=5 cell=1.455385
+PASS exact source108 content, physical routes and door access size=1.100000 range=7 cell=2.037539
+PASS exact source108 content, physical routes and door access size=1.100000 range=10 cell=2.910769
+PASS exact source108 content, physical routes and door access size=1.500000 range=5 cell=1.984615
+PASS exact source108 content, physical routes and door access size=1.500000 range=7 cell=2.778461
+PASS exact source108 content, physical routes and door access size=1.500000 range=10 cell=3.969231
+PASS actual shots/cover/deaths/successors/seals/rewards/demolition/revisit/Apply; shots=30 kills=4
+PASS exact source108 content, physical routes and door access size=0.750000 range=5 cell=1.323077
+FAIL all four live Gapers navigate the source cover toward the player
+
+3/4 Test #144: combat_rock_room .................   Passed    3.67 sec
+4/4 Test #157: source_combat_room ...............   Passed    7.07 sec
+
+75% tests passed, 1 tests failed out of 4
+
+Total Test time (real) =   7.08 sec
+
+The following tests FAILED:
+	154 - four_gaper_room (Failed)
+Errors while running CTest

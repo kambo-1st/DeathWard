@@ -37,7 +37,7 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "User acknowledged optional single-entrance shops/D10d and requested this commit. Next proposed: revalidate older seed-specific room review fixtures and handoffs, then D11a one named real treasure upgrade. No new implementation selected; bulk parity stays paused.",
+  "next_work": "Selected seed-based review refresh is in progress, followed by selected D11a one real treasure upgrade. Nine rebuilt suites exposed stale witnesses. No D12/bulk resumption.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-12",
     "status": "Ordinary caller/descriptor and direct-entry delivery accepted; next complete-room continuation selected",
@@ -358,7 +358,7 @@
     "historical_review_executable": "/home/kambo/.local/share/deathward/reviews/damage-health-retry-20261108T175053Z/deathward_damage_health_review"
   },
   "enemy_movement_checkpoint": {
-    "status": "D04–D06 movement and Pooter shots enabled, developer-verified and scoped playtest accepted; D07 damage/HP now enabled; full native acceptance open",
+    "status": "D04\u2013D06 movement and Pooter shots enabled, developer-verified and scoped playtest accepted; D07 damage/HP now enabled; full native acceptance open",
     "scope": "encounter roster conversion and native movement verification first",
     "evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/validation.json",
     "corrected_candidate_enabled": true,
@@ -855,7 +855,6 @@
     "committed": true,
     "report": "docs/reports/isaac-first-floor-parity/shop-leaf-placement/README.md",
     "remaining": [
-      "Revalidate older seed-specific room review fixtures and handoffs",
       "Broader native generation/profile/physics and gameplay-save continuity"
     ],
     "graph_cases": 7168,
@@ -864,5 +863,66 @@
     "game_renderer_modes": 2,
     "cli_cases": 3,
     "acceptance_report": "docs/reports/isaac-first-floor-parity/shop-leaf-placement/human-acceptance.json"
+  },
+  "seed_review_refresh": {
+    "selected": true,
+    "status": "developer_verified",
+    "report": "docs/reports/isaac-first-floor-parity/seed-review-refresh/README.md",
+    "initial_failures": 9,
+    "initial_suites": 11,
+    "core_suites": 11,
+    "game_renderer_modes": 11,
+    "remaining": [
+      "Human replay of refreshed witnesses",
+      "Broader native selection/contents/physics acceptance"
+    ]
+  },
+  "d11a_treasure_upgrade": {
+    "selected": true,
+    "enabled": true,
+    "research": "60 original-code ordinary Tears cases and preserved item/treasure XML verified",
+    "human_accepted": false,
+    "developer_verified": true,
+    "status": "ready_for_human_review",
+    "report": "docs/reports/isaac-first-floor-parity/d11a-treasure-upgrade/README.md",
+    "full_native_acceptance": false,
+    "native_cases": 60,
+    "generated_collection_cases": 27,
+    "core_suites": 7,
+    "game_renderer_modes": 1,
+    "cli_cases": 3,
+    "remaining": [
+      "Human playtest acceptance",
+      "Native inventory/cache/modifier order and complete item synergies",
+      "Full treasure pool eligibility/selection/exhaustion/RNG and D6/active items",
+      "Native pedestal/pickup factory, animation and physics",
+      "Browser runtime and gameplay-save continuity",
+      "D12 source shop stock, prices and purchases (not started)"
+    ],
+    "centered_pedestal": true,
+    "pedestal_clearance_floor_configurations": 36,
+    "asset_candidates_report": "docs/reports/isaac-first-floor-parity/d11a-treasure-upgrade/pedestal-assets/README.md",
+    "pedestal_model": "Retained current stone, explicitly selected by user",
+    "pedestal_collision": {
+      "implemented": true,
+      "developer_verified": true,
+      "human_accepted": false,
+      "scope": "Persistent treasure-room bases; source and legacy offerings",
+      "shape": "Eight-sided base prism with conservative swept character clearance",
+      "direction_cases": 16,
+      "edge_collection": true,
+      "persists_after_collection_and_revisit": true,
+      "apply_safe_placement": true,
+      "legacy_offering_menu": true,
+      "game_renderer_verified": true,
+      "focused_regression_suites": [
+        "treasure_upgrade",
+        "chest_gameplay",
+        "preplaced_chest_layout",
+        "mission_shop"
+      ],
+      "new_tunables": false,
+      "original_model_retained": true
+    }
   }
 }

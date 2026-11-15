@@ -1,3 +1,4 @@
+#include "RoomReviewSeeds.hpp"
 #include "combat/Simulation.hpp"
 #include "world/SourceHeartRockRoom.hpp"
 #include "world/SourceCoinRockRoomData.hpp"
@@ -94,8 +95,8 @@ void boundaries(uint64_t seed) {
     std::cout<<"PASS capacity/blocked identity, partial revisit/inactive clock, all three coin values/caps and scope exclusions\n";
 }
 int main(){try{
-    verify(1322,.75f,5,5,false);
-    verify(1063,1.1f,7,9,true);
-    verify(1063,1.5f,10,10,false);
-    boundaries(1063);
+    verify(review::seed(30,.75f,5,5),.75f,5,5,false);
+    verify(review::seed(30,1.1f,7,9),1.1f,7,9,true);
+    verify(review::seed(30,1.5f,10,10),1.5f,10,10,false);
+    boundaries(review::seed(30));
 }catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

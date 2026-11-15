@@ -1,3 +1,4 @@
+#include "RoomReviewSeeds.hpp"
 #include "combat/Simulation.hpp"
 #include "world/SourceHeartRockRoom.hpp"
 #include "world/SourceKeyRockRoomData.hpp"
@@ -70,5 +71,5 @@ void boundaries(uint64_t seed) {
 }
 int main(int argc,char **argv){try{
     if(argc>1){verify(std::stoull(argv[1]),.75f,5,5,false);return 0;}
-    verify(1493,.75f,5,5,false);verify(285,1.1f,7,9,true);verify(1932,1.5f,10,10,false);boundaries(285);
+    verify(review::seed(214,.75f,5,5),.75f,5,5,false);verify(review::seed(214,1.1f,7,9),1.1f,7,9,true);verify(review::seed(214,1.5f,10,10),1.5f,10,10,false);boundaries(review::seed(214));
 }catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

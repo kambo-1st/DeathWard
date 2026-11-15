@@ -1,0 +1,60 @@
+{
+  "selected": true,
+  "enabled": true,
+  "developer_verified": true,
+  "human_accepted": false,
+  "full_native_acceptance": false,
+  "native_cases": 60,
+  "generated_collection_cases": 27,
+  "core_suites": [
+    "treasure_upgrade",
+    "canonical_shooting_integration",
+    "room_lock_policy",
+    "keyed_door_spending",
+    "mission_shop",
+    "balance_preset_contract",
+    "mechanics_content"
+  ],
+  "game_renderer_modes": 1,
+  "cli_cases": 3,
+  "source_executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "remaining": [
+    "Human playtest acceptance",
+    "Native inventory/cache/modifier order and complete item synergies",
+    "Full treasure pool eligibility/selection/exhaustion/RNG and D6/active items",
+    "Native pedestal/pickup factory, animation and physics",
+    "Browser runtime and gameplay-save continuity",
+    "D12 source shop stock, prices and purchases (not started)"
+  ],
+  "centered_pedestal": {
+    "implemented": true,
+    "human_accepted": false,
+    "opening_floor_configurations": 27,
+    "later_floor_configurations": 9,
+    "game_renderer_verified": true,
+    "model_replacement_selected": false,
+    "model_choice": "keep_current_stone"
+  },
+  "pedestal_collision": {
+    "implemented": true,
+    "developer_verified": true,
+    "human_accepted": false,
+    "scope": "Persistent treasure-room bases; source and legacy offerings",
+    "shape": "Eight-sided base prism with conservative swept character clearance",
+    "direction_cases": 16,
+    "edge_collection": true,
+    "persists_after_collection_and_revisit": true,
+    "apply_safe_placement": true,
+    "legacy_offering_menu": true,
+    "game_renderer_verified": true,
+    "focused_regression_suites": [
+      "treasure_upgrade",
+      "chest_gameplay",
+      "preplaced_chest_layout",
+      "mission_shop"
+    ],
+    "new_tunables": false,
+    "original_model_retained": true
+  }
+}

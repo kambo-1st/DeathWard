@@ -216,7 +216,8 @@ void Game::launch(bool freeMission) {
                                                   nextBalancePreset?nextBalancePreset->sourceCombatRoom:true,
                                                   nextBalancePreset?nextBalancePreset->roomHeartLayouts:1,
                                                   nextBalancePreset?nextBalancePreset->coinClearRewards:true,
-                                                  nextBalancePreset?nextBalancePreset->sourceRoomLocks:true);
+                                                  nextBalancePreset?nextBalancePreset->sourceRoomLocks:true,
+                                                  nextBalancePreset?nextBalancePreset->sourceTreasureUpgrade:true);
     startExpedition(std::move(candidate));
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
     if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
@@ -264,7 +265,7 @@ void Game::perform(Action action) {
     try {
         if(balanceOpen&&action!=Action::None&&action!=Action::Quit&&
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
-           (action<Action::BalanceDamageHealthTab||action>Action::ToggleSourceRoomLocks))return;
+           (action<Action::BalanceDamageHealthTab||action>Action::ResetSadOnion))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -279,9 +280,19 @@ void Game::perform(Action action) {
         case Action::CloseBalance:
             balanceOpen=balancePathEditing=false;accumulator=0;resetPointerInput();break;
         case Action::BalanceWorldTab:balanceRewardsOpen=balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
-        case Action::BalanceShootingTab:balanceShootingOpen=true;balanceEnemiesOpen=balanceRewardsOpen=balanceCombatOpen=false;break;
+        case Action::BalanceShootingTab:balanceTreasureOpen=false;balanceShootingOpen=true;balanceEnemiesOpen=balanceRewardsOpen=balanceCombatOpen=false;break;
         case Action::BalanceEnemiesTab:balanceEnemiesOpen=true;balanceShootingOpen=balanceRewardsOpen=balanceCombatOpen=false;balancePooterOpen=false;break;
         case Action::BalanceRewardsTab:balanceRewardsOpen=true;balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
+        case Action::BalanceTreasureTab:balanceTreasureOpen=true;break;
+        case Action::ToggleTreasureUpgrade:
+            balanceDraft.sourceTreasureUpgrade=!balanceDraft.sourceTreasureUpgrade;
+            balanceNotice="Treasure offering pending. APPLY MAP CHANGES resets this floor; player/build retained.";break;
+        case Action::SadOnionDown:case Action::SadOnionUp:case Action::ResetSadOnion: {
+            auto preset=balancePreset;
+            preset.sadOnionStrength=action==Action::ResetSadOnion?1:std::clamp(preset.sadOnionStrength+(action==Action::SadOnionUp?.05f:-.05f),0.f,2.f);
+            applyBalance(std::move(preset));
+            balanceNotice="Owned Sad Onion: next firing interval. Current wait and emitted shots retained.";break;
+        }
         case Action::BalanceRoomHeartsTab:balanceRoomHeartsOpen=true;break;
         case Action::BalanceClearHeartsTab:balanceRoomHeartsOpen=false;break;
         case Action::RoomHeartsOff:setRoomHeartLayouts(0);break;
@@ -903,8 +914,10 @@ std::vector<Action> Game::menuActions() const {
             std::vector<Action>{Action::PooterMovementDown,Action::PooterMovementUp,Action::PooterShotDown,Action::PooterShotUp,Action::PooterDelayDown,Action::PooterDelayUp,Action::ResetPooter}:
             balanceEnemiesOpen?
             std::vector<Action>{Action::GaperMovementDown,Action::GaperMovementUp,Action::GaperMovementReset,Action::SpiderMovementDown,Action::SpiderMovementUp,Action::SpiderMovementReset}:
+            balanceShootingOpen&&balanceTreasureOpen?
+            std::vector<Action>{Action::ToggleTreasureUpgrade,Action::SadOnionDown,Action::SadOnionUp,Action::ResetSadOnion,Action::ApplyMapChanges}:
             balanceShootingOpen?
-            std::vector<Action>{Action::TearsDown,Action::TearsUp,Action::ShotSpeedDown,Action::ShotSpeedUp,Action::RangeDown,Action::RangeUp,Action::ResetShooting}:
+            std::vector<Action>{Action::BalanceTreasureTab,Action::TearsDown,Action::TearsUp,Action::ShotSpeedDown,Action::ShotSpeedUp,Action::RangeDown,Action::RangeUp,Action::ResetShooting}:
             std::vector<Action>{Action::SpeedDown,Action::SpeedUp,Action::DefaultZoomDown,Action::DefaultZoomUp,Action::DefaultZoomCurrent,Action::DefaultZoomReset,
                 Action::RoomSizeDown,Action::RoomSizeUp,Action::RoomMinDown,Action::RoomMinUp,Action::RoomMaxDown,Action::RoomMaxUp,Action::RoomRangeAuto,
                 Action::RouteLengthDown,Action::RouteLengthUp,Action::ApplyMapChanges,Action::ToggleSourceCombatRoom,Action::ResetBalance};

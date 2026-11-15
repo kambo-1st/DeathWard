@@ -1,0 +1,27 @@
+[
+  {
+    "mode": "treasure-upgrade",
+    "exit_code": 1,
+    "log": "docs/reports/isaac-first-floor-parity/d11a-treasure-upgrade/treasure-upgrade-recheck.log"
+  },
+  {
+    "mode": "keys",
+    "exit_code": 1,
+    "log": "docs/reports/isaac-first-floor-parity/seed-review-refresh/keys-recheck.log"
+  },
+  {
+    "mode": "coin-layout",
+    "exit_code": 0,
+    "log": "docs/reports/isaac-first-floor-parity/seed-review-refresh/coin-layout-recheck.log"
+  },
+  {
+    "mode": "chest-layout",
+    "exit_code": 1,
+    "log": "docs/reports/isaac-first-floor-parity/seed-review-refresh/chest-layout-recheck.log"
+  },
+  {
+    "mode": "red-heart-rewards",
+    "exit_code": 0,
+    "log": "docs/reports/isaac-first-floor-parity/seed-review-refresh/red-heart-rewards-recheck.log"
+  }
+]

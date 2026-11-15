@@ -1,0 +1,55 @@
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_source_combat_room_tests
+[100%] Building CXX object CMakeFiles/deathward_source_combat_room_tests.dir/tests/source_combat_room_tests.cpp.o
+[100%] Linking CXX executable deathward_source_combat_room_tests
+[100%] Built target deathward_source_combat_room_tests
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_room_heart_tests
+[100%] Building CXX object CMakeFiles/deathward_room_heart_tests.dir/tests/room_heart_tests.cpp.o
+[100%] Linking CXX executable deathward_room_heart_tests
+[100%] Built target deathward_room_heart_tests
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_heart_rock_room_tests
+[ 94%] Building CXX object CMakeFiles/deathward_heart_rock_room_tests.dir/tests/heart_rock_room_tests.cpp.o
+[100%] Linking CXX executable deathward_heart_rock_room_tests
+[100%] Built target deathward_heart_rock_room_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_combat_rock_room_tests
+[100%] Building CXX object CMakeFiles/deathward_combat_rock_room_tests.dir/tests/combat_rock_room_tests.cpp.o
+[100%] Linking CXX executable deathward_combat_rock_room_tests
+[100%] Built target deathward_combat_rock_room_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_four_gaper_room_tests
+[100%] Building CXX object CMakeFiles/deathward_four_gaper_room_tests.dir/tests/four_gaper_room_tests.cpp.o
+[100%] Linking CXX executable deathward_four_gaper_room_tests
+[100%] Built target deathward_four_gaper_room_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_room_coverage_tests
+[100%] Building CXX object CMakeFiles/deathward_room_coverage_tests.dir/tests/room_coverage_tests.cpp.o
+[100%] Linking CXX executable deathward_room_coverage_tests
+[100%] Built target deathward_room_coverage_tests
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_chest_layout_tests
+[ 94%] Building CXX object CMakeFiles/deathward_chest_layout_tests.dir/tests/chest_layout_tests.cpp.o
+[100%] Linking CXX executable deathward_chest_layout_tests
+[100%] Built target deathward_chest_layout_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_coin_layout_tests
+[100%] Building CXX object CMakeFiles/deathward_coin_layout_tests.dir/tests/coin_layout_tests.cpp.o
+[100%] Linking CXX executable deathward_coin_layout_tests
+[100%] Built target deathward_coin_layout_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_key_layout_tests
+[100%] Building CXX object CMakeFiles/deathward_key_layout_tests.dir/tests/key_layout_tests.cpp.o
+[100%] Linking CXX executable deathward_key_layout_tests
+[100%] Built target deathward_key_layout_tests
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_bomb_layout_tests
+[100%] Building CXX object CMakeFiles/deathward_bomb_layout_tests.dir/tests/bomb_layout_tests.cpp.o
+[100%] Linking CXX executable deathward_bomb_layout_tests
+[100%] Built target deathward_bomb_layout_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_room_graph_tests
+[100%] Building CXX object CMakeFiles/deathward_room_graph_tests.dir/tests/room_graph_tests.cpp.o
+[100%] Linking CXX executable deathward_room_graph_tests
+[100%] Built target deathward_room_graph_tests

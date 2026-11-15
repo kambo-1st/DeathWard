@@ -1,0 +1,16 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  32: room_lock_policy
+    Start  31: keyed_door_spending
+    Start 137: canonical_shooting_integration
+    Start  33: mission_shop
+1/5 Test #137: canonical_shooting_integration ...   Passed    1.91 sec
+    Start  30: treasure_upgrade
+2/5 Test  #33: mission_shop .....................   Passed    2.81 sec
+3/5 Test  #30: treasure_upgrade .................   Passed    9.26 sec
+4/5 Test  #31: keyed_door_spending ..............   Passed   21.16 sec
+5/5 Test  #32: room_lock_policy .................   Passed   30.40 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =  30.41 sec

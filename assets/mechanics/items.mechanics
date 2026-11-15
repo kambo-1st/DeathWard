@@ -50,3 +50,7 @@ end
 # parity is unselected and other revival items remain unaccepted.
 item "isaac:collectible:11" "1up!" "STRANGE" "One extra life. Return to a safe room with filled red containers, or half a soul heart without red containers."
 end
+
+# D11a: bounded first-floor treasure pedestal; not added to legacy reward pools.
+item "isaac:collectible:1" "The Sad Onion" "TEARS UP" "Faster firing through the ordinary source Tears curve. Copies stack; Shot Speed and Range stay independent."
+end

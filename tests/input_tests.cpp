@@ -1,3 +1,4 @@
+#include "RoomReviewSeeds.hpp"
 #include "core/Game.hpp"
 #include "render/Renderer.hpp"
 #include "items/Items.hpp"
@@ -19,6 +20,25 @@ constexpr unsigned MouseUp = 5, MouseDown = 6, MousePosition = 7, MouseWheel = 8
 constexpr unsigned KeyUp = 1, KeyDown = 2;
 void mouseEvent(unsigned type, int first, int second = 0) {
     PlayAutomationEvent({0, type, {first, second, 0, 0}});
+}
+// Walk through visible nearby waypoints with real mouse events. A regenerated
+// room can put the final pickup behind the HUD or off screen at the accepted zoom.
+template<class Frame> void mouseWalk(dw::Game &game,Frame frame,Vector3 target,float radius=.25f) {
+    using namespace dw;auto &run=*game.run;target.y=run.player.position.y;
+    for(int leg=0;leg<80&&planarDistance(run.player.position,target)>radius;++leg) {
+        auto route=run.arena.path(run.player.position,target,.48f);
+        if(route.empty())std::cerr<<"MOUSE_PATH from="<<run.player.position.x<<","<<run.player.position.z<<" to="<<target.x<<","<<target.z<<" room="<<run.room<<" blocked="<<run.arena.blocked(run.player.position,.48f)<<","<<run.arena.blocked(target,.48f)<<" clear="<<run.arena.clear(run.player.position,target,.48f)<<"\n";
+        check(!route.empty(),"mouse walking target physically reachable");
+        Vector3 next=target;for(const auto &p:route)if(planarDistance(run.player.position,p)>.15f){next=p;break;}
+        const auto delta=horizontal(sub(next,run.player.position));if(length(delta)>3)next=add(run.player.position,mul(unit(delta),3));
+        game.updateCamera(10);frame();next.y=0;const auto screen=GetWorldToScreen(next,game.camera);
+        check(screen.x>180&&screen.x<1035&&screen.y>165&&screen.y<620,"mouse waypoint visible outside HUD");
+        const auto start=run.player.position;
+        mouseEvent(MousePosition,int(screen.x),int(screen.y));frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();
+        for(int n=0;n<90&&planarDistance(run.player.position,next)>.15f&&planarDistance(run.player.position,target)>radius;++n)frame();
+        check(planarDistance(start,run.player.position)>.02f||planarDistance(run.player.position,target)<=radius,"visible mouse waypoint advances");
+    }
+    check(planarDistance(run.player.position,target)<=radius,"mouse reaches requested target");
 }
 void balanceInputCheck(const std::filesystem::path &directory) {
     const auto save=directory/"balance.save";
@@ -571,7 +591,7 @@ void dynamiteBalanceInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"dynamite-balance.save",preset=directory/"dynamite.json";
-    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="129";game.reviewSourceRoomTemplate=32;
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText=std::to_string(review::seed(32));game.reviewSourceRoomTemplate=32;
     game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
     check(game.run&&game.error.empty(),"D10a main-game launch");auto &run=*game.run;Renderer renderer;
     const auto frame=[&] {game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"D10a UI errors");};
@@ -625,7 +645,7 @@ void bombInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"bombs.save",preset=directory/"bombs.json",sourcePreset=directory/"bombs-source.json";
-    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="129";game.reviewSourceRoomTemplate=32;
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText=std::to_string(review::seed(32));game.reviewSourceRoomTemplate=32;
     game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
     if(!game.run||!game.error.empty())throw std::runtime_error("direct bomb room launch: "+game.error);auto &run=*game.run;const int owner=run.room;
     check(run.bombPickups.size()==3&&run.bombClearRewards&&run.player.hp==6&&!run.godMode&&run.dynamite==3,"three natural bombs and normal starting player");
@@ -684,7 +704,7 @@ void bombInputCheck(const std::filesystem::path &directory) {
     run.jumpDebug(0);run.jumpDebug(owner);frame();check(run.dynamite==expected&&run.bombPickups.empty(),"revisit no duplicate bombs");
     run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->room==owner&&game.run->bombPickups.size()==3&&game.run->player.hp==6&&!game.run->godMode&&!game.run->bombClearRewards,"retry retains config with fresh actors and starting health");
     game.close();renderer.unload();
-    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="129";fresh.reviewSourceRoomTemplate=32;fresh.loadBalancePreset(preset);fresh.launch(true);
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText=std::to_string(review::seed(32));fresh.reviewSourceRoomTemplate=32;fresh.loadBalancePreset(preset);fresh.launch(true);
     check(fresh.run&&fresh.run->bombPickups.size()==3&&!fresh.run->bombClearRewards&&fresh.cameraZoomPercent()==165&&fresh.run->player.walkingSpeed()==4.8f,"fresh bomb preset retains accepted map/view/feel");fresh.close();
     std::cout<<"PASS main-game bombs, normal-health mouse rock access, keyboard demolition/live policy, Apply/export/load, revisit/retry and fresh preset; spent="<<spent<<" collected_inventory="<<expected<<'\n';
 }
@@ -692,10 +712,10 @@ void keyInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"keys.save",preset=directory/"keys.json",sourcePreset=directory/"keys-source.json";
-    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="285";game.reviewSourceRoomTemplate=214;
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText=std::to_string(review::seed(214));game.reviewSourceRoomTemplate=214;
     game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
     check(game.run&&game.error.empty(),"direct key room launch");auto &run=*game.run;const int owner=run.room;
-    check(owner==5&&run.keyPickups.size()==2&&run.keyClearRewards&&run.player.hp==6&&!run.godMode,"natural room6 ordinary keys at normal health");
+    check(owner==review::room(214)&&run.keyPickups.size()==2&&run.keyClearRewards&&run.player.hp==6&&!run.godMode,"natural ordinary key room at normal health");
     const auto layout=run.arena.rooms[size_t(owner)];Renderer renderer;
     const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"key UI no errors");};
     const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
@@ -728,7 +748,7 @@ void keyInputCheck(const std::filesystem::path &directory) {
         for(int n=0;n<240;++n)frame();
         if(run.dead||run.player.hp!=6||run.dynamite!=StartingDynamite-i-1) {capture("artifacts/keys-retreat-check.png");std::cerr<<"KEY_RETREAT i="<<i<<" hp="<<run.player.hp<<" ammo="<<run.dynamite<<" distance="<<planarDistance(run.player.position,approach)<<" target_distance="<<planarDistance(run.player.position,retreat)<<" paused="<<game.paused<<" position="<<run.player.position.x<<","<<run.player.position.z<<" target="<<retreat.x<<","<<retreat.z<<std::endl;}
         check(!run.dead&&run.player.hp==6&&run.dynamite==StartingDynamite-i-1,"normal keyboard dynamite and safe retreat");
-        game.updateCamera(10);frame();floorClick(layout.keySpawns[size_t(i)].preferred);
+        game.updateCamera(10);frame();mouseWalk(game,frame,layout.keySpawns[size_t(i)].preferred);
         for(int n=0;n<480;++n){frame();check(!run.arena.blocked(run.player.position,.48f),"mouse path stays physically clear");}
         check(run.keys==i+1,"mouse collects one key after real breach");
     }
@@ -736,7 +756,7 @@ void keyInputCheck(const std::filesystem::path &directory) {
     run.jumpDebug(0);run.jumpDebug(owner);frame();check(run.keys==2&&run.keyPickups.empty(),"revisit has no duplicate keys");
     run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->room==owner&&game.run->keyPickups.size()==2&&game.run->player.hp==6&&!game.run->godMode&&!game.run->keyClearRewards,"retry returns to fresh key room with saved policy and normal health");
     game.close();renderer.unload();
-    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="285";fresh.reviewSourceRoomTemplate=214;fresh.loadBalancePreset(preset);fresh.launch(true);
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText=std::to_string(review::seed(214));fresh.reviewSourceRoomTemplate=214;fresh.loadBalancePreset(preset);fresh.launch(true);
     check(fresh.run&&fresh.run->keyPickups.size()==2&&!fresh.run->keyClearRewards&&fresh.cameraZoomPercent()==165&&fresh.run->player.walkingSpeed()==4.8f,"fresh preset loads keys and accepted map/view/feel");fresh.close();
     Game reward(directory/"key-reward.save");reward.themeChoice=ThemeChoice::Canyon;reward.seedText="2";reward.reviewRoomIndex=1;reward.loadBalancePreset(source);reward.launch(true);
     check(reward.run&&reward.run->keyClearRewards,"legacy preset enables selected main-game key rewards");
@@ -746,16 +766,74 @@ void keyInputCheck(const std::filesystem::path &directory) {
     std::cout<<"PASS main-game keys/model/shadows, mouse rock access, keyboard dynamite/live policy, staged Apply/export/load, revisit/retry and clear reward\n";
 }
 
+void treasureUpgradeInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"treasure.save",file=directory/"treasure.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="69";
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.error.empty(),"treasure main-game launch");auto &run=*game.run;
+    int owner=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.hasSourceTreasure(i)){owner=i;break;}
+    check(owner>=0,"opening-floor treasure offering enabled");run.jumpDebug(owner);game.reviewRoomIndex=owner;
+    Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"treasure UI no errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"treasure capture");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();check(run.player.hp==6&&!run.godMode&&run.player.walkingSpeed()==4.8f&&game.cameraZoomPercent()==165,"accepted health/feel/view");
+    const auto base=run.player.attributes.tearsPerSecond;const auto before=primaryPlayerAttack(run,run.player.shotDamage,false);capture("artifacts/treasure-before.png");
+    auto at=run.rewardPosition(owner);mouseWalk(game,frame,at,3);key(KEY_W);game.updateCamera(10);frame();
+    capture("artifacts/treasure-pedestal.png");
+    at.y=0;const auto pedestalScreen=GetWorldToScreen(at,game.camera);click(int(pedestalScreen.x),int(pedestalScreen.y));
+    for(int n=0;n<600&&!run.itemStacks({"isaac",ItemKind::Collectible,1});++n) {
+        frame();check(!run.arena.blocked(run.player.position,.48f),"actual mouse approach stays outside solid pedestal");
+    }
+    check(run.itemStacks({"isaac",ItemKind::Collectible,1})==1&&!run.rewardOpen&&run.rooms[size_t(owner)].rewardTaken,"actual mouse movement collects single pedestal");
+    check(planarDistance(run.player.position,at)>1.4f&&run.arena.blocked({at.x,.85f,at.z},.48f),"collect from edge while base remains solid");
+    const auto after=primaryPlayerAttack(run,run.player.shotDamage,false);
+    check(run.player.attributes.tearsPerSecond==base&&1/primaryCadence(run)>base&&after.speed==before.speed&&after.maxDistance==before.maxDistance&&after.damage==before.damage,"owned upgrade changes cadence only");
+    capture("artifacts/treasure-collected.png");
+    int combat=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.arena.rooms[size_t(i)].sourceCombatTemplate==47)combat=i;
+    check(combat>=0,"following generated Gaper encounter exists");run.jumpDebug(combat);
+    for(auto &enemy:run.enemies)if(enemy.alive){enemy.state=EnemyState::Stunned;enemy.stateTime=1000;}
+    auto target=std::find_if(run.enemies.begin(),run.enemies.end(),[](const auto &e){return e.alive;});check(target!=run.enemies.end(),"following encounter has a target");
+    const auto id=target->id;const float hp=target->hp;
+    run.player.position=add(target->position,{0,0,3});check(!run.arena.blocked(run.player.position,.48f),"legal next-fight firing point");game.updateCamera(10);
+    const auto aim=GetWorldToScreen(add(target->position,{0,.25f,0}),game.camera);mouseEvent(MousePosition,int(aim.x),int(aim.y));frame();mouseEvent(MouseDown,MOUSE_BUTTON_RIGHT);
+    for(int n=0;n<180&&run.findEnemy(id)&&run.findEnemy(id)->hp==hp;++n)frame();mouseEvent(MouseUp,MOUSE_BUTTON_RIGHT);frame();
+    check(run.findEnemy(id)&&run.findEnemy(id)->hp<hp&&std::abs(hp-run.findEnemy(id)->hp-run.player.shotDamage)<.001f,"next generated fight uses retained per-shot damage");
+    check(1/primaryCadence(run)>base&&run.itemStacks({"isaac",ItemKind::Collectible,1})==1,"upgrade remains effective in following fight");
+    run.jumpDebug(owner);game.updateCamera(10);frame();check(!run.rewardAvailable(owner),"post-fight revisit does not repay");
+    click(374,642);click(710,143);click(1010,189);check(game.balanceOpen&&game.balanceShootingOpen&&game.balanceTreasureOpen,"treasure page via mouse");
+    const auto terrain=run.arena.canyon.get();click(430,270);check(game.hasPendingMapChanges()&&run.sourceTreasureUpgrade,"offering toggle staged");
+    const float wait=run.player.fireCooldown;click(715,330);check(std::abs(run.sadOnionStrength-.95f)<.0001f&&run.player.fireCooldown==wait&&run.arena.canyon.get()==terrain,"strength live with pending map and retained wait");
+    for(int n=0;n<30&&game.keyboardFocus()!=Action::ResetSadOnion;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::ResetSadOnion,"treasure strength keyboard focus");key(KEY_ENTER);check(run.sadOnionStrength==1,"keyboard reset");
+    click(715,330);click(335,605);auto exported=BalancePreset::load(file,run.content->fingerprint());
+    check(!exported.sourceTreasureUpgrade&&std::abs(exported.sadOnionStrength-.95f)<.0001f&&exported.defaultZoomPercent==165,"export includes staged offering/live strength/accepted view");
+    click(380,460);check(!game.hasPendingMapChanges()&&!run.sourceTreasureUpgrade&&run.itemStacks({"isaac",ItemKind::Collectible,1})==1,"Apply preserves owned upgrade");
+    click(430,270);click(380,460);check(run.sourceTreasureUpgrade&&run.rewardAvailable(owner),"Apply testing reset restores offering");
+    click(600,605);check(game.hasPendingMapChanges()&&run.sourceTreasureUpgrade&&!game.balanceDraft.sourceTreasureUpgrade,"Load stages offering");
+    click(430,270);check(!game.hasPendingMapChanges(),"restore source offering before remember");
+    game.exportBalancePreset();game.rememberBalancePreset();capture("artifacts/treasure-panel.png");
+    std::filesystem::copy_file(file,"artifacts/treasure-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.perform(Action::CloseBalance);run.finishDebug(false);game.retryExpedition();
+    check(game.run&&game.run->room==owner&&game.run->sourceTreasureUpgrade&&std::abs(game.run->sadOnionStrength-.95f)<.0001f&&game.run->items.empty()&&game.run->player.hp==6,"death retry keeps tuning, fresh unowned item");game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="69";fresh.reviewRoomIndex=owner;fresh.loadBalancePreset(file);fresh.launch(true);
+    check(fresh.run&&fresh.run->hasSourceTreasure(owner)&&fresh.run->items.empty()&&std::abs(fresh.run->sadOnionStrength-.95f)<.0001f&&fresh.cameraZoomPercent()==165,"fresh exported preset");fresh.close();
+    std::cout<<"PASS D11a actual Game/Renderer mouse collection, keyboard/live/staged settings, Apply/load/export/remember/retry; seed=69 room="<<owner+1<<'\n';
+}
+
 void coinLayoutInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
-    constexpr int seed=1063;
+    const auto seed=review::seed(30);
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"coin-layout.save",preset=directory/"coin-layout.json",sourcePreset=directory/"coin-layout-source.json";
     Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText=std::to_string(seed);game.reviewSourceRoomTemplate=30;
     game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
     check(game.run&&game.error.empty(),"direct coin layout launch");auto &run=*game.run;const int owner=run.room;
     auto count=[&]{return std::count_if(run.moneyPickups.begin(),run.moneyPickups.end(),[&](const auto &p){return p.placedInLayout&&p.room==owner;});};
-    check(owner==1&&count()==4&&run.arena.rooms[size_t(owner)].sourceObstacleTemplate==30&&run.roomClear&&run.player.hp==6&&!run.godMode,"natural room2 has four ready coins with normal health");
+    check(owner==review::room(30)&&count()==4&&run.arena.rooms[size_t(owner)].sourceObstacleTemplate==30&&run.roomClear&&run.player.hp==6&&!run.godMode,"natural source30 has four ready coins with normal health");
     int expected=0;std::vector<Vector3> positions;
     for(const auto &coin:run.moneyPickups)if(coin.placedInLayout&&coin.room==owner){expected+=coin.value;positions.push_back(coin.position);check(coin.timing.phase==CoinTiming::Phase::Idle&&coin.timing.collectible(),"preplaced coins idle at launch");}
     Renderer renderer;
@@ -791,7 +869,7 @@ void coinLayoutInputCheck(const std::filesystem::path &directory) {
 }
 void chestLayoutInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
-    constexpr int seed=375; // Natural complete source31 room at the accepted preset.
+    const auto seed=review::seed(31); // Natural complete source31 room at the accepted preset.
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"chest-layout.save",preset=directory/"chest-layout.json";
     Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText=std::to_string(seed);game.reviewSourceRoomTemplate=31;
@@ -819,11 +897,31 @@ void chestLayoutInputCheck(const std::filesystem::path &directory) {
     for(int n=0;n<480;++n)frame();check(planarDistance(run.player.position,approach)<.15f,"mouse reaches demolition approach");
     // Normal keyboard bomb placement, then retreat beyond the retained blast.
     mouseEvent(KeyDown,KEY_B);frame();mouseEvent(KeyUp,KEY_B);frame();
-    const auto retreat=add(approach,{-6,0,0});clickFloor(retreat);
+    Vector3 retreat{};bool retreatFound=false;
+    for(Vector3 delta:{Vector3{0,0,7},Vector3{0,0,-7},Vector3{7,0,0},Vector3{-7,0,0}}) {
+        auto candidate=add(approach,delta);candidate.y=run.player.position.y;
+        if(run.arena.roomAt(candidate)!=owner||!run.arena.clear(run.player.position,candidate,.48f))continue;
+        bool nearDoor=false;for(size_t d=0;d<run.arena.passages.size();++d)for(int side=0;side<2;++side)
+            if(run.arena.passages[d].rooms[size_t(side)]==owner&&planarDistance(candidate,run.arena.doorApproach(int(d),side))<4)nearDoor=true;
+        if(nearDoor)continue;retreat=candidate;retreatFound=true;break;
+    }
+    check(retreatFound,"safe interior chest retreat exists");clickFloor(retreat);
     for(int n=0;n<240;++n)frame();
     check(!run.dead&&run.dynamite==StartingDynamite-1,"normal-health player uses and survives inventory dynamite");
     check(std::any_of(run.arena.breakables.begin(),run.arena.breakables.end(),[&](const auto &b){return b.room==owner&&b.destroyed;}),"actual bomb opens enclosing rocks");
-    game.updateCamera(10);frame();clickFloor(at);for(int n=0;n<480;++n)frame();
+    // Approach a physically reachable chest edge through visible mouse clicks.
+    bool approached=false;
+    for(Vector3 offset:{Vector3{-chestGeometry::StopX-.04f,0,0},Vector3{chestGeometry::StopX+.04f,0,0},Vector3{0,0,-chestGeometry::StopZ-.04f},Vector3{0,0,chestGeometry::StopZ+.04f}}) {
+        auto edge=add(at,offset);edge.y=run.player.position.y;
+        if(run.arena.blocked(edge,.48f)||run.arena.path(run.player.position,edge,.48f).empty())continue;
+        mouseWalk(game,frame,edge,.15f);approached=true;break;
+    }
+    check(approached,"chest has a reachable edge after demolition");
+    game.updateCamera(10);frame();clickFloor(at);for(int n=0;n<120;++n)frame();
+    if(run.chests.empty()||!run.chests[0].opened) {
+        std::cerr<<"CHEST_ROUTE player="<<run.player.position.x<<","<<run.player.position.z<<" chest="<<at.x<<","<<at.z<<" distance="<<planarDistance(run.player.position,at)<<" room="<<run.room<<" paused="<<game.paused<<" path="<<run.arena.path(run.player.position,at,.48f).size()<<" hp="<<run.player.hp<<"\n";
+        capture("artifacts/chest-layout-failed.png");
+    }
     check(run.chests.size()==1&&run.chests[0].opened&&!run.arena.blocked(run.player.position,.48f),"actual mouse route enters breach and opens solid chest");
     check(std::all_of(run.chests[0].contents.begin(),run.chests[0].contents.end(),[](const auto &d){return d.delivered;}),"preplaced contents delivered once");capture("artifacts/chest-layout-open.png");
     run.jumpDebug(0);run.jumpDebug(owner);frame();check(run.chests.size()==1&&run.chests[0].opened,"revisit retains opened layout chest");
@@ -926,8 +1024,8 @@ void coinRewardInputCheck(const std::filesystem::path &directory) {
 void combatRockRoomInputCheck(const std::filesystem::path &directory,int variant=4) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
-    const int expectedRoom=variant==109?6:variant==108?5:4,count=variant==109?5:variant==108?4:2;
-    const std::string seed=variant==109?"2942":variant==108?"117":"268",prefix=variant==109?"source-five-gaper":variant==108?"source-four-gaper":"source-combat-rock";
+    const int expectedRoom=review::room(variant),count=variant==109?5:variant==108?4:2;
+    const std::string seed=std::to_string(review::seed(variant)),prefix=variant==109?"source-five-gaper":variant==108?"source-four-gaper":"source-combat-rock";
     const auto save=directory/(prefix+".save"),file=directory/(prefix+".json");
     Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText=seed;game.reviewSourceRoomTemplate=variant;
     game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
@@ -955,11 +1053,11 @@ void heartRockRoomInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"heart-rock-room.save";
-    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="934";game.reviewSourceRoomTemplate=91;game.loadBalancePreset(source);game.rememberBalancePreset();game.launch(true);
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText=std::to_string(review::seed(91));game.reviewSourceRoomTemplate=91;game.loadBalancePreset(source);game.rememberBalancePreset();game.launch(true);
     check(game.run&&game.error.empty(),"source rock room launches with accepted preset");
     auto &run=*game.run;Renderer renderer;
     int owner=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.arena.rooms[size_t(i)].sourceObstacleTemplate==91)owner=i;
-    check(owner==3&&run.room==owner,"native descriptor seed934 launches directly in generated room4");
+    check(owner==review::room(91)&&run.room==owner,"recorded descriptor seed launches directly in generated source91 room");
     check(!run.godMode&&run.player.hp==6&&run.dynamite==StartingDynamite,"review launch retains normal health, inventory and damage");
     run.godMode=true;
     auto point=[&](int x,int y) {
@@ -992,9 +1090,9 @@ void heartRockRoomInputCheck(const std::filesystem::path &directory) {
     game.setRoomHeartLayouts(0);game.applyMapChanges();game.run->finishDebug(false);game.retryExpedition();
     check(game.run->room==0,"retry with disabled template explicitly returns to the entrance");
     game.close();renderer.unload();
-    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="934";fresh.reviewSourceRoomTemplate=91;fresh.loadBalancePreset(exported);fresh.rememberBalancePreset();fresh.launch(true);
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText=std::to_string(review::seed(91));fresh.reviewSourceRoomTemplate=91;fresh.loadBalancePreset(exported);fresh.rememberBalancePreset();fresh.launch(true);
     check(fresh.run&&fresh.run->room==owner&&!fresh.run->godMode&&fresh.cameraZoomPercent()==165,"fresh load keeps settings and direct natural room entry");fresh.close();
-    Game missing(directory/"missing-review.save");missing.themeChoice=ThemeChoice::Canyon;missing.seedText="934";missing.reviewSourceRoomTemplate=999999;
+    Game missing(directory/"missing-review.save");missing.themeChoice=ThemeChoice::Canyon;missing.seedText=std::to_string(review::seed(91));missing.reviewSourceRoomTemplate=999999;
     const auto previousId=missing.campaign.data().nextRunId;bool rejected=false;try{missing.launch(true);}catch(const std::exception &){rejected=true;}
     check(rejected&&!missing.run&&missing.campaign.data().nextRunId==previousId,"absent review template cannot fabricate a room or begin the campaign expedition");
     std::cout<<"PASS actual Game/Renderer source91, PLACE action, both pickups, revisit, staged OFF/Apply and accepted settings\n";
@@ -1045,7 +1143,7 @@ void redHeartRewardsInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"red-hearts.save",file=directory/"red-hearts-export.json";
-    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="69";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText=std::to_string(review::FullHeartClearSeed);
     game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
     check(game.run&&game.run->redHeartClearRewards&&game.run->player.attributes.luck==0,"main Game enables D09a with migrated baseline Luck");
     auto &run=*game.run;run.godMode=true;Renderer renderer;
@@ -1053,7 +1151,8 @@ void redHeartRewardsInputCheck(const std::filesystem::path &directory) {
     const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
     const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
     const auto capture=[&](const char *file){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto image=LoadImageFromScreen();check(ExportImage(image,file),"capture D09 handoff");UnloadImage(image);EndDrawing();};
-    run.jumpDebug(2);check(run.livingEnemies()==2,"ordinary generated D08 witness has two Gapers");
+    int owner=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.arena.rooms[size_t(i)].sourceCombatTemplate==47)owner=i;
+    check(owner>=0,"D08 source47 present");run.jumpDebug(owner);check(run.livingEnemies()==2,"ordinary generated D08 witness has two Gapers");
     // Hold AI for deterministic input verification, retaining natural generation,
     // actual Game mouse primary fire, death/morph/clear and reward production.
     for(int body=0;body<10&&!run.roomClear;++body) {
@@ -1080,7 +1179,7 @@ void redHeartRewardsInputCheck(const std::filesystem::path &directory) {
     auto health=run.player.sourceHealth();health.addRed(-2);run.player.setSourceHealth(health);frame();
     check(run.heartPickups.size()==1&&run.player.hp==6&&run.heartPickups[0].timing.phase==RedHeartTiming::Phase::Collect,"natural heart heals immediately at admission and starts collection effect");
     capture("artifacts/d09a-timed-heart-collection.png");for(int n=0;n<30;++n)frame();check(run.heartPickups.empty(),"collection presentation expires");
-    const auto award=*run.rooms[2].redHeartAward;run.jumpDebug(0);run.jumpDebug(2);frame();check(run.heartPickups.empty(),"collected natural reward stays collected on revisit");
+    const auto award=*run.rooms[size_t(owner)].redHeartAward;run.jumpDebug(0);run.jumpDebug(owner);frame();check(run.heartPickups.empty(),"collected natural reward stays collected on revisit");
     click(374,642);click(575,143);check(game.balanceOpen&&game.balanceRewardsOpen,"Rewards tab via actual mouse");
     game.setRoomSize(1.2f);const auto terrain=run.arena.canyon.get();click(350,244);click(850,304);
     check(!run.redHeartClearRewards&&run.player.attributes.luck==1&&game.hasPendingMapChanges()&&run.arena.canyon.get()==terrain,"reward switch and Luck live, map still staged");
@@ -1089,17 +1188,17 @@ void redHeartRewardsInputCheck(const std::filesystem::path &directory) {
     game.setRedHeartRewards(true,5);game.setRedHeartAppearanceSpeed(.5f);click(330,605);const auto exported=BalancePreset::load(file,run.content->fingerprint());
     check(exported.redHeartAppearanceSpeed==.5f&&exported.redHeartClearRewards&&exported.playerLuck==5&&exported.roomSizeScale==1.2f&&exported.defaultZoomPercent==165,"reward settings and staged map exported together");
     game.setRedHeartRewards(false,-3);game.setRedHeartAppearanceSpeed(4);click(590,605);check(run.redHeartAppearanceSpeed==.5f&&run.redHeartClearRewards&&run.player.attributes.luck==5&&game.hasPendingMapChanges(),"valid load applies rewards only to future clears");
-    check(run.rooms[2].redHeartAward->pickupSeed==award.pickupSeed&&run.heartPickups.empty(),"editing/loading never rerolls paid room");
+    check(run.rooms[size_t(owner)].redHeartAward->pickupSeed==award.pickupSeed&&run.heartPickups.empty(),"editing/loading never rerolls paid room");
     const auto revision=game.balancePreset.revision(),draft=game.balanceDraft.revision();auto bad=exported.json();const auto offset=bad.find("\"player_luck\": 5");check(offset!=bad.npos,"invalid Luck fixture field");
     bad.replace(offset,std::string("\"player_luck\": 5").size(),"\"player_luck\": 21");const auto invalid=directory/"invalid-red-hearts.json";{std::ofstream out(invalid);out<<bad;}
     game.balanceFile=invalid.string();game.perform(Action::LoadBalance);check(!game.error.empty()&&game.balancePreset.revision()==revision&&game.balanceDraft.revision()==draft&&run.arena.canyon.get()==terrain,"invalid reward config has no partial effect");
     game.balanceFile=file.string();game.perform(Action::LoadBalance);capture("artifacts/d09a-timing-panel.png");game.rememberBalancePreset();
     std::filesystem::copy_file(file,"artifacts/d09a-timing-preset.json",std::filesystem::copy_options::overwrite_existing);
-    game.applyMapChanges();check(run.redHeartAppearanceSpeed==.5f&&run.redHeartClearRewards&&run.player.attributes.luck==5&&!run.rooms[2].redHeartAward,"map testing reset retains config and resets reward history");key(KEY_ESCAPE);
+    game.applyMapChanges();check(run.redHeartAppearanceSpeed==.5f&&run.redHeartClearRewards&&run.player.attributes.luck==5&&!run.rooms[size_t(owner)].redHeartAward,"map testing reset retains config and resets reward history");key(KEY_ESCAPE);
     run.jumpDebug(run.finalRoom());run.clearRoomDebug();check(!run.rooms[size_t(run.finalRoom())].redHeartAward,"boss uses separate existing reward policy");run.floorExitRequested=true;
     check(run.advanceFloor()&&run.redHeartAppearanceSpeed==.5f&&run.redHeartClearRewards&&run.player.attributes.luck==5,"floor descent retains config");
     run.finishDebug(false);game.retryExpedition();check(game.run->redHeartAppearanceSpeed==.5f&&game.run->redHeartClearRewards&&game.run->player.attributes.luck==5&&game.run->player.hp==6,"death retry retains reward settings");game.close();renderer.unload();
-    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="69";fresh.launch(true);
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText=std::to_string(review::FullHeartClearSeed);fresh.launch(true);
     check(fresh.run->redHeartAppearanceSpeed==.5f&&fresh.run->redHeartClearRewards&&fresh.run->player.attributes.luck==5&&fresh.cameraZoomPercent()==165&&fresh.run->player.attributes.tearsPerSecond==1.9272734f,"fresh application retains rewards and accepted base");fresh.close();
     std::cout<<"PASS D09a actual Game natural heart through mouse-fire clear, full-health refusal/healing/revisit, reward UI, pending map, export/load/reject, floor/retry/new-session persistence\n";
 }
@@ -1107,7 +1206,7 @@ void sourceCombatRoomInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"source-room.save",file=directory/"source-room-export.json";
-    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="69";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText=std::to_string(review::FullHeartClearSeed);
     game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
     check(game.run&&game.error.empty(),"D08 ordinary main Game launch");auto &run=*game.run;Renderer renderer;
     auto sourceIndex=[&]{for(int i=0;i<run.arena.roomCount();++i)if(run.arena.rooms[size_t(i)].sourceCombatTemplate==47)return i;return -1;};
@@ -1135,7 +1234,7 @@ void sourceCombatRoomInputCheck(const std::filesystem::path &directory) {
     game.rememberBalancePreset();run.finishDebug(false);game.retryExpedition();
     check(!game.run->sourceCombatRoom&&game.cameraZoomPercent()==165,"retry keeps disabled switch and view");
     game.close();renderer.unload();
-    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="69";fresh.launch(true);
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText=std::to_string(review::FullHeartClearSeed);fresh.launch(true);
     check(fresh.run&&!fresh.run->sourceCombatRoom,"fresh application loads remembered source-room setting");
     fresh.setSourceCombatRoom(true);fresh.applyMapChanges();check(fresh.run->sourceCombatRoom,"reenable in running expedition");
     fresh.balanceFile=file.string();fresh.exportBalancePreset();fresh.rememberBalancePreset();
@@ -2304,6 +2403,9 @@ int main(int argc, char **argv) {
         }
         if(mode=="--keys-only") {
             keyInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--treasure-upgrade-only") {
+            treasureUpgradeInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--coin-layout-only") {
             coinLayoutInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

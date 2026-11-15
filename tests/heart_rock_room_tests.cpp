@@ -1,3 +1,4 @@
+#include "RoomReviewSeeds.hpp"
 #include "combat/Simulation.hpp"
 #include "world/SourceHeartRockRoom.hpp"
 #include "world/SourceHeartRockRoomData.hpp"
@@ -6,12 +7,12 @@
 using namespace dw;
 void check(bool ok,const std::string &why){if(!ok)throw std::runtime_error(why);}
 Simulation create(float scale=1.1f,int minimum=7,int maximum=9,int mode=1) {
-    Simulation r(934,1,{},MissionTheme::Canyon,true,false,WitnessAccount::None,0,ExpeditionPacing::Compact,defaultMechanics(),scale,minimum,maximum,.26f,true,mode);
+    Simulation r(review::seed(91,scale,minimum,maximum),1,{},MissionTheme::Canyon,true,false,WitnessAccount::None,0,ExpeditionPacing::Compact,defaultMechanics(),scale,minimum,maximum,.26f,true,mode);
     r.godMode=true;return r;
 }
 void checkRoom(Simulation &r,bool lifecycle) {
     int owner=-1;for(int i=0;i<r.arena.roomCount();++i)if(r.arena.rooms[size_t(i)].sourceObstacleTemplate==91)owner=i;
-    check(owner>=0,"seed934 selects complete source rock room");
+    check(owner>=0,"recorded witness selects complete source rock room");
     const auto &layout=r.arena.rooms[size_t(owner)];const float cell=sourceHeartCellSize(layout);
     const std::string tag=" size="+std::to_string(r.roomSizeScale)+" cell="+std::to_string(cell);
     check(layout.kind==RoomKind::Empty&&r.roomEnemies(owner).empty(),"source room has no generated enemies"+tag);

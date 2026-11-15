@@ -1,0 +1,12 @@
+{
+  "launched_at": "2026-11-15T17:42:05.770796+00:00",
+  "seed": 69,
+  "displayed_room": 8,
+  "zoom_percent": 165,
+  "starting_health_half_hearts": 6,
+  "god_mode": false,
+  "muted": true,
+  "save": "/home/kambo/.local/share/deathward/reviews/d11a-treasure-upgrade/campaign.save",
+  "preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+  "status": "interactive main game launched at user request; human review pending"
+}

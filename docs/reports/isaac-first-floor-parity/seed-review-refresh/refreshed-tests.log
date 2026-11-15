@@ -1,0 +1,45 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start 154: four_gaper_room
+      Start 142: room_heart_layouts
+      Start 144: combat_rock_room
+      Start 151: preplaced_bomb_layout
+ 1/11 Test #154: four_gaper_room ..................***Failed    2.50 sec
+PASS exact source108 content, physical routes and door access size=0.750000 range=5 cell=1.323077
+PASS exact source108 content, physical routes and door access size=0.750000 range=7 cell=1.389231
+PASS exact source108 content, physical routes and door access size=0.750000 range=10 cell=1.984615
+PASS exact source108 content, physical routes and door access size=1.100000 range=5 cell=1.455385
+PASS exact source108 content, physical routes and door access size=1.100000 range=7 cell=2.037539
+PASS exact source108 content, physical routes and door access size=1.100000 range=10 cell=2.910769
+PASS exact source108 content, physical routes and door access size=1.500000 range=5 cell=1.984615
+PASS exact source108 content, physical routes and door access size=1.500000 range=7 cell=2.778461
+PASS exact source108 content, physical routes and door access size=1.500000 range=10 cell=3.969231
+PASS actual shots/cover/deaths/successors/seals/rewards/demolition/revisit/Apply; shots=30 kills=4
+PASS exact source108 content, physical routes and door access size=0.750000 range=5 cell=1.323077
+FAIL all four live Gapers navigate the source cover toward the player
+
+      Start 157: source_combat_room
+ 2/11 Test #151: preplaced_bomb_layout ............   Passed    2.76 sec
+      Start 152: preplaced_coin_layout
+ 3/11 Test #144: combat_rock_room .................   Passed    3.92 sec
+      Start 149: preplaced_key_layout
+ 4/11 Test #149: preplaced_key_layout .............   Passed    1.66 sec
+      Start 145: source_room_coverage
+ 5/11 Test #152: preplaced_coin_layout ............   Passed    4.64 sec
+      Start 147: preplaced_chest_layout
+ 6/11 Test #147: preplaced_chest_layout ...........   Passed    1.90 sec
+      Start 143: heart_rock_room
+ 7/11 Test #145: source_room_coverage .............   Passed    4.16 sec
+      Start 171: generated_room_graphs
+ 8/11 Test #157: source_combat_room ...............   Passed    7.80 sec
+ 9/11 Test #171: generated_room_graphs ............   Passed    0.56 sec
+10/11 Test #142: room_heart_layouts ...............   Passed   10.38 sec
+11/11 Test #143: heart_rock_room ..................   Passed    2.21 sec
+
+91% tests passed, 1 tests failed out of 11
+
+Total Test time (real) =  11.52 sec
+
+The following tests FAILED:
+	154 - four_gaper_room (Failed)
+Errors while running CTest

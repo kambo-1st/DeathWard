@@ -1,0 +1,4 @@
+BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 onion_strength=1 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=50b94afe9becde64 profile=custom
+ROOM_REVIEW requested=214 room=5 template=214 selection_seed=14377700 spawn_seed=2942904809 chest_slots=0 chests=0 bomb_slots=0 layout_bombs=0 key_slots=2 layout_keys=2 coin_slots=0 layout_coins=0 hp=6 god=0
+FAIL: mouse collects one key after real breach
+Temporary campaign: "/tmp/deathward-input-46738523804450"

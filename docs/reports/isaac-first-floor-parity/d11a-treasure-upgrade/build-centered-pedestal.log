@@ -1,0 +1,31 @@
+[ 12%] Built target glfw
+[ 16%] Built target raylib
+[ 16%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonTerrain.cpp.o
+[ 20%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Simulation.cpp.o
+[ 20%] Built target deathward_runtime_assets
+[ 20%] Linking CXX static library libdeathward_core.a
+[ 84%] Built target deathward_core
+[ 88%] Built target deathward_skinning
+[ 92%] Built target deathward_cloth
+[ 92%] Built target deathward_mission_lighting
+[ 92%] Built target deathward_particles
+[ 92%] Building CXX object CMakeFiles/deathward.dir/src/core/GameTuning.cpp.o
+[ 92%] Linking CXX executable deathward
+[100%] Built target deathward
+Consolidate compiler generated dependencies of target deathward_core
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_treasure_upgrade_tests
+[100%] Linking CXX executable deathward_treasure_upgrade_tests
+[100%] Built target deathward_treasure_upgrade_tests
+[ 12%] Built target glfw
+[ 16%] Built target raylib
+[ 87%] Built target deathward_core
+[ 91%] Built target deathward_cloth
+[ 91%] Built target deathward_particles
+[ 95%] Built target deathward_skinning
+[ 95%] Built target deathward_mission_lighting
+[ 95%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward_input_tests
+[ 95%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/core/GameTuning.cpp.o
+[ 95%] Linking CXX executable deathward_input_tests
+[100%] Built target deathward_input_tests

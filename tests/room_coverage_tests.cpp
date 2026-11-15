@@ -1,3 +1,4 @@
+#include "RoomReviewSeeds.hpp"
 #include "combat/Simulation.hpp"
 #include "world/SourceCombatRockRooms.hpp"
 #include "world/SourceHeartRockRoom.hpp"
@@ -45,7 +46,7 @@ void verify(uint64_t seed,int variant,float size,int lo,int hi,bool live) {
     std::cout<<"PASS "<<tag<<" room="<<index+1<<" gapers="<<source.gapers.size()<<" rocks="<<source.rocks.size()<<" live="<<live<<'\n';
 }
 void fightAndRevisit() {
-    auto r=create(2942,1.1f,7,9);r.redHeartClearRewards=r.coinClearRewards=true;const int index=6;
+    auto r=create(review::seed(109),1.1f,7,9);r.redHeartClearRewards=r.coinClearRewards=true;const int index=review::room(109);
     check(r.enterSourceRoomReview(109)&&r.room==index&&!r.godMode&&r.player.hp==6,"direct ordinary launch has no cheats");
     r.godMode=true;
     check(!r.roomClear&&r.livingEnemies()==5,"fight begins on entry");
@@ -94,9 +95,7 @@ void fightAndRevisit() {
     std::cout<<"PASS actual shots/cover/deaths/successors/seals/rewards/demolition/revisit/Apply; shots="<<shots<<" kills="<<kills<<'\n';
 }
 int main(){try{
-    for(auto [variant,seed]:{std::pair{109,70},std::pair{547,860},std::pair{548,6},std::pair{550,737}})verify(seed,variant,.75f,5,5,true);
-    verify(860,547,1.1f,7,9,false);verify(6,548,1.1f,7,9,false);
-    verify(2942,109,1.1f,7,9,false);verify(2704,550,1.1f,7,9,false);
-    verify(2530,109,1.5f,10,10,false);verify(841,547,1.5f,10,10,false);verify(6,548,1.5f,10,10,false);verify(447,550,1.5f,10,10,false);
+    for(int variant:{109,547,548,550})for(auto dims:{std::array<float,3>{.75f,5,5},{1.1f,7,9},{1.5f,10,10}})
+        verify(review::seed(variant,dims[0],int(dims[1]),int(dims[2])),variant,dims[0],int(dims[1]),int(dims[2]),dims[0]==.75f);
     fightAndRevisit();
 }catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

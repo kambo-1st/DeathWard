@@ -1,3 +1,4 @@
+#include "RoomReviewSeeds.hpp"
 #include "combat/Simulation.hpp"
 #include "combat/ChestGeometry.hpp"
 #include "world/SourceHeartRockRoom.hpp"
@@ -102,8 +103,8 @@ int main(int argc,char **argv){try{
     // Natural selector witnesses at the globally smallest/largest supported
     // dimensions and the accepted user preset. Resizing can select other rooms;
     // never force source31 into a seed where the native selector omitted it.
-    verify(669,.75f,5,5,false);
-    verify(375,1.1f,7,9,true);
-    verify(375,1.5f,10,10,false);
-    deferred(375);
+    verify(review::seed(31,.75f,5,5),.75f,5,5,false);
+    verify(review::seed(31,1.1f,7,9),1.1f,7,9,true);
+    verify(review::seed(31,1.5f,10,10),1.5f,10,10,false);
+    deferred(review::seed(31));
 }catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

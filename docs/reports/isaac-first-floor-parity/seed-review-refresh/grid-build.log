@@ -1,0 +1,5 @@
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_room_review_scan
+[100%] Building CXX object CMakeFiles/deathward_room_review_scan.dir/tests/room_review_scan.cpp.o
+[100%] Linking CXX executable deathward_room_review_scan
+[100%] Built target deathward_room_review_scan

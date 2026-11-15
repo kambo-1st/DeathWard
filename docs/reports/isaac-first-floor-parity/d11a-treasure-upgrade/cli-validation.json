@@ -1,0 +1,59 @@
+[
+  {
+    "label": "v5-original",
+    "passed": true,
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--expedition",
+      "--seed",
+      "69",
+      "--review-room",
+      "8",
+      "--mute",
+      "--save",
+      "/tmp/deathward-d11a-cli-uudmb1jk/v5-original.save",
+      "--balance-preset",
+      "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+    ],
+    "termination": "own process stopped after startup verification",
+    "exit_code": -15
+  },
+  {
+    "label": "v28-source",
+    "passed": true,
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--expedition",
+      "--seed",
+      "69",
+      "--review-room",
+      "8",
+      "--mute",
+      "--save",
+      "/tmp/deathward-d11a-cli-uudmb1jk/v28-source.save",
+      "--balance-preset",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d10d-room-locks/preset-v28-source.json"
+    ],
+    "termination": "own process stopped after startup verification",
+    "exit_code": -15
+  },
+  {
+    "label": "v29-export",
+    "passed": true,
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--expedition",
+      "--seed",
+      "69",
+      "--review-room",
+      "8",
+      "--mute",
+      "--save",
+      "/tmp/deathward-d11a-cli-uudmb1jk/v29-export.save",
+      "--balance-preset",
+      "/home/kambo/workspace/DeathWard/artifacts/treasure-preset.json"
+    ],
+    "termination": "own process stopped after startup verification",
+    "exit_code": -15
+  }
+]

@@ -19,7 +19,7 @@
 
 namespace dw {
 namespace {
-constexpr const char *Contract = "d10d-room-locks-v28";
+constexpr const char *Contract = "d11a-sad-onion-v29";
 constexpr const char *Source = "The Binding of Isaac: Repentance 1.7.9b";
 constexpr const char *SourceHash = "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6";
 // Deliberately bounded JSON for this schema (objects, strings, finite numbers,
@@ -157,6 +157,7 @@ InventoryBombTuning readBombTuning(Json j,bool rockSetting) {
 }
 void BalancePreset::validate() const {
     inventoryBombs.validate();
+    if(!std::isfinite(sadOnionStrength)||sadOnionStrength<0||sadOnionStrength>2)throw std::runtime_error("Sad Onion strength must be between 0% and 200%");
     if(keyedDoorCost<0||keyedDoorCost>5)throw std::runtime_error("Keyed door cost must be 0-5 whole keys");
     if(roomHeartLayouts<0||roomHeartLayouts>2)throw std::runtime_error("Room heart layouts must be off, source pool or full/half test");
     if(!std::isfinite(redHeartAppearanceSpeed)||redHeartAppearanceSpeed<MinHeartAppearanceSpeed||redHeartAppearanceSpeed>MaxHeartAppearanceSpeed)
@@ -194,15 +195,17 @@ void BalancePreset::validate() const {
 }
 std::string BalancePreset::json() const {
     validate();std::ostringstream out;out.imbue(std::locale::classic());out<<std::setprecision(9);
-    out<<"{\n  \"format\": \"deathward.balance\",\n  \"schema_version\": 28,\n"
+    out<<"{\n  \"format\": \"deathward.balance\",\n  \"schema_version\": 29,\n"
        <<"  \"compatibility\": {\"contract\": "<<quoted(Contract)<<", \"content_version\": "<<quoted(ContentVersion)
        <<", \"mechanics_fingerprint\": "<<quoted(mechanicsFingerprint)<<"},\n"
        <<"  \"reference\": {\"source\": "<<quoted(Source)<<", \"executable_sha256\": "<<quoted(SourceHash)
-       <<", \"room_lock_policy\": \"ordinary-stage1-free-shops-treasure-v1\", \"keyed_door_policy\": \"ordinary-one-key-v1\", \"keyed_door_cost\": 1, \"inventory_bomb_calibration\": \"source-countdown-shooting-space-v1\", \"inventory_bombs\": "<<bombJson(InventoryBombTuning{})<<", \"coverage\": \"Player, combat, enemy, map and camera configuration; native balance pending\", \"player_speed\": 1, \"walking_pace_at_speed_one\": 4.8, \"room_size_scale\": 1, \"room_size_baseline\": \"larger-compact-v1\", \"route_length_scale\": 1, \"default_zoom_percent\": 160, \"tears_per_second\": "<<numericText(ReferenceTears)<<", \"shot_speed\": 1, \"range_tiles\": 6.5, \"shooting_calibration\": \"accepted-independent-v1\", \"gaper_movement_multiplier\": 1, \"gaper_calibration\": \"player-relative-v1\", \"spider_movement_multiplier\": 1, \"spider_calibration\": \"player-relative-burst-v1\", \"pooter_movement_multiplier\": 1, \"pooter_shot_speed_multiplier\": 1, \"pooter_attack_interval_multiplier\": 1, \"pooter_calibration\": \"player-relative-mode0-v1\", \"player_damage\": 3.5, \"regular_health_multiplier\": 1, \"damage_calibration\": \"source-damage-internal-hp-v1\", \"health_units_per_source\": 3.2, \"combat_room_template\": \"basement-1.47.0-canyon-v1\", \"red_heart_reward_policy\": \"ordinary-normal-rare-gates-off-v1\", \"player_luck\": 0, \"red_heart_timing\": \"appear33-drop25-collect12-30hz-v1\", \"red_heart_appearance_speed\": 1, \"bomb_reward_policy\": \"ordinary-normal-golden-gate-off-cap99-v1\", \"key_reward_policy\": \"ordinary-normal-charged-gate-off-v1\", \"chest_reward_policy\": \"pickup-batches-adapted-v1\", \"coin_reward_policy\": \"ordinary-normal-rare-gates-off-v1\", \"room_heart_layout_policy\": \"basement-native-descriptor-bomb32-v11\", \"room_heart_layouts\": 1},\n"
-       <<"  \"resolved\": {\"player_speed\": "<<numericText(playerSpeed)<<", \"room_size_scale\": "<<numericText(roomSizeScale)<<", \"room_min_half_tiles\": "<<roomMinHalfTiles<<", \"room_max_half_tiles\": "<<roomMaxHalfTiles<<", \"route_length_scale\": "<<numericText(routeLengthScale)<<", \"default_zoom_percent\": "<<numericText(defaultZoomPercent)<<", \"tears_per_second\": "<<numericText(tearsPerSecond)<<", \"shot_speed\": "<<numericText(shotSpeed)<<", \"range_tiles\": "<<numericText(rangeTiles)<<", \"gaper_movement_multiplier\": "<<numericText(gaperMovementMultiplier)<<", \"spider_movement_multiplier\": "<<numericText(spiderMovementMultiplier)<<", \"pooter_movement_multiplier\": "<<numericText(pooterMovementMultiplier)<<", \"pooter_shot_speed_multiplier\": "<<numericText(pooterShotSpeedMultiplier)<<", \"pooter_attack_interval_multiplier\": "<<numericText(pooterAttackIntervalMultiplier)<<", \"player_damage\": "<<numericText(playerDamage)<<", \"regular_health_multiplier\": "<<numericText(regularHealthMultiplier)<<", \"source_combat_room\": "<<(sourceCombatRoom?"true":"false")<<", \"red_heart_clear_rewards\": "<<(redHeartClearRewards?"true":"false")<<", \"player_luck\": "<<numericText(playerLuck)<<", \"red_heart_appearance_speed\": "<<numericText(redHeartAppearanceSpeed)<<", \"room_heart_layouts\": "<<roomHeartLayouts<<", \"coin_clear_rewards\": "<<(coinClearRewards?"true":"false")<<", \"bomb_clear_rewards\": "<<(bombClearRewards?"true":"false")<<", \"key_clear_rewards\": "<<(keyClearRewards?"true":"false")<<", \"chest_clear_rewards\": "<<(chestClearRewards?"true":"false")<<", \"inventory_bombs\": "<<bombJson(inventoryBombs)<<", \"keyed_door_cost\": "<<keyedDoorCost<<", \"source_room_locks\": "<<(sourceRoomLocks?"true":"false")<<"},\n  \"overrides\": {";
+       <<", \"treasure_upgrade_policy\": \"sad-onion-ordinary-tears-v1\", \"sad_onion_strength\": 1, \"room_lock_policy\": \"ordinary-stage1-free-shops-treasure-v1\", \"keyed_door_policy\": \"ordinary-one-key-v1\", \"keyed_door_cost\": 1, \"inventory_bomb_calibration\": \"source-countdown-shooting-space-v1\", \"inventory_bombs\": "<<bombJson(InventoryBombTuning{})<<", \"coverage\": \"Player, combat, enemy, map and camera configuration; native balance pending\", \"player_speed\": 1, \"walking_pace_at_speed_one\": 4.8, \"room_size_scale\": 1, \"room_size_baseline\": \"larger-compact-v1\", \"route_length_scale\": 1, \"default_zoom_percent\": 160, \"tears_per_second\": "<<numericText(ReferenceTears)<<", \"shot_speed\": 1, \"range_tiles\": 6.5, \"shooting_calibration\": \"accepted-independent-v1\", \"gaper_movement_multiplier\": 1, \"gaper_calibration\": \"player-relative-v1\", \"spider_movement_multiplier\": 1, \"spider_calibration\": \"player-relative-burst-v1\", \"pooter_movement_multiplier\": 1, \"pooter_shot_speed_multiplier\": 1, \"pooter_attack_interval_multiplier\": 1, \"pooter_calibration\": \"player-relative-mode0-v1\", \"player_damage\": 3.5, \"regular_health_multiplier\": 1, \"damage_calibration\": \"source-damage-internal-hp-v1\", \"health_units_per_source\": 3.2, \"combat_room_template\": \"basement-1.47.0-canyon-v1\", \"red_heart_reward_policy\": \"ordinary-normal-rare-gates-off-v1\", \"player_luck\": 0, \"red_heart_timing\": \"appear33-drop25-collect12-30hz-v1\", \"red_heart_appearance_speed\": 1, \"bomb_reward_policy\": \"ordinary-normal-golden-gate-off-cap99-v1\", \"key_reward_policy\": \"ordinary-normal-charged-gate-off-v1\", \"chest_reward_policy\": \"pickup-batches-adapted-v1\", \"coin_reward_policy\": \"ordinary-normal-rare-gates-off-v1\", \"room_heart_layout_policy\": \"basement-native-descriptor-bomb32-v11\", \"room_heart_layouts\": 1},\n"
+       <<"  \"resolved\": {\"player_speed\": "<<numericText(playerSpeed)<<", \"room_size_scale\": "<<numericText(roomSizeScale)<<", \"room_min_half_tiles\": "<<roomMinHalfTiles<<", \"room_max_half_tiles\": "<<roomMaxHalfTiles<<", \"route_length_scale\": "<<numericText(routeLengthScale)<<", \"default_zoom_percent\": "<<numericText(defaultZoomPercent)<<", \"tears_per_second\": "<<numericText(tearsPerSecond)<<", \"shot_speed\": "<<numericText(shotSpeed)<<", \"range_tiles\": "<<numericText(rangeTiles)<<", \"gaper_movement_multiplier\": "<<numericText(gaperMovementMultiplier)<<", \"spider_movement_multiplier\": "<<numericText(spiderMovementMultiplier)<<", \"pooter_movement_multiplier\": "<<numericText(pooterMovementMultiplier)<<", \"pooter_shot_speed_multiplier\": "<<numericText(pooterShotSpeedMultiplier)<<", \"pooter_attack_interval_multiplier\": "<<numericText(pooterAttackIntervalMultiplier)<<", \"player_damage\": "<<numericText(playerDamage)<<", \"regular_health_multiplier\": "<<numericText(regularHealthMultiplier)<<", \"source_combat_room\": "<<(sourceCombatRoom?"true":"false")<<", \"red_heart_clear_rewards\": "<<(redHeartClearRewards?"true":"false")<<", \"player_luck\": "<<numericText(playerLuck)<<", \"red_heart_appearance_speed\": "<<numericText(redHeartAppearanceSpeed)<<", \"room_heart_layouts\": "<<roomHeartLayouts<<", \"coin_clear_rewards\": "<<(coinClearRewards?"true":"false")<<", \"bomb_clear_rewards\": "<<(bombClearRewards?"true":"false")<<", \"key_clear_rewards\": "<<(keyClearRewards?"true":"false")<<", \"chest_clear_rewards\": "<<(chestClearRewards?"true":"false")<<", \"inventory_bombs\": "<<bombJson(inventoryBombs)<<", \"keyed_door_cost\": "<<keyedDoorCost<<", \"source_room_locks\": "<<(sourceRoomLocks?"true":"false")<<", \"source_treasure_upgrade\": "<<(sourceTreasureUpgrade?"true":"false")<<", \"sad_onion_strength\": "<<numericText(sadOnionStrength)<<"},\n  \"overrides\": {";
     bool comma=false;
     const auto field=[&](const char *key,float value){out<<(comma?", ":"")<<quoted(key)<<": "<<numericText(value);comma=true;};
     if(inventoryBombs.custom()){out<<"\"inventory_bombs\": "<<bombJson(inventoryBombs);comma=true;}
+    if(!sourceTreasureUpgrade){out<<(comma?", ":"")<<"\"source_treasure_upgrade\": false";comma=true;}
+    if(sadOnionStrength!=1)field("sad_onion_strength",sadOnionStrength);
     if(!sourceRoomLocks){out<<(comma?", ":"")<<"\"source_room_locks\": false";comma=true;}
     if(keyedDoorCost!=1)field("keyed_door_cost",float(keyedDoorCost));
     if(!coinClearRewards){out<<(comma?", ":"")<<"\"coin_clear_rewards\": false";comma=true;}
@@ -264,12 +267,21 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     root.keys({"format","schema_version","compatibility","reference","resolved","overrides","exceptions"});
     root.at("format").equal("deathward.balance");
     const auto version=root.at("schema_version").numeric();
-    if(version!=1&&version!=2&&version!=3&&version!=4&&version!=5&&version!=6&&version!=7&&version!=8&&version!=9&&version!=10&&version!=11&&version!=12&&version!=13&&version!=14&&version!=15&&version!=16&&version!=17&&version!=18&&version!=19&&version!=20&&version!=21&&version!=22&&version!=23&&version!=24&&version!=25&&version!=26&&version!=27&&version!=28)throw std::runtime_error("Unsupported balance preset schema");
+    if(version!=1&&version!=2&&version!=3&&version!=4&&version!=5&&version!=6&&version!=7&&version!=8&&version!=9&&version!=10&&version!=11&&version!=12&&version!=13&&version!=14&&version!=15&&version!=16&&version!=17&&version!=18&&version!=19&&version!=20&&version!=21&&version!=22&&version!=23&&version!=24&&version!=25&&version!=26&&version!=27&&version!=28&&version!=29)throw std::runtime_error("Unsupported balance preset schema");
     const bool legacy=version==1;
     const auto &compat=root.at("compatibility");compat.keys({"contract","content_version","mechanics_fingerprint"});
-    compat.at("contract").equal(legacy?"d01-speed-v1":version==2?"d02-room-size-v2":version==3?"d02-map-v3":version==4?"d02-view-v4":version==5?"d03-shooting-v5":version==6?"d04-gaper-v6":version==7?"d05-spider-v7":version==8?"d06-pooter-v8":version==9?"d07-combat-v9":version==10?"d08-source-room-v10":version==11?"d09a-red-hearts-v11":version==12?"d09a-heart-timing-v12":version==13?"d09a-room-hearts-v13":version==14?"d09a-room-selection-v14":version==15?"d09a-heart-rock-room-v15":version==16?"d09a-room-descriptor-v16":version==17?"d09a-combat-rock-room-v17":version==18?"d09a-four-gaper-room-v18":version==19?"d09b-ordinary-coins-v19":version==20?"ordinary-chests-v20":version==21?"preplaced-chests-v21":version==22?"preplaced-coins-v22":version==23?"d09c-ordinary-keys-v23":version==24?"d09d-ordinary-bombs-v24":version==25?"d10a-inventory-bombs-v25":version==26?"d10b-rock-demolition-v26":version==27?"d10c-keyed-doors-v27":Contract);compat.at("content_version").equal(ContentVersion);
-    compat.at("mechanics_fingerprint").equal(fingerprint.c_str());
+    compat.at("contract").equal(legacy?"d01-speed-v1":version==2?"d02-room-size-v2":version==3?"d02-map-v3":version==4?"d02-view-v4":version==5?"d03-shooting-v5":version==6?"d04-gaper-v6":version==7?"d05-spider-v7":version==8?"d06-pooter-v8":version==9?"d07-combat-v9":version==10?"d08-source-room-v10":version==11?"d09a-red-hearts-v11":version==12?"d09a-heart-timing-v12":version==13?"d09a-room-hearts-v13":version==14?"d09a-room-selection-v14":version==15?"d09a-heart-rock-room-v15":version==16?"d09a-room-descriptor-v16":version==17?"d09a-combat-rock-room-v17":version==18?"d09a-four-gaper-room-v18":version==19?"d09b-ordinary-coins-v19":version==20?"ordinary-chests-v20":version==21?"preplaced-chests-v21":version==22?"preplaced-coins-v22":version==23?"d09c-ordinary-keys-v23":version==24?"d09d-ordinary-bombs-v24":version==25?"d10a-inventory-bombs-v25":version==26?"d10b-rock-demolition-v26":version==27?"d10c-keyed-doors-v27":version==28?"d10d-room-locks-v28":Contract);compat.at("content_version").equal(ContentVersion);
+    // Exact additive D11a catalog migration. Arbitrary mechanics changes remain incompatible.
+    const auto &storedFingerprint=compat.at("mechanics_fingerprint");
+    const bool additiveMigration=version<=28&&storedFingerprint.kind==Json::String&&
+        storedFingerprint.text=="2ccd5b1c274a302e"&&fingerprint=="57e101e53ba57102";
+    if(!additiveMigration)storedFingerprint.equal(fingerprint.c_str());
     auto ref=root.at("reference");
+    if(version>=29) {
+        ref.at("treasure_upgrade_policy").equal("sad-onion-ordinary-tears-v1");
+        if(ref.at("sad_onion_strength").numeric()!=1)throw std::runtime_error("Reference Sad Onion strength cannot change");
+        ref.fields.erase("treasure_upgrade_policy");ref.fields.erase("sad_onion_strength");
+    }
     if(version>=28){ref.at("room_lock_policy").equal("ordinary-stage1-free-shops-treasure-v1");ref.fields.erase("room_lock_policy");}
     if(version>=27) {
         ref.at("keyed_door_policy").equal("ordinary-one-key-v1");
@@ -348,6 +360,14 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     if(ref.at("player_speed").numeric()!=1||ref.at("walking_pace_at_speed_one").numeric()!=4.8)
         throw std::runtime_error("Reference values cannot be overridden; edit resolved and overrides");
     auto resolved=root.at("resolved");
+    bool treasureUpgrade=true;double onionStrength=1;
+    if(version>=29) {
+        const auto &entry=resolved.at("source_treasure_upgrade");
+        if(entry.kind!=Json::Boolean)throw std::runtime_error("Treasure upgrade mode must be boolean");
+        treasureUpgrade=entry.flag;onionStrength=resolved.at("sad_onion_strength").numeric();
+        if(onionStrength<0||onionStrength>2)throw std::runtime_error("Sad Onion strength outside supported range");
+        resolved.fields.erase("source_treasure_upgrade");resolved.fields.erase("sad_onion_strength");
+    }
     bool roomLocks=true;
     if(version>=28) {
         const auto &entry=resolved.at("source_room_locks");
@@ -456,8 +476,13 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     const double speed=resolved.at("player_speed").numeric();
     if(speed<.1||speed>2)throw std::runtime_error("Speed must be between 0.10 and 2.00");
     const auto &overrides=root.at("overrides");
-    if(overrides.kind!=Json::Object||overrides.fields.size()!=size_t((!roomLocks)+(keyCost!=1)+inventoryBombs.custom()+(speed!=1)+(!legacy&&roomScale!=1)+(minimum!=0?2:0)+(routeScale!=1)+(zoom!=ReferenceZoom)+customTears+(shotSpeed!=ReferenceShotSpeed)+(range!=ReferenceRange)+(gaper!=ReferenceGaperMovement)+(spider!=ReferenceSpiderMovement)+(pooterMove!=1)+(pooterShot!=1)+(pooterInterval!=1)+(damage!=ReferenceDamage)+(health!=1)+(!sourceRoom)+(!heartRewards)+(!coinRewards)+(!chestRewards)+(!keyRewards)+(!bombRewards)+(luck!=ReferenceLuck)+(heartAppearanceSpeed!=1)+(heartLayouts!=1)))
+    if(overrides.kind!=Json::Object||overrides.fields.size()!=size_t((!treasureUpgrade)+(onionStrength!=1)+(!roomLocks)+(keyCost!=1)+inventoryBombs.custom()+(speed!=1)+(!legacy&&roomScale!=1)+(minimum!=0?2:0)+(routeScale!=1)+(zoom!=ReferenceZoom)+customTears+(shotSpeed!=ReferenceShotSpeed)+(range!=ReferenceRange)+(gaper!=ReferenceGaperMovement)+(spider!=ReferenceSpiderMovement)+(pooterMove!=1)+(pooterShot!=1)+(pooterInterval!=1)+(damage!=ReferenceDamage)+(health!=1)+(!sourceRoom)+(!heartRewards)+(!coinRewards)+(!chestRewards)+(!keyRewards)+(!bombRewards)+(luck!=ReferenceLuck)+(heartAppearanceSpeed!=1)+(heartLayouts!=1)))
         throw std::runtime_error("Unexpected preset overrides");
+    if(!treasureUpgrade) {
+        const auto &entry=overrides.at("source_treasure_upgrade");
+        if(entry.kind!=Json::Boolean||entry.flag)throw std::runtime_error("Treasure upgrade override disagrees");
+    }
+    if(onionStrength!=1&&overrides.at("sad_onion_strength").numeric()!=onionStrength)throw std::runtime_error("Sad Onion override disagrees");
     if(!roomLocks) {
         const auto &entry=overrides.at("source_room_locks");
         if(entry.kind!=Json::Boolean||entry.flag)throw std::runtime_error("Room lock override disagrees");
@@ -526,6 +551,6 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     exceptions.keys({"isometric","eight_direction_controls","universal_dodge","immediate_stopping"});
     for(const auto &[name,entry]:exceptions.fields)
         if(entry.kind!=Json::Boolean||!entry.flag)throw std::runtime_error("Retained control exception cannot change: "+name);
-    BalancePreset preset{float(speed),fingerprint,float(roomScale),int(minimum),int(maximum),float(routeScale),float(zoom),float(tears),float(shotSpeed),float(range),float(gaper),float(spider),float(pooterMove),float(pooterShot),float(pooterInterval),float(damage),float(health),sourceRoom,heartRewards,float(luck),float(heartAppearanceSpeed),int(heartLayouts),coinRewards,chestRewards,keyRewards,bombRewards,inventoryBombs,int(keyCost),roomLocks};preset.validate();return preset;
+    BalancePreset preset{float(speed),fingerprint,float(roomScale),int(minimum),int(maximum),float(routeScale),float(zoom),float(tears),float(shotSpeed),float(range),float(gaper),float(spider),float(pooterMove),float(pooterShot),float(pooterInterval),float(damage),float(health),sourceRoom,heartRewards,float(luck),float(heartAppearanceSpeed),int(heartLayouts),coinRewards,chestRewards,keyRewards,bombRewards,inventoryBombs,int(keyCost),roomLocks,treasureUpgrade,float(onionStrength)};preset.validate();return preset;
 }
 } // namespace dw

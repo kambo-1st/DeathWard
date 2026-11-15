@@ -1,3 +1,4 @@
+#include "RoomReviewSeeds.hpp"
 #include "combat/Simulation.hpp"
 #include "world/SourceCombatRoom.hpp"
 #include <iostream>
@@ -34,7 +35,7 @@ void walkTo(Simulation &r,Vector3 target,int room) {
     check(r.room==room,"ordinary movement crosses door and changes rooms");
 }
 void encounterLoop() {
-    auto r=create(69);r.redHeartClearRewards=true;r.applyCombatBalance(3.5f,1);r.canonicalShooting=true;r.gaperMovementMultiplier=1;r.godMode=true;
+    auto r=create(review::FullHeartClearSeed);r.redHeartClearRewards=true;r.applyCombatBalance(3.5f,1);r.canonicalShooting=true;r.gaperMovementMultiplier=1;r.godMode=true;
     const int index=sourceRoom(r);check(r.arena.rooms[size_t(index)].depth==1,"review template adjacent to entrance");
     // Freeze naturally generated actors solely for deterministic projectile counting.
     // Room transitions, sealed gates, attacks, death/morphs, rewards and persistence are real.

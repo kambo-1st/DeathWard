@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start   2: mechanics_content
+    Start 135: balance_preset_contract
+1/2 Test #135: balance_preset_contract ..........   Passed    0.19 sec
+2/2 Test   #2: mechanics_content ................   Passed    2.65 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   2.66 sec

@@ -1,3 +1,4 @@
+#include "RoomReviewSeeds.hpp"
 #include "combat/Simulation.hpp"
 #include "world/SourceHeartRockRoom.hpp"
 #include "world/SourceBombRockRoomData.hpp"
@@ -72,7 +73,7 @@ void verify(uint64_t seed,float size,int lo,int hi) {
     std::cout<<"PASS source32 slots/rocks/real demolition/clicks/revisit/Apply"<<tag<<" spent="<<spent<<'\n';
 }
 void boundaries() {
-    auto r=create(129);const int index=owner(r);check(index>=0,"deferred bomb layout fixture");
+    auto r=create(review::seed(32));const int index=owner(r);check(index>=0,"deferred bomb layout fixture");
     const auto slots=r.arena.rooms[size_t(index)].bombSpawns;
     r.bombPickups.assign(1024,OrdinaryBombPickup{r.arena.rooms[0].center,0});
     check(r.enterSourceRoomReview(32),"deferred direct room entry");
@@ -80,7 +81,7 @@ void boundaries() {
     r.bombPickups.clear();r.bombClearRewards=false;r.player.attributes.luck=10;r.step({});
     check(r.bombPickups.size()==3,"capacity recovery delivers all original slots");
     for(size_t i=0;i<3;++i)check(r.bombPickups[i].seed==slots[i].pickupSeed&&r.bombPickups[i].sourceSubtype==slots[i].subtype&&planarDistance(r.bombPickups[i].position,slots[i].preferred)<.001f,"deferred slot identity and location stay fixed");
-    for(int mode:{0,2}){auto off=create(129,1.1f,7,9,mode);check(owner(off)<0&&!off.enterSourceRoomReview(32),"OFF/test cannot masquerade as complete bomb room");}
+    for(int mode:{0,2}){auto off=create(review::seed(32),1.1f,7,9,mode);check(owner(off)<0&&!off.enterSourceRoomReview(32),"OFF/test cannot masquerade as complete bomb room");}
 }
 int main(int argc,char **argv){try{
     if(argc>1&&std::string(argv[1])=="--scan") {
@@ -94,5 +95,5 @@ int main(int argc,char **argv){try{
         }return 0;
     }
     if(argc==5){verify(std::stoull(argv[1]),std::stof(argv[2]),std::stoi(argv[3]),std::stoi(argv[4]));return 0;}
-    verify(1027,.75f,5,5);verify(129,1.1f,7,9);verify(1027,1.5f,10,10);boundaries();
+    verify(review::seed(32,.75f,5,5),.75f,5,5);verify(review::seed(32,1.1f,7,9),1.1f,7,9);verify(review::seed(32,1.5f,10,10),1.5f,10,10);boundaries();
 }catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

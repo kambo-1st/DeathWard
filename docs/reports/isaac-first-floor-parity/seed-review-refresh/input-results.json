@@ -1,0 +1,57 @@
+[
+  {
+    "mode": "--dynamite-balance-only",
+    "exit_code": 0,
+    "log": "dynamite-balance-only.log"
+  },
+  {
+    "mode": "--bombs-only",
+    "exit_code": 0,
+    "log": "bombs-only.log"
+  },
+  {
+    "mode": "--keys-only",
+    "exit_code": 1,
+    "log": "keys-only.log"
+  },
+  {
+    "mode": "--coin-layout-only",
+    "exit_code": 1,
+    "log": "coin-layout-only.log"
+  },
+  {
+    "mode": "--chest-layout-only",
+    "exit_code": 1,
+    "log": "chest-layout-only.log"
+  },
+  {
+    "mode": "--heart-rock-room-only",
+    "exit_code": 0,
+    "log": "heart-rock-room-only.log"
+  },
+  {
+    "mode": "--combat-rock-room-only",
+    "exit_code": 0,
+    "log": "combat-rock-room-only.log"
+  },
+  {
+    "mode": "--four-gaper-room-only",
+    "exit_code": 0,
+    "log": "four-gaper-room-only.log"
+  },
+  {
+    "mode": "--five-gaper-room-only",
+    "exit_code": 0,
+    "log": "five-gaper-room-only.log"
+  },
+  {
+    "mode": "--red-heart-rewards-only",
+    "exit_code": 1,
+    "log": "red-heart-rewards-only.log"
+  },
+  {
+    "mode": "--source-combat-room-only",
+    "exit_code": 0,
+    "log": "source-combat-room-only.log"
+  }
+]

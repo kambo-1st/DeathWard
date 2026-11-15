@@ -215,6 +215,17 @@ void buildCanyon(Arena &arena, bool river) {
     }
     // Selected source rooms provide their own cover. Exclude generated outcrops before baking terrain.
     for(auto &room:arena.rooms)if(room.sourceCombatTemplate>=0||room.sourceObstacleTemplate>=0)room.obstacles.clear();
+    // A centered treasure pedestal needs room for the player's whole footprint,
+    // including diagonal approaches and the outcrop's irregular silhouette.
+    // Filter after all seeded draws; other rooms keep their original cover.
+    for(auto &room:arena.rooms)if(room.kind==RoomKind::Power) {
+        std::erase_if(rocks,[&](const Outcrop &rock) {
+            return planarDistance(rock.center,room.center)<std::max(rock.rx,rock.rz)+5.f;
+        });
+        std::erase_if(room.obstacles,[&](Box box) {
+            return planarDistance(mul(add(box.min,box.max),.5f),room.center)<(box.max.x-box.min.x)*.5f+5.f;
+        });
+    }
     field->x = std::floor((arena.bounds.min.x - 40) / field->step) * field->step;
     field->z = std::floor((arena.bounds.min.z - 40) / field->step) * field->step;
     field->width = int(std::ceil((arena.bounds.max.x + 40 - field->x) / field->step)) + 1;

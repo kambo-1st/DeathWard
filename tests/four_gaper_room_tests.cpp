@@ -1,3 +1,4 @@
+#include "RoomReviewSeeds.hpp"
 #include "combat/Simulation.hpp"
 #include "world/SourceHeartRockRoom.hpp"
 #include "world/SourceCombatRockRoomData.hpp"
@@ -5,8 +6,8 @@
 #include <stdexcept>
 using namespace dw;
 void check(bool ok,const std::string &why){if(!ok)throw std::runtime_error(why);}
-Simulation create(float size=1.1f,int lo=7,int hi=9,float route=.26f,int mode=1,bool d08=true,int floor=0,uint64_t seed=117) {
-    Simulation r(seed,1,{},MissionTheme::Canyon,true,false,WitnessAccount::None,floor,ExpeditionPacing::Compact,defaultMechanics(),size,lo,hi,route,d08,mode);
+Simulation create(float size=1.1f,int lo=7,int hi=9,float route=.26f,int mode=1,bool d08=true,int floor=0,uint64_t seed=0) {
+    Simulation r(seed?seed:review::seed(108,size,lo,hi),1,{},MissionTheme::Canyon,true,false,WitnessAccount::None,floor,ExpeditionPacing::Compact,defaultMechanics(),size,lo,hi,route,d08,mode);
     r.applyCombatBalance(3.5f,1);r.canonicalShooting=true;r.gaperMovementMultiplier=1;r.redHeartClearRewards=true;
     return r;
 }
@@ -44,7 +45,7 @@ void verify(Simulation &r,int index) {
     std::cout<<"PASS exact source108 content, physical routes and door access "<<tag<<'\n';
 }
 void fightAndRevisit() {
-    auto r=create();const int index=owner(r);check(index==5,"natural seed117 selects displayed room6");
+    auto r=create();const int index=owner(r);check(index==review::room(108),"recorded natural source108 review room");
     check(r.enterSourceRoomReview(108)&&r.room==index&&!r.godMode&&r.player.hp==6,"direct ordinary launch has no cheats");
     r.godMode=true;
     check(!r.roomClear&&r.livingEnemies()==4,"fight begins on entry");
@@ -93,8 +94,8 @@ void fightAndRevisit() {
     std::cout<<"PASS actual shots/cover/deaths/successors/seals/rewards/demolition/revisit/Apply; shots="<<shots<<" kills="<<kills<<'\n';
 }
 void movement() {
-    auto r=create(.75f,5,5,.26f,1,true,0,793);const int index=owner(r);
-    check(index>=0,"minimum-size seed793 naturally selects source108");verify(r,index);
+    auto r=create(.75f,5,5,.26f,1,true,0,review::seed(108,.75f,5,5));const int index=owner(r);
+    check(index>=0,"recorded minimum-size witness naturally selects source108");verify(r,index);
     check(r.enterSourceRoomReview(108),"small source room review available");r.godMode=true;
     const auto l=r.arena.rooms[size_t(index)];const auto target=sourceHeartCell(l,6,2);
     for(auto &e:r.enemies){e.state=EnemyState::Stunned;e.stateTime=1000;}
@@ -102,8 +103,10 @@ void movement() {
     check(planarDistance(r.player.position,target)<.15f,"real click movement reaches narrow Gaper slot");
     r.player.position=l.entry;
     for(auto &e:r.enemies){e.state=EnemyState::Ready;e.stateTime=0;}
-    std::array<bool,4> reached{};
-    for(int n=0;n<3600;++n){r.step({});for(size_t i=0;i<4;++i)if(planarDistance(r.enemies[i].position,r.player.position)<1.5f)reached[i]=true;}
+    std::array<bool,4> reached{};std::array<EntityId,4> ids{};for(size_t i=0;i<4;++i)ids[i]=r.enemies[i].id;
+    // Retire arrivals to measure all four independent navigation routes. A
+    // different entrance can make the arrived actors block the waiting ones.
+    for(int n=0;n<3600;++n){r.step({});for(size_t i=0;i<4;++i)if(auto *e=r.findEnemy(ids[i]);e&&e->alive&&planarDistance(e->position,r.player.position)<1.5f){reached[i]=true;e->alive=false;}}
     check(std::all_of(reached.begin(),reached.end(),[](bool value){return value;}),"all four live Gapers navigate the source cover toward the player");
     std::cout<<"PASS actual small-room player clicks and four live Gaper routes\n";
 }
@@ -113,7 +116,7 @@ int main(){try{
         if(i>=0){verify(r,i);++arrangements;}
         else check(!r.enterSourceRoomReview(108),"geometry-dependent selection is not fabricated for review");
     }
-    check(arrangements==5,"five naturally selected size/range content cases");
+    check(arrangements==9,"nine naturally selected size/range content cases");
     fightAndRevisit();movement();
     auto off=create(1.1f,7,9,.26f,0);check(owner(off)<0,"OFF restores ordinary generation");
     auto test=create(1.1f,7,9,.26f,2);check(owner(test)<0,"full/half testing override stays independent");
