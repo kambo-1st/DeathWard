@@ -22,14 +22,14 @@ int main(){try{
         check(sourceOrdinaryRoomAward(rng,std::stof(r[1]),std::stoi(r[2]))==std::stoi(r[3]),"native room reward variant for seed "+r[0]+" luck "+r[1]);
         check(rng.state==uint32_t(std::stoul(r[4])),"exact native selector RNG endpoint for seed "+r[0]);
     }
-    size_t hearts=0,coins=0;
+    size_t hearts=0,coins=0,keys=0;
     for(const auto &r:pickups) {
-        if(std::stoi(r[1])!=10&&std::stoi(r[1])!=20)continue;
-        if(std::stoi(r[1])==10)++hearts;else ++coins;
+        if(std::stoi(r[1])!=10&&std::stoi(r[1])!=20&&std::stoi(r[1])!=30)continue;
+        if(std::stoi(r[1])==10)++hearts;else if(std::stoi(r[1])==20)++coins;else ++keys;
         const auto choice=sourceOrdinaryPickup(uint32_t(std::stoul(r[0])),std::stoi(r[1]),std::stoi(r[2])?SourcePickupGates::representedEnabled():SourcePickupGates{});
         check(choice.resolved&&choice.variant==std::stoi(r[3])&&choice.subtype==std::stoi(r[4]),"native pickup resolution for seed "+r[0]+" variant "+r[1]+" gates "+r[2]+" expected "+r[4]+" got "+std::to_string(choice.subtype));
     }
-    check(awards.size()==2196&&hearts==1036&&coins==1036,"complete independent native matrices compared");
+    check(awards.size()==2196&&hearts==1036&&coins==1036&&keys==1036,"complete independent native matrices compared");
     check(!sourceOrdinaryPickup(42,300).resolved,"unsupported subtype families remain explicit, not substituted");
-    std::cout<<"PASS 2196 native award choices/RNG endpoints and 1036 heart and 1036 coin subtype choices; full native spawning/modifiers remain open\n";
+    std::cout<<"PASS 2196 native award choices/RNG endpoints and 1036 heart and 1036 coin and 1036 key subtype choices; full native spawning/modifiers remain open\n";
 }catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

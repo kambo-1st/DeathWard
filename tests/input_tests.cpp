@@ -436,6 +436,64 @@ void spiderBalanceInputCheck(const std::filesystem::path &directory) {
           "fresh Game restores independent enemy and accepted user settings");fresh.close();
     std::cout<<"PASS D05 actual Game encounter, UI mouse/keyboard, live edit, export/reload/rejection, map/floor/retry/fresh-session persistence\n";
 }
+void keyInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"keys.save",preset=directory/"keys.json",sourcePreset=directory/"keys-source.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="285";game.reviewSourceRoomTemplate=214;
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
+    check(game.run&&game.error.empty(),"direct key room launch");auto &run=*game.run;const int owner=run.room;
+    check(owner==5&&run.keyPickups.size()==2&&run.keyClearRewards&&run.player.hp==6&&!run.godMode,"natural room6 ordinary keys at normal health");
+    const auto layout=run.arena.rooms[size_t(owner)];Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"key UI no errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto floorClick=[&](Vector3 p){p.y=0;auto screen=GetWorldToScreen(p,game.camera);click(int(screen.x),int(screen.y));};
+    const auto key=[&](int k){mouseEvent(KeyDown,k);frame();mouseEvent(KeyUp,k);frame();};
+    const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"key screenshot");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();check(renderer.keyModelReady()&&renderer.missionShadowsReady(),"Synty key mesh and scene shadows loaded");capture("artifacts/keys-room.png");
+    floorClick(layout.keySpawns[0].preferred);for(int n=0;n<90;++n)frame();check(run.keys==0,"mouse cannot collect through rocks");
+    click(374,642);click(575,143);click(1005,303);
+    check(!run.keyClearRewards&&run.keyPickups.size()==2,"AFTER CLEAR KEYS independent of preplaced actors");
+    // Keyboard reaches the same live control, then restore OFF for export/reload.
+    for(int n=0;n<32&&game.keyboardFocus()!=Action::ToggleKeyRewards;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::ToggleKeyRewards,"keys keyboard focus");key(KEY_ENTER);check(run.keyClearRewards,"keyboard key toggle");click(1005,303);
+    capture("artifacts/keys-rewards-panel.png");game.exportBalancePreset();std::filesystem::copy_file(preset,sourcePreset,std::filesystem::copy_options::overwrite_existing);
+    click(970,190);click(275,270);check(game.hasPendingMapChanges()&&run.keyPickups.size()==2,"layout OFF staged");
+    click(415,446);check(run.keyPickups.empty()&&run.roomHeartLayouts==0,"Apply removes key layout");
+    game.exportBalancePreset();std::filesystem::copy_file(preset,"artifacts/keys-layout-off-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.balanceFile=sourcePreset.string();click(605,606);check(game.hasPendingMapChanges()&&run.roomHeartLayouts==0&&!run.keyClearRewards,"Load stages map and restores live key policy");
+    click(415,446);check(run.keyPickups.size()==2&&run.roomHeartLayouts==1&&!run.keyClearRewards,"Apply restores preplaced keys independent of reward switch");
+    game.balanceFile=preset.string();game.exportBalancePreset();game.rememberBalancePreset();capture("artifacts/keys-panel.png");
+    std::filesystem::copy_file(preset,"artifacts/keys-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.perform(Action::CloseBalance);game.paused=false;
+    for(int i=0;i<2;++i) {
+        game.updateCamera(10);frame();const auto approach=sourceHeartCell(layout,i==0?1:11,i==0?2:4);
+        floorClick(approach);for(int n=0;n<480;++n)frame();
+        check(planarDistance(run.player.position,approach)<.15f,"mouse reaches key demolition approach");
+        game.updateCamera(10);frame();key(KEY_B);
+        // Retreat to an interior aisle, away from the nearby clickable passage.
+        const auto retreat=sourceHeartCell(layout,i==0?1:6,i==0?5:2);floorClick(retreat);
+        for(int n=0;n<240;++n)frame();
+        if(run.dead||run.player.hp!=6||run.dynamite!=StartingDynamite-i-1) {capture("artifacts/keys-retreat-check.png");std::cerr<<"KEY_RETREAT i="<<i<<" hp="<<run.player.hp<<" ammo="<<run.dynamite<<" distance="<<planarDistance(run.player.position,approach)<<" target_distance="<<planarDistance(run.player.position,retreat)<<" paused="<<game.paused<<" position="<<run.player.position.x<<","<<run.player.position.z<<" target="<<retreat.x<<","<<retreat.z<<std::endl;}
+        check(!run.dead&&run.player.hp==6&&run.dynamite==StartingDynamite-i-1,"normal keyboard dynamite and safe retreat");
+        game.updateCamera(10);frame();floorClick(layout.keySpawns[size_t(i)].preferred);
+        for(int n=0;n<480;++n){frame();check(!run.arena.blocked(run.player.position,.48f),"mouse path stays physically clear");}
+        check(run.keys==i+1,"mouse collects one key after real breach");
+    }
+    check(run.keyPickups.empty()&&run.keys==2,"both keys collected exactly once");capture("artifacts/keys-collected.png");
+    run.jumpDebug(0);run.jumpDebug(owner);frame();check(run.keys==2&&run.keyPickups.empty(),"revisit has no duplicate keys");
+    run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->room==owner&&game.run->keyPickups.size()==2&&game.run->player.hp==6&&!game.run->godMode&&!game.run->keyClearRewards,"retry returns to fresh key room with saved policy and normal health");
+    game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="285";fresh.reviewSourceRoomTemplate=214;fresh.loadBalancePreset(preset);fresh.launch(true);
+    check(fresh.run&&fresh.run->keyPickups.size()==2&&!fresh.run->keyClearRewards&&fresh.cameraZoomPercent()==165&&fresh.run->player.walkingSpeed()==4.8f,"fresh preset loads keys and accepted map/view/feel");fresh.close();
+    Game reward(directory/"key-reward.save");reward.themeChoice=ThemeChoice::Canyon;reward.seedText="2";reward.reviewRoomIndex=1;reward.loadBalancePreset(source);reward.launch(true);
+    check(reward.run&&reward.run->keyClearRewards,"legacy preset enables selected main-game key rewards");
+    reward.run->clearRoomDebug();check(reward.run->keyPickups.size()==1&&reward.run->rooms[1].redHeartAward->variant==30,"main-game natural reward roll produces ordinary key");
+    reward.run->player.position=reward.run->keyPickups[0].position;for(int n=0;n<100;++n)reward.update(Tick);
+    check(reward.run->keys==1&&reward.run->keyPickups.empty(),"main-game clear key collects once");reward.close();
+    std::cout<<"PASS main-game keys/model/shadows, mouse rock access, keyboard dynamite/live policy, staged Apply/export/load, revisit/retry and clear reward\n";
+}
+
 void coinLayoutInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     constexpr int seed=1063;
@@ -2005,6 +2063,9 @@ int main(int argc, char **argv) {
         if(mode.empty()||mode=="--shooting-balance-only") {
             shootingBalanceInputCheck(directory);
             if(mode=="--shooting-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode=="--keys-only") {
+            keyInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--coin-layout-only") {
             coinLayoutInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

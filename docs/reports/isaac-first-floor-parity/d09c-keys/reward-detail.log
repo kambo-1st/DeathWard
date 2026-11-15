@@ -1,0 +1,3 @@
+PASS key clear witness seed=2 / source timing30,60,120Hz / one-time collection
+PASS deferred/pause/inactive/policy/Apply/scope and unsupported golden witness seed=320
+PASS single/double caps, refusal/recovery and unsupported actor identities

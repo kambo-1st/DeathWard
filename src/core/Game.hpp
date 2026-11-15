@@ -116,7 +116,7 @@ enum class Action {
     ToggleSourceCombatRoom,
     BalanceRewardsTab, BalanceRoomHeartsTab, BalanceClearHeartsTab,
     RoomHeartsOff, RoomHeartsSource, RoomHeartsTest,
-    ToggleRedHeartRewards, ToggleCoinRewards, ToggleChestRewards,
+    ToggleRedHeartRewards, ToggleCoinRewards, ToggleChestRewards, ToggleKeyRewards,
     RewardLuckDown,
     RewardLuckUp,
     ResetRewardLuck, HeartAppearanceDown, HeartAppearanceUp, ResetHeartAppearance,

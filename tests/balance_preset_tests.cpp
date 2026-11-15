@@ -70,6 +70,18 @@ int main() {
             p.save(file);const auto q=BalancePreset::load(file,"2ccd5b1c274a302e");
             check(q.coinClearRewards==p.coinClearRewards&&q.revision()==p.revision(),"new layout policy round-trip preserves clear-coin switch");
         }
+        for(bool enabled:{false,true}) {
+            BalancePreset p{1,"fixture-content"};p.keyClearRewards=enabled;p.save(file);
+            const auto q=BalancePreset::load(file,"fixture-content");
+            check(q.keyClearRewards==enabled&&q.revision()==p.revision(),"key switch roundtrip");
+        }
+        for(const auto *name:{"preset-v22-clear-off.json","preset-v22-layout-off.json"}) {
+            const auto p=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+                "docs/reports/isaac-first-floor-parity/preplaced-coins"/name,"2ccd5b1c274a302e");
+            check(p.keyClearRewards&&p.defaultZoomPercent==165&&p.shotSpeed==.9f,"schema22 migrates keys preserving view/shooting");
+            p.save(file);const auto q=BalancePreset::load(file,"2ccd5b1c274a302e");
+            check(q.keyClearRewards&&q.coinClearRewards==p.coinClearRewards&&q.roomHeartLayouts==p.roomHeartLayouts&&q.revision()==p.revision(),"schema22 keeps independent map/coin switches");
+        }
         const auto previousCoins=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
             "docs/reports/isaac-first-floor-parity/d09b-coins/preset-v19.json","2ccd5b1c274a302e");
         check(previousCoins.chestClearRewards&&previousCoins.defaultZoomPercent==165,"schema19 migration enables selected chests and preserves view");
@@ -184,11 +196,14 @@ int main() {
         auto layouts=custom;layouts.roomHeartLayouts=2;
         const auto valid=custom.json();
         std::vector<std::string> invalid{
+            replaceOne(valid,"\"key_clear_rewards\": true","\"key_clear_rewards\": 1"),
+            replaceOne(valid,"\"key_clear_rewards\": true","\"key_clear_rewards\": false"),
+            replaceOne(valid,"ordinary-normal-charged-gate-off-v1","invalid-key-policy"),
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 3"),
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 1.5"),
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": false"),
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 0"),
-            replaceOne(valid,"basement-native-descriptor-coin30-v9","invalid-policy"),
+            replaceOne(valid,"basement-native-descriptor-key214-v10","invalid-policy"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 0"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 4.01"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 2"),
@@ -208,11 +223,11 @@ int main() {
             replaceOne(valid,"\"chest_clear_rewards\": true","\"chest_clear_rewards\": 1"),
             replaceOne(valid,"pickup-batches-adapted-v1","unverified-chest-policy"),
             valid+"garbage", valid.substr(0,valid.size()-3),
-            replaceOne(valid,"\"schema_version\": 22","\"schema_version\": 23"),
+            replaceOne(valid,"\"schema_version\": 23","\"schema_version\": 24"),
             replaceOne(valid,"\"red_heart_appearance_speed\": 1","\"red_heart_appearance_speed\": 2"),
             replaceOne(valid,"appear33-drop25-collect12-30hz-v1","unverified-timing"),
-            replaceOne(valid,"\"schema_version\": 22","\"schema_version\": 22, \"schema_version\": 22"),
-            replaceOne(valid,"preplaced-coins-v22","future-contract"),
+            replaceOne(valid,"\"schema_version\": 23","\"schema_version\": 23, \"schema_version\": 23"),
+            replaceOne(valid,"d09c-ordinary-keys-v23","future-contract"),
             replaceOne(valid,"fixture-content","different-content"),
             replaceOne(valid,"Repentance 1.7.9b","Repentance 1.7.9a"),
             replaceOne(valid,"\"walking_pace_at_speed_one\": 4.8","\"walking_pace_at_speed_one\": 30"),

@@ -287,6 +287,10 @@ void Game::perform(Action action) {
         case Action::RoomHeartsOff:setRoomHeartLayouts(0);break;
         case Action::RoomHeartsSource:setRoomHeartLayouts(1);break;
         case Action::RoomHeartsTest:setRoomHeartLayouts(2);break;
+        case Action::ToggleKeyRewards: {
+            auto preset=balancePreset;preset.keyClearRewards=!preset.keyClearRewards;applyBalance(std::move(preset));
+            balanceNotice="Keys: future first clears. Existing keys, chest contents and room layouts stay fixed.";break;
+        }
         case Action::ToggleChestRewards: {
             auto preset=balancePreset;preset.chestClearRewards=!preset.chestClearRewards;applyBalance(std::move(preset));
             balanceNotice="Applies to future first clears. Existing chests and their contents stay fixed.";break;
@@ -867,7 +871,7 @@ std::vector<Action> Game::menuActions() const {
         const std::vector<Action> page=balanceRewardsOpen&&balanceRoomHeartsOpen?
             std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::RoomHeartsOff,Action::RoomHeartsSource,Action::RoomHeartsTest,Action::ApplyMapChanges}:
             balanceRewardsOpen?
-            std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::ToggleRedHeartRewards,Action::RewardLuckDown,Action::RewardLuckUp,Action::ResetRewardLuck,Action::HeartAppearanceDown,Action::HeartAppearanceUp,Action::ResetHeartAppearance}:
+            std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::ToggleRedHeartRewards,Action::ToggleCoinRewards,Action::ToggleChestRewards,Action::ToggleKeyRewards,Action::RewardLuckDown,Action::RewardLuckUp,Action::ResetRewardLuck,Action::HeartAppearanceDown,Action::HeartAppearanceUp,Action::ResetHeartAppearance}:
             balanceCombatOpen?
             std::vector<Action>{Action::CombatDamageDown,Action::CombatDamageUp,Action::RegularHealthDown,Action::RegularHealthUp,Action::ResetCombat}:
             balanceEnemiesOpen&&balancePooterOpen?

@@ -1,0 +1,44 @@
+{
+  "target": "Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "preserved_evidence_sha256": {
+    "docs/reports/isaac-first-floor-parity/room-awards/native-awards.csv": "d89fab7250594fafd9d78d2a2cda770dd370d675787f511e990a7269fa9a6a09",
+    "docs/reports/isaac-first-floor-parity/room-awards/native-pickups.csv": "7d67dc16fef2fce8429856fa7b11ef7cd34910a2165c80d7f56127d1f9d7a3ac",
+    "docs/reports/isaac-first-floor-parity/room-awards/pickup_resolver.asm": "d6d157ab6e4b9a0caad127e78f62376f22769a09986067a70faa4ad6530627f1",
+    "docs/reports/isaac-first-floor-parity/room-awards/weighted_picker.asm": "62c481c66b79e449c280272ed639f9cc027bc97cbb336f9947e5e2fc9f7039f0",
+    "docs/reports/isaac-first-floor-parity/resources/native-collection.csv": "cf39af52b0261a734d349f0d00d211b19903f6c5c3d31eab6973090909729bfd",
+    "docs/reports/isaac-first-floor-parity/resources/key_collection.asm": "c87102e9dd19bce4dcedc8a648ccfd4f00bb2a5ec456c3c53a6a44de34cf936a",
+    "docs/reports/isaac-first-floor-parity/resources/add_keys.asm": "3f330aa97e0d44da05982400b7a571a31970d1524fa16896b125b4d42aa3cba7"
+  },
+  "key_resolver_cases": 1036,
+  "key_quantity_cases": 16,
+  "weighted_key_table": [
+    [
+      1,
+      49
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      "4 if charged gate enabled, else1",
+      1
+    ]
+  ],
+  "gameplay_charged_gate": false,
+  "enabled_subtypes": [
+    1,
+    3
+  ],
+  "unsupported_subtypes": [
+    2,
+    4
+  ],
+  "key_timing": "Appear33/Drop25/Collect12 from highest installed DLC animation override",
+  "limits": [
+    "Native collision eligibility prechecks absent from preserved admitted-collection capture.",
+    "DW planar proximity/line-of-sight/cap-refusal remains explicit adapter.",
+    "No native seed/factory/pushing/scheduler/profile/full actor acceptance."
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "pack": "Synty Polygon Generic",
+  "source_root": "/mnt/f/UNITY/My project (1)/Assets/Synty/PolygonGeneric",
+  "prefab": "SM_Gen_Prop_Key_01",
+  "material": "Generic_01_A",
+  "scope": "Existing owned pack; retain original mesh/UV/albedo. Normalize centered longest dimension to 1 world unit. Same scene lighting/shadow material binding as other props; no Isaac artwork.",
+  "source_files": {
+    "Models/SM_Gen_Prop_Key_01.fbx": "9baf9d1fa854cbf8b6e7f8c50bce11ba18be03fcc8d3e13b583daf2af31646b5",
+    "Models/SM_Gen_Prop_Key_01.fbx.meta": "639a74f9921168d86e421a987140cb633724b44a1da3e7eac8a5c931ceff5779",
+    "Prefabs/Props/SM_Gen_Prop_Key_01.prefab": "d8075b805b25eeaf78520036496c07fc6f187da3a2b6bd4131a3a82588e90a56",
+    "Materials/Alts/Generic_01_A.mat": "ae2845749ce7dec3b1be24126080922693b568503394c6c7764d258dc1b3511d",
+    "Materials/Alts/Generic_01_A.mat.meta": "205b5a572d20d230cce4d83d78c28f82505b717efbb1cbdda5f28d664596338a",
+    "Textures/Alts/Generic_01_A.png": "fb6eea4cbdd6d86962739d0bc384fdc605fba7651745c1fd950e1f031eece3f1",
+    "Textures/Alts/Generic_01_A.png.meta": "2ab8c106a9606ec50977868af56445198d530c80a57b6018728eb80e0f942bd9"
+  },
+  "output_sha256": "6807bc7b05bc73f93712e4674a81f9f2542bd010649127681e096067b3c1da5e",
+  "vertices": 82,
+  "triangles": 164,
+  "source_bounds": [
+    [
+      -0.12317977845668793,
+      -0.011800575070083141,
+      -0.03736274689435959
+    ],
+    [
+      0.11163665354251862,
+      0.011800575070083141,
+      0.0336928553879261
+    ]
+  ],
+  "dimensions": [
+    1,
+    0.30260063862364533,
+    0.10050893772308929
+  ]
+}

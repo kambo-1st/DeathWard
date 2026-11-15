@@ -917,6 +917,28 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             chestModel_.draw(chest.position,t*t*(3-2*t),shader,shadowMap);
         }
     };
+    const auto drawKeys=[&](Shader shader,Texture2D shadowMap) {
+        for(const auto &key:run.keyPickups)if(key.room==run.room) {
+            auto at=key.position;at.y=.65f;
+            float scale=1;
+            if(key.timing.phase==KeyTiming::Phase::Appear) {
+                const float t=std::clamp(key.timing.frame/KeyTiming::DropFrame,0.f,1.f);
+                at.y+=(1-t)*.6f;
+            } else if(key.timing.phase==KeyTiming::Phase::Collect) {
+                scale=std::max(0.f,1-key.timing.frame/KeyTiming::CollectFrames);at.y+=(1-scale)*.6f;
+            } else if(key.timing.phase==KeyTiming::Phase::Gone)continue;
+            keyModel_.draw(at,scale,key.sourceSubtype==3,shader,shadowMap);
+        }
+        for(const auto &key:run.arena.keys)if(!key.collected&&run.rooms[size_t(key.room)].cleared&&distance(run.player.position,key.position)<=60) {
+            auto at=key.position;at.y=.8f+.1f*std::sin(float(run.stats.duration)*3);
+            keyModel_.draw(at,1,false,shader,shadowMap);
+        }
+        for(const auto &key:run.chestSupplies)if(!key.bomb&&key.room==run.room) {
+            auto at=key.position;at.y=.65f;
+            const float scale=key.timing.phase==CoinTiming::Phase::Collect?std::max(0.f,1-key.timing.frame/CoinTiming::CollectFrames):1;
+            keyModel_.draw(at,scale,false,shader,shadowMap);
+        }
+    };
     westernScene_.prepareLighting(camera, [&](Shader meshDepth, Shader primitiveDepth) {
         BeginShaderMode(primitiveDepth);
         solids(true);
@@ -936,6 +958,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             cowboy(run.player.position, run.player.facing, WHITE, 1, false, false);
         EndShaderMode();
         drawChests(meshDepth,{});
+        drawKeys(meshDepth,{});
     });
     postProcess_.begin(WorldSky, distance(camera.position, camera.target), false, visualStyle);
     BeginMode3D(camera);
@@ -1055,7 +1078,8 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     if(!lighting.ready())for(const auto &chest:run.chests)if(chest.room==run.room)
         shadow(chest.position,chestGeometry::ShadowRadius);
     drawChests(lighting.actorShader(),lighting.texture());
-    for(const auto &supply:run.chestSupplies)if(supply.room==run.room) {
+    drawKeys(lighting.actorShader(),lighting.texture());
+    for(const auto &supply:run.chestSupplies)if(supply.bomb&&supply.room==run.room) {
         auto p=supply.position;p.y=.5f;
         const bool collecting=supply.timing.phase==CoinTiming::Phase::Collect;
         const float scale=collecting?std::max(0.f,1-supply.timing.frame/CoinTiming::CollectFrames):1;
@@ -1064,10 +1088,6 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         if(supply.bomb) {
             DrawCylinderEx(add(p,{0,-.25f*scale,0}),add(p,{0,.25f*scale,0}),.14f*scale,.14f*scale,8,ColorAlpha(Rust,scale));
             DrawLine3D(add(p,{0,.25f*scale,0}),add(p,{.16f*scale,.42f*scale,0}),Gold);
-        } else {
-            DrawCircle3D(p,.2f*scale,{0,1,0},0,ColorAlpha(Gold,scale));
-            DrawCubeV(add(p,{.32f*scale,0,0}),{.5f*scale,.1f*scale,.1f*scale},ColorAlpha(Gold,scale));
-            DrawCubeV(add(p,{.5f*scale,-.1f*scale,0}),{.1f*scale,.2f*scale,.1f*scale},ColorAlpha(Gold,scale));
         }
     }
     for(const auto &pickup:run.heartPickups)if(pickup.room==run.room) {
@@ -1124,17 +1144,6 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             DrawCylinderEx(sub(center, mul(axis, .07f)), front, .25f, .25f, 12, ColorAlpha(color,alpha));
             DrawCylinderEx(front, add(front, mul(axis, .015f)), .16f, .16f, 12, ColorAlpha(Color{255,225,132,255},alpha));
         }
-    }
-    for (const auto &key : run.arena.keys) {
-        if (key.collected || !run.rooms[size_t(key.room)].cleared ||
-            distance(run.player.position, key.position) > 60)
-            continue;
-        auto p = key.position;
-        p.y = 1.1f + 0.1f * std::sin(float(run.stats.duration) * 3);
-        DrawCircle3D(p, 0.28f, {0, 1, 0}, 0, Gold);
-        DrawCube({p.x + 0.43f, p.y, p.z}, 0.65f, 0.12f, 0.12f, Gold);
-        DrawCube({p.x + 0.65f, p.y - 0.14f, p.z}, 0.12f, 0.3f, 0.12f, Gold);
-        DrawCircle3D({p.x, 0.06f, p.z}, 0.85f, {1, 0, 0}, 90, Gold);
     }
     for (int i = 0; i < run.arena.roomCount(); ++i) {
         if (run.rewardAvailable(i)&&distance(run.player.position,run.rewardPosition(i))<60) {
@@ -2235,7 +2244,7 @@ Action Renderer::balancePanel(const Game &game) {
         if(game.balanceRoomHeartsOpen) {
             const int mode=game.balanceDraft.roomHeartLayouts;
             text("SOURCE ROOM LAYOUTS",205,184,22,Gold);
-            text("Placed hearts, coins and chests, rocks and combat arrangements.",205,221,14,Paper);
+            text("Placed hearts, coins, keys and chests, plus rocks and combat.",205,221,14,Paper);
             if(button(Action::RoomHeartsOff,"OFF",205,250,150,40,mode==0))return Action::RoomHeartsOff;
             if(button(Action::RoomHeartsSource,"SOURCE LAYOUTS",375,250,300,40,mode==1))return Action::RoomHeartsSource;
             if(button(Action::RoomHeartsTest,"FULL + HALF TEST",695,250,380,40,mode==2))return Action::RoomHeartsTest;
@@ -2244,7 +2253,7 @@ Action Renderer::balancePanel(const Game &game) {
             text("Opening floor only. Room-clear rewards keep their separate settings.",205,364,14,Teal);
             std::string locations;
             if(game.run)for(int i=0;i<game.run->arena.roomCount();++i) {
-                if(!game.run->arena.rooms[size_t(i)].coinSpawns.empty()||!game.run->arena.rooms[size_t(i)].chestSpawns.empty()||
+                if(!game.run->arena.rooms[size_t(i)].keySpawns.empty()||!game.run->arena.rooms[size_t(i)].coinSpawns.empty()||!game.run->arena.rooms[size_t(i)].chestSpawns.empty()||
                    std::any_of(game.run->heartPickups.begin(),game.run->heartPickups.end(),[&](const auto &h){return h.placedInLayout&&h.room==i;}))
                     locations+=(locations.empty()?"":", ")+std::to_string(i+1);
             }
@@ -2258,6 +2267,7 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::ToggleCoinRewards,p.coinClearRewards?"COINS: ON":"COINS: OFF",535,224,300,40))return Action::ToggleCoinRewards;
         if(button(Action::ToggleChestRewards,p.chestClearRewards?"CHESTS: ON":"CHESTS: OFF",855,224,220,40))return Action::ToggleChestRewards;
         text("Future clears/drops; initial piles change on floor regeneration. Existing pickups stay.",205,270,13,Teal);
+        if(button(Action::ToggleKeyRewards,p.keyClearRewards?"KEYS: ON":"KEYS: OFF",945,284,130,40))return Action::ToggleKeyRewards;
         text("LUCK",205,300,18,Paper);text(decimal(p.playerLuck),400,290,28,Paper);
         if(button(Action::RewardLuckDown,"- 1",650,284,130,40))return Action::RewardLuckDown;
         if(button(Action::RewardLuckUp,"+ 1",795,284,130,40))return Action::RewardLuckUp;

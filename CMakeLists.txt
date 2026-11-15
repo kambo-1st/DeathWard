@@ -137,6 +137,7 @@ add_library(deathward_core
     src/world/CanyonRiver.cpp
     src/world/CanyonRoad.cpp
     src/world/RoomGraph.cpp
+    src/combat/Keys.cpp
     src/combat/Chests.cpp
     src/combat/RedHeartRewards.cpp
     src/combat/RoomHearts.cpp
@@ -334,7 +335,7 @@ if(EMSCRIPTEN)
     list(APPEND web_assets ${web_audio})
     file(GLOB web_cast CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "assets/cinematic_cast/*.glb")
     list(APPEND web_assets ${web_cast} assets/train_opening/arrival.cinematic)
-    list(APPEND web_assets assets/pickups/chest/base.glb assets/pickups/chest/lid.glb)
+    list(APPEND web_assets assets/pickups/chest/base.glb assets/pickups/chest/lid.glb assets/pickups/key/key.glb)
     foreach(asset IN LISTS web_assets)
         target_link_options(deathward PRIVATE "SHELL:--preload-file '${CMAKE_CURRENT_SOURCE_DIR}/${asset}@/${asset}'")
         set_property(TARGET deathward APPEND PROPERTY LINK_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${asset}")
@@ -995,6 +996,12 @@ if(BUILD_TESTING)
     add_executable(deathward_chest_layout_tests tests/chest_layout_tests.cpp)
     target_link_libraries(deathward_chest_layout_tests PRIVATE deathward_core)
     add_test(NAME preplaced_chest_layout COMMAND deathward_chest_layout_tests)
+    add_executable(deathward_key_reward_tests tests/key_reward_tests.cpp)
+    target_link_libraries(deathward_key_reward_tests PRIVATE deathward_core)
+    add_test(NAME ordinary_key_gameplay COMMAND deathward_key_reward_tests)
+    add_executable(deathward_key_layout_tests tests/key_layout_tests.cpp)
+    target_link_libraries(deathward_key_layout_tests PRIVATE deathward_core)
+    add_test(NAME preplaced_key_layout COMMAND deathward_key_layout_tests)
     add_executable(deathward_coin_layout_tests tests/coin_layout_tests.cpp)
     target_link_libraries(deathward_coin_layout_tests PRIVATE deathward_core)
     add_test(NAME preplaced_coin_layout COMMAND deathward_coin_layout_tests)

@@ -1,6 +1,7 @@
 #pragma once
 #include "combat/RedHeartTiming.hpp"
 #include "combat/CoinTiming.hpp"
+#include "combat/KeyTiming.hpp"
 #include "combat/ChestLoot.hpp"
 #include "audio/AudioState.hpp"
 #include "combat/Monsters.hpp"
@@ -1056,6 +1057,7 @@ struct RoomProgress {
     std::vector<bool> roomHeartsDelivered;
     std::vector<bool> roomChestsDelivered;
     std::vector<bool> roomCoinsDelivered;
+    std::vector<bool> roomKeysDelivered;
     std::array<ItemKey, 2> offers{};
     std::array<bool,2> serviceSold{};
     // The active room uses Simulation::enemies; other rooms keep their actual group here.
@@ -1076,6 +1078,10 @@ struct ChestPickup {
 };
 struct ChestSupply {
     Vector3 position{};int room=-1;bool bomb=false;CoinTiming timing{};
+};
+struct OrdinaryKeyPickup {
+    Vector3 position{};int room=-1,sourceSubtype=1;uint32_t seed=0;
+    KeyTiming timing{};bool placedInLayout=false;
 };
 struct MoneyPickup {
     Vector3 position{};
@@ -1139,6 +1145,8 @@ class Simulation {
     std::vector<MoneyPickup> moneyPickups;
     std::vector<ChestPickup> chests;
     std::vector<ChestSupply> chestSupplies;
+    std::vector<OrdinaryKeyPickup> keyPickups;
+    bool spawnOrdinaryKey(Vector3 position,int subtype,uint32_t seed,bool preplaced=false);
     bool chestClearRewards=false;
     bool spawnChest(Vector3 position,uint32_t seed);
     uint64_t moneyCollected = 0;
@@ -1180,6 +1188,7 @@ class Simulation {
     bool tunedSpider(const Enemy &e) const { return spiderMovementMultiplier && e.monster==monsterId(85); }
     std::optional<PooterTuning> pooterTuning;
     float redHeartAppearanceSpeed=1; // Snapshotted when an ordinary red-heart actor is admitted.
+    bool keyClearRewards=false; // Selected D09c; legacy Simulation fixtures opt in.
     bool coinClearRewards=false; // Selected D09b; historical fixtures remain opt-in.
     bool redHeartClearRewards=false; // Game enables selected D09a; legacy fixtures retain generation.
     bool tunedPooter(const Enemy &e) const { return pooterTuning && e.monster==monsterId(14); }
@@ -1640,6 +1649,8 @@ class Simulation {
     void deliverRoomHearts(int index);
     void deliverRoomChests(int index);
     void deliverRoomCoins(int index);
+    void deliverRoomKeys(int index);
+    void updateOrdinaryKeys(float dt);
     void resolveRedHeartClearAward();
     void deliverRedHeartClearAward();
     bool hurtPlayer(float damage, const Context &context = {}, bool hostile = true);

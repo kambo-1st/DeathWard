@@ -36,7 +36,8 @@ struct BalancePreset {
     int roomHeartLayouts=1; // Staged: 0 off, 1 source heart layers, 2 full/half test pair.
     bool coinClearRewards=true;
     bool chestClearRewards=true; // Pickup-batch adaptation; not complete native chest contents.
-    bool custom() const { return !chestClearRewards || !coinClearRewards || roomHeartLayouts!=1 || redHeartAppearanceSpeed!=1 || !redHeartClearRewards || playerLuck!=ReferenceLuck || !sourceCombatRoom || playerDamage != ReferenceDamage || regularHealthMultiplier != ReferenceRegularHealth || playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange || gaperMovementMultiplier != ReferenceGaperMovement || spiderMovementMultiplier != ReferenceSpiderMovement || pooterMovementMultiplier != 1 || pooterShotSpeedMultiplier != 1 || pooterAttackIntervalMultiplier != 1; }
+    bool keyClearRewards=true;
+    bool custom() const { return !keyClearRewards || !chestClearRewards || !coinClearRewards || roomHeartLayouts!=1 || redHeartAppearanceSpeed!=1 || !redHeartClearRewards || playerLuck!=ReferenceLuck || !sourceCombatRoom || playerDamage != ReferenceDamage || regularHealthMultiplier != ReferenceRegularHealth || playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange || gaperMovementMultiplier != ReferenceGaperMovement || spiderMovementMultiplier != ReferenceSpiderMovement || pooterMovementMultiplier != 1 || pooterShotSpeedMultiplier != 1 || pooterAttackIntervalMultiplier != 1; }
     void validate() const;
     std::string json() const;
     std::string revision() const;

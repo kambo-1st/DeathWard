@@ -1,7 +1,7 @@
 {
   "status": "enabled-developer-verified-scoped-human-accepted",
   "previous_chest_commit": "3dee8d4f",
-  "new_delivery_committed": false,
+  "new_delivery_committed": true,
   "source_record": "1.30.0",
   "source_sha256": "524406fcb10c6275995292c0bd024cfc43d3d30c32b233e55d4d514573d963b0",
   "source_extraction": "extract-room-heart-layouts.py --check passes",
@@ -84,5 +84,6 @@
     "full native seed/factory/physical/profile/modifier/economy equivalence",
     "full expedition gameplay save/restore",
     "previous chest loot/physics and broader room gaps"
-  ]
+  ],
+  "commit": "dadbc92b"
 }

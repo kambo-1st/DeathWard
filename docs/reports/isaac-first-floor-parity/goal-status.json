@@ -662,6 +662,35 @@
       "full native seed/factory/physical/profile/modifier/economy equivalence",
       "full expedition gameplay save/restore",
       "previous chest loot/physics and broader room gaps"
-    ]
+    ],
+    "commit": "dadbc92b"
+  },
+  "d09c_keys_checkpoint": {
+    "selected": "2026-11-15",
+    "status": "enabled-developer-verified-scoped-human-accepted",
+    "report": "docs/reports/isaac-first-floor-parity/d09c-keys/README.md",
+    "schema": 23,
+    "scope": "ordinary clear/chest keys and complete source1.214.0 with owned Synty key model",
+    "human_acceptance": {
+      "date": "2026-11-15",
+      "feedback": "cool, it works! Whats next?",
+      "scope": "Positive acknowledgment of the playable ordinary-key delivery and new model; full native key parity remains open."
+    },
+    "remaining": [
+      "other key layouts and special keys",
+      "native seed/factory/physics/profile/modifier/scheduler equivalence",
+      "full gameplay save/restore",
+      "earlier chest loot and room gaps"
+    ],
+    "developer_validation": "8 focused suites; main-game mouse/keyboard/model; 4 CLI cases",
+    "review": {
+      "seed": 285,
+      "room": 6,
+      "hp": 6,
+      "god": false,
+      "zoom": 165
+    },
+    "next_proposed": "Commit the accepted D09c delivery, then separately select D09d ordinary bomb/dynamite pickups. Fuse/blast/self-damage and keyed-door behavior stay separate D10 deliveries.",
+    "next_delivery_selected": false
   }
 }

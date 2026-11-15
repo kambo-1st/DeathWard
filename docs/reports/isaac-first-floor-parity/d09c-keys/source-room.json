@@ -1,0 +1,283 @@
+{
+  "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/01.basement.stb",
+  "sha256": "524406fcb10c6275995292c0bd024cfc43d3d30c32b233e55d4d514573d963b0",
+  "template": "1.214.0",
+  "metadata": {
+    "index": 214,
+    "type": 1,
+    "variant": 214,
+    "subtype": 0,
+    "difficulty": 1,
+    "shape": 1,
+    "doors": 15,
+    "weight": 1.0,
+    "spawnCount": 20,
+    "slots": []
+  },
+  "slots": [
+    {
+      "ordinal": 0,
+      "x": 2,
+      "y": 1,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 1,
+      "x": 3,
+      "y": 1,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 2,
+      "x": 4,
+      "y": 1,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 3,
+      "x": 2,
+      "y": 2,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 4,
+      "x": 3,
+      "y": 2,
+      "choices": [
+        {
+          "type": 5,
+          "variant": 30,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 5,
+      "x": 4,
+      "y": 2,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 6,
+      "x": 2,
+      "y": 3,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 7,
+      "x": 3,
+      "y": 3,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 8,
+      "x": 4,
+      "y": 3,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 9,
+      "x": 5,
+      "y": 3,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 10,
+      "x": 7,
+      "y": 3,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 11,
+      "x": 8,
+      "y": 3,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 12,
+      "x": 9,
+      "y": 3,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 13,
+      "x": 10,
+      "y": 3,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 14,
+      "x": 8,
+      "y": 4,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 15,
+      "x": 9,
+      "y": 4,
+      "choices": [
+        {
+          "type": 5,
+          "variant": 30,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 16,
+      "x": 10,
+      "y": 4,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 17,
+      "x": 8,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 18,
+      "x": 9,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "ordinal": 19,
+      "x": 10,
+      "y": 5,
+      "choices": [
+        {
+          "type": 1000,
+          "variant": 0,
+          "subtype": 0,
+          "weight": 1.0
+        }
+      ]
+    }
+  ],
+  "rock_count": 18,
+  "keys": 2,
+  "enemies": 0,
+  "scope": "Complete source content record; original descriptor/slot seeds. Canyon geometry, dynamite, pickup contact/physics and full source profile remain adaptations or verification limits."
+}

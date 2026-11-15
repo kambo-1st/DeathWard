@@ -32,13 +32,14 @@ inline int sourceOrdinaryRoomAward(SourceAwardRng &rng,float luck=0,bool prevent
 // These are explicit achievement-gate inputs, not a complete save/unlock profile.
 struct SourcePickupGates {
     bool rotten=false,scared=false,halfSoul=false,bone=false,goldenHeart=false;
-    bool sticky=false,lucky=false,goldenCoin=false;
-    static SourcePickupGates representedEnabled(){return {true,true,true,true,true,true,true,true};}
+    bool sticky=false,lucky=false,goldenCoin=false,chargedKey=false;
+    static SourcePickupGates representedEnabled(){return {true,true,true,true,true,true,true,true,true};}
 };
 // Ordinary native coin values; special coin behavior is outside this delivery.
 inline int sourceOrdinaryCoinValue(int subtype) {
     switch(subtype){case 1:return 1;case 2:return 5;case 3:return 10;case 4:return 2;default:return 0;}
 }
+inline int sourceOrdinaryKeyValue(int subtype) { return subtype==1?1:subtype==3?2:0; }
 struct SourcePickupChoice {int variant=0,subtype=0;bool resolved=false;};
 // Native6b48b0 scoped ordinary room/type1, ordinary Isaac, empty inventory,
 // Normal mode, input subtype0. No world actor/collection acceptance is implied.
@@ -67,6 +68,10 @@ inline SourcePickupChoice sourceOrdinaryPickup(uint32_t seed,int variant,SourceP
         if(rng.bounded(100)==0)subtype=3;
         else if(subtype==1&&rng.bounded(100)==0&&gates.lucky)subtype=5;
         if(rng.bounded(200)==0&&gates.goldenCoin)subtype=7;
+    } else if(variant==30) {
+        rng.next(); // Native passes Next() as the copied weighted-picker seed.
+        const auto pick=rng.bounded(51);
+        subtype=pick<49?1:pick==49?2:gates.chargedKey?4:1;
     } else return {variant,0}; // Unresolved families are not rerolled or substituted.
     return {variant,subtype,true};
 }

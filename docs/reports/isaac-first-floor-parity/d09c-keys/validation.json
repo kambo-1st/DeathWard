@@ -1,0 +1,79 @@
+{
+  "status": "enabled-developer-verified-scoped-human-accepted",
+  "previous_coin_commit": "dadbc92b",
+  "new_delivery_committed": false,
+  "schema": 23,
+  "native_key_resolver_cases": 1036,
+  "native_single_double_quantity_cases": 16,
+  "native_award_cases": 2196,
+  "focused_suites_passed": [
+    "balance_preset_contract",
+    "red_heart_reward_reference",
+    "ordinary_key_gameplay",
+    "preplaced_key_layout",
+    "chest_gameplay",
+    "preplaced_chest_layout",
+    "preplaced_coin_layout",
+    "coin_reward_gameplay"
+  ],
+  "natural_size_witnesses": [
+    {
+      "seed": 1493,
+      "scale": 0.75,
+      "range": [
+        5,
+        5
+      ]
+    },
+    {
+      "seed": 285,
+      "scale": 1.1,
+      "range": [
+        7,
+        9
+      ]
+    },
+    {
+      "seed": 1932,
+      "scale": 1.5,
+      "range": [
+        10,
+        10
+      ]
+    }
+  ],
+  "actual_game_renderer_input": true,
+  "normal_health_collection": true,
+  "cli_cases": 4,
+  "model": "Synty Polygon Generic SM_Gen_Prop_Key_01",
+  "model_triangles": 164,
+  "model_scene_lighting_and_shadows": true,
+  "screenshots_viewed": [
+    "room.png",
+    "collected.png",
+    "rewards-panel.png"
+  ],
+  "original_preset_unchanged": true,
+  "human_acceptance": true,
+  "full_native_acceptance": false,
+  "remaining": [
+    "other key layouts and special keys",
+    "native seed/factory/physics/profile/modifier/scheduler equivalence",
+    "full gameplay save/restore",
+    "earlier chest loot and room gaps"
+  ],
+  "sha256": {
+    "src/combat/Keys.cpp": "f2bc3eaa4c4a4286f5e05897792e1d15d03956d8fd74ffba1a8219b2a1acf948",
+    "src/combat/KeyTiming.hpp": "ba9ee1606ce4c3aff1fc57866499a85b548eb37f2371084d34a2f5b727272c8e",
+    "src/combat/SourceRoomRewards.hpp": "5a73cdbcd7f3547c02b735f92e19d004316719756f1ab323b5f66b904bb5446b",
+    "src/world/SourceKeyRockRoomData.hpp": "3c2bf6f2fede4f29fe854c42ed105bb8ff25d3cb8d8380f2269e9dc7e63434a2",
+    "assets/pickups/key/key.glb": "6807bc7b05bc73f93712e4674a81f9f2542bd010649127681e096067b3c1da5e",
+    "assets/pickups/key/manifest.json": "8b927976de6be867c221c47ca994fa9361a2565419d498bb8626fdfe173ec707",
+    "build/deathward": "787f4c9310986450ddd3d1229f97faa319e34c2a4e9861574f9977ddd525ce2d"
+  },
+  "human_acceptance_record": {
+    "date": "2026-11-15",
+    "feedback": "cool, it works! Whats next?",
+    "scope": "Positive acknowledgment of the playable ordinary-key delivery and new model; full native key parity remains open."
+  }
+}

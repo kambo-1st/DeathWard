@@ -1,0 +1,30 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 131: balance_preset_contract
+1/8 Test #131: balance_preset_contract ..........   Passed    0.11 sec
+    Start 137: red_heart_reward_reference
+2/8 Test #137: red_heart_reward_reference .......   Passed    0.01 sec
+    Start 143: chest_gameplay
+3/8 Test #143: chest_gameplay ...................   Passed   14.98 sec
+    Start 144: preplaced_chest_layout
+4/8 Test #144: preplaced_chest_layout ...........   Passed    2.22 sec
+    Start 145: ordinary_key_gameplay
+5/8 Test #145: ordinary_key_gameplay ............   Passed    3.81 sec
+    Start 146: preplaced_key_layout
+6/8 Test #146: preplaced_key_layout .............***Failed    1.04 sec
+PASS full source214 exact identities/access/dynamite/clicks/revisit seed=1493 scale=0.750000
+PASS full source214 exact identities/access/dynamite/clicks/revisit seed=285 scale=1.100000
+FAIL natural source214 exists seed=285 scale=1.500000
+
+    Start 147: preplaced_coin_layout
+7/8 Test #147: preplaced_coin_layout ............   Passed    4.37 sec
+    Start 148: coin_reward_gameplay
+8/8 Test #148: coin_reward_gameplay .............   Passed    3.51 sec
+
+88% tests passed, 1 tests failed out of 8
+
+Total Test time (real) =  30.06 sec
+
+The following tests FAILED:
+	146 - preplaced_key_layout (Failed)
+Errors while running CTest

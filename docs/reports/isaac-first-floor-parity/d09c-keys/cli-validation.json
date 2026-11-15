@@ -1,0 +1,42 @@
+[
+  {
+    "preset": "v5",
+    "room": 6,
+    "zoom": 165,
+    "hp": 6,
+    "god": false,
+    "key_rewards": true,
+    "layout_keys": 2,
+    "log": "cli-v5.log"
+  },
+  {
+    "preset": "v22",
+    "room": 6,
+    "zoom": 165,
+    "hp": 6,
+    "god": false,
+    "key_rewards": true,
+    "layout_keys": 2,
+    "log": "cli-v22.log"
+  },
+  {
+    "preset": "v23-clear-off",
+    "room": 6,
+    "zoom": 165,
+    "hp": 6,
+    "god": false,
+    "key_rewards": false,
+    "layout_keys": 2,
+    "log": "cli-v23-clear-off.log"
+  },
+  {
+    "preset": "v23-layout-off",
+    "room": 6,
+    "zoom": 165,
+    "hp": 6,
+    "god": false,
+    "key_rewards": false,
+    "layout_keys": 0,
+    "log": "cli-v23-layout-off.log"
+  }
+]

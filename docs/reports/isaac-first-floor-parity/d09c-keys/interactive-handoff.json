@@ -1,0 +1,29 @@
+{
+  "pid": 114404,
+  "command": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "285",
+    "--review-source-room",
+    "214",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/d09c-keys/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "seed": 285,
+  "displayed_room": 6,
+  "source_template": 214,
+  "normal_health": 6,
+  "god": false,
+  "zoom": 165,
+  "ordinary_keys": 2,
+  "dynamite": 3,
+  "preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "log": "interactive-rerun-1.log",
+  "manual_check": "Inspect the key model; B places dynamite beside an enclosure, retreat inside the room, then walk through the breach to collect. Each ordinary key adds1. Revisit without duplicates. Death retry returns here.",
+  "status": "interactive-rerun-verified",
+  "currently_running": true
+}

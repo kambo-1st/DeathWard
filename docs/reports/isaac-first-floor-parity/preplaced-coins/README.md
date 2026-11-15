@@ -1,6 +1,6 @@
 # Preplaced ordinary coins — source room 1.30.0
 
-Selected on 2026-11-15 after the accepted source31 chest room, now committed as `3dee8d4f`. **The coin arrangement is enabled, developer-verified and accepted in the scoped human playtest on 2026-11-15 ("yes, nice, it works!").** This new delivery remains uncommitted.
+Selected on 2026-11-15 after the accepted source31 chest room, now committed as `3dee8d4f`. **The coin arrangement is enabled, developer-verified and accepted in the scoped human playtest on 2026-11-15 ("yes, nice, it works!").** Committed as `dadbc92b`.
 
 ## Short playable check
 
@@ -36,4 +36,4 @@ Seven focused suites pass, including existing hearts/chests/room coverage and co
 
 The actual Game/Renderer workflow passes mouse toggle/Apply/staged Load, collection around the rock, export/remember/fresh load, revisit and death retry with normal health. Three CLI launches cover schema21 migration, schema22 with clear coins off, and schema22 with source layouts off. The final review approach was rechecked in the actual Simulation and mouse workflow; the165% entry render was visually inspected. [Validation](validation.json), [seven suites](tests.log), [boundary checks](boundary-detail.log), [actual input](input.log), [CLI loads](cli-validation.json).
 
-Recommended next: commit this accepted delivery, then D09c ordinary keys under the delivery plan's one-pickup-family rule: natural rewards and compatible source layout placement, once-only collection, existing inventory limits and staged/live preset boundaries. D09c is proposed, not selected or started by this status question. Bomb/dynamite and door-spending rules remain separate later deliveries. Other preplaced coin layouts, special coins, full native seed/factory/physical/profile/modifier/economy equivalence, full expedition gameplay save/restore and prior chest/room gaps remain unfinished. Exact Isaac size/shape/connections remain excluded; automatic bulk parity stays paused.
+The accepted delivery was committed as `dadbc92b`; the user subsequently selected D09c ordinary keys under the delivery plan's one-pickup-family rule: natural rewards and compatible source layout placement, once-only collection, existing inventory limits and staged/live preset boundaries. D09c is now in progress; see [ordinary keys](../d09c-keys/README.md). Bomb/dynamite and door-spending rules remain separate later deliveries. Other preplaced coin layouts, special coins, full native seed/factory/physical/profile/modifier/economy equivalence, full expedition gameplay save/restore and prior chest/room gaps remain unfinished. Exact Isaac size/shape/connections remain excluded; automatic bulk parity stays paused.
