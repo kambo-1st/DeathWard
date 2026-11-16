@@ -1,0 +1,11 @@
+{
+  "delivery": "PW-T02",
+  "status": "scoped accepted",
+  "feedback": "NIce commit, what next?",
+  "authorized": "Commit accepted Whip Worm checkpoint",
+  "next_proposed": "PW-F02 Halo of Flies; not selected",
+  "still_open": [
+    "Full native item/cache/pool/physics equivalence and special trinket interactions",
+    "Full live expedition resume"
+  ]
+}

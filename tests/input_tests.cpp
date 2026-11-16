@@ -825,6 +825,46 @@ void treasureUpgradeInputCheck(const std::filesystem::path &directory) {
     std::cout<<"PASS D11a actual Game/Renderer mouse collection, keyboard/live/staged settings, Apply/load/export/remember/retry; seed=69 room="<<owner+1<<'\n';
 }
 
+void whipWormInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
+    const auto save=directory/"whip.save",preset=directory/"whip.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="1";game.reviewTrinkets=true;
+    game.loadBalancePreset(root/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json");game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
+    check(game.run&&game.error.empty()&&game.run->trinketPickups.size()==2&&!game.run->heldTrinket,"Labelled trinket pair starts unowned");
+    auto &run=*game.run;Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"Whip Game error");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"Whip capture");UnloadImage(im);EndDrawing();};
+    const auto start=run.player.position,cancer=run.trinketPickups[0].position,whip=run.trinketPickups[1].position;
+    const auto base=primaryPlayerAttack(run,run.player.shotDamage,false);const float rate=primaryCadence(run);
+    game.updateCamera(10);frame();capture("artifacts/whip-pair.png");mouseWalk(game,frame,cancer,.5f);
+    check(run.heldTrinket==CancerKey&&primaryCadence(run)<rate,"Mouse Cancer acquisition");mouseWalk(game,frame,start,.5f);mouseWalk(game,frame,whip,.5f);
+    check(run.heldTrinket==WhipWormKey&&run.items.empty()&&std::abs(primaryCadence(run)-rate)<.00001f,"Mouse different-effect swap removes Cancer");
+    const auto fast=primaryPlayerAttack(run,run.player.shotDamage,false);check(fast.speed>base.speed&&fast.maxDistance==base.maxDistance&&fast.damage==base.damage,"Whip changes only independent travel");
+    for(int n=0;n<60;++n)frame();check(run.heldTrinket==WhipWormKey,"No contact swap-back");
+    mouseEvent(KeyDown,KEY_UP);bool emitted=false;
+    for(int n=0;n<60;++n){frame();for(const auto &p:run.projectiles)if(!p.hostile){check(std::abs(p.attack.speed-fast.speed)<.001f&&p.attack.maxDistance==fast.maxDistance,"Actual keyboard Whip projectile birth");emitted=true;}}
+    mouseEvent(KeyUp,KEY_UP);frame();check(emitted,"Actual arrows fire with Whip");capture("artifacts/whip-held.png");
+    key(KEY_TAB);check(game.buildOpen,"Whip build inspector");capture("artifacts/whip-build.png");key(KEY_TAB);
+    mouseWalk(game,frame,start,.5f);mouseWalk(game,frame,whip,.5f);check(run.heldTrinket==CancerKey&&primaryPlayerAttack(run,run.player.shotDamage,false).speed==base.speed,"Mouse swap back removes Whip");
+    mouseWalk(game,frame,start,.5f);for(int n=0;n<60;++n)frame();mouseWalk(game,frame,whip,.5f);check(run.heldTrinket==WhipWormKey,"Mouse second Whip swap");
+    key(KEY_U);check(!run.heldTrinket&&primaryPlayerAttack(run,run.player.shotDamage,false).speed==base.speed,"Actual U drops Whip");
+    const auto dropped=run.trinketPickups.back().position;mouseWalk(game,frame,start,.5f);for(int n=0;n<60;++n)frame();mouseWalk(game,frame,dropped,.5f);check(run.heldTrinket==WhipWormKey,"Recollect dropped Whip once");
+    click(374,642);click(710,143);click(1010,189);click(630,189);check(game.balanceTrinketOpen,"Actual trinket panel");
+    click(970,311);click(370,427);check(std::abs(run.trinkets.whipStrength-1.05f)<.00001f&&run.trinkets.binding==1&&std::abs(run.effectivePlayerStats().shotSpeed-1.425f)<.00001f,"Whip slider and binding live");
+    key(KEY_Y);check(run.heldTrinket==WhipWormKey,"Panel consumes rebind");click(335,605);auto exported=BalancePreset::load(preset,run.content->fingerprint());check(exported.trinkets==run.trinkets&&exported.defaultZoomPercent==165,"Whip export");
+    click(380,490);check(!run.trinkets.custom(),"Reset both trinkets");click(600,605);check(run.trinkets==exported.trinkets&&run.heldTrinket==WhipWormKey,"Configuration load retains owned slot");capture("artifacts/whip-panel.png");
+    game.perform(Action::CloseBalance);key(KEY_U);check(run.heldTrinket==WhipWormKey,"Old binding inactive");key(KEY_Y);check(!run.heldTrinket,"Actual rebound drop");
+    const auto finalDrop=run.trinketPickups.back().position;mouseWalk(game,frame,start,.5f);for(int n=0;n<60;++n)frame();mouseWalk(game,frame,finalDrop,.5f);check(run.heldTrinket==WhipWormKey,"Recollect with rebound controls");
+    game.perform(Action::OpenBalance);game.perform(Action::BalanceWorldTab);game.perform(Action::RoomSizeUp);game.perform(Action::ApplyMapChanges);game.perform(Action::CloseBalance);frame();check(run.heldTrinket==WhipWormKey&&run.trinkets==exported.trinkets&&run.trinketPickups.empty(),"Apply retains held/config and resets test pickups");
+    game.exportBalancePreset();game.rememberBalancePreset();std::filesystem::copy_file(preset,"artifacts/whip-preset.json",std::filesystem::copy_options::overwrite_existing);
+    run.finishDebug(false);game.retryExpedition();check(game.run&&!game.run->heldTrinket&&game.run->items.empty()&&game.run->trinketPickups.size()==2&&game.run->trinkets==exported.trinkets,"Retry restores test pair with empty ownership and retained config");game.close();renderer.unload();
+    Game fresh(directory/"ordinary.save");fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="1";fresh.loadBalancePreset(preset);fresh.rememberBalancePreset();fresh.launch(true);check(fresh.run&&!fresh.run->heldTrinket&&fresh.run->trinketPickups.empty()&&fresh.run->trinkets==exported.trinkets&&fresh.cameraZoomPercent()==165&&fresh.run->roomSizeScale==1.11f,"Fresh CLI-equivalent preset load without test actors or owned items");fresh.close();
+    std::cout<<"PASS PW-T02 actual mouse swaps/arrows/drop/build/rebind/live/export/load/Apply/retry/ordinary reload\n";
+}
+
 void powerupCategoryInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
@@ -921,10 +961,10 @@ void cancerInputCheck(const std::filesystem::path &directory) {
     mouseEvent(KeyDown,KEY_U);for(int i=0;i<90;++i)frame();mouseEvent(KeyUp,KEY_U);frame();check(!run.heldTrinket&&run.trinketPickups.size()==1,"Held U drops once");
     mouseWalk(game,frame,away,.25f);mouseWalk(game,frame,dropped,.25f);for(int i=0;i<60;++i)frame();check(run.heldTrinket==CancerKey,"Recollect before live tuning");
     click(374,642);click(710,143);click(1010,189);click(630,189);check(game.balanceTrinketOpen,"Actual mouse opens trinket page");
-    const float before=run.effectivePlayerStats().tearsPerSecond;click(970,258);click(370,321);click(370,384);
+    const float before=run.effectivePlayerStats().tearsPerSecond;click(970,258);click(370,374);click(370,427);
     check(std::abs(run.trinkets.cancerStrength-1.05f)<.00001f&&!run.trinkets.clearRewards&&run.trinkets.binding==1&&std::abs(run.effectivePlayerStats().tearsPerSecond-before-.05f)<.00001f,"Live strength/reward/binding consumers");
     key(KEY_Y);check(run.heldTrinket==CancerKey,"Panel consumes drop key");click(335,605);auto exported=BalancePreset::load(file,run.content->fingerprint());check(exported.trinkets==run.trinkets&&exported.defaultZoomPercent==165,"Mouse export includes trinkets and accepted zoom");
-    click(380,474);check(!run.trinkets.custom(),"Reset trinket settings");click(600,605);check(run.trinkets==exported.trinkets&&run.heldTrinket==CancerKey,"Reload configuration retains owned slot");capture("artifacts/cancer-panel.png");
+    click(380,490);check(!run.trinkets.custom(),"Reset trinket settings");click(600,605);check(run.trinkets==exported.trinkets&&run.heldTrinket==CancerKey,"Reload configuration retains owned slot");capture("artifacts/cancer-panel.png");
     // Apply through its real control; the explicit testing boundary preserves held ownership.
     game.perform(Action::BalanceWorldTab);game.perform(Action::RoomSizeUp);check(game.hasPendingMapChanges(),"Map still staged");click(380,410);check(run.heldTrinket==CancerKey&&run.trinkets==exported.trinkets&&run.trinketPickups.empty(),"Actual Apply retains slot and clears floor actors");
     game.perform(Action::CloseBalance);frame();key(KEY_U);check(run.heldTrinket==CancerKey,"Old drop binding inactive");key(KEY_Y);check(!run.heldTrinket&&run.trinketPickups.size()==1,"New drop binding active");
@@ -2958,6 +2998,9 @@ int main(int argc, char **argv) {
         }
         if(mode=="--cancer-only") {
             cancerInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--whip-worm-only") {
+            whipWormInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--yum-heart-only") {
             yumHeartInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

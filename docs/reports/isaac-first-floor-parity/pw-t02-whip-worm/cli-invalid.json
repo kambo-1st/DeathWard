@@ -1,0 +1,28 @@
+[
+  {
+    "args": [
+      "--review-trinkets"
+    ],
+    "exit": 2,
+    "message": "Room review requires --expedition without other launch modes"
+  },
+  {
+    "args": [
+      "--expedition",
+      "--review-trinkets",
+      "--review-powerups"
+    ],
+    "exit": 2,
+    "message": "Choose one review room option"
+  },
+  {
+    "args": [
+      "--expedition",
+      "--review-trinkets",
+      "--review-room",
+      "5"
+    ],
+    "exit": 2,
+    "message": "Choose one review room option"
+  }
+]

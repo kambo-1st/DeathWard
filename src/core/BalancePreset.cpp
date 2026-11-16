@@ -19,7 +19,7 @@
 
 namespace dw {
 namespace {
-constexpr const char *Contract = "pw-t01-cancer-v39";
+constexpr const char *Contract = "pw-t02-whip-worm-v40";
 constexpr const char *Source = "The Binding of Isaac: Repentance 1.7.9b";
 constexpr const char *SourceHash = "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6";
 // Deliberately bounded JSON for this schema (objects, strings, finite numbers,
@@ -138,13 +138,14 @@ std::string numericText(float value) {
     return {buffer,result.ptr};
 }
 std::string trinketJson(const TrinketTuning &t) {
-    return "{\"cancer_strength\": "+numericText(t.cancerStrength)+", \"clear_rewards\": "+(t.clearRewards?"true":"false")+", \"binding\": "+std::to_string(t.binding)+"}";
+    return "{\"cancer_strength\": "+numericText(t.cancerStrength)+", \"clear_rewards\": "+(t.clearRewards?"true":"false")+", \"binding\": "+std::to_string(t.binding)+", \"whip_strength\": "+numericText(t.whipStrength)+"}";
 }
-TrinketTuning readTrinkets(const Json &j) {
-    j.keys({"cancer_strength","clear_rewards","binding"});
+TrinketTuning readTrinkets(const Json &j,int version) {
+    if(version>=40)j.keys({"cancer_strength","clear_rewards","binding","whip_strength"});
+    else j.keys({"cancer_strength","clear_rewards","binding"});
     const double key=j.at("binding").numeric();const auto &enabled=j.at("clear_rewards");
     if(key<0||key>1||std::floor(key)!=key||enabled.kind!=Json::Boolean)throw std::runtime_error("Invalid trinket binding or rewards");
-    TrinketTuning t{float(j.at("cancer_strength").numeric()),enabled.flag,int(key)};t.validate();return t;
+    TrinketTuning t{float(j.at("cancer_strength").numeric()),enabled.flag,int(key)};if(version>=40)t.whipStrength=float(j.at("whip_strength").numeric());t.validate();return t;
 }
 std::string yumJson(const YumHeartTuning &t) {
     return "{\"healing\": "+std::to_string(t.healing)+", \"recharge\": "+std::to_string(t.recharge)+", \"binding\": "+std::to_string(t.binding)+"}";
@@ -230,7 +231,7 @@ void BalancePreset::validate() const {
 }
 std::string BalancePreset::json() const {
     validate();std::ostringstream out;out.imbue(std::locale::classic());out<<std::setprecision(9);
-    out<<"{\n  \"format\": \"deathward.balance\",\n  \"schema_version\": 39,\n"
+    out<<"{\n  \"format\": \"deathward.balance\",\n  \"schema_version\": 40,\n"
        <<"  \"compatibility\": {\"contract\": "<<quoted(Contract)<<", \"content_version\": "<<quoted(ContentVersion)
        <<", \"mechanics_fingerprint\": "<<quoted(mechanicsFingerprint)<<"},\n"
        <<"  \"reference\": {\"source\": "<<quoted(Source)<<", \"executable_sha256\": "<<quoted(SourceHash)
@@ -317,10 +318,10 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     root.keys({"format","schema_version","compatibility","reference","resolved","overrides","exceptions"});
     root.at("format").equal("deathward.balance");
     const auto version=root.at("schema_version").numeric();
-    if(version!=1&&version!=2&&version!=3&&version!=4&&version!=5&&version!=6&&version!=7&&version!=8&&version!=9&&version!=10&&version!=11&&version!=12&&version!=13&&version!=14&&version!=15&&version!=16&&version!=17&&version!=18&&version!=19&&version!=20&&version!=21&&version!=22&&version!=23&&version!=24&&version!=25&&version!=26&&version!=27&&version!=28&&version!=29&&version!=30&&version!=31&&version!=32&&version!=33&&version!=34&&version!=35&&version!=36&&version!=37&&version!=38&&version!=39)throw std::runtime_error("Unsupported balance preset schema");
+    if(version!=1&&version!=2&&version!=3&&version!=4&&version!=5&&version!=6&&version!=7&&version!=8&&version!=9&&version!=10&&version!=11&&version!=12&&version!=13&&version!=14&&version!=15&&version!=16&&version!=17&&version!=18&&version!=19&&version!=20&&version!=21&&version!=22&&version!=23&&version!=24&&version!=25&&version!=26&&version!=27&&version!=28&&version!=29&&version!=30&&version!=31&&version!=32&&version!=33&&version!=34&&version!=35&&version!=36&&version!=37&&version!=38&&version!=39&&version!=40)throw std::runtime_error("Unsupported balance preset schema");
     const bool legacy=version==1;
     const auto &compat=root.at("compatibility");compat.keys({"contract","content_version","mechanics_fingerprint"});
-    compat.at("contract").equal(legacy?"d01-speed-v1":version==2?"d02-room-size-v2":version==3?"d02-map-v3":version==4?"d02-view-v4":version==5?"d03-shooting-v5":version==6?"d04-gaper-v6":version==7?"d05-spider-v7":version==8?"d06-pooter-v8":version==9?"d07-combat-v9":version==10?"d08-source-room-v10":version==11?"d09a-red-hearts-v11":version==12?"d09a-heart-timing-v12":version==13?"d09a-room-hearts-v13":version==14?"d09a-room-selection-v14":version==15?"d09a-heart-rock-room-v15":version==16?"d09a-room-descriptor-v16":version==17?"d09a-combat-rock-room-v17":version==18?"d09a-four-gaper-room-v18":version==19?"d09b-ordinary-coins-v19":version==20?"ordinary-chests-v20":version==21?"preplaced-chests-v21":version==22?"preplaced-coins-v22":version==23?"d09c-ordinary-keys-v23":version==24?"d09d-ordinary-bombs-v24":version==25?"d10a-inventory-bombs-v25":version==26?"d10b-rock-demolition-v26":version==27?"d10c-keyed-doors-v27":version==28?"d10d-room-locks-v28":version==29?"d11a-sad-onion-v29":version==30?"d12a-shop-heart-v30":version==31?"d12b-shop-key-v31":version==32?"d12c-shop-stock-v32":version==33?"d12d-shop-dynamite-v33":version==34?"d12e-shop-soul-heart-v34":version==35?"d12f-shop-collectibles-v35":version==36?"d11b-treasure-variety-v36":version==37?"pw-f01-brother-bobby-v37":version==38?"pw-a01-yum-heart-v38":Contract);compat.at("content_version").equal(ContentVersion);
+    compat.at("contract").equal(legacy?"d01-speed-v1":version==2?"d02-room-size-v2":version==3?"d02-map-v3":version==4?"d02-view-v4":version==5?"d03-shooting-v5":version==6?"d04-gaper-v6":version==7?"d05-spider-v7":version==8?"d06-pooter-v8":version==9?"d07-combat-v9":version==10?"d08-source-room-v10":version==11?"d09a-red-hearts-v11":version==12?"d09a-heart-timing-v12":version==13?"d09a-room-hearts-v13":version==14?"d09a-room-selection-v14":version==15?"d09a-heart-rock-room-v15":version==16?"d09a-room-descriptor-v16":version==17?"d09a-combat-rock-room-v17":version==18?"d09a-four-gaper-room-v18":version==19?"d09b-ordinary-coins-v19":version==20?"ordinary-chests-v20":version==21?"preplaced-chests-v21":version==22?"preplaced-coins-v22":version==23?"d09c-ordinary-keys-v23":version==24?"d09d-ordinary-bombs-v24":version==25?"d10a-inventory-bombs-v25":version==26?"d10b-rock-demolition-v26":version==27?"d10c-keyed-doors-v27":version==28?"d10d-room-locks-v28":version==29?"d11a-sad-onion-v29":version==30?"d12a-shop-heart-v30":version==31?"d12b-shop-key-v31":version==32?"d12c-shop-stock-v32":version==33?"d12d-shop-dynamite-v33":version==34?"d12e-shop-soul-heart-v34":version==35?"d12f-shop-collectibles-v35":version==36?"d11b-treasure-variety-v36":version==37?"pw-f01-brother-bobby-v37":version==38?"pw-a01-yum-heart-v38":version==39?"pw-t01-cancer-v39":Contract);compat.at("content_version").equal(ContentVersion);
     // Exact additive item-catalog migrations only; arbitrary content changes fail.
     const auto &storedFingerprint=compat.at("mechanics_fingerprint");
     const bool oldBase=version<=28&&storedFingerprint.kind==Json::String&&storedFingerprint.text=="2ccd5b1c274a302e";
@@ -330,13 +331,14 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     const bool oldCricket=version<=36&&storedFingerprint.kind==Json::String&&storedFingerprint.text=="2c70255f590fb92f";
     const bool oldBobby=version<=37&&storedFingerprint.kind==Json::String&&storedFingerprint.text=="eb6516e350a813e7";
     const bool oldYum=version<=38&&storedFingerprint.kind==Json::String&&storedFingerprint.text=="955371c9553b4b4f";
-    const bool additiveMigration=((oldBase||oldOnion||oldSale||oldBogo||oldCricket||oldBobby||oldYum)&&fingerprint=="44310290ea6adb1f")||((oldBase||oldOnion||oldSale||oldBogo||oldCricket||oldBobby)&&fingerprint=="955371c9553b4b4f")||((oldBase||oldOnion||oldSale||oldBogo||oldCricket)&&fingerprint=="eb6516e350a813e7")||(oldBase&&(fingerprint=="57e101e53ba57102"||fingerprint=="53ab4ae76cff6d8"||fingerprint=="1058a67f0b03cff3"||fingerprint=="2c70255f590fb92f"))||
+    const bool oldCancer=version<=39&&storedFingerprint.kind==Json::String&&storedFingerprint.text=="44310290ea6adb1f";
+    const bool additiveMigration=((oldBase||oldOnion||oldSale||oldBogo||oldCricket||oldBobby||oldYum||oldCancer)&&fingerprint=="3df18721421b70ad")||((oldBase||oldOnion||oldSale||oldBogo||oldCricket||oldBobby||oldYum)&&fingerprint=="44310290ea6adb1f")||((oldBase||oldOnion||oldSale||oldBogo||oldCricket||oldBobby)&&fingerprint=="955371c9553b4b4f")||((oldBase||oldOnion||oldSale||oldBogo||oldCricket)&&fingerprint=="eb6516e350a813e7")||(oldBase&&(fingerprint=="57e101e53ba57102"||fingerprint=="53ab4ae76cff6d8"||fingerprint=="1058a67f0b03cff3"||fingerprint=="2c70255f590fb92f"))||
         (oldOnion&&(fingerprint=="53ab4ae76cff6d8"||fingerprint=="1058a67f0b03cff3"||fingerprint=="2c70255f590fb92f"))||
         (oldSale&&(fingerprint=="1058a67f0b03cff3"||fingerprint=="2c70255f590fb92f"))||
         (oldBogo&&fingerprint=="2c70255f590fb92f");
     if(!additiveMigration)storedFingerprint.equal(fingerprint.c_str());
     auto ref=root.at("reference");
-    if(version>=39){if(readTrinkets(ref.at("trinkets")).custom())throw std::runtime_error("Reference trinkets cannot change");ref.fields.erase("trinkets");}
+    if(version>=39){if(readTrinkets(ref.at("trinkets"),int(version)).custom())throw std::runtime_error("Reference trinkets cannot change");ref.fields.erase("trinkets");}
     if(version>=38){if(readYum(ref.at("yum_heart")).custom())throw std::runtime_error("Reference active values cannot change");ref.fields.erase("yum_heart");}
     if(version>=37) {
         if(readBobby(ref.at("brother_bobby")).custom())throw std::runtime_error("Reference familiar values cannot change");
@@ -460,7 +462,7 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
         throw std::runtime_error("Reference values cannot be overridden; edit resolved and overrides");
     auto resolved=root.at("resolved");
     TrinketTuning trinkets;
-    if(version>=39){trinkets=readTrinkets(resolved.at("trinkets"));resolved.fields.erase("trinkets");}
+    if(version>=39){trinkets=readTrinkets(resolved.at("trinkets"),int(version));resolved.fields.erase("trinkets");}
     YumHeartTuning yum;
     if(version>=38){yum=readYum(resolved.at("yum_heart"));resolved.fields.erase("yum_heart");}
     BrotherBobbyTuning bobby;
@@ -635,7 +637,7 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     if(!sourceShopVariation&&(overrides.at("source_shop_variation").kind!=Json::Boolean||overrides.at("source_shop_variation").flag))throw std::runtime_error("Shop stock override disagrees");
     if(!steamSaleDiscounts&&(overrides.at("steam_sale_discounts").kind!=Json::Boolean||overrides.at("steam_sale_discounts").flag))throw std::runtime_error("Shop discount override disagrees");
     if(treasurePool!=1&&overrides.at("treasure_collectible_pool").numeric()!=treasurePool)throw std::runtime_error("Treasure pool override disagrees");
-    if(trinkets.custom()&&readTrinkets(overrides.at("trinkets"))!=trinkets)throw std::runtime_error("Trinket override disagrees");
+    if(trinkets.custom()&&readTrinkets(overrides.at("trinkets"),int(version))!=trinkets)throw std::runtime_error("Trinket override disagrees");
     if(yum.custom()&&readYum(overrides.at("yum_heart"))!=yum)throw std::runtime_error("Active override disagrees");
     if(bobby.custom()&&readBobby(overrides.at("brother_bobby"))!=bobby)throw std::runtime_error("Familiar override disagrees");
     if(cricketStrength!=1&&overrides.at("cricket_head_strength").numeric()!=cricketStrength)throw std::runtime_error("Cricket strength override disagrees");

@@ -1,6 +1,6 @@
 # Power-up categories: small main-game deliveries
 
-Status: plan requested on 2026-11-16. The user clarified: **establish support for each category with one or two items first; implement the remaining catalog later.** The user subsequently selected **PW-F01 — Brother Bobby**; implementation and developer verification are complete; the scoped human review is accepted. PW-A01 Yum Heart is accepted. PW-T01 Cancer is implemented, developer-verified and scoped human-accepted; see [its progress report](reports/isaac-first-floor-parity/pw-t01-cancer/README.md). PW-C01 is scoped human-accepted. PW-T02 Whip Worm is selected next; other optional second examples remain unselected. The automatic bulk parity effort remains paused; the user selects each named delivery before it starts.
+Status: plan requested on 2026-11-16. The user clarified: **establish support for each category with one or two items first; implement the remaining catalog later.** The user subsequently selected **PW-F01 — Brother Bobby**; implementation and developer verification are complete; the scoped human review is accepted. PW-A01 Yum Heart is accepted. PW-T01 Cancer is implemented, developer-verified and scoped human-accepted; see [its progress report](reports/isaac-first-floor-parity/pw-t01-cancer/README.md). PW-C01 is scoped human-accepted. PW-T02 Whip Worm is scoped human-accepted; the other optional second examples remain unselected. The automatic bulk parity effort remains paused; the user selects each named delivery before it starts.
 
 ## First milestone
 
@@ -11,7 +11,7 @@ Make all four categories usable together in an ordinary DeathWard expedition:
 | Passive | The Sad Onion — collectible1 | Cricket's Head — collectible4 | Both enabled and scoped human-accepted; retain them. |
 | Familiar | Brother Bobby — collectible8 | Halo of Flies — collectible10 | Brother Bobby accepted; Halo of Flies remains proposed. |
 | Active | Yum Heart — collectible45 | Book of Shadows — collectible58 | Yum Heart scoped human-accepted. Second example unselected. |
-| Trinket | Cancer — trinket39 | Whip Worm — trinket27 | Cancer scoped human-accepted. Whip Worm selected. |
+| Trinket | Cancer — trinket39 | Whip Worm — trinket27 | Cancer and Whip Worm scoped human-accepted. |
 
 The first milestone therefore needs **five example items total: two existing passives and one example from each missing category**. Second examples bring that to eight and follow after the four-category milestone. Existing Steam Sale, BOGO Bombs and DeathWard items remain available under their current rules.
 
@@ -117,6 +117,8 @@ Exercise floor transition, death retry and configuration reload. Audit newly int
 
 ## Optional second examples, after the first milestone
 
+PW-T02 Whip Worm is implemented, developer-verified and scoped human-accepted after PW-C01 (`81138b55`). See [PW-T02 report](reports/isaac-first-floor-parity/pw-t02-whip-worm/README.md). The other second examples remain unselected.
+
 | Delivery | Item | Additional capability exercised | Short visible check |
 | --- | --- | --- | --- |
 | PW-F02 | Halo of Flies10 | Orbital formation and enemy-projectile interception; verify source count, orbit/contact rules and any other owned effects. | Collect; observe the source-defined orbiters and blocked shots in an ordinary ranged encounter. |
@@ -149,6 +151,6 @@ Deferred work includes the rest of the425 passive,126 familiar,170 active and188
 
 Maintain one row per item with identity, category, source effects/evidence, eligible producers/pools, dependencies, implementation status, ordinary availability, user verdict and known adaptations. A familiar/active/trinket framework is not an accepted count for every catalog entry. Do not publish a full-catalog completion percentage from these examples.
 
-## Current selected action
+## Current checkpoint and next proposal
 
-**PW-T02 — Whip Worm27.** Commit the scoped accepted PW-C01 checkpoint, then add the second trinket with independently verified Shot Speed contribution, actual Cancer/Whip swaps, ordinary producer support and live/export/load boundaries. Full-catalog expansion, Halo of Flies and Book of Shadows remain unselected.
+**PW-T02 — Whip Worm27: accepted checkpoint.** The second trinket is enabled with independently verified +0.5 Shot Speed, actual Cancer/Whip swaps, ordinary producer support and live/export/load boundaries. Developer checks and the scoped human playtest pass. Next proposed: **PW-F02 Halo of Flies**, then **PW-A02 Book of Shadows**. Neither is selected; full-catalog expansion remains deferred. Full native equivalence and full live expedition resume remain open.

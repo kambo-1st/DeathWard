@@ -1166,6 +1166,7 @@ class Simulation {
     BrotherBobbyTuning brotherBobby{};
     std::optional<PowerupReviewState> powerupReview; // Explicit CLI fixture, never a natural item pool.
     bool beginPowerupReview();
+    bool beginTrinketReview();
     bool visitPowerupReviewEncounter(bool bossRoom=false);
     TrinketTuning trinkets{};
     std::optional<ItemKey> heldTrinket;

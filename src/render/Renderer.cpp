@@ -1184,6 +1184,18 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         if(pickup.timing.phase==TrinketTiming::Phase::Appear)at.y+=1.2f*(1-std::min(1.f,float(pickup.timing.frame)/TrinketTiming::DropFrame));
         if(pickup.timing.phase==TrinketTiming::Phase::Collect){scale=1-float(pickup.timing.frame)/TrinketTiming::CollectFrames;at.y+=1-scale;}
         shadow(at,.5f*scale);
+        if(pickup.item==WhipWormKey) {
+            // A leather coil with a brass handle, distinct from Cancer's two scrolls.
+            const Color leather=ColorAlpha(Color{93,49,31,255},scale);
+            Vector3 previous=add(at,{.38f*scale,0,0});
+            for(int j=1;j<=24;++j) {
+                const float a=j*2.8f*Pi/24,r=(.38f-.24f*j/24)*scale;
+                const auto next=add(at,{std::cos(a)*r,.01f*scale,std::sin(a)*r});
+                DrawCylinderEx(previous,next,.06f*scale,.045f*scale,6,leather);previous=next;
+            }
+            DrawCylinderEx(add(at,{.38f*scale,0,0}),add(at,{.7f*scale,0,-.18f*scale}),.07f*scale,.07f*scale,6,ColorAlpha(Gold,scale));
+            continue;
+        }
         // Brass double-scroll charm: original canyon artwork, identifiable as a trinket.
         const Color brass=ColorAlpha(Gold,scale);
         for(int side:{-1,1}) {
@@ -1951,9 +1963,10 @@ Action Renderer::buildDetails(const Game &game) {
     }
     if(game.run&&game.run->heldTrinket) {
         const float x=152+float(index%2)*496,y=133+float(index/2)*92;++index;
-        panel(x,y,480,86,Ink);text("CANCER / HELD TRINKET",x+16,y+10,16,Gold);
-        std::ostringstream bonus;bonus<<std::fixed<<std::setprecision(2)<<game.run->trinkets.cancerStrength;
-        wrap("+"+bonus.str()+" tears/s while held. "+game.run->trinkets.keyName()+" drops it; other upgrades remain.",x+16,y+35,448,12,Paper);
+        const bool whip=*game.run->heldTrinket==WhipWormKey;
+        panel(x,y,480,86,Ink);text(std::string(trinketName(*game.run->heldTrinket))+" / HELD TRINKET",x+16,y+10,16,Gold);
+        std::ostringstream bonus;bonus<<std::fixed<<std::setprecision(2)<<(whip?.5f*game.run->trinkets.whipStrength:game.run->trinkets.cancerStrength);
+        wrap("+"+bonus.str()+(whip?" Shot Speed":" tears/s")+" while held. "+game.run->trinkets.keyName()+" drops it; other upgrades remain.",x+16,y+35,448,12,Paper);
     }
     if(!index)wrap("No powers collected yet. Look for caches, shops and boss rewards.",160,168,800,20,Paper);
     return button(Action::CloseBuild,"BACK",830,710,290,36,true)?Action::CloseBuild:Action::None;
@@ -2058,6 +2071,11 @@ Action Renderer::expedition(const Game &game) {
         const auto control=[&](Action action,const std::string &label,Rectangle r,bool primary=false) {
             return button(action,label,r.x,r.y,r.width,r.height,primary);
         };
+        if(game.reviewTrinkets) {
+            const auto r=expeditionHud::categoryReview(false);panel(r.x,r.y,r.width,r.height,Panel);
+            text("TRINKET REVIEW / TEST PICKUPS",354,33,18,Gold);
+            text("Touch a charm to swap. Step away before swapping back. Tab: build.",354,58,13,Paper);
+        }
         if(run.powerupReview) {
             const auto &review=*run.powerupReview;const auto r=expeditionHud::categoryReview(run.roomClear&&review.collected==4);
             panel(r.x,r.y,r.width,r.height,Panel);text("CATEGORY REVIEW / TEST OFFERINGS",354,33,18,Gold);
@@ -2077,7 +2095,7 @@ Action Renderer::expedition(const Game &game) {
             if(control(Action::UseActiveItem,std::string(run.yumHeart.keyName())+" / YUM HEART "+std::to_string(run.activeItem->charge)+"/4",r,run.activeItem->charge==4))controls=Action::UseActiveItem;
             for(int i=0;i<4;++i)DrawRectangleRec({(r.x+3+i*(r.width-6)/4)*sx_,(r.y+r.height-4)*sy_,(r.width-10)*sx_/4,3*sy_},i<run.activeItem->charge?Teal:Border);
         }
-        if(run.heldTrinket&&control(Action::DropTrinket,std::string(run.trinkets.keyName())+" / DROP CANCER",expeditionHud::Trinket))controls=Action::DropTrinket;
+        if(run.heldTrinket&&control(Action::DropTrinket,std::string(run.trinkets.keyName())+" / DROP "+trinketName(*run.heldTrinket),expeditionHud::Trinket))controls=Action::DropTrinket;
         const auto dodge=expeditionHud::Dodge;
         if(control(Action::Dodge,"DODGE",dodge))controls=Action::Dodge;
         if(run.player.dodgeCooldown>0)
@@ -2582,19 +2600,22 @@ Action Renderer::balancePanel(const Game &game) {
             if(game.run->arena.rooms[i].sourceCombatTemplate==47)sourceRoom="Active: room "+std::to_string(i+1)+" / two Gapers";
         text(sourceRoom,610,474,13,Teal);
     } else if(game.balanceTrinketOpen) {
-        text("TRINKET / CANCER",205,182,22,Gold);
+        text("TRINKETS",205,182,22,Gold);
         if(button(Action::BalanceTreasureTab,"TREASURE",945,169,130,40))return Action::BalanceTreasureTab;
         const auto &t=game.balancePreset.trinkets;
+        text("Cancer +1 tear/s / Whip Worm +0.5 Shot Speed; Range stays independent.",205,218,13,Muted);
         text("CANCER STRENGTH",205,250,18,Gold);text(decimal(t.cancerStrength*100)+"%",495,247,22,Paper);
         if(button(Action::CancerDown,"- 5%",760,238,130,40))return Action::CancerDown;
         if(button(Action::CancerUp,"+ 5%",905,238,130,40))return Action::CancerUp;
-        if(button(Action::ToggleTrinketRewards,t.clearRewards?"CLEAR REWARDS: ON":"CLEAR REWARDS: OFF",205,301,350,40))return Action::ToggleTrinketRewards;
-        text("Rare ordinary trinket outcome; Cancer-only pool.",585,316,14,Muted);
-        if(button(Action::CycleTrinketBinding,std::string("DROP KEY: ")+t.keyName()+" / CHANGE",205,364,350,40))return Action::CycleTrinketBinding;
-        text("Drop, walk away, then return to collect.",585,378,14,Muted);
-        text("Reference: +1 tear/s after ordinary Tears; can exceed its cap.",205,427,14,Muted);
-        if(button(Action::ResetTrinkets,"RESET TRINKET SETTINGS",205,453,350,40))return Action::ResetTrinkets;
-        if(game.run)text(std::string(game.run->heldTrinket?"CANCER HELD":"EMPTY SLOT")+" / NEXT VOLLEY "+decimal(1/primaryCadence(*game.run))+" /s",585,468,14,Teal);
+        text("WHIP WORM STRENGTH",205,303,18,Gold);text(decimal(t.whipStrength*100)+"%",560,300,22,Paper);
+        if(button(Action::WhipDown,"- 5%",760,291,130,40))return Action::WhipDown;
+        if(button(Action::WhipUp,"+ 5%",905,291,130,40))return Action::WhipUp;
+        if(button(Action::ToggleTrinketRewards,t.clearRewards?"CLEAR REWARDS: ON":"CLEAR REWARDS: OFF",205,354,350,40))return Action::ToggleTrinketRewards;
+        text("Rare trinket outcome; Cancer / Whip Worm pool.",585,369,14,Muted);
+        if(button(Action::CycleTrinketBinding,std::string("DROP KEY: ")+t.keyName()+" / CHANGE",205,407,350,40))return Action::CycleTrinketBinding;
+        text("Drop, walk away, then return to collect.",585,421,14,Muted);
+        if(button(Action::ResetTrinkets,"RESET TRINKET SETTINGS",205,459,350,36))return Action::ResetTrinkets;
+        if(game.run)text(std::string(game.run->heldTrinket?trinketName(*game.run->heldTrinket):"EMPTY SLOT")+" / SHOT SPEED "+decimal(game.run->effectivePlayerStats().shotSpeed),585,470,14,Teal);
     } else if(game.balanceActiveOpen) {
         text("ACTIVE / YUM HEART",205,182,22,Gold);
         if(button(Action::BalanceTreasureTab,"TREASURE",945,169,130,40))return Action::BalanceTreasureTab;

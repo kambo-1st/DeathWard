@@ -135,7 +135,7 @@ enum class Action {
     BalanceDamageHealthTab, BalanceBombsTab, BombFuseDown, BombFuseUp,
     BombRadiusDown, BombRadiusUp, BombDamageDown, BombDamageUp,
     BombSelfDamageDown, BombSelfDamageUp, ResetInventoryBombs, ToggleRockBlastShielding,
-    BalanceDoorsTab, DoorKeyCostDown, DoorKeyCostUp, ResetKeyedDoors, ToggleSourceRoomLocks, BalanceTreasureTab, ToggleTreasureUpgrade, SadOnionDown, SadOnionUp, ResetSadOnion, BalanceShopTab, ToggleShopHeart, ShopHeartPriceDown, ShopHeartPriceUp, ResetShopHeartPrice, BalanceShopHeartTab, BalanceShopKeyTab, ToggleShopKey, ShopKeyPriceDown, ShopKeyPriceUp, ResetShopKeyPrice, BalanceShopStockTab, ToggleShopVariation, ToggleSteamSaleDiscounts, ShopUpgradePriceDown, ShopUpgradePriceUp, ResetShopUpgradePrice, BalanceShopBombTab, ShopBombPriceDown, ShopBombPriceUp, ResetShopBombPrice, BalanceShopRedHeartTab, BalanceShopSoulHeartTab, ShopSoulHeartPriceDown, ShopSoulHeartPriceUp, ResetShopSoulHeartPrice, CycleShopCollectiblePool, CycleTreasureCollectiblePool, CricketHeadDown, CricketHeadUp, ResetCricketHead, BalanceFamiliarTab, BobbyMovementDown, BobbyMovementUp, BobbyIntervalDown, BobbyIntervalUp, BobbyDamageDown, BobbyDamageUp, BobbyShotDown, BobbyShotUp, ResetBrotherBobby, BalanceActiveTab, YumHealingDown, YumHealingUp, YumRechargeDown, YumRechargeUp, CycleActiveBinding, ResetYumHeart, UseActiveItem, BalanceTrinketTab, CancerDown, CancerUp, ToggleTrinketRewards, CycleTrinketBinding, ResetTrinkets, DropTrinket, ReviewPowerupFight, ReviewPowerupBoss
+    BalanceDoorsTab, DoorKeyCostDown, DoorKeyCostUp, ResetKeyedDoors, ToggleSourceRoomLocks, BalanceTreasureTab, ToggleTreasureUpgrade, SadOnionDown, SadOnionUp, ResetSadOnion, BalanceShopTab, ToggleShopHeart, ShopHeartPriceDown, ShopHeartPriceUp, ResetShopHeartPrice, BalanceShopHeartTab, BalanceShopKeyTab, ToggleShopKey, ShopKeyPriceDown, ShopKeyPriceUp, ResetShopKeyPrice, BalanceShopStockTab, ToggleShopVariation, ToggleSteamSaleDiscounts, ShopUpgradePriceDown, ShopUpgradePriceUp, ResetShopUpgradePrice, BalanceShopBombTab, ShopBombPriceDown, ShopBombPriceUp, ResetShopBombPrice, BalanceShopRedHeartTab, BalanceShopSoulHeartTab, ShopSoulHeartPriceDown, ShopSoulHeartPriceUp, ResetShopSoulHeartPrice, CycleShopCollectiblePool, CycleTreasureCollectiblePool, CricketHeadDown, CricketHeadUp, ResetCricketHead, BalanceFamiliarTab, BobbyMovementDown, BobbyMovementUp, BobbyIntervalDown, BobbyIntervalUp, BobbyDamageDown, BobbyDamageUp, BobbyShotDown, BobbyShotUp, ResetBrotherBobby, BalanceActiveTab, YumHealingDown, YumHealingUp, YumRechargeDown, YumRechargeUp, CycleActiveBinding, ResetYumHeart, UseActiveItem, BalanceTrinketTab, CancerDown, CancerUp, ToggleTrinketRewards, CycleTrinketBinding, ResetTrinkets, DropTrinket, ReviewPowerupFight, ReviewPowerupBoss, WhipDown, WhipUp
 };
 class Game {
   public:
@@ -218,6 +218,7 @@ class Game {
     AudioCueQueue audioCues;
     uint64_t audioContext = 0;
     std::string seedText = "1866", error;
+    bool reviewTrinkets=false;
     bool reviewPowerups=false; // Labelled category setup; ordinary consumers and encounters.
     std::optional<int> reviewRoomIndex; // Zero-based generated room; normal health/damage.
     bool reviewShopStock=false; // Direct bounded stock review with labelled test funds.

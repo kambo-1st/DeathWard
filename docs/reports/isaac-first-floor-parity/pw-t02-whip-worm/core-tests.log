@@ -1,0 +1,34 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  36: treasure_upgrade
+      Start  35: cricket_head_treasure
+ 1/10 Test  #35: cricket_head_treasure ............   Passed    4.20 sec
+      Start  33: yum_heart
+ 2/10 Test  #33: yum_heart ........................   Passed    3.76 sec
+      Start  31: cancer_trinket
+ 3/10 Test  #31: cancer_trinket ...................   Passed    2.10 sec
+      Start  30: powerup_categories
+ 4/10 Test  #36: treasure_upgrade .................***Failed   11.29 sec
+PASS 27 generated geometry/route collection cases
+PASS 16-direction keyboard/dodge/click routing, persistent collision, safe Apply and legacy offering
+FAIL: audited additive catalog hash
+
+      Start  34: brother_bobby
+ 5/10 Test  #30: powerup_categories ...............   Passed    1.35 sec
+      Start   2: mechanics_content
+ 6/10 Test  #34: brother_bobby ....................   Passed    1.70 sec
+      Start 145: core_contracts
+ 7/10 Test   #2: mechanics_content ................   Passed    2.08 sec
+      Start 147: balance_preset_contract
+ 8/10 Test #147: balance_preset_contract ..........   Passed    0.13 sec
+      Start  32: whip_worm_trinket
+ 9/10 Test #145: core_contracts ...................   Passed    1.14 sec
+10/10 Test  #32: whip_worm_trinket ................   Passed    7.17 sec
+
+90% tests passed, 1 tests failed out of 10
+
+Total Test time (real) =  20.82 sec
+
+The following tests FAILED:
+	 36 - treasure_upgrade (Failed)
+Errors while running CTest

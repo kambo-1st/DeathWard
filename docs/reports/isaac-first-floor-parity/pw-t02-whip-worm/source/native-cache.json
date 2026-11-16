@@ -1,0 +1,14 @@
+[
+  {
+    "held": 0,
+    "shot_speed": 1.0
+  },
+  {
+    "held": 27,
+    "shot_speed": 1.5
+  },
+  {
+    "held": 39,
+    "shot_speed": 1.0
+  }
+]

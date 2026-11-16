@@ -1,0 +1,17 @@
+{
+  "pid": 2753545,
+  "args": [
+    "build/deathward",
+    "--expedition",
+    "--seed",
+    "1",
+    "--review-trinkets",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/pw-t02-whip-worm/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "started": "2026-11-16T19:52:03.056762",
+  "human_acceptance": "pending"
+}

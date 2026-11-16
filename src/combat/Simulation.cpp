@@ -300,9 +300,9 @@ std::string Simulation::roomName(int index, MissionTheme theme) {
 }
 void Simulation::grant(const ItemKey &item) {
     const auto *definition=content->item(item);
-    if(item==CancerKey) {
-        // Only this selected item enters the new slot; retain unselected external-pack rules.
-        if(definition&&!heldTrinket){heldTrinket=item;checkpointNeeded=true;audioCues.push(AudioCueKind::Pickup,player.position);announce("CANCER / TRINKET",2);}
+    if(supportedTrinket(item)) {
+        // Only selected items enter this slot; retain unselected external-pack rules.
+        if(definition&&!heldTrinket){heldTrinket=item;checkpointNeeded=true;audioCues.push(AudioCueKind::Pickup,player.position);announce(std::string(trinketName(item))+" / TRINKET",2);}
         return;
     }
     if (!definition || items.size() >= 256)
@@ -381,6 +381,7 @@ SourcePlayerStats Simulation::effectivePlayerStats() const {
     result.damage=cricketHeadDamage(result.damage,itemStacks({"isaac",ItemKind::Collectible,4}),cricketHeadStrength);
     result.tearsPerSecond=sadOnionTears(result.tearsPerSecond,itemStacks({"isaac",ItemKind::Collectible,1}),sadOnionStrength);
     result.tearsPerSecond=cancerTears(result.tearsPerSecond,heldTrinket==CancerKey,trinkets.cancerStrength);
+    result.shotSpeed=whipShotSpeed(result.shotSpeed,heldTrinket==WhipWormKey,trinkets.whipStrength);
     return result;
 }
 int Simulation::treasureUpgradeItem(int index) const {

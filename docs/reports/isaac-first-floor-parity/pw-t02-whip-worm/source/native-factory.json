@@ -1,0 +1,202 @@
+[
+  {
+    "pool": [
+      27
+    ],
+    "seed": 1,
+    "subtype": 27,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      27
+    ],
+    "seed": 2,
+    "subtype": 27,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      27
+    ],
+    "seed": 7,
+    "subtype": 27,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      27
+    ],
+    "seed": 39,
+    "subtype": 27,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      27
+    ],
+    "seed": 69,
+    "subtype": 27,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      27
+    ],
+    "seed": 12345,
+    "subtype": 27,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      27
+    ],
+    "seed": 1416295006,
+    "subtype": 27,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      27
+    ],
+    "seed": 4294967295,
+    "subtype": 27,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      39
+    ],
+    "seed": 1,
+    "subtype": 39,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      39
+    ],
+    "seed": 2,
+    "subtype": 39,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      39
+    ],
+    "seed": 7,
+    "subtype": 39,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      39
+    ],
+    "seed": 39,
+    "subtype": 39,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      39
+    ],
+    "seed": 69,
+    "subtype": 39,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      39
+    ],
+    "seed": 12345,
+    "subtype": 39,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      39
+    ],
+    "seed": 1416295006,
+    "subtype": 39,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      39
+    ],
+    "seed": 4294967295,
+    "subtype": 39,
+    "remaining": 0
+  },
+  {
+    "pool": [
+      27,
+      39
+    ],
+    "seed": 1,
+    "subtype": 39,
+    "remaining": 1
+  },
+  {
+    "pool": [
+      27,
+      39
+    ],
+    "seed": 2,
+    "subtype": 27,
+    "remaining": 1
+  },
+  {
+    "pool": [
+      27,
+      39
+    ],
+    "seed": 7,
+    "subtype": 39,
+    "remaining": 1
+  },
+  {
+    "pool": [
+      27,
+      39
+    ],
+    "seed": 39,
+    "subtype": 27,
+    "remaining": 1
+  },
+  {
+    "pool": [
+      27,
+      39
+    ],
+    "seed": 69,
+    "subtype": 39,
+    "remaining": 1
+  },
+  {
+    "pool": [
+      27,
+      39
+    ],
+    "seed": 12345,
+    "subtype": 39,
+    "remaining": 1
+  },
+  {
+    "pool": [
+      27,
+      39
+    ],
+    "seed": 1416295006,
+    "subtype": 39,
+    "remaining": 1
+  },
+  {
+    "pool": [
+      27,
+      39
+    ],
+    "seed": 4294967295,
+    "subtype": 27,
+    "remaining": 1
+  }
+]

@@ -1,0 +1,47 @@
+{
+  "delivery": "PW-T02",
+  "accepted_predecessor": "81138b55",
+  "implementation": "enabled in main game",
+  "developer_verification": "passed",
+  "human_acceptance": "scoped accepted",
+  "source": {
+    "version": "Repentance 1.7.9b",
+    "ordinary_held_shot_speed_bonus": 0.5,
+    "native_arithmetic_cases": 24,
+    "whole_cache_cases": 3,
+    "factory_cases": 24
+  },
+  "checks": {
+    "focused_suites": 10,
+    "treasure_rerun": "stale expected catalog hash updated; now passed",
+    "actual_whip_game_renderer": "passed",
+    "actual_cancer_regression": "passed",
+    "dynamic_sizes": 3,
+    "cli_preset_schemas": [
+      5,
+      39,
+      40
+    ],
+    "invalid_cli_cases": 3
+  },
+  "natural_witness": {
+    "seed": 32,
+    "displayed_room": 5,
+    "pickup_seed": 3303011089
+  },
+  "balance_schema": 40,
+  "campaign_version": 10,
+  "content_hash": "3df18721421b70ad",
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "adaptations": [
+    "Retained canyon geometry and accepted independent shooting calibration",
+    "Fresh restricted [27,39] pool using DW pickup seed; no full native pool/depletion/refill/seed-stream claim",
+    "Custom Shot Speed below source global minimum remains a testing override",
+    "Review pair is explicitly staged; normal acquisition is also enabled"
+  ],
+  "remaining": [
+    "Full native cache/pool/drop/physics equivalence and special trinket interactions",
+    "Full live expedition save/resume (D18)",
+    "Other optional examples and catalog expansion unselected"
+  ]
+}

@@ -33,8 +33,8 @@ void Simulation::resolveRedHeartClearAward() {
         result.pickupSeed=rng.next();result.subtype=1;result.pending=chestClearRewards;
     }
     if(result.variant==350) {
-        result.pickupSeed=rng.next();result.subtype=39;result.pending=trinkets.clearRewards;
-        // Explicit single eligible trinket adapter; no complete native pool claim.
+        result.pickupSeed=rng.next();result.subtype=sourceSupportedTrinket(result.pickupSeed);result.pending=trinkets.clearRewards;
+        // Explicit fresh two-entry pool adapter; no complete native pool claim.
     }
     // Keep unsupported outcomes explicit; no reroll or substitute red heart.
     progress.redHeartAward=result;checkpointNeeded=true;
@@ -77,7 +77,7 @@ void Simulation::deliverRedHeartClearAward() {
     if(chest) {
         if(!spawnChest(position,award->pickupSeed))return;
     } else if(trinket) {
-        if(!spawnTrinket(position,CancerKey,award->pickupSeed))return;
+        if(!spawnTrinket(position,{"isaac",ItemKind::Trinket,uint32_t(award->subtype)},award->pickupSeed))return;
     } else if(bomb) {
         if(!spawnOrdinaryBomb(position,award->subtype,award->pickupSeed))return;
     } else if(key) {

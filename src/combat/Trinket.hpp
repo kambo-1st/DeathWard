@@ -5,14 +5,19 @@
 
 namespace dw {
 inline const ItemKey CancerKey{"isaac",ItemKind::Trinket,39};
+inline const ItemKey WhipWormKey{"isaac",ItemKind::Trinket,27};
+inline bool supportedTrinket(const ItemKey &key){return key==CancerKey||key==WhipWormKey;}
+inline const char *trinketName(const ItemKey &key){return key==WhipWormKey?"WHIP WORM":"CANCER";}
 struct TrinketTuning {
     float cancerStrength=1; // Source +1 tears/second, after ordinary Tears modifiers.
-    bool clearRewards=true; // Future ordinary first clears; bounded Cancer-only pool.
+    bool clearRewards=true; // Future ordinary first clears; bounded Whip/Cancer pool.
     int binding=0; // U/Y; neither conflicts with active, aim, camera or dodge controls.
+    float whipStrength=1; // Source +0.5 Shot Speed; independent from Tears and Range.
     bool operator==(const TrinketTuning &) const = default;
     bool custom() const {return *this!=TrinketTuning{};}
     void validate() const {
-        if(!std::isfinite(cancerStrength)||cancerStrength<0||cancerStrength>2||binding<0||binding>1)
+        if(!std::isfinite(cancerStrength)||cancerStrength<0||cancerStrength>2||binding<0||binding>1||
+           !std::isfinite(whipStrength)||whipStrength<0||whipStrength>2)
             throw std::runtime_error("Invalid trinket tuning");
     }
     const char *keyName() const {return binding==1?"Y":"U";}
@@ -20,6 +25,9 @@ struct TrinketTuning {
 inline float cancerTears(float ordinaryRate,bool held,float strength=1) {
     if(!held||strength==0||ordinaryRate<=0)return ordinaryRate;
     return ordinaryRate+strength;
+}
+inline float whipShotSpeed(float ordinarySpeed,bool held,float strength=1) {
+    return held?ordinarySpeed+.5f*strength:ordinarySpeed;
 }
 // Installed 005.350_Trinket ANM2. Contact/drop placement uses the canyon adapter.
 struct TrinketTiming {

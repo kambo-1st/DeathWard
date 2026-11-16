@@ -660,6 +660,10 @@ if(BUILD_TESTING)
     target_link_libraries(deathward_cancer_tests PRIVATE deathward_core)
     add_test(NAME cancer_trinket COMMAND deathward_cancer_tests)
 
+    add_executable(deathward_whip_worm_tests tests/whip_worm_tests.cpp)
+    target_link_libraries(deathward_whip_worm_tests PRIVATE deathward_core)
+    add_test(NAME whip_worm_trinket COMMAND deathward_whip_worm_tests)
+
     add_executable(deathward_yum_heart_tests tests/yum_heart_tests.cpp)
     target_link_libraries(deathward_yum_heart_tests PRIVATE deathward_core)
     add_test(NAME yum_heart COMMAND deathward_yum_heart_tests)

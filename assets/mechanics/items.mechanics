@@ -80,3 +80,7 @@ end
 # PW-T01: separate held trinket; bounded ordinary clear-award pool.
 item "isaac:trinket:39" "Cancer" "TRINKET" "Adds one tear per second while held, beyond the ordinary Tears cap. Drop it to remove the effect."
 end
+
+# PW-T02: second held trinket; independent Shot Speed contribution.
+item "isaac:trinket:27" "Whip Worm" "TRINKET" "Adds 0.5 Shot Speed while held. Firing rate and maximum range stay unchanged. Swap or drop it to remove the effect."
+end

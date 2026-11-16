@@ -12,6 +12,11 @@ struct SourceAwardRng {
     uint32_t bounded(uint32_t maximum){return next()%maximum;}
     float unit(){return float(next())*0x1.fffffcp-33f;}
 };
+// Native first draw for a fresh supplied enabled pool [27,39]. The retained DW
+// pickup seed initializes this bounded adapter; full expedition pool state is separate.
+inline int sourceSupportedTrinket(uint32_t seed) {
+    SourceAwardRng rng{seed};return rng.bounded(2)==0?27:39;
+}
 // Entire ordinary empty-inventory selector at7b82b0. All represented source
 // items/trinkets are absent; this is not the complete modified award system.
 inline int sourceOrdinaryRoomAward(SourceAwardRng &rng,float luck=0,bool preventNone=false) {

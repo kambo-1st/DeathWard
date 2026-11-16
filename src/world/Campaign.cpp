@@ -65,7 +65,7 @@ void writeSummary(std::ostream &out, const RunSummary &s) {
     if(s.activeItem){s.activeItem->validate();out<<' '<<std::quoted(itemKeyText(s.activeItem->item))<<' '<<s.activeItem->charge;}
     out<<'\n'<<bool(s.heldTrinket);
     if(s.heldTrinket) {
-        if(*s.heldTrinket!=CancerKey||std::count(s.items.begin(),s.items.end(),*s.heldTrinket))throw std::runtime_error("Invalid trinket slot ownership");
+        if(!supportedTrinket(*s.heldTrinket)||std::count(s.items.begin(),s.items.end(),*s.heldTrinket))throw std::runtime_error("Invalid trinket slot ownership");
         out<<' '<<std::quoted(itemKeyText(*s.heldTrinket));
     }
     out<<'\n';
@@ -145,7 +145,7 @@ RunSummary readSummary(std::istream &in, int version) {
         const auto occupied=count(in,1);
         if(occupied) {
             std::string key;in>>std::quoted(key);s.heldTrinket=parseItemKey(key);
-            if(*s.heldTrinket!=CancerKey||std::count(s.items.begin(),s.items.end(),*s.heldTrinket))throw std::runtime_error("Invalid saved trinket ownership");
+            if(!supportedTrinket(*s.heldTrinket)||(version<10&&*s.heldTrinket==WhipWormKey)||std::count(s.items.begin(),s.items.end(),*s.heldTrinket))throw std::runtime_error("Invalid saved trinket ownership");
         }
     }
     return s;
@@ -216,7 +216,7 @@ void saveAtomic(const std::filesystem::path &path, const Campaign &c) {
         std::ofstream out(temp, std::ios::binary | std::ios::trunc);
         if (!out)
             throw std::runtime_error("Cannot create save: " + temp.string());
-        out << "DEATHWARD 9 " << checksum(payload) << '\n' << payload;
+        out << "DEATHWARD 10 " << checksum(payload) << '\n' << payload;
         out.flush();
         if (!out)
             throw std::runtime_error("Cannot write campaign save");
@@ -258,7 +258,7 @@ CampaignStore::CampaignStore(std::filesystem::path path) : path_(std::move(path)
     in >> magic >> version >> hash;
     in.get();
     std::string payload((std::istreambuf_iterator<char>(in)), {});
-    if (magic != "DEATHWARD" || version < 1 || version > 9 || checksum(payload) != hash)
+    if (magic != "DEATHWARD" || version < 1 || version > 10 || checksum(payload) != hash)
         throw std::runtime_error("Campaign save is damaged or unsupported. Original file was preserved: " +
                                  path_.string());
     campaign_ = deserialize(payload, version);

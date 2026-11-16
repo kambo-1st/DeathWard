@@ -18,6 +18,28 @@ std::optional<Vector3> reviewPosition(const Simulation &s,int index,Vector3 pref
     return best;
 }
 }
+bool Simulation::beginTrinketReview() {
+    if(floor!=0||surveyTutorial||stats.duration!=0||!items.empty()||activeItem||heldTrinket||powerupReview||!trinketPickups.empty())return false;
+    const auto start=reviewPosition(*this,0,arena.rooms.front().center);if(!start)return false;
+    std::vector<Vector3> points;
+    for(int side:{-1,1}) {
+        std::optional<Vector3> best;float score=std::numeric_limits<float>::infinity();
+        for(const auto &cell:arena.floorCells) {
+            const Vector3 at{(cell.first+.5f)*FloorTile,.85f,(cell.second+.5f)*FloorTile};
+            const float distance=planarDistance(at,*start);
+            if(distance<2.5f||distance>5||arena.roomAt(at)!=0||arena.blocked(at,.48f)||arena.path(*start,at,.48f).empty()||
+               (!points.empty()&&planarDistance(at,points.front())<4))continue;
+            const float d=planarDistance(at,add(*start,{side*3.f,0,side*3.f}));
+            if(d<score){best=at;score=d;}
+        }
+        if(!best)return false;points.push_back(*best);
+    }
+    if(!content->item(CancerKey)||!content->item(WhipWormKey))return false;
+    if(!spawnTrinket(points[0],CancerKey,1,true)||!spawnTrinket(points[1],WhipWormKey,2,true))return false;
+    player.position=*start;cancelMove();enterRoom(0);
+    announce("TRINKET REVIEW / Two test pickups: Cancer and Whip Worm",5);
+    checkpointNeeded=true;return true;
+}
 bool Simulation::beginPowerupReview() {
     if(floor!=0||surveyTutorial||stats.duration!=0||!items.empty()||activeItem||heldTrinket||powerupReview)return false;
     int target=-1;for(int i=0;i<arena.roomCount();++i)if(hasSourceTreasure(i)){target=i;break;}

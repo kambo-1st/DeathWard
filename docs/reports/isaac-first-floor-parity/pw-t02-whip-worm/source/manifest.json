@@ -1,0 +1,37 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "version": "Repentance 1.7.9b",
+  "item": {
+    "cache": "shotspeed",
+    "description": "#WHIP_WORM_DESCRIPTION",
+    "gfx": "trinket_027_whipworm.png",
+    "id": "27",
+    "name": "#WHIP_WORM_NAME"
+  },
+  "xml_sha256": "ee567ed920b1bcada61f2a2d65e48563286fe7e8bf00363ad763ac2aa3ae64b7",
+  "windows": [
+    {
+      "name": "whip-query-contribution",
+      "start": "0x732b12",
+      "end": "0x732b40",
+      "sha256": "8193619159a298fabcd8793e985ed59920ba24a69402a663b30812839d9a8ce0"
+    },
+    {
+      "name": "global-shot-speed-floor",
+      "start": "0x732cd0",
+      "end": "0x732ce8",
+      "sha256": "a5c6f47683f7718d4c3df1fcfc646d831db79b5bb10836a897b5d9b2d96eaa84"
+    },
+    {
+      "name": "ordinary-shot-speed-cache",
+      "start": "0x732646",
+      "end": "0x732c33",
+      "sha256": "8b96504460540989342345d3d474714c6db283c08ff4facfee0bfcdff65bb21a"
+    }
+  ],
+  "arithmetic_cases": 24,
+  "whole_cache_cases": 3,
+  "factory_cases": 24,
+  "scope": "Original held-slot queries and Whip contribution, ordinary shot-speed cache before mod callback, and final global minimum. Other modifiers empty. Native pickup factory with supplied fresh enabled pools [27], [39], [27,39] and supplied pool RNG seeds; no complete pool/depletion/refill/seed-stream acceptance. Existing custom Shot Speed below native minimum remains a DW testing override. Golden/swallowed/Moms Box, character/status/mod callbacks, complete cache scheduler and actor physics unaccepted.",
+  "full_native_acceptance": false
+}

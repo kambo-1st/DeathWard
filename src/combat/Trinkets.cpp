@@ -2,7 +2,7 @@
 
 namespace dw {
 bool Simulation::spawnTrinket(Vector3 at,const ItemKey &item,uint32_t seed,bool preplaced) {
-    if(item!=CancerKey||!content->item(item)||dead||finished||!seed||trinketPickups.size()>=1024||
+    if(!supportedTrinket(item)||!content->item(item)||dead||finished||!seed||trinketPickups.size()>=1024||
        !std::isfinite(at.x)||!std::isfinite(at.y)||!std::isfinite(at.z)||arena.blocked(at,.35f))return false;
     const int owner=arena.roomAt(at);if(owner<0)return false;
     TrinketPickup pickup;pickup.position=at;pickup.room=owner;pickup.item=item;pickup.seed=seed;
@@ -17,7 +17,8 @@ bool Simulation::dropTrinket() {
         if(arena.roomAt(at)!=room||arena.blocked(at,.48f)||arena.reservedSupplyCache(at,.5f))return false;
         for(int index:layout.passages)for(const auto &gate:arena.passages[size_t(index)].gates)
             if(sphereBox(at,.5f,gate))return false;
-        for(const auto &p:trinketPickups)if(p.room==room&&p.timing.collectible()&&planarDistance(p.position,at)<.7f)return false;
+        for(const auto &p:trinketPickups)if(p.room==room&&p.timing.phase!=TrinketTiming::Phase::Collect&&
+            p.timing.phase!=TrinketTiming::Phase::Gone&&planarDistance(p.position,at)<.7f)return false;
         return !arena.path(player.position,at,.48f).empty();
     };
     Vector3 point=player.position;float best=safe(point)?0:std::numeric_limits<float>::infinity();
@@ -44,7 +45,8 @@ void Simulation::updateTrinkets(float dt) {
         if(outgoing) {
             p.item=*outgoing;p.contactBlocked=true;p.timing.appear();
         } else p.timing.collect();
-        audioCues.push(AudioCueKind::Pickup,p.position);announce("CANCER / TEARS UP / TRINKET",3);
+        audioCues.push(AudioCueKind::Pickup,p.position);
+        announce(*heldTrinket==WhipWormKey?"WHIP WORM / SHOT SPEED UP / TRINKET":"CANCER / TEARS UP / TRINKET",3);
         checkpointNeeded=true;return false;
     });
     // Block all overlapping actors until the player leaves their contact area.

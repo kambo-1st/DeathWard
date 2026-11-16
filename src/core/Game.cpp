@@ -278,7 +278,7 @@ void Game::perform(Action action) {
         if(balanceOpen&&action!=Action::None&&action!=Action::Quit&&
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
            (action<Action::BalanceDamageHealthTab||action>Action::ResetYumHeart)&&
-           (action<Action::BalanceTrinketTab||action>Action::ResetTrinkets))return;
+           (action<Action::BalanceTrinketTab||action>Action::ResetTrinkets)&&action!=Action::WhipDown&&action!=Action::WhipUp)return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -340,12 +340,13 @@ void Game::perform(Action action) {
             balanceNotice="Healing applies on next use; recharge on future first combat clears. Existing charge stays unchanged.";break;
         }
         case Action::BalanceTrinketTab:balanceTrinketOpen=true;balanceActiveOpen=balanceFamiliarOpen=balanceTreasureOpen=false;break;
-        case Action::CancerDown:case Action::CancerUp:case Action::ToggleTrinketRewards:
+        case Action::WhipDown:case Action::WhipUp:case Action::CancerDown:case Action::CancerUp:case Action::ToggleTrinketRewards:
         case Action::CycleTrinketBinding:case Action::ResetTrinkets: {
             auto preset=balancePreset;auto &t=preset.trinkets;
             if(action==Action::ResetTrinkets)t={};
             else if(action==Action::ToggleTrinketRewards)t.clearRewards=!t.clearRewards;
             else if(action==Action::CycleTrinketBinding)t.binding=(t.binding+1)%2;
+            else if(action==Action::WhipDown||action==Action::WhipUp)t.whipStrength=std::clamp(t.whipStrength+(action==Action::WhipUp?.05f:-.05f),0.f,2.f);
             else t.cancerStrength=std::clamp(t.cancerStrength+(action==Action::CancerUp?.05f:-.05f),0.f,2.f);
             applyBalance(std::move(preset));trinketQueued_=false;
             balanceNotice="Owned effect changes next attack; current wait and flying shots stay fixed. Rewards apply to future first clears.";break;
@@ -975,7 +976,7 @@ bool Game::pointerOverControls() const {
     const auto over=[&](Rectangle r){return CheckCollisionPointRec({x,y},r);};
     const bool live=run&&!paused&&!run->dead&&!run->rewardOpen&&!run->shopOpen;
     return (run&&(run->surveyTutorial||run->testimony())&&x>=964&&x<=1256&&y>=22&&y<=153)||
-           (live&&((run->powerupReview&&over(expeditionHud::categoryReview(run->roomClear&&run->powerupReview->collected==4)))||over(expeditionHud::Dynamite)||
+           (live&&((reviewTrinkets&&over(expeditionHud::categoryReview(false)))||(run->powerupReview&&over(expeditionHud::categoryReview(run->roomClear&&run->powerupReview->collected==4)))||over(expeditionHud::Dynamite)||
                (run->heldTrinket&&over(expeditionHud::Trinket))||(run->activeItem&&over(expeditionHud::Active))||over(expeditionHud::Dodge)||over(expeditionHud::Pause)||over(expeditionHud::Tuning)||
                (ownedItemTypes()>0&&over(expeditionHud::items(ownedItemTypes())))))||
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||
@@ -1046,7 +1047,7 @@ std::vector<Action> Game::menuActions() const {
             balanceEnemiesOpen?
             std::vector<Action>{Action::GaperMovementDown,Action::GaperMovementUp,Action::GaperMovementReset,Action::SpiderMovementDown,Action::SpiderMovementUp,Action::SpiderMovementReset}:
             balanceShootingOpen&&balanceTrinketOpen?
-            std::vector<Action>{Action::BalanceTreasureTab,Action::CancerDown,Action::CancerUp,Action::ToggleTrinketRewards,Action::CycleTrinketBinding,Action::ResetTrinkets}:
+            std::vector<Action>{Action::BalanceTreasureTab,Action::CancerDown,Action::CancerUp,Action::WhipDown,Action::WhipUp,Action::ToggleTrinketRewards,Action::CycleTrinketBinding,Action::ResetTrinkets}:
             balanceShootingOpen&&balanceActiveOpen?
             std::vector<Action>{Action::BalanceTreasureTab,Action::YumHealingDown,Action::YumHealingUp,Action::YumRechargeDown,Action::YumRechargeUp,Action::CycleActiveBinding,Action::ResetYumHeart}:
             balanceShootingOpen&&balanceFamiliarOpen?
