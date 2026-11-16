@@ -1,5 +1,7 @@
 #pragma once
 #include "combat/BrotherBobby.hpp"
+#include "combat/ActiveItem.hpp"
+#include "combat/Trinket.hpp"
 #include "combat/RedHeartTiming.hpp"
 #include "combat/CoinTiming.hpp"
 #include "combat/KeyTiming.hpp"
@@ -899,7 +901,7 @@ struct Input {
     std::optional<Vector3> moveTarget;
     std::optional<std::pair<int, int>> doorTarget;
     std::optional<Vector3> dynamiteTarget;
-    bool placeDynamite = false;
+    bool placeDynamite = false, useActive = false, dropTrinket = false;
     bool fire = false, dodge = false, interact = false, standStill = false;
 };
 struct EncounterPlan {
@@ -1059,6 +1061,8 @@ struct RedHeartClearAward {
     bool pending=false,delivered=false;
 };
 struct RoomProgress {
+    bool activeChargeEligible=false, activePickupContact=false;
+    std::optional<ActiveItemState> droppedActive;
     bool visited = false, cleared = false, rewardTaken = false, bossPaid = false;
     std::optional<RedHeartClearAward> redHeartAward;
     std::vector<bool> roomHeartsDelivered;
@@ -1086,6 +1090,14 @@ struct ChestPickup {
 };
 struct ChestSupply {
     Vector3 position{};int room=-1;bool bomb=false;CoinTiming timing{};
+};
+struct TrinketPickup {
+    Vector3 position{};
+    int room=-1;
+    ItemKey item=CancerKey;
+    uint32_t seed=1;
+    TrinketTiming timing;
+    bool contactBlocked=false;
 };
 struct OrdinaryKeyPickup {
     Vector3 position{};int room=-1,sourceSubtype=1;uint32_t seed=0;
@@ -1148,6 +1160,14 @@ class Simulation {
     bool sourceTreasureUpgrade = false;
     float sadOnionStrength = 1, cricketHeadStrength = 1;
     BrotherBobbyTuning brotherBobby{};
+    TrinketTuning trinkets{};
+    std::optional<ItemKey> heldTrinket;
+    bool dropTrinket();
+    bool spawnTrinket(Vector3 at,const ItemKey &item=CancerKey,uint32_t seed=1,bool preplaced=false);
+    std::vector<TrinketPickup> trinketPickups;
+    YumHeartTuning yumHeart{};
+    std::optional<ActiveItemState> activeItem;
+    bool useActiveItem();
     int treasureCollectiblePool=0; // 0 Onion test, 1 restricted pool, 2 Cricket test.
     bool sourceShopHeart=false, shopHeartDelivered=false, shopHeartSold=false;
     bool sourceShopKey=false, shopKeyDelivered=false, shopKeySold=false;
@@ -1695,6 +1715,9 @@ class Simulation {
     void updateBlueFlies(float dt);
     void updateBrotherBobby(const Input &input,float dt);
     float brotherBobbyClock_=0;
+    bool activeInputHeld_=false, trinketInputHeld_=false;
+    void updateTrinkets(float dt);
+    std::set<int> activeChargeClears_; // Floor-local ledger survives testing regeneration.
     float blueFlyClock_=0;
     uint32_t blueFlyFrame_=0;
     int reviveRoom_=0;

@@ -36,6 +36,7 @@ template<class Frame> void mouseWalk(dw::Game &game,Frame frame,Vector3 target,f
         const auto start=run.player.position;
         mouseEvent(MousePosition,int(screen.x),int(screen.y));frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();
         for(int n=0;n<90&&planarDistance(run.player.position,next)>.15f&&planarDistance(run.player.position,target)>radius;++n)frame();
+        if(!(planarDistance(start,run.player.position)>.02f||planarDistance(run.player.position,target)<=radius))std::cerr<<"MOUSE_STALL leg="<<leg<<" start="<<start.x<<","<<start.z<<" next="<<next.x<<","<<next.z<<" target="<<target.x<<","<<target.z<<" screen="<<screen.x<<","<<screen.y<<" room="<<run.room<<" path="<<bool(run.moveDestination())<<" clear="<<run.arena.clear(start,next,.48f)<<"\n";
         check(planarDistance(start,run.player.position)>.02f||planarDistance(run.player.position,target)<=radius,"visible mouse waypoint advances");
     }
     check(planarDistance(run.player.position,target)<=radius,"mouse reaches requested target");
@@ -824,11 +825,103 @@ void treasureUpgradeInputCheck(const std::filesystem::path &directory) {
     std::cout<<"PASS D11a actual Game/Renderer mouse collection, keyboard/live/staged settings, Apply/load/export/remember/retry; seed=69 room="<<owner+1<<'\n';
 }
 
+void cancerInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"cancer.save",file=directory/"cancer.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="1";game.reviewRoomIndex=4;
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.error.empty()&&game.run->room==4,"Natural Cancer encounter direct launch");auto &run=*game.run;
+    Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"Cancer UI error");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"Cancer capture");UnloadImage(im);EndDrawing();};
+    check(!run.roomClear&&run.roomThreats()>0&&!run.heldTrinket,"No forced item or cleared encounter");
+    // Keep this collection fixture inside the actual room; entry coordinates may lie in a corridor.
+    const auto center=run.arena.rooms[4].center;bool located=false;
+    for(const auto &cell:run.arena.floorCells){Vector3 at{(cell.first+.5f)*FloorTile,.85f,(cell.second+.5f)*FloorTile};const float d=planarDistance(at,center);if(d>3&&d<5&&run.arena.roomAt(at)==4&&!run.arena.blocked(at,.48f)&&!run.arena.path(run.player.position,at,.48f).empty()){run.player.position=at;located=true;break;}}
+    check(located,"Safe in-room collection fixture");run.killAll();
+    for(int n=0;n<180&&!run.roomClear;++n)frame();
+    check(run.roomClear&&run.rooms[4].redHeartAward&&run.rooms[4].redHeartAward->variant==350&&run.trinketPickups.size()==1,"Actual completion delivers natural trinket roll");
+    const auto point=run.trinketPickups.front().position;
+    game.updateCamera(10);for(int i=0;i<90;++i)frame();check(!run.heldTrinket,"Ground actor available for mouse pickup");capture("artifacts/cancer-ground.png");
+    const float baseline=primaryCadence(run);mouseWalk(game,frame,point,.25f);for(int i=0;i<90;++i)frame();
+    check(run.heldTrinket==CancerKey&&run.itemStacks(CancerKey)==0&&primaryCadence(run)<baseline,"Actual mouse pickup activates one held effect");capture("artifacts/cancer-held.png");
+    const auto position=run.player.position;const auto shots=run.stats.shots;const int bombs=run.dynamite;
+    click(850,690);frame();check(!run.heldTrinket&&run.trinketPickups.size()==1&&std::abs(primaryCadence(run)-baseline)<.000001f,"HUD drop restores baseline");
+    check(distance(position,run.player.position)<.01f&&shots==run.stats.shots&&bombs==run.dynamite,"HUD drop never moves/fires/places dynamite");
+    for(int i=0;i<90;++i)frame();check(!run.heldTrinket,"No instant recollection while standing on drop");
+    const auto dropped=run.trinketPickups.front().position;
+    Vector3 away{};float best=1000;
+    for(const auto &cell:run.arena.floorCells){Vector3 at{(cell.first+.5f)*FloorTile,.85f,(cell.second+.5f)*FloorTile};float d=planarDistance(at,dropped);if(d>3&&d<best&&run.arena.roomAt(at)==4&&!run.arena.blocked(at,.48f)&&!run.arena.path(run.player.position,at,.48f).empty()){away=at;best=d;}}
+    check(best<1000,"Reachable contact exit");mouseWalk(game,frame,away,.25f);mouseWalk(game,frame,dropped,.25f);for(int i=0;i<60;++i)frame();check(run.heldTrinket==CancerKey&&run.trinketPickups.empty(),"Walk away and return recollects once");
+    mouseEvent(KeyDown,KEY_U);for(int i=0;i<90;++i)frame();mouseEvent(KeyUp,KEY_U);frame();check(!run.heldTrinket&&run.trinketPickups.size()==1,"Held U drops once");
+    mouseWalk(game,frame,away,.25f);mouseWalk(game,frame,dropped,.25f);for(int i=0;i<60;++i)frame();check(run.heldTrinket==CancerKey,"Recollect before live tuning");
+    click(374,642);click(710,143);click(1010,189);click(630,189);check(game.balanceTrinketOpen,"Actual mouse opens trinket page");
+    const float before=run.effectivePlayerStats().tearsPerSecond;click(970,258);click(370,321);click(370,384);
+    check(std::abs(run.trinkets.cancerStrength-1.05f)<.00001f&&!run.trinkets.clearRewards&&run.trinkets.binding==1&&std::abs(run.effectivePlayerStats().tearsPerSecond-before-.05f)<.00001f,"Live strength/reward/binding consumers");
+    key(KEY_Y);check(run.heldTrinket==CancerKey,"Panel consumes drop key");click(335,605);auto exported=BalancePreset::load(file,run.content->fingerprint());check(exported.trinkets==run.trinkets&&exported.defaultZoomPercent==165,"Mouse export includes trinkets and accepted zoom");
+    click(380,474);check(!run.trinkets.custom(),"Reset trinket settings");click(600,605);check(run.trinkets==exported.trinkets&&run.heldTrinket==CancerKey,"Reload configuration retains owned slot");capture("artifacts/cancer-panel.png");
+    // Apply through its real control; the explicit testing boundary preserves held ownership.
+    game.perform(Action::BalanceWorldTab);game.perform(Action::RoomSizeUp);check(game.hasPendingMapChanges(),"Map still staged");click(380,410);check(run.heldTrinket==CancerKey&&run.trinkets==exported.trinkets&&run.trinketPickups.empty(),"Actual Apply retains slot and clears floor actors");
+    game.perform(Action::CloseBalance);frame();key(KEY_U);check(run.heldTrinket==CancerKey,"Old drop binding inactive");key(KEY_Y);check(!run.heldTrinket&&run.trinketPickups.size()==1,"New drop binding active");
+    game.exportBalancePreset();game.rememberBalancePreset();std::filesystem::copy_file(file,"artifacts/cancer-preset.json",std::filesystem::copy_options::overwrite_existing);
+    run.finishDebug(false);game.retryExpedition();check(game.run&&!game.run->heldTrinket&&game.run->items.empty()&&game.run->trinkets==exported.trinkets,"Retry fresh slot, retained configuration");game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="1";fresh.reviewRoomIndex=4;fresh.loadBalancePreset(file);fresh.launch(true);check(fresh.run&&!fresh.run->heldTrinket&&fresh.run->trinkets==exported.trinkets&&fresh.cameraZoomPercent()==165,"Fresh configuration load never grants trinket");fresh.close();
+    std::cout<<"PASS PW-T01 actual Game/Renderer natural award/mouse pickup/HUD and U drop/contact/rebind/tuning/Apply/export/load/retry\n";
+}
+
+void yumHeartInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"yum.save",file=directory/"yum.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="2";
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.error.empty(),"Yum normal launch");auto &run=*game.run;
+    int owner=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.hasSourceTreasure(i)){owner=i;break;}
+    check(owner>=0&&run.treasureUpgradeItem(owner)==45,"Natural Yum selection");run.jumpDebug(owner);game.reviewRoomIndex=owner;
+    Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"Yum UI error");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"Yum capture");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();auto at=run.rewardPosition(owner);mouseWalk(game,frame,at,3);game.updateCamera(10);frame();capture("artifacts/yum-pedestal.png");
+    at.y=0;auto screen=GetWorldToScreen(at,game.camera);click(int(screen.x),int(screen.y));
+    for(int n=0;n<600&&!run.activeItem;++n)frame();frame();
+    check(run.activeItem&&run.activeItem->charge==4&&run.itemStacks(YumHeartKey)==1,"Mouse pickup creates full active slot");
+    run.player.hp=3;const auto position=run.player.position;const auto shots=run.stats.shots;const int bombs=run.dynamite;
+    click(570,690);frame();check(run.player.hp==5&&run.activeItem->charge==0,"HUD use heals once");
+    check(distance(position,run.player.position)<.01f&&run.stats.shots==shots&&run.dynamite==bombs,"HUD click does not move/fire/place dynamite");
+    int clears=0;for(int i=1;i<run.finalRoom()&&clears<4;++i){run.jumpDebug(i);if(run.roomClear||!run.roomThreats())continue;run.killAll();for(int n=0;n<180&&!run.roomClear;++n)frame();check(run.roomClear,"Actual step completes room");++clears;check(run.activeItem->charge==clears,"First combat clear increments HUD charge");}
+    check(clears==4,"Four encounter recharge");run.jumpDebug(owner);frame();run.player.hp=4;
+    mouseEvent(KeyDown,KEY_C);for(int i=0;i<30;++i)frame();check(run.player.hp==6&&run.activeItem->charge==0,"C use held single activation");mouseEvent(KeyUp,KEY_C);frame();capture("artifacts/yum-used.png");
+    click(374,642);click(710,143);click(1010,189);click(810,189);
+    check(game.balanceOpen&&game.balanceActiveOpen,"Mouse opens active page");
+    click(970,258);click(970,321);click(370,384);
+    check(run.yumHeart==YumHeartTuning{3,2,1}&&run.activeItem->charge==0,"Live consumers and rebind do not refill");
+    key(KEY_X);check(run.activeItem->charge==0,"Panel consumes gameplay action");
+    click(335,605);auto exported=BalancePreset::load(file,run.content->fingerprint());check(exported.yumHeart==run.yumHeart&&exported.defaultZoomPercent==165,"Actual mouse export keeps selected zoom");
+    click(380,474);check(!run.yumHeart.custom(),"Reset settings");click(600,605);check(run.yumHeart==exported.yumHeart&&run.activeItem->charge==0,"Reload settings without charge");capture("artifacts/yum-panel.png");
+    click(1010,189);for(int i=0;i<3;++i)click(865,270);check(game.balanceDraft.treasureCollectiblePool==4&&run.treasureCollectiblePool==1,"Yum mode staged");click(380,460);
+    check(run.activeItem->charge==0&&run.treasureCollectiblePool==4,"Apply keeps spent slot");game.perform(Action::CloseBalance);frame();
+    // Real regenerated pedestal supplies the second same-kind item for swap review.
+    mouseWalk(game,frame,run.rewardPosition(owner),3);game.updateCamera(10);frame();at=run.rewardPosition(owner);at.y=0;screen=GetWorldToScreen(at,game.camera);click(int(screen.x),int(screen.y));
+    for(int n=0;n<600&&run.activeItem->charge==0;++n)frame();
+    check(run.activeItem->charge==4&&run.rooms[size_t(owner)].droppedActive&&run.rooms[size_t(owner)].droppedActive->charge==0,"Actual second pedestal swap preserves old charge");
+    for(int n=0;n<30;++n)frame();check(run.activeItem->charge==4&&run.itemStacks(YumHeartKey)==1,"No swap loop or duplicate ownership");
+    key(KEY_C);check(run.activeItem->charge==4,"Old binding inactive after rebind");run.player.hp=2;key(KEY_X);check(run.player.hp==5&&run.activeItem->charge==0,"New binding and live healing consumer");
+    game.exportBalancePreset();game.rememberBalancePreset();std::filesystem::copy_file(file,"artifacts/yum-preset.json",std::filesystem::copy_options::overwrite_existing);
+    run.finishDebug(false);game.retryExpedition();check(game.run&&!game.run->activeItem&&game.run->items.empty()&&game.run->yumHeart==exported.yumHeart&&game.run->treasureCollectiblePool==4,"Retry fresh build and retained config");game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="2";fresh.reviewRoomIndex=owner;fresh.loadBalancePreset(file);fresh.launch(true);check(fresh.run&&!fresh.run->activeItem&&fresh.run->yumHeart==exported.yumHeart&&fresh.cameraZoomPercent()==165,"Fresh preset loads configuration, not charge");fresh.close();
+    std::cout<<"PASS PW-A01 actual Game/Renderer natural acquisition/use/clear/rebind/swap/Apply/export/load/retry\n";
+}
+
 void brotherBobbyInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"bobby.save",file=directory/"bobby.json";
-    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="7";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="9";
     game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
     check(game.run&&game.error.empty(),"Bobby normal game launch");auto &run=*game.run;const ItemKey item{"isaac",ItemKind::Collectible,8};
     int owner=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.hasSourceTreasure(i)){owner=i;break;}
@@ -860,8 +953,8 @@ void brotherBobbyInputCheck(const std::filesystem::path &directory) {
     click(380,460);check(run.treasureCollectiblePool==3&&run.itemStacks(item)==1&&run.brotherBobby==exported.brotherBobby,"Apply keeps build and live tuning");
     game.exportBalancePreset();game.rememberBalancePreset();game.perform(Action::CloseBalance);frame();check(run.brotherBobbies.size()==1,"Apply reconstructs actor");
     run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->room==owner&&game.run->items.empty()&&game.run->brotherBobbies.empty()&&game.run->brotherBobby==exported.brotherBobby&&game.run->treasureCollectiblePool==3,"retry fresh build with remembered configuration");game.close();renderer.unload();
-    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="7";fresh.reviewRoomIndex=owner;fresh.loadBalancePreset(file);fresh.launch(true);check(fresh.run&&fresh.run->brotherBobby==exported.brotherBobby&&fresh.cameraZoomPercent()==165,"fresh CLI-equivalent preset load");fresh.close();
-    std::cout<<"PASS PW-F01 actual Game/Renderer mouse acquisition, held firing, lifecycle, live/staged UI, export/load/remember/retry; seed7 room8\n";
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="9";fresh.reviewRoomIndex=owner;fresh.loadBalancePreset(file);fresh.launch(true);check(fresh.run&&fresh.run->brotherBobby==exported.brotherBobby&&fresh.cameraZoomPercent()==165,"fresh CLI-equivalent preset load");fresh.close();
+    std::cout<<"PASS PW-F01 actual Game/Renderer mouse acquisition, held firing, lifecycle, live/staged UI, export/load/remember/retry; seed9 room8\n";
 }
 
 void cricketHeadInputCheck(const std::filesystem::path &directory) {
@@ -905,7 +998,7 @@ void cricketHeadInputCheck(const std::filesystem::path &directory) {
     click(374,642);click(710,143);click(1010,189);check(game.balanceOpen&&game.balanceShootingOpen&&game.balanceTreasureOpen,"treasure page via mouse");
     click(865,270);check(game.hasPendingMapChanges()&&game.balanceDraft.treasureCollectiblePool==2&&run.treasureCollectiblePool==1,"pool selection staged");
     click(380,460);check(run.treasureCollectiblePool==2&&run.itemStacks({"isaac",ItemKind::Collectible,4})==1&&run.rewardAvailable(owner),"Apply changes pool while retaining owned Cricket");
-    click(865,270);click(865,270);click(380,460);check(run.treasureCollectiblePool==0&&run.treasureUpgradeItem(owner)==1,"Apply fixed Onion comparison");
+    click(865,270);click(865,270);click(865,270);click(380,460);check(run.treasureCollectiblePool==0&&run.treasureUpgradeItem(owner)==1,"Apply fixed Onion comparison");
     click(865,270);click(380,460);check(run.treasureCollectiblePool==1&&run.treasureUpgradeItem(owner)==4&&!game.hasPendingMapChanges(),"Apply restores natural Cricket pool");
     const auto terrain=run.arena.canyon.get();click(430,270);check(game.hasPendingMapChanges()&&run.sourceTreasureUpgrade,"offering toggle staged");
     const float wait=run.player.fireCooldown;click(715,399);check(std::abs(run.cricketHeadStrength-.95f)<.0001f&&run.player.fireCooldown==wait&&run.arena.canyon.get()==terrain,"strength live with pending map and retained wait");
@@ -2797,6 +2890,12 @@ int main(int argc, char **argv) {
         }
         if(mode=="--shop-heart-only") {
             shopHeartInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--cancer-only") {
+            cancerInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--yum-heart-only") {
+            yumHeartInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--brother-bobby-only") {
             brotherBobbyInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

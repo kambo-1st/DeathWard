@@ -1,0 +1,66 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "item": {
+    "description": "#YUM_HEART_DESCRIPTION",
+    "gfx": "Collectibles_045_YumHeart.png",
+    "id": "45",
+    "maxcharges": "4",
+    "name": "#YUM_HEART_NAME"
+  },
+  "treasure": {
+    "Id": "45",
+    "Weight": "1",
+    "DecreaseBy": "1",
+    "RemoveOn": "0.1"
+  },
+  "healing_cases": 56,
+  "charge_cases": 15,
+  "discharge_cases": 7,
+  "room_charge_cases": 24,
+  "windows": [
+    {
+      "name": "yum-effect",
+      "start": "0x5a2818",
+      "end": "0x5a28a5",
+      "sha256": "291096b40dcbfce04817fad1cab78331cfbb5085fab93a69612be7927b3a0823"
+    },
+    {
+      "name": "result-default",
+      "start": "0x5a1360",
+      "end": "0x5a1430",
+      "sha256": "b0e0b063cf9406e0da79a55c0733b9e14167baeb82906e4849384cc7576f243c"
+    },
+    {
+      "name": "use-discharge-caller",
+      "start": "0x7599f2",
+      "end": "0x759ad0",
+      "sha256": "14383b513bb7668edaebe80a9614a3cf496d55b0653ff9fbe3408e9cfb3e54f9"
+    },
+    {
+      "name": "charge-capacity",
+      "start": "0x757d80",
+      "end": "0x757e40",
+      "sha256": "6fb5958767adbae2d5e2acfdff5b1bc0b6e6162a3f984495f1854660cce30567"
+    },
+    {
+      "name": "charge-arithmetic",
+      "start": "0x758030",
+      "end": "0x758149",
+      "sha256": "6969dbcc1c4b7829d9e149ca177a323d198f6c5ee159e873c341a20d2dbad5f9"
+    },
+    {
+      "name": "clear-charge",
+      "start": "0x76e140",
+      "end": "0x76e4a6",
+      "sha256": "44e06078f10ba708bb3f014ee75dc079e46680c2e64c09f1b72d9a28261e4b93"
+    },
+    {
+      "name": "discharge",
+      "start": "0x771510",
+      "end": "0x772000",
+      "sha256": "d817fb3e5216e8d2655a62be78c5af410002dccdc0af699f2052d3ed5ec5b722"
+    }
+  ],
+  "scope": "Executed owner amount branch plus original AddHearts and ordinary discharge through original SetActiveCharge (SEH prologue bypassed); supplied slot primary-charge arithmetic and room-shape award branch. Ordinary Yum effect leaves default discharge=true even with full health; primary caller invokes discharge on this result. Full use/input/animation/co-op/room-clear scheduler, modifiers, battery/pocket slots and factory acceptance are not certified. DeathWard uses one charge per first hostile-room clear with its retained canyon shapes; no area multiplier inferred from dynamic size. Regeneration ledger is an explicit testing policy.",
+  "full_native_acceptance": false
+}

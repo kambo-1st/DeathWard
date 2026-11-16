@@ -1,0 +1,20 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start   2: mechanics_content
+1/7 Test   #2: mechanics_content ................   Passed    2.39 sec
+    Start  30: yum_heart
+2/7 Test  #30: yum_heart ........................   Passed    3.55 sec
+    Start  31: brother_bobby
+3/7 Test  #31: brother_bobby ....................   Passed    1.60 sec
+    Start  32: cricket_head_treasure
+4/7 Test  #32: cricket_head_treasure ............   Passed    4.00 sec
+    Start  33: treasure_upgrade
+5/7 Test  #33: treasure_upgrade .................   Passed   10.41 sec
+    Start  76: native_player_health
+6/7 Test  #76: native_player_health .............   Passed    0.00 sec
+    Start 144: balance_preset_contract
+7/7 Test #144: balance_preset_contract ..........   Passed    0.13 sec
+
+100% tests passed, 0 tests failed out of 7
+
+Total Test time (real) =  22.10 sec

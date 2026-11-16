@@ -71,3 +71,12 @@ end
 item "isaac:collectible:8" "Brother Bobby" "FAMILIAR" "A small companion follows and fires with you. Its damage and firing rhythm are independent of your weapon."
 category familiar
 end
+
+# PW-A01: one ordinary active slot and restricted treasure offering.
+item "isaac:collectible:45" "Yum Heart" "ACTIVE" "Restores one red heart. Uses four charges even at full health; combat room clears recharge it."
+category active
+end
+
+# PW-T01: separate held trinket; bounded ordinary clear-award pool.
+item "isaac:trinket:39" "Cancer" "TRINKET" "Adds one tear per second while held, beyond the ordinary Tears cap. Drop it to remove the effect."
+end

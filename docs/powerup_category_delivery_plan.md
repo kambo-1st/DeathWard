@@ -1,6 +1,6 @@
 # Power-up categories: small main-game deliveries
 
-Status: plan requested on 2026-11-16. The user clarified: **establish support for each category with one or two items first; implement the remaining catalog later.** The user subsequently selected **PW-F01 — Brother Bobby**; implementation and developer verification are complete; the scoped human review is accepted. PW-A01 Yum Heart is now explicitly selected next. PW-T01/PW-C01 and optional second examples remain unselected. The automatic bulk parity effort remains paused; the user selects each named delivery before it starts.
+Status: plan requested on 2026-11-16. The user clarified: **establish support for each category with one or two items first; implement the remaining catalog later.** The user subsequently selected **PW-F01 — Brother Bobby**; implementation and developer verification are complete; the scoped human review is accepted. PW-A01 Yum Heart is accepted. PW-T01 Cancer is implemented, developer-verified and scoped human-accepted; see [its progress report](reports/isaac-first-floor-parity/pw-t01-cancer/README.md). PW-C01 is now selected; optional second examples remain unselected. The automatic bulk parity effort remains paused; the user selects each named delivery before it starts.
 
 ## First milestone
 
@@ -10,8 +10,8 @@ Make all four categories usable together in an ordinary DeathWard expedition:
 | --- | --- | --- | --- |
 | Passive | The Sad Onion — collectible1 | Cricket's Head — collectible4 | Both enabled and scoped human-accepted; retain them. |
 | Familiar | Brother Bobby — collectible8 | Halo of Flies — collectible10 | Brother Bobby accepted; Halo of Flies remains proposed. |
-| Active | Yum Heart — collectible45 | Book of Shadows — collectible58 | Proposed; deliver Yum Heart before the second example. |
-| Trinket | Cancer — trinket39 | Whip Worm — trinket27 | Proposed; deliver Cancer before the second example. |
+| Active | Yum Heart — collectible45 | Book of Shadows — collectible58 | Yum Heart scoped human-accepted. Second example unselected. |
+| Trinket | Cancer — trinket39 | Whip Worm — trinket27 | Cancer scoped human-accepted. Second example unselected. |
 
 The first milestone therefore needs **five example items total: two existing passives and one example from each missing category**. Second examples bring that to eight and follow after the four-category milestone. Existing Steam Sale, BOGO Bombs and DeathWard items remain available under their current rules.
 
@@ -19,7 +19,7 @@ The first milestone therefore needs **five example items total: two existing pas
 
 ## Current starting point and source
 
-- D11b's Sad Onion/Cricket treasure offering is accepted and uncommitted. See [D11b](reports/isaac-first-floor-parity/d11b-treasure-variety/README.md). This plan does not commit it or repeat its implementation.
+- D11b's Sad Onion/Cricket treasure offering is accepted and committed with PW-F01 as `d915e845`. See [D11b](reports/isaac-first-floor-parity/d11b-treasure-variety/README.md). This plan does not commit it or repeat its implementation.
 - Stable item keys already distinguish collectibles, trinkets, cards, pills and internal entries in `src/content/ContentId.hpp`. Passive, familiar and active are collectible subcategories; retain existing IDs and save compatibility.
 - `ItemDefinition`, owned-item counts, attack specifications, scoped stat consumers and item-event hooks already exist. Extend those paths incrementally. Existing My Shadow/allied-actor work is reusable code, not acceptance of a generic familiar system.
 - A trinket identifier alone does not supply a usable trinket slot. This plan supplies actual category workflows with their example items, rather than stopping at metadata or a private demonstration.
@@ -63,7 +63,7 @@ Add the supported item to the bounded ordinary treasure offering with its source
 
 ### PW-A01 — active slot, use and recharge with Yum Heart
 
-Status: explicitly selected after the accepted Brother Bobby checkpoint; implementation pending.
+Status: implemented in ordinary expeditions; developer checks pass; scoped human review accepted. See [PW-A01 report](reports/isaac-first-floor-parity/pw-a01-yum-heart/README.md).
 
 **Visible result:** a usable active item with a named HUD slot, charge display and a dedicated activation action.
 
@@ -83,6 +83,8 @@ Recharge only on verified qualifying events. Revisit, pause, preset loading and 
 
 ### PW-T01 — trinket slot, swap and drop with Cancer
 
+Status: explicitly selected after accepted PW-A01; main-game implementation, native bounded comparisons, nine core suites, actual Game/Renderer and CLI checks pass. Scoped human review accepted; see [PW-T01 report](reports/isaac-first-floor-parity/pw-t01-cancer/README.md).
+
 **Visible result:** a distinct trinket slot with a passive effect that is present only while the trinket is held.
 
 Implement one held-trinket slot, source pickup admission, swap/drop behavior, safe world placement and effect removal. Cancer exercises the existing Tears consumer, but its exact cache stage, cap interaction and combination with Sad Onion must be verified; do not substitute the Onion formula for its effect. Do not count trinkets as permanent collectible copies.
@@ -100,6 +102,8 @@ Dropping/swapping must remove precisely this item's contribution, leave the old 
 **Developer gates:** exact held/removed contributions, Sad Onion interaction and caps, drop placement/contact gates, same-item swaps, no duplicate ownership, source producer bounds, live configuration/presets, transitions and slot serialization.
 
 ### PW-C01 — all four categories in one ordinary expedition
+
+Status: explicitly selected after the accepted Cancer checkpoint; in progress.
 
 **Visible result:** the accepted passive build, Brother Bobby, Yum Heart and Cancer work together through the same expedition.
 
@@ -145,8 +149,6 @@ Deferred work includes the rest of the425 passive,126 familiar,170 active and188
 
 Maintain one row per item with identity, category, source effects/evidence, eligible producers/pools, dependencies, implementation status, ordinary availability, user verdict and known adaptations. A familiar/active/trinket framework is not an accepted count for every catalog entry. Do not publish a full-catalog completion percentage from these examples.
 
-## Next selectable action
+## Current selected action
 
-**Current selected delivery: PW-F01 — Brother Bobby in ordinary encounters.** Passives already provide the accepted starting point. This adds the first missing category before expanding any category's roster.
-
-After that handoff: PW-A01, then PW-T01, then PW-C01. Full-catalog implementation and the optional second examples wait for their own selections. PW-F01 is accepted; PW-A01 is selected next. PW-T01/PW-C01 and optional second examples remain unselected.
+**PW-C01 — all four categories together.** PW-F01, PW-A01 and PW-T01 are scoped human-accepted. Record the accepted active/trinket checkpoint, then verify the combined main-game acquisition, combat, transition and persistence boundaries. Full-catalog implementation and optional second examples remain deferred and unselected.

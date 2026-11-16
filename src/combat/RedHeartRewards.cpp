@@ -8,7 +8,7 @@ void Simulation::resolveRedHeartClearAward() {
     // First-clear only. This delivery is ordinary opening-floor combat, excluding
     // bosses, story sites, tutorial and other special-room/reward policies.
     const auto &layout=arena.rooms[size_t(room)];
-    if((!redHeartClearRewards&&!coinClearRewards&&!chestClearRewards&&!keyClearRewards&&!bombClearRewards)||progress.redHeartAward||!progress.cleared||floor!=0||surveyTutorial||
+    if((!trinkets.clearRewards&&!redHeartClearRewards&&!coinClearRewards&&!chestClearRewards&&!keyClearRewards&&!bombClearRewards)||progress.redHeartAward||!progress.cleared||floor!=0||surveyTutorial||
        !arena.profile.active()||arena.theme!=MissionTheme::Canyon||layout.kind!=RoomKind::Combat||
        layout.story!=StoryRoom::None||debugScenario||progress.trapOnly||progress.plateObjective)return;
     // Explicit DW room-seed adapter, isolated from combat/loot/order of discovery.
@@ -32,6 +32,10 @@ void Simulation::resolveRedHeartClearAward() {
     if(result.variant==50) {
         result.pickupSeed=rng.next();result.subtype=1;result.pending=chestClearRewards;
     }
+    if(result.variant==350) {
+        result.pickupSeed=rng.next();result.subtype=39;result.pending=trinkets.clearRewards;
+        // Explicit single eligible trinket adapter; no complete native pool claim.
+    }
     // Keep unsupported outcomes explicit; no reroll or substitute red heart.
     progress.redHeartAward=result;checkpointNeeded=true;
     deliverRedHeartClearAward();
@@ -39,8 +43,8 @@ void Simulation::resolveRedHeartClearAward() {
 void Simulation::deliverRedHeartClearAward() {
     auto &award=rooms[size_t(room)].redHeartAward;
     if(!award||!award->pending||award->delivered||dead||finished)return;
-    const bool coin=award->variant==20,chest=award->variant==50,key=award->variant==30,bomb=award->variant==40;
-    if(chest?chests.size()>=128:(bomb?bombPickups.size():key?keyPickups.size():coin?moneyPickups.size():heartPickups.size())>=1024)return;
+    const bool trinket=award->variant==350,coin=award->variant==20,chest=award->variant==50,key=award->variant==30,bomb=award->variant==40;
+    if(chest?chests.size()>=128:(trinket?trinketPickups.size():bomb?bombPickups.size():key?keyPickups.size():coin?moneyPickups.size():heartPickups.size())>=1024)return;
     const auto &layout=arena.rooms[size_t(room)];
     const int amount=award->subtype==2?1:award->subtype==5?4:2;
     auto safe=[&](Vector3 at) {
@@ -72,6 +76,8 @@ void Simulation::deliverRedHeartClearAward() {
     if(!std::isfinite(best))return;
     if(chest) {
         if(!spawnChest(position,award->pickupSeed))return;
+    } else if(trinket) {
+        if(!spawnTrinket(position,CancerKey,award->pickupSeed))return;
     } else if(bomb) {
         if(!spawnOrdinaryBomb(position,award->subtype,award->pickupSeed))return;
     } else if(key) {

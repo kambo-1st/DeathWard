@@ -137,6 +137,7 @@ add_library(deathward_core
     src/world/CanyonRiver.cpp
     src/world/CanyonRoad.cpp
     src/world/RoomGraph.cpp
+    src/combat/Trinkets.cpp
     src/combat/Keys.cpp
     src/combat/Bombs.cpp
     src/combat/Chests.cpp
@@ -650,6 +651,14 @@ if(BUILD_TESTING)
     add_executable(deathward_inventory_bomb_tuning_tests tests/inventory_bomb_tuning_tests.cpp)
     target_link_libraries(deathward_inventory_bomb_tuning_tests PRIVATE deathward_core)
     add_test(NAME inventory_bomb_tuning COMMAND deathward_inventory_bomb_tuning_tests)
+    add_executable(deathward_cancer_tests tests/cancer_tests.cpp)
+    target_link_libraries(deathward_cancer_tests PRIVATE deathward_core)
+    add_test(NAME cancer_trinket COMMAND deathward_cancer_tests)
+
+    add_executable(deathward_yum_heart_tests tests/yum_heart_tests.cpp)
+    target_link_libraries(deathward_yum_heart_tests PRIVATE deathward_core)
+    add_test(NAME yum_heart COMMAND deathward_yum_heart_tests)
+
     add_executable(deathward_brother_bobby_tests tests/brother_bobby_tests.cpp)
     target_link_libraries(deathward_brother_bobby_tests PRIVATE deathward_core)
     add_test(NAME brother_bobby COMMAND deathward_brother_bobby_tests)

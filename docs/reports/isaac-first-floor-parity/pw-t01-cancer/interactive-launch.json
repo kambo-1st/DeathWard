@@ -1,0 +1,30 @@
+{
+  "pid": 2728236,
+  "command": [
+    "build/deathward",
+    "--expedition",
+    "--seed",
+    "1",
+    "--review-room",
+    "5",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/pw-t01-cancer/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "started_utc": "2026-11-16T17:50:21.587382+00:00",
+  "status": "launched successfully; window closed normally before final response",
+  "seed": 1,
+  "displayed_room": 5,
+  "zoom": 165,
+  "health_half_hearts": 6,
+  "god_mode": false,
+  "trinket_defaults": {
+    "cancer_strength": 1,
+    "clear_rewards": true,
+    "binding": "U"
+  },
+  "human_acceptance": "pending",
+  "closing_evidence": "interactive.log ends with Window closed successfully; process no longer present"
+}

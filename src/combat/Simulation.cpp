@@ -39,7 +39,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
       runId_(runId), canyonRiver_(canyonRiver), startingWorld_(world) {
     if(account!=WitnessAccount::None&&account!=WitnessAccount::Rourke)
         throw std::invalid_argument("This testimony has not been authored yet.");
-    if(treasureCollectiblePool<0||treasureCollectiblePool>3)throw std::invalid_argument("Invalid treasure pool");
+    if(treasureCollectiblePool<0||treasureCollectiblePool>4)throw std::invalid_argument("Invalid treasure pool");
     coinClearRewards=requestedCoins;
     surveyTutorial=tutorial;
     rooms.resize(arena.rooms.size());
@@ -108,7 +108,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     const bool keyStock=shopKey.value_or(sourceShopKey);
     const bool variation=shopVariation.value_or(sourceShopVariation);
     const int treasureChoice=treasurePool.value_or(treasureCollectiblePool);
-    if(treasureChoice<0||treasureChoice>3)throw std::invalid_argument("Invalid treasure pool");
+    if(treasureChoice<0||treasureChoice>4)throw std::invalid_argument("Invalid treasure pool");
     const int pool=collectiblePool.value_or(shopCollectiblePool);
     if(pool<0||pool>2)throw std::invalid_argument("Invalid shop collectible pool");
     const bool locks=roomLocks.value_or(sourceRoomLocks);
@@ -118,8 +118,11 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     if(!canResizeRooms())throw std::runtime_error("No floor to resize");
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
                     expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice);
+    next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
+    next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
     next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
     const int targetRoom=std::clamp(room,0,next.finalRoom());
+    next.activeChargeClears_=activeChargeClears_;
     next.items=items;next.keys=keys;next.powerUpsTaken=powerUpsTaken;
     next.dynamite=dynamite;next.dynamiteCooldown=dynamiteCooldown;
     next.moneyCollected=moneyCollected;next.moneySpent=moneySpent;
@@ -194,6 +197,8 @@ bool Simulation::advanceFloor() {
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
                     expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool);
+    next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
+    next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
     next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
     next.canonicalShooting=canonicalShooting;
     next.gaperMovementMultiplier=gaperMovementMultiplier;
@@ -294,8 +299,17 @@ std::string Simulation::roomName(int index, MissionTheme theme) {
 }
 void Simulation::grant(const ItemKey &item) {
     const auto *definition=content->item(item);
+    if(item==CancerKey) {
+        // Only this selected item enters the new slot; retain unselected external-pack rules.
+        if(definition&&!heldTrinket){heldTrinket=item;checkpointNeeded=true;audioCues.push(AudioCueKind::Pickup,player.position);announce("CANCER / TRINKET",2);}
+        return;
+    }
     if (!definition || items.size() >= 256)
         return;
+    if(definition->category==CollectibleCategory::Active) {
+        if(item!=YumHeartKey||activeItem)return;
+        activeItem=ActiveItemState{};
+    }
     items.push_back(item);
     audioCues.push(AudioCueKind::Pickup, player.position);
     if (definition->pickupHealthMultiplier != 1) {
@@ -365,27 +379,59 @@ SourcePlayerStats Simulation::effectivePlayerStats() const {
     auto result=player.attributes;
     result.damage=cricketHeadDamage(result.damage,itemStacks({"isaac",ItemKind::Collectible,4}),cricketHeadStrength);
     result.tearsPerSecond=sadOnionTears(result.tearsPerSecond,itemStacks({"isaac",ItemKind::Collectible,1}),sadOnionStrength);
+    result.tearsPerSecond=cancerTears(result.tearsPerSecond,heldTrinket==CancerKey,trinkets.cancerStrength);
     return result;
 }
 int Simulation::treasureUpgradeItem(int index) const {
     if(!hasSourceTreasure(index))return 0;
-    const int choice=treasureCollectiblePool==0?1:treasureCollectiblePool==2?4:treasureCollectiblePool==3?8:
-        sourceTreasureChoice(canyonTreasureSeed(seed_,index),true);
+    if(rooms[size_t(index)].droppedActive)return int(rooms[size_t(index)].droppedActive->item.number);
+    const int choice=treasureCollectiblePool==0?1:treasureCollectiblePool==2?4:treasureCollectiblePool==3?8:treasureCollectiblePool==4?45:
+        sourceTreasureChoice(canyonTreasureSeed(seed_,index),true,true);
     return choice?choice:1; // Empty numeric draw: fixed fallback, never reroll.
 }
+bool Simulation::useActiveItem() {
+    if(!activeItem||activeItem->item!=YumHeartKey||activeItem->charge<YumHeartCharges||
+       dead||finished||player.totalHealth()<=0||rewardOpen||shopOpen||letterOpen||
+       storyOpen!=StoryRoom::None||floorExitRequested)return false;
+    yumHeart.validate();
+    // Source ordinary effect spends its charge even when AddHearts changes nothing.
+    const bool healed=collectHeart(HeartKind::Red,yumHeart.healing);
+    activeItem->charge=0;
+    announce(healed?"YUM HEART / RED HEALTH RESTORED":"YUM HEART / NO RED HEALTH RESTORED",2);
+    checkpointNeeded=true;
+    return true;
+}
 bool Simulation::collectTreasureUpgrade() {
-    if(!hasSourceTreasure(room)||!rewardAvailable(room)||dead||finished||!roomClear||
-       shopOpen||rewardOpen||player.totalHealth()<=0||items.size()>=256)return false;
-    const auto at=rewardPosition(room);
-    if(!pedestalGeometry::touching(player.position,at)||!arena.sight(player.position,at))return false;
+    if(!hasSourceTreasure(room))return false;
+    auto &progress=rooms[size_t(room)];const auto at=rewardPosition(room);
+    const bool touching=pedestalGeometry::touching(player.position,at);
+    if(!touching){progress.activePickupContact=false;return false;}
+    if(progress.activePickupContact||!rewardAvailable(room)||dead||finished||!roomClear||
+       shopOpen||rewardOpen||player.totalHealth()<=0||!arena.sight(player.position,at))return false;
     const ItemKey item{"isaac",ItemKind::Collectible,uint32_t(treasureUpgradeItem(room))};
-    if(!content->item(item))return false;
-    rooms[size_t(room)].rewardTaken=true;++powerUpsTaken;grant(item);
-    announce(treasureUpgradeItem(room)==8?"BROTHER BOBBY / FAMILIAR":treasureUpgradeItem(room)==4?"CRICKET'S HEAD / DAMAGE UP":"THE SAD ONION / TEARS UP",3);return true;
+    const auto *definition=content->item(item);if(!definition)return false;
+    if(items.size()>=256&&!(item==YumHeartKey&&activeItem))return false;
+    const bool first=!progress.rewardTaken;
+    if(item==YumHeartKey) {
+        const auto incoming=progress.droppedActive.value_or(ActiveItemState{});
+        incoming.validate();
+        const auto outgoing=activeItem;
+        if(outgoing) {
+            const auto owned=std::find(items.begin(),items.end(),outgoing->item);
+            if(owned==items.end())return false; // Reject an inconsistent slot atomically.
+            items.erase(owned);
+        }
+        activeItem.reset();grant(item);activeItem=incoming;
+        progress.droppedActive=outgoing;progress.activePickupContact=true;
+    } else grant(item);
+    progress.rewardTaken=true;if(first)++powerUpsTaken;
+    checkpointNeeded=true;
+    announce(definition->name+" / "+(item==YumHeartKey?"ACTIVE ITEM":item.number==8?"FAMILIAR":item.number==4?"DAMAGE UP":"TEARS UP"),3);
+    return true;
 }
 bool Simulation::rewardAvailable(int index) const {
     const auto &site=arena.rooms.at(size_t(index));const auto &progress=rooms.at(size_t(index));
-    return !progress.rewardTaken&&(site.kind==RoomKind::Power||
+    return (progress.droppedActive||!progress.rewardTaken)&&(site.kind==RoomKind::Power||
         (arena.profile.active()&&site.kind==RoomKind::Boss&&progress.bossPaid&&progress.cleared));
 }
 Vector3 Simulation::rewardPosition(int index) const {
@@ -479,6 +525,7 @@ void Simulation::enterRoom(int index) {
     } else {
         arena.sealRoom(-1);
     }
+    if(!progress.cleared&&roomThreats()>0)progress.activeChargeEligible=true;
     deliverRoomHearts(room);
     deliverShopHeart();deliverShopKey();deliverShopBomb();
     deliverRoomChests(room);
@@ -492,6 +539,9 @@ void Simulation::clearRoom() {
     if (progress.cleared)
         return;
     progress.cleared = roomClear = true;
+    if(progress.activeChargeEligible&&activeChargeClears_.insert(room).second&&activeItem) {
+        yumHeart.validate();activeItem->charge=std::min(YumHeartCharges,activeItem->charge+yumHeart.recharge);
+    }
     roomClearedAt=stats.duration;
     refillRottenHeartFlies();
     audioCues.push(AudioCueKind::RoomClear, player.position);
@@ -850,6 +900,7 @@ RunSummary Simulation::summary() const {
     s.surveyRecovered = surveyTutorial&&surveyRecovered;
     s.stats = stats;
     s.items = items;
+    s.activeItem=activeItem;s.heldTrinket=heldTrinket;
     s.mechanicsFingerprint=content->fingerprint();
     s.moneyCollected = moneyCollected;
     s.moneySpent = moneySpent;
@@ -1737,6 +1788,11 @@ void Simulation::updateProjectiles(float dt) {
 void Simulation::step(const Input &input, float dt) {
     if (rewardOpen || shopOpen || letterOpen || storyOpen!=StoryRoom::None || floorExitRequested || finished || dead)
         return;
+    const bool activate=input.useActive&&!activeInputHeld_;activeInputHeld_=input.useActive;
+    if(activate)useActiveItem();
+    const bool drop=input.dropTrinket&&!trinketInputHeld_;trinketInputHeld_=input.dropTrinket;
+    if(drop)dropTrinket();
+    if(!roomClear&&roomThreats()>0)rooms[size_t(room)].activeChargeEligible=true;
     stats.duration += dt;
     syncMovementBodies();
     refreshStatueAttraction(dt);
@@ -1764,6 +1820,7 @@ void Simulation::step(const Input &input, float dt) {
     updateMoney(dt);
     updateHeartPickups(dt);
     updateOrdinaryKeys(dt);
+    updateTrinkets(dt);
     updateOrdinaryBombs(dt);
     updateChestSupplies(dt);
     updateChests(dt);

@@ -1,0 +1,71 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "scope": "Highest available DLC override before base animation metadata. No sprite artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/005.350_Trinket.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/pw-t01-cancer/animations/005.350_Trinket.anm2",
+      "sha256": "cc590a0a1385d37cf5cf2413777f2d515d07106d9020322ba9aeb6528f8e1017",
+      "checksum": "0xfe397af5",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/21/2015 11:12:24 AM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "16",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "35",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "PlayerPickupSparkle",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

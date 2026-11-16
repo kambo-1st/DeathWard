@@ -1,0 +1,48 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "version": "Repentance 1.7.9b",
+  "item": {
+    "cache": "firedelay",
+    "description": "#CANCER_TRINKET_DESCRIPTION",
+    "gfx": "trinket_039_cancer.png",
+    "id": "39",
+    "name": "#CANCER_TRINKET_NAME"
+  },
+  "xml_sha256": "ee567ed920b1bcada61f2a2d65e48563286fe7e8bf00363ad763ac2aa3ae64b7",
+  "windows": [
+    {
+      "name": "cancer-query-contribution",
+      "start": "0x73030e",
+      "end": "0x730371",
+      "sha256": "9cf493ec72eadbd4fea1f734de2f7fcdabe77321b292c852654c9e3d5dfd86e1"
+    },
+    {
+      "name": "post-curve-addition",
+      "start": "0x73043c",
+      "end": "0x730454",
+      "sha256": "17d1465c832afa00641b62c789237575ac74c504d083e628b010a69597db1890"
+    },
+    {
+      "name": "ordinary-final-delay",
+      "start": "0x730c0e",
+      "end": "0x730c38",
+      "sha256": "aeae1dd78713259cb0669d8cd3976453c3817fedd7ee3086b53cb4ada9c2e537"
+    },
+    {
+      "name": "trinket-pool",
+      "start": "0x701880",
+      "end": "0x701bc8",
+      "sha256": "47b5765322eac7e6c55cb59804ad7405923b84e182a7ea664f792e653216e514"
+    },
+    {
+      "name": "trinket-factory",
+      "start": "0x6b62bf",
+      "end": "0x6b6314",
+      "sha256": "62888d3b64627c2c5cba7cf7d7a73ff764cf621e445199f558936675a63af7f2"
+    }
+  ],
+  "arithmetic_cases": 60,
+  "factory_cases": 8,
+  "scope": "Original SSE ordinary curve, Cancer contribution and addition/final delay, with supplied ordinary base stat, owned Onion count and Cancer effective multiplier. Other cache contributions zero; multiplier one. Original numeric pickup wrapper with a supplied one-entry enabled/available Cancer pool, no mod callbacks/golden unlocks. No full pool population/refill/native seed stream, swallowed/golden/Moms Box, inventory/cache scheduler, physics or full actor acceptance.",
+  "full_native_acceptance": false
+}

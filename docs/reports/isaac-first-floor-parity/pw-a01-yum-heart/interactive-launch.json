@@ -1,0 +1,29 @@
+{
+  "pid": 2672019,
+  "command": [
+    "build/deathward",
+    "--expedition",
+    "--seed",
+    "2",
+    "--review-room",
+    "8",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/pw-a01-yum-heart/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "started_utc": "2026-11-16T17:22:22.438185+00:00",
+  "status": "running; ordinary main game",
+  "seed": 2,
+  "displayed_room": 8,
+  "zoom": 165,
+  "health_half_hearts": 6,
+  "god_mode": false,
+  "active_defaults": {
+    "healing": 2,
+    "recharge": 1,
+    "binding": "C"
+  },
+  "human_acceptance": "pending"
+}

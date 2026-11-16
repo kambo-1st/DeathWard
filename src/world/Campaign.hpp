@@ -1,5 +1,7 @@
 #pragma once
 #include "core/Types.hpp"
+#include "combat/ActiveItem.hpp"
+#include "combat/Trinket.hpp"
 #include "world/Expedition.hpp"
 #include <filesystem>
 #include <optional>
@@ -39,6 +41,8 @@ struct RunSummary {
     uint64_t moneyCollected = 0;
     uint64_t moneySpent = 0;
     std::vector<ItemKey> items;
+    std::optional<ActiveItemState> activeItem;
+    std::optional<ItemKey> heldTrinket;
     std::string mechanicsFingerprint;
     std::vector<std::string> consequences;
 };

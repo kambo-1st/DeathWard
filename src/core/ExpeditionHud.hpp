@@ -3,6 +3,8 @@
 
 namespace dw::expeditionHud {
 // Logical screen coordinates shared by drawing and input. Empty HUD space stays playable.
+inline constexpr Rectangle Trinket{708,674,286,34};
+inline constexpr Rectangle Active{452,674,242,34};
 inline constexpr Rectangle Dynamite{24,626,164,34};
 inline constexpr Rectangle Dodge{592,716,100,40}, Pause{704,716,100,40};
 inline constexpr Rectangle Tuning{308,626,132,34};

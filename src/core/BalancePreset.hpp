@@ -1,5 +1,7 @@
 #pragma once
 #include "combat/BrotherBobby.hpp"
+#include "combat/ActiveItem.hpp"
+#include "combat/Trinket.hpp"
 #include "combat/InventoryBombTuning.hpp"
 #include <filesystem>
 #include <string>
@@ -58,7 +60,9 @@ struct BalancePreset {
     int treasureCollectiblePool=1; // Staged: pool, 0 Onion test / 2 Cricket test.
     float cricketHeadStrength=1; // Live next-attack effect, 0-2x; default source contribution.
     BrotherBobbyTuning brotherBobby{};
-    bool custom() const { return brotherBobby.custom() || treasureCollectiblePool!=1 || cricketHeadStrength!=1 || shopCollectiblePool!=1 || shopSoulHeartPrice!=5 || shopBombPrice!=5 || !sourceShopVariation || !steamSaleDiscounts || shopUpgradePrice!=15 || !sourceShopKey || shopKeyPrice!=5 || !sourceShopHeart || shopHeartPrice!=3 || !sourceTreasureUpgrade || sadOnionStrength!=1 || !sourceRoomLocks || keyedDoorCost!=1 || inventoryBombs.custom() || !bombClearRewards || !keyClearRewards || !chestClearRewards || !coinClearRewards || roomHeartLayouts!=1 || redHeartAppearanceSpeed!=1 || !redHeartClearRewards || playerLuck!=ReferenceLuck || !sourceCombatRoom || playerDamage != ReferenceDamage || regularHealthMultiplier != ReferenceRegularHealth || playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange || gaperMovementMultiplier != ReferenceGaperMovement || spiderMovementMultiplier != ReferenceSpiderMovement || pooterMovementMultiplier != 1 || pooterShotSpeedMultiplier != 1 || pooterAttackIntervalMultiplier != 1; }
+    YumHeartTuning yumHeart{};
+    TrinketTuning trinkets{};
+    bool custom() const { return trinkets.custom() || yumHeart.custom() || brotherBobby.custom() || treasureCollectiblePool!=1 || cricketHeadStrength!=1 || shopCollectiblePool!=1 || shopSoulHeartPrice!=5 || shopBombPrice!=5 || !sourceShopVariation || !steamSaleDiscounts || shopUpgradePrice!=15 || !sourceShopKey || shopKeyPrice!=5 || !sourceShopHeart || shopHeartPrice!=3 || !sourceTreasureUpgrade || sadOnionStrength!=1 || !sourceRoomLocks || keyedDoorCost!=1 || inventoryBombs.custom() || !bombClearRewards || !keyClearRewards || !chestClearRewards || !coinClearRewards || roomHeartLayouts!=1 || redHeartAppearanceSpeed!=1 || !redHeartClearRewards || playerLuck!=ReferenceLuck || !sourceCombatRoom || playerDamage != ReferenceDamage || regularHealthMultiplier != ReferenceRegularHealth || playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange || gaperMovementMultiplier != ReferenceGaperMovement || spiderMovementMultiplier != ReferenceSpiderMovement || pooterMovementMultiplier != 1 || pooterShotSpeedMultiplier != 1 || pooterAttackIntervalMultiplier != 1; }
     void validate() const;
     std::string json() const;
     std::string revision() const;

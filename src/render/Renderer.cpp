@@ -942,7 +942,12 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                          pedestalGeometry::Height,pedestalGeometry::Sides,Border);
             if(run.hasSourceTreasure(i)&&run.rewardAvailable(i)) {
                 const float y=1.35f+.07f*std::sin(float(run.stats.duration)*2);
-                if(run.treasureUpgradeItem(i)==8) {
+                if(run.treasureUpgradeItem(i)==45) {
+                    const Color red{186,51,55,255};
+                    DrawSphereEx({p.x-.18f,y+.12f,p.z},.27f,7,9,red);
+                    DrawSphereEx({p.x+.18f,y+.12f,p.z},.27f,7,9,red);
+                    DrawCylinderEx({p.x,y+.08f,p.z},{p.x,y-.42f,p.z},.34f,0,8,red);
+                } else if(run.treasureUpgradeItem(i)==8) {
                     brotherBobbyModel({p.x,y,p.z},{0,0,1});
                 } else if(run.treasureUpgradeItem(i)==4) {
                     const Color fur{130,82,51,255};
@@ -1171,6 +1176,23 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         if(supply.bomb) {
             DrawCylinderEx(add(p,{0,-.25f*scale,0}),add(p,{0,.25f*scale,0}),.14f*scale,.14f*scale,8,ColorAlpha(Rust,scale));
             DrawLine3D(add(p,{0,.25f*scale,0}),add(p,{.16f*scale,.42f*scale,0}),Gold);
+        }
+    }
+    for(const auto &pickup:run.trinketPickups)if(pickup.room==run.room) {
+        auto at=pickup.position;at.y=.65f+.06f*std::sin(float(run.stats.duration)*3);
+        float scale=1;
+        if(pickup.timing.phase==TrinketTiming::Phase::Appear)at.y+=1.2f*(1-std::min(1.f,float(pickup.timing.frame)/TrinketTiming::DropFrame));
+        if(pickup.timing.phase==TrinketTiming::Phase::Collect){scale=1-float(pickup.timing.frame)/TrinketTiming::CollectFrames;at.y+=1-scale;}
+        shadow(at,.5f*scale);
+        // Brass double-scroll charm: original canyon artwork, identifiable as a trinket.
+        const Color brass=ColorAlpha(Gold,scale);
+        for(int side:{-1,1}) {
+            const auto center=add(at,{side*.18f*scale,0,side*.15f*scale});
+            for(int j=0;j<9;++j) {
+                const float a=j*2*Pi/9,b=(j+1)*2*Pi/9;
+                DrawCylinderEx(add(center,{std::cos(a)*.16f*scale,0,std::sin(a)*.16f*scale}),add(center,{std::cos(b)*.16f*scale,0,std::sin(b)*.16f*scale}),.055f*scale,.055f*scale,5,brass);
+            }
+            DrawCylinderEx(add(center,{0,0,side*.16f*scale}),add(center,{-side*.4f*scale,0,side*.16f*scale}),.055f*scale,.045f*scale,5,brass);
         }
     }
     for(const auto &pickup:run.heartPickups)if(pickup.room==run.room) {
@@ -1927,6 +1949,12 @@ Action Renderer::buildDetails(const Game &game) {
         text(std::string(item.name)+(stacks>1?" x"+std::to_string(stacks):""),x+58,y+10,16,Gold);
         wrap(item.description,x+58,y+35,408,12,Paper);
     }
+    if(game.run&&game.run->heldTrinket) {
+        const float x=152+float(index%2)*496,y=133+float(index/2)*92;++index;
+        panel(x,y,480,86,Ink);text("CANCER / HELD TRINKET",x+16,y+10,16,Gold);
+        std::ostringstream bonus;bonus<<std::fixed<<std::setprecision(2)<<game.run->trinkets.cancerStrength;
+        wrap("+"+bonus.str()+" tears/s while held. "+game.run->trinkets.keyName()+" drops it; other upgrades remain.",x+16,y+35,448,12,Paper);
+    }
     if(!index)wrap("No powers collected yet. Look for caches, shops and boss rewards.",160,168,800,20,Paper);
     return button(Action::CloseBuild,"BACK",830,710,290,36,true)?Action::CloseBuild:Action::None;
 }
@@ -2033,6 +2061,12 @@ Action Renderer::expedition(const Game &game) {
         const auto bomb=expeditionHud::Dynamite;
         if(control(Action::Dynamite,"DYNAMITE "+std::to_string(run.dynamite),bomb))
             controls=Action::Dynamite;
+        if(run.activeItem) {
+            const auto r=expeditionHud::Active;
+            if(control(Action::UseActiveItem,std::string(run.yumHeart.keyName())+" / YUM HEART "+std::to_string(run.activeItem->charge)+"/4",r,run.activeItem->charge==4))controls=Action::UseActiveItem;
+            for(int i=0;i<4;++i)DrawRectangleRec({(r.x+3+i*(r.width-6)/4)*sx_,(r.y+r.height-4)*sy_,(r.width-10)*sx_/4,3*sy_},i<run.activeItem->charge?Teal:Border);
+        }
+        if(run.heldTrinket&&control(Action::DropTrinket,std::string(run.trinkets.keyName())+" / DROP CANCER",expeditionHud::Trinket))controls=Action::DropTrinket;
         const auto dodge=expeditionHud::Dodge;
         if(control(Action::Dodge,"DODGE",dodge))controls=Action::Dodge;
         if(run.player.dodgeCooldown>0)
@@ -2536,6 +2570,35 @@ Action Renderer::balancePanel(const Game &game) {
         if(game.run)for(size_t i=0;i<game.run->arena.rooms.size();++i)
             if(game.run->arena.rooms[i].sourceCombatTemplate==47)sourceRoom="Active: room "+std::to_string(i+1)+" / two Gapers";
         text(sourceRoom,610,474,13,Teal);
+    } else if(game.balanceTrinketOpen) {
+        text("TRINKET / CANCER",205,182,22,Gold);
+        if(button(Action::BalanceTreasureTab,"TREASURE",945,169,130,40))return Action::BalanceTreasureTab;
+        const auto &t=game.balancePreset.trinkets;
+        text("CANCER STRENGTH",205,250,18,Gold);text(decimal(t.cancerStrength*100)+"%",495,247,22,Paper);
+        if(button(Action::CancerDown,"- 5%",760,238,130,40))return Action::CancerDown;
+        if(button(Action::CancerUp,"+ 5%",905,238,130,40))return Action::CancerUp;
+        if(button(Action::ToggleTrinketRewards,t.clearRewards?"CLEAR REWARDS: ON":"CLEAR REWARDS: OFF",205,301,350,40))return Action::ToggleTrinketRewards;
+        text("Rare ordinary trinket outcome; Cancer-only pool.",585,316,14,Muted);
+        if(button(Action::CycleTrinketBinding,std::string("DROP KEY: ")+t.keyName()+" / CHANGE",205,364,350,40))return Action::CycleTrinketBinding;
+        text("Drop, walk away, then return to collect.",585,378,14,Muted);
+        text("Reference: +1 tear/s after ordinary Tears; can exceed its cap.",205,427,14,Muted);
+        if(button(Action::ResetTrinkets,"RESET TRINKET SETTINGS",205,453,350,40))return Action::ResetTrinkets;
+        if(game.run)text(std::string(game.run->heldTrinket?"CANCER HELD":"EMPTY SLOT")+" / NEXT VOLLEY "+decimal(1/primaryCadence(*game.run))+" /s",585,468,14,Teal);
+    } else if(game.balanceActiveOpen) {
+        text("ACTIVE / YUM HEART",205,182,22,Gold);
+        if(button(Action::BalanceTreasureTab,"TREASURE",945,169,130,40))return Action::BalanceTreasureTab;
+        const auto &t=game.balancePreset.yumHeart;
+        text("HEALING",205,250,18,Gold);text(std::to_string(t.healing)+" HALF-HEARTS",460,250,22,Paper);
+        if(button(Action::YumHealingDown,"- 1",760,238,130,40))return Action::YumHealingDown;
+        if(button(Action::YumHealingUp,"+ 1",905,238,130,40))return Action::YumHealingUp;
+        text("CHARGE / COMBAT CLEAR",205,313,18,Gold);text(std::to_string(t.recharge),590,313,22,Paper);
+        if(button(Action::YumRechargeDown,"- 1",760,301,130,40))return Action::YumRechargeDown;
+        if(button(Action::YumRechargeUp,"+ 1",905,301,130,40))return Action::YumRechargeUp;
+        if(button(Action::CycleActiveBinding,std::string("USE KEY: ")+t.keyName()+" / CHANGE",205,364,350,40))return Action::CycleActiveBinding;
+        text("Four charges per use, including at full health.",585,378,14,Muted);
+        text("Reference: heals 2 half-hearts; +1 charge per first combat clear.",205,427,14,Muted);
+        if(button(Action::ResetYumHeart,"RESET ACTIVE SETTINGS",205,453,350,40))return Action::ResetYumHeart;
+        text("Charge is expedition state; presets never refill it.",585,468,13,Teal);
     } else if(game.balanceFamiliarOpen) {
         text("FAMILIAR / BROTHER BOBBY",205,182,22,Gold);
         if(button(Action::BalanceTreasureTab,"TREASURE",945,169,130,40))return Action::BalanceTreasureTab;
@@ -2551,12 +2614,14 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::ResetBrotherBobby,"RESET FAMILIAR",205,453,290,40))return Action::ResetBrotherBobby;
         text("Owned "+std::to_string(game.run?game.run->itemStacks({"isaac",ItemKind::Collectible,8}):0)+" / own shots; unaffected by player weapon upgrades",515,468,13,Teal);
     } else if(game.balanceTreasureOpen) {
-        text("TREASURE COLLECTIBLES",205,182,22,Gold);
+        text("TREASURE",205,182,22,Gold);
+        if(button(Action::BalanceTrinketTab,"TRINKETS",545,169,170,40))return Action::BalanceTrinketTab;
+        if(button(Action::BalanceActiveTab,"ACTIVES",725,169,170,40))return Action::BalanceActiveTab;
         if(button(Action::BalanceFamiliarTab,"FAMILIARS",905,169,170,40))return Action::BalanceFamiliarTab;
         text("One upgrade per opening-floor treasure pedestal. Touch it to collect once.",205,220,14,Paper);
         if(button(Action::ToggleTreasureUpgrade,game.balanceDraft.sourceTreasureUpgrade?"COLLECTIBLE PEDESTAL":"LEGACY RELIC CHOICES",205,252,490,40,game.balanceDraft.sourceTreasureUpgrade))return Action::ToggleTreasureUpgrade;
         const int treasurePool=game.balanceDraft.treasureCollectiblePool;
-        if(button(Action::CycleTreasureCollectiblePool,treasurePool==1?"POOL: ONION / CRICKET / BOBBY":treasurePool==3?"TEST: BROTHER BOBBY":treasurePool==2?"TEST: CRICKET'S HEAD":"TEST: SAD ONION",720,252,355,40))return Action::CycleTreasureCollectiblePool;
+        if(button(Action::CycleTreasureCollectiblePool,treasurePool==1?"POOL: FOUR ITEMS":treasurePool==4?"TEST: YUM HEART":treasurePool==3?"TEST: BROTHER BOBBY":treasurePool==2?"TEST: CRICKET'S HEAD":"TEST: SAD ONION",720,252,355,40))return Action::CycleTreasureCollectiblePool;
         text("SAD ONION STRENGTH",205,324,18,Gold);
         text(decimal(game.balancePreset.sadOnionStrength*100)+"%",470,319,24,Paper);
         if(button(Action::SadOnionDown,"- 5%",650,310,130,40))return Action::SadOnionDown;
@@ -2709,17 +2774,19 @@ Action Renderer::draw(const Game &game) {
     if(game.controlsOpen) {
         panel(0,0,1280,800,{8,12,16,235});panel(235,80,810,650,Panel);
         text("KEYBOARD CONTROLS",267,110,30,Gold);
-        const std::array<std::pair<const char *,const char *>,13> rows{{
+        const std::array<std::pair<const char *,const char *>,15> rows{{
             {"W A S D","Move relative to the camera"},{"Arrow keys","Fire; combine two for diagonal shots"},
             {"Space","Dodge in your movement / facing direction"},{"E / Enter","Use nearby doors, evidence, trades and exits"},
             {"B","Place dynamite at your feet"},
+            {game.balancePreset.trinkets.keyName(),"Drop held trinket; rebind in Tuning / Shooting / Trinkets"},
+            {game.balancePreset.yumHeart.keyName(),"Use active item; rebind in Tuning / Shooting / Actives"},
             {"Q / R","Rotate the camera"},{"Page Up / Down","Zoom in / out"},{"Insert / Delete","Tilt the camera"},
             {"J / L","Field journal / reread Eleanor's letter"},{"1 / 2 / 3 / 4","Choose a reward or buy a shop offer"},
             {"Tab during play","Inspect your build; Tab or Escape closes"},
             {"Tab / arrows","Select menu buttons; Enter / Space confirms"},{"Escape","Close a panel or pause"}
         }};
         for(size_t i=0;i<rows.size();++i) {
-            const float y=173+float(i)*32;
+            const float y=173+float(i)*30;
             text(rows[i].first,267,y,16,Teal);text(rows[i].second,492,y,15,Paper);
         }
         text("Walk into lit dynamite to nudge it. T while paused retreats.",267,636,14,Muted);

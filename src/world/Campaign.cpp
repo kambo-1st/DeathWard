@@ -61,6 +61,14 @@ void writeSummary(std::ostream &out, const RunSummary &s) {
         out << std::quoted(line) << '\n';
     out << s.evidence.size() << '\n';
     for(const auto &e:s.evidence)out<<int(e.room)<<' '<<int(e.account)<<' '<<e.floor<<' '<<e.floorSeed<<'\n';
+    out<<bool(s.activeItem);
+    if(s.activeItem){s.activeItem->validate();out<<' '<<std::quoted(itemKeyText(s.activeItem->item))<<' '<<s.activeItem->charge;}
+    out<<'\n'<<bool(s.heldTrinket);
+    if(s.heldTrinket) {
+        if(*s.heldTrinket!=CancerKey||std::count(s.items.begin(),s.items.end(),*s.heldTrinket))throw std::runtime_error("Invalid trinket slot ownership");
+        out<<' '<<std::quoted(itemKeyText(*s.heldTrinket));
+    }
+    out<<'\n';
 }
 RunSummary readSummary(std::istream &in, int version) {
     RunSummary s;
@@ -122,6 +130,22 @@ RunSummary readSummary(std::istream &in, int version) {
             if(s.floorCount!=plan.floorCount||plan.storyAt(e.floor)!=e.room||plan.floorSeed(e.floor)!=e.floorSeed)
                 throw std::runtime_error("Evidence does not match its expedition");
             s.evidence.push_back(e);
+        }
+    }
+    if(version>=8) {
+        const auto occupied=count(in,1);
+        if(occupied) {
+            std::string key;int charge=-1;in>>std::quoted(key)>>charge;
+            s.activeItem=ActiveItemState{parseItemKey(key),charge};s.activeItem->validate();
+            if(std::count(s.items.begin(),s.items.end(),s.activeItem->item)!=1)
+                throw std::runtime_error("Active slot ownership disagrees with saved inventory");
+        }
+    }
+    if(version>=9) {
+        const auto occupied=count(in,1);
+        if(occupied) {
+            std::string key;in>>std::quoted(key);s.heldTrinket=parseItemKey(key);
+            if(*s.heldTrinket!=CancerKey||std::count(s.items.begin(),s.items.end(),*s.heldTrinket))throw std::runtime_error("Invalid saved trinket ownership");
         }
     }
     return s;
@@ -192,7 +216,7 @@ void saveAtomic(const std::filesystem::path &path, const Campaign &c) {
         std::ofstream out(temp, std::ios::binary | std::ios::trunc);
         if (!out)
             throw std::runtime_error("Cannot create save: " + temp.string());
-        out << "DEATHWARD 7 " << checksum(payload) << '\n' << payload;
+        out << "DEATHWARD 9 " << checksum(payload) << '\n' << payload;
         out.flush();
         if (!out)
             throw std::runtime_error("Cannot write campaign save");
@@ -234,7 +258,7 @@ CampaignStore::CampaignStore(std::filesystem::path path) : path_(std::move(path)
     in >> magic >> version >> hash;
     in.get();
     std::string payload((std::istreambuf_iterator<char>(in)), {});
-    if (magic != "DEATHWARD" || version < 1 || version > 7 || checksum(payload) != hash)
+    if (magic != "DEATHWARD" || version < 1 || version > 9 || checksum(payload) != hash)
         throw std::runtime_error("Campaign save is damaged or unsupported. Original file was preserved: " +
                                  path_.string());
     campaign_ = deserialize(payload, version);

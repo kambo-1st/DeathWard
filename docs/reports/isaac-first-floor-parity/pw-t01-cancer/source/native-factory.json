@@ -1,0 +1,58 @@
+[
+  {
+    "seed": 1,
+    "variant": 350,
+    "subtype": 39,
+    "remaining": 0,
+    "available": 0
+  },
+  {
+    "seed": 2,
+    "variant": 350,
+    "subtype": 39,
+    "remaining": 0,
+    "available": 0
+  },
+  {
+    "seed": 7,
+    "variant": 350,
+    "subtype": 39,
+    "remaining": 0,
+    "available": 0
+  },
+  {
+    "seed": 39,
+    "variant": 350,
+    "subtype": 39,
+    "remaining": 0,
+    "available": 0
+  },
+  {
+    "seed": 69,
+    "variant": 350,
+    "subtype": 39,
+    "remaining": 0,
+    "available": 0
+  },
+  {
+    "seed": 12345,
+    "variant": 350,
+    "subtype": 39,
+    "remaining": 0,
+    "available": 0
+  },
+  {
+    "seed": 3735928559,
+    "variant": 350,
+    "subtype": 39,
+    "remaining": 0,
+    "available": 0
+  },
+  {
+    "seed": 4294967295,
+    "variant": 350,
+    "subtype": 39,
+    "remaining": 0,
+    "available": 0
+  }
+]

@@ -1,0 +1,4 @@
+PASS 53 native health comparisons, charge admission, actual held/released action
+PASS 15 native charge comparisons through actual encounter completion
+PASS first clears/revisit/replay/Apply, second-pedestal swaps and floor continuity
+PASS preset validation/migration and campaign slot/charge checkpoint

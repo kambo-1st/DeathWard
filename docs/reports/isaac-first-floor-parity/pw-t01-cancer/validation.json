@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-16",
+  "status": "developer checks passed; scoped human review accepted",
+  "native_rate_cases": 60,
+  "native_factory_cases": 8,
+  "appearance_partitions_hz": [
+    30,
+    60,
+    120
+  ],
+  "core_suites_passed": 9,
+  "actual_game_modes": [
+    "cancer-only",
+    "yum-heart-only"
+  ],
+  "cli_schemas": [
+    5,
+    37,
+    38,
+    39
+  ],
+  "catalog_fingerprint": "44310290ea6adb1f",
+  "source_executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "full_native_acceptance": false,
+  "unselected": [
+    "second examples",
+    "bulk catalog"
+  ],
+  "human_acceptance": "human-acceptance.json",
+  "next_selected": "PW-C01"
+}

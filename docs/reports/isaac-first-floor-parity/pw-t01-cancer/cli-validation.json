@@ -1,0 +1,78 @@
+[
+  {
+    "case": "original-165",
+    "schema": 5,
+    "command": [
+      "build/deathward",
+      "--expedition",
+      "--seed",
+      "1",
+      "--review-room",
+      "5",
+      "--mute",
+      "--save",
+      "/home/kambo/.local/share/deathward/reviews/pw-t01-cancer/cli-original-165.save",
+      "--balance-preset",
+      "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+    ],
+    "status": "pass",
+    "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 cancer_strength=1 trinket_rewards=1 trinket_key=U yum_healing=2 yum_recharge=1 active_key=C bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=2382b0004f2feaa1 profile=custom"
+  },
+  {
+    "case": "schema37",
+    "schema": 37,
+    "command": [
+      "build/deathward",
+      "--expedition",
+      "--seed",
+      "1",
+      "--review-room",
+      "5",
+      "--mute",
+      "--save",
+      "/home/kambo/.local/share/deathward/reviews/pw-t01-cancer/cli-schema37.save",
+      "--balance-preset",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/pw-f01-brother-bobby/bobby-preset.json"
+    ],
+    "status": "pass",
+    "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 cancer_strength=1 trinket_rewards=1 trinket_key=U yum_healing=2 yum_recharge=1 active_key=C bobby_movement=0.95 bobby_interval=1.05 bobby_damage=1.05 bobby_shot_speed=0.95 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=b8cb8a2dc0bcd829 profile=custom"
+  },
+  {
+    "case": "schema38",
+    "schema": 38,
+    "command": [
+      "build/deathward",
+      "--expedition",
+      "--seed",
+      "1",
+      "--review-room",
+      "5",
+      "--mute",
+      "--save",
+      "/home/kambo/.local/share/deathward/reviews/pw-t01-cancer/cli-schema38.save",
+      "--balance-preset",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/pw-a01-yum-heart/yum-preset.json"
+    ],
+    "status": "pass",
+    "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=4 cancer_strength=1 trinket_rewards=1 trinket_key=U yum_healing=3 yum_recharge=2 active_key=X bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=d26bf9a3a79abfb0 profile=custom"
+  },
+  {
+    "case": "schema39",
+    "schema": 39,
+    "command": [
+      "build/deathward",
+      "--expedition",
+      "--seed",
+      "1",
+      "--review-room",
+      "5",
+      "--mute",
+      "--save",
+      "/home/kambo/.local/share/deathward/reviews/pw-t01-cancer/cli-schema39.save",
+      "--balance-preset",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/pw-t01-cancer/cancer-preset.json"
+    ],
+    "status": "pass",
+    "balance": "BALANCE speed=1 room_size=1.11 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 cancer_strength=1.05 trinket_rewards=0 trinket_key=Y yum_healing=2 yum_recharge=1 active_key=C bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=8f4d25fce61b67cd profile=custom"
+  }
+]

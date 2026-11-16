@@ -13,7 +13,7 @@ const ItemKey Bobby{"isaac",ItemKind::Collectible,8};
 const auto Root=std::filesystem::path(__FILE__).parent_path().parent_path();
 void check(bool b,const char *m){if(!b)throw std::runtime_error(m);}
 void near(float a,float b,const char *m){if(std::abs(a-b)>std::max(.00005f,std::abs(b)*.000005f))throw std::runtime_error(m);}
-Simulation make(uint64_t seed=7,int pool=1) {return Simulation(seed,1,{},MissionTheme::Canyon,true,false,WitnessAccount::None,0,ExpeditionPacing::Compact,defaultMechanics(),1.1f,7,9,.26f,true,1,true,true,true,true,true,true,1,pool);}
+Simulation make(uint64_t seed=9,int pool=1) {return Simulation(seed,1,{},MissionTheme::Canyon,true,false,WitnessAccount::None,0,ExpeditionPacing::Compact,defaultMechanics(),1.1f,7,9,.26f,true,1,true,true,true,true,true,true,1,pool);}
 int treasure(const Simulation &s){for(int i=0;i<s.arena.roomCount();++i)if(s.hasSourceTreasure(i))return i;throw std::runtime_error("treasure missing");}
 void native() {
  auto file=std::ifstream(Root/"docs/reports/isaac-first-floor-parity/pw-f01-brother-bobby/source/native-follow.csv");std::string line;std::getline(file,line);int n=0;
@@ -25,7 +25,7 @@ void native() {
  check(n==48,"all native birth states");std::cout<<"PASS 315 source follow/free-physics and 48 independent tear births\n";
 }
 void lifecycle() {
- auto s=make();s.jumpDebug(treasure(s));check(s.treasureUpgradeItem(s.room)==8,"natural Bobby witness seed7");
+ auto s=make();s.jumpDebug(treasure(s));check(s.treasureUpgradeItem(s.room)==8,"natural Bobby witness seed9");
  check(s.content->item(Bobby)->category==CollectibleCategory::Familiar,"real category metadata");
  const auto attack=primaryPlayerAttack(s,s.player.shotDamage,false);const auto pace=s.player.walkingSpeed();
  s.player.position=pedestalGeometry::approach(s.rewardPosition(s.room),{1,0,0},.85f);check(s.collectTreasureUpgrade()&&!s.collectTreasureUpgrade(),"ordinary once-only acquisition");s.step({},Tick);

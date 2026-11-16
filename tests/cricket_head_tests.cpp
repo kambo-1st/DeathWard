@@ -53,7 +53,7 @@ void ownership() {
 }
 void coverage() {
  bool onion=false,cricket=false;int n=0;
- for(uint64_t seed:{1ULL,4ULL,7ULL,32ULL,69ULL})for(auto dim:{std::tuple{.75f,5,5},std::tuple{1.1f,7,9},std::tuple{1.5f,10,10}}){auto [scale,low,high]=dim;auto s=make(seed,1,scale,low,high);int room=treasure(s);s.jumpDebug(room);int item=s.treasureUpgradeItem(room);check(item==1||item==4||item==8,"eligible pool");onion|=item==1;cricket|=item==4;const auto at=pedestalGeometry::approach(s.rewardPosition(room),{1,0,0},.85f);check(!s.arena.blocked(at,.48f)&&!s.arena.path(s.player.position,at,.48f).empty(),"reachable pedestal");if(scale==1.1f)std::cout<<"WITNESS seed="<<seed<<" room="<<room+1<<" item="<<item<<'\n';++n;}
+ for(uint64_t seed:{1ULL,4ULL,7ULL,32ULL,69ULL})for(auto dim:{std::tuple{.75f,5,5},std::tuple{1.1f,7,9},std::tuple{1.5f,10,10}}){auto [scale,low,high]=dim;auto s=make(seed,1,scale,low,high);int room=treasure(s);s.jumpDebug(room);int item=s.treasureUpgradeItem(room);check(item==1||item==4||item==8||item==45,"eligible pool");onion|=item==1;cricket|=item==4;const auto at=pedestalGeometry::approach(s.rewardPosition(room),{1,0,0},.85f);check(!s.arena.blocked(at,.48f)&&!s.arena.path(s.player.position,at,.48f).empty(),"reachable pedestal");if(scale==1.1f)std::cout<<"WITNESS seed="<<seed<<" room="<<room+1<<" item="<<item<<'\n';++n;}
  check(onion&&cricket,"both natural options");std::cout<<"PASS "<<n<<" natural size/placement cases\n";
 }
 void presets() {

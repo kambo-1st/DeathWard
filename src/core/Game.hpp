@@ -135,7 +135,7 @@ enum class Action {
     BalanceDamageHealthTab, BalanceBombsTab, BombFuseDown, BombFuseUp,
     BombRadiusDown, BombRadiusUp, BombDamageDown, BombDamageUp,
     BombSelfDamageDown, BombSelfDamageUp, ResetInventoryBombs, ToggleRockBlastShielding,
-    BalanceDoorsTab, DoorKeyCostDown, DoorKeyCostUp, ResetKeyedDoors, ToggleSourceRoomLocks, BalanceTreasureTab, ToggleTreasureUpgrade, SadOnionDown, SadOnionUp, ResetSadOnion, BalanceShopTab, ToggleShopHeart, ShopHeartPriceDown, ShopHeartPriceUp, ResetShopHeartPrice, BalanceShopHeartTab, BalanceShopKeyTab, ToggleShopKey, ShopKeyPriceDown, ShopKeyPriceUp, ResetShopKeyPrice, BalanceShopStockTab, ToggleShopVariation, ToggleSteamSaleDiscounts, ShopUpgradePriceDown, ShopUpgradePriceUp, ResetShopUpgradePrice, BalanceShopBombTab, ShopBombPriceDown, ShopBombPriceUp, ResetShopBombPrice, BalanceShopRedHeartTab, BalanceShopSoulHeartTab, ShopSoulHeartPriceDown, ShopSoulHeartPriceUp, ResetShopSoulHeartPrice, CycleShopCollectiblePool, CycleTreasureCollectiblePool, CricketHeadDown, CricketHeadUp, ResetCricketHead, BalanceFamiliarTab, BobbyMovementDown, BobbyMovementUp, BobbyIntervalDown, BobbyIntervalUp, BobbyDamageDown, BobbyDamageUp, BobbyShotDown, BobbyShotUp, ResetBrotherBobby
+    BalanceDoorsTab, DoorKeyCostDown, DoorKeyCostUp, ResetKeyedDoors, ToggleSourceRoomLocks, BalanceTreasureTab, ToggleTreasureUpgrade, SadOnionDown, SadOnionUp, ResetSadOnion, BalanceShopTab, ToggleShopHeart, ShopHeartPriceDown, ShopHeartPriceUp, ResetShopHeartPrice, BalanceShopHeartTab, BalanceShopKeyTab, ToggleShopKey, ShopKeyPriceDown, ShopKeyPriceUp, ResetShopKeyPrice, BalanceShopStockTab, ToggleShopVariation, ToggleSteamSaleDiscounts, ShopUpgradePriceDown, ShopUpgradePriceUp, ResetShopUpgradePrice, BalanceShopBombTab, ShopBombPriceDown, ShopBombPriceUp, ResetShopBombPrice, BalanceShopRedHeartTab, BalanceShopSoulHeartTab, ShopSoulHeartPriceDown, ShopSoulHeartPriceUp, ResetShopSoulHeartPrice, CycleShopCollectiblePool, CycleTreasureCollectiblePool, CricketHeadDown, CricketHeadUp, ResetCricketHead, BalanceFamiliarTab, BobbyMovementDown, BobbyMovementUp, BobbyIntervalDown, BobbyIntervalUp, BobbyDamageDown, BobbyDamageUp, BobbyShotDown, BobbyShotUp, ResetBrotherBobby, BalanceActiveTab, YumHealingDown, YumHealingUp, YumRechargeDown, YumRechargeUp, CycleActiveBinding, ResetYumHeart, UseActiveItem, BalanceTrinketTab, CancerDown, CancerUp, ToggleTrinketRewards, CycleTrinketBinding, ResetTrinkets, DropTrinket
 };
 class Game {
   public:
@@ -164,7 +164,7 @@ class Game {
     bool controlsOpen = false;
     bool buildOpen = false;
     bool balanceOpen = false, balancePathEditing = false, balanceShootingOpen = false;
-    bool balanceFamiliarOpen = false;
+    bool balanceFamiliarOpen = false, balanceActiveOpen = false, balanceTrinketOpen = false;
     bool balanceEnemiesOpen = false, balancePooterOpen = false, balanceCombatOpen = false, balanceRewardsOpen = false, balanceRoomHeartsOpen = false, balanceTreasureOpen = false, balanceShopOpen=false, balanceShopKeyOpen=false, balanceShopStockOpen=false, balanceShopBombOpen=false, balanceShopSoulHeartOpen=false;
     bool balanceBombsOpen=false, balanceDoorsOpen=false;
     BalancePreset balancePreset, balanceDraft;
@@ -271,7 +271,7 @@ class Game {
     std::optional<Vector3> dodgeAimQueued_;
     std::optional<Vector3> moveQueued_;
     std::optional<FireCommand> fireQueued_;
-    bool placeDynamiteQueued_ = false;
+    bool placeDynamiteQueued_ = false, activeQueued_ = false, trinketQueued_ = false;
     std::optional<std::pair<int, int>> doorQueued_;
     float mouseMoveCooldown_ = 0;
     float cameraZoom_ = 100.0f / BalancePreset::ReferenceZoom, cameraZoomTarget_ = cameraZoom_;

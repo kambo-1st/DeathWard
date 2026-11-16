@@ -1,0 +1,53 @@
+{
+  "status": "developer checks pass; scoped human review accepted",
+  "previous_checkpoint": "d915e845",
+  "source_cases": {
+    "healing": 56,
+    "discharge": 7,
+    "charge": 15,
+    "room_charge": 24
+  },
+  "core_suites": [
+    "yum_heart",
+    "brother_bobby",
+    "cricket_head_treasure",
+    "treasure_upgrade",
+    "mechanics_content",
+    "native_player_health",
+    "balance_preset_contract",
+    "core_contracts"
+  ],
+  "natural_witnesses": {
+    "yum_heart": {
+      "seed": 2,
+      "displayed_room": 8
+    },
+    "brother_bobby": {
+      "seed": 9,
+      "displayed_room": 8
+    },
+    "cricket_head": {
+      "seed": 4,
+      "displayed_room": 8
+    },
+    "sad_onion": {
+      "seed": 1,
+      "displayed_room": 8
+    }
+  },
+  "full_native_acceptance": false,
+  "human_acceptance": "human-acceptance.json",
+  "input_suites": [
+    "--yum-heart-only",
+    "--brother-bobby-only",
+    "--cricket-head-only"
+  ],
+  "cli_schemas": [
+    5,
+    37,
+    38
+  ],
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "source_capture_reproduced": true,
+  "visual_check": "Pedestal, tuning panel and unobscured active charge/button inspected at 165% zoom."
+}

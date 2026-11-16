@@ -1,0 +1,24 @@
+{
+  "pid": 2728875,
+  "command": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "1",
+    "--review-room",
+    "5",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/pw-t01-cancer/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "started_utc": "2026-11-16T17:56:25.566474+00:00",
+  "status": "running; ordinary main game",
+  "seed": 1,
+  "displayed_room": 5,
+  "zoom": 165,
+  "health_half_hearts": 6,
+  "god_mode": false,
+  "human_acceptance": "pending"
+}
