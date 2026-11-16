@@ -1,0 +1,93 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "item": {
+    "description": "#BROTHER_BOBBY_DESCRIPTION",
+    "gfx": "Collectibles_008_BrotherBobby.png",
+    "id": "8",
+    "name": "#BROTHER_BOBBY_NAME"
+  },
+  "entity": {
+    "anm2path": "003.001_Brother Bobby.anm2",
+    "baseHP": "0",
+    "boss": "0",
+    "champion": "0",
+    "collisionDamage": "0",
+    "collisionMass": "3",
+    "collisionRadius": "13",
+    "friction": "1",
+    "id": "3",
+    "name": "Brother Bobby",
+    "numGridCollisionPoints": "12",
+    "shadowSize": "11",
+    "stageHP": "0",
+    "tags": "cansacrifice",
+    "variant": "1"
+  },
+  "treasure": {
+    "Id": "8",
+    "Weight": "1",
+    "DecreaseBy": "1",
+    "RemoveOn": "0.1"
+  },
+  "follow_states": 315,
+  "cadence_states": 80,
+  "birth_cases": 48,
+  "windows": [
+    {
+      "name": "dispatch",
+      "start": "0x6009b4",
+      "end": "0x6009c7",
+      "sha256": "ec51a8a2217a01bf6889b2fb43b1c3335b0eb6ecc048e161a3b64cd69178ec1c"
+    },
+    {
+      "name": "ordinary-follow-tail",
+      "start": "0x5f4d7c",
+      "end": "0x5f4eab",
+      "sha256": "daf4c0f545f1151e7d698929b326ddc135f6526e6622de40f5fb0d2df53c6971"
+    },
+    {
+      "name": "free-physics",
+      "start": "0x686406",
+      "end": "0x686497",
+      "sha256": "8aa58bee7866dda1c899c521ab22f0ae7ac378a07817f277bb1ff1e08ab7e2cf"
+    },
+    {
+      "name": "cadence",
+      "start": "0x5f6350",
+      "end": "0x5f63d6",
+      "sha256": "6caaa55ebbfb318c2d759a73689535ab23e788ba0a16e93a47632c00aa9284df"
+    },
+    {
+      "name": "shoot-gate",
+      "start": "0x5f6486",
+      "end": "0x5f64cb",
+      "sha256": "87ad3274eceff3b6bf938dcaf8b8548e6b8bb5a2636de58682f969214e5367fc"
+    },
+    {
+      "name": "shoot-reset",
+      "start": "0x5f6648",
+      "end": "0x5f6662",
+      "sha256": "a06e3f930e57c69bcf34f1c19d6c256909d62d662776cfedfd0f9688e260a123"
+    },
+    {
+      "name": "tear-velocity",
+      "start": "0x618860",
+      "end": "0x618b44",
+      "sha256": "da8b55b532cd06f345f8b7ea73ea350d0caf21daebfe8979c1cdc9dc988cc02e"
+    },
+    {
+      "name": "tear-baseline",
+      "start": "0x618b60",
+      "end": "0x618bf5",
+      "sha256": "257bccc3f4f328836214de12c0ac3a9bece85f7dbf0887a6f2e09742f809a198"
+    },
+    {
+      "name": "tear-factory-boundary",
+      "start": "0x619a1e",
+      "end": "0x619b4c",
+      "sha256": "fd4472db24fae103df204656fc0a08dee90a7420d496f6f216e31b3fd048b0c7"
+    }
+  ],
+  "scope": "Supplied parent follow tail + original free physics. Original ordinary cooldown decrement/variant interval/reset, supplied held-input admission. Entire original familiar tear routine to first factory boundary with actual empty-inventory queries and ordinary owner. Factory/initial tear height, native actor scheduler, parent-chain construction, inventory cache reconstruction, item synergies and live physical acceptance not certified. DW 30Hz boundary/space/eight-way aim and physical collisions are explicit adapters.",
+  "full_native_acceptance": false
+}

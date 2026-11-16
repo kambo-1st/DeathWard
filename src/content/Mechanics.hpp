@@ -33,11 +33,13 @@ struct WeightedItem {
     int weight=0;
     auto operator<=>(const WeightedItem &) const = default;
 };
+enum class CollectibleCategory { Passive, Familiar, Active };
 struct ItemDefinition {
     ItemKey id;
     std::string name,rarity,description;
     std::vector<ItemEffect> effects;
     float pickupHealthMultiplier=1, pickupHealthFloor=10;
+    CollectibleCategory category=CollectibleCategory::Passive;
 };
 struct ResolvedBuild {
     std::array<float,size_t(BuildStat::Count)> values{};

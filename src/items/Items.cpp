@@ -1,4 +1,5 @@
 #include "items/Items.hpp"
+#include "items/CricketHead.hpp"
 #include "combat/PlayerShooting.hpp"
 
 namespace dw {
@@ -70,6 +71,12 @@ AttackSpec playerAttack(const Simulation &run,float damage,bool sixth,float spee
 }
 AttackSpec primaryPlayerAttack(const Simulation &run,float damage,bool sixth) {
     auto spec=playerAttack(run,damage,sixth);
+    if(const auto copies=run.itemStacks({"isaac",ItemKind::Collectible,4});copies&&run.cricketHeadStrength>0) {
+        const float beforeDamage=spec.damage;
+        const float upgraded=cricketHeadDamage(damage/CombatHealthUnitsPerSource,copies,run.cricketHeadStrength)*CombatHealthUnitsPerSource;
+        spec=playerAttack(run,upgraded,sixth);
+        spec.radius*=sourceOrdinaryTearScale(spec.damage/CombatHealthUnitsPerSource)/sourceOrdinaryTearScale(beforeDamage/CombatHealthUnitsPerSource);
+    }
     if(!run.canonicalShooting)return spec;
     const auto source=AcceptedPlayerShooting.resolve(run.effectivePlayerStats());
     const auto empty=run.content->resolve({},damage,26,false);
@@ -102,6 +109,7 @@ const ItemDefinition &itemDefinition(const ItemKey &key,const MechanicsLibrary &
     return missing;
 }
 void dispatchItemEffects(Simulation &run,const Event &event) {
+    if(event.context.familiarAttack)return;
     // Snapshot the dispatch list. A hook that grants an item must not invalidate
     // iteration or retroactively subscribe that new item to the current event.
     std::vector<std::pair<ItemKey,size_t>> owned;

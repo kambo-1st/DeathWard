@@ -1,0 +1,16 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start   2: mechanics_content
+1/5 Test   #2: mechanics_content ................   Passed    2.07 sec
+    Start   7: item_builds
+2/5 Test   #7: item_builds ......................   Passed    7.48 sec
+    Start  36: source_shop_collectibles
+3/5 Test  #36: source_shop_collectibles .........   Passed    6.44 sec
+    Start 143: balance_preset_contract
+4/5 Test #143: balance_preset_contract ..........   Passed    0.13 sec
+    Start 145: canonical_shooting_integration
+5/5 Test #145: canonical_shooting_integration ...   Passed    1.65 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =  17.78 sec

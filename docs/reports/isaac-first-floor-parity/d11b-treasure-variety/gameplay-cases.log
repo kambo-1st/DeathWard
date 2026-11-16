@@ -1,0 +1,9 @@
+PASS 32 damage / 32 full tear outputs / 524 native weighted-index cases
+PASS actual attack / size / birth / duplicate / Onion / revisit / Apply / floor / capacity
+WITNESS seed=1 room=8 item=1
+WITNESS seed=4 room=8 item=1
+WITNESS seed=7 room=8 item=4
+WITNESS seed=32 room=8 item=4
+WITNESS seed=69 room=8 item=1
+PASS 15 natural size/placement cases
+PASS old preset / 12 combinations / invalid refusal

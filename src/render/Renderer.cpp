@@ -35,6 +35,19 @@ std::string timeLabel(double seconds) {
 void shadow(Vector3 p, float radius) {
     DrawCylinder({p.x, 0.025f, p.z}, radius, radius, 0.012f, 12, Color{24, 27, 26, 120});
 }
+void brotherBobbyModel(Vector3 at,Vector3 facing) {
+    const Color blue{87,142,194,255},light{170,204,224,255};
+    facing=unit(horizontal(facing));if(length(facing)<.1f)facing={0,0,1};
+    const Vector3 side{-facing.z,0,facing.x};
+    DrawSphereEx(at,.27f,6,8,blue);
+    const auto head=add(at,{0,.32f,0});DrawSphereEx(head,.32f,7,9,light);
+    for(float sign:{-1.f,1.f}) {
+        DrawSphereEx(add(add(head,mul(facing,.28f)),mul(side,sign*.11f)),.052f,5,6,Ink);
+        DrawSphereEx(add(at,mul(side,sign*.29f)),.105f,5,6,blue);
+    }
+    DrawCylinderEx(add(head,{0,.27f,0}),add(head,{0,.34f,0}),.36f,.29f,8,Color{91,69,50,255});
+    DrawCylinderEx(add(head,{0,.33f,0}),add(head,{0,.53f,0}),.22f,.19f,8,Color{118,86,55,255});
+}
 bool propOccludes(const Breakable &prop,const Camera3D &camera,Vector3 player) {
     PlayerOcclusion occlusion;occlusion.set(camera,player);
     if(!prop.solid()||!occlusion.intersects(prop.bounds))return false;
@@ -929,9 +942,21 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                          pedestalGeometry::Height,pedestalGeometry::Sides,Border);
             if(run.hasSourceTreasure(i)&&run.rewardAvailable(i)) {
                 const float y=1.35f+.07f*std::sin(float(run.stats.duration)*2);
-                DrawSphereEx({p.x,y,p.z},.43f,8,10,Color{209,171,115,255});
-                DrawCylinderEx({p.x,y+.24f,p.z},{p.x+.05f,y+.65f,p.z},.20f,.06f,7,Color{224,193,143,255});
-                DrawCylinderEx({p.x+.05f,y+.62f,p.z},{p.x+.18f,y+.87f,p.z+.06f},.055f,.025f,5,Color{121,145,72,255});
+                if(run.treasureUpgradeItem(i)==8) {
+                    brotherBobbyModel({p.x,y,p.z},{0,0,1});
+                } else if(run.treasureUpgradeItem(i)==4) {
+                    const Color fur{130,82,51,255};
+                    DrawSphereEx({p.x,y+.1f,p.z},.48f,7,9,fur);
+                    for(float side:{-1.f,1.f}) {
+                        DrawCylinderEx({p.x+side*.29f,y+.38f,p.z},{p.x+side*.36f,y+.78f,p.z},.23f,0,4,fur);
+                        DrawSphereEx({p.x+side*.19f,y+.19f,p.z+.41f},.085f,5,6,Gold);
+                    }
+                    DrawSphereEx({p.x,y-.02f,p.z+.46f},.09f,5,6,Border);
+                } else {
+                    DrawSphereEx({p.x,y,p.z},.43f,8,10,Color{209,171,115,255});
+                    DrawCylinderEx({p.x,y+.24f,p.z},{p.x+.05f,y+.65f,p.z},.20f,.06f,7,Color{224,193,143,255});
+                    DrawCylinderEx({p.x+.05f,y+.62f,p.z},{p.x+.18f,y+.87f,p.z+.06f},.055f,.025f,5,Color{121,145,72,255});
+                }
             }
         }
         if(run.hasSourceShop(run.room)&&run.shopVariationActive()&&!run.shopUpgradeSold) {
@@ -1177,6 +1202,10 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         if(pickup.kind==HeartKind::Red&&pickup.amount==4) {
             heart(add(point,{-.28f,0,0}),false);heart(add(point,{.28f,0,.22f}),false);
         } else heart(point,pickup.kind==HeartKind::Red&&pickup.amount==1);
+    }
+    for(const auto &f:run.brotherBobbies)if(f.room==run.room) {
+        shadow(f.position,.3f);
+        brotherBobbyModel(add(f.position,{0,.18f+.04f*std::sin(float(run.stats.duration)*3),0}),sub(run.player.aim,run.player.position));
     }
     for(const auto &fly:run.blueFlies) {
         DrawSphere(fly.position,.14f,{78,141,205,255});
@@ -2507,20 +2536,41 @@ Action Renderer::balancePanel(const Game &game) {
         if(game.run)for(size_t i=0;i<game.run->arena.rooms.size();++i)
             if(game.run->arena.rooms[i].sourceCombatTemplate==47)sourceRoom="Active: room "+std::to_string(i+1)+" / two Gapers";
         text(sourceRoom,610,474,13,Teal);
+    } else if(game.balanceFamiliarOpen) {
+        text("FAMILIAR / BROTHER BOBBY",205,182,22,Gold);
+        if(button(Action::BalanceTreasureTab,"TREASURE",945,169,130,40))return Action::BalanceTreasureTab;
+        const auto &t=game.balancePreset.brotherBobby;
+        const std::array<float,4> values{t.movement,t.interval,t.damage,t.shotSpeed};
+        const std::array<const char *,4> labels{"FOLLOW SPEED","SHOT INTERVAL","SHOT DAMAGE","SHOT SPEED"};
+        for(int i=0;i<4;++i) {
+            const float y=240+i*51;const auto down=Action(int(Action::BobbyMovementDown)+i*2),up=Action(int(down)+1);
+            text(labels[size_t(i)],205,y+12,18,Gold);text(decimal(values[size_t(i)]*100)+"%",495,y+7,22,Paper);
+            if(button(down,"- 5%",650,y,130,40))return down;
+            if(button(up,"+ 5%",795,y,130,40))return up;
+        }
+        if(button(Action::ResetBrotherBobby,"RESET FAMILIAR",205,453,290,40))return Action::ResetBrotherBobby;
+        text("Owned "+std::to_string(game.run?game.run->itemStacks({"isaac",ItemKind::Collectible,8}):0)+" / own shots; unaffected by player weapon upgrades",515,468,13,Teal);
     } else if(game.balanceTreasureOpen) {
-        text("TREASURE / THE SAD ONION",205,182,22,Gold);
-        text("A single Tears upgrade in opening-floor treasure rooms. Touch it to collect once.",205,220,14,Paper);
-        if(button(Action::ToggleTreasureUpgrade,game.balanceDraft.sourceTreasureUpgrade?"SAD ONION PEDESTAL":"LEGACY RELIC CHOICES",205,252,490,40,game.balanceDraft.sourceTreasureUpgrade))return Action::ToggleTreasureUpgrade;
-        text("Offering changes wait for Apply.",720,266,14,Muted);
-        text("UPGRADE STRENGTH",205,324,18,Gold);
+        text("TREASURE COLLECTIBLES",205,182,22,Gold);
+        if(button(Action::BalanceFamiliarTab,"FAMILIARS",905,169,170,40))return Action::BalanceFamiliarTab;
+        text("One upgrade per opening-floor treasure pedestal. Touch it to collect once.",205,220,14,Paper);
+        if(button(Action::ToggleTreasureUpgrade,game.balanceDraft.sourceTreasureUpgrade?"COLLECTIBLE PEDESTAL":"LEGACY RELIC CHOICES",205,252,490,40,game.balanceDraft.sourceTreasureUpgrade))return Action::ToggleTreasureUpgrade;
+        const int treasurePool=game.balanceDraft.treasureCollectiblePool;
+        if(button(Action::CycleTreasureCollectiblePool,treasurePool==1?"POOL: ONION / CRICKET / BOBBY":treasurePool==3?"TEST: BROTHER BOBBY":treasurePool==2?"TEST: CRICKET'S HEAD":"TEST: SAD ONION",720,252,355,40))return Action::CycleTreasureCollectiblePool;
+        text("SAD ONION STRENGTH",205,324,18,Gold);
         text(decimal(game.balancePreset.sadOnionStrength*100)+"%",470,319,24,Paper);
         if(button(Action::SadOnionDown,"- 5%",650,310,130,40))return Action::SadOnionDown;
         if(button(Action::SadOnionUp,"+ 5%",795,310,130,40))return Action::SadOnionUp;
-        text("Live for owned copies. Current firing wait and flying shots keep their settings.",205,367,14,Muted);
-        if(button(Action::ResetSadOnion,"RESET STRENGTH TO 100%",205,391,490,36))return Action::ResetSadOnion;
-        if(game.run)text("OWNED "+std::to_string(game.run->itemStacks({"isaac",ItemKind::Collectible,1}))+" / NEXT VOLLEY "+decimal(1/primaryCadence(*game.run))+" /s",720,402,14,Teal);
+        text("Live owned effects. Flying shots keep their settings.",205,357,14,Muted);
+        if(button(Action::ResetSadOnion,"RESET",940,310,135,40))return Action::ResetSadOnion;
+        if(game.run)text("OWNED "+std::to_string(game.run->itemStacks({"isaac",ItemKind::Collectible,1}))+" / NEXT VOLLEY "+decimal(1/primaryCadence(*game.run))+" /s",720,357,14,Teal);
         if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,441,350,40))return Action::ApplyMapChanges;
         text(game.hasPendingMapChanges()?"PENDING / resets floor rewards; keeps build":"APPLIED / no pending map changes",580,452,13,game.hasPendingMapChanges()?Gold:Teal);
+        text("CRICKET STRENGTH",205,393,18,Gold);text(decimal(game.balancePreset.cricketHeadStrength*100)+"%",470,388,24,Paper);
+        if(button(Action::CricketHeadDown,"- 5%",650,379,130,40))return Action::CricketHeadDown;
+        if(button(Action::CricketHeadUp,"+ 5%",795,379,130,40))return Action::CricketHeadUp;
+        if(button(Action::ResetCricketHead,"RESET",940,379,135,40))return Action::ResetCricketHead;
+        if(game.run)text("OWNED "+std::to_string(game.run->itemStacks({"isaac",ItemKind::Collectible,4}))+" / DAMAGE "+decimal(game.run->effectivePlayerStats().damage)+" / affects new shots",205,424,13,Teal);
     } else {
         const auto &preset=game.balancePreset;
         if(button(Action::BalanceTreasureTab,"TREASURE",945,169,130,40))return Action::BalanceTreasureTab;

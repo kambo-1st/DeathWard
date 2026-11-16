@@ -1,7 +1,51 @@
 #include "combat/Simulation.hpp"
 #include "combat/BlueFly.hpp"
+#include "items/CricketHead.hpp"
 
 namespace dw {
+void Simulation::updateBrotherBobby(const Input &input,float dt) {
+    const auto count=itemStacks({"isaac",ItemKind::Collectible,8});
+    if(brotherBobbies.size()>count)brotherBobbies.resize(count);
+    while(brotherBobbies.size()<count) {
+        BrotherBobbyRuntime familiar;familiar.id=nextEntity_++;familiar.room=room;
+        familiar.position=familiar.previous=player.position;brotherBobbies.push_back(familiar);
+    }
+    for(auto &f:brotherBobbies)if(f.room!=room) {
+        f.position=f.previous=player.position;f.nativeVelocity={};f.room=room;
+    }
+    if(brotherBobbies.empty()){brotherBobbyClock_=0;return;}
+    brotherBobbyClock_+=dt;
+    while(brotherBobbyClock_>=1.f/30-1e-6f) {
+        brotherBobbyClock_=std::max(0.f,brotherBobbyClock_-1.f/30);
+        Vector3 parent=player.position;
+        for(auto &f:brotherBobbies) {
+            f.previous=f.position;
+            f.nativeVelocity=sourceBobbyFollow(f.nativeVelocity,mul(sub(f.position,parent),1/BobbySpace));
+            f.position=add(f.position,mul(f.nativeVelocity,BobbySpace*brotherBobby.movement));
+            f.position.y=player.position.y;parent=f.position;
+            f.cooldown=std::max(0.f,f.cooldown-1.f/30);
+            if(!input.fire||input.placeDynamite||input.dynamiteTarget||carriedBomb()||f.cooldown>1e-6f)continue;
+            Event shot;shot.direction=unit(sub(player.aim,player.position));
+            if(length(shot.direction)<.001f)shot.direction={0,0,-1};
+            shot.position=shot.origin=f.position;
+            AttackSpec attack;attack.damage=BobbySourceDamage*CombatHealthUnitsPerSource*brotherBobby.damage;
+            attack.speed=BobbyLaunch*brotherBobby.shotSpeed;attack.life=5;
+            attack.radius=.11f*.8f/sourceOrdinaryTearScale(3.5f); // Source scale relative to the accepted ordinary bullet.
+            attack.canonicalFlight=true;
+            // Native ordinary Bobby adds 1.2 times owner velocity per60Hz step
+            // to a per30Hz tear velocity, clamping resultant speed to at least10.
+            auto velocity=add(mul(shot.direction,attack.speed),mul(player.velocity,.6f));
+            if(length(velocity)<attack.speed)velocity=mul(unit(velocity),attack.speed);
+            attack.inheritedVelocity=sub(velocity,mul(shot.direction,attack.speed));
+            shot.attack=attack;shot.damage=attack.damage;shot.speed=attack.speed;
+            shot.context.sourceEntity=f.id;shot.context.sourceItem=ItemKey{"isaac",ItemKind::Collectible,8};
+            shot.context.damageSource=DamageSource::Ally;shot.context.familiarAttack=true;
+            shot.projectileTint=Color{111,174,236,255};
+            if(queueRoot(shot)){++f.shots;f.cooldown=BobbySourceInterval*brotherBobby.interval;}
+        }
+    }
+}
+
 void Simulation::rebalanceBlueFlyOrbit() {
     const int count=int(std::count_if(blueFlies.begin(),blueFlies.end(),[](const auto &fly){return fly.alive&&fly.orbiting;}));
     int index=0;

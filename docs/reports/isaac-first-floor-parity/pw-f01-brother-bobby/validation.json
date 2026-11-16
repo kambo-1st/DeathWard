@@ -1,0 +1,45 @@
+{
+  "status": "developer_verified_scoped_user_accepted",
+  "date": "2026-11-16",
+  "build": "main game, actual Game/Renderer and relevant core test targets pass",
+  "native": {
+    "follow_states": 315,
+    "cadence_states": 80,
+    "birth_cases": 48,
+    "reproduction_check": "passed"
+  },
+  "core_suites": [
+    "brother_bobby",
+    "cricket_head_treasure",
+    "treasure_upgrade",
+    "mechanics_content",
+    "item_builds",
+    "source_shop_collectibles",
+    "balance_preset_contract",
+    "canonical_shooting_integration"
+  ],
+  "actual_game_modes": [
+    "--brother-bobby-only",
+    "--cricket-head-only"
+  ],
+  "actual_lifecycle": "natural mouse acquisition, per-copy spawn/removal, following/cadence at30/60/120Hz, actual friendly damage and tall-cover hit, birth freeze/player-item independence, pause, revisit, Apply/floor, live UI, export/load/remember and fresh-build retry",
+  "cli_schemas": [
+    5,
+    36,
+    37
+  ],
+  "catalog_fingerprint": "eb6516e350a813e7",
+  "human_accepted": true,
+  "full_native_acceptance": false,
+  "committed": "included in requested checkpoint",
+  "corrections": [
+    "Regressions initially used stale executables; rebuilt every tested target and reran successfully.",
+    "Bobby tear radius now uses source scale .8 relative to the retained ordinary bullet. Physical checks respect the retained low pedestal height and separately verify tall cover."
+  ],
+  "remaining": [
+    "native factory/initial-height wrapper, scheduler/parent cache, item synergies, full RNG/pool and physical equivalence",
+    "live gameplay save/resume remains PW-C01/D18",
+    "PW-A01 Yum Heart selected next; trinkets and combined acceptance remain unselected"
+  ],
+  "interactive_review": "ready; interactive-launch.json"
+}

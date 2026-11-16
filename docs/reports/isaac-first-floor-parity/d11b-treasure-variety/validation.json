@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-16",
+  "status": "developer_verified_scoped_user_accepted",
+  "build": "deathward, input and six focused core targets passed",
+  "native": {
+    "damage_cases": 32,
+    "whole_tear_parameter_comparisons": 32,
+    "shot_speed_cases": 4,
+    "shared_native_weighted_index_cases": 524,
+    "script_check": "passed"
+  },
+  "core_suites": {
+    "cricket_head_treasure": "passed; gameplay-cases.log",
+    "treasure_upgrade": "passed after expected catalog hash update; treasure-recheck.log",
+    "item_builds": "passed; tests.log",
+    "source_shop_collectibles": "passed; tests.log",
+    "balance_preset_contract": "passed; tests.log",
+    "canonical_shooting_integration": "passed; tests.log"
+  },
+  "game_input_modes": [
+    "--cricket-head-only",
+    "--treasure-upgrade-only"
+  ],
+  "game_input_result": "both pass after panel layout correction; actual mouse collection and following generated fight, live strength, staged pool/Apply, keyboard reset, export/load/remember/retry/fresh launch",
+  "cli_schemas": [
+    5,
+    35,
+    36
+  ],
+  "catalog_fingerprint": "2c70255f590fb92f",
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "human_accepted": true,
+  "full_native_acceptance": false,
+  "review": {
+    "seed": 7,
+    "displayed_room": 8,
+    "collectible": 4,
+    "source_preset": "first-floor-d02/campaign.save.balance/export.json",
+    "health_half_hearts": 6,
+    "god_mode": false,
+    "muted": true,
+    "launch": "successfully opened; later exited normally with code0"
+  },
+  "corrections": [
+    "Screenshot exposed overlap with shared preset controls; item controls moved above the preset area and both Game/Renderer modes rerun.",
+    "Historical Onion test pinned the pre-BOGO catalog; updated to audited additive catalog and rechecked."
+  ],
+  "acceptance_record": "human-acceptance.json"
+}

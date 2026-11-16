@@ -1,0 +1,65 @@
+{
+  "cases": [
+    {
+      "schema": 5,
+      "preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+      "command": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "7",
+        "--review-room",
+        "8",
+        "--mute",
+        "--save",
+        "/tmp/deathward-d11b-cli-1zwdevw7/campaign.save",
+        "--balance-preset",
+        "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+      ],
+      "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=170b6ce126650371 profile=custom",
+      "review": "ROOM_REVIEW room=8 hp=6 god=0",
+      "passed": true
+    },
+    {
+      "schema": 35,
+      "preset": "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d12f-shop-collectibles/shop-collectibles-preset.json",
+      "command": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "7",
+        "--review-room",
+        "8",
+        "--mute",
+        "--save",
+        "/tmp/deathward-d11b-cli-6zxc417a/campaign.save",
+        "--balance-preset",
+        "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d12f-shop-collectibles/shop-collectibles-preset.json"
+      ],
+      "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=2 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=c76ff49fe7de87fc profile=custom",
+      "review": "ROOM_REVIEW room=8 hp=6 god=0",
+      "passed": true
+    },
+    {
+      "schema": 36,
+      "preset": "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d11b-treasure-variety/cli-cricket-test-preset.json",
+      "command": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "7",
+        "--review-room",
+        "8",
+        "--mute",
+        "--save",
+        "/tmp/deathward-d11b-cli-7yrysg_w/campaign.save",
+        "--balance-preset",
+        "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d11b-treasure-variety/cli-cricket-test-preset.json"
+      ],
+      "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=2 cricket_strength=0.95 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=e26c9750fd479816 profile=custom",
+      "review": "ROOM_REVIEW room=8 hp=6 god=0",
+      "passed": true
+    }
+  ],
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf"
+}

@@ -771,7 +771,7 @@ void treasureUpgradeInputCheck(const std::filesystem::path &directory) {
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"treasure.save",file=directory/"treasure.json";
     Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="69";
-    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    game.loadBalancePreset(source);game.balanceDraft.treasureCollectiblePool=0;game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
     check(game.run&&game.error.empty(),"treasure main-game launch");auto &run=*game.run;
     int owner=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.hasSourceTreasure(i)){owner=i;break;}
     check(owner>=0,"opening-floor treasure offering enabled");run.jumpDebug(owner);game.reviewRoomIndex=owner;
@@ -822,6 +822,108 @@ void treasureUpgradeInputCheck(const std::filesystem::path &directory) {
     Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="69";fresh.reviewRoomIndex=owner;fresh.loadBalancePreset(file);fresh.launch(true);
     check(fresh.run&&fresh.run->hasSourceTreasure(owner)&&fresh.run->items.empty()&&std::abs(fresh.run->sadOnionStrength-.95f)<.0001f&&fresh.cameraZoomPercent()==165,"fresh exported preset");fresh.close();
     std::cout<<"PASS D11a actual Game/Renderer mouse collection, keyboard/live/staged settings, Apply/load/export/remember/retry; seed=69 room="<<owner+1<<'\n';
+}
+
+void brotherBobbyInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"bobby.save",file=directory/"bobby.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="7";
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.error.empty(),"Bobby normal game launch");auto &run=*game.run;const ItemKey item{"isaac",ItemKind::Collectible,8};
+    int owner=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.hasSourceTreasure(i)){owner=i;break;}
+    check(owner>=0&&run.treasureUpgradeItem(owner)==8,"natural Bobby selection");run.jumpDebug(owner);game.reviewRoomIndex=owner;
+    Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"Bobby UI error");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"Bobby capture");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();check(run.player.hp==6&&!run.godMode&&game.cameraZoomPercent()==165,"retained ordinary starting settings");
+    auto at=run.rewardPosition(owner);mouseWalk(game,frame,at,3);game.updateCamera(10);frame();capture("artifacts/bobby-pedestal.png");
+    at.y=0;const auto screen=GetWorldToScreen(at,game.camera);click(int(screen.x),int(screen.y));
+    for(int n=0;n<600&&!run.itemStacks(item);++n)frame();frame();
+    check(run.itemStacks(item)==1&&run.brotherBobbies.size()==1&&run.rooms[size_t(owner)].rewardTaken,"actual mouse pickup creates one owned familiar");
+    mouseEvent(KeyDown,KEY_W);for(int n=0;n<40;++n)frame();mouseEvent(KeyUp,KEY_W);frame();
+    mouseEvent(MousePosition,1000,400);mouseEvent(MouseDown,MOUSE_BUTTON_RIGHT);for(int n=0;n<100;++n)frame();mouseEvent(MouseUp,MOUSE_BUTTON_RIGHT);frame();
+    check(run.brotherBobbies[0].shots>=3&&run.stats.shots>=3,"actual eight-way player firing also commands familiar");capture("artifacts/bobby-following.png");
+    const auto id=run.brotherBobbies[0].id;run.jumpDebug(0);frame();run.jumpDebug(owner);frame();check(run.brotherBobbies.size()==1&&run.brotherBobbies[0].id==id&&!run.rewardAvailable(owner),"revisit no duplicate");
+    game.updateCamera(10);click(374,642);click(710,143);click(1010,189);click(980,189);
+    check(game.balanceOpen&&game.balanceShootingOpen&&game.balanceFamiliarOpen,"mouse opens familiar page");
+    const float wait=run.brotherBobbies[0].cooldown;const auto position=run.brotherBobbies[0].position;
+    click(710,260);click(850,310);click(850,360);click(710,410);
+    check(std::abs(run.brotherBobby.movement-.95f)<.0001f&&std::abs(run.brotherBobby.interval-1.05f)<.0001f&&std::abs(run.brotherBobby.damage-1.05f)<.0001f&&std::abs(run.brotherBobby.shotSpeed-.95f)<.0001f,"all live tuning consumers");
+    check(run.brotherBobbies[0].cooldown==wait&&distance(run.brotherBobbies[0].position,position)==0,"tuning pause preserves actor clocks");
+    click(335,605);const auto exported=BalancePreset::load(file,run.content->fingerprint());check(exported.brotherBobby==run.brotherBobby&&exported.defaultZoomPercent==165,"mouse export");
+    click(350,474);check(!run.brotherBobby.custom(),"reset tuning");click(600,605);check(run.brotherBobby==exported.brotherBobby,"mouse reload");
+    capture("artifacts/bobby-panel.png");std::filesystem::copy_file(file,"artifacts/bobby-preset.json",std::filesystem::copy_options::overwrite_existing);
+    click(1010,189);check(game.balanceTreasureOpen&&!game.balanceFamiliarOpen,"back to treasure");
+    click(865,270);click(865,270);check(game.hasPendingMapChanges()&&game.balanceDraft.treasureCollectiblePool==3&&run.treasureCollectiblePool==1,"fixed Bobby staged");
+    click(380,460);check(run.treasureCollectiblePool==3&&run.itemStacks(item)==1&&run.brotherBobby==exported.brotherBobby,"Apply keeps build and live tuning");
+    game.exportBalancePreset();game.rememberBalancePreset();game.perform(Action::CloseBalance);frame();check(run.brotherBobbies.size()==1,"Apply reconstructs actor");
+    run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->room==owner&&game.run->items.empty()&&game.run->brotherBobbies.empty()&&game.run->brotherBobby==exported.brotherBobby&&game.run->treasureCollectiblePool==3,"retry fresh build with remembered configuration");game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="7";fresh.reviewRoomIndex=owner;fresh.loadBalancePreset(file);fresh.launch(true);check(fresh.run&&fresh.run->brotherBobby==exported.brotherBobby&&fresh.cameraZoomPercent()==165,"fresh CLI-equivalent preset load");fresh.close();
+    std::cout<<"PASS PW-F01 actual Game/Renderer mouse acquisition, held firing, lifecycle, live/staged UI, export/load/remember/retry; seed7 room8\n";
+}
+
+void cricketHeadInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"cricket.save",file=directory/"cricket.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="4";
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.error.empty(),"treasure main-game launch");auto &run=*game.run;
+    int owner=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.hasSourceTreasure(i)){owner=i;break;}
+    check(owner>=0,"opening-floor treasure offering enabled");run.jumpDebug(owner);game.reviewRoomIndex=owner;
+    Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"treasure UI no errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"treasure capture");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();check(run.player.hp==6&&!run.godMode&&run.player.walkingSpeed()==4.8f&&game.cameraZoomPercent()==165,"accepted health/feel/view");
+    check(run.treasureCollectiblePool==1&&run.treasureUpgradeItem(owner)==4,"natural Cricket selection");const auto base=run.player.attributes.damage;const float cadence=primaryCadence(run);const auto before=primaryPlayerAttack(run,run.player.shotDamage,false);capture("artifacts/cricket-before.png");
+    auto at=run.rewardPosition(owner);mouseWalk(game,frame,at,3);key(KEY_W);game.updateCamera(10);frame();
+    capture("artifacts/cricket-pedestal.png");
+    at.y=0;const auto pedestalScreen=GetWorldToScreen(at,game.camera);click(int(pedestalScreen.x),int(pedestalScreen.y));
+    for(int n=0;n<600&&!run.itemStacks({"isaac",ItemKind::Collectible,4});++n) {
+        frame();check(!run.arena.blocked(run.player.position,.48f),"actual mouse approach stays outside solid pedestal");
+    }
+    check(run.itemStacks({"isaac",ItemKind::Collectible,4})==1&&!run.rewardOpen&&run.rooms[size_t(owner)].rewardTaken,"actual mouse movement collects single pedestal");
+    check(planarDistance(run.player.position,at)>1.4f&&run.arena.blocked({at.x,.85f,at.z},.48f),"collect from edge while base remains solid");
+    const auto after=primaryPlayerAttack(run,run.player.shotDamage,false);
+    check(run.player.attributes.damage==base&&primaryCadence(run)==cadence&&after.speed==before.speed&&after.maxDistance==before.maxDistance&&after.damage>before.damage&&after.radius>before.radius,"owned Cricket changes damage/size only");
+    capture("artifacts/cricket-collected.png");
+    int combat=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.arena.rooms[size_t(i)].sourceCombatTemplate==47)combat=i;
+    check(combat>=0,"following generated Gaper encounter exists");run.jumpDebug(combat);
+    for(auto &enemy:run.enemies)if(enemy.alive){enemy.state=EnemyState::Stunned;enemy.stateTime=1000;}
+    auto target=std::find_if(run.enemies.begin(),run.enemies.end(),[](const auto &e){return e.alive;});check(target!=run.enemies.end(),"following encounter has a target");
+    const auto id=target->id;const float hp=target->hp;
+    run.player.position=add(target->position,{0,0,3});check(!run.arena.blocked(run.player.position,.48f),"legal next-fight firing point");game.updateCamera(10);
+    const auto aim=GetWorldToScreen(add(target->position,{0,.25f,0}),game.camera);mouseEvent(MousePosition,int(aim.x),int(aim.y));frame();mouseEvent(MouseDown,MOUSE_BUTTON_RIGHT);
+    for(int n=0;n<180&&run.findEnemy(id)&&run.findEnemy(id)->hp==hp;++n)frame();mouseEvent(MouseUp,MOUSE_BUTTON_RIGHT);frame();
+    check(run.findEnemy(id)&&run.findEnemy(id)->hp<hp&&std::abs(hp-run.findEnemy(id)->hp-after.damage)<.001f,"next generated fight uses upgraded birth damage");
+    check(primaryCadence(run)==cadence&&run.itemStacks({"isaac",ItemKind::Collectible,4})==1,"upgrade remains effective in following fight");
+    run.jumpDebug(owner);game.updateCamera(10);frame();check(!run.rewardAvailable(owner),"post-fight revisit does not repay");
+    click(374,642);click(710,143);click(1010,189);check(game.balanceOpen&&game.balanceShootingOpen&&game.balanceTreasureOpen,"treasure page via mouse");
+    click(865,270);check(game.hasPendingMapChanges()&&game.balanceDraft.treasureCollectiblePool==2&&run.treasureCollectiblePool==1,"pool selection staged");
+    click(380,460);check(run.treasureCollectiblePool==2&&run.itemStacks({"isaac",ItemKind::Collectible,4})==1&&run.rewardAvailable(owner),"Apply changes pool while retaining owned Cricket");
+    click(865,270);click(865,270);click(380,460);check(run.treasureCollectiblePool==0&&run.treasureUpgradeItem(owner)==1,"Apply fixed Onion comparison");
+    click(865,270);click(380,460);check(run.treasureCollectiblePool==1&&run.treasureUpgradeItem(owner)==4&&!game.hasPendingMapChanges(),"Apply restores natural Cricket pool");
+    const auto terrain=run.arena.canyon.get();click(430,270);check(game.hasPendingMapChanges()&&run.sourceTreasureUpgrade,"offering toggle staged");
+    const float wait=run.player.fireCooldown;click(715,399);check(std::abs(run.cricketHeadStrength-.95f)<.0001f&&run.player.fireCooldown==wait&&run.arena.canyon.get()==terrain,"strength live with pending map and retained wait");
+    for(int n=0;n<30&&game.keyboardFocus()!=Action::ResetCricketHead;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::ResetCricketHead,"treasure strength keyboard focus");key(KEY_ENTER);check(run.cricketHeadStrength==1,"keyboard reset");
+    click(715,399);click(335,605);auto exported=BalancePreset::load(file,run.content->fingerprint());
+    check(!exported.sourceTreasureUpgrade&&std::abs(exported.cricketHeadStrength-.95f)<.0001f&&exported.defaultZoomPercent==165,"export includes staged offering/live strength/accepted view");
+    click(380,460);check(!game.hasPendingMapChanges()&&!run.sourceTreasureUpgrade&&run.itemStacks({"isaac",ItemKind::Collectible,4})==1,"Apply preserves owned upgrade");
+    click(430,270);click(380,460);check(run.sourceTreasureUpgrade&&run.rewardAvailable(owner),"Apply testing reset restores offering");
+    click(600,605);check(game.hasPendingMapChanges()&&run.sourceTreasureUpgrade&&!game.balanceDraft.sourceTreasureUpgrade,"Load stages offering");
+    click(430,270);check(!game.hasPendingMapChanges(),"restore source offering before remember");
+    game.exportBalancePreset();game.rememberBalancePreset();capture("artifacts/cricket-panel.png");
+    std::filesystem::copy_file(file,"artifacts/cricket-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.perform(Action::CloseBalance);run.finishDebug(false);game.retryExpedition();
+    check(game.run&&game.run->room==owner&&game.run->sourceTreasureUpgrade&&std::abs(game.run->cricketHeadStrength-.95f)<.0001f&&game.run->items.empty()&&game.run->player.hp==6,"death retry keeps tuning, fresh unowned item");game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="4";fresh.reviewRoomIndex=owner;fresh.loadBalancePreset(file);fresh.launch(true);
+    check(fresh.run&&fresh.run->hasSourceTreasure(owner)&&fresh.run->items.empty()&&std::abs(fresh.run->cricketHeadStrength-.95f)<.0001f&&fresh.cameraZoomPercent()==165,"fresh exported preset");fresh.close();
+    std::cout<<"PASS D11b actual Game/Renderer mouse collection, keyboard/live/staged settings, Apply/load/export/remember/retry; seed=4 room="<<owner+1<<'\n';
 }
 
 void shopHeartInputCheck(const std::filesystem::path &directory) {
@@ -2695,6 +2797,12 @@ int main(int argc, char **argv) {
         }
         if(mode=="--shop-heart-only") {
             shopHeartInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--brother-bobby-only") {
+            brotherBobbyInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--cricket-head-only") {
+            cricketHeadInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--treasure-upgrade-only") {
             treasureUpgradeInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

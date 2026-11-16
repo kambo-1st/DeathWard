@@ -228,7 +228,8 @@ void Game::launch(bool freeMission) {
                                                   nextBalancePreset?nextBalancePreset->sourceShopHeart:true,
                                                   nextBalancePreset?nextBalancePreset->sourceShopKey:true,
                                                   nextBalancePreset?nextBalancePreset->sourceShopVariation:true,
-                                                  nextBalancePreset?nextBalancePreset->shopCollectiblePool:1);
+                                                  nextBalancePreset?nextBalancePreset->shopCollectiblePool:1,
+                                                  nextBalancePreset?nextBalancePreset->treasureCollectiblePool:1);
     startExpedition(std::move(candidate));
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
     if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
@@ -276,7 +277,7 @@ void Game::perform(Action action) {
     try {
         if(balanceOpen&&action!=Action::None&&action!=Action::Quit&&
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
-           (action<Action::BalanceDamageHealthTab||action>Action::CycleShopCollectiblePool))return;
+           (action<Action::BalanceDamageHealthTab||action>Action::ResetBrotherBobby))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -291,7 +292,7 @@ void Game::perform(Action action) {
         case Action::CloseBalance:
             balanceOpen=balancePathEditing=false;accumulator=0;resetPointerInput();break;
         case Action::BalanceWorldTab:balanceRewardsOpen=balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
-        case Action::BalanceShootingTab:balanceTreasureOpen=false;balanceShootingOpen=true;balanceEnemiesOpen=balanceRewardsOpen=balanceCombatOpen=false;break;
+        case Action::BalanceShootingTab:balanceFamiliarOpen=balanceTreasureOpen=false;balanceShootingOpen=true;balanceEnemiesOpen=balanceRewardsOpen=balanceCombatOpen=false;break;
         case Action::BalanceEnemiesTab:balanceEnemiesOpen=true;balanceShootingOpen=balanceRewardsOpen=balanceCombatOpen=false;balancePooterOpen=false;break;
         case Action::BalanceRewardsTab:balanceShopOpen=false;balanceRewardsOpen=true;balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
         case Action::BalanceShopTab:balanceShopOpen=true;balanceShopKeyOpen=balanceShopStockOpen=balanceShopBombOpen=balanceShopSoulHeartOpen=false;break;
@@ -310,6 +311,28 @@ void Game::perform(Action action) {
             auto preset=balancePreset;
             preset.shopSoulHeartPrice=action==Action::ResetShopSoulHeartPrice?5:std::clamp(preset.shopSoulHeartPrice+(action==Action::ShopSoulHeartPriceUp?1:-1),0,15);
             applyBalance(std::move(preset));balanceNotice="Unsold soul-heart base price updated. Sold stock stays sold. Export to keep edits.";break;
+        }
+        case Action::BalanceFamiliarTab:balanceFamiliarOpen=true;balanceTreasureOpen=false;break;
+        case Action::BobbyMovementDown:case Action::BobbyMovementUp:
+        case Action::BobbyIntervalDown:case Action::BobbyIntervalUp:
+        case Action::BobbyDamageDown:case Action::BobbyDamageUp:
+        case Action::BobbyShotDown:case Action::BobbyShotUp:case Action::ResetBrotherBobby: {
+            auto preset=balancePreset;auto &t=preset.brotherBobby;
+            if(action==Action::ResetBrotherBobby)t={};
+            else {
+                const int offset=int(action)-int(Action::BobbyMovementDown);
+                float *field=offset<2?&t.movement:offset<4?&t.interval:offset<6?&t.damage:&t.shotSpeed;
+                *field=std::clamp(*field+(offset%2?.05f:-.05f),.25f,2.f);
+            }
+            applyBalance(std::move(preset));balanceNotice="Following updates next tick. New shots use edits; current waits and flying shots stay fixed.";break;
+        }
+        case Action::CycleTreasureCollectiblePool:
+            balanceDraft.treasureCollectiblePool=(balanceDraft.treasureCollectiblePool+1)%4;
+            balanceNotice="Treasure selection pending / Apply resets this floor";break;
+        case Action::CricketHeadDown:case Action::CricketHeadUp:case Action::ResetCricketHead: {
+            auto preset=balancePreset;
+            preset.cricketHeadStrength=action==Action::ResetCricketHead?1:std::clamp(preset.cricketHeadStrength+(action==Action::CricketHeadUp?.05f:-.05f),0.f,2.f);
+            applyBalance(std::move(preset));balanceNotice="Cricket strength applies to new attacks. Flying shots retain their damage and size.";break;
         }
         case Action::CycleShopCollectiblePool:
             balanceDraft.shopCollectiblePool=(balanceDraft.shopCollectiblePool+1)%3;
@@ -345,7 +368,7 @@ void Game::perform(Action action) {
             applyBalance(std::move(preset));
             balanceNotice="Unsold heart price updated. Sold stock stays sold. Export or Use next expedition to keep edits.";break;
         }
-        case Action::BalanceTreasureTab:balanceTreasureOpen=true;break;
+        case Action::BalanceTreasureTab:balanceFamiliarOpen=false;balanceTreasureOpen=true;break;
         case Action::ToggleTreasureUpgrade:
             balanceDraft.sourceTreasureUpgrade=!balanceDraft.sourceTreasureUpgrade;
             balanceNotice="Treasure offering pending. APPLY MAP CHANGES resets this floor; player/build retained.";break;
@@ -989,8 +1012,10 @@ std::vector<Action> Game::menuActions() const {
             std::vector<Action>{Action::PooterMovementDown,Action::PooterMovementUp,Action::PooterShotDown,Action::PooterShotUp,Action::PooterDelayDown,Action::PooterDelayUp,Action::ResetPooter}:
             balanceEnemiesOpen?
             std::vector<Action>{Action::GaperMovementDown,Action::GaperMovementUp,Action::GaperMovementReset,Action::SpiderMovementDown,Action::SpiderMovementUp,Action::SpiderMovementReset}:
+            balanceShootingOpen&&balanceFamiliarOpen?
+            std::vector<Action>{Action::BalanceTreasureTab,Action::BobbyMovementDown,Action::BobbyMovementUp,Action::BobbyIntervalDown,Action::BobbyIntervalUp,Action::BobbyDamageDown,Action::BobbyDamageUp,Action::BobbyShotDown,Action::BobbyShotUp,Action::ResetBrotherBobby}:
             balanceShootingOpen&&balanceTreasureOpen?
-            std::vector<Action>{Action::ToggleTreasureUpgrade,Action::SadOnionDown,Action::SadOnionUp,Action::ResetSadOnion,Action::ApplyMapChanges}:
+            std::vector<Action>{Action::BalanceFamiliarTab,Action::ToggleTreasureUpgrade,Action::SadOnionDown,Action::SadOnionUp,Action::ResetSadOnion,Action::CycleTreasureCollectiblePool,Action::CricketHeadDown,Action::CricketHeadUp,Action::ResetCricketHead,Action::ApplyMapChanges}:
             balanceShootingOpen?
             std::vector<Action>{Action::BalanceTreasureTab,Action::TearsDown,Action::TearsUp,Action::ShotSpeedDown,Action::ShotSpeedUp,Action::RangeDown,Action::RangeUp,Action::ResetShooting}:
             std::vector<Action>{Action::SpeedDown,Action::SpeedUp,Action::DefaultZoomDown,Action::DefaultZoomUp,Action::DefaultZoomCurrent,Action::DefaultZoomReset,

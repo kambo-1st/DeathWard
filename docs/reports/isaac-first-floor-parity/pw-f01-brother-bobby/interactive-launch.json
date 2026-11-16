@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "7",
+    "--review-room",
+    "8",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/pw-f01-brother-bobby/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "pid": 2661833,
+  "seed": 7,
+  "displayed_room": 8,
+  "collectible": 8,
+  "preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "status": "ready"
+}

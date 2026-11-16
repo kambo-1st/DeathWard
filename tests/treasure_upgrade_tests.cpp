@@ -146,7 +146,7 @@ void solidPedestal(){
 }
 void presets(){
  auto dir=std::filesystem::temp_directory_path()/("deathward-d11a-preset-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));std::filesystem::create_directories(dir);
- const auto hash=defaultMechanics()->fingerprint();check(hash=="53ab4ae76cff6d8","audited additive catalog hash");
+ const auto hash=defaultMechanics()->fingerprint();check(hash=="eb6516e350a813e7","audited additive catalog hash");
  for(bool enabled:{false,true})for(float strength:{0.f,.55f,1.f,2.f}){
   BalancePreset p{1,hash};p.sourceTreasureUpgrade=enabled;p.sadOnionStrength=strength;p.save(dir/"test.json");
   auto q=BalancePreset::load(dir/"test.json",hash);check(p.revision()==q.revision(),"treasure preset roundtrip");

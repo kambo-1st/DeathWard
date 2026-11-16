@@ -1,0 +1,5 @@
+006009b4 mov ecx, edi
+006009b6 call 0x5f4250
+006009bb mov ecx, edi
+006009bd call 0x5f6300
+006009c2 jmp 0x60492b

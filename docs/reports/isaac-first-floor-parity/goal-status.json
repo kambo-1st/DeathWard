@@ -3,7 +3,7 @@
   "status": "paused",
   "paused_at_utc": "2026-11-08T08:08:31Z",
   "pause_reason": "User stopped the bulk effort,requested rollback and manual selection of each specific future difference.",
-  "implementation_state": "D12f_shop_collectibles_scoped_user_accepted_in_checkpoint_bulk_paused",
+  "implementation_state": "PW_F01_scoped_user_accepted_PW_A01_selected_bulk_paused",
   "baseline_commit": "28023a49dbd8712820ba6953219cfdb7866bdcb6",
   "automatic_implementation_authorized": false,
   "accepted_exceptions": [
@@ -37,10 +37,10 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "D12f is accepted and authorized for checkpoint commit. Proposed next: D11b treasure-room variety with Cricket\u2019s Head4, complete source-effect verification and main-game live/export/load playtest; not selected or started. Full shop/treasure pools and other native gaps remain unfinished.",
+  "next_work": "Power-up category plan is prepared. Next selectable gameplay delivery is PW-F01 Brother Bobby, followed by PW-A01 Yum Heart, PW-T01 Cancer and PW-C01 combined acceptance. User requires only1\u20132 example items per category before full-catalog expansion. No new item delivery is selected; D11b remains accepted/uncommitted.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-16",
-    "status": "D12e committed e4f41461; D12f enabled, developer-verified and scoped user-accepted in this checkpoint",
+    "status": "D12f committed e43d91b1; D11b enabled, developer-verified and scoped human-accepted, uncommitted",
     "report": "docs/isaac_first_floor_delivery_plan.md",
     "delivery_location": "main DeathWard executable, ordinary Game/Simulation and expedition paths",
     "cumulative_gameplay_integration_required": true,
@@ -1167,5 +1167,39 @@
     "name": "Cricket\u2019s Head",
     "scope": "Second eligible treasure choice, complete effects verified against installed1.7.9b, reusable tuning and one short main-game combat check.",
     "eligibility": "Preserved itempools.xml treasure pool, weight1; this alone does not verify effects."
+  },
+  "d11b_treasure_variety": {
+    "selected": true,
+    "previous_commit": "e43d91b1",
+    "developer_validation": "passed",
+    "human_accepted": true,
+    "report": "docs/reports/isaac-first-floor-parity/d11b-treasure-variety/README.md",
+    "schema": 36,
+    "review_seed": 7,
+    "displayed_room": 8,
+    "acceptance_record": "docs/reports/isaac-first-floor-parity/d11b-treasure-variety/human-acceptance.json"
+  },
+  "powerup_category_plan": {
+    "report": "docs/powerup_category_delivery_plan.md",
+    "status": "plan_prepared_gameplay_unselected",
+    "initial_scope": "1\u20132 example items per category; catalog expansion later",
+    "existing_passives": [
+      1,
+      4
+    ],
+    "proposed_first_examples": {
+      "familiar": "isaac:collectible:8",
+      "active": "isaac:collectible:45",
+      "trinket": "isaac:trinket:39"
+    },
+    "next_selectable_delivery": "PW-F01",
+    "automatic_implementation_authorized": false
+  },
+  "pw_f01": {
+    "selected": true,
+    "report": "docs/reports/isaac-first-floor-parity/pw-f01-brother-bobby/README.md",
+    "developer_checks": "passed; validation.json in report",
+    "human_acceptance": true,
+    "committed": "included in requested checkpoint"
   }
 }

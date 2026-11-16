@@ -1,4 +1,5 @@
 #pragma once
+#include "combat/BrotherBobby.hpp"
 #include "combat/RedHeartTiming.hpp"
 #include "combat/CoinTiming.hpp"
 #include "combat/KeyTiming.hpp"
@@ -1125,20 +1126,29 @@ struct BlueFlyRuntime {
     bool alive=true,orbiting=false;
     std::optional<Event> pendingHit;
 };
+struct BrotherBobbyRuntime {
+    EntityId id=0;
+    Vector3 position{},previous{},nativeVelocity{};
+    float cooldown=0;
+    int room=-1;
+    uint64_t shots=0;
+};
 class Simulation {
   public:
     Simulation(uint64_t seed, uint64_t runId, const WorldState &world,
                MissionTheme theme = MissionTheme::Mine, bool canyonRiver = true, bool tutorial = false,
                WitnessAccount account = WitnessAccount::None, int floor = 0,
                ExpeditionPacing pacing = ExpeditionPacing::Compact,
-               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics(), float roomSizeScale = 1, int roomMinHalfTiles = 0, int roomMaxHalfTiles = 0, float routeLengthScale = 1, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool coinClearRewards = false, bool sourceRoomLocks = false, bool sourceTreasureUpgrade = false, bool sourceShopHeart = false, bool sourceShopKey = false, bool sourceShopVariation = false, int shopCollectiblePool = 0);
+               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics(), float roomSizeScale = 1, int roomMinHalfTiles = 0, int roomMaxHalfTiles = 0, float routeLengthScale = 1, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool coinClearRewards = false, bool sourceRoomLocks = false, bool sourceTreasureUpgrade = false, bool sourceShopHeart = false, bool sourceShopKey = false, bool sourceShopVariation = false, int shopCollectiblePool = 0, int treasureCollectiblePool = 0);
     std::shared_ptr<const MechanicsLibrary> content;
     ExpeditionPlan expedition;
     int floor = 0;
     float roomSizeScale = 1, routeLengthScale = 1;
     bool sourceRoomLocks = false; // Staged generation setting; legacy direct fixtures stay unchanged.
     bool sourceTreasureUpgrade = false;
-    float sadOnionStrength = 1;
+    float sadOnionStrength = 1, cricketHeadStrength = 1;
+    BrotherBobbyTuning brotherBobby{};
+    int treasureCollectiblePool=0; // 0 Onion test, 1 restricted pool, 2 Cricket test.
     bool sourceShopHeart=false, shopHeartDelivered=false, shopHeartSold=false;
     bool sourceShopKey=false, shopKeyDelivered=false, shopKeySold=false;
     bool sourceShopVariation=false, shopUpgradeSold=false, steamSaleDiscounts=true;
@@ -1165,6 +1175,7 @@ class Simulation {
     Vector3 shopHeartPosition() const;
     Vector3 shopKeyPosition() const;
     bool hasSourceTreasure(int index) const;
+    int treasureUpgradeItem(int index) const;
     bool collectTreasureUpgrade();
     SourcePlayerStats effectivePlayerStats() const;
     bool sourceCombatRoom = false;
@@ -1251,7 +1262,7 @@ class Simulation {
     bool canUseFloorExit() const;
     bool advanceFloor();
     bool canResizeRooms() const;
-    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1, std::optional<bool> sourceRoom = std::nullopt, std::optional<int> heartLayouts = std::nullopt, std::optional<bool> roomLocks = std::nullopt, std::optional<bool> treasureUpgrade = std::nullopt, std::optional<bool> shopHeart = std::nullopt, std::optional<bool> shopKey = std::nullopt, std::optional<bool> shopVariation = std::nullopt, std::optional<int> collectiblePool = std::nullopt);
+    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1, std::optional<bool> sourceRoom = std::nullopt, std::optional<int> heartLayouts = std::nullopt, std::optional<bool> roomLocks = std::nullopt, std::optional<bool> treasureUpgrade = std::nullopt, std::optional<bool> shopHeart = std::nullopt, std::optional<bool> shopKey = std::nullopt, std::optional<bool> shopVariation = std::nullopt, std::optional<int> collectiblePool = std::nullopt, std::optional<int> treasurePool = std::nullopt);
     int finalRoom() const { return arena.roomCount()-1; }
     Vector3 surveyPosition() const { return arena.rooms.back().objective; }
     bool canReturn() const { return lastFloor()&&canUseFloorExit(); }
@@ -1316,6 +1327,7 @@ class Simulation {
     bool spawnHeartPickup(HeartKind kind,Vector3 position,int amount=0);
     std::vector<HeartPickup> heartPickups;
     std::vector<BlueFlyRuntime> blueFlies;
+    std::vector<BrotherBobbyRuntime> brotherBobbies;
     void refillRottenHeartFlies();
     bool applyMidasFreeze(EntityId id,int frames,bool goldenHeart=false);
     bool takeHeartDamage(float halves,bool redFirst=false,const Context &context={},bool hostile=true);
@@ -1681,6 +1693,8 @@ class Simulation {
     void clearHazards(bool preservePlayer = false);
     void rebalanceBlueFlyOrbit();
     void updateBlueFlies(float dt);
+    void updateBrotherBobby(const Input &input,float dt);
+    float brotherBobbyClock_=0;
     float blueFlyClock_=0;
     uint32_t blueFlyFrame_=0;
     int reviveRoom_=0;

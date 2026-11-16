@@ -92,6 +92,7 @@ struct Context {
     std::optional<ItemKey> sourceItem{};
     DamageSource damageSource = DamageSource::Unspecified;
     bool championCoinLoss=false;
+    bool familiarAttack=false; // Independent familiar weapon lineage, copied to descendants.
 };
 struct Stats {
     double duration = 0, bossDuration = 0;

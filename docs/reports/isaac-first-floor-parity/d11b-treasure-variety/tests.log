@@ -1,0 +1,24 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start   7: item_builds
+1/5 Test   #7: item_builds ......................   Passed    8.23 sec
+    Start  31: treasure_upgrade
+2/5 Test  #31: treasure_upgrade .................***Failed   12.60 sec
+PASS 27 generated geometry/route collection cases
+PASS 16-direction keyboard/dodge/click routing, persistent collision, safe Apply and legacy offering
+FAIL: audited additive catalog hash
+
+    Start  35: source_shop_collectibles
+3/5 Test  #35: source_shop_collectibles .........   Passed    7.34 sec
+    Start 142: balance_preset_contract
+4/5 Test #142: balance_preset_contract ..........   Passed    0.18 sec
+    Start 144: canonical_shooting_integration
+5/5 Test #144: canonical_shooting_integration ...   Passed    2.14 sec
+
+80% tests passed, 1 tests failed out of 5
+
+Total Test time (real) =  30.50 sec
+
+The following tests FAILED:
+	 31 - treasure_upgrade (Failed)
+Errors while running CTest

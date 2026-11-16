@@ -1,0 +1,77 @@
+{
+  "version": "Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "items": [
+    {
+      "item": {
+        "cache": "firedelay",
+        "description": "#THE_SAD_ONION_DESCRIPTION",
+        "gfx": "Collectibles_001_TheSadOnion.png",
+        "id": "1",
+        "name": "#THE_SAD_ONION_NAME"
+      },
+      "pool": {
+        "Id": "1",
+        "Weight": "1",
+        "DecreaseBy": "1",
+        "RemoveOn": "0.1"
+      }
+    },
+    {
+      "item": {
+        "cache": "damage shotspeed",
+        "description": "#CRICKETS_HEAD_DESCRIPTION",
+        "gfx": "Collectibles_004_CricketsHead.png",
+        "id": "4",
+        "name": "#CRICKETS_HEAD_NAME"
+      },
+      "pool": {
+        "Id": "4",
+        "Weight": "1",
+        "DecreaseBy": "1",
+        "RemoveOn": "0.1"
+      }
+    }
+  ],
+  "windows": [
+    {
+      "name": "cricket-contribution",
+      "start": "0x731524",
+      "end": "0x73155d",
+      "sha256": "f6d2da24bb0d217613966362a746c21be8054bd43086c2b2a2f4c951f8cdaa24"
+    },
+    {
+      "name": "contribution-store",
+      "start": "0x731769",
+      "end": "0x73178d",
+      "sha256": "46d7fc57c710e75f337d532e3aa3062a49a5265f24c4fbcbe888859988fc9ea4"
+    },
+    {
+      "name": "damage-curve",
+      "start": "0x731b25",
+      "end": "0x731b82",
+      "sha256": "cfdc18db23a8fca7c6bd8a2e36b4712d8a00007c1bae0415ea49141c133cb6b3"
+    },
+    {
+      "name": "presence-multiplier",
+      "start": "0x7322ad",
+      "end": "0x73232e",
+      "sha256": "4c30418010a68ac44f8fe5bc676a86764e7a6deacb852fac206bbce6ae2cf832"
+    },
+    {
+      "name": "tear-scale",
+      "start": "0x7862a7",
+      "end": "0x786315",
+      "sha256": "2756f42a5c42cef2ae1b4cfc75acde17c22cb5ccb12ed6601fef6a651b0be16a"
+    }
+  ],
+  "damage_cases": 32,
+  "whole_tear_comparisons": 32,
+  "shot_speed_cases": 4,
+  "xml_sha256": {
+    "items.xml": "ee567ed920b1bcada61f2a2d65e48563286fe7e8bf00363ad763ac2aa3ae64b7",
+    "itempools.xml": "da5391ba59626b0fe349fa6d143df82cd7c19c648f04311d8e21a441d5aa502c"
+  },
+  "scope": "Original inventory query/contribution, ordinary raw-damage curve and original presence multiplier with supplied intermediate raw cache. Whole GetTearHitParams (0x7836a0) under ordinary player fixture: same damage gives identical 104-byte output with/without item. Shot-speed cache block with other modifiers off stops before callback. Full cache ordering, other damage items/characters, native RNG, actors/physical contact and full pool are unaccepted. Relative DW size and inverse accepted-base damage are explicit adapters.",
+  "full_native_acceptance": false
+}

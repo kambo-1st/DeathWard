@@ -1,0 +1,65 @@
+{
+  "cases": [
+    {
+      "schema": 5,
+      "preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+      "command": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "7",
+        "--review-room",
+        "8",
+        "--mute",
+        "--save",
+        "/tmp/deathward-pw-f01-cli-d61ni9pt/campaign.save",
+        "--balance-preset",
+        "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+      ],
+      "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=d10b15d797fd2191 profile=custom",
+      "passed": true,
+      "scope": "Ordinary CLI startup/direct review; stopped only this test process after readiness."
+    },
+    {
+      "schema": 36,
+      "preset": "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d11b-treasure-variety/cli-cricket-test-preset.json",
+      "command": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "7",
+        "--review-room",
+        "8",
+        "--mute",
+        "--save",
+        "/tmp/deathward-pw-f01-cli-2e_zjzy9/campaign.save",
+        "--balance-preset",
+        "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d11b-treasure-variety/cli-cricket-test-preset.json"
+      ],
+      "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=2 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=0.95 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=8890bd2abc882936 profile=custom",
+      "passed": true,
+      "scope": "Ordinary CLI startup/direct review; stopped only this test process after readiness."
+    },
+    {
+      "schema": 37,
+      "preset": "/home/kambo/workspace/DeathWard/artifacts/bobby-preset.json",
+      "command": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "7",
+        "--review-room",
+        "8",
+        "--mute",
+        "--save",
+        "/tmp/deathward-pw-f01-cli-km0p0gde/campaign.save",
+        "--balance-preset",
+        "/home/kambo/workspace/DeathWard/artifacts/bobby-preset.json"
+      ],
+      "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 bobby_movement=0.95 bobby_interval=1.05 bobby_damage=1.05 bobby_shot_speed=0.95 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=309c83f9c6fd3279 profile=custom",
+      "passed": true,
+      "scope": "Ordinary CLI startup/direct review; stopped only this test process after readiness."
+    }
+  ],
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf"
+}

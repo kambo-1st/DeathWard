@@ -1,4 +1,5 @@
 #pragma once
+#include "combat/BrotherBobby.hpp"
 #include "combat/InventoryBombTuning.hpp"
 #include <filesystem>
 #include <string>
@@ -42,7 +43,7 @@ struct BalancePreset {
     InventoryBombTuning inventoryBombs{};
     int keyedDoorCost=1;
     bool sourceRoomLocks=true; // Staged: source first-stage/later locks versus legacy comparison.
-    bool sourceTreasureUpgrade=true; // Opening-floor single Sad Onion pedestal; staged.
+    bool sourceTreasureUpgrade=true; // Opening-floor single collectible pedestal; staged.
     float sadOnionStrength=1; // Live per-copy source tear-stat contribution, 0-2x.
     bool sourceShopHeart=true; // Staged opening-floor stock policy.
     int shopHeartPrice=3; // Live whole-coin price, 0-15 testing range.
@@ -54,7 +55,10 @@ struct BalancePreset {
     int shopBombPrice=5; // Live ordinary dynamite base price, whole coins 0-15.
     int shopSoulHeartPrice=5; // Live soul-heart base price, whole coins 0-15.
     int shopCollectiblePool=1; // Staged: restricted pool; 0 Steam Sale / 2 BOGO test.
-    bool custom() const { return shopCollectiblePool!=1 || shopSoulHeartPrice!=5 || shopBombPrice!=5 || !sourceShopVariation || !steamSaleDiscounts || shopUpgradePrice!=15 || !sourceShopKey || shopKeyPrice!=5 || !sourceShopHeart || shopHeartPrice!=3 || !sourceTreasureUpgrade || sadOnionStrength!=1 || !sourceRoomLocks || keyedDoorCost!=1 || inventoryBombs.custom() || !bombClearRewards || !keyClearRewards || !chestClearRewards || !coinClearRewards || roomHeartLayouts!=1 || redHeartAppearanceSpeed!=1 || !redHeartClearRewards || playerLuck!=ReferenceLuck || !sourceCombatRoom || playerDamage != ReferenceDamage || regularHealthMultiplier != ReferenceRegularHealth || playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange || gaperMovementMultiplier != ReferenceGaperMovement || spiderMovementMultiplier != ReferenceSpiderMovement || pooterMovementMultiplier != 1 || pooterShotSpeedMultiplier != 1 || pooterAttackIntervalMultiplier != 1; }
+    int treasureCollectiblePool=1; // Staged: pool, 0 Onion test / 2 Cricket test.
+    float cricketHeadStrength=1; // Live next-attack effect, 0-2x; default source contribution.
+    BrotherBobbyTuning brotherBobby{};
+    bool custom() const { return brotherBobby.custom() || treasureCollectiblePool!=1 || cricketHeadStrength!=1 || shopCollectiblePool!=1 || shopSoulHeartPrice!=5 || shopBombPrice!=5 || !sourceShopVariation || !steamSaleDiscounts || shopUpgradePrice!=15 || !sourceShopKey || shopKeyPrice!=5 || !sourceShopHeart || shopHeartPrice!=3 || !sourceTreasureUpgrade || sadOnionStrength!=1 || !sourceRoomLocks || keyedDoorCost!=1 || inventoryBombs.custom() || !bombClearRewards || !keyClearRewards || !chestClearRewards || !coinClearRewards || roomHeartLayouts!=1 || redHeartAppearanceSpeed!=1 || !redHeartClearRewards || playerLuck!=ReferenceLuck || !sourceCombatRoom || playerDamage != ReferenceDamage || regularHealthMultiplier != ReferenceRegularHealth || playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange || gaperMovementMultiplier != ReferenceGaperMovement || spiderMovementMultiplier != ReferenceSpiderMovement || pooterMovementMultiplier != 1 || pooterShotSpeedMultiplier != 1 || pooterAttackIntervalMultiplier != 1; }
     void validate() const;
     std::string json() const;
     std::string revision() const;

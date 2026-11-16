@@ -62,3 +62,12 @@ end
 # D12f: ordinary pickup factory dependency; no special-bomb actors enabled.
 item "isaac:collectible:250" "BOGO Bombs" "DOUBLE DYNAMITE" "New ordinary single-dynamite pickups become doubles. Existing pickups keep their quantity. Extra copies do not multiply again."
 end
+
+# D11b: bounded treasure dependency; ordinary damage curve and derived tear size.
+item "isaac:collectible:4" "Cricket's Head" "DAMAGE UP" "Raises damage and bullet size. Copies add damage; the multiplier applies once. Firing rate, shot speed and range stay independent."
+end
+
+# PW-F01: ordinary shooting familiar; restricted treasure offering.
+item "isaac:collectible:8" "Brother Bobby" "FAMILIAR" "A small companion follows and fires with you. Its damage and firing rhythm are independent of your weapon."
+category familiar
+end

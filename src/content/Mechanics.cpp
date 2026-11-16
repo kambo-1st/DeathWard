@@ -85,6 +85,9 @@ std::shared_ptr<const MechanicsLibrary> MechanicsLibrary::load(const std::filesy
                     next.name=word(row);next.rarity=word(row);next.description=word(row);
                     require(lib->items_.size()<8192&&!lib->itemIndex_.contains(next.id),"Duplicate item ID or item capacity exceeded");
                     lib->itemIndex_[next.id]=lib->items_.size();lib->items_.push_back(std::move(next));item=&lib->items_.back();
+                } else if(command=="category") {
+                    require(item,"category outside item");
+                    item->category=named<CollectibleCategory>(word(row),{{"passive",CollectibleCategory::Passive},{"familiar",CollectibleCategory::Familiar},{"active",CollectibleCategory::Active}});
                 } else if(command=="hook") {
                     require(item,"hook outside item");const auto name=word(row);const auto mode=word(row);
                     require(name=="split"||name=="powder"||name=="ghost"||name=="cap","Unknown native item hook '"+name+"'");
