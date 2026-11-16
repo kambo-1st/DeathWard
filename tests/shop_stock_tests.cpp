@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#include <sstream>
 using namespace dw;
 namespace {
 void check(bool ok,const char *why){if(!ok)throw std::runtime_error(why);}
@@ -99,24 +100,72 @@ void cartMovement() {
     check(!s.shopUpgradeSold&&!s.shopKeySold,"cart click never purchases unrelated stock");
     std::cout<<"PASS 16 walking/dodge directions and cart click approach\n";
 }
+void dynamiteStock() {
+    std::ifstream prices(std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d12d-shop-dynamite/source/native-prices.csv");
+    std::string line;std::getline(prices,line);int count=0;
+    while(std::getline(prices,line)) {
+        std::replace(line.begin(),line.end(),',',' ');std::istringstream row(line);
+        uint64_t seed;int variant,subtype,slot,price;check(bool(row>>seed>>variant>>subtype>>slot>>price),"native bomb price row");
+        check(variant==40&&subtype==1&&price==BalancePreset{}.shopBombPrice&&price==make().shopBombPrice,"native ordinary bomb price equals preset/runtime defaults");++count;
+    }
+    check(count==30,"all native dynamite price cases consumed");count=0;
+    for(uint64_t seed:{4ULL,26ULL,32ULL})for(auto dims:{std::tuple{.75f,5,5},std::tuple{1.1f,7,9},std::tuple{1.5f,10,10}})for(float route:{.25f,1.f,2.f}) {
+        const auto [scale,low,high]=dims;auto s=make(seed,scale,low,high,route);enter(s);
+        check(s.shopBombOffered()&&!s.shopHeartOffered()&&!s.shopKeyOffered(),"native category1 supplies dynamite only");
+        check(s.shopBombSlot==(seed==26?1:0),"both native dynamite slot orders");
+        const auto at=s.shopBombPosition();const auto &r=s.arena.rooms[size_t(s.room)];
+        check(!s.arena.blocked(at,.48f)&&!s.arena.path(r.entry,at,.48f).empty()&&planarDistance(at,s.shopUpgradePosition())>2,"cart and stock placement/reachability");
+        check(s.bombPickups.size()==1&&s.bombPickups.front().shopStock&&s.bombPickups.front().timing.collectible(),"one idle priced bomb actor");++count;
+    }
+    for(int charges:{0,98,99})for(int coins:{0,4,5,20})for(bool itemFirst:{false,true}) {
+        auto s=make(4);enter(s);s.moneyCollected=uint64_t(coins);s.dynamite=charges;
+        if(itemFirst)touch(s,s.shopUpgradePosition());
+        const bool itemBought=itemFirst&&coins>=15;
+        const int price=itemBought?3:5;const bool bought=charges<99&&coins-(itemBought?15:0)>=price;
+        const auto rng=s.rewardRng.state;touch(s,s.shopBombPosition());
+        check(s.shopBombSold==bought&&s.dynamite==charges+int(bought),"dynamite cap/funds/discount admission");
+        check(s.moneySpent==uint64_t((itemBought?15:0)+(bought?price:0))&&s.rewardRng.state==rng,"atomic payment and no RNG draw");
+        const auto paid=s.moneySpent;
+        for(int n=0;n<50;++n)s.step({});s.jumpDebug(0);s.jumpDebug(s.arena.shopRoom);
+        check(s.moneySpent==paid&&s.dynamite==charges+int(bought),"dynamite sold revisit pays/grants once");
+        if(bought)check(std::none_of(s.bombPickups.begin(),s.bombPickups.end(),[](const auto &p){return p.shopStock;}),"sold actor stays absent");
+    }
+    auto s=make(4);enter(s);
+    s.shopOpen=true;touch(s,s.shopBombPosition());check(!s.shopBombSold,"modal blocks bomb purchase");s.shopOpen=false;
+    s.roomClear=false;touch(s,s.shopBombPosition());check(!s.shopBombSold,"combat blocks bomb purchase");s.roomClear=true;
+    s.dead=true;touch(s,s.shopBombPosition());check(!s.shopBombSold,"death blocks bomb purchase");s.dead=false;
+    s.bombPickups.front().timing.appear(1);touch(s,s.shopBombPosition());check(!s.shopBombSold,"appearance actor not yet admitted");
+    s.bombPickups.front().timing={};s.shopBombPrice=15;s.moneyCollected=14;touch(s,s.shopBombPosition());check(!s.shopBombSold,"live price refusal");
+    s.shopBombPrice=0;touch(s,s.shopBombPosition());check(s.shopBombSold&&s.dynamite==4&&s.moneySpent==0,"zero-price testing override");
+    s.shopBombPrice=6;touch(s,s.shopBombPosition());check(s.dynamite==4,"price edits never restock");
+    s.resizeRooms(1.1f,7,9,.26f,true,1,true,true,true,true,false);
+    check(!s.shopBombOffered()&&s.shopBombPrice==6&&s.dynamite==4,"Apply fixed pair keeps charges and price");
+    s.resizeRooms(1.1f,7,9,.26f,true,1,true,true,true,true,true);
+    check(s.shopBombOffered()&&!s.shopBombSold&&s.shopBombPrice==6&&s.dynamite==4,"explicit Apply fresh dynamite offering");
+    s.jumpDebug(s.finalRoom());s.clearRoomDebug();s.floorExitRequested=true;const auto chargesBeforeFloor=s.dynamite;check(s.advanceFloor(),"bomb next floor");
+    check(s.shopBombPrice==6,"shop dynamite price carries to next floor");
+    check(s.dynamite==chargesBeforeFloor,"dynamite inventory carries to next floor");
+    check(!s.hasSourceShop(s.arena.shopRoom),"later legacy shop unchanged");
+    std::cout<<"PASS 30 native prices, "<<count<<" dynamite placement cases, funds/cap/discount/gates/timing/sold/Apply/floor boundaries\n";
+}
 void presets() {
     const auto dir=std::filesystem::temp_directory_path()/("deathward-stock-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
     const auto file=dir/"preset.json";const auto hash=defaultMechanics()->fingerprint();
     for(bool variation:{false,true})for(bool discounts:{false,true})for(int price:{0,15,30}) {
-        BalancePreset p{1,hash};p.sourceShopVariation=variation;p.steamSaleDiscounts=discounts;p.shopUpgradePrice=price;p.save(file);
+        BalancePreset p{1,hash};p.shopBombPrice=price/2;p.sourceShopVariation=variation;p.steamSaleDiscounts=discounts;p.shopUpgradePrice=price;p.save(file);
         check(BalancePreset::load(file,hash).revision()==p.revision(),"schema32 exact roundtrip");
     }
     const auto root=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity";
-    for(auto path:{root/"d03-shooting/user-preset-2026-11-11.json",root/"d12b-shop-key/shop-key-preset.json"}) {
+    for(auto path:{root/"d03-shooting/user-preset-2026-11-11.json",root/"d12b-shop-key/shop-key-preset.json",root/"d12c-shop-stock/shop-stock-preset.json"}) {
         const auto p=BalancePreset::load(path,hash);
-        check(p.sourceShopVariation&&p.steamSaleDiscounts&&p.shopUpgradePrice==15&&p.defaultZoomPercent==165&&p.playerSpeed==1,"exact old catalog/schema migration retains accepted view/speed");
+        check(p.shopBombPrice==5&&p.defaultZoomPercent==165&&p.playerSpeed==1,"exact old catalog/schema migration retains accepted view/speed");
     }
     BalancePreset valid{1,hash};const auto bytes=valid.json();
-    for(auto [from,to]:{std::pair{"\"shop_upgrade_price\": 15}","\"shop_upgrade_price\": 15.5}"},std::pair{"\"source_shop_variation\": true","\"source_shop_variation\": 1"},std::pair{"53ab4ae76cff6d8","bad-catalog"}}) {
+    for(auto [from,to]:{std::pair{"\"shop_upgrade_price\": 15}","\"shop_upgrade_price\": 15.5}"},std::pair{"\"source_shop_variation\": true","\"source_shop_variation\": 1"},std::pair{"\"shop_bomb_price\": 5, \"shop_upgrade_price\"","\"shop_bomb_price\": 5.5, \"shop_upgrade_price\""},std::pair{"53ab4ae76cff6d8","bad-catalog"}}) {
         auto invalid=bytes;const auto at=invalid.find(from);check(at!=std::string::npos,"negative fixture located");invalid.replace(at,std::string(from).size(),to);
         std::ofstream(file)<<invalid;bool rejected=false;try{(void)BalancePreset::load(file,hash);}catch(...){rejected=true;}check(rejected,"invalid preset fails closed");
     }
     std::filesystem::remove_all(dir);
 }
 }
-int main(){try{layouts();purchase();lifecycle();cartMovement();presets();std::cout<<"PASS stock transactions, discounts/copies, gates, sold revisit, Apply/floors and preset migration\n";}catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}
+int main(){try{layouts();purchase();lifecycle();cartMovement();dynamiteStock();presets();std::cout<<"PASS stock transactions, discounts/copies, gates, sold revisit, Apply/floors and preset migration\n";}catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

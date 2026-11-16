@@ -1,0 +1,25 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  31: source_shop_heart
+1/4 Test  #31: source_shop_heart ................   Passed    8.76 sec
+    Start  33: source_shop_stock
+2/4 Test  #33: source_shop_stock ................***Failed   23.29 sec
+PASS 27 generated slot/clearance/access cases plus unsupported and random-sale witnesses
+PASS 16 walking/dodge directions and cart click approach
+FAIL price/charges carry; later legacy shop unchanged
+
+    Start  34: source_shop_key
+3/4 Test  #34: source_shop_key ..................   Passed    8.55 sec
+    Start 139: balance_preset_contract
+4/4 Test #139: balance_preset_contract ..........***Failed    0.09 sec
+Missing mutation fixture: "schema_version": 32
+
+
+50% tests passed, 2 tests failed out of 4
+
+Total Test time (real) =  40.69 sec
+
+The following tests FAILED:
+	 33 - source_shop_stock (Failed)
+	139 - balance_preset_contract (Failed)
+Errors while running CTest

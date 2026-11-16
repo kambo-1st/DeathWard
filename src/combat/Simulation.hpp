@@ -1092,7 +1092,7 @@ struct OrdinaryKeyPickup {
 };
 struct OrdinaryBombPickup {
     Vector3 position{};int room=-1,sourceSubtype=1;uint32_t seed=0;
-    BombTiming timing{};bool placedInLayout=false;
+    BombTiming timing{};bool placedInLayout=false,shopStock=false;
 };
 struct MoneyPickup {
     Vector3 position{};
@@ -1143,6 +1143,10 @@ class Simulation {
     bool sourceShopKey=false, shopKeyDelivered=false, shopKeySold=false;
     bool sourceShopVariation=false, shopUpgradeSold=false, steamSaleDiscounts=true;
     int shopUpgradePrice=15;
+    int shopBombPrice=5,shopBombSlot=-1;
+    bool shopBombDelivered=false,shopBombSold=false;
+    bool shopBombOffered() const { return shopBombSlot>=0; }
+    Vector3 shopBombPosition() const;
     // Slots -1 mean absent. Unsupported native pairs retain the declared D12a/b fallback.
     int shopHeartSlot=1, shopKeySlot=0, shopUpgradeSlot=-1, shopDiscountSlot=-1;
     bool shopVariationActive() const { return shopUpgradeSlot>=0; }
@@ -1688,6 +1692,7 @@ class Simulation {
     void deliverRoomHearts(int index);
     void deliverShopHeart();
     void deliverShopKey();
+    void deliverShopBomb();
     void deliverRoomChests(int index);
     void deliverRoomCoins(int index);
     void deliverRoomKeys(int index);

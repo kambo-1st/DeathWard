@@ -1,0 +1,91 @@
+Start testing: Nov 16 15:33 CET
+----------------------------------------------------------
+32/176 Testing: source_shop_stock_reference
+32/176 Test: source_shop_stock_reference
+Command: "/home/kambo/workspace/DeathWard/build/deathward_shop_stock_reference_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"source_shop_stock_reference" start time: Nov 16 15:33 CET
+Output:
+----------------------------------------------------------
+PASS 1551 native stock schedules, 155 native/CRT discount cases, 30 native collectible base prices
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"source_shop_stock_reference" end time: Nov 16 15:33 CET
+"source_shop_stock_reference" time elapsed: 00:00:00
+----------------------------------------------------------
+
+33/176 Testing: source_shop_stock
+33/176 Test: source_shop_stock
+Command: "/home/kambo/workspace/DeathWard/build/deathward_shop_stock_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"source_shop_stock" start time: Nov 16 15:33 CET
+Output:
+----------------------------------------------------------
+PASS 27 generated slot/clearance/access cases plus unsupported and random-sale witnesses
+PASS 16 walking/dodge directions and cart click approach
+PASS 30 native prices, 27 dynamite placement cases, funds/cap/discount/gates/timing/sold/Apply/floor boundaries
+PASS stock transactions, discounts/copies, gates, sold revisit, Apply/floors and preset migration
+<end of output>
+Test time =  24.71 sec
+----------------------------------------------------------
+Test Passed.
+"source_shop_stock" end time: Nov 16 15:33 CET
+"source_shop_stock" time elapsed: 00:00:24
+----------------------------------------------------------
+
+139/176 Testing: balance_preset_contract
+139/176 Test: balance_preset_contract
+Command: "/home/kambo/workspace/DeathWard/build/deathward_balance_preset_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"balance_preset_contract" start time: Nov 16 15:33 CET
+Output:
+----------------------------------------------------------
+PASS preset round-trip, schema migrations and rejection cases, invalid-export protection and atomic replacement failure
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"balance_preset_contract" end time: Nov 16 15:33 CET
+"balance_preset_contract" time elapsed: 00:00:00
+----------------------------------------------------------
+
+155/176 Testing: ordinary_bomb_gameplay
+155/176 Test: ordinary_bomb_gameplay
+Command: "/home/kambo/workspace/DeathWard/build/deathward_bomb_reward_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"ordinary_bomb_gameplay" start time: Nov 16 15:33 CET
+Output:
+----------------------------------------------------------
+PASS bomb clear witness seed=32 / source timing30,60,120Hz / one-time collection
+PASS bomb clear witness seed=99 / source timing30,60,120Hz / one-time collection
+PASS deferred/pause/inactive/policy/Apply/scope and unsupported troll witness seed=49
+PASS single/double caps, refusal/recovery and unsupported actor identities
+<end of output>
+Test time =   4.21 sec
+----------------------------------------------------------
+Test Passed.
+"ordinary_bomb_gameplay" end time: Nov 16 15:34 CET
+"ordinary_bomb_gameplay" time elapsed: 00:00:04
+----------------------------------------------------------
+
+156/176 Testing: preplaced_bomb_layout
+156/176 Test: preplaced_bomb_layout
+Command: "/home/kambo/workspace/DeathWard/build/deathward_bomb_layout_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"preplaced_bomb_layout" start time: Nov 16 15:34 CET
+Output:
+----------------------------------------------------------
+PASS source32 slots/rocks/real demolition/clicks/revisit/Apply seed=1860 size=0.750000 spent=2
+PASS source32 slots/rocks/real demolition/clicks/revisit/Apply seed=1860 size=1.100000 spent=2
+PASS source32 slots/rocks/real demolition/clicks/revisit/Apply seed=1860 size=1.500000 spent=2
+<end of output>
+Test time =   1.99 sec
+----------------------------------------------------------
+Test Passed.
+"preplaced_bomb_layout" end time: Nov 16 15:34 CET
+"preplaced_bomb_layout" time elapsed: 00:00:01
+----------------------------------------------------------
+
+End testing: Nov 16 15:34 CET

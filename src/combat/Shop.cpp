@@ -16,6 +16,16 @@ Vector3 Simulation::shopHeartPosition() const {
 Vector3 Simulation::shopKeyPosition() const {
     return shopKeySlot==1?sourceShopHeartPosition(arena.rooms.at(size_t(arena.shopRoom))):sourceShopKeyPosition(arena.rooms.at(size_t(arena.shopRoom)));
 }
+Vector3 Simulation::shopBombPosition() const {
+    return shopBombSlot==0?sourceShopKeyPosition(arena.rooms.at(size_t(arena.shopRoom))):sourceShopHeartPosition(arena.rooms.at(size_t(arena.shopRoom)));
+}
+void Simulation::deliverShopBomb() {
+    if(!hasSourceShop(room)||!shopBombOffered()||shopBombDelivered||shopBombSold||dead||finished)return;
+    const auto at=shopBombPosition();
+    const uint32_t pickupSeed=uint32_t(seed_^0x53484f50424f4d42ULL)|1U; // Explicit DW actor seed.
+    if(arena.blocked(at,.48f)||!spawnOrdinaryBomb(at,1,pickupSeed,true))return;
+    bombPickups.back().shopStock=true;shopBombDelivered=true;checkpointNeeded=true;
+}
 void Simulation::deliverShopKey() {
     if(!hasSourceShop(room)||!shopKeyOffered()||shopKeyDelivered||shopKeySold||dead||finished)return;
     const auto at=shopKeyPosition();
@@ -53,13 +63,14 @@ bool Simulation::collectShopUpgrade() {
     announce("STEAM SALE / SHOP DISCOUNT",3);checkpointNeeded=true;return true;
 }
 void Simulation::prepareShop() {
-    shopHeartSlot=1;shopKeySlot=0;shopUpgradeSlot=shopDiscountSlot=-1;
+    shopHeartSlot=1;shopKeySlot=0;shopUpgradeSlot=shopDiscountSlot=shopBombSlot=-1;
     if(hasSourceShop(arena.shopRoom)&&sourceShopVariation) {
         const auto stock=sourceShopStock(canyonShopStockSeed(seed_)); // Supplied basic shop level0.
         const int a=stock.categories[0],b=stock.categories[1];
-        if((a==8&&(b==0||b==3))||(b==8&&(a==0||a==3))) {
+        if((a==8&&(b==0||b==1||b==3))||(b==8&&(a==0||a==1||a==3))) {
             shopUpgradeSlot=a==8?0:1;
             shopHeartSlot=a==0?0:b==0?1:-1;shopKeySlot=a==3?0:b==3?1:-1;
+            shopBombSlot=a==1?0:b==1?1:-1;
             shopDiscountSlot=stock.discountSlot;
         }
         // No category reroll. Other pairs retain the explicit previous fixed-pair fallback.

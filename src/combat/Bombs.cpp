@@ -25,10 +25,18 @@ void Simulation::updateOrdinaryBombs(float dt) {
         if(p.timing.phase==BombTiming::Phase::Gone)return true;
         if(!p.timing.collectible()||dead||player.totalHealth()<=0||dynamite>=MaxDynamite||
            planarDistance(player.position,p.position)>=1||!arena.clear(player.position,p.position,.1f))return false;
+        if(p.shopStock&&(!hasSourceShop(room)||!shopBombOffered()||shopBombSold||!roomClear||roomThreats()||
+           shopBombPrice<0||shopBombPrice>15||money()<uint64_t(shopPrice(shopBombPrice,shopBombSlot))))return false;
+        if(p.shopStock) {
+            const int price=shopPrice(shopBombPrice,shopBombSlot);
+            moneySpent+=uint64_t(price);shopBombSold=true;
+            announce("DYNAMITE / "+std::to_string(price)+" COINS",2);
+        }
         dynamite=std::min(MaxDynamite,dynamite+sourceOrdinaryBombValue(p.sourceSubtype));
         p.timing.collect();audioCues.push(AudioCueKind::Pickup,p.position);
         checkpointNeeded=true;return false;
     });
+    deliverShopBomb();
     deliverRoomBombs(room); // Deferred births never consume elapsed time retroactively.
 }
 } // namespace dw

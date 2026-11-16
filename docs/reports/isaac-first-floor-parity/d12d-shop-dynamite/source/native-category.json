@@ -1,0 +1,38 @@
+[
+  {
+    "slot": 0,
+    "category": 1,
+    "variant": 40,
+    "subtype": 1
+  },
+  {
+    "slot": 1,
+    "category": 1,
+    "variant": 40,
+    "subtype": 1
+  },
+  {
+    "slot": 2,
+    "category": 1,
+    "variant": 40,
+    "subtype": 1
+  },
+  {
+    "slot": 3,
+    "category": 1,
+    "variant": 40,
+    "subtype": 1
+  },
+  {
+    "slot": 4,
+    "category": 1,
+    "variant": 40,
+    "subtype": 1
+  },
+  {
+    "slot": 5,
+    "category": 1,
+    "variant": 40,
+    "subtype": 1
+  }
+]

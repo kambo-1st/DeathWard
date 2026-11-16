@@ -887,7 +887,7 @@ void shopKeyInputCheck(const std::filesystem::path &directory) {
     check(run.shopHeartSold&&run.shopKeySold&&run.player.hp==6&&run.keys==1&&run.money()==0&&run.moneySpent==8,"key and heart purchase independently");
     run.jumpDebug(0);run.jumpDebug(owner);frame();
     check(run.shopKeySold&&std::none_of(run.keyPickups.begin(),run.keyPickups.end(),[](const auto &h){return h.shopStock;}),"sold pickup absent on revisit");
-    click(374,642);click(575,143);click(545,189);click(990,270);
+    click(374,642);click(575,143);click(545,189);click(880,270);
     check(game.balanceRewardsOpen&&game.balanceShopOpen&&game.balanceShopKeyOpen,"shop page accessible by mouse");
     auto terrain=run.arena.canyon.get();click(430,270);click(1010,330);
     check(game.hasPendingMapChanges()&&run.sourceShopKey&&run.shopKeyPrice==6&&run.shopKeySold&&run.arena.canyon.get()==terrain,"stock toggle staged, price live, sold state retained");
@@ -951,6 +951,47 @@ void shopStockInputCheck(const std::filesystem::path &directory) {
     Game fresh(directory/"stock-fresh.save");fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="7";fresh.loadBalancePreset(file);fresh.rememberBalancePreset();fresh.launch(true);
     check(fresh.run&&fresh.run->room==0&&fresh.run->player.hp==6&&fresh.run->money()==0&&fresh.run->shopVariationActive()&&fresh.run->roomSizeScale==1.1f&&fresh.run->routeLengthScale==.26f&&fresh.run->shopUpgradePrice==16&&!fresh.run->steamSaleDiscounts&&fresh.cameraZoomPercent()==165,"fresh normal launch retains settings without review grants");fresh.close();
     std::cout<<"PASS D12c actual Game/Renderer mouse purchase/discount/revisit, tuning/Apply/export/load/remember/retry and fresh launch; seed7 shop="<<owner+1<<'\n';
+}
+
+void shopBombInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto file=directory/"shop-dynamite.json";
+    Game game(directory/"shop-dynamite.save");game.themeChoice=ThemeChoice::Canyon;game.seedText="4";game.reviewShopStock=true;
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.error.empty(),"dynamite stock review launch");auto &run=*game.run;const int owner=run.room;
+    check(run.shopBombOffered()&&run.dynamite==3&&run.money()==20&&run.player.hp==4&&!run.godMode,"natural dynamite pair with explicit stock review funds");
+    Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"dynamite shop UI no errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"dynamite stock capture");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();check(game.cameraZoomPercent()==165&&run.player.walkingSpeed()==4.8f,"retained accepted view/pace");
+    capture("artifacts/shop-dynamite-before.png");mouseWalk(game,frame,run.shopUpgradePosition(),.3f);
+    check(run.shopUpgradeSold&&run.money()==5&&run.shopPrice(run.shopBombPrice,run.shopBombSlot)==3,"Steam Sale immediately reduces dynamite price");
+    capture("artifacts/shop-dynamite-discount.png");mouseWalk(game,frame,run.shopBombPosition(),.3f);
+    check(run.shopBombSold&&run.dynamite==4&&run.money()==2,"mouse dynamite purchase grants one and charges three");
+    for(int n=0;n<40;++n)frame();run.jumpDebug(0);run.jumpDebug(owner);frame();
+    check(run.shopBombSold&&run.dynamite==4&&run.moneySpent==18,"sold revisit");
+    click(374,642);click(575,143);click(545,189);click(1015,270);
+    check(game.balanceShopBombOpen&&game.balanceShopOpen,"dynamite mouse tab");
+    const auto terrain=run.arena.canyon.get();click(1010,330);click(430,270);
+    check(run.shopBombPrice==6&&run.shopBombSold&&game.hasPendingMapChanges()&&run.sourceShopVariation&&run.arena.canyon.get()==terrain,"live price and staged selection preserve sold floor");
+    click(335,605);game.rememberBalancePreset();auto exported=BalancePreset::load(file,run.content->fingerprint());
+    check(exported.shopBombPrice==6&&!exported.sourceShopVariation&&exported.defaultZoomPercent==165,"independent price and staged selection export");
+    for(int n=0;n<40&&game.keyboardFocus()!=Action::ResetShopBombPrice;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::ResetShopBombPrice,"dynamite keyboard reset focus");key(KEY_ENTER);check(run.shopBombPrice==5,"keyboard reset price");
+    click(380,465);check(!run.shopBombOffered()&&run.dynamite==4,"Apply fixed pair");
+    click(430,270);click(380,465);check(run.shopBombOffered()&&!run.shopBombSold&&run.dynamite==4&&run.moneySpent==18,"Apply resets stock retaining build/spending");
+    click(600,605);check(game.hasPendingMapChanges()&&run.shopBombPrice==6&&run.sourceShopVariation&&!game.balanceDraft.sourceShopVariation,"load price immediately and stage map mode");
+    click(430,270);game.exportBalancePreset();game.rememberBalancePreset();capture("artifacts/shop-dynamite-panel.png");
+    std::filesystem::copy_file(file,"artifacts/shop-dynamite-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.perform(Action::CloseBalance);run.finishDebug(false);game.retryExpedition();
+    check(game.run&&game.run->room==owner&&game.run->shopBombOffered()&&!game.run->shopBombSold&&game.run->shopBombPrice==6&&game.run->dynamite==3&&game.run->money()>=20,"review retry fresh stock and configured price");
+    game.close();renderer.unload();
+    Game fresh(directory/"dynamite-fresh.save");fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="4";fresh.loadBalancePreset(file);fresh.rememberBalancePreset();fresh.launch(true);
+    check(fresh.run&&fresh.run->room==0&&fresh.run->money()==0&&fresh.run->dynamite==3&&fresh.run->shopBombPrice==6&&fresh.run->roomSizeScale==1.1f&&fresh.cameraZoomPercent()==165,"fresh ordinary expedition keeps price and accepted preset without review funds");fresh.close();
+    std::cout<<"PASS D12d actual Game/Renderer mouse discount/dynamite purchase/revisit, live price/staged stock/Apply/export/load/keyboard/remember/retry/fresh expedition; seed4 shop="<<owner+1<<'\n';
 }
 
 void coinLayoutInputCheck(const std::filesystem::path &directory) {
@@ -2547,6 +2588,9 @@ int main(int argc, char **argv) {
         }
         if(mode=="--keys-only") {
             keyInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--shop-bomb-only") {
+            shopBombInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--shop-stock-only") {
             shopStockInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

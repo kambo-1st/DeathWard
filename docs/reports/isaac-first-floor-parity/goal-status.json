@@ -3,7 +3,7 @@
   "status": "paused",
   "paused_at_utc": "2026-11-08T08:08:31Z",
   "pause_reason": "User stopped the bulk effort,requested rollback and manual selection of each specific future difference.",
-  "implementation_state": "centered_shop_cart_scoped_user_accepted_in_checkpoint_bulk_paused",
+  "implementation_state": "D12d_scoped_user_accepted_in_checkpoint_soul_heart_shop_selected_bulk_paused",
   "baseline_commit": "28023a49dbd8712820ba6953219cfdb7866bdcb6",
   "automatic_implementation_authorized": false,
   "accepted_exceptions": [
@@ -1079,11 +1079,42 @@
     "commit": "a8f35fb7"
   },
   "shop_cart": {
-    "status": "scoped_user_accepted_in_checkpoint",
+    "status": "committed_scoped_user_accepted",
     "report": "docs/reports/isaac-first-floor-parity/shop-cart/README.md",
     "source_model": "SM_Veh_Wagon_Shop_01",
     "human_acceptance": "scoped_user_acknowledgment_2026-11-16",
-    "committed": false,
+    "committed": true,
+    "included_in_this_checkpoint": true,
+    "commit": "b570950f"
+  },
+  "d12d_shop_dynamite": {
+    "status": "scoped_user_accepted_in_checkpoint",
+    "report": "docs/reports/isaac-first-floor-parity/d12d-shop-dynamite/README.md",
+    "schema": 33,
+    "native_category_cases": 6,
+    "native_price_cases": 30,
+    "new_placement_cases": 27,
+    "core_suites_passed": 7,
+    "game_renderer_modes_passed": 4,
+    "cli_schemas": [
+      5,
+      32,
+      33
+    ],
+    "human_acceptance": "scoped_user_acknowledgment",
+    "full_native_acceptance": false,
+    "uncommitted": true,
+    "review": {
+      "seed": 4,
+      "displayed_room": 7,
+      "coins": 20,
+      "dynamite": 3,
+      "base_price": 5,
+      "discounted_price": 3,
+      "zoom_percent": 165,
+      "god_mode": false
+    },
+    "cart_label_removed": true,
     "included_in_this_checkpoint": true
   }
 }
