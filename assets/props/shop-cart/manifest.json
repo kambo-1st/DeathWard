@@ -1,0 +1,27 @@
+{
+  "source_prefab": "Frontier/SM_Veh_Wagon_Shop_01",
+  "source_assembly": "Fort Mercy story-merchant-wagon",
+  "source_glb": "assets/redstone/town.glb",
+  "source_sha256": "94d14287d3b22774d820449fbb5b2649104112585892b661f638de45979cdb37",
+  "source_scene_sha256": "2b719d8cc2b37eac58598cf951f06cb81e75f862e80827b236ae83f2d299b7de",
+  "parts": 13,
+  "triangles": 7256,
+  "dimensions": [
+    4.4,
+    2.6412565754466955,
+    2.3794168059430993
+  ],
+  "bounds_min": [
+    -2.2,
+    0.0,
+    -1.1897084029715488
+  ],
+  "bounds_max": [
+    2.2,
+    2.6412565754466955,
+    1.1897084029715503
+  ],
+  "baked_uniform_scale": 0.8553373579098947,
+  "output_sha256": "fdc33bfe8e65417cf7f77192f9c66a287f6e61d676f11fcf66411251cc459f08",
+  "adaptation": "Existing 13-part assembled merchant wagon, original UVs and embedded material. Uniform scale to 4.4 longest ground dimension; centered XZ and grounded at Y0."
+}

@@ -1,4 +1,5 @@
 #include "combat/Simulation.hpp"
+#include "world/ShopCartGeometry.hpp"
 #include <chrono>
 #include <fstream>
 #include <iostream>
@@ -14,9 +15,11 @@ void check(bool condition, const char *message) {
 }
 void approach(Simulation &run) {
     run.enterRoom(run.arena.shopRoom);
-    run.player.position = add(run.arena.rooms[size_t(run.room)].objective, {0, 0, -1.8f});
-    run.interact();
-    check(run.shopOpen, "approaching and interacting opens the peaceful shop");
+    run.player.position = shopCartGeometry::reviewStart(run.arena.rooms[size_t(run.room)].center);
+    for(int tick=0;tick<180&&!run.shopOpen;++tick) {
+        Input input;if(tick==0)input.moveTarget=run.arena.rooms[size_t(run.room)].center;run.step(input);
+    }
+    check(run.shopOpen&&!run.arena.blocked(run.player.position,.48f), "click approach reaches trading distance beside solid wagon and opens shop");
 }
 void generation() {
     std::set<int> locations; std::set<ItemKey> items;
@@ -47,9 +50,10 @@ void generation() {
             }
             check(reachable.contains(shop), "shop can be reached without spending a key");
             const auto &layout = a.arena.rooms[size_t(shop)];
-            check(!a.arena.blocked(layout.objective, .6f) &&
-                      !a.arena.path(layout.center, layout.objective, .48f).empty(),
-                  "the shopkeeper and approach stand on reachable floor");
+            const auto tradingPoint=add(layout.center,{0,.85f,-1.8f});
+            check(planarDistance(layout.objective,layout.center)<.0001f&&a.arena.blocked(layout.center,.6f)&&
+                      !a.arena.blocked(tradingPoint,.48f)&&!a.arena.path(layout.entry,tradingPoint,.48f).empty(),
+                  "centered solid wagon has an accessible trading approach");
             check(a.shopOffers[1].item != a.shopOffers[2].item, "shop power-ups are distinct");
             for (int slot = 0; slot < 3; ++slot) {
                 check(a.shopOffers[size_t(slot)].item == b.shopOffers[size_t(slot)].item &&

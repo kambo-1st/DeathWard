@@ -924,6 +924,7 @@ void shopStockInputCheck(const std::filesystem::path &directory) {
     const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
     const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"shop stock capture");UnloadImage(im);EndDrawing();};
     game.updateCamera(10);frame();check(game.cameraZoomPercent()==165&&run.player.walkingSpeed()==4.8f,"accepted view and pace");
+    check(renderer.shopCartModelReady()&&renderer.missionShadowsReady()&&!run.arena.blocked(run.player.position,.48f),"imported centered wagon, shared shadows and safe review spawn");
     capture("artifacts/shop-stock-before.png");mouseWalk(game,frame,run.shopUpgradePosition(),.3f);
     check(run.shopUpgradeSold&&run.itemStacks({"isaac",ItemKind::Collectible,64})==1&&run.money()==5&&run.shopPrice(run.shopKeyPrice,run.shopKeySlot)==3,"mouse purchase immediate discount");
     capture("artifacts/shop-stock-discount.png");mouseWalk(game,frame,run.shopKeyPosition(),.3f);
@@ -1893,8 +1894,7 @@ void shopInputCheck(const std::filesystem::path &directory, dw::MissionTheme the
     auto &run = *game.run;
     run.jumpDebug(run.arena.shopRoom);
     const auto merchant = run.arena.rooms[size_t(run.room)].objective;
-    run.player.position =
-        dw::add(merchant, dw::mul(dw::unit(dw::sub(run.arena.rooms[size_t(run.room)].center, merchant)), 4));
+    run.player.position = dw::shopCartGeometry::reviewStart(merchant);
     run.player.hp = 3;
     game.updateCamera(10);
     dw::Renderer renderer;
@@ -1934,8 +1934,9 @@ void shopInputCheck(const std::filesystem::path &directory, dw::MissionTheme the
     click(int(pixel.x), int(pixel.y));
     for (int i = 0; i < 240 && !run.shopOpen; ++i)
         frame();
+    if(!run.shopOpen)std::cerr<<"CART_CLICK theme="<<name<<" player="<<run.player.position.x<<","<<run.player.position.y<<","<<run.player.position.z<<" cart="<<merchant.x<<","<<merchant.y<<","<<merchant.z<<" shots="<<run.stats.shots<<" blocked="<<run.arena.blocked(run.player.position,.48f)<<'\n';
     check(run.shopOpen && run.enemies.empty() && run.stats.shots == 0,
-          "clicking the actual shopkeeper approaches and opens trade without shooting");
+          "clicking the actual shop cart approaches and opens trade without shooting");
     const auto position = run.player.position;
     const auto duration = run.stats.duration;
     mouseEvent(KeyDown, KEY_W);

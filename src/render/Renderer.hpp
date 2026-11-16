@@ -7,6 +7,7 @@
 #include "render/TownScene.hpp"
 #include "render/WesternScene.hpp"
 #include "render/ChestModel.hpp"
+#include "render/ShopCartModel.hpp"
 #include "render/KeyModel.hpp"
 #include "render/MainFont.hpp"
 
@@ -19,6 +20,7 @@ class Renderer {
     void setSandstormStrength(float strength) { sandstormStrength_=std::clamp(strength,0.f,1.f); }
     bool keyModelReady() const { return keyModel_.ready(); }
     bool mainFontReady() const { return mainFont_.ready(); }
+    bool shopCartModelReady() const { return shopCartModel_.ready(); }
     bool chestModelReady() const { return chestModel_.ready(); }
     bool missionShadowsReady() const {
         return westernScene_.lighting().ready();
@@ -45,7 +47,7 @@ class Renderer {
     void unload() {
         mainFont_.unload();
         keyModel_.unload();
-        chestModel_.unload();
+        chestModel_.unload();shopCartModel_.unload();
         playerModel_.unload();
         animalModels_.unload();
         characterModels_.unload();
@@ -63,6 +65,7 @@ class Renderer {
     float sandstormStrength_ = 0;
     Action keyboardFocus_ = Action::None;
     ChestModel chestModel_;
+    ShopCartModel shopCartModel_;
     KeyModel keyModel_;
     PlayerModel playerModel_;
     AnimalModels animalModels_;

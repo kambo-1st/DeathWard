@@ -782,6 +782,11 @@ std::optional<RayCollision> Renderer::pickScenery(const Simulation &run, const C
     westernScene_.prepare(run.arena);
     westernScene_.setPlayerOcclusion(camera, run.player.position);
     auto best=westernScene_.pick(ray, run.player.position);
+    for(const auto &room:run.arena.rooms)if(room.kind==RoomKind::Shop) {
+        const auto box=shopCartGeometry::bounds(room.center);
+        const auto hit=GetRayCollisionBox(ray,{box.min,box.max});
+        if(hit.hit&&(!best.hit||hit.distance<best.distance))best=hit;
+    }
     for(const auto &p:run.arena.breakables) {
         if(!p.solid()||propOccludes(p,camera,run.player.position))continue;
         auto hit=GetRayCollisionBox(ray,{p.bounds.min,p.bounds.max});
@@ -912,9 +917,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         // Select the role once instead of drawing independent trader lists.
         for(const auto &site:run.arena.rooms) {
             if(distance(run.player.position,site.objective)>=60)continue;
-            if(site.kind==RoomKind::Shop)
-                shopkeeper(site.objective,float(run.stats.duration),!depthOnly&&!lighting.ready());
-            else if(site.kind==RoomKind::Service)
+            if(site.kind==RoomKind::Service)
                 servicePerson(site.objective,site.service,float(run.stats.duration),!depthOnly&&!lighting.ready());
         }
         for (int i = 0; i < run.arena.roomCount(); ++i) {
@@ -965,6 +968,11 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             }
         }
     };
+    if(run.arena.shopRoom>=0)shopCartModel_.prepare();
+    const auto drawShopCarts=[&](Shader shader,Texture2D shadowMap) {
+        for(const auto &site:run.arena.rooms)if(site.kind==RoomKind::Shop&&distance(run.player.position,site.center)<60)
+            shopCartModel_.draw(site.center,shader,shadowMap);
+    };
     if(!run.chests.empty())chestModel_.prepare();
     const auto drawChests=[&](Shader shader,Texture2D shadowMap) {
         for(const auto &chest:run.chests)if(chest.room==run.room) {
@@ -1012,6 +1020,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         else
             cowboy(run.player.position, run.player.facing, WHITE, 1, false, false);
         EndShaderMode();
+        drawShopCarts(meshDepth,{});
         drawChests(meshDepth,{});
         drawKeys(meshDepth,{});
     });
@@ -1118,6 +1127,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     }
     if(!lighting.ready())for(const auto &chest:run.chests)if(chest.room==run.room)
         shadow(chest.position,chestGeometry::ShadowRadius);
+    drawShopCarts(lighting.actorShader(),lighting.texture());
     drawChests(lighting.actorShader(),lighting.texture());
     drawKeys(lighting.actorShader(),lighting.texture());
     for(const auto &supply:run.chestSupplies)if(supply.bomb&&supply.room==run.room) {
@@ -1488,7 +1498,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         const auto p = run.arena.rooms[size_t(run.room)].objective;
         const auto at = GetWorldToScreen({p.x, 2.6f, p.z}, camera);
         if (at.x > 0 && at.x < GetScreenWidth() && at.y > 0 && at.y < GetScreenHeight())
-            text("SHOPKEEPER", at.x / sx_ - 39, at.y / sy_ - 8, 12, Gold);
+            text("TRADER CART", at.x / sx_ - 39, at.y / sy_ - 8, 12, Gold);
     }
     auto outlineEligible = [](const Enemy &e) {
         return e.alive && !e.friendly && e.state != EnemyState::Buried && e.state != EnemyState::Teleporting;

@@ -262,6 +262,9 @@ function(deathward_assets target)
     add_custom_command(TARGET deathward_runtime_assets POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/pickups" "$<TARGET_FILE_DIR:deathward>/assets/pickups"
         VERBATIM)
+    add_custom_command(TARGET deathward_runtime_assets POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/props/shop-cart" "$<TARGET_FILE_DIR:deathward>/assets/props/shop-cart"
+        VERBATIM)
     foreach(western_file western.glb western.catalog)
         set(western_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/western/${western_file}")
         add_custom_command(TARGET deathward_runtime_assets POST_BUILD
@@ -339,7 +342,7 @@ if(EMSCRIPTEN)
     list(APPEND web_assets ${web_audio})
     file(GLOB web_cast CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "assets/cinematic_cast/*.glb")
     list(APPEND web_assets ${web_cast} assets/train_opening/arrival.cinematic)
-    list(APPEND web_assets assets/pickups/chest/base.glb assets/pickups/chest/lid.glb assets/pickups/key/key.glb)
+    list(APPEND web_assets assets/props/shop-cart/shop-cart.glb assets/pickups/chest/base.glb assets/pickups/chest/lid.glb assets/pickups/key/key.glb)
     foreach(asset IN LISTS web_assets)
         target_link_options(deathward PRIVATE "SHELL:--preload-file '${CMAKE_CURRENT_SOURCE_DIR}/${asset}@/${asset}'")
         set_property(TARGET deathward APPEND PROPERTY LINK_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${asset}")

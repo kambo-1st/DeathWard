@@ -35,7 +35,7 @@ void placement() {
     for(uint64_t seed:{1ULL,69ULL,129ULL})for(auto dimensions:{std::tuple{.75f,5,5},std::tuple{1.1f,7,9},std::tuple{1.5f,10,10}})for(float route:{.25f,1.f,2.f}) {
         const auto [scale,minimum,maximum]=dimensions;auto run=generated(seed,scale,minimum,maximum,route);enter(run);
         const auto &room=run.arena.rooms[size_t(run.room)];const auto at=run.shopKeyPosition();
-        check(planarDistance(at,sourceHeartCell(room,5,4))<.0001f,"recorded first stock slot");
+        check(planarDistance(at,shopCartGeometry::stockPosition(sourceHeartCell(room,5,4),room.center))<.0001f,"recorded first stock slot");
         check(planarDistance(at,run.shopHeartPosition())>2,"separate heart/key contact regions");
         check(!run.arena.blocked(at,.48f)&&!run.arena.path(room.entry,at,.48f).empty(),"key reachable from entrance");
         for(const auto &key:run.arena.keys)check(planarDistance(at,key.position)>1.5f,"mandatory key cannot overlap shop key");

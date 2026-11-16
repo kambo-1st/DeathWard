@@ -1246,7 +1246,8 @@ void Simulation::updatePlayer(const Input &input, float dt) {
             useDoor(target.first, target.second);
         }
         if (!movePath_.empty() && interactOnArrival_ &&
-            distance(player.position,arena.rooms[size_t(room)].kind==RoomKind::Power?rewardPosition(room):movePath_.back())<2.0f &&
+            distance(player.position,arena.rooms[size_t(room)].kind==RoomKind::Power?rewardPosition(room):
+                arena.rooms[size_t(room)].kind==RoomKind::Shop?arena.rooms[size_t(room)].center:movePath_.back())<2.0f &&
             arena.sight(player.position, movePath_.back())) {
             interact();
         }

@@ -26,6 +26,9 @@ void layouts() {
         const auto a=s.shopUpgradePosition(),b=seed==2?s.shopHeartPosition():s.shopKeyPosition();
         check(planarDistance(a,b)>2,"stock contact regions disjoint");
         const auto &room=s.arena.rooms[size_t(s.room)];
+        check(planarDistance(room.objective,room.center)<.0001f&&s.arena.blocked(add(room.center,{0,.85f,0}),.48f),"centered solid shop wagon");
+        check(!s.arena.blocked(shopCartGeometry::reviewStart(room.center),.48f),"direct review starts beside cart");
+        for(const auto &key:s.arena.keys)check(!sphereBox(key.position,.35f,shopCartGeometry::bounds(room.center)),"cart does not trap existing keys");
         for(auto at:{a,b}) {
             if(s.arena.blocked(at,.48f)||s.arena.path(room.entry,at,.48f).empty()) {
                 std::cerr<<"placement seed="<<seed<<" scale="<<scale<<" range="<<low<<","<<high<<" route="<<route<<" at="<<at.x<<","<<at.z<<" blocked="<<s.arena.blocked(at,.48f)<<" entryBlocked="<<s.arena.blocked(room.entry,.48f)<<'\n';
@@ -78,6 +81,24 @@ void lifecycle() {
     s.jumpDebug(s.finalRoom());s.clearRoomDebug();s.floorExitRequested=true;check(s.advanceFloor(),"floor advance");
     check(s.sourceShopVariation&&s.shopUpgradePrice==16&&!s.steamSaleDiscounts&&s.itemStacks(SteamSale)==1&&!s.hasSourceShop(s.arena.shopRoom),"carry config/item to later floor; legacy shop retained");
 }
+void cartMovement() {
+    for(bool dodge:{false,true})for(int side=0;side<8;++side) {
+        auto s=make();enter(s);const auto c=s.arena.rooms[size_t(s.room)].center;
+        const Vector3 direction{std::cos(side*Pi/4),0,std::sin(side*Pi/4)};
+        s.player.position=add(c,mul(direction,4));s.player.position.y=.85f;
+        for(int tick=0;tick<100;++tick) {
+            Input input;input.movement=mul(direction,-1);input.dodge=dodge&&tick==0;s.step(input);
+            check(!s.arena.blocked(s.player.position,.48f),"walking/dodge cannot enter wagon");
+        }
+        if(side%2==0)check(dot(horizontal(sub(s.player.position,c)),direction)>0,"straight walking/dodge cannot cross wagon; diagonal sliding may route around it");
+    }
+    auto s=make();enter(s);const auto c=s.arena.rooms[size_t(s.room)].center;
+    s.player.position=shopCartGeometry::reviewStart(c);
+    for(int tick=0;tick<180;++tick){Input in;if(tick==0)in.moveTarget=c;s.step(in);}
+    check(!s.arena.blocked(s.player.position,.48f)&&planarDistance(s.player.position,c)<2.1f,"click cart reaches an edge without collecting stock");
+    check(!s.shopUpgradeSold&&!s.shopKeySold,"cart click never purchases unrelated stock");
+    std::cout<<"PASS 16 walking/dodge directions and cart click approach\n";
+}
 void presets() {
     const auto dir=std::filesystem::temp_directory_path()/("deathward-stock-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
     const auto file=dir/"preset.json";const auto hash=defaultMechanics()->fingerprint();
@@ -98,4 +119,4 @@ void presets() {
     std::filesystem::remove_all(dir);
 }
 }
-int main(){try{layouts();purchase();lifecycle();presets();std::cout<<"PASS stock transactions, discounts/copies, gates, sold revisit, Apply/floors and preset migration\n";}catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}
+int main(){try{layouts();purchase();lifecycle();cartMovement();presets();std::cout<<"PASS stock transactions, discounts/copies, gates, sold revisit, Apply/floors and preset migration\n";}catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

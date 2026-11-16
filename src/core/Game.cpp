@@ -1,5 +1,6 @@
 #include "core/Game.hpp"
 #include "core/ExpeditionHud.hpp"
+#include "world/ShopCartGeometry.hpp"
 #include "render/AnimalModels.hpp"
 #include "render/PlayerModel.hpp"
 #include "render/TownScene.hpp"
@@ -79,9 +80,15 @@ PointerTarget pickTarget(const Simulation &run, Ray ray, const std::optional<Ray
     // Visible pickups and the shopkeeper take priority over passage click areas.
     // Keep opaque scenery and actual interaction objects in front of them solid.
     nearest = objectiveDistance;
-    if (run.arena.shopRoom >= 0 && hits(run.arena.rooms[size_t(run.arena.shopRoom)].objective, .9f, 2.8f)) {
-        result.objective = run.arena.rooms[size_t(run.arena.shopRoom)].objective;
-        result.door.reset();
+    if(run.arena.shopRoom>=0) {
+        const auto &shop=run.arena.rooms[size_t(run.arena.shopRoom)];
+        const auto box=shopCartGeometry::bounds(shop.center);
+        const auto hit=GetRayCollisionBox(ray,{box.min,box.max});
+        // The shared cart surface also participates in scenery picking. Admit
+        // that same surface, while retaining occlusion by anything in front.
+        if(hit.hit&&hit.distance<=nearest+.001f) {
+            nearest=hit.distance;result.objective=shop.center;result.door.reset();
+        }
     }
     for(const auto &site:run.arena.rooms)if(site.kind==RoomKind::Service&&hits(site.objective,.9f,2.8f)) {
         result.objective=site.objective;result.door.reset();

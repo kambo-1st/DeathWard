@@ -3,7 +3,7 @@
   "status": "paused",
   "paused_at_utc": "2026-11-08T08:08:31Z",
   "pause_reason": "User stopped the bulk effort,requested rollback and manual selection of each specific future difference.",
-  "implementation_state": "D12c_developer_verified_user_acknowledged_commit_authorized_bulk_paused",
+  "implementation_state": "centered_shop_cart_scoped_user_accepted_in_checkpoint_bulk_paused",
   "baseline_commit": "28023a49dbd8712820ba6953219cfdb7866bdcb6",
   "automatic_implementation_authorized": false,
   "accepted_exceptions": [
@@ -37,10 +37,10 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Selected centered Western seller-cart presentation/placement; broader shop stock/native parity remains open.",
+  "next_work": "Human visual check of the centered merchant cart, then commit this selected change. Broader stock/pool/native shop acceptance remains unfinished.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-15",
-    "status": "D12ab committed fbbf0306; selected D12c enabled and developer-verified, human review pending",
+    "status": "D12c committed a8f35fb7; centered shop cart developer-verified, human review pending",
     "report": "docs/isaac_first_floor_delivery_plan.md",
     "delivery_location": "main DeathWard executable, ordinary Game/Simulation and expedition paths",
     "cumulative_gameplay_integration_required": true,
@@ -1062,7 +1062,7 @@
     "included_in_this_checkpoint": true
   },
   "d12c_shop_stock": {
-    "status": "developer_verified_user_acknowledged",
+    "status": "committed_scoped_user_accepted",
     "checkpoint_commit": "fbbf0306",
     "report": "docs/reports/isaac-first-floor-parity/d12c-shop-stock/README.md",
     "schema": 32,
@@ -1075,6 +1075,15 @@
     "generated_placement_cases": 27,
     "game_renderer_modes_passed": 3,
     "cli_loads_passed": 4,
-    "uncommitted": "included_in_requested_checkpoint"
+    "uncommitted": false,
+    "commit": "a8f35fb7"
+  },
+  "shop_cart": {
+    "status": "scoped_user_accepted_in_checkpoint",
+    "report": "docs/reports/isaac-first-floor-parity/shop-cart/README.md",
+    "source_model": "SM_Veh_Wagon_Shop_01",
+    "human_acceptance": "scoped_user_acknowledgment_2026-11-16",
+    "committed": false,
+    "included_in_this_checkpoint": true
   }
 }

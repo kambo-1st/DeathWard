@@ -227,6 +227,11 @@ void buildCanyon(Arena &arena, bool river) {
             return planarDistance(mul(add(box.min,box.max),.5f),room.center)<(box.max.x-box.min.x)*.5f+5.f;
         });
     }
+    // Centered merchant wagons need clearance around their full assembled footprint.
+    for(auto &room:arena.rooms)if(room.kind==RoomKind::Shop) {
+        std::erase_if(rocks,[&](const Outcrop &rock){return planarDistance(rock.center,room.center)<std::max(rock.rx,rock.rz)+4.f;});
+        std::erase_if(room.obstacles,[&](Box box){return planarDistance(mul(add(box.min,box.max),.5f),room.center)<(box.max.x-box.min.x)*.5f+4.f;});
+    }
     // Opening-floor shop slots must be reachable without demolition. Filter only
     // intruding outcrops after seeded draws, retaining the surrounding canyon.
     if(arena.profile.active()&&arena.profile.floor==0)for(auto &room:arena.rooms)if(room.kind==RoomKind::Shop) {

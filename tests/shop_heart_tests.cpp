@@ -32,7 +32,7 @@ void layout(){
   if(stock(r)!=1)std::cerr<<"LAYOUT seed="<<seed<<" scale="<<scale<<" routes="<<routes<<" room="<<r.room<<" blocked="<<r.arena.blocked(at,.48f)<<'\n';
   check(stock(r)==1&&r.roomClear&&r.enemies.empty(),"priced stock is present in generated peaceful shop");
   const auto &site=r.arena.rooms[size_t(r.room)];
-  check(planarDistance(at,sourceHeartCell(site,7,4))<.0001f,"original second-slot coordinates adapted to canyon");
+  check(planarDistance(at,shopCartGeometry::stockPosition(sourceHeartCell(site,7,4),site.center))<.0001f,"original second-slot coordinates adapted to canyon");
   check(!r.arena.blocked(at,.48f)&&!r.arena.path(site.entry,at,.48f).empty(),"shop stock reachable from entrance");
   check(site.passages.size()==1&&!r.arena.passages[size_t(site.passages.front())].locked,"free opening-floor optional shop retained");
   for(const auto &coin:r.moneyPickups)check(r.arena.roomAt(coin.position)!=r.room,"no unrelated custom free coin piles in source shop");

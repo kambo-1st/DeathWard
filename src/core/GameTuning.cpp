@@ -1,4 +1,5 @@
 #include "core/Game.hpp"
+#include "world/ShopCartGeometry.hpp"
 #include <iostream>
 
 namespace dw {
@@ -233,7 +234,7 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     if(reviewShopPurchase||reviewShopKeyPurchase||reviewShopStock) {
         const int shop=candidate->arena.shopRoom;
         if(!candidate->hasSourceShop(shop)||(reviewShopKeyPurchase&&!candidate->shopKeyOffered())||(reviewShopPurchase&&!candidate->shopHeartOffered())||(reviewShopStock&&!candidate->shopVariationActive()))throw std::runtime_error("Shop review requires the requested opening-floor stock; use its recorded seed and stock settings");
-        candidate->player.position=candidate->arena.rooms[size_t(shop)].center;
+        candidate->player.position=shopCartGeometry::reviewStart(candidate->arena.rooms[size_t(shop)].center);
         candidate->player.hp=4;
         const uint64_t funds=reviewShopStock?20:reviewShopKeyPurchase?8:3;
         if(reviewShopKeyPurchase||reviewShopStock)candidate->keys=0;

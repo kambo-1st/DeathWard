@@ -11,10 +11,10 @@ bool Simulation::hasSourceShop(int index) const {
         arena.rooms[size_t(index)].kind==RoomKind::Shop;
 }
 Vector3 Simulation::shopHeartPosition() const {
-    return sourceHeartCell(arena.rooms.at(size_t(arena.shopRoom)),shopHeartSlot==0?5:7,4);
+    return shopHeartSlot==0?sourceShopKeyPosition(arena.rooms.at(size_t(arena.shopRoom))):sourceShopHeartPosition(arena.rooms.at(size_t(arena.shopRoom)));
 }
 Vector3 Simulation::shopKeyPosition() const {
-    return sourceHeartCell(arena.rooms.at(size_t(arena.shopRoom)),shopKeySlot==1?7:5,4);
+    return shopKeySlot==1?sourceShopHeartPosition(arena.rooms.at(size_t(arena.shopRoom))):sourceShopKeyPosition(arena.rooms.at(size_t(arena.shopRoom)));
 }
 void Simulation::deliverShopKey() {
     if(!hasSourceShop(room)||!shopKeyOffered()||shopKeyDelivered||shopKeySold||dead||finished)return;
@@ -32,7 +32,7 @@ void Simulation::deliverShopHeart() {
     shopHeartDelivered=true;checkpointNeeded=true; // Idle on entry, no clear-reward birth.
 }
 Vector3 Simulation::shopUpgradePosition() const {
-    return sourceHeartCell(arena.rooms.at(size_t(arena.shopRoom)),shopUpgradeSlot==0?5:7,4);
+    return shopUpgradeSlot==0?sourceShopKeyPosition(arena.rooms.at(size_t(arena.shopRoom))):sourceShopHeartPosition(arena.rooms.at(size_t(arena.shopRoom)));
 }
 int Simulation::shopPrice(int base,int slot) const {
     const int copies=steamSaleDiscounts?itemStacks({"isaac",ItemKind::Collectible,64}):0;

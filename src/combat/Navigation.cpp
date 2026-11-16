@@ -1,6 +1,7 @@
 #include "combat/Simulation.hpp"
 #include "combat/ChestGeometry.hpp"
 #include "world/PedestalGeometry.hpp"
+#include "world/ShopCartGeometry.hpp"
 #include "world/SourceHeartRockRoom.hpp"
 #include "world/SourceCombatRockRooms.hpp"
 #include "world/SourceChestRockRoomData.hpp"
@@ -192,6 +193,7 @@ std::vector<Vector3> Arena::path(Vector3 from, Vector3 target, float radius) con
     // Bounding corners supply route candidates; clearance uses the octagon.
     for(const auto &room:rooms)if(room.kind==RoomKind::Power)
         navigationWalls.push_back(pedestalGeometry::bounds(room.objective));
+    for(const auto &room:rooms)if(room.kind==RoomKind::Shop)navigationWalls.push_back(shopCartGeometry::bounds(room.center));
     auto valid = [&](Vector3 p) { return contains(p) && !blocked(p, radius); };
     // A click on solid cover lands at its nearest walkable edge.
     if (blocked(target, radius)) {
@@ -316,6 +318,20 @@ void Simulation::requestMove(Vector3 target, bool interactAtDestination) {
         movePath_=arena.path(player.position,target,.48f);return;
     }
     const auto &site=arena.rooms[size_t(room)];
+    if(site.kind==RoomKind::Shop&&std::abs(target.x-site.center.x)<shopCartGeometry::HalfWidth+.2f&&
+       std::abs(target.z-site.center.z)<shopCartGeometry::HalfDepth+.2f) {
+        float best=std::numeric_limits<float>::infinity();
+        for(float side:{-1.f,1.f}) {
+            const Vector3 point{site.center.x,target.y,site.center.z+side*(shopCartGeometry::HalfDepth+.6f)};
+            auto route=arena.path(player.position,point,.48f);if(route.empty())continue;
+            float cost=0;auto previous=player.position;
+            for(auto next:route){cost+=planarDistance(previous,next);previous=next;}
+            if(cost<best){best=cost;movePath_=std::move(route);}
+        }
+        interactOnArrival_=!movePath_.empty()&&!hasSourceShop(room);
+        if(movePath_.empty())announce("That shop cannot be reached.",2);
+        return;
+    }
     // The stone stays solid after collection. Clicking it approaches a legal
     // edge; source collectibles pay on contact, legacy relics retain their menu.
     if(site.kind==RoomKind::Power&&planarDistance(target,site.objective)<2.4f) {

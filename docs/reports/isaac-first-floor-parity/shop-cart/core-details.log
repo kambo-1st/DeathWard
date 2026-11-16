@@ -1,0 +1,71 @@
+Start testing: Nov 16 06:10 CET
+----------------------------------------------------------
+31/176 Testing: source_shop_heart
+31/176 Test: source_shop_heart
+Command: "/home/kambo/workspace/DeathWard/build/deathward_shop_heart_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"source_shop_heart" start time: Nov 16 06:10 CET
+Output:
+----------------------------------------------------------
+PASS 27 generated size/route/shop placement cases
+PASS source prices/admission, atomic purchases, live price, revisit/Apply/floor, earned coins and schema30 migration
+<end of output>
+Test time =  12.44 sec
+----------------------------------------------------------
+Test Passed.
+"source_shop_heart" end time: Nov 16 06:10 CET
+"source_shop_heart" time elapsed: 00:00:12
+----------------------------------------------------------
+
+33/176 Testing: source_shop_stock
+33/176 Test: source_shop_stock
+Command: "/home/kambo/workspace/DeathWard/build/deathward_shop_stock_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"source_shop_stock" start time: Nov 16 06:10 CET
+Output:
+----------------------------------------------------------
+PASS 27 generated slot/clearance/access cases plus unsupported and random-sale witnesses
+PASS 16 walking/dodge directions and cart click approach
+PASS stock transactions, discounts/copies, gates, sold revisit, Apply/floors and preset migration
+<end of output>
+Test time =  14.51 sec
+----------------------------------------------------------
+Test Passed.
+"source_shop_stock" end time: Nov 16 06:10 CET
+"source_shop_stock" time elapsed: 00:00:14
+----------------------------------------------------------
+
+34/176 Testing: source_shop_key
+34/176 Test: source_shop_key
+Command: "/home/kambo/workspace/DeathWard/build/deathward_shop_key_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"source_shop_key" start time: Nov 16 06:10 CET
+Output:
+----------------------------------------------------------
+PASS 27 key/heart placement and reachability cases
+PASS native prices, cap/payment/refusals, both purchase orders, sold revisit, live price/Apply/floor and schema31 migration
+<end of output>
+Test time =  11.74 sec
+----------------------------------------------------------
+Test Passed.
+"source_shop_key" end time: Nov 16 06:11 CET
+"source_shop_key" time elapsed: 00:00:11
+----------------------------------------------------------
+
+37/176 Testing: mission_shop
+37/176 Test: mission_shop
+Command: "/home/kambo/workspace/DeathWard/build/deathward_shop_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"mission_shop" start time: Nov 16 06:11 CET
+Output:
+----------------------------------------------------------
+PASS peaceful seeded shops, stock, purchases, menu freeze, spending and save migration
+<end of output>
+Test time =   2.59 sec
+----------------------------------------------------------
+Test Passed.
+"mission_shop" end time: Nov 16 06:11 CET
+"mission_shop" time elapsed: 00:00:02
+----------------------------------------------------------
+
+End testing: Nov 16 06:11 CET
