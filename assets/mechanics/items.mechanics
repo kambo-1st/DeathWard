@@ -54,3 +54,7 @@ end
 # D11a: bounded first-floor treasure pedestal; not added to legacy reward pools.
 item "isaac:collectible:1" "The Sad Onion" "TEARS UP" "Faster firing through the ordinary source Tears curve. Copies stack; Shot Speed and Range stay independent."
 end
+
+# D12c: bounded shop collectible dependency, outside legacy pools.
+item "isaac:collectible:64" "Steam Sale" "SHOP DISCOUNT" "Reduces ordinary source-shop prices. Copies stack; remaining stock updates immediately."
+end

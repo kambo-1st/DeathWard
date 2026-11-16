@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
     std::filesystem::path balancePresetPath;
     std::string expeditionSeedText;
     std::optional<int> reviewSourceRoom,reviewRoom;
-    bool reviewShopPurchase=false,reviewShopKeyPurchase=false;
+    bool reviewShopPurchase=false,reviewShopKeyPurchase=false,reviewShopStock=false;
     std::optional<float> cinematicTime;
     std::string screenshot, scene = "combat";
     std::optional<dw::MonsterId> enemyScene;
@@ -108,6 +108,7 @@ int main(int argc, char **argv) {
                 std::cerr<<"--seed needs an unsigned whole number\n";return 2;
             }
         }
+        else if (arg == "--review-shop-stock")reviewShopStock=true;
         else if (arg == "--review-shop-key")reviewShopKeyPurchase=true;
         else if (arg == "--review-shop-purchase")reviewShopPurchase=true;
         else if (arg == "--review-room" && i + 1 < argc) {
@@ -340,6 +341,7 @@ int main(int argc, char **argv) {
                          "Town pack to edit (with --editor)\n  --save PATH          Separate campaign file\n "
                          " --balance-preset PATH  Load and remember player/enemy/view/map settings\n "
                          " --seed NUMBER        Repeatable expedition seed\n "
+                         " --review-shop-stock     Steam Sale stock review: 20 test coins (compatible seed 7)\n"
                          " --review-shop-key       Key + heart shop test: 2 red hearts, zero keys, at least 8 coins\n"
                          " --review-shop-purchase  Shop test start: 2 red hearts and at least 3 coins; repeats on retry\n"
                          " --review-room N         Enter displayed generated room N on launch/retry\n"
@@ -392,8 +394,8 @@ int main(int argc, char **argv) {
             return 2;
         }
     }
-    if(int(bool(reviewSourceRoom))+int(bool(reviewRoom))+int(reviewShopPurchase)+int(reviewShopKeyPurchase)>1){std::cerr<<"Choose one review room option\n";return 2;}
-    if((reviewSourceRoom||reviewRoom||reviewShopPurchase||reviewShopKeyPurchase)&&(!startExpedition||fullExperience||startEditor||startCinematic||intro||benchmark||practiceBatch||smoke)) {
+    if(int(bool(reviewSourceRoom))+int(bool(reviewRoom))+int(reviewShopPurchase)+int(reviewShopKeyPurchase)+int(reviewShopStock)>1){std::cerr<<"Choose one review room option\n";return 2;}
+    if((reviewSourceRoom||reviewRoom||reviewShopPurchase||reviewShopKeyPurchase||reviewShopStock)&&(!startExpedition||fullExperience||startEditor||startCinematic||intro||benchmark||practiceBatch||smoke)) {
         std::cerr<<"Room review requires --expedition without other launch modes\n";return 2;
     }
     if(practiceBatch&&(fullExperience||startEditor||startCinematic||intro||benchmark)){std::cerr<<"Practice mode requires ordinary gameplay or smoke capture\n";return 2;}
@@ -540,7 +542,7 @@ int main(int argc, char **argv) {
         game.expeditionPacing = expeditionPacing;
         if (smoke || benchmark) game.seedText = "1866";
         if(!expeditionSeedText.empty())game.seedText=expeditionSeedText;
-        game.reviewSourceRoomTemplate=reviewSourceRoom;game.reviewRoomIndex=reviewRoom;game.reviewShopPurchase=reviewShopPurchase;game.reviewShopKeyPurchase=reviewShopKeyPurchase;
+        game.reviewSourceRoomTemplate=reviewSourceRoom;game.reviewRoomIndex=reviewRoom;game.reviewShopPurchase=reviewShopPurchase;game.reviewShopKeyPurchase=reviewShopKeyPurchase;game.reviewShopStock=reviewShopStock;
         game.audioSettings = audioSettings; game.visualSettings = visualSettings; game.audioStatus = audioStatus;
         game.visualStyle = styleChoice.value_or(dw::VisualStyle::Original);
         auto savedAudioSettings = audioSettings;

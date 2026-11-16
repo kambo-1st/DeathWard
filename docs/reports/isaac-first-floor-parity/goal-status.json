@@ -3,7 +3,7 @@
   "status": "paused",
   "paused_at_utc": "2026-11-08T08:08:31Z",
   "pause_reason": "User stopped the bulk effort,requested rollback and manual selection of each specific future difference.",
-  "implementation_state": "selected_deliveries_through_D12b_enabled_developer_verified_human_key_shop_review_pending_bulk_paused",
+  "implementation_state": "D12c_developer_verified_user_acknowledged_commit_authorized_bulk_paused",
   "baseline_commit": "28023a49dbd8712820ba6953219cfdb7866bdcb6",
   "automatic_implementation_authorized": false,
   "accepted_exceptions": [
@@ -37,10 +37,10 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Selected D12c: verify native shop stock rules and integrate one supported variation with live/export/load and direct review. Bulk parity remains paused.",
+  "next_work": "Selected centered Western seller-cart presentation/placement; broader shop stock/native parity remains open.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-15",
-    "status": "D12a acknowledged; selected D12b developer-verified, human review pending",
+    "status": "D12ab committed fbbf0306; selected D12c enabled and developer-verified, human review pending",
     "report": "docs/isaac_first_floor_delivery_plan.md",
     "delivery_location": "main DeathWard executable, ordinary Game/Simulation and expedition paths",
     "cumulative_gameplay_integration_required": true,
@@ -49,7 +49,7 @@
     "preset_format": "versioned self-contained JSON with reference provenance and custom overrides",
     "preset_export_and_fresh_launch_reload_required": true,
     "explicit_application_boundaries_required": true,
-    "next_proposed_delivery": "Short D12b key/heart purchase and sold revisit review, then source-based shop stock selection if selected. No bulk resumption.",
+    "next_proposed_delivery": "Human D12c Steam Sale/key discount and sold-revisit review; then commit accepted checkpoint and select the next bounded stock/pool dependency. Bulk parity remains paused.",
     "new_gameplay_implemented": true,
     "new_bulk_selection": false,
     "selected_deliveries": [
@@ -71,7 +71,8 @@
       "D10d",
       "D11a",
       "D12a",
-      "D12b"
+      "D12b",
+      "D12c"
     ],
     "human_acceptance": "D12a scoped acknowledgment; D12b pending",
     "implementation_report": "docs/reports/isaac-first-floor-parity/d12b-shop-key/README.md",
@@ -1061,11 +1062,19 @@
     "included_in_this_checkpoint": true
   },
   "d12c_shop_stock": {
-    "selected": true,
-    "enabled": false,
-    "developer_verified": false,
-    "human_accepted": false,
+    "status": "developer_verified_user_acknowledged",
+    "checkpoint_commit": "fbbf0306",
+    "report": "docs/reports/isaac-first-floor-parity/d12c-shop-stock/README.md",
+    "schema": 32,
+    "native_stock_cases": 1551,
+    "native_discount_cases": 155,
+    "native_item_price_cases": 30,
+    "human_acceptance": "scoped_user_acknowledgment_2026-11-16",
     "full_native_acceptance": false,
-    "status": "selected_pending_research_and_implementation"
+    "core_suites_passed": 7,
+    "generated_placement_cases": 27,
+    "game_renderer_modes_passed": 3,
+    "cli_loads_passed": 4,
+    "uncommitted": "included_in_requested_checkpoint"
   }
 }

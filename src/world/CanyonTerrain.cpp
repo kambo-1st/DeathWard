@@ -1,5 +1,6 @@
 #include "world/CanyonTerrain.hpp"
 #include "world/Dungeon.hpp"
+#include "world/SourceShopHeart.hpp"
 #include <memory>
 
 namespace dw {
@@ -225,6 +226,16 @@ void buildCanyon(Arena &arena, bool river) {
         std::erase_if(room.obstacles,[&](Box box) {
             return planarDistance(mul(add(box.min,box.max),.5f),room.center)<(box.max.x-box.min.x)*.5f+5.f;
         });
+    }
+    // Opening-floor shop slots must be reachable without demolition. Filter only
+    // intruding outcrops after seeded draws, retaining the surrounding canyon.
+    if(arena.profile.active()&&arena.profile.floor==0)for(auto &room:arena.rooms)if(room.kind==RoomKind::Shop) {
+        const auto nearStock=[&](Vector3 at,float radius) {
+            return lineDistance(at,room.center,sourceShopKeyPosition(room))<radius+3.f||
+                   lineDistance(at,room.center,sourceShopHeartPosition(room))<radius+3.f;
+        };
+        std::erase_if(rocks,[&](const Outcrop &rock){return nearStock(rock.center,std::max(rock.rx,rock.rz));});
+        std::erase_if(room.obstacles,[&](Box box){return nearStock(mul(add(box.min,box.max),.5f),(box.max.x-box.min.x)*.5f);});
     }
     field->x = std::floor((arena.bounds.min.x - 40) / field->step) * field->step;
     field->z = std::floor((arena.bounds.min.z - 40) / field->step) * field->step;

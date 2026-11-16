@@ -1,0 +1,79 @@
+{
+  "cases": [
+    {
+      "case": "schema5",
+      "argv": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "7",
+        "--review-shop-stock",
+        "--mute",
+        "--save",
+        "/tmp/deathward-d12c-cli-mud52rtp/schema5.save",
+        "--balance-preset",
+        "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+      ],
+      "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 onion_strength=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=a6606a149041ee10 profile=custom",
+      "review": "SHOP_STOCK_REVIEW room=7 upgrade_slot=0 key_slot=1 heart_slot=-1 sale_slot=4 coins=20 price=15 god=0",
+      "status": "passed",
+      "log": "cli-schema5.log"
+    },
+    {
+      "case": "schema31",
+      "argv": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "7",
+        "--review-shop-stock",
+        "--mute",
+        "--save",
+        "/tmp/deathward-d12c-cli-mud52rtp/schema31.save",
+        "--balance-preset",
+        "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d12b-shop-key/shop-key-preset.json"
+      ],
+      "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 onion_strength=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_key_price=6 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=9fff4637eb2c5021 profile=custom",
+      "review": "SHOP_STOCK_REVIEW room=7 upgrade_slot=0 key_slot=1 heart_slot=-1 sale_slot=4 coins=20 price=15 god=0",
+      "status": "passed",
+      "log": "cli-schema31.log"
+    },
+    {
+      "case": "schema32",
+      "argv": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "7",
+        "--review-shop-stock",
+        "--mute",
+        "--save",
+        "/tmp/deathward-d12c-cli-mud52rtp/schema32.save",
+        "--balance-preset",
+        "/home/kambo/workspace/DeathWard/artifacts/shop-stock-preset.json"
+      ],
+      "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 onion_strength=1 shop_stock=1 shop_upgrade_price=16 steam_sale=0 shop_heart=1 shop_key=1 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=21359ebe0b4fccb0 profile=custom",
+      "review": "SHOP_STOCK_REVIEW room=7 upgrade_slot=0 key_slot=1 heart_slot=-1 sale_slot=4 coins=20 price=16 god=0",
+      "status": "passed",
+      "log": "cli-schema32.log"
+    },
+    {
+      "case": "remembered32",
+      "argv": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "7",
+        "--review-shop-stock",
+        "--mute",
+        "--save",
+        "/tmp/deathward-d12c-cli-mud52rtp/schema32.save"
+      ],
+      "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 onion_strength=1 shop_stock=1 shop_upgrade_price=16 steam_sale=0 shop_heart=1 shop_key=1 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=21359ebe0b4fccb0 profile=custom",
+      "review": "SHOP_STOCK_REVIEW room=7 upgrade_slot=0 key_slot=1 heart_slot=-1 sale_slot=4 coins=20 price=16 god=0",
+      "status": "passed",
+      "log": "cli-remembered32.log"
+    }
+  ],
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf"
+}

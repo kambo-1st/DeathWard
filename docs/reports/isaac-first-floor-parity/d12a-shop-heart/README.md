@@ -1,5 +1,7 @@
 # D12a — Ordinary shop red-heart purchase
 
+Checkpoint committed as `fbbf0306`; subsequent selected [D12c](../d12c-shop-stock/README.md) adds bounded stock variation and Steam Sale. The delivery details below describe this earlier checkpoint.
+
 Selected on 2026-11-15 after the user authorized the D11a checkpoint and the proposed first shop delivery. D11a is committed as `7d97f72d`. D12a is enabled in the main game. Native reference, generated placement, transaction, Game/Renderer and preset/CLI checks pass. The user acknowledged the handoff with “ok, continue” and selected another shop offering. This is scoped acknowledgment, not a separately observed playtest or full native acceptance. The user subsequently authorized committing D12a/D12b and continuing with D12c; both are included in this checkpoint.
 
 ## Scope

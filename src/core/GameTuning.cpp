@@ -29,15 +29,15 @@ void Game::archiveBalance(const BalancePreset &preset) const {
 void Game::applyBalance(BalancePreset preset) {
     preset.validate();archiveBalance(preset); // No partial runtime update on validation/write failure.
     const bool zoomChanged=preset.defaultZoomPercent!=balancePreset.defaultZoomPercent;
-    const bool resize=run&&(preset.roomSizeScale!=run->roomSizeScale||preset.roomMinHalfTiles!=run->roomMinHalfTiles||preset.roomMaxHalfTiles!=run->roomMaxHalfTiles||preset.routeLengthScale!=run->routeLengthScale||preset.sourceCombatRoom!=run->sourceCombatRoom||preset.roomHeartLayouts!=run->roomHeartLayouts||preset.sourceRoomLocks!=run->sourceRoomLocks||preset.sourceTreasureUpgrade!=run->sourceTreasureUpgrade||preset.sourceShopHeart!=run->sourceShopHeart||preset.sourceShopKey!=run->sourceShopKey);
-    if(resize)run->resizeRooms(preset.roomSizeScale,preset.roomMinHalfTiles,preset.roomMaxHalfTiles,preset.routeLengthScale,preset.sourceCombatRoom,preset.roomHeartLayouts,preset.sourceRoomLocks,preset.sourceTreasureUpgrade,preset.sourceShopHeart,preset.sourceShopKey); // Constructs first; an invalid/unsafe edit leaves the expedition intact.
+    const bool resize=run&&(preset.roomSizeScale!=run->roomSizeScale||preset.roomMinHalfTiles!=run->roomMinHalfTiles||preset.roomMaxHalfTiles!=run->roomMaxHalfTiles||preset.routeLengthScale!=run->routeLengthScale||preset.sourceCombatRoom!=run->sourceCombatRoom||preset.roomHeartLayouts!=run->roomHeartLayouts||preset.sourceRoomLocks!=run->sourceRoomLocks||preset.sourceTreasureUpgrade!=run->sourceTreasureUpgrade||preset.sourceShopHeart!=run->sourceShopHeart||preset.sourceShopKey!=run->sourceShopKey||preset.sourceShopVariation!=run->sourceShopVariation);
+    if(resize)run->resizeRooms(preset.roomSizeScale,preset.roomMinHalfTiles,preset.roomMaxHalfTiles,preset.routeLengthScale,preset.sourceCombatRoom,preset.roomHeartLayouts,preset.sourceRoomLocks,preset.sourceTreasureUpgrade,preset.sourceShopHeart,preset.sourceShopKey,preset.sourceShopVariation); // Constructs first; an invalid/unsafe edit leaves the expedition intact.
     if(!run){preset.save(balanceDirectory/"next.json");nextBalancePreset=preset;}
     balancePreset=std::move(preset);balanceDraft.playerSpeed=balancePreset.playerSpeed;
     balanceDraft.tearsPerSecond=balancePreset.tearsPerSecond;balanceDraft.shotSpeed=balancePreset.shotSpeed;
     balanceDraft.rangeTiles=balancePreset.rangeTiles;
     balanceDraft.inventoryBombs=balancePreset.inventoryBombs;
     balanceDraft.keyedDoorCost=balancePreset.keyedDoorCost;
-    balanceDraft.sadOnionStrength=balancePreset.sadOnionStrength;balanceDraft.shopHeartPrice=balancePreset.shopHeartPrice;balanceDraft.shopKeyPrice=balancePreset.shopKeyPrice;
+    balanceDraft.sadOnionStrength=balancePreset.sadOnionStrength;balanceDraft.shopHeartPrice=balancePreset.shopHeartPrice;balanceDraft.shopKeyPrice=balancePreset.shopKeyPrice;balanceDraft.shopUpgradePrice=balancePreset.shopUpgradePrice;balanceDraft.steamSaleDiscounts=balancePreset.steamSaleDiscounts;
     balanceDraft.redHeartAppearanceSpeed=balancePreset.redHeartAppearanceSpeed;
     balanceDraft.bombClearRewards=balancePreset.bombClearRewards;balanceDraft.keyClearRewards=balancePreset.keyClearRewards;balanceDraft.chestClearRewards=balancePreset.chestClearRewards;balanceDraft.coinClearRewards=balancePreset.coinClearRewards;balanceDraft.redHeartClearRewards=balancePreset.redHeartClearRewards;balanceDraft.playerLuck=balancePreset.playerLuck;
     balanceDraft.playerDamage=balancePreset.playerDamage;balanceDraft.regularHealthMultiplier=balancePreset.regularHealthMultiplier;
@@ -53,7 +53,7 @@ void Game::applyBalance(BalancePreset preset) {
         run->applyCombatBalance(balancePreset.playerDamage,balancePreset.regularHealthMultiplier);
         run->inventoryBombTuning=balancePreset.inventoryBombs;
         run->keyedDoorCost=balancePreset.keyedDoorCost;
-        run->sadOnionStrength=balancePreset.sadOnionStrength;run->shopHeartPrice=balancePreset.shopHeartPrice;run->shopKeyPrice=balancePreset.shopKeyPrice;
+        run->sadOnionStrength=balancePreset.sadOnionStrength;run->shopHeartPrice=balancePreset.shopHeartPrice;run->shopKeyPrice=balancePreset.shopKeyPrice;run->shopUpgradePrice=balancePreset.shopUpgradePrice;run->steamSaleDiscounts=balancePreset.steamSaleDiscounts;
         playerDamage=run->player.shotDamage;
         run->redHeartAppearanceSpeed=balancePreset.redHeartAppearanceSpeed;
         run->bombClearRewards=balancePreset.bombClearRewards;run->keyClearRewards=balancePreset.keyClearRewards;run->chestClearRewards=balancePreset.chestClearRewards;run->coinClearRewards=balancePreset.coinClearRewards;run->redHeartClearRewards=balancePreset.redHeartClearRewards;run->player.attributes.luck=balancePreset.playerLuck;
@@ -120,7 +120,7 @@ bool Game::hasPendingMapChanges() const {
     return balanceDraft.roomSizeScale!=balancePreset.roomSizeScale||
         balanceDraft.roomMinHalfTiles!=balancePreset.roomMinHalfTiles||
         balanceDraft.roomMaxHalfTiles!=balancePreset.roomMaxHalfTiles||
-        balanceDraft.routeLengthScale!=balancePreset.routeLengthScale||balanceDraft.sourceCombatRoom!=balancePreset.sourceCombatRoom||balanceDraft.roomHeartLayouts!=balancePreset.roomHeartLayouts||balanceDraft.sourceRoomLocks!=balancePreset.sourceRoomLocks||balanceDraft.sourceTreasureUpgrade!=balancePreset.sourceTreasureUpgrade||balanceDraft.sourceShopHeart!=balancePreset.sourceShopHeart||balanceDraft.sourceShopKey!=balancePreset.sourceShopKey;
+        balanceDraft.routeLengthScale!=balancePreset.routeLengthScale||balanceDraft.sourceCombatRoom!=balancePreset.sourceCombatRoom||balanceDraft.roomHeartLayouts!=balancePreset.roomHeartLayouts||balanceDraft.sourceRoomLocks!=balancePreset.sourceRoomLocks||balanceDraft.sourceTreasureUpgrade!=balancePreset.sourceTreasureUpgrade||balanceDraft.sourceShopHeart!=balancePreset.sourceShopHeart||balanceDraft.sourceShopKey!=balancePreset.sourceShopKey||balanceDraft.sourceShopVariation!=balancePreset.sourceShopVariation;
 }
 void Game::setRoomSizeRange(int minimum,int maximum) {
     auto preset=balanceDraft;preset.roomMinHalfTiles=minimum;preset.roomMaxHalfTiles=maximum;preset.validate();
@@ -170,7 +170,7 @@ void Game::loadBalancePreset(const std::filesystem::path &path) {
     auto candidate=BalancePreset::load(path,defaultMechanics()->fingerprint());
     const auto filename=path.string();
     auto live=balancePreset;live.playerSpeed=candidate.playerSpeed;live.defaultZoomPercent=candidate.defaultZoomPercent;
-    live.tearsPerSecond=candidate.tearsPerSecond;live.shotSpeed=candidate.shotSpeed;live.rangeTiles=candidate.rangeTiles;live.inventoryBombs=candidate.inventoryBombs;live.keyedDoorCost=candidate.keyedDoorCost;live.sadOnionStrength=candidate.sadOnionStrength;live.shopHeartPrice=candidate.shopHeartPrice;live.shopKeyPrice=candidate.shopKeyPrice;
+    live.tearsPerSecond=candidate.tearsPerSecond;live.shotSpeed=candidate.shotSpeed;live.rangeTiles=candidate.rangeTiles;live.inventoryBombs=candidate.inventoryBombs;live.keyedDoorCost=candidate.keyedDoorCost;live.sadOnionStrength=candidate.sadOnionStrength;live.shopHeartPrice=candidate.shopHeartPrice;live.shopKeyPrice=candidate.shopKeyPrice;live.shopUpgradePrice=candidate.shopUpgradePrice;live.steamSaleDiscounts=candidate.steamSaleDiscounts;
     live.redHeartAppearanceSpeed=candidate.redHeartAppearanceSpeed;live.bombClearRewards=candidate.bombClearRewards;live.keyClearRewards=candidate.keyClearRewards;live.chestClearRewards=candidate.chestClearRewards;live.coinClearRewards=candidate.coinClearRewards;live.redHeartClearRewards=candidate.redHeartClearRewards;live.playerLuck=candidate.playerLuck;
     live.playerDamage=candidate.playerDamage;live.regularHealthMultiplier=candidate.regularHealthMultiplier;
     live.gaperMovementMultiplier=candidate.gaperMovementMultiplier;
@@ -203,7 +203,7 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     candidate->applyCombatBalance(preset.playerDamage,preset.regularHealthMultiplier);
     candidate->inventoryBombTuning=preset.inventoryBombs;
     candidate->keyedDoorCost=preset.keyedDoorCost;
-    candidate->sadOnionStrength=preset.sadOnionStrength;candidate->shopHeartPrice=preset.shopHeartPrice;candidate->shopKeyPrice=preset.shopKeyPrice;
+    candidate->sadOnionStrength=preset.sadOnionStrength;candidate->shopHeartPrice=preset.shopHeartPrice;candidate->shopKeyPrice=preset.shopKeyPrice;candidate->shopUpgradePrice=preset.shopUpgradePrice;candidate->steamSaleDiscounts=preset.steamSaleDiscounts;
     playerDamage=candidate->player.shotDamage;
     candidate->redHeartAppearanceSpeed=preset.redHeartAppearanceSpeed;
     candidate->bombClearRewards=preset.bombClearRewards;candidate->keyClearRewards=preset.keyClearRewards;candidate->chestClearRewards=preset.chestClearRewards;candidate->coinClearRewards=preset.coinClearRewards;candidate->redHeartClearRewards=preset.redHeartClearRewards;candidate->player.attributes.luck=preset.playerLuck;
@@ -230,16 +230,16 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
             candidate->announce("ROOM REVIEW / Room "+std::to_string(*reviewRoomIndex+1),6);
         }
     }
-    if(reviewShopPurchase||reviewShopKeyPurchase) {
+    if(reviewShopPurchase||reviewShopKeyPurchase||reviewShopStock) {
         const int shop=candidate->arena.shopRoom;
-        if(!candidate->hasSourceShop(shop)||(reviewShopKeyPurchase&&!candidate->sourceShopKey))throw std::runtime_error("Shop purchase review requires opening-floor source shop stock");
+        if(!candidate->hasSourceShop(shop)||(reviewShopKeyPurchase&&!candidate->shopKeyOffered())||(reviewShopPurchase&&!candidate->shopHeartOffered())||(reviewShopStock&&!candidate->shopVariationActive()))throw std::runtime_error("Shop review requires the requested opening-floor stock; use its recorded seed and stock settings");
         candidate->player.position=candidate->arena.rooms[size_t(shop)].center;
         candidate->player.hp=4;
-        const uint64_t funds=reviewShopKeyPurchase?8:3;
-        if(reviewShopKeyPurchase)candidate->keys=0;
+        const uint64_t funds=reviewShopStock?20:reviewShopKeyPurchase?8:3;
+        if(reviewShopKeyPurchase||reviewShopStock)candidate->keys=0;
         if(candidate->money()<funds)candidate->moneyCollected+=funds-candidate->money();
         candidate->enterRoom(shop);
-        candidate->announce(reviewShopKeyPurchase?"SHOP REVIEW / KEY + HEART / AT LEAST 8 COINS":"SHOP REVIEW / 2 RED HEARTS / AT LEAST 3 COINS",8);
+        candidate->announce(reviewShopStock?"STOCK REVIEW / STEAM SALE / AT LEAST 20 COINS":reviewShopKeyPurchase?"SHOP REVIEW / KEY + HEART / AT LEAST 8 COINS":"SHOP REVIEW / 2 RED HEARTS / AT LEAST 3 COINS",8);
     }
     const RetrySetup setup{candidate->expedition.seed,candidate->arena.theme,visualSettings.canyonRiver,
                            candidate->surveyTutorial,candidate->expedition.account,candidate->expedition.pacing};
@@ -251,9 +251,10 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     missionMenu=walkingToMission=false;town.stop();screen=Screen::Expedition;
     deathTime=0;paused=false;accumulator=0;error.clear();resetArmed=false;
     useDefaultZoom();resetPointerInput();
-    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" gaper_movement="<<balancePreset.gaperMovementMultiplier<<" spider_movement="<<balancePreset.spiderMovementMultiplier<<" pooter_movement="<<balancePreset.pooterMovementMultiplier<<" pooter_shot="<<balancePreset.pooterShotSpeedMultiplier<<" pooter_delay="<<balancePreset.pooterAttackIntervalMultiplier<<" damage="<<balancePreset.playerDamage<<" regular_hp="<<balancePreset.regularHealthMultiplier<<" bomb_fuse="<<balancePreset.inventoryBombs.fuseMultiplier<<" bomb_radius="<<balancePreset.inventoryBombs.radiusMultiplier<<" bomb_damage="<<balancePreset.inventoryBombs.damage<<" bomb_self="<<balancePreset.inventoryBombs.selfDamageHalfHearts<<" treasure_upgrade="<<balancePreset.sourceTreasureUpgrade<<" onion_strength="<<balancePreset.sadOnionStrength<<" shop_heart="<<balancePreset.sourceShopHeart<<" shop_key="<<balancePreset.sourceShopKey<<" shop_key_price="<<balancePreset.shopKeyPrice<<" shop_heart_price="<<balancePreset.shopHeartPrice<<" room_locks="<<balancePreset.sourceRoomLocks<<" key_cost="<<balancePreset.keyedDoorCost<<" rock_shielding="<<balancePreset.inventoryBombs.rocksBlockBlast<<" bomb_rewards="<<balancePreset.bombClearRewards<<" key_rewards="<<balancePreset.keyClearRewards<<" chest_rewards="<<balancePreset.chestClearRewards<<" coin_rewards="<<balancePreset.coinClearRewards<<" red_heart_rewards="<<balancePreset.redHeartClearRewards<<" heart_appearance="<<balancePreset.redHeartAppearanceSpeed<<" luck="<<balancePreset.playerLuck<<" room_hearts="<<balancePreset.roomHeartLayouts<<" source_room="<<balancePreset.sourceCombatRoom<<" revision="<<balancePreset.revision()
+    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" gaper_movement="<<balancePreset.gaperMovementMultiplier<<" spider_movement="<<balancePreset.spiderMovementMultiplier<<" pooter_movement="<<balancePreset.pooterMovementMultiplier<<" pooter_shot="<<balancePreset.pooterShotSpeedMultiplier<<" pooter_delay="<<balancePreset.pooterAttackIntervalMultiplier<<" damage="<<balancePreset.playerDamage<<" regular_hp="<<balancePreset.regularHealthMultiplier<<" bomb_fuse="<<balancePreset.inventoryBombs.fuseMultiplier<<" bomb_radius="<<balancePreset.inventoryBombs.radiusMultiplier<<" bomb_damage="<<balancePreset.inventoryBombs.damage<<" bomb_self="<<balancePreset.inventoryBombs.selfDamageHalfHearts<<" treasure_upgrade="<<balancePreset.sourceTreasureUpgrade<<" onion_strength="<<balancePreset.sadOnionStrength<<" shop_stock="<<balancePreset.sourceShopVariation<<" shop_upgrade_price="<<balancePreset.shopUpgradePrice<<" steam_sale="<<balancePreset.steamSaleDiscounts<<" shop_heart="<<balancePreset.sourceShopHeart<<" shop_key="<<balancePreset.sourceShopKey<<" shop_key_price="<<balancePreset.shopKeyPrice<<" shop_heart_price="<<balancePreset.shopHeartPrice<<" room_locks="<<balancePreset.sourceRoomLocks<<" key_cost="<<balancePreset.keyedDoorCost<<" rock_shielding="<<balancePreset.inventoryBombs.rocksBlockBlast<<" bomb_rewards="<<balancePreset.bombClearRewards<<" key_rewards="<<balancePreset.keyClearRewards<<" chest_rewards="<<balancePreset.chestClearRewards<<" coin_rewards="<<balancePreset.coinClearRewards<<" red_heart_rewards="<<balancePreset.redHeartClearRewards<<" heart_appearance="<<balancePreset.redHeartAppearanceSpeed<<" luck="<<balancePreset.playerLuck<<" room_hearts="<<balancePreset.roomHeartLayouts<<" source_room="<<balancePreset.sourceCombatRoom<<" revision="<<balancePreset.revision()
              <<" profile="<<(balancePreset.custom()?"custom":"reference-partial")<<'\n';
     if(reviewRoomIndex)std::cout<<"ROOM_REVIEW room="<<run->room+1<<" hp="<<run->player.hp<<" god="<<run->godMode<<'\n';
+    if(reviewShopStock)std::cout<<"SHOP_STOCK_REVIEW room="<<run->room+1<<" upgrade_slot="<<run->shopUpgradeSlot<<" key_slot="<<run->shopKeySlot<<" heart_slot="<<run->shopHeartSlot<<" sale_slot="<<run->shopDiscountSlot<<" coins="<<run->money()<<" price="<<run->shopPrice(run->shopUpgradePrice,run->shopUpgradeSlot)<<" god="<<run->godMode<<'\n';
     if(reviewShopKeyPurchase)std::cout<<"SHOP_KEY_REVIEW room="<<run->room+1<<" keys="<<run->keys<<" coins="<<run->money()<<" key_price="<<run->shopKeyPrice<<" heart_price="<<run->shopHeartPrice<<" god="<<run->godMode<<'\n';
     if(reviewShopPurchase)std::cout<<"SHOP_REVIEW room="<<run->room+1<<" hp="<<run->player.hp<<" coins="<<run->money()<<" price="<<run->shopHeartPrice<<" god="<<run->godMode<<'\n';
     if(reviewSourceRoomTemplate) {
@@ -276,7 +277,7 @@ void Game::retryExpedition() {
     const auto setup=*retrySetup_;
     if(run)finish(EndReason::Death); // Resolve consequences once; never reset the campaign.
     auto candidate=std::make_unique<Simulation>(setup.seed,campaign.data().nextRunId,campaign.data().world,
-        setup.theme,setup.river,setup.tutorial,setup.account,0,setup.pacing,defaultMechanics(),balancePreset.roomSizeScale,balancePreset.roomMinHalfTiles,balancePreset.roomMaxHalfTiles,balancePreset.routeLengthScale,balancePreset.sourceCombatRoom,balancePreset.roomHeartLayouts,balancePreset.coinClearRewards,balancePreset.sourceRoomLocks,balancePreset.sourceTreasureUpgrade,balancePreset.sourceShopHeart,balancePreset.sourceShopKey);
+        setup.theme,setup.river,setup.tutorial,setup.account,0,setup.pacing,defaultMechanics(),balancePreset.roomSizeScale,balancePreset.roomMinHalfTiles,balancePreset.roomMaxHalfTiles,balancePreset.routeLengthScale,balancePreset.sourceCombatRoom,balancePreset.roomHeartLayouts,balancePreset.coinClearRewards,balancePreset.sourceRoomLocks,balancePreset.sourceTreasureUpgrade,balancePreset.sourceShopHeart,balancePreset.sourceShopKey,balancePreset.sourceShopVariation);
     startExpedition(std::move(candidate),true);
     balanceNotice="Retried the same expedition seed with the applied player, enemy, view and map settings.";
 }

@@ -1,0 +1,15 @@
+32/176 Testing: source_shop_stock_reference
+32/176 Test: source_shop_stock_reference
+Command: "/home/kambo/workspace/DeathWard/build/deathward_shop_stock_reference_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"source_shop_stock_reference" start time: Nov 15 20:18 CET
+Output:
+----------------------------------------------------------
+PASS 1551 native stock schedules, 155 native/CRT discount cases, 30 native collectible base prices
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"source_shop_stock_reference" end time: Nov 15 20:18 CET
+"source_shop_stock_reference" time elapsed: 00:00:00
+----------------------------------------------------------

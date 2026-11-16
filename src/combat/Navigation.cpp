@@ -360,14 +360,16 @@ void Simulation::requestMove(Vector3 target, bool interactAtDestination) {
 }
 std::string Simulation::nearbyInteraction() const {
     const auto &site=arena.rooms[size_t(room)];
-    if(hasSourceShop(room)&&sourceShopKey&&!shopKeySold&&planarDistance(player.position,shopKeyPosition())<2.6f&&
-       (shopHeartSold||planarDistance(player.position,shopKeyPosition())<planarDistance(player.position,shopHeartPosition()))) {
+    if(hasSourceShop(room)&&shopVariationActive()&&!shopUpgradeSold&&planarDistance(player.position,shopUpgradePosition())<2.6f)
+        return "STEAM SALE / "+std::to_string(shopPrice(shopUpgradePrice,shopUpgradeSlot))+" COINS / WALK UP TO BUY";
+    if(hasSourceShop(room)&&shopKeyOffered()&&!shopKeySold&&planarDistance(player.position,shopKeyPosition())<2.6f&&
+       (!shopHeartOffered()||shopHeartSold||planarDistance(player.position,shopKeyPosition())<planarDistance(player.position,shopHeartPosition()))) {
         if(keys>=99)return "KEY / INVENTORY FULL";
-        return "KEY / "+std::to_string(shopKeyPrice)+" COINS / WALK UP TO BUY";
+        return "KEY / "+std::to_string(shopPrice(shopKeyPrice,shopKeySlot))+" COINS / WALK UP TO BUY";
     }
-    if(hasSourceShop(room)&&!shopHeartSold&&planarDistance(player.position,shopHeartPosition())<2.6f) {
+    if(hasSourceShop(room)&&shopHeartOffered()&&!shopHeartSold&&planarDistance(player.position,shopHeartPosition())<2.6f) {
         if(player.hp>=player.redHealthCapacity())return "RED HEART / HEALTH FULL";
-        return "RED HEART / "+std::to_string(shopHeartPrice)+" COINS / WALK UP TO BUY";
+        return "RED HEART / "+std::to_string(shopPrice(shopHeartPrice,shopHeartSlot))+" COINS / WALK UP TO BUY";
     }
     if(site.story!=StoryRoom::None&&roomClear&&distance(player.position,site.objective)<2.6f&&arena.sight(player.position,site.objective))
         return "EXAMINE SITE";

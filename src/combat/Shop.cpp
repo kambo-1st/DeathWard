@@ -2,6 +2,7 @@
 #include "items/Items.hpp"
 #include "items/ItemPools.hpp"
 #include "world/SourceShopHeart.hpp"
+#include "world/SourceShopStock.hpp"
 
 namespace dw {
 bool Simulation::hasSourceShop(int index) const {
@@ -10,13 +11,13 @@ bool Simulation::hasSourceShop(int index) const {
         arena.rooms[size_t(index)].kind==RoomKind::Shop;
 }
 Vector3 Simulation::shopHeartPosition() const {
-    return sourceShopHeartPosition(arena.rooms.at(size_t(arena.shopRoom)));
+    return sourceHeartCell(arena.rooms.at(size_t(arena.shopRoom)),shopHeartSlot==0?5:7,4);
 }
 Vector3 Simulation::shopKeyPosition() const {
-    return sourceShopKeyPosition(arena.rooms.at(size_t(arena.shopRoom)));
+    return sourceHeartCell(arena.rooms.at(size_t(arena.shopRoom)),shopKeySlot==1?7:5,4);
 }
 void Simulation::deliverShopKey() {
-    if(!hasSourceShop(room)||!sourceShopKey||shopKeyDelivered||shopKeySold||dead||finished)return;
+    if(!hasSourceShop(room)||!shopKeyOffered()||shopKeyDelivered||shopKeySold||dead||finished)return;
     const auto at=shopKeyPosition();
     // Stable DW actor seed; native shop stock/factory RNG is a separate open scope.
     const uint32_t pickupSeed=uint32_t(seed_^0x53484f504b4559ULL)|1U;
@@ -24,13 +25,46 @@ void Simulation::deliverShopKey() {
     keyPickups.back().shopStock=true;shopKeyDelivered=true;checkpointNeeded=true;
 }
 void Simulation::deliverShopHeart() {
-    if(!hasSourceShop(room)||shopHeartDelivered||shopHeartSold||dead||finished)return;
+    if(!hasSourceShop(room)||!shopHeartOffered()||shopHeartDelivered||shopHeartSold||dead||finished)return;
     const auto at=shopHeartPosition();
     if(arena.blocked(at,.48f)||!spawnHeartPickup(HeartKind::Red,at,2))return;
     auto &heart=heartPickups.back();heart.sourceSubtype=1;heart.shopStock=true;
     shopHeartDelivered=true;checkpointNeeded=true; // Idle on entry, no clear-reward birth.
 }
+Vector3 Simulation::shopUpgradePosition() const {
+    return sourceHeartCell(arena.rooms.at(size_t(arena.shopRoom)),shopUpgradeSlot==0?5:7,4);
+}
+int Simulation::shopPrice(int base,int slot) const {
+    const int copies=steamSaleDiscounts?itemStacks({"isaac",ItemKind::Collectible,64}):0;
+    // The native random sale and Steam Sale use the same count; they do not multiply.
+    const int discounts=copies>0?copies:(slot>=0&&slot==shopDiscountSlot?1:0);
+    return sourceShopDiscountPrice(base,discounts);
+}
+bool Simulation::collectShopUpgrade() {
+    if(!hasSourceShop(room)||!shopVariationActive()||shopUpgradeSold||dead||finished||
+       player.totalHealth()<=0||!roomClear||roomThreats()||shopOpen||rewardOpen||letterOpen||
+       storyOpen!=StoryRoom::None||items.size()>=256||shopUpgradePrice<0||shopUpgradePrice>30)return false;
+    const auto at=shopUpgradePosition();
+    if(planarDistance(player.position,at)>=1||!arena.clear(player.position,at,.1f))return false;
+    const int price=shopPrice(shopUpgradePrice,shopUpgradeSlot);
+    const ItemKey item{"isaac",ItemKind::Collectible,64};
+    if(!content->item(item)||money()<uint64_t(price))return false;
+    moneySpent+=uint64_t(price);shopUpgradeSold=true;grant(item);
+    announce("STEAM SALE / SHOP DISCOUNT",3);checkpointNeeded=true;return true;
+}
 void Simulation::prepareShop() {
+    shopHeartSlot=1;shopKeySlot=0;shopUpgradeSlot=shopDiscountSlot=-1;
+    if(hasSourceShop(arena.shopRoom)&&sourceShopVariation) {
+        const auto stock=sourceShopStock(canyonShopStockSeed(seed_)); // Supplied basic shop level0.
+        const int a=stock.categories[0],b=stock.categories[1];
+        if((a==8&&(b==0||b==3))||(b==8&&(a==0||a==3))) {
+            shopUpgradeSlot=a==8?0:1;
+            shopHeartSlot=a==0?0:b==0?1:-1;shopKeySlot=a==3?0:b==3?1:-1;
+            shopDiscountSlot=stock.discountSlot;
+        }
+        // No category reroll. Other pairs retain the explicit previous fixed-pair fallback.
+        // Collectible pool selection is bounded to the eligible Steam Sale offering.
+    }
     Random rng(seed_ ^ 0x53484f5053544f43ULL);
     std::array<ItemId, ItemCount> pool{};
     const int available=surveyTutorial||expedition.pacing==ExpeditionPacing::Classic?LegacyItemCount:ItemCount;

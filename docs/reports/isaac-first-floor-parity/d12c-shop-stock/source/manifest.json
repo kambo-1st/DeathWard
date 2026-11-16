@@ -1,0 +1,69 @@
+{
+  "version": "Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "stock_cases": 1551,
+  "discount_cases": 155,
+  "item_price_cases": 30,
+  "item": {
+    "description": "#STEAM_SALE_DESCRIPTION",
+    "gfx": "Collectibles_064_SteamSale.png",
+    "id": "64",
+    "name": "#STEAM_SALE_NAME"
+  },
+  "shop_pool_entry": {
+    "Id": "64",
+    "Weight": "1",
+    "DecreaseBy": "1",
+    "RemoveOn": "0.1"
+  },
+  "xml_sha256": {
+    "items.xml": "ee567ed920b1bcada61f2a2d65e48563286fe7e8bf00363ad763ac2aa3ae64b7",
+    "itempools.xml": "da5391ba59626b0fe349fa6d143df82cd7c19c648f04311d8e21a441d5aa502c"
+  },
+  "windows": [
+    {
+      "name": "stock-init",
+      "start": "0x7cf800",
+      "end": "0x7d03dc",
+      "sha256": "d554e57ae0ff8c0eb177dcd57cac67cc835a329657bb17b0b7be7aac289f1db6"
+    },
+    {
+      "name": "stock-dispatch",
+      "start": "0x7d03e0",
+      "end": "0x7d049c",
+      "sha256": "c20de3cf135de26b295dfc751abbc1ef4c918105a526301a37377213e2fd45b4"
+    },
+    {
+      "name": "stock-resolve",
+      "start": "0x7d04a0",
+      "end": "0x7d08ee",
+      "sha256": "dc7461b51e9d247aa520af257d4295b07d437155e2bd7c3d36f34638fd07c0ee"
+    },
+    {
+      "name": "stock-shuffle",
+      "start": "0x5b6400",
+      "end": "0x5b648d",
+      "sha256": "562659212f2be01058199cabfee25b647bfb8c05304816884443b7b3724a7bb8"
+    },
+    {
+      "name": "discount-count",
+      "start": "0x7d1751",
+      "end": "0x7d1827",
+      "sha256": "31c6b86785516cd04dedd3c7da9e14a7148cc6205385d21d94f36fb5a069a0a9"
+    },
+    {
+      "name": "default-item-price",
+      "start": "0x6f1564",
+      "end": "0x6f1572",
+      "sha256": "39508e3c5b2e24109513ac49c676208bc7af7495f3296a6f57a170fec584d0e3"
+    },
+    {
+      "name": "ordinary-price",
+      "start": "0x7d0950",
+      "end": "0x7d0df4",
+      "sha256": "d3a1484db2ba766790757566de86d3b85630570e938d1a2e78f8e88c8aaf0de1"
+    }
+  ],
+  "scope": "Whole ordinary stock initializer and original shuffle/RNG/game queries under supplied normal mode, room type2/config variant0, levels0/3/4 and nonzero descriptor stock seed. Only CRT memory hosting. Discount numeric branch uses a supplied effective Steam Sale/sale count, hosting the external CRT ceil import; full inventory query/cache not accepted. Original config default price store plus whole base-price function verifies the no-price-override XML64 base15. Full shop level/profile selection and collectible pool resolver are not accepted.",
+  "full_native_acceptance": false
+}

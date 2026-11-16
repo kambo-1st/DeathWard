@@ -124,12 +124,12 @@ void Simulation::updateHeartPickups(float dt) {
         if(pickup.timing.phase==RedHeartTiming::Phase::Gone)return true;
         if(!pickup.timing.collectible()||distance(player.position,pickup.position)>=1||
            !arena.clear(player.position,pickup.position,.1f))return false;
-        if(pickup.shopStock&&(!hasSourceShop(room)||shopHeartSold||!roomClear||roomThreats()||
-           shopHeartPrice<0||shopHeartPrice>15||money()<uint64_t(shopHeartPrice)))return false;
+        if(pickup.shopStock&&(!hasSourceShop(room)||!shopHeartOffered()||shopHeartSold||!roomClear||roomThreats()||
+           shopHeartPrice<0||shopHeartPrice>15||money()<uint64_t(shopPrice(shopHeartPrice,shopHeartSlot))))return false;
         if(!collectHeart(pickup.kind,pickup.amount))return false;
         if(pickup.shopStock) {
-            moneySpent+=uint64_t(shopHeartPrice);shopHeartSold=true;checkpointNeeded=true;
-            announce("RED HEART / "+std::to_string(shopHeartPrice)+" COINS",2);
+            moneySpent+=uint64_t(shopPrice(shopHeartPrice,shopHeartSlot));shopHeartSold=true;checkpointNeeded=true;
+            announce("RED HEART / "+std::to_string(shopPrice(shopHeartPrice,shopHeartSlot))+" COINS",2);
         }
         // Health changes once at admission; the source-duration collection
         // presentation cannot pay again, including after leaving/re-entering.

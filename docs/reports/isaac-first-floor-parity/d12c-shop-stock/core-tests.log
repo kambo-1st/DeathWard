@@ -1,0 +1,16 @@
+33/176 Testing: source_shop_stock
+33/176 Test: source_shop_stock
+Command: "/home/kambo/workspace/DeathWard/build/deathward_shop_stock_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"source_shop_stock" start time: Nov 15 20:18 CET
+Output:
+----------------------------------------------------------
+PASS 27 generated slot/clearance/access cases plus unsupported and random-sale witnesses
+PASS stock transactions, discounts/copies, gates, sold revisit, Apply/floors and preset migration
+<end of output>
+Test time =   9.64 sec
+----------------------------------------------------------
+Test Passed.
+"source_shop_stock" end time: Nov 15 20:18 CET
+"source_shop_stock" time elapsed: 00:00:09
+----------------------------------------------------------

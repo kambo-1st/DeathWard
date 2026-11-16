@@ -1,0 +1,34 @@
+{
+  "status": "developer_verified_user_acknowledged",
+  "checkpoint_commit": "fbbf0306",
+  "new_delivery_committed": "included_in_requested_checkpoint",
+  "build": "deathward, input and seven focused suites passed",
+  "native_stock_cases": 1551,
+  "native_discount_arithmetic_cases": 155,
+  "native_item_price_cases": 30,
+  "generated_size_route_cases": 27,
+  "core_suites_passed": 7,
+  "game_renderer_modes_passed": [
+    "stock",
+    "key",
+    "heart"
+  ],
+  "cli_loads_passed": [
+    "schema5",
+    "schema31",
+    "schema32",
+    "remembered32"
+  ],
+  "source_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "human_acceptance": "scoped_user_acknowledgment_2026-11-16",
+  "full_native_acceptance": false,
+  "remaining": [
+    "full stock category/item-pool coverage",
+    "shop level/profile/unlock/layout selection",
+    "native descriptor seed mapping",
+    "other modifiers/Restock/scenery",
+    "native pickup factory/physics/cache",
+    "browser runtime",
+    "gameplay-save continuity"
+  ]
+}

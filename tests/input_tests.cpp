@@ -910,6 +910,48 @@ void shopKeyInputCheck(const std::filesystem::path &directory) {
     std::cout<<"PASS D12b actual Game/Renderer purchase, sold revisit, mouse/keyboard tuning, staged Apply/load/export/remember/retry and ordinary fresh launch; seed69 shop="<<owner+1<<'\n';
 }
 
+void shopStockInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"shop-stock.save",file=directory/"shop-stock.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="7";game.reviewShopStock=true;
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.error.empty(),"stock review launch");auto &run=*game.run;const int owner=run.room;
+    check(run.shopVariationActive()&&run.player.hp==4&&run.money()==20&&run.keys==0&&!run.godMode,"explicit stock review resources");
+    Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"shop stock UI no errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"shop stock capture");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();check(game.cameraZoomPercent()==165&&run.player.walkingSpeed()==4.8f,"accepted view and pace");
+    capture("artifacts/shop-stock-before.png");mouseWalk(game,frame,run.shopUpgradePosition(),.3f);
+    check(run.shopUpgradeSold&&run.itemStacks({"isaac",ItemKind::Collectible,64})==1&&run.money()==5&&run.shopPrice(run.shopKeyPrice,run.shopKeySlot)==3,"mouse purchase immediate discount");
+    capture("artifacts/shop-stock-discount.png");mouseWalk(game,frame,run.shopKeyPosition(),.3f);
+    check(run.shopKeySold&&run.keys==1&&run.money()==2&&run.moneySpent==18,"discounted key exact payment");
+    for(int n=0;n<35;++n)frame();run.jumpDebug(0);run.jumpDebug(owner);frame();
+    check(run.shopUpgradeSold&&run.shopKeySold&&run.itemStacks({"isaac",ItemKind::Collectible,64})==1,"sold revisit retains owned item");
+    click(374,642);click(575,143);click(545,189);click(610,270);
+    check(game.balanceRewardsOpen&&game.balanceShopOpen&&game.balanceShopStockOpen,"stock mouse tab");
+    auto terrain=run.arena.canyon.get();click(430,270);click(1010,330);click(380,415);
+    check(game.hasPendingMapChanges()&&run.sourceShopVariation&&run.shopUpgradePrice==16&&!run.steamSaleDiscounts&&run.shopUpgradeSold&&run.arena.canyon.get()==terrain,"staged selection and live price/effect preserve sold floor");
+    click(335,605);const auto exported=BalancePreset::load(file,run.content->fingerprint());
+    check(!exported.sourceShopVariation&&!exported.steamSaleDiscounts&&exported.shopUpgradePrice==16&&exported.defaultZoomPercent==165,"all stock settings exported");
+    for(int n=0;n<40&&game.keyboardFocus()!=Action::ResetShopUpgradePrice;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::ResetShopUpgradePrice,"stock keyboard actions");key(KEY_ENTER);check(run.shopUpgradePrice==15,"keyboard reset");
+    click(380,465);check(!run.shopVariationActive()&&!game.hasPendingMapChanges(),"Apply fixed pair");
+    click(430,270);click(380,465);check(run.shopVariationActive()&&!run.shopUpgradeSold&&run.itemStacks({"isaac",ItemKind::Collectible,64})==1&&run.moneySpent==18,"Apply fresh stock preserves build and spending");
+    click(600,605);check(game.hasPendingMapChanges()&&!game.balanceDraft.sourceShopVariation&&run.sourceShopVariation&&run.shopUpgradePrice==16&&!run.steamSaleDiscounts,"Load stages stock and applies live fields");
+    click(430,270);check(!game.hasPendingMapChanges(),"restore variation without regeneration");
+    game.exportBalancePreset();game.rememberBalancePreset();capture("artifacts/shop-stock-panel.png");
+    std::filesystem::copy_file(file,"artifacts/shop-stock-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.perform(Action::CloseBalance);run.finishDebug(false);game.retryExpedition();
+    check(game.run&&game.run->room==owner&&game.run->money()>=20&&!game.run->shopUpgradeSold&&game.run->shopUpgradePrice==16&&!game.run->steamSaleDiscounts,"review retry retains config and repeats labelled start");
+    game.close();renderer.unload();
+    Game fresh(directory/"stock-fresh.save");fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="7";fresh.loadBalancePreset(file);fresh.rememberBalancePreset();fresh.launch(true);
+    check(fresh.run&&fresh.run->room==0&&fresh.run->player.hp==6&&fresh.run->money()==0&&fresh.run->shopVariationActive()&&fresh.run->roomSizeScale==1.1f&&fresh.run->routeLengthScale==.26f&&fresh.run->shopUpgradePrice==16&&!fresh.run->steamSaleDiscounts&&fresh.cameraZoomPercent()==165,"fresh normal launch retains settings without review grants");fresh.close();
+    std::cout<<"PASS D12c actual Game/Renderer mouse purchase/discount/revisit, tuning/Apply/export/load/remember/retry and fresh launch; seed7 shop="<<owner+1<<'\n';
+}
+
 void coinLayoutInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto seed=review::seed(30);
@@ -2504,6 +2546,9 @@ int main(int argc, char **argv) {
         }
         if(mode=="--keys-only") {
             keyInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--shop-stock-only") {
+            shopStockInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--shop-key-only") {
             shopKeyInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

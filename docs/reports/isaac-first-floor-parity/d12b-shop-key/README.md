@@ -1,5 +1,7 @@
 # D12b — Ordinary shop key purchase
 
+Checkpoint committed as `fbbf0306`; subsequent selected [D12c](../d12c-shop-stock/README.md) adds bounded stock variation and Steam Sale. The delivery details below describe this earlier checkpoint.
+
 The user acknowledged D12a with “ok, continue” and selected the next shop offering. D12b is enabled in the main game and developer-verified. The user authorized committing D12a/D12b and selected D12c with “ok, lets go!”. Both are included in this checkpoint. This is scoped acknowledgment, not a separately observed new playtest or full native acceptance.
 
 ## Delivered behavior

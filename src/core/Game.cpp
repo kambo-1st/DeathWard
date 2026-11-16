@@ -219,7 +219,8 @@ void Game::launch(bool freeMission) {
                                                   nextBalancePreset?nextBalancePreset->sourceRoomLocks:true,
                                                   nextBalancePreset?nextBalancePreset->sourceTreasureUpgrade:true,
                                                   nextBalancePreset?nextBalancePreset->sourceShopHeart:true,
-                                                  nextBalancePreset?nextBalancePreset->sourceShopKey:true);
+                                                  nextBalancePreset?nextBalancePreset->sourceShopKey:true,
+                                                  nextBalancePreset?nextBalancePreset->sourceShopVariation:true);
     startExpedition(std::move(candidate));
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
     if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
@@ -267,7 +268,7 @@ void Game::perform(Action action) {
     try {
         if(balanceOpen&&action!=Action::None&&action!=Action::Quit&&
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
-           (action<Action::BalanceDamageHealthTab||action>Action::ResetShopKeyPrice))return;
+           (action<Action::BalanceDamageHealthTab||action>Action::ResetShopUpgradePrice))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -285,9 +286,22 @@ void Game::perform(Action action) {
         case Action::BalanceShootingTab:balanceTreasureOpen=false;balanceShootingOpen=true;balanceEnemiesOpen=balanceRewardsOpen=balanceCombatOpen=false;break;
         case Action::BalanceEnemiesTab:balanceEnemiesOpen=true;balanceShootingOpen=balanceRewardsOpen=balanceCombatOpen=false;balancePooterOpen=false;break;
         case Action::BalanceRewardsTab:balanceShopOpen=false;balanceRewardsOpen=true;balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
-        case Action::BalanceShopTab:balanceShopOpen=true;balanceShopKeyOpen=false;break;
-        case Action::BalanceShopHeartTab:balanceShopKeyOpen=false;break;
-        case Action::BalanceShopKeyTab:balanceShopKeyOpen=true;break;
+        case Action::BalanceShopTab:balanceShopOpen=true;balanceShopKeyOpen=balanceShopStockOpen=false;break;
+        case Action::BalanceShopHeartTab:balanceShopKeyOpen=balanceShopStockOpen=false;break;
+        case Action::BalanceShopKeyTab:balanceShopKeyOpen=true;balanceShopStockOpen=false;break;
+        case Action::BalanceShopStockTab:balanceShopStockOpen=true;balanceShopKeyOpen=false;break;
+        case Action::ToggleShopVariation:
+            balanceDraft.sourceShopVariation=!balanceDraft.sourceShopVariation;
+            balanceNotice="Stock selection pending. APPLY MAP CHANGES resets floor purchases; player/build retained.";break;
+        case Action::ToggleSteamSaleDiscounts: {
+            auto preset=balancePreset;preset.steamSaleDiscounts=!preset.steamSaleDiscounts;applyBalance(std::move(preset));
+            balanceNotice="Owned Steam Sale effect updated on unsold source-shop stock. Export to keep this setting.";break;
+        }
+        case Action::ShopUpgradePriceDown:case Action::ShopUpgradePriceUp:case Action::ResetShopUpgradePrice: {
+            auto preset=balancePreset;
+            preset.shopUpgradePrice=action==Action::ResetShopUpgradePrice?15:std::clamp(preset.shopUpgradePrice+(action==Action::ShopUpgradePriceUp?1:-1),0,30);
+            applyBalance(std::move(preset));balanceNotice="Upgrade base price updated; discounts are applied at purchase. Sold stock stays sold.";break;
+        }
         case Action::ToggleShopKey:
             balanceDraft.sourceShopKey=!balanceDraft.sourceShopKey;
             balanceNotice="Key stock pending. APPLY MAP CHANGES resets floor purchases; player/build retained.";break;
@@ -924,8 +938,11 @@ std::vector<Action> Game::menuActions() const {
         std::vector<Action> actions{Action::CloseBalance,Action::BalanceWorldTab,Action::BalanceShootingTab,Action::BalanceCombatTab,Action::BalanceEnemiesTab,Action::BalanceRewardsTab};
         if(balanceEnemiesOpen){actions.push_back(Action::BalanceChasersTab);actions.push_back(Action::BalancePooterTab);}
         if(balanceRewardsOpen)actions.push_back(Action::BalanceShopTab);
-        const std::vector<Action> page=balanceRewardsOpen&&balanceShopOpen?
-            std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::BalanceShopHeartTab,Action::BalanceShopKeyTab,
+        const std::vector<Action> page=balanceRewardsOpen&&balanceShopOpen&&balanceShopStockOpen?
+            std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::BalanceShopStockTab,Action::BalanceShopHeartTab,Action::BalanceShopKeyTab,
+                Action::ToggleShopVariation,Action::ShopUpgradePriceDown,Action::ShopUpgradePriceUp,Action::ToggleSteamSaleDiscounts,Action::ResetShopUpgradePrice,Action::ApplyMapChanges}:
+            balanceRewardsOpen&&balanceShopOpen?
+            std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::BalanceShopStockTab,Action::BalanceShopHeartTab,Action::BalanceShopKeyTab,
                 balanceShopKeyOpen?Action::ToggleShopKey:Action::ToggleShopHeart,
                 balanceShopKeyOpen?Action::ShopKeyPriceDown:Action::ShopHeartPriceDown,
                 balanceShopKeyOpen?Action::ShopKeyPriceUp:Action::ShopHeartPriceUp,
