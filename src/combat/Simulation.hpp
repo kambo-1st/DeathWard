@@ -1145,6 +1145,10 @@ struct BrotherBobbyRuntime {
     int room=-1;
     uint64_t shots=0;
 };
+struct PowerupReviewState {
+    int treasureRoom=-1,collected=0;
+    static constexpr std::array<int,4> Offerings{1,4,8,45};
+};
 class Simulation {
   public:
     Simulation(uint64_t seed, uint64_t runId, const WorldState &world,
@@ -1160,6 +1164,9 @@ class Simulation {
     bool sourceTreasureUpgrade = false;
     float sadOnionStrength = 1, cricketHeadStrength = 1;
     BrotherBobbyTuning brotherBobby{};
+    std::optional<PowerupReviewState> powerupReview; // Explicit CLI fixture, never a natural item pool.
+    bool beginPowerupReview();
+    bool visitPowerupReviewEncounter(bool bossRoom=false);
     TrinketTuning trinkets{};
     std::optional<ItemKey> heldTrinket;
     bool dropTrinket();

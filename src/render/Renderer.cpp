@@ -2058,6 +2058,17 @@ Action Renderer::expedition(const Game &game) {
         const auto control=[&](Action action,const std::string &label,Rectangle r,bool primary=false) {
             return button(action,label,r.x,r.y,r.width,r.height,primary);
         };
+        if(run.powerupReview) {
+            const auto &review=*run.powerupReview;const auto r=expeditionHud::categoryReview(run.roomClear&&review.collected==4);
+            panel(r.x,r.y,r.width,r.height,Panel);text("CATEGORY REVIEW / TEST OFFERINGS",354,33,18,Gold);
+            const std::string hint=review.collected<4?"Pedestal "+std::to_string(review.collected+1)+"/4: collect, step away, return. Also take Cancer.":
+                std::string(run.yumHeart.keyName())+": active / "+run.trinkets.keyName()+": drop trinket / Tab: build. "+(run.roomClear?"Choose a fight below.":"Clear this encounter.");
+            wrap(hint,354,58,570,13,Paper);
+            if(review.collected==4&&run.roomClear) {
+                if(control(Action::ReviewPowerupFight,"NEXT ENCOUNTER",expeditionHud::ReviewFight))controls=Action::ReviewPowerupFight;
+                if(control(Action::ReviewPowerupBoss,"BOSS / THEN FLOOR EXIT",expeditionHud::ReviewBoss))controls=Action::ReviewPowerupBoss;
+            }
+        }
         const auto bomb=expeditionHud::Dynamite;
         if(control(Action::Dynamite,"DYNAMITE "+std::to_string(run.dynamite),bomb))
             controls=Action::Dynamite;

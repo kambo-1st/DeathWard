@@ -207,6 +207,7 @@ bool Simulation::advanceFloor() {
     next.inventoryBombTuning=inventoryBombTuning;
     next.keyedDoorCost=keyedDoorCost;
     next.bombClearRewards=bombClearRewards;next.keyClearRewards=keyClearRewards;next.chestClearRewards=chestClearRewards;next.coinClearRewards=coinClearRewards;next.redHeartClearRewards=redHeartClearRewards;next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
+    if(powerupReview)next.powerupReview=PowerupReviewState{-1,4};
     const auto spawn=next.player;
     next.player=player;next.player.position=spawn.position;next.player.aim=spawn.aim;next.player.facing=spawn.facing;
     next.player.velocity={};next.player.shootPose=next.player.dodge=next.player.pullTime=next.player.hurt=0;
@@ -384,6 +385,8 @@ SourcePlayerStats Simulation::effectivePlayerStats() const {
 }
 int Simulation::treasureUpgradeItem(int index) const {
     if(!hasSourceTreasure(index))return 0;
+    if(powerupReview&&powerupReview->treasureRoom==index&&powerupReview->collected<4)
+        return PowerupReviewState::Offerings[size_t(powerupReview->collected)];
     if(rooms[size_t(index)].droppedActive)return int(rooms[size_t(index)].droppedActive->item.number);
     const int choice=treasureCollectiblePool==0?1:treasureCollectiblePool==2?4:treasureCollectiblePool==3?8:treasureCollectiblePool==4?45:
         sourceTreasureChoice(canyonTreasureSeed(seed_,index),true,true);
@@ -425,6 +428,10 @@ bool Simulation::collectTreasureUpgrade() {
         progress.droppedActive=outgoing;progress.activePickupContact=true;
     } else grant(item);
     progress.rewardTaken=true;if(first)++powerUpsTaken;
+    if(powerupReview&&powerupReview->treasureRoom==room&&powerupReview->collected<4) {
+        ++powerupReview->collected;progress.rewardTaken=powerupReview->collected==4;
+        progress.activePickupContact=true; // Each review offering still requires a separate pickup.
+    }
     checkpointNeeded=true;
     announce(definition->name+" / "+(item==YumHeartKey?"ACTIVE ITEM":item.number==8?"FAMILIAR":item.number==4?"DAMAGE UP":"TEARS UP"),3);
     return true;
@@ -894,6 +901,7 @@ RunSummary Simulation::summary() const {
     s.floor=floor;s.floorCount=expedition.floorCount;s.pacing=expedition.pacing;s.account=expedition.account;s.evidence=evidence;
     s.expedition = surveyTutorial?SurveyExpeditionTitle:testimony()?RourkeExpeditionTitle:missionTheme(arena.theme).title;
     s.startingContext = CampaignStore::worldContext(startingWorld_);
+    if(powerupReview)s.startingContext+=" / PW-C01 CATEGORY REVIEW: staged test offerings and direct travel";
     s.rescued = legacyObjectives()&&rescued;
     s.altarDestroyed = legacyObjectives()&&altarDestroyed;
     s.bossKilled = legacyObjectives()&&bossKilled&&(lastFloor()||debugVictory_);

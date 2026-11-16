@@ -825,6 +825,68 @@ void treasureUpgradeInputCheck(const std::filesystem::path &directory) {
     std::cout<<"PASS D11a actual Game/Renderer mouse collection, keyboard/live/staged settings, Apply/load/export/remember/retry; seed=69 room="<<owner+1<<'\n';
 }
 
+void powerupCategoryInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
+    const auto save=directory/"categories.save",preset=directory/"categories.json",audit=directory/"interrupted.save";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="1";game.reviewPowerups=true;
+    game.loadBalancePreset(root/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json");game.rememberBalancePreset();game.balanceFile=preset.string();game.launch(true);
+    check(game.run&&game.error.empty()&&game.run->powerupReview&&game.run->items.empty(),"Labelled review starts unowned");
+    auto &run=*game.run;Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"Category Game error");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"Category capture");UnloadImage(im);EndDrawing();};
+    const int treasure=run.room;const auto start=run.player.position;
+    game.updateCamera(10);frame();capture("artifacts/categories-setup.png");
+    for(int count=1;count<=4;++count) {
+        auto at=run.rewardPosition(treasure);at.y=0;game.updateCamera(10);frame();const auto screen=GetWorldToScreen(at,game.camera);click(int(screen.x),int(screen.y));
+        for(int n=0;n<300&&int(run.items.size())<count;++n)frame();check(int(run.items.size())==count,"Actual mouse pedestal pickup");
+        for(int n=0;n<30;++n)frame();check(int(run.items.size())==count,"No contact auto-chain");mouseWalk(game,frame,start,.25f);
+    }
+    check(run.trinketPickups.size()==1,"Staged trinket present");const auto charm=run.trinketPickups.front().position;
+    mouseWalk(game,frame,charm,.25f);for(int n=0;n<40;++n)frame();
+    check(run.heldTrinket==CancerKey&&run.activeItem->charge==4&&run.brotherBobbies.size()==1&&run.player.hp==6,"All four categories acquired through world actors");
+    const auto owned=run.items;key(KEY_TAB);check(game.buildOpen,"Build inspector opens");capture("artifacts/categories-build.png");key(KEY_TAB);check(!game.buildOpen,"Build inspector closes");
+    run.player.hp=4;const int bombs=run.dynamite;click(480,112);frame();check(!run.roomClear&&run.room!=treasure&&run.player.hp==4&&run.activeItem->charge==4&&run.dynamite==bombs,"HUD travel preserves health/charge/ammo");
+    key(KEY_C);check(run.player.hp==6&&run.activeItem->charge==0,"Actual active key with combined build");
+    mouseEvent(MouseDown,MOUSE_BUTTON_RIGHT);bool playerShot=false,familiarShot=false,captured=false;
+    for(int n=0;n<1800&&!run.roomClear&&!run.dead;++n) {
+        const Enemy *target=nullptr;float nearest=10000;
+        for(const auto &e:run.enemies)if(e.alive&&!e.friendly&&!e.environment&&planarDistance(e.position,run.player.position)<nearest){target=&e;nearest=planarDistance(e.position,run.player.position);}
+        if(target){const auto screen=GetWorldToScreen(target->position,game.camera);mouseEvent(MousePosition,int(screen.x),int(screen.y));}
+        frame();for(const auto &shot:run.projectiles)if(!shot.hostile){if(shot.context.familiarAttack)familiarShot=true;else playerShot=true;}
+        if(n>10&&!captured){capture("artifacts/categories-combat.png");captured=true;}
+    }
+    mouseEvent(MouseUp,MOUSE_BUTTON_RIGHT);frame();check(!run.dead&&run.roomClear&&playerShot&&familiarShot&&run.activeItem->charge==1,"Actual mouse combat clears and charges once");
+    const auto active=run.activeItem;const auto damage=run.effectivePlayerStats().damage;const float tears=run.effectivePlayerStats().tearsPerSecond;
+    key(KEY_U);check(!run.heldTrinket&&run.items==owned&&run.activeItem==active&&std::abs(run.effectivePlayerStats().tearsPerSecond-(tears-1))<.00001f&&run.effectivePlayerStats().damage==damage,"Actual drop removes only Cancer");
+    const auto dropped=run.trinketPickups.back().position;Vector3 away{};float best=10000;
+    for(const auto &c:run.arena.floorCells){Vector3 p{(c.first+.5f)*FloorTile,.85f,(c.second+.5f)*FloorTile};const float d=planarDistance(p,dropped);if(d>3&&d<best&&run.arena.roomAt(p)==run.room&&!run.arena.blocked(p,.48f)&&!run.arena.path(run.player.position,p,.48f).empty()){away=p;best=d;}}
+    std::cerr<<"CATEGORY_INPUT combat passed; recollect from "<<run.player.position.x<<","<<run.player.position.z<<" via "<<away.x<<","<<away.z<<" to "<<dropped.x<<","<<dropped.z<<'\n';
+    check(best<10000,"Combined drop rearm route");mouseWalk(game,frame,away,.5f);mouseWalk(game,frame,dropped,.5f);for(int n=0;n<40;++n)frame();check(run.heldTrinket==CancerKey,"Combined recollection");
+    std::cerr<<"CATEGORY_INPUT recollection passed\n";
+    game.perform(Action::Pause);const auto charge=run.activeItem->charge;const auto id=run.brotherBobbies.front().id;key(KEY_C);key(KEY_U);check(run.heldTrinket==CancerKey&&run.activeItem->charge==charge&&run.brotherBobbies.front().id==id,"Paused controls leave all categories untouched");game.perform(Action::Resume);frame();
+    click(374,642);game.perform(Action::BalanceShootingTab);game.perform(Action::BalanceTreasureTab);game.perform(Action::BalanceTrinketTab);game.perform(Action::CancerDown);
+    const auto activeBefore=run.activeItem;const auto ownedBefore=run.items;game.perform(Action::ExportBalance);game.perform(Action::RememberBalance);
+    const auto exported=BalancePreset::load(preset,run.content->fingerprint());check(std::abs(exported.trinkets.cancerStrength-.95f)<.00001f&&exported.defaultZoomPercent==165,"Live combined export");
+    game.perform(Action::ResetTrinkets);game.perform(Action::LoadBalance);check(run.trinkets==exported.trinkets&&run.items==ownedBefore&&run.activeItem==activeBefore&&run.heldTrinket==CancerKey,"Configuration reload preserves equipped gameplay state");game.perform(Action::CloseBalance);frame();
+    click(770,112);check(run.room==run.finalRoom()&&!run.roomClear,"Actual boss review button");run.clearRoomDebug();run.floorExitRequested=true;frame();frame();
+    check(run.floor==1&&run.items==owned&&run.heldTrinket==CancerKey&&run.brotherBobbies.size()==1&&run.powerupReview&&run.powerupReview->treasureRoom==-1,"Game consumes real floor transition with all four categories");capture("artifacts/categories-next-floor.png");
+    check(game.campaign.data().pending&&game.campaign.data().pending->items==owned&&game.campaign.data().pending->heldTrinket==CancerKey&&game.campaign.data().pending->activeItem==run.activeItem,"Actual campaign checkpoint contains slots and owned keys");
+    const auto snapshot=*game.campaign.data().pending;std::filesystem::copy_file(save,audit,std::filesystem::copy_options::overwrite_existing);
+    game.perform(Action::OpenBalance);game.perform(Action::BalanceWorldTab);game.perform(Action::RoomSizeUp);game.perform(Action::ApplyMapChanges);game.perform(Action::CloseBalance);frame();
+    check(!run.powerupReview&&run.items==owned&&run.activeItem==snapshot.activeItem&&run.heldTrinket==CancerKey&&run.brotherBobbies.size()==1,"Apply ends review fixture while preserving actual build");
+    game.exportBalancePreset();game.rememberBalancePreset();std::filesystem::copy_file(preset,"artifacts/categories-preset.json",std::filesystem::copy_options::overwrite_existing);
+    run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->powerupReview&&game.run->items.empty()&&!game.run->activeItem&&!game.run->heldTrinket&&game.run->powerupReview->collected==0,"Retry recreates unowned review, never restores dead build");
+    check(game.run->trinkets==exported.trinkets&&game.cameraZoomPercent()==165,"Retry retains selected live config");game.close();renderer.unload();
+    Game recovered(audit);check(!recovered.run&&recovered.screen==Screen::Summary&&recovered.lastSummary.interrupted,"Real recovery is interruption summary, not live resume");
+    check(recovered.lastSummary.items==snapshot.items&&recovered.lastSummary.activeItem==snapshot.activeItem&&recovered.lastSummary.heldTrinket==snapshot.heldTrinket&&recovered.lastSummary.floor==snapshot.floor,"Interrupted history keeps category state at last checkpoint");
+    const auto history=recovered.campaign.data().history.size();Game second(audit);check(second.campaign.data().history.size()==history&&!second.campaign.data().pending,"Recovery is once-only");
+    Game normal(directory/"normal.save");normal.themeChoice=ThemeChoice::Canyon;normal.seedText="1";normal.loadBalancePreset(preset);normal.launch(true);check(normal.run&&!normal.run->powerupReview&&normal.run->items.empty()&&!normal.run->heldTrinket&&normal.run->trinkets==exported.trinkets,"Fresh ordinary preset reload never enables fixture or owns items");normal.close();
+    std::cout<<"PASS PW-C01 actual acquisition/combined fight/C/U/pause/configuration/floor/Apply/retry/interruption-history audit\n";
+}
+
 void cancerInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
@@ -2890,6 +2952,9 @@ int main(int argc, char **argv) {
         }
         if(mode=="--shop-heart-only") {
             shopHeartInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--powerup-categories-only") {
+            powerupCategoryInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--cancer-only") {
             cancerInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

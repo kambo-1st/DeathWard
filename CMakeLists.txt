@@ -137,6 +137,7 @@ add_library(deathward_core
     src/world/CanyonRiver.cpp
     src/world/CanyonRoad.cpp
     src/world/RoomGraph.cpp
+    src/combat/PowerupReview.cpp
     src/combat/Trinkets.cpp
     src/combat/Keys.cpp
     src/combat/Bombs.cpp
@@ -651,6 +652,10 @@ if(BUILD_TESTING)
     add_executable(deathward_inventory_bomb_tuning_tests tests/inventory_bomb_tuning_tests.cpp)
     target_link_libraries(deathward_inventory_bomb_tuning_tests PRIVATE deathward_core)
     add_test(NAME inventory_bomb_tuning COMMAND deathward_inventory_bomb_tuning_tests)
+    add_executable(deathward_powerup_category_tests tests/powerup_category_tests.cpp)
+    target_link_libraries(deathward_powerup_category_tests PRIVATE deathward_core)
+    add_test(NAME powerup_categories COMMAND deathward_powerup_category_tests)
+
     add_executable(deathward_cancer_tests tests/cancer_tests.cpp)
     target_link_libraries(deathward_cancer_tests PRIVATE deathward_core)
     add_test(NAME cancer_trinket COMMAND deathward_cancer_tests)

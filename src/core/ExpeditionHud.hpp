@@ -3,6 +3,8 @@
 
 namespace dw::expeditionHud {
 // Logical screen coordinates shared by drawing and input. Empty HUD space stays playable.
+inline Rectangle categoryReview(bool choices) {return {340,24,600,choices?116.0f:56.0f};}
+inline constexpr Rectangle ReviewFight{354,96,260,32}, ReviewBoss{630,96,294,32};
 inline constexpr Rectangle Trinket{708,674,286,34};
 inline constexpr Rectangle Active{452,674,242,34};
 inline constexpr Rectangle Dynamite{24,626,164,34};

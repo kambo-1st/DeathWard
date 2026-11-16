@@ -1,0 +1,11 @@
+{
+  "delivery": "PW-C01",
+  "status": "scoped accepted",
+  "user_feedback": "NIce! Whats next?",
+  "followup": "yes, lets go!",
+  "authorized_next": "Commit PW-C01, implement PW-T02 Whip Worm",
+  "not_accepted": [
+    "Full native item parity",
+    "Full live expedition resume"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "pid": 2743692,
+  "args": [
+    "build/deathward",
+    "--expedition",
+    "--seed",
+    "1",
+    "--review-powerups",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/pw-c01-category-check/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "started": "2026-11-16T19:21:53.298972",
+  "human_acceptance": "pending"
+}

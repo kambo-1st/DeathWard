@@ -715,6 +715,9 @@ void Game::perform(Action action) {
         case Action::Resume:
             paused = false;
             break;
+        case Action::ReviewPowerupFight:case Action::ReviewPowerupBoss:
+            if(run&&!paused&&run->visitPowerupReviewEncounter(action==Action::ReviewPowerupBoss)){resetPointerInput();accumulator=0;updateCamera(10);checkpoint();}
+            break;
         case Action::DropTrinket:
             if(run&&!paused&&!run->dead&&!run->finished&&!run->rewardOpen&&!run->shopOpen)trinketQueued_=true;
             break;
@@ -972,7 +975,7 @@ bool Game::pointerOverControls() const {
     const auto over=[&](Rectangle r){return CheckCollisionPointRec({x,y},r);};
     const bool live=run&&!paused&&!run->dead&&!run->rewardOpen&&!run->shopOpen;
     return (run&&(run->surveyTutorial||run->testimony())&&x>=964&&x<=1256&&y>=22&&y<=153)||
-           (live&&(over(expeditionHud::Dynamite)||
+           (live&&((run->powerupReview&&over(expeditionHud::categoryReview(run->roomClear&&run->powerupReview->collected==4)))||over(expeditionHud::Dynamite)||
                (run->heldTrinket&&over(expeditionHud::Trinket))||(run->activeItem&&over(expeditionHud::Active))||over(expeditionHud::Dodge)||over(expeditionHud::Pause)||over(expeditionHud::Tuning)||
                (ownedItemTypes()>0&&over(expeditionHud::items(ownedItemTypes())))))||
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||

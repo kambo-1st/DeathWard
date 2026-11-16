@@ -1,0 +1,28 @@
+[
+  {
+    "args": [
+      "--review-powerups"
+    ],
+    "exit": 2,
+    "message": "Room review requires --expedition without other launch modes"
+  },
+  {
+    "args": [
+      "--expedition",
+      "--review-powerups",
+      "--review-room",
+      "5"
+    ],
+    "exit": 2,
+    "message": "Choose one review room option"
+  },
+  {
+    "args": [
+      "--expedition",
+      "--review-powerups",
+      "--review-shop-stock"
+    ],
+    "exit": 2,
+    "message": "Choose one review room option"
+  }
+]

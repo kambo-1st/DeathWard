@@ -1,0 +1,37 @@
+{
+  "delivery": "PW-C01",
+  "date": "2026-11-16",
+  "accepted_checkpoint": "27d7691c",
+  "implementation": "enabled in main game as explicitly labelled pickup/travel review",
+  "developer_checks": "passed",
+  "human_acceptance": "scoped accepted",
+  "tests": {
+    "focused_suites": 8,
+    "combined_simulation": "pass; rerun after interior review entry adjustment",
+    "dynamic_room_sizes": 3,
+    "actual_game_renderer": "pass",
+    "cli_presets": [
+      "original schema5",
+      "exported schema39"
+    ],
+    "invalid_cli_cases": 3
+  },
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "save_audit": {
+    "real_checkpoint": "inventory, active identity/charge and held trinket retained in once-only interruption history",
+    "live_expedition_resume": false,
+    "configuration_is_gameplay_save": false
+  },
+  "scope_notes": [
+    "All five examples acquired with normal world consumers; labelled staged offerings, not a natural all-item seed.",
+    "Ordinary encounter cleared with actual player/familiar shots.",
+    "Automated active check uses controlled four-half-heart injury; interactive start has six.",
+    "Boss completion is controlled in the transition fixture; floor transition and actor reconstruction use actual Game.",
+    "No new items, new tunables, schema migration or balance changes."
+  ],
+  "remaining": [
+    "Full live expedition save/resume (D18)",
+    "Full native item actor/cache/pool/physics equivalence",
+    "PW-T02 Whip Worm selected next; other optional examples and catalog expansion unselected"
+  ]
+}

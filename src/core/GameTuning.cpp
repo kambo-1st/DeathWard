@@ -155,7 +155,7 @@ void Game::applyMapChanges() {
     if(!hasPendingMapChanges()){balanceNotice="Map settings are already applied.";return;}
     auto preset=balanceDraft;preset.playerSpeed=balancePreset.playerSpeed;applyBalance(std::move(preset));
     balanceDraft=balancePreset;
-    balanceNotice=run?"Map applied. Floor encounters/pickups reset; player, build and Speed retained.":
+    balanceNotice=run?(reviewPowerups?"Map applied. Review offerings ended; owned build retained. Retry restarts the review.":"Map applied. Floor encounters/pickups reset; player, build and Speed retained."):
                       "Map settings saved for generation of the next expedition.";
 }
 void Game::resetBalance() {
@@ -193,6 +193,7 @@ void Game::rememberBalancePreset() {
 }
 RunSummary Game::configuredSummary() const {
     auto summary=run->summary();
+    if(reviewPowerups&&summary.startingContext.find("PW-C01")==std::string::npos)summary.startingContext+=" / PW-C01 CATEGORY REVIEW: staged test offerings and direct travel";
     summary.mechanicsFingerprint+="/balance-v13:"+balancePreset.revision();
     return summary;
 }
@@ -215,6 +216,7 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     candidate->gaperMovementMultiplier=preset.gaperMovementMultiplier;
     candidate->spiderMovementMultiplier=preset.spiderMovementMultiplier;
     candidate->pooterTuning=PooterTuning{preset.pooterMovementMultiplier,preset.pooterShotSpeedMultiplier,preset.pooterAttackIntervalMultiplier};
+    if(reviewPowerups&&!candidate->beginPowerupReview())throw std::runtime_error("Category review needs opening-floor source treasure, an empty build and reachable floor");
     if(reviewSourceRoomTemplate&&!candidate->enterSourceRoomReview(*reviewSourceRoomTemplate)) {
         if(!retry)throw std::runtime_error("Source room "+std::to_string(*reviewSourceRoomTemplate)+" is absent from this generated floor. Use the recorded review seed and enable SOURCE LAYOUTS or SOURCE COMBAT ROOM.");
         candidate->announce("ROOM REVIEW / Requested template is absent with these map settings; starting at the entrance.",8);
@@ -254,6 +256,7 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     useDefaultZoom();resetPointerInput();
     std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" gaper_movement="<<balancePreset.gaperMovementMultiplier<<" spider_movement="<<balancePreset.spiderMovementMultiplier<<" pooter_movement="<<balancePreset.pooterMovementMultiplier<<" pooter_shot="<<balancePreset.pooterShotSpeedMultiplier<<" pooter_delay="<<balancePreset.pooterAttackIntervalMultiplier<<" damage="<<balancePreset.playerDamage<<" regular_hp="<<balancePreset.regularHealthMultiplier<<" bomb_fuse="<<balancePreset.inventoryBombs.fuseMultiplier<<" bomb_radius="<<balancePreset.inventoryBombs.radiusMultiplier<<" bomb_damage="<<balancePreset.inventoryBombs.damage<<" bomb_self="<<balancePreset.inventoryBombs.selfDamageHalfHearts<<" treasure_upgrade="<<balancePreset.sourceTreasureUpgrade<<" treasure_pool="<<balancePreset.treasureCollectiblePool<<" cancer_strength="<<balancePreset.trinkets.cancerStrength<<" trinket_rewards="<<balancePreset.trinkets.clearRewards<<" trinket_key="<<balancePreset.trinkets.keyName()<<" yum_healing="<<balancePreset.yumHeart.healing<<" yum_recharge="<<balancePreset.yumHeart.recharge<<" active_key="<<balancePreset.yumHeart.keyName()<<" bobby_movement="<<balancePreset.brotherBobby.movement<<" bobby_interval="<<balancePreset.brotherBobby.interval<<" bobby_damage="<<balancePreset.brotherBobby.damage<<" bobby_shot_speed="<<balancePreset.brotherBobby.shotSpeed<<" cricket_strength="<<balancePreset.cricketHeadStrength<<" onion_strength="<<balancePreset.sadOnionStrength<<" shop_collectible_pool="<<balancePreset.shopCollectiblePool<<" shop_stock="<<balancePreset.sourceShopVariation<<" shop_upgrade_price="<<balancePreset.shopUpgradePrice<<" steam_sale="<<balancePreset.steamSaleDiscounts<<" shop_heart="<<balancePreset.sourceShopHeart<<" shop_key="<<balancePreset.sourceShopKey<<" shop_soul_heart_price="<<balancePreset.shopSoulHeartPrice<<" shop_bomb_price="<<balancePreset.shopBombPrice<<" shop_key_price="<<balancePreset.shopKeyPrice<<" shop_heart_price="<<balancePreset.shopHeartPrice<<" room_locks="<<balancePreset.sourceRoomLocks<<" key_cost="<<balancePreset.keyedDoorCost<<" rock_shielding="<<balancePreset.inventoryBombs.rocksBlockBlast<<" bomb_rewards="<<balancePreset.bombClearRewards<<" key_rewards="<<balancePreset.keyClearRewards<<" chest_rewards="<<balancePreset.chestClearRewards<<" coin_rewards="<<balancePreset.coinClearRewards<<" red_heart_rewards="<<balancePreset.redHeartClearRewards<<" heart_appearance="<<balancePreset.redHeartAppearanceSpeed<<" luck="<<balancePreset.playerLuck<<" room_hearts="<<balancePreset.roomHeartLayouts<<" source_room="<<balancePreset.sourceCombatRoom<<" revision="<<balancePreset.revision()
              <<" profile="<<(balancePreset.custom()?"custom":"reference-partial")<<'\n';
+    if(reviewPowerups)std::cout<<"CATEGORY_REVIEW room="<<run->room+1<<" staged_offerings=1,4,8,45 trinket=39 owned="<<run->items.size()<<" hp="<<run->player.hp<<" god="<<run->godMode<<'\n';
     if(reviewRoomIndex)std::cout<<"ROOM_REVIEW room="<<run->room+1<<" hp="<<run->player.hp<<" god="<<run->godMode<<'\n';
     if(reviewShopStock)std::cout<<"SHOP_STOCK_REVIEW room="<<run->room+1<<" upgrade_item="<<run->shopUpgradeItem<<" upgrade_slot="<<run->shopUpgradeSlot<<" key_slot="<<run->shopKeySlot<<" bomb_slot="<<run->shopBombSlot<<" heart_kind="<<(run->shopHeartKind==HeartKind::Soul?"soul":"red")<<" heart_slot="<<run->shopHeartSlot<<" sale_slot="<<run->shopDiscountSlot<<" coins="<<run->money()<<" price="<<run->shopPrice(run->shopUpgradePrice,run->shopUpgradeSlot)<<" god="<<run->godMode<<'\n';
     if(reviewShopKeyPurchase)std::cout<<"SHOP_KEY_REVIEW room="<<run->room+1<<" keys="<<run->keys<<" coins="<<run->money()<<" key_price="<<run->shopKeyPrice<<" heart_price="<<run->shopHeartPrice<<" god="<<run->godMode<<'\n';
