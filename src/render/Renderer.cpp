@@ -1906,7 +1906,7 @@ Action Renderer::expedition(const Game &game) {
             text(price==0?"FREE":std::to_string(price)+" COINS",x+8,y+5,14,Gold);
         };
         if(run.hasSourceShop(run.room)&&run.shopVariationActive()&&!run.shopUpgradeSold)priceTag(run.shopUpgradePosition(),run.shopPrice(run.shopUpgradePrice,run.shopUpgradeSlot));
-        for(const auto &heart:run.heartPickups)if(heart.shopStock&&heart.room==run.room&&heart.timing.collectible())priceTag(heart.position,run.shopPrice(run.shopHeartPrice,run.shopHeartSlot));
+        for(const auto &heart:run.heartPickups)if(heart.shopStock&&heart.room==run.room&&heart.timing.collectible())priceTag(heart.position,run.shopPrice(run.shopHeartBasePrice(),run.shopHeartSlot));
         for(const auto &key:run.keyPickups)if(key.shopStock&&key.room==run.room&&key.timing.collectible())priceTag(key.position,run.shopPrice(run.shopKeyPrice,run.shopKeySlot));
         for(const auto &bomb:run.bombPickups)if(bomb.shopStock&&bomb.room==run.room&&bomb.timing.collectible())priceTag(bomb.position,run.shopPrice(run.shopBombPrice,run.shopBombSlot));
     }
@@ -2295,28 +2295,32 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::BalanceClearHeartsTab,"AFTER CLEAR",650,175,200,28,!game.balanceRoomHeartsOpen&&!game.balanceShopOpen))return Action::BalanceClearHeartsTab;
         if(button(Action::BalanceRoomHeartsTab,"ROOM LAYOUTS",875,175,200,28,game.balanceRoomHeartsOpen))return Action::BalanceRoomHeartsTab;
         if(game.balanceShopOpen) {
-            const bool key=game.balanceShopKeyOpen,stock=game.balanceShopStockOpen,bomb=game.balanceShopBombOpen;
-            text(bomb?"SHOP DYNAMITE":stock?"SHOP STOCK":key?"SHOP KEY":"SHOP HEART",205,184,22,Gold);
-            text(bomb?"One dynamite when selected. Walk up to buy; capacity 99 charges.":stock?"Steam Sale with a heart, key or dynamite. Other combinations keep the previous pair.":key?"Ordinary key when selected. Walk up to buy; capacity 99 keys.":"Opening-floor heart when selected. Walk up to buy when injured.",205,221,14,Paper);
+            const bool key=game.balanceShopKeyOpen,stock=game.balanceShopStockOpen,bomb=game.balanceShopBombOpen,soul=game.balanceShopSoulHeartOpen;
+            text(soul?"SHOP SOUL HEART":bomb?"SHOP DYNAMITE":stock?"SHOP STOCK":key?"SHOP KEY":"SHOP HEART",205,184,22,Gold);
+            text(soul?"Adds one protective soul heart, up to available health capacity. Walk up to buy.":bomb?"One dynamite when selected. Walk up to buy; capacity 99 charges.":stock?"Steam Sale with red/soul hearts, keys or dynamite. Other combinations keep the fixed pair.":key?"Ordinary key when selected. Walk up to buy; capacity 99 keys.":"Opening-floor heart when selected. Walk up to buy when injured.",205,221,14,Paper);
             if(button(Action::BalanceShopStockTab,"STOCK",535,252,130,40,stock))return Action::BalanceShopStockTab;
             if(button(Action::BalanceShopHeartTab,"HEART",675,252,130,40,!key&&!stock&&!bomb))return Action::BalanceShopHeartTab;
             if(button(Action::BalanceShopKeyTab,"KEY",815,252,130,40,key))return Action::BalanceShopKeyTab;
             if(button(Action::BalanceShopBombTab,"DYNAMITE",955,252,120,40,bomb))return Action::BalanceShopBombTab;
-            const auto toggle=(stock||bomb)?Action::ToggleShopVariation:key?Action::ToggleShopKey:Action::ToggleShopHeart;
-            const bool enabled=(stock||bomb)?game.balanceDraft.sourceShopVariation:key?game.balanceDraft.sourceShopKey:game.balanceDraft.sourceShopHeart;
-            if(button(toggle,(stock||bomb)?(enabled?"VARY STOCK":"FIXED PAIR"):key?(enabled?"KEY ENABLED":"NO KEY OFFER"):(enabled?"SOURCE SHOP":"LEGACY SHOP MENU"),205,252,310,40,enabled))return toggle;
+            const auto toggle=(stock||bomb||soul)?Action::ToggleShopVariation:key?Action::ToggleShopKey:Action::ToggleShopHeart;
+            const bool enabled=(stock||bomb||soul)?game.balanceDraft.sourceShopVariation:key?game.balanceDraft.sourceShopKey:game.balanceDraft.sourceShopHeart;
+            if(button(toggle,(stock||bomb||soul)?(enabled?"VARY STOCK":"FIXED PAIR"):key?(enabled?"KEY ENABLED":"NO KEY OFFER"):(enabled?"SOURCE SHOP":"LEGACY SHOP MENU"),205,252,310,40,enabled))return toggle;
             text(stock?"UPGRADE BASE":"BASE PRICE",205,324,18,Paper);
-            text(std::to_string(bomb?game.balancePreset.shopBombPrice:stock?game.balancePreset.shopUpgradePrice:key?game.balancePreset.shopKeyPrice:game.balancePreset.shopHeartPrice)+" COINS",475,318,24,Paper);
-            const auto down=bomb?Action::ShopBombPriceDown:stock?Action::ShopUpgradePriceDown:key?Action::ShopKeyPriceDown:Action::ShopHeartPriceDown;
-            const auto up=bomb?Action::ShopBombPriceUp:stock?Action::ShopUpgradePriceUp:key?Action::ShopKeyPriceUp:Action::ShopHeartPriceUp;
-            const auto reset=bomb?Action::ResetShopBombPrice:stock?Action::ResetShopUpgradePrice:key?Action::ResetShopKeyPrice:Action::ResetShopHeartPrice;
+            text(std::to_string(soul?game.balancePreset.shopSoulHeartPrice:bomb?game.balancePreset.shopBombPrice:stock?game.balancePreset.shopUpgradePrice:key?game.balancePreset.shopKeyPrice:game.balancePreset.shopHeartPrice)+" COINS",475,318,24,Paper);
+            const auto down=soul?Action::ShopSoulHeartPriceDown:bomb?Action::ShopBombPriceDown:stock?Action::ShopUpgradePriceDown:key?Action::ShopKeyPriceDown:Action::ShopHeartPriceDown;
+            const auto up=soul?Action::ShopSoulHeartPriceUp:bomb?Action::ShopBombPriceUp:stock?Action::ShopUpgradePriceUp:key?Action::ShopKeyPriceUp:Action::ShopHeartPriceUp;
+            const auto reset=soul?Action::ResetShopSoulHeartPrice:bomb?Action::ResetShopBombPrice:stock?Action::ResetShopUpgradePrice:key?Action::ResetShopKeyPrice:Action::ResetShopHeartPrice;
             if(button(down,"- 1",795,310,130,40))return down;
             if(button(up,"+ 1",945,310,130,40))return up;
-            text(bomb?"Reference: 5 coins before discounts. Other base prices are testing overrides.":stock?"Base 15 coins. Buying Steam Sale discounts remaining stock immediately.":key?"Reference: 5 coins before discounts. Other base prices are testing overrides.":"Reference: 3 coins before discounts. Other base prices are testing overrides.",205,370,14,Teal);
+            text((bomb||soul)?"Reference: 5 coins before discounts. Other base prices are testing overrides.":stock?"Base 15 coins. Buying Steam Sale discounts remaining stock immediately.":key?"Reference: 5 coins before discounts. Other base prices are testing overrides.":"Reference: 3 coins before discounts. Other base prices are testing overrides.",205,370,14,Teal);
             if(stock) {
                 if(button(Action::ToggleSteamSaleDiscounts,game.balancePreset.steamSaleDiscounts?"ITEM DISCOUNT ON":"ITEM DISCOUNT OFF",205,399,350,36,game.balancePreset.steamSaleDiscounts))return Action::ToggleSteamSaleDiscounts;
                 if(button(reset,"RESET BASE TO 15",600,399,350,36))return reset;
-            } else if(button(reset,(key||bomb)?"RESET PRICE TO 5":"RESET PRICE TO 3",205,399,350,36))return reset;
+            } else if(button(reset,(key||bomb||soul)?"RESET PRICE TO 5":"RESET PRICE TO 3",205,399,350,36))return reset;
+            if(!stock&&!key&&!bomb) {
+                if(button(Action::BalanceShopRedHeartTab,"RED HEART",600,399,200,36,!soul))return Action::BalanceShopRedHeartTab;
+                if(button(Action::BalanceShopSoulHeartTab,"SOUL HEART",825,399,250,36,soul))return Action::BalanceShopSoulHeartTab;
+            }
             if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,449,350,36))return Action::ApplyMapChanges;
             text(game.hasPendingMapChanges()?"PENDING / RESETS THIS FLOOR":"MAP SETTINGS APPLIED",585,461,14,Muted);
         } else if(game.balanceRoomHeartsOpen) {

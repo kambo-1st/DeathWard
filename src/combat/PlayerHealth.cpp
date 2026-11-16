@@ -124,12 +124,13 @@ void Simulation::updateHeartPickups(float dt) {
         if(pickup.timing.phase==RedHeartTiming::Phase::Gone)return true;
         if(!pickup.timing.collectible()||distance(player.position,pickup.position)>=1||
            !arena.clear(player.position,pickup.position,.1f))return false;
+        const int basePrice=shopHeartBasePrice();
         if(pickup.shopStock&&(!hasSourceShop(room)||!shopHeartOffered()||shopHeartSold||!roomClear||roomThreats()||
-           shopHeartPrice<0||shopHeartPrice>15||money()<uint64_t(shopPrice(shopHeartPrice,shopHeartSlot))))return false;
+           pickup.kind!=shopHeartKind||basePrice<0||basePrice>15||money()<uint64_t(shopPrice(basePrice,shopHeartSlot))))return false;
         if(!collectHeart(pickup.kind,pickup.amount))return false;
         if(pickup.shopStock) {
-            moneySpent+=uint64_t(shopPrice(shopHeartPrice,shopHeartSlot));shopHeartSold=true;checkpointNeeded=true;
-            announce("RED HEART / "+std::to_string(shopPrice(shopHeartPrice,shopHeartSlot))+" COINS",2);
+            moneySpent+=uint64_t(shopPrice(basePrice,shopHeartSlot));shopHeartSold=true;checkpointNeeded=true;
+            announce(std::string(pickup.kind==HeartKind::Soul?"SOUL HEART / ":"RED HEART / ")+std::to_string(shopPrice(basePrice,shopHeartSlot))+" COINS",2);
         }
         // Health changes once at admission; the source-duration collection
         // presentation cannot pay again, including after leaving/re-entering.

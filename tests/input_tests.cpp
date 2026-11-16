@@ -994,6 +994,48 @@ void shopBombInputCheck(const std::filesystem::path &directory) {
     std::cout<<"PASS D12d actual Game/Renderer mouse discount/dynamite purchase/revisit, live price/staged stock/Apply/export/load/keyboard/remember/retry/fresh expedition; seed4 shop="<<owner+1<<'\n';
 }
 
+void shopSoulHeartInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto file=directory/"shop-soul-heart.json";
+    Game game(directory/"shop-soul-heart.save");game.themeChoice=ThemeChoice::Canyon;game.seedText="18";game.reviewShopStock=true;
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.error.empty(),"soul heart stock review launch");auto &run=*game.run;const int owner=run.room;
+    check((run.shopHeartOffered()&&run.shopHeartKind==HeartKind::Soul)&&run.player.soulHearts==0&&run.money()==20&&run.player.hp==4&&!run.godMode,"natural soul heart pair with explicit stock review funds");
+    Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"soul heart shop UI no errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"soul heart stock capture");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();check(game.cameraZoomPercent()==165&&run.player.walkingSpeed()==4.8f,"retained accepted view/pace");
+    capture("artifacts/shop-soul-heart-before.png");mouseWalk(game,frame,run.shopUpgradePosition(),.3f);
+    check(run.shopUpgradeSold&&run.money()==5&&run.shopPrice(run.shopSoulHeartPrice,run.shopHeartSlot)==3,"Steam Sale immediately reduces soul heart price");
+    capture("artifacts/shop-soul-heart-discount.png");mouseWalk(game,frame,run.shopHeartPosition(),.3f);
+    check(run.shopHeartSold&&run.player.soulHearts==2&&run.player.hp==4&&run.money()==2,"mouse soul heart purchase grants two protective half-heart units and charges three");
+    capture("artifacts/shop-soul-heart-purchased.png");
+    for(int n=0;n<40;++n)frame();run.jumpDebug(0);run.jumpDebug(owner);frame();
+    check(run.shopHeartSold&&run.player.soulHearts==2&&run.player.hp==6&&run.moneySpent==18,"sold revisit");
+    click(374,642);click(575,143);click(545,189);click(740,270);click(950,415);
+    check(game.balanceShopSoulHeartOpen&&game.balanceShopOpen,"soul heart mouse tab");
+    const auto terrain=run.arena.canyon.get();click(1010,330);click(700,415);click(1010,330);click(950,415);click(430,270);
+    check(run.shopSoulHeartPrice==6&&run.shopHeartPrice==4&&run.shopHeartSold&&game.hasPendingMapChanges()&&run.sourceShopVariation&&run.arena.canyon.get()==terrain,"live price and staged selection preserve sold floor");
+    click(335,605);game.rememberBalancePreset();auto exported=BalancePreset::load(file,run.content->fingerprint());
+    check(exported.shopSoulHeartPrice==6&&!exported.sourceShopVariation&&exported.defaultZoomPercent==165,"independent price and staged selection export");
+    for(int n=0;n<40&&game.keyboardFocus()!=Action::ResetShopSoulHeartPrice;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::ResetShopSoulHeartPrice,"soul heart keyboard reset focus");key(KEY_ENTER);check(run.shopSoulHeartPrice==5,"keyboard reset price");
+    click(380,465);check(!(run.shopHeartOffered()&&run.shopHeartKind==HeartKind::Soul)&&run.player.soulHearts==2&&run.player.hp==6,"Apply fixed pair");
+    click(430,270);click(380,465);check((run.shopHeartOffered()&&run.shopHeartKind==HeartKind::Soul)&&!run.shopHeartSold&&run.player.soulHearts==2&&run.player.hp==6&&run.moneySpent==18,"Apply resets stock retaining build/spending");
+    click(600,605);check(game.hasPendingMapChanges()&&run.shopSoulHeartPrice==6&&run.sourceShopVariation&&!game.balanceDraft.sourceShopVariation,"load price immediately and stage map mode");
+    click(430,270);game.exportBalancePreset();game.rememberBalancePreset();capture("artifacts/shop-soul-heart-panel.png");
+    std::filesystem::copy_file(file,"artifacts/shop-soul-heart-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.perform(Action::CloseBalance);run.finishDebug(false);game.retryExpedition();
+    check(game.run&&game.run->room==owner&&(game.run->shopHeartOffered()&&game.run->shopHeartKind==HeartKind::Soul)&&!game.run->shopHeartSold&&game.run->shopSoulHeartPrice==6&&game.run->player.soulHearts==0&&game.run->money()>=20,"review retry fresh stock and configured price");
+    game.close();renderer.unload();
+    Game fresh(directory/"soul-heart-fresh.save");fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="18";fresh.loadBalancePreset(file);fresh.rememberBalancePreset();fresh.launch(true);
+    check(fresh.run&&fresh.run->room==0&&fresh.run->money()==0&&fresh.run->player.soulHearts==0&&fresh.run->shopSoulHeartPrice==6&&fresh.run->roomSizeScale==1.1f&&fresh.cameraZoomPercent()==165,"fresh ordinary expedition keeps price and accepted preset without review funds");fresh.close();
+    std::cout<<"PASS D12e actual Game/Renderer mouse discount/soul heart purchase/revisit, live price/staged stock/Apply/export/load/keyboard/remember/retry/fresh expedition; seed18 shop="<<owner+1<<'\n';
+}
+
 void coinLayoutInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto seed=review::seed(30);
@@ -2588,6 +2630,9 @@ int main(int argc, char **argv) {
         }
         if(mode=="--keys-only") {
             keyInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--shop-soul-heart-only") {
+            shopSoulHeartInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--shop-bomb-only") {
             shopBombInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

@@ -1156,6 +1156,9 @@ class Simulation {
     Vector3 shopUpgradePosition() const;
     bool collectShopUpgrade();
     int shopKeyPrice=5;
+    HeartKind shopHeartKind=HeartKind::Red; // One selected red/soul offering, shared once-only state.
+    int shopSoulHeartPrice=5;
+    int shopHeartBasePrice() const { return shopHeartKind==HeartKind::Soul?shopSoulHeartPrice:shopHeartPrice; }
     int shopHeartPrice=3; // Live transaction price; zero is a labelled testing override.
     bool hasSourceShop(int index) const;
     Vector3 shopHeartPosition() const;

@@ -135,7 +135,7 @@ enum class Action {
     BalanceDamageHealthTab, BalanceBombsTab, BombFuseDown, BombFuseUp,
     BombRadiusDown, BombRadiusUp, BombDamageDown, BombDamageUp,
     BombSelfDamageDown, BombSelfDamageUp, ResetInventoryBombs, ToggleRockBlastShielding,
-    BalanceDoorsTab, DoorKeyCostDown, DoorKeyCostUp, ResetKeyedDoors, ToggleSourceRoomLocks, BalanceTreasureTab, ToggleTreasureUpgrade, SadOnionDown, SadOnionUp, ResetSadOnion, BalanceShopTab, ToggleShopHeart, ShopHeartPriceDown, ShopHeartPriceUp, ResetShopHeartPrice, BalanceShopHeartTab, BalanceShopKeyTab, ToggleShopKey, ShopKeyPriceDown, ShopKeyPriceUp, ResetShopKeyPrice, BalanceShopStockTab, ToggleShopVariation, ToggleSteamSaleDiscounts, ShopUpgradePriceDown, ShopUpgradePriceUp, ResetShopUpgradePrice, BalanceShopBombTab, ShopBombPriceDown, ShopBombPriceUp, ResetShopBombPrice
+    BalanceDoorsTab, DoorKeyCostDown, DoorKeyCostUp, ResetKeyedDoors, ToggleSourceRoomLocks, BalanceTreasureTab, ToggleTreasureUpgrade, SadOnionDown, SadOnionUp, ResetSadOnion, BalanceShopTab, ToggleShopHeart, ShopHeartPriceDown, ShopHeartPriceUp, ResetShopHeartPrice, BalanceShopHeartTab, BalanceShopKeyTab, ToggleShopKey, ShopKeyPriceDown, ShopKeyPriceUp, ResetShopKeyPrice, BalanceShopStockTab, ToggleShopVariation, ToggleSteamSaleDiscounts, ShopUpgradePriceDown, ShopUpgradePriceUp, ResetShopUpgradePrice, BalanceShopBombTab, ShopBombPriceDown, ShopBombPriceUp, ResetShopBombPrice, BalanceShopRedHeartTab, BalanceShopSoulHeartTab, ShopSoulHeartPriceDown, ShopSoulHeartPriceUp, ResetShopSoulHeartPrice
 };
 class Game {
   public:
@@ -164,7 +164,7 @@ class Game {
     bool controlsOpen = false;
     bool buildOpen = false;
     bool balanceOpen = false, balancePathEditing = false, balanceShootingOpen = false;
-    bool balanceEnemiesOpen = false, balancePooterOpen = false, balanceCombatOpen = false, balanceRewardsOpen = false, balanceRoomHeartsOpen = false, balanceTreasureOpen = false, balanceShopOpen=false, balanceShopKeyOpen=false, balanceShopStockOpen=false, balanceShopBombOpen=false;
+    bool balanceEnemiesOpen = false, balancePooterOpen = false, balanceCombatOpen = false, balanceRewardsOpen = false, balanceRoomHeartsOpen = false, balanceTreasureOpen = false, balanceShopOpen=false, balanceShopKeyOpen=false, balanceShopStockOpen=false, balanceShopBombOpen=false, balanceShopSoulHeartOpen=false;
     bool balanceBombsOpen=false, balanceDoorsOpen=false;
     BalancePreset balancePreset, balanceDraft;
     std::optional<BalancePreset> nextBalancePreset;

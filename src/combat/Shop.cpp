@@ -37,8 +37,8 @@ void Simulation::deliverShopKey() {
 void Simulation::deliverShopHeart() {
     if(!hasSourceShop(room)||!shopHeartOffered()||shopHeartDelivered||shopHeartSold||dead||finished)return;
     const auto at=shopHeartPosition();
-    if(arena.blocked(at,.48f)||!spawnHeartPickup(HeartKind::Red,at,2))return;
-    auto &heart=heartPickups.back();heart.sourceSubtype=1;heart.shopStock=true;
+    if(arena.blocked(at,.48f)||!spawnHeartPickup(shopHeartKind,at,2))return;
+    auto &heart=heartPickups.back();heart.sourceSubtype=shopHeartKind==HeartKind::Soul?3:1;heart.shopStock=true;
     shopHeartDelivered=true;checkpointNeeded=true; // Idle on entry, no clear-reward birth.
 }
 Vector3 Simulation::shopUpgradePosition() const {
@@ -63,13 +63,15 @@ bool Simulation::collectShopUpgrade() {
     announce("STEAM SALE / SHOP DISCOUNT",3);checkpointNeeded=true;return true;
 }
 void Simulation::prepareShop() {
+    shopHeartKind=HeartKind::Red;
     shopHeartSlot=1;shopKeySlot=0;shopUpgradeSlot=shopDiscountSlot=shopBombSlot=-1;
     if(hasSourceShop(arena.shopRoom)&&sourceShopVariation) {
         const auto stock=sourceShopStock(canyonShopStockSeed(seed_)); // Supplied basic shop level0.
         const int a=stock.categories[0],b=stock.categories[1];
-        if((a==8&&(b==0||b==1||b==3))||(b==8&&(a==0||a==1||a==3))) {
+        if((a==8&&(b==0||b==1||b==3||b==4))||(b==8&&(a==0||a==1||a==3||a==4))) {
             shopUpgradeSlot=a==8?0:1;
-            shopHeartSlot=a==0?0:b==0?1:-1;shopKeySlot=a==3?0:b==3?1:-1;
+            shopHeartKind=(a==4||b==4)?HeartKind::Soul:HeartKind::Red;
+            shopHeartSlot=(a==0||a==4)?0:(b==0||b==4)?1:-1;shopKeySlot=a==3?0:b==3?1:-1;
             shopBombSlot=a==1?0:b==1?1:-1;
             shopDiscountSlot=stock.discountSlot;
         }

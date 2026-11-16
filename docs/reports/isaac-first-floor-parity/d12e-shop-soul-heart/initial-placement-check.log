@@ -1,0 +1,5 @@
+PASS 30 native prices and 66 source admission/health cases
+heart actors seed=41 scale=0.75 range=5,5 route=0.25 shop=6 count=2
+ actor room=3 shop=0 kind=0 subtype=2
+ actor room=6 shop=1 kind=1 subtype=3
+FAIL one idle blue source heart

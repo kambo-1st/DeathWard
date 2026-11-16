@@ -3,7 +3,7 @@
   "status": "paused",
   "paused_at_utc": "2026-11-08T08:08:31Z",
   "pause_reason": "User stopped the bulk effort,requested rollback and manual selection of each specific future difference.",
-  "implementation_state": "D12d_scoped_user_accepted_in_checkpoint_soul_heart_shop_selected_bulk_paused",
+  "implementation_state": "D12e_soul_heart_shop_scoped_user_accepted_in_checkpoint_bulk_paused",
   "baseline_commit": "28023a49dbd8712820ba6953219cfdb7866bdcb6",
   "automatic_implementation_authorized": false,
   "accepted_exceptions": [
@@ -1088,7 +1088,7 @@
     "commit": "b570950f"
   },
   "d12d_shop_dynamite": {
-    "status": "scoped_user_accepted_in_checkpoint",
+    "status": "committed_scoped_user_accepted",
     "report": "docs/reports/isaac-first-floor-parity/d12d-shop-dynamite/README.md",
     "schema": 33,
     "native_category_cases": 6,
@@ -1103,7 +1103,7 @@
     ],
     "human_acceptance": "scoped_user_acknowledgment",
     "full_native_acceptance": false,
-    "uncommitted": true,
+    "uncommitted": false,
     "review": {
       "seed": 4,
       "displayed_room": 7,
@@ -1115,6 +1115,38 @@
       "god_mode": false
     },
     "cart_label_removed": true,
-    "included_in_this_checkpoint": true
+    "included_in_this_checkpoint": true,
+    "commit": "7f1260e6"
+  },
+  "d12e_shop_soul_heart": {
+    "status": "scoped_user_accepted_in_checkpoint",
+    "report": "docs/reports/isaac-first-floor-parity/d12e-shop-soul-heart/README.md",
+    "schema": 34,
+    "native_category_cases": 6,
+    "native_price_cases": 30,
+    "native_health_cases": 66,
+    "placement_cases": 27,
+    "core_suites_passed": 7,
+    "game_renderer_modes_passed": 3,
+    "cli_schemas": [
+      5,
+      33,
+      34
+    ],
+    "human_acceptance": "nice perfect, commit",
+    "full_native_acceptance": false,
+    "uncommitted": false,
+    "review": {
+      "seed": 18,
+      "displayed_room": 7,
+      "coins": 20,
+      "base_price": 5,
+      "discounted_price": 3,
+      "added_soul_half_hearts": 2,
+      "zoom_percent": 165,
+      "god_mode": false
+    },
+    "included_in_this_checkpoint": true,
+    "next_delivery_selected": false
   }
 }

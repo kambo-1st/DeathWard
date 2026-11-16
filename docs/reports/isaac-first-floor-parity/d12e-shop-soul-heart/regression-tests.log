@@ -1,0 +1,18 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  31: source_shop_heart
+1/6 Test  #31: source_shop_heart ................   Passed   10.92 sec
+    Start  34: source_shop_stock
+2/6 Test  #34: source_shop_stock ................   Passed   31.05 sec
+    Start  35: source_shop_key
+3/6 Test  #35: source_shop_key ..................   Passed   11.07 sec
+    Start  69: heart_gameplay
+4/6 Test  #69: heart_gameplay ...................   Passed    3.59 sec
+    Start  72: native_player_health
+5/6 Test  #72: native_player_health .............   Passed    0.01 sec
+    Start 140: balance_preset_contract
+6/6 Test #140: balance_preset_contract ..........   Passed    0.13 sec
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =  56.79 sec

@@ -3,7 +3,7 @@
 #include <cmath>
 
 namespace dw {
-// Installed Repentance 1.7.9b full/half/double-heart ANM2 metadata and
+// Installed Repentance 1.7.9b full/half/double/soul-heart ANM2 metadata and
 // executed pickup appearance gate. Seconds use DW's explicit 30 Hz adapter;
 // the complete native spawn/scheduler/collision wrapper is not reproduced.
 inline bool sourcePickupAppearanceGate(bool appearance,bool playing,bool dropEvent,bool previous) {
