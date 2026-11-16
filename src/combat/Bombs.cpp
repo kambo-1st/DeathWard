@@ -4,6 +4,9 @@ bool Simulation::spawnOrdinaryBomb(Vector3 at,int subtype,uint32_t seed,bool pre
     if(dead||finished||!sourceOrdinaryBombValue(subtype)||!seed||bombPickups.size()>=1024||
        !std::isfinite(at.x)||!std::isfinite(at.y)||!std::isfinite(at.z)||arena.blocked(at,.35f))return false;
     const int owner=arena.roomAt(at);if(owner<0)return false;
+    // Native pickup resolver: BOGO changes ordinary subtype1 into subtype2 at
+    // actor birth. Never double a collected amount or mutate existing actors.
+    if(subtype==1&&itemStacks({"isaac",ItemKind::Collectible,250})>0)subtype=2;
     OrdinaryBombPickup pickup;pickup.position=at;pickup.room=owner;pickup.sourceSubtype=subtype;
     pickup.seed=seed;pickup.placedInLayout=preplaced;
     pickup.timing.collectFrames=subtype==2?BombTiming::DoubleCollectFrames:BombTiming::SingleCollectFrames;

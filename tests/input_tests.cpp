@@ -915,7 +915,8 @@ void shopStockInputCheck(const std::filesystem::path &directory) {
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"shop-stock.save",file=directory/"shop-stock.json";
     Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="7";game.reviewShopStock=true;
-    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    auto fixed=BalancePreset::load(source,defaultMechanics()->fingerprint());fixed.shopCollectiblePool=0;fixed.save(file);
+    game.loadBalancePreset(file);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
     check(game.run&&game.error.empty(),"stock review launch");auto &run=*game.run;const int owner=run.room;
     check(run.shopVariationActive()&&run.player.hp==4&&run.money()==20&&run.keys==0&&!run.godMode,"explicit stock review resources");
     Renderer renderer;
@@ -958,7 +959,8 @@ void shopBombInputCheck(const std::filesystem::path &directory) {
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto file=directory/"shop-dynamite.json";
     Game game(directory/"shop-dynamite.save");game.themeChoice=ThemeChoice::Canyon;game.seedText="4";game.reviewShopStock=true;
-    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    auto fixed=BalancePreset::load(source,defaultMechanics()->fingerprint());fixed.shopCollectiblePool=0;fixed.save(file);
+    game.loadBalancePreset(file);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
     check(game.run&&game.error.empty(),"dynamite stock review launch");auto &run=*game.run;const int owner=run.room;
     check(run.shopBombOffered()&&run.dynamite==3&&run.money()==20&&run.player.hp==4&&!run.godMode,"natural dynamite pair with explicit stock review funds");
     Renderer renderer;
@@ -994,12 +996,57 @@ void shopBombInputCheck(const std::filesystem::path &directory) {
     std::cout<<"PASS D12d actual Game/Renderer mouse discount/dynamite purchase/revisit, live price/staged stock/Apply/export/load/keyboard/remember/retry/fresh expedition; seed4 shop="<<owner+1<<'\n';
 }
 
+void shopCollectibleInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto file=directory/"shop-collectibles.json";
+    Game game(directory/"shop-collectibles.save");game.themeChoice=ThemeChoice::Canyon;game.seedText="32";game.reviewShopStock=true;
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.error.empty(),"collectible review launch");auto &run=*game.run;const int owner=run.room;
+    const ItemKey bogo{"isaac",ItemKind::Collectible,250};
+    check(run.shopCollectiblePool==1&&run.shopUpgradeItem==250&&run.shopBombOffered()&&run.money()==20&&!run.godMode,"natural BOGO + bomb stock / labelled review coins");
+    Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"collectible UI no errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto image=LoadImageFromScreen();check(ExportImage(image,name),"collectible screenshot");UnloadImage(image);EndDrawing();};
+    game.updateCamera(10);frame();check(game.cameraZoomPercent()==165&&run.player.walkingSpeed()==4.8f,"accepted view and pace retained");
+    capture("artifacts/shop-collectibles-before.png");mouseWalk(game,frame,run.shopUpgradePosition(),.3f);
+    check(run.shopUpgradeSold&&run.itemStacks(bogo)==1&&run.money()==5,"mouse purchase charges once and grants BOGO");
+    const auto existing=std::find_if(run.bombPickups.begin(),run.bombPickups.end(),[](const auto &p){return p.shopStock;});
+    check(existing!=run.bombPickups.end()&&existing->sourceSubtype==1,"already born single unchanged");capture("artifacts/shop-collectibles-owned.png");
+    click(374,642);click(575,143);click(545,189);click(610,270);
+    const auto terrain=run.arena.canyon.get();click(830,465);
+    check(game.balanceDraft.shopCollectiblePool==2&&run.shopCollectiblePool==1&&run.shopUpgradeSold&&run.arena.canyon.get()==terrain&&game.hasPendingMapChanges(),"selection staged without reroll");
+    click(335,605);game.rememberBalancePreset();auto exported=BalancePreset::load(file,run.content->fingerprint());
+    check(exported.shopCollectiblePool==2&&exported.defaultZoomPercent==165,"staged pool exported with view");
+    for(int n=0;n<45&&game.keyboardFocus()!=Action::CycleShopCollectiblePool;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::CycleShopCollectiblePool,"selector keyboard reachable");key(KEY_ENTER);
+    check(game.balanceDraft.shopCollectiblePool==0&&run.shopCollectiblePool==1,"keyboard stages fixed Sale");
+    click(380,465);check(run.shopCollectiblePool==0&&run.shopUpgradeItem==64&&run.itemStacks(bogo)==1&&run.money()==5&&!run.shopUpgradeSold,"Apply preserves build and funds, resets selected stock");
+    const auto born=std::find_if(run.bombPickups.begin(),run.bombPickups.end(),[](const auto &p){return p.shopStock;});
+    check(born!=run.bombPickups.end()&&born->sourceSubtype==2,"new shop actor is double");
+    capture("artifacts/shop-collectibles-panel.png");game.perform(Action::CloseBalance);frame();
+    capture("artifacts/shop-collectibles-double.png");mouseWalk(game,frame,run.shopBombPosition(),.3f);
+    check(run.shopBombSold&&run.dynamite==5&&run.money()==0,"mouse double purchase grants two for one payment");
+    capture("artifacts/shop-collectibles-purchased.png");
+    game.loadBalancePreset(file);check(game.hasPendingMapChanges()&&run.shopCollectiblePool==0&&game.balanceDraft.shopCollectiblePool==2&&run.shopBombSold,"load stages without restock");
+    game.applyMapChanges();check(run.shopUpgradeItem==250&&run.itemStacks(bogo)==1&&run.dynamite==5&&run.money()==0,"loaded selection applies with player preserved");
+    game.exportBalancePreset();game.rememberBalancePreset();std::filesystem::copy_file(file,"artifacts/shop-collectibles-preset.json",std::filesystem::copy_options::overwrite_existing);
+    run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->room==owner&&game.run->shopCollectiblePool==2&&game.run->shopUpgradeItem==250&&game.run->itemStacks(bogo)==0&&game.run->dynamite==3&&game.run->money()==20,"retry fresh expedition retains selected pool");
+    game.close();renderer.unload();
+    Game fresh(directory/"collectibles-fresh.save");fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="32";fresh.loadBalancePreset(file);fresh.rememberBalancePreset();fresh.launch(true);
+    check(fresh.run&&fresh.run->room==0&&fresh.run->money()==0&&fresh.run->itemStacks(bogo)==0&&fresh.run->shopCollectiblePool==2&&fresh.cameraZoomPercent()==165,"fresh ordinary expedition loads selection without review state");fresh.close();
+    std::cout<<"PASS D12f actual Game/Renderer mouse BOGO/double purchase, immutable existing actor, staged mouse/keyboard selection/Apply/export/load/remember/retry/fresh expedition; seed32 shop="<<owner+1<<'\n';
+}
+
 void shopSoulHeartInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto file=directory/"shop-soul-heart.json";
     Game game(directory/"shop-soul-heart.save");game.themeChoice=ThemeChoice::Canyon;game.seedText="18";game.reviewShopStock=true;
-    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    auto fixed=BalancePreset::load(source,defaultMechanics()->fingerprint());fixed.shopCollectiblePool=0;fixed.save(file);
+    game.loadBalancePreset(file);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
     check(game.run&&game.error.empty(),"soul heart stock review launch");auto &run=*game.run;const int owner=run.room;
     check((run.shopHeartOffered()&&run.shopHeartKind==HeartKind::Soul)&&run.player.soulHearts==0&&run.money()==20&&run.player.hp==4&&!run.godMode,"natural soul heart pair with explicit stock review funds");
     Renderer renderer;
@@ -2630,6 +2677,9 @@ int main(int argc, char **argv) {
         }
         if(mode=="--keys-only") {
             keyInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--shop-collectibles-only") {
+            shopCollectibleInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--shop-soul-heart-only") {
             shopSoulHeartInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

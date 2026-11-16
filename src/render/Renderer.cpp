@@ -937,6 +937,12 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         if(run.hasSourceShop(run.room)&&run.shopVariationActive()&&!run.shopUpgradeSold) {
             const auto p=run.shopUpgradePosition();
             const float y=1.1f+.08f*std::sin(float(run.stats.duration)*2);
+            if(run.shopUpgradeItem==250) {
+                // Paired sticks on a brass card distinguish the collectible
+                // from loose supplies while retaining the shared geometry.
+                DrawCube({p.x,y-.17f,p.z},1.2f,.13f,.9f,Gold);
+                dynamiteStick({p.x,y,p.z-.22f});dynamiteStick({p.x,y,p.z+.22f});
+            } else {
             // A small brass sale tag, built in the existing world primitive style.
             DrawCube({p.x,y,p.z},.82f,1.02f,.16f,Gold);
             for(float face:{-1.f,1.f}) {
@@ -944,6 +950,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                 DrawSphereEx({p.x-.17f,y+.23f,p.z+face*.14f},.09f,6,8,Paper);
                 DrawSphereEx({p.x+.17f,y-.23f,p.z+face*.14f},.09f,6,8,Paper);
                 DrawCylinderEx({p.x-.21f,y-.29f,p.z+face*.14f},{p.x+.21f,y+.29f,p.z+face*.14f},.035f,.035f,6,Paper);
+            }
             }
         }
         if (run.legacyObjectives() && distance(run.player.position, run.arena.miners) < 60) {
@@ -1899,13 +1906,14 @@ Action Renderer::expedition(const Game &game) {
     drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy, game.deathTime,
               sandstormStrength_);
     if(!game.balanceOpen&&!game.buildOpen&&!game.paused) {
-        const auto priceTag=[&](Vector3 at,int price) {
+        const auto priceTag=[&](Vector3 at,int price,const char *name=nullptr) {
             at.y=.1f;const auto screen=GetWorldToScreen(at,game.camera);
-            const float x=screen.x/sx_-44,y=screen.y/sy_+12;
-            panel(x,y,88,25,Panel);
-            text(price==0?"FREE":std::to_string(price)+" COINS",x+8,y+5,14,Gold);
+            const float x=screen.x/sx_-(name?70:44),y=screen.y/sy_+12;
+            panel(x,y,name?140:88,name?43:25,Panel);
+            if(name)text(name,x+8,y+5,13,Paper);
+            text(price==0?"FREE":std::to_string(price)+" COINS",x+8,y+(name?23:5),14,Gold);
         };
-        if(run.hasSourceShop(run.room)&&run.shopVariationActive()&&!run.shopUpgradeSold)priceTag(run.shopUpgradePosition(),run.shopPrice(run.shopUpgradePrice,run.shopUpgradeSlot));
+        if(run.hasSourceShop(run.room)&&run.shopVariationActive()&&!run.shopUpgradeSold)priceTag(run.shopUpgradePosition(),run.shopPrice(run.shopUpgradePrice,run.shopUpgradeSlot),run.shopUpgradeItem==250?"BOGO BOMBS":"STEAM SALE");
         for(const auto &heart:run.heartPickups)if(heart.shopStock&&heart.room==run.room&&heart.timing.collectible())priceTag(heart.position,run.shopPrice(run.shopHeartBasePrice(),run.shopHeartSlot));
         for(const auto &key:run.keyPickups)if(key.shopStock&&key.room==run.room&&key.timing.collectible())priceTag(key.position,run.shopPrice(run.shopKeyPrice,run.shopKeySlot));
         for(const auto &bomb:run.bombPickups)if(bomb.shopStock&&bomb.room==run.room&&bomb.timing.collectible())priceTag(bomb.position,run.shopPrice(run.shopBombPrice,run.shopBombSlot));
@@ -2297,7 +2305,7 @@ Action Renderer::balancePanel(const Game &game) {
         if(game.balanceShopOpen) {
             const bool key=game.balanceShopKeyOpen,stock=game.balanceShopStockOpen,bomb=game.balanceShopBombOpen,soul=game.balanceShopSoulHeartOpen;
             text(soul?"SHOP SOUL HEART":bomb?"SHOP DYNAMITE":stock?"SHOP STOCK":key?"SHOP KEY":"SHOP HEART",205,184,22,Gold);
-            text(soul?"Adds one protective soul heart, up to available health capacity. Walk up to buy.":bomb?"One dynamite when selected. Walk up to buy; capacity 99 charges.":stock?"Steam Sale with red/soul hearts, keys or dynamite. Other combinations keep the fixed pair.":key?"Ordinary key when selected. Walk up to buy; capacity 99 keys.":"Opening-floor heart when selected. Walk up to buy when injured.",205,221,14,Paper);
+            text(soul?"Adds one protective soul heart, up to available health capacity. Walk up to buy.":bomb?"Dynamite when selected. Walk up to buy; capacity 99 charges.":stock?"Steam Sale or BOGO Bombs beside supplies. Unfinished stock keeps the fixed pair.":key?"Ordinary key when selected. Walk up to buy; capacity 99 keys.":"Opening-floor heart when selected. Walk up to buy when injured.",205,221,14,Paper);
             if(button(Action::BalanceShopStockTab,"STOCK",535,252,130,40,stock))return Action::BalanceShopStockTab;
             if(button(Action::BalanceShopHeartTab,"HEART",675,252,130,40,!key&&!stock&&!bomb))return Action::BalanceShopHeartTab;
             if(button(Action::BalanceShopKeyTab,"KEY",815,252,130,40,key))return Action::BalanceShopKeyTab;
@@ -2312,7 +2320,7 @@ Action Renderer::balancePanel(const Game &game) {
             const auto reset=soul?Action::ResetShopSoulHeartPrice:bomb?Action::ResetShopBombPrice:stock?Action::ResetShopUpgradePrice:key?Action::ResetShopKeyPrice:Action::ResetShopHeartPrice;
             if(button(down,"- 1",795,310,130,40))return down;
             if(button(up,"+ 1",945,310,130,40))return up;
-            text((bomb||soul)?"Reference: 5 coins before discounts. Other base prices are testing overrides.":stock?"Base 15 coins. Buying Steam Sale discounts remaining stock immediately.":key?"Reference: 5 coins before discounts. Other base prices are testing overrides.":"Reference: 3 coins before discounts. Other base prices are testing overrides.",205,370,14,Teal);
+            text((bomb||soul)?"Reference: 5 coins before discounts. Other base prices are testing overrides.":stock?"Base 15 coins. Steam Sale lowers prices; BOGO doubles new dynamite pickups.":key?"Reference: 5 coins before discounts. Other base prices are testing overrides.":"Reference: 3 coins before discounts. Other base prices are testing overrides.",205,370,14,Teal);
             if(stock) {
                 if(button(Action::ToggleSteamSaleDiscounts,game.balancePreset.steamSaleDiscounts?"ITEM DISCOUNT ON":"ITEM DISCOUNT OFF",205,399,350,36,game.balancePreset.steamSaleDiscounts))return Action::ToggleSteamSaleDiscounts;
                 if(button(reset,"RESET BASE TO 15",600,399,350,36))return reset;
@@ -2322,7 +2330,11 @@ Action Renderer::balancePanel(const Game &game) {
                 if(button(Action::BalanceShopSoulHeartTab,"SOUL HEART",825,399,250,36,soul))return Action::BalanceShopSoulHeartTab;
             }
             if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,449,350,36))return Action::ApplyMapChanges;
-            text(game.hasPendingMapChanges()?"PENDING / RESETS THIS FLOOR":"MAP SETTINGS APPLIED",585,461,14,Muted);
+            if(stock) {
+                const int pool=game.balanceDraft.shopCollectiblePool;
+                if(button(Action::CycleShopCollectiblePool,pool==0?"STEAM SALE TEST":pool==2?"BOGO BOMBS TEST":"TWO ITEM POOL",600,449,475,36))return Action::CycleShopCollectiblePool;
+            }
+            text(game.hasPendingMapChanges()?"PENDING / RESETS THIS FLOOR":"MAP SETTINGS APPLIED",stock?205:585,stock?495:461,14,Muted);
         } else if(game.balanceRoomHeartsOpen) {
             const int mode=game.balanceDraft.roomHeartLayouts;
             text("SOURCE ROOM LAYOUTS",205,184,22,Gold);

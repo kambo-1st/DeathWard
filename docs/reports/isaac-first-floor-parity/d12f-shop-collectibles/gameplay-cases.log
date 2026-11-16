@@ -1,0 +1,8 @@
+PASS 524 native choices / 8 native ordinary BOGO actor cases
+PASS purchases / immutable births / cap / repeat / Apply / next-floor effect
+WITNESS seed=4 item=64 bomb=1 room=7
+WITNESS seed=7 item=250 bomb=0 room=7
+WITNESS seed=18 item=250 bomb=0 room=7
+WITNESS seed=26 item=64 bomb=1 room=7
+PASS 12 size/selection cases
+PASS original preset migration / all modes / invalid refusal

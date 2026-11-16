@@ -58,3 +58,7 @@ end
 # D12c: bounded shop collectible dependency, outside legacy pools.
 item "isaac:collectible:64" "Steam Sale" "SHOP DISCOUNT" "Reduces ordinary source-shop prices. Copies stack; remaining stock updates immediately."
 end
+
+# D12f: ordinary pickup factory dependency; no special-bomb actors enabled.
+item "isaac:collectible:250" "BOGO Bombs" "DOUBLE DYNAMITE" "New ordinary single-dynamite pickups become doubles. Existing pickups keep their quantity. Extra copies do not multiply again."
+end

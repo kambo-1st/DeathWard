@@ -33,4 +33,21 @@ inline uint32_t canyonShopStockSeed(uint64_t floorSeed) {
     const auto seed=uint32_t(floorSeed)^0x53544f43U;
     return seed?seed:1;
 }
+// Restricted eligible pool, XML order: Steam Sale64 and BOGO Bombs250, weight1.
+// Original first-draw RNG and float cumulative comparison. Full native pool
+// eligibility/history/depletion and descriptor item-seed generation are separate.
+inline int sourceShopCollectibleChoice(uint32_t seed) {
+    uint32_t state=seed?seed:1;
+    state^=state>>1;state^=state<<11;state^=state>>6;
+    // Pinned 0xb6a198 / bits0x2f7ffffe, slightly below 2^-32.
+    const float draw=float(state)*0x1.fffffcp-33f*2.f;
+    return draw<1.f?64:draw<2.f?250:0;
+}
+inline uint32_t canyonShopCollectibleSeed(uint64_t floorSeed) {
+    uint64_t mixed=floorSeed^0x4954454dULL;
+    mixed=(mixed^(mixed>>30))*0xbf58476d1ce4e5b9ULL;
+    mixed=(mixed^(mixed>>27))*0x94d049bb133111ebULL;
+    const uint32_t seed=uint32_t(mixed^(mixed>>31));
+    return seed?seed:1;
+}
 } // namespace dw

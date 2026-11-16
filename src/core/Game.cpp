@@ -227,7 +227,8 @@ void Game::launch(bool freeMission) {
                                                   nextBalancePreset?nextBalancePreset->sourceTreasureUpgrade:true,
                                                   nextBalancePreset?nextBalancePreset->sourceShopHeart:true,
                                                   nextBalancePreset?nextBalancePreset->sourceShopKey:true,
-                                                  nextBalancePreset?nextBalancePreset->sourceShopVariation:true);
+                                                  nextBalancePreset?nextBalancePreset->sourceShopVariation:true,
+                                                  nextBalancePreset?nextBalancePreset->shopCollectiblePool:1);
     startExpedition(std::move(candidate));
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
     if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
@@ -275,7 +276,7 @@ void Game::perform(Action action) {
     try {
         if(balanceOpen&&action!=Action::None&&action!=Action::Quit&&
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
-           (action<Action::BalanceDamageHealthTab||action>Action::ResetShopSoulHeartPrice))return;
+           (action<Action::BalanceDamageHealthTab||action>Action::CycleShopCollectiblePool))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -310,6 +311,10 @@ void Game::perform(Action action) {
             preset.shopSoulHeartPrice=action==Action::ResetShopSoulHeartPrice?5:std::clamp(preset.shopSoulHeartPrice+(action==Action::ShopSoulHeartPriceUp?1:-1),0,15);
             applyBalance(std::move(preset));balanceNotice="Unsold soul-heart base price updated. Sold stock stays sold. Export to keep edits.";break;
         }
+        case Action::CycleShopCollectiblePool:
+            balanceDraft.shopCollectiblePool=(balanceDraft.shopCollectiblePool+1)%3;
+            balanceNotice="Collectible selection pending / Apply resets this floor";
+            break;
         case Action::ToggleShopVariation:
             balanceDraft.sourceShopVariation=!balanceDraft.sourceShopVariation;
             balanceNotice="Stock selection pending. APPLY MAP CHANGES resets floor purchases; player/build retained.";break;
@@ -963,7 +968,7 @@ std::vector<Action> Game::menuActions() const {
         }
         const std::vector<Action> page=balanceRewardsOpen&&balanceShopOpen&&balanceShopStockOpen?
             std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::BalanceShopStockTab,Action::BalanceShopHeartTab,Action::BalanceShopKeyTab,Action::BalanceShopBombTab,
-                Action::ToggleShopVariation,Action::ShopUpgradePriceDown,Action::ShopUpgradePriceUp,Action::ToggleSteamSaleDiscounts,Action::ResetShopUpgradePrice,Action::ApplyMapChanges}:
+                Action::ToggleShopVariation,Action::ShopUpgradePriceDown,Action::ShopUpgradePriceUp,Action::ToggleSteamSaleDiscounts,Action::ResetShopUpgradePrice,Action::CycleShopCollectiblePool,Action::ApplyMapChanges}:
             balanceRewardsOpen&&balanceShopOpen?
             std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::BalanceShopStockTab,Action::BalanceShopHeartTab,Action::BalanceShopKeyTab,Action::BalanceShopBombTab,
                 (balanceShopSoulHeartOpen||balanceShopBombOpen)?Action::ToggleShopVariation:balanceShopKeyOpen?Action::ToggleShopKey:Action::ToggleShopHeart,

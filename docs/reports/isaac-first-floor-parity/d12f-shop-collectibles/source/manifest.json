@@ -1,0 +1,74 @@
+{
+  "version": "Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "items": [
+    {
+      "item": {
+        "description": "#STEAM_SALE_DESCRIPTION",
+        "gfx": "Collectibles_064_SteamSale.png",
+        "id": "64",
+        "name": "#STEAM_SALE_NAME"
+      },
+      "shop_entry": {
+        "Id": "64",
+        "Weight": "1",
+        "DecreaseBy": "1",
+        "RemoveOn": "0.1"
+      }
+    },
+    {
+      "item": {
+        "description": "#BOGO_BOMBS_DESCRIPTION",
+        "gfx": "collectibles_250_bogobombs.png",
+        "id": "250",
+        "name": "#BOGO_BOMBS_NAME"
+      },
+      "shop_entry": {
+        "Id": "250",
+        "Weight": "1",
+        "DecreaseBy": "1",
+        "RemoveOn": "0.1"
+      }
+    }
+  ],
+  "choice_cases": 524,
+  "bogo_cases": 112,
+  "price_cases": 60,
+  "windows": [
+    {
+      "name": "choice-rng",
+      "start": "0x7015e9",
+      "end": "0x701614",
+      "sha256": "b43b7db716c937f70693e80f638f7e52ec6d8b5fb860bc4d876dca6a28238871"
+    },
+    {
+      "name": "rng-float",
+      "start": "0x7a7db0",
+      "end": "0x7a7e1d",
+      "sha256": "a496bf0877608ee4dd7250e0c678aa1767d541b2383ba2b84bc7fc3b87589962"
+    },
+    {
+      "name": "weighted-scan",
+      "start": "0x700c60",
+      "end": "0x700e55",
+      "sha256": "c49a31b6ddc61d5f25967e957b7d18b5aaeb8d336345726536ecfeb2e48ea734"
+    },
+    {
+      "name": "bogo-gate",
+      "start": "0x6b57da",
+      "end": "0x6b58a1",
+      "sha256": "f4726f22cdc85055accda660088f382640e1351adb774f81ba5617cfb97accf5"
+    }
+  ],
+  "xml_sha256": {
+    "items.xml": "ee567ed920b1bcada61f2a2d65e48563286fe7e8bf00363ad763ac2aa3ae64b7",
+    "itempools.xml": "da5391ba59626b0fe349fa6d143df82cd7c19c648f04311d8e21a441d5aa502c"
+  },
+  "scope": "Original RNG/weighted scan under supplied two eligible equal-weight entries; stops before eligibility/history/depletion. Whole pickup resolver with real inventory query and supplied explicit subtype, ordinary player, no Humbling Bundle or mode overrides. Original default store and ordinary prices. Canyon item seed, restricted pool and lazy room admission are adaptations. Full item pool, modifiers, existing-actor lifecycle and native actor acceptance remain open.",
+  "full_native_acceptance": false,
+  "rng_coefficient": {
+    "address": "0xb6a198",
+    "float_bits": "0x2f7ffffe"
+  },
+  "bomb_price_cases": 12
+}

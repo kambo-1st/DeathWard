@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-16",
+  "status": "developer_verified_scoped_user_accepted",
+  "build": "deathward and deathward_input_tests passed",
+  "native": {
+    "weighted_scan": 524,
+    "pickup_resolver": 112,
+    "collectible_prices": 60,
+    "ordinary_double_bomb_prices": 12,
+    "script_check": "passed"
+  },
+  "core_suites": 7,
+  "game_input_modes": [
+    "--shop-collectibles-only",
+    "--shop-stock-only"
+  ],
+  "cli_schemas": [
+    5,
+    34,
+    35
+  ],
+  "catalog_fingerprint": "1058a67f0b03cff3",
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "human_accepted": true,
+  "full_native_acceptance": false,
+  "corrections": [
+    "Pinned RNG coefficient corrected after boundary comparisons failed.",
+    "Two negative preset fixtures updated for schema35 field position/catalog/contract.",
+    "A stale input object initially ran the old fallback suite; task translation units rebuilt before final explicit mode checks.",
+    "Preview corrected old Steam Sale review caption and added named collectible price tags."
+  ],
+  "unfinished": [
+    "complete shop pool/eligibility/depletion/descriptor seeds",
+    "remaining stock categories and special bomb actors",
+    "full native actor/factory/physics/profile equivalence",
+    "browser execution",
+    "gameplay save continuity"
+  ],
+  "artifacts": {
+    "shop-collectibles-before.png": "f5069ab854265b34c0d52c2dffa8e1b65e16053706d29123a9958a24c467c0dd",
+    "shop-collectibles-owned.png": "443895b677ab95653deddf44385681803a4560cdb1480ed34591647e32bf0bf7",
+    "shop-collectibles-purchased.png": "478ea199b0cc9960bef38a8965ba1b0c35989a432f330515575b146f92e151ad",
+    "gameplay-cases.log": "ad33a205dc665736fae1d16f743f9f092041aca8aaf72596b3e0d56a76edff48",
+    "shop-collectibles-double.png": "45e602dc50758c6196343ec2d0404c277fdebe9915774f1e28af4fabc79feb48",
+    "game-input.log": "9ac932d7aa78f7503d76eac3b79bd75b9578a0a1527c60ed992b9ef991e7e483",
+    "steam-sale-input.log": "03745b2792585f54c6a7d37d0cb037acda1288375c5e6ee9f3570a87bb4a839a",
+    "tests.log": "5b7f9dcfb83bc9bbe8e1f82ad1e975e65238583f0acac6f8527450236ab90e7b",
+    "shop-collectibles-panel.png": "6de8455a2c28b3b92a88a6080911a3c4380aeb181ca2ce8a37eaca3813839934"
+  },
+  "interactive_review": {
+    "seed": 32,
+    "displayed_room": 7,
+    "startup": "SHOP_STOCK_REVIEW room=7 upgrade_item=250 upgrade_slot=1 key_slot=-1 bomb_slot=0 heart_kind=red heart_slot=-1 sale_slot=-1 coins=20 price=15 god=0",
+    "human_accepted": true
+  }
+}

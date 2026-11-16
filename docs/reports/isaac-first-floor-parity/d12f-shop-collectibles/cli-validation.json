@@ -1,0 +1,35 @@
+{
+  "cases": [
+    {
+      "case": "original-schema5",
+      "schema": 5,
+      "preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+      "passed": true,
+      "startup": [
+        "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=380f330fed853180 profile=custom",
+        "SHOP_STOCK_REVIEW room=7 upgrade_item=250 upgrade_slot=1 key_slot=-1 bomb_slot=0 heart_kind=red heart_slot=-1 sale_slot=-1 coins=20 price=15 god=0"
+      ]
+    },
+    {
+      "case": "previous-schema34",
+      "schema": 34,
+      "preset_sha256": "a0cb4b8bd0a4cf914b3551502454656526c3b67e6b98212f08b8022fef18e57e",
+      "passed": true,
+      "startup": [
+        "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=6 shop_bomb_price=5 shop_key_price=5 shop_heart_price=4 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=f5f4ad3319ad04c2 profile=custom",
+        "SHOP_STOCK_REVIEW room=7 upgrade_item=250 upgrade_slot=1 key_slot=-1 bomb_slot=0 heart_kind=red heart_slot=-1 sale_slot=-1 coins=20 price=15 god=0"
+      ]
+    },
+    {
+      "case": "exported-schema35",
+      "schema": 35,
+      "preset_sha256": "d7fe2397395c5df8af1d32d2f204d31b5b1d8df26b41ec7d1d2192a47e050d4b",
+      "passed": true,
+      "startup": [
+        "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 onion_strength=1 shop_collectible_pool=2 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=f68b105a7bdc7759 profile=custom",
+        "SHOP_STOCK_REVIEW room=7 upgrade_item=250 upgrade_slot=1 key_slot=-1 bomb_slot=0 heart_kind=red heart_slot=-1 sale_slot=-1 coins=20 price=15 god=0"
+      ]
+    }
+  ],
+  "original_preset_unchanged": true
+}

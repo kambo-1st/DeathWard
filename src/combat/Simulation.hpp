@@ -1131,7 +1131,7 @@ class Simulation {
                MissionTheme theme = MissionTheme::Mine, bool canyonRiver = true, bool tutorial = false,
                WitnessAccount account = WitnessAccount::None, int floor = 0,
                ExpeditionPacing pacing = ExpeditionPacing::Compact,
-               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics(), float roomSizeScale = 1, int roomMinHalfTiles = 0, int roomMaxHalfTiles = 0, float routeLengthScale = 1, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool coinClearRewards = false, bool sourceRoomLocks = false, bool sourceTreasureUpgrade = false, bool sourceShopHeart = false, bool sourceShopKey = false, bool sourceShopVariation = false);
+               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics(), float roomSizeScale = 1, int roomMinHalfTiles = 0, int roomMaxHalfTiles = 0, float routeLengthScale = 1, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool coinClearRewards = false, bool sourceRoomLocks = false, bool sourceTreasureUpgrade = false, bool sourceShopHeart = false, bool sourceShopKey = false, bool sourceShopVariation = false, int shopCollectiblePool = 0);
     std::shared_ptr<const MechanicsLibrary> content;
     ExpeditionPlan expedition;
     int floor = 0;
@@ -1142,6 +1142,7 @@ class Simulation {
     bool sourceShopHeart=false, shopHeartDelivered=false, shopHeartSold=false;
     bool sourceShopKey=false, shopKeyDelivered=false, shopKeySold=false;
     bool sourceShopVariation=false, shopUpgradeSold=false, steamSaleDiscounts=true;
+    int shopCollectiblePool=0, shopUpgradeItem=64; // 0 Steam Sale, 1 restricted pool, 2 BOGO test.
     int shopUpgradePrice=15;
     int shopBombPrice=5,shopBombSlot=-1;
     bool shopBombDelivered=false,shopBombSold=false;
@@ -1250,7 +1251,7 @@ class Simulation {
     bool canUseFloorExit() const;
     bool advanceFloor();
     bool canResizeRooms() const;
-    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1, std::optional<bool> sourceRoom = std::nullopt, std::optional<int> heartLayouts = std::nullopt, std::optional<bool> roomLocks = std::nullopt, std::optional<bool> treasureUpgrade = std::nullopt, std::optional<bool> shopHeart = std::nullopt, std::optional<bool> shopKey = std::nullopt, std::optional<bool> shopVariation = std::nullopt);
+    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1, std::optional<bool> sourceRoom = std::nullopt, std::optional<int> heartLayouts = std::nullopt, std::optional<bool> roomLocks = std::nullopt, std::optional<bool> treasureUpgrade = std::nullopt, std::optional<bool> shopHeart = std::nullopt, std::optional<bool> shopKey = std::nullopt, std::optional<bool> shopVariation = std::nullopt, std::optional<int> collectiblePool = std::nullopt);
     int finalRoom() const { return arena.roomCount()-1; }
     Vector3 surveyPosition() const { return arena.rooms.back().objective; }
     bool canReturn() const { return lastFloor()&&canUseFloorExit(); }

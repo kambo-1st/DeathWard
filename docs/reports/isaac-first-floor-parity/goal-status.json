@@ -3,7 +3,7 @@
   "status": "paused",
   "paused_at_utc": "2026-11-08T08:08:31Z",
   "pause_reason": "User stopped the bulk effort,requested rollback and manual selection of each specific future difference.",
-  "implementation_state": "D12e_soul_heart_shop_scoped_user_accepted_in_checkpoint_bulk_paused",
+  "implementation_state": "D12f_shop_collectibles_scoped_user_accepted_in_checkpoint_bulk_paused",
   "baseline_commit": "28023a49dbd8712820ba6953219cfdb7866bdcb6",
   "automatic_implementation_authorized": false,
   "accepted_exceptions": [
@@ -37,10 +37,10 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Human visual check of the centered merchant cart, then commit this selected change. Broader stock/pool/native shop acceptance remains unfinished.",
+  "next_work": "D12f is accepted and authorized for checkpoint commit. Proposed next: D11b treasure-room variety with Cricket\u2019s Head4, complete source-effect verification and main-game live/export/load playtest; not selected or started. Full shop/treasure pools and other native gaps remain unfinished.",
   "first_floor_delivery_plan_checkpoint": {
-    "recorded_date": "2026-11-15",
-    "status": "D12c committed a8f35fb7; centered shop cart developer-verified, human review pending",
+    "recorded_date": "2026-11-16",
+    "status": "D12e committed e4f41461; D12f enabled, developer-verified and scoped user-accepted in this checkpoint",
     "report": "docs/isaac_first_floor_delivery_plan.md",
     "delivery_location": "main DeathWard executable, ordinary Game/Simulation and expedition paths",
     "cumulative_gameplay_integration_required": true,
@@ -1148,5 +1148,24 @@
     },
     "included_in_this_checkpoint": true,
     "next_delivery_selected": false
+  },
+  "d12f_shop_collectibles": {
+    "selected": true,
+    "enabled": true,
+    "report": "docs/reports/isaac-first-floor-parity/d12f-shop-collectibles/README.md",
+    "human_accepted": true,
+    "validation": "passed: seven focused suites, two actual Game/Renderer modes, three CLI loads",
+    "schema": 35,
+    "previous_commit": "e4f41461",
+    "acceptance_record": "docs/reports/isaac-first-floor-parity/d12f-shop-collectibles/human-acceptance.json",
+    "commit_authorized": true
+  },
+  "d11b_treasure_variety_proposal": {
+    "selected": false,
+    "started": false,
+    "item": "isaac:collectible:4",
+    "name": "Cricket\u2019s Head",
+    "scope": "Second eligible treasure choice, complete effects verified against installed1.7.9b, reusable tuning and one short main-game combat check.",
+    "eligibility": "Preserved itempools.xml treasure pool, weight1; this alone does not verify effects."
   }
 }
