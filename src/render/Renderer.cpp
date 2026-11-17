@@ -35,6 +35,16 @@ std::string timeLabel(double seconds) {
 void shadow(Vector3 p, float radius) {
     DrawCylinder({p.x, 0.025f, p.z}, radius, radius, 0.012f, 12, Color{24, 27, 26, 120});
 }
+void haloFlyModel(Vector3 at,float time,float scale=1) {
+    const float wing=.16f+.06f*std::sin(time*42);
+    DrawSphereEx(at,.23f*scale,6,8,Color{42,53,43,255});
+    DrawSphereEx(add(at,{0,.04f*scale,.18f*scale}),.17f*scale,5,7,Color{89,101,62,255});
+    for(float sign:{-1.f,1.f}) {
+        const auto tip=add(at,{sign*.25f*scale,wing*scale,-.05f*scale});
+        DrawSphereEx(tip,.17f*scale,4,6,Color{215,213,178,230});
+        DrawSphereEx(add(at,{sign*.09f*scale,.08f*scale,.3f*scale}),.055f*scale,4,6,Color{225,172,65,255});
+    }
+}
 void brotherBobbyModel(Vector3 at,Vector3 facing) {
     const Color blue{87,142,194,255},light{170,204,224,255};
     facing=unit(horizontal(facing));if(length(facing)<.1f)facing={0,0,1};
@@ -949,6 +959,9 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                     DrawCylinderEx({p.x,y+.08f,p.z},{p.x,y-.42f,p.z},.34f,0,8,red);
                 } else if(run.treasureUpgradeItem(i)==8) {
                     brotherBobbyModel({p.x,y,p.z},{0,0,1});
+                } else if(run.treasureUpgradeItem(i)==10) {
+                    haloFlyModel({p.x-.32f,y,p.z},float(run.stats.duration),.9f);
+                    haloFlyModel({p.x+.32f,y+.15f,p.z},float(run.stats.duration)+1,.9f);
                 } else if(run.treasureUpgradeItem(i)==4) {
                     const Color fur{130,82,51,255};
                     DrawSphereEx({p.x,y+.1f,p.z},.48f,7,9,fur);
@@ -1236,6 +1249,9 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         if(pickup.kind==HeartKind::Red&&pickup.amount==4) {
             heart(add(point,{-.28f,0,0}),false);heart(add(point,{.28f,0,.22f}),false);
         } else heart(point,pickup.kind==HeartKind::Red&&pickup.amount==1);
+    }
+    for(const auto &fly:run.haloFlies) {
+        shadow(fly.position,.24f);haloFlyModel(fly.position,float(run.stats.duration));
     }
     for(const auto &f:run.brotherBobbies)if(f.room==run.room) {
         shadow(f.position,.3f);
@@ -2631,8 +2647,25 @@ Action Renderer::balancePanel(const Game &game) {
         text("Reference: heals 2 half-hearts; +1 charge per first combat clear.",205,427,14,Muted);
         if(button(Action::ResetYumHeart,"RESET ACTIVE SETTINGS",205,453,350,40))return Action::ResetYumHeart;
         text("Charge is expedition state; presets never refill it.",585,468,13,Teal);
+    } else if(game.balanceFamiliarOpen&&game.balanceHaloOpen) {
+        text("FAMILIAR / HALO OF FLIES",205,182,22,Gold);
+        if(button(Action::BalanceFamiliarTab,"BROTHER BOBBY",710,169,220,40))return Action::BalanceFamiliarTab;
+        if(button(Action::BalanceTreasureTab,"TREASURE",945,169,130,40))return Action::BalanceTreasureTab;
+        const auto &t=game.balancePreset.haloOfFlies;
+        const std::array<float,3> values{t.orbitSpeed,t.orbitRadius,t.contactRadius};
+        const std::array<const char *,3> labels{"ORBIT SPEED","ORBIT SIZE","CONTACT SIZE"};
+        for(int i=0;i<3;++i) {
+            const float y=240+i*60;const auto down=Action(int(Action::HaloSpeedDown)+i*2),up=Action(int(down)+1);
+            text(labels[size_t(i)],205,y+12,18,Gold);text(decimal(values[size_t(i)]*100)+"%",495,y+7,22,Paper);
+            if(button(down,"- 5%",650,y,130,40))return down;
+            if(button(up,"+ 5%",795,y,130,40))return up;
+        }
+        text("Two protective flies per copy, up to ten. Contact kills fly enemies.",205,423,14,Muted);
+        if(button(Action::ResetHalo,"RESET HALO",205,453,290,40))return Action::ResetHalo;
+        text("FLIES "+std::to_string(game.run?game.run->haloFlies.size():0)+" / gaps between flies still let shots through",515,468,13,Teal);
     } else if(game.balanceFamiliarOpen) {
         text("FAMILIAR / BROTHER BOBBY",205,182,22,Gold);
+        if(button(Action::BalanceHaloTab,"HALO OF FLIES",710,169,220,40))return Action::BalanceHaloTab;
         if(button(Action::BalanceTreasureTab,"TREASURE",945,169,130,40))return Action::BalanceTreasureTab;
         const auto &t=game.balancePreset.brotherBobby;
         const std::array<float,4> values{t.movement,t.interval,t.damage,t.shotSpeed};
@@ -2653,7 +2686,7 @@ Action Renderer::balancePanel(const Game &game) {
         text("One upgrade per opening-floor treasure pedestal. Touch it to collect once.",205,220,14,Paper);
         if(button(Action::ToggleTreasureUpgrade,game.balanceDraft.sourceTreasureUpgrade?"COLLECTIBLE PEDESTAL":"LEGACY RELIC CHOICES",205,252,490,40,game.balanceDraft.sourceTreasureUpgrade))return Action::ToggleTreasureUpgrade;
         const int treasurePool=game.balanceDraft.treasureCollectiblePool;
-        if(button(Action::CycleTreasureCollectiblePool,treasurePool==1?"POOL: FOUR ITEMS":treasurePool==4?"TEST: YUM HEART":treasurePool==3?"TEST: BROTHER BOBBY":treasurePool==2?"TEST: CRICKET'S HEAD":"TEST: SAD ONION",720,252,355,40))return Action::CycleTreasureCollectiblePool;
+        if(button(Action::CycleTreasureCollectiblePool,treasurePool==1?"POOL: FIVE ITEMS":treasurePool==5?"TEST: HALO OF FLIES":treasurePool==4?"TEST: YUM HEART":treasurePool==3?"TEST: BROTHER BOBBY":treasurePool==2?"TEST: CRICKET'S HEAD":"TEST: SAD ONION",720,252,355,40))return Action::CycleTreasureCollectiblePool;
         text("SAD ONION STRENGTH",205,324,18,Gold);
         text(decimal(game.balancePreset.sadOnionStrength*100)+"%",470,319,24,Paper);
         if(button(Action::SadOnionDown,"- 5%",650,310,130,40))return Action::SadOnionDown;

@@ -25,7 +25,7 @@ void native() {
  check(n==48,"all native birth states");std::cout<<"PASS 315 source follow/free-physics and 48 independent tear births\n";
 }
 void lifecycle() {
- auto s=make();s.jumpDebug(treasure(s));check(s.treasureUpgradeItem(s.room)==8,"natural Bobby witness seed9");
+ auto s=make(4);s.jumpDebug(treasure(s));check(s.treasureUpgradeItem(s.room)==8,"natural Bobby witness seed4");
  check(s.content->item(Bobby)->category==CollectibleCategory::Familiar,"real category metadata");
  const auto attack=primaryPlayerAttack(s,s.player.shotDamage,false);const auto pace=s.player.walkingSpeed();
  s.player.position=pedestalGeometry::approach(s.rewardPosition(s.room),{1,0,0},.85f);check(s.collectTreasureUpgrade()&&!s.collectTreasureUpgrade(),"ordinary once-only acquisition");s.step({},Tick);

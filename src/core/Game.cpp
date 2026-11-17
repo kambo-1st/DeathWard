@@ -278,7 +278,8 @@ void Game::perform(Action action) {
         if(balanceOpen&&action!=Action::None&&action!=Action::Quit&&
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
            (action<Action::BalanceDamageHealthTab||action>Action::ResetYumHeart)&&
-           (action<Action::BalanceTrinketTab||action>Action::ResetTrinkets)&&action!=Action::WhipDown&&action!=Action::WhipUp)return;
+           (action<Action::BalanceTrinketTab||action>Action::ResetTrinkets)&&action!=Action::WhipDown&&action!=Action::WhipUp&&
+           (action<Action::BalanceHaloTab||action>Action::ResetHalo))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -313,7 +314,20 @@ void Game::perform(Action action) {
             preset.shopSoulHeartPrice=action==Action::ResetShopSoulHeartPrice?5:std::clamp(preset.shopSoulHeartPrice+(action==Action::ShopSoulHeartPriceUp?1:-1),0,15);
             applyBalance(std::move(preset));balanceNotice="Unsold soul-heart base price updated. Sold stock stays sold. Export to keep edits.";break;
         }
-        case Action::BalanceFamiliarTab:balanceTrinketOpen=false;balanceActiveOpen=false;balanceFamiliarOpen=true;balanceTreasureOpen=false;break;
+        case Action::BalanceFamiliarTab:balanceHaloOpen=false;balanceTrinketOpen=false;balanceActiveOpen=false;balanceFamiliarOpen=true;balanceTreasureOpen=false;break;
+        case Action::BalanceHaloTab:balanceHaloOpen=true;balanceFamiliarOpen=true;balanceActiveOpen=balanceTrinketOpen=balanceTreasureOpen=false;break;
+        case Action::HaloSpeedDown:case Action::HaloSpeedUp:
+        case Action::HaloRadiusDown:case Action::HaloRadiusUp:
+        case Action::HaloContactDown:case Action::HaloContactUp:case Action::ResetHalo: {
+            auto preset=balancePreset;auto &t=preset.haloOfFlies;
+            if(action==Action::ResetHalo)t={};
+            else {
+                const int offset=int(action)-int(Action::HaloSpeedDown);
+                float *field=offset<2?&t.orbitSpeed:offset<4?&t.orbitRadius:&t.contactRadius;
+                *field=std::clamp(*field+(offset%2?.05f:-.05f),.25f,2.f);
+            }
+            applyBalance(std::move(preset));balanceNotice="Orbit and contact edits apply next tick; rotation phase and ownership remain.";break;
+        }
         case Action::BobbyMovementDown:case Action::BobbyMovementUp:
         case Action::BobbyIntervalDown:case Action::BobbyIntervalUp:
         case Action::BobbyDamageDown:case Action::BobbyDamageUp:
@@ -352,7 +366,7 @@ void Game::perform(Action action) {
             balanceNotice="Owned effect changes next attack; current wait and flying shots stay fixed. Rewards apply to future first clears.";break;
         }
         case Action::CycleTreasureCollectiblePool:
-            balanceDraft.treasureCollectiblePool=(balanceDraft.treasureCollectiblePool+1)%5;
+            balanceDraft.treasureCollectiblePool=(balanceDraft.treasureCollectiblePool+1)%6;
             balanceNotice="Treasure selection pending / Apply resets this floor";break;
         case Action::CricketHeadDown:case Action::CricketHeadUp:case Action::ResetCricketHead: {
             auto preset=balancePreset;
@@ -1050,8 +1064,10 @@ std::vector<Action> Game::menuActions() const {
             std::vector<Action>{Action::BalanceTreasureTab,Action::CancerDown,Action::CancerUp,Action::WhipDown,Action::WhipUp,Action::ToggleTrinketRewards,Action::CycleTrinketBinding,Action::ResetTrinkets}:
             balanceShootingOpen&&balanceActiveOpen?
             std::vector<Action>{Action::BalanceTreasureTab,Action::YumHealingDown,Action::YumHealingUp,Action::YumRechargeDown,Action::YumRechargeUp,Action::CycleActiveBinding,Action::ResetYumHeart}:
+            balanceShootingOpen&&balanceFamiliarOpen&&balanceHaloOpen?
+            std::vector<Action>{Action::BalanceTreasureTab,Action::BalanceFamiliarTab,Action::HaloSpeedDown,Action::HaloSpeedUp,Action::HaloRadiusDown,Action::HaloRadiusUp,Action::HaloContactDown,Action::HaloContactUp,Action::ResetHalo}:
             balanceShootingOpen&&balanceFamiliarOpen?
-            std::vector<Action>{Action::BalanceTreasureTab,Action::BobbyMovementDown,Action::BobbyMovementUp,Action::BobbyIntervalDown,Action::BobbyIntervalUp,Action::BobbyDamageDown,Action::BobbyDamageUp,Action::BobbyShotDown,Action::BobbyShotUp,Action::ResetBrotherBobby}:
+            std::vector<Action>{Action::BalanceTreasureTab,Action::BalanceHaloTab,Action::BobbyMovementDown,Action::BobbyMovementUp,Action::BobbyIntervalDown,Action::BobbyIntervalUp,Action::BobbyDamageDown,Action::BobbyDamageUp,Action::BobbyShotDown,Action::BobbyShotUp,Action::ResetBrotherBobby}:
             balanceShootingOpen&&balanceTreasureOpen?
             std::vector<Action>{Action::BalanceTrinketTab,Action::BalanceActiveTab,Action::BalanceFamiliarTab,Action::ToggleTreasureUpgrade,Action::SadOnionDown,Action::SadOnionUp,Action::ResetSadOnion,Action::CycleTreasureCollectiblePool,Action::CricketHeadDown,Action::CricketHeadUp,Action::ResetCricketHead,Action::ApplyMapChanges}:
             balanceShootingOpen?

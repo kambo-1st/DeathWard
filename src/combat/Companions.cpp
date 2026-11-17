@@ -3,6 +3,38 @@
 #include "items/CricketHead.hpp"
 
 namespace dw {
+void Simulation::updateHaloOfFlies(float dt) {
+    const auto count=sourceHaloCount(itemStacks({"isaac",ItemKind::Collectible,10}));
+    const bool changed=haloFlies.size()!=count;
+    haloFlies.resize(count);
+    // Continuous half-world-step adapter; live speed edits retain phase.
+    haloPhase_=std::fmod(haloPhase_-double(dt)*30*HaloSourceSpeed*Pi*.5*haloOfFlies.orbitSpeed,2*Pi);
+    bool queued=false;
+    for(size_t i=0;i<haloFlies.size();++i) {
+        auto &fly=haloFlies[i];
+        const bool reset=changed||fly.room!=room||!fly.id;
+        if(!fly.id)fly.id=nextEntity_++;
+        fly.previous=fly.position;
+        const float phase=float(haloPhase_)+2*Pi*float(i)/float(count);
+        fly.position=add(player.position,mul(sourceHaloOffset(phase),HaloSpace*haloOfFlies.orbitRadius));
+        if(reset)fly.previous=fly.position;
+        fly.room=room;
+        // Halo's native contact branch skips ordinary damage; it directly kills
+        // the same bounded fly identities as blue flies, without consuming Halo.
+        for(auto &enemy:enemies)if(companionTarget(enemy)&&sourceBlueFlyInstakill(enemy.monster)&&
+            segmentSphere(horizontal(fly.previous),horizontal(fly.position),horizontal(enemy.position),
+                          HaloSourceContactRadius*HaloSpace*haloOfFlies.contactRadius+enemy.radius)<=1) {
+            Event hit;hit.type=EventType::Damage;hit.target=enemy.id;hit.execution=true;
+            hit.damage=std::max(1.f,enemy.hp);hit.position=fly.position;hit.origin=fly.previous;
+            hit.context.sourceEntity=fly.id;hit.context.sourceItem=ItemKey{"isaac",ItemKind::Collectible,10};
+            hit.context.damageSource=DamageSource::Ally;hit.context.familiarAttack=true;
+            queued=queueRoot(hit)||queued;
+        }
+    }
+    // Kill events use the existing lifecycle/drop path, not direct NPC erasure.
+    if(queued)drainEvents();
+}
+
 void Simulation::updateBrotherBobby(const Input &input,float dt) {
     const auto count=itemStacks({"isaac",ItemKind::Collectible,8});
     if(brotherBobbies.size()>count)brotherBobbies.resize(count);

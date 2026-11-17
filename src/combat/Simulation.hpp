@@ -1,5 +1,6 @@
 #pragma once
 #include "combat/BrotherBobby.hpp"
+#include "combat/HaloOfFlies.hpp"
 #include "combat/ActiveItem.hpp"
 #include "combat/Trinket.hpp"
 #include "combat/RedHeartTiming.hpp"
@@ -1138,6 +1139,12 @@ struct BlueFlyRuntime {
     bool alive=true,orbiting=false;
     std::optional<Event> pendingHit;
 };
+struct HaloFlyRuntime {
+    EntityId id=0;
+    Vector3 position{},previous{};
+    int room=-1;
+    uint64_t blockedShots=0;
+};
 struct BrotherBobbyRuntime {
     EntityId id=0;
     Vector3 position{},previous{},nativeVelocity{};
@@ -1164,6 +1171,7 @@ class Simulation {
     bool sourceTreasureUpgrade = false;
     float sadOnionStrength = 1, cricketHeadStrength = 1;
     BrotherBobbyTuning brotherBobby{};
+    HaloOfFliesTuning haloOfFlies{};
     std::optional<PowerupReviewState> powerupReview; // Explicit CLI fixture, never a natural item pool.
     bool beginPowerupReview();
     bool beginTrinketReview();
@@ -1356,6 +1364,7 @@ class Simulation {
     std::vector<HeartPickup> heartPickups;
     std::vector<BlueFlyRuntime> blueFlies;
     std::vector<BrotherBobbyRuntime> brotherBobbies;
+    std::vector<HaloFlyRuntime> haloFlies;
     void refillRottenHeartFlies();
     bool applyMidasFreeze(EntityId id,int frames,bool goldenHeart=false);
     bool takeHeartDamage(float halves,bool redFirst=false,const Context &context={},bool hostile=true);
@@ -1721,6 +1730,8 @@ class Simulation {
     void clearHazards(bool preservePlayer = false);
     void rebalanceBlueFlyOrbit();
     void updateBlueFlies(float dt);
+    void updateHaloOfFlies(float dt);
+    double haloPhase_=0;
     void updateBrotherBobby(const Input &input,float dt);
     float brotherBobbyClock_=0;
     bool activeInputHeld_=false, trinketInputHeld_=false;

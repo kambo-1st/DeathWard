@@ -1,0 +1,14 @@
+{
+  "delivery": "PW-F02",
+  "status": "scoped accepted",
+  "feedback": "ok, cool, it works... Whats next?",
+  "scope": "User acceptance of the Halo main-game playtest; does not certify full native parity.",
+  "next_proposed": "Commit accepted Halo checkpoint, then PW-A02 Book of Shadows; not selected",
+  "still_open": [
+    "Full native cache/group/factory/scheduler/physical/synergy/special-projectile equivalence",
+    "Broader catalog",
+    "Full live expedition resume"
+  ],
+  "commit_authorized": true,
+  "next_selected": "PW-A02 Book of Shadows; one active slot, charge-preserving pedestal swaps, permanent expedition passives"
+}

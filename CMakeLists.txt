@@ -668,6 +668,10 @@ if(BUILD_TESTING)
     target_link_libraries(deathward_yum_heart_tests PRIVATE deathward_core)
     add_test(NAME yum_heart COMMAND deathward_yum_heart_tests)
 
+    add_executable(deathward_halo_of_flies_tests tests/halo_of_flies_tests.cpp)
+    target_link_libraries(deathward_halo_of_flies_tests PRIVATE deathward_core)
+    add_test(NAME halo_of_flies COMMAND deathward_halo_of_flies_tests)
+
     add_executable(deathward_brother_bobby_tests tests/brother_bobby_tests.cpp)
     target_link_libraries(deathward_brother_bobby_tests PRIVATE deathward_core)
     add_test(NAME brother_bobby COMMAND deathward_brother_bobby_tests)

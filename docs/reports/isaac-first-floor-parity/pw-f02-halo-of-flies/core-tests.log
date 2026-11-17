@@ -1,0 +1,12 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 30: powerup_categories
+1/3 Test #30: powerup_categories ...............   Passed    1.96 sec
+    Start 35: brother_bobby
+2/3 Test #35: brother_bobby ....................   Passed    3.31 sec
+    Start 37: treasure_upgrade
+3/3 Test #37: treasure_upgrade .................   Passed   13.90 sec
+
+100% tests passed, 0 tests failed out of 3
+
+Total Test time (real) =  19.18 sec

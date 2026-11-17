@@ -1,0 +1,36 @@
+{
+  "delivery": "PW-F02 Halo of Flies",
+  "status": "developer_verified_scoped_human_accepted",
+  "source": "installed Repentance1.7.9b",
+  "native_cases": {
+    "count": 9,
+    "angle": 36,
+    "projectile_contact": 8,
+    "npc_contact": 22
+  },
+  "focused_suites": 10,
+  "actual_game_modes": [
+    "--halo-of-flies-only",
+    "--brother-bobby-only",
+    "--cricket-head-only"
+  ],
+  "cli_schemas": [
+    5,
+    40,
+    41
+  ],
+  "natural_review": {
+    "seed": 38,
+    "treasure_room": 8,
+    "pooter_room": 4
+  },
+  "mechanics_fingerprint": "7475c3faee57bd46",
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "full_native_acceptance": false,
+  "unfinished": [
+    "checkpoint commit",
+    "full native cache/group/factory/scheduler/physical/synergy/special-projectile acceptance",
+    "full live expedition resume"
+  ],
+  "next_proposed": "Commit accepted Halo checkpoint, then separately select PW-A02 Book of Shadows"
+}

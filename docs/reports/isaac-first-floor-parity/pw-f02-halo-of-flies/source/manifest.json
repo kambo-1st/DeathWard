@@ -1,0 +1,109 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "item": {
+    "description": "#HALO_OF_FLIES_DESCRIPTION",
+    "gfx": "Collectibles_010_HaloOfFlies.png",
+    "id": "10",
+    "name": "#HALO_OF_FLIES_NAME"
+  },
+  "entity": {
+    "anm2path": "003.033_Fly Orbital.anm2",
+    "baseHP": "0",
+    "boss": "0",
+    "champion": "0",
+    "collisionDamage": "0",
+    "collisionInterval": "7",
+    "collisionMass": "3",
+    "collisionRadius": "6",
+    "friction": "1",
+    "id": "3",
+    "name": "Fly Orbital",
+    "numGridCollisionPoints": "12",
+    "shadowSize": "8",
+    "stageHP": "0",
+    "tags": "cansacrifice fly",
+    "variant": "33"
+  },
+  "treasure": {
+    "Id": "10",
+    "Weight": "1",
+    "DecreaseBy": "1",
+    "RemoveOn": "0.1"
+  },
+  "orbit_group": 0,
+  "group_values": [
+    25.0,
+    20.0,
+    0.04500000178813934,
+    2.0,
+    1.5
+  ],
+  "count_cases": 9,
+  "orbit_cases": 36,
+  "projectile_cases": 8,
+  "npc_cases": 22,
+  "windows": [
+    {
+      "name": "count",
+      "start": "0x73880b",
+      "end": "0x73888e",
+      "sha256": "8e027f0acbc4c8f2e5490ab42687d294d632a613ddeb7fcc9fbe97611272522d"
+    },
+    {
+      "name": "group",
+      "start": "0x5f072a",
+      "end": "0x5f07ec",
+      "sha256": "b2498374b33f91b1e96c4c50f368fd4fc21d4fa4d0669b9c1593b52fdcf03949"
+    },
+    {
+      "name": "formation",
+      "start": "0x5f0b99",
+      "end": "0x5f0ce4",
+      "sha256": "185c6cab537eb3c507f5c4a7244763cfa421d6dce78ae0368fa3bfbd1bd96e7c"
+    },
+    {
+      "name": "orbit-angle",
+      "start": "0x5f50aa",
+      "end": "0x5f510b",
+      "sha256": "558d3dd9cd95fc4bdafb793b56a4e39269e0f47fe4aa093518dbbf8d341ffb4d"
+    },
+    {
+      "name": "orbit-position",
+      "start": "0x5f521e",
+      "end": "0x5f5274",
+      "sha256": "029ec8d0d962df1366de503e4993213a6221306b52d3d11639174462c278e8e7"
+    },
+    {
+      "name": "orbital-ai",
+      "start": "0x5ff758",
+      "end": "0x5ff7a1",
+      "sha256": "d669165d2bee167d61c3f6a448bfc11a12254160f82ee3836909955910bb10ef"
+    },
+    {
+      "name": "blocker",
+      "start": "0x5efae0",
+      "end": "0x5efb67",
+      "sha256": "7bc7458f9df66cedd539b1adf9b4f677216d05913d79e233c4fd8805a21a4979"
+    },
+    {
+      "name": "projectile-gates",
+      "start": "0x6098ca",
+      "end": "0x609900",
+      "sha256": "fba4284d8286f4fea89d59f44e7e5e632bfef1bbe2cd4ba4b51cb1bc0c3b4922"
+    },
+    {
+      "name": "projectile-removal",
+      "start": "0x609a35",
+      "end": "0x609b22",
+      "sha256": "0bcb66ac8327b53f42ebdec6c3bf89123fb381d2bc7e17dd5473b6370bba5033"
+    },
+    {
+      "name": "npc-contact",
+      "start": "0x6089cf",
+      "end": "0x608b64",
+      "sha256": "a7a554e15657d82c358e798e26260338ef79e5de08c33c047d17a6b43067c52f"
+    }
+  ],
+  "scope": "Supplied ordinary copy count/zero other orbital effects; original init group dispatch, orbit angle before host fmod/trig, projectile contact tail and NPC kill admission. Contact broadphase, full inventory cache/factory/scheduler, synergies and special projectile death effects are not certified. Group0 source radii25/20, speed.045 and angle offset1.5; evenly spaced formation. Halo bypasses ordinary contact damage, retaining special fly-enemy kills.",
+  "full_native_acceptance": false
+}

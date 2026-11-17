@@ -1019,11 +1019,56 @@ void yumHeartInputCheck(const std::filesystem::path &directory) {
     std::cout<<"PASS PW-A01 actual Game/Renderer natural acquisition/use/clear/rebind/swap/Apply/export/load/retry\n";
 }
 
+void haloOfFliesInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"halo.save",file=directory/"halo.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="38";game.reviewRoomIndex=7;
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.error.empty(),"Halo direct main-game launch");auto &run=*game.run;const ItemKey item{"isaac",ItemKind::Collectible,10};
+    check(run.room==7&&run.hasSourceTreasure(7)&&run.treasureUpgradeItem(7)==10,"natural seed38 treasure in room8");
+    Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"Halo UI error");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"Halo capture");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);frame();check(run.player.hp==6&&!run.godMode&&game.cameraZoomPercent()==165&&run.player.walkingSpeed()==4.8f,"accepted normal health/speed/zoom");
+    auto at=run.rewardPosition(7);mouseWalk(game,frame,at,3);game.updateCamera(10);frame();capture("artifacts/halo-pedestal.png");at.y=0;const auto screen=GetWorldToScreen(at,game.camera);click(int(screen.x),int(screen.y));
+    for(int n=0;n<600&&!run.itemStacks(item);++n)frame();frame();check(run.itemStacks(item)==1&&run.haloFlies.size()==2,"real mouse collection produces two orbitals");
+    const auto before=run.haloFlies[0].position;for(int i=0;i<60;++i)frame();check(distance(before,run.haloFlies[0].position)>.5f,"visible orbit");capture("artifacts/halo-owned.png");
+    mouseEvent(KeyDown,KEY_TAB);frame();mouseEvent(KeyUp,KEY_TAB);frame();capture("artifacts/halo-build.png");click(970,728);check(!game.buildOpen,"mouse closes build inspector");
+    mouseWalk(game,frame,add(run.rewardPosition(7),{0,0,4}),.25f);game.updateCamera(10);frame();
+    click(374,642);click(710,143);click(1010,189);click(980,189);click(815,189);
+    check(game.balanceOpen&&game.balanceFamiliarOpen&&game.balanceHaloOpen,"actual mouse Halo tab");const auto position=run.haloFlies[0].position;
+    click(710,260);click(850,320);click(850,380);check(std::abs(run.haloOfFlies.orbitSpeed-.95f)<.0001f&&std::abs(run.haloOfFlies.orbitRadius-1.05f)<.0001f&&std::abs(run.haloOfFlies.contactRadius-1.05f)<.0001f,"three live consumers");check(distance(position,run.haloFlies[0].position)==0,"tuning pauses runtime");
+    click(335,605);const auto exported=BalancePreset::load(file,run.content->fingerprint());check(exported.haloOfFlies==run.haloOfFlies&&exported.defaultZoomPercent==165,"mouse export");click(350,474);check(!run.haloOfFlies.custom(),"reset Halo");click(600,605);check(run.haloOfFlies==exported.haloOfFlies,"mouse reload");capture("artifacts/halo-panel.png");std::filesystem::copy_file(file,"artifacts/halo-preset.json",std::filesystem::copy_options::overwrite_existing);
+    click(1010,189);for(int i=0;i<4;++i)click(865,270);check(game.hasPendingMapChanges()&&game.balanceDraft.treasureCollectiblePool==5&&run.treasureCollectiblePool==1,"fixed Halo staged");click(380,460);check(run.itemStacks(item)==1&&run.haloOfFlies==exported.haloOfFlies&&run.treasureCollectiblePool==5,"Apply keeps build/settings");game.perform(Action::CloseBalance);frame();check(run.haloFlies.size()==2,"Apply reconstructs orbitals");
+    // Real generated adjacent Pooter encounter, no injected enemies or immunity.
+    bool adjacent=false;for(int link:run.arena.rooms[7].passages){const auto &p=run.arena.passages[size_t(link)];adjacent|=p.rooms[0]==3||p.rooms[1]==3;}check(adjacent,"single treasure exit leads to Pooter room4");
+    run.jumpDebug(3);game.updateCamera(10);frame();check(std::any_of(run.enemies.begin(),run.enemies.end(),[](const auto &e){return e.alive&&e.monster==MonsterId{14,0,0};}),"ordinary generated Pooter");
+    const auto shooter=std::find_if(run.enemies.begin(),run.enemies.end(),[](const auto &e){return e.alive&&e.monster==MonsterId{14,0,0};});
+    const auto shooterId=shooter->id;std::optional<Vector3> approach;float nearest=10000;
+    for(const auto &cell:run.arena.floorCells) {
+        const Vector3 point{(cell.first+.5f)*FloorTile,.85f,(cell.second+.5f)*FloorTile};const float d=planarDistance(point,shooter->position);
+        if(d<2.4f||d>3.1f||run.arena.roomAt(point)!=3||run.arena.blocked(point,.48f)||!run.arena.sight(point,shooter->position))continue;
+        if(std::any_of(run.enemies.begin(),run.enemies.end(),[&](const auto &e){return e.alive&&planarDistance(point,e.position)<e.radius+1.5f;}))continue;
+        const float travel=planarDistance(point,run.player.position);if(travel<nearest){approach=point;nearest=travel;}
+    }
+    check(bool(approach),"reachable firing-distance review position");
+    // Direct test positioning only, within the accepted D06 acquisition range.
+    // No NPC/stat/health mutation: the user reaches this area by walking.
+    run.player.position=*approach;game.updateCamera(10);
+    bool fired=false;for(int i=0;i<300&&!run.dead&&!fired;++i){frame();const auto *e=run.findEnemy(shooterId);fired=e&&e->buzz&&e->buzz->fired;}
+    check(fired,"Pooter fires through actual main-game scheduler");capture("artifacts/halo-encounter.png");
+    game.exportBalancePreset();game.rememberBalancePreset();if(!run.dead)run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->room==7&&game.run->items.empty()&&game.run->haloFlies.empty()&&game.run->haloOfFlies==exported.haloOfFlies,"retry fresh ownership, configured orbitals");game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="38";fresh.reviewRoomIndex=7;fresh.loadBalancePreset(file);fresh.launch(true);check(fresh.run&&fresh.run->haloOfFlies==exported.haloOfFlies&&fresh.cameraZoomPercent()==165,"fresh next-expedition preset");fresh.close();
+    std::cout<<"PASS Halo main-game natural mouse pickup/model/inspector, live UI/export/load/Apply/retry, ordinary Pooter shots; seed38 room8 -> room4\n";
+}
+
 void brotherBobbyInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"bobby.save",file=directory/"bobby.json";
-    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="9";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="4";
     game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
     check(game.run&&game.error.empty(),"Bobby normal game launch");auto &run=*game.run;const ItemKey item{"isaac",ItemKind::Collectible,8};
     int owner=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.hasSourceTreasure(i)){owner=i;break;}
@@ -1055,15 +1100,15 @@ void brotherBobbyInputCheck(const std::filesystem::path &directory) {
     click(380,460);check(run.treasureCollectiblePool==3&&run.itemStacks(item)==1&&run.brotherBobby==exported.brotherBobby,"Apply keeps build and live tuning");
     game.exportBalancePreset();game.rememberBalancePreset();game.perform(Action::CloseBalance);frame();check(run.brotherBobbies.size()==1,"Apply reconstructs actor");
     run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->room==owner&&game.run->items.empty()&&game.run->brotherBobbies.empty()&&game.run->brotherBobby==exported.brotherBobby&&game.run->treasureCollectiblePool==3,"retry fresh build with remembered configuration");game.close();renderer.unload();
-    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="9";fresh.reviewRoomIndex=owner;fresh.loadBalancePreset(file);fresh.launch(true);check(fresh.run&&fresh.run->brotherBobby==exported.brotherBobby&&fresh.cameraZoomPercent()==165,"fresh CLI-equivalent preset load");fresh.close();
-    std::cout<<"PASS PW-F01 actual Game/Renderer mouse acquisition, held firing, lifecycle, live/staged UI, export/load/remember/retry; seed9 room8\n";
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="4";fresh.reviewRoomIndex=owner;fresh.loadBalancePreset(file);fresh.launch(true);check(fresh.run&&fresh.run->brotherBobby==exported.brotherBobby&&fresh.cameraZoomPercent()==165,"fresh CLI-equivalent preset load");fresh.close();
+    std::cout<<"PASS PW-F01 actual Game/Renderer mouse acquisition, held firing, lifecycle, live/staged UI, export/load/remember/retry; seed4 room8\n";
 }
 
 void cricketHeadInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"cricket.save",file=directory/"cricket.json";
-    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="4";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="11";
     game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
     check(game.run&&game.error.empty(),"treasure main-game launch");auto &run=*game.run;
     int owner=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.hasSourceTreasure(i)){owner=i;break;}
@@ -1100,7 +1145,7 @@ void cricketHeadInputCheck(const std::filesystem::path &directory) {
     click(374,642);click(710,143);click(1010,189);check(game.balanceOpen&&game.balanceShootingOpen&&game.balanceTreasureOpen,"treasure page via mouse");
     click(865,270);check(game.hasPendingMapChanges()&&game.balanceDraft.treasureCollectiblePool==2&&run.treasureCollectiblePool==1,"pool selection staged");
     click(380,460);check(run.treasureCollectiblePool==2&&run.itemStacks({"isaac",ItemKind::Collectible,4})==1&&run.rewardAvailable(owner),"Apply changes pool while retaining owned Cricket");
-    click(865,270);click(865,270);click(865,270);click(380,460);check(run.treasureCollectiblePool==0&&run.treasureUpgradeItem(owner)==1,"Apply fixed Onion comparison");
+    for(int i=0;i<4;++i)click(865,270);click(380,460);check(run.treasureCollectiblePool==0&&run.treasureUpgradeItem(owner)==1,"Apply fixed Onion comparison");
     click(865,270);click(380,460);check(run.treasureCollectiblePool==1&&run.treasureUpgradeItem(owner)==4&&!game.hasPendingMapChanges(),"Apply restores natural Cricket pool");
     const auto terrain=run.arena.canyon.get();click(430,270);check(game.hasPendingMapChanges()&&run.sourceTreasureUpgrade,"offering toggle staged");
     const float wait=run.player.fireCooldown;click(715,399);check(std::abs(run.cricketHeadStrength-.95f)<.0001f&&run.player.fireCooldown==wait&&run.arena.canyon.get()==terrain,"strength live with pending map and retained wait");
@@ -1116,9 +1161,9 @@ void cricketHeadInputCheck(const std::filesystem::path &directory) {
     std::filesystem::copy_file(file,"artifacts/cricket-preset.json",std::filesystem::copy_options::overwrite_existing);
     game.perform(Action::CloseBalance);run.finishDebug(false);game.retryExpedition();
     check(game.run&&game.run->room==owner&&game.run->sourceTreasureUpgrade&&std::abs(game.run->cricketHeadStrength-.95f)<.0001f&&game.run->items.empty()&&game.run->player.hp==6,"death retry keeps tuning, fresh unowned item");game.close();renderer.unload();
-    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="4";fresh.reviewRoomIndex=owner;fresh.loadBalancePreset(file);fresh.launch(true);
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="11";fresh.reviewRoomIndex=owner;fresh.loadBalancePreset(file);fresh.launch(true);
     check(fresh.run&&fresh.run->hasSourceTreasure(owner)&&fresh.run->items.empty()&&std::abs(fresh.run->cricketHeadStrength-.95f)<.0001f&&fresh.cameraZoomPercent()==165,"fresh exported preset");fresh.close();
-    std::cout<<"PASS D11b actual Game/Renderer mouse collection, keyboard/live/staged settings, Apply/load/export/remember/retry; seed=4 room="<<owner+1<<'\n';
+    std::cout<<"PASS D11b actual Game/Renderer mouse collection, keyboard/live/staged settings, Apply/load/export/remember/retry; seed=11 room="<<owner+1<<'\n';
 }
 
 void shopHeartInputCheck(const std::filesystem::path &directory) {
@@ -3004,6 +3049,9 @@ int main(int argc, char **argv) {
         }
         if(mode=="--yum-heart-only") {
             yumHeartInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--halo-of-flies-only") {
+            haloOfFliesInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--brother-bobby-only") {
             brotherBobbyInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

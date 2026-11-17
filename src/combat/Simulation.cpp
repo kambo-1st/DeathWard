@@ -39,7 +39,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
       runId_(runId), canyonRiver_(canyonRiver), startingWorld_(world) {
     if(account!=WitnessAccount::None&&account!=WitnessAccount::Rourke)
         throw std::invalid_argument("This testimony has not been authored yet.");
-    if(treasureCollectiblePool<0||treasureCollectiblePool>4)throw std::invalid_argument("Invalid treasure pool");
+    if(treasureCollectiblePool<0||treasureCollectiblePool>5)throw std::invalid_argument("Invalid treasure pool");
     coinClearRewards=requestedCoins;
     surveyTutorial=tutorial;
     rooms.resize(arena.rooms.size());
@@ -108,7 +108,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     const bool keyStock=shopKey.value_or(sourceShopKey);
     const bool variation=shopVariation.value_or(sourceShopVariation);
     const int treasureChoice=treasurePool.value_or(treasureCollectiblePool);
-    if(treasureChoice<0||treasureChoice>4)throw std::invalid_argument("Invalid treasure pool");
+    if(treasureChoice<0||treasureChoice>5)throw std::invalid_argument("Invalid treasure pool");
     const int pool=collectiblePool.value_or(shopCollectiblePool);
     if(pool<0||pool>2)throw std::invalid_argument("Invalid shop collectible pool");
     const bool locks=roomLocks.value_or(sourceRoomLocks);
@@ -120,7 +120,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
                     expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice);
     next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
-    next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
+    next.haloOfFlies=haloOfFlies;next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
     const int targetRoom=std::clamp(room,0,next.finalRoom());
     next.activeChargeClears_=activeChargeClears_;
     next.items=items;next.keys=keys;next.powerUpsTaken=powerUpsTaken;
@@ -199,7 +199,7 @@ bool Simulation::advanceFloor() {
                     expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool);
     next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
-    next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
+    next.haloOfFlies=haloOfFlies;next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
     next.canonicalShooting=canonicalShooting;
     next.gaperMovementMultiplier=gaperMovementMultiplier;
     next.spiderMovementMultiplier=spiderMovementMultiplier;
@@ -389,8 +389,8 @@ int Simulation::treasureUpgradeItem(int index) const {
     if(powerupReview&&powerupReview->treasureRoom==index&&powerupReview->collected<4)
         return PowerupReviewState::Offerings[size_t(powerupReview->collected)];
     if(rooms[size_t(index)].droppedActive)return int(rooms[size_t(index)].droppedActive->item.number);
-    const int choice=treasureCollectiblePool==0?1:treasureCollectiblePool==2?4:treasureCollectiblePool==3?8:treasureCollectiblePool==4?45:
-        sourceTreasureChoice(canyonTreasureSeed(seed_,index),true,true);
+    const int choice=treasureCollectiblePool==0?1:treasureCollectiblePool==2?4:treasureCollectiblePool==3?8:treasureCollectiblePool==4?45:treasureCollectiblePool==5?10:
+        sourceTreasureChoice(canyonTreasureSeed(seed_,index),true,true,true);
     return choice?choice:1; // Empty numeric draw: fixed fallback, never reroll.
 }
 bool Simulation::useActiveItem() {
@@ -434,7 +434,7 @@ bool Simulation::collectTreasureUpgrade() {
         progress.activePickupContact=true; // Each review offering still requires a separate pickup.
     }
     checkpointNeeded=true;
-    announce(definition->name+" / "+(item==YumHeartKey?"ACTIVE ITEM":item.number==8?"FAMILIAR":item.number==4?"DAMAGE UP":"TEARS UP"),3);
+    announce(definition->name+" / "+(item==YumHeartKey?"ACTIVE ITEM":(item.number==8||item.number==10)?"FAMILIAR":item.number==4?"DAMAGE UP":"TEARS UP"),3);
     return true;
 }
 bool Simulation::rewardAvailable(int index) const {
@@ -1589,6 +1589,7 @@ void Simulation::updateProjectiles(float dt) {
             Vector3 normal{};
             EntityId target = 0;
             bool wall = false, playerHit = false, caught = false, weakPointHit = false;
+            HaloFlyRuntime *haloHit=nullptr;
             if(!p.noWallCollision) {
                 const auto terrainHit = arena.trace(p.position, end, p.radius);
                 if (terrainHit.hit) {
@@ -1646,6 +1647,16 @@ void Simulation::updateProjectiles(float dt) {
                 const auto hit=segmentSphere(p.position,end,player.position,.5f);
                 if(hit<best){best=hit;wall=false;caught=true;}
             }
+            if(p.hostile&&!p.ignoresPlayer) {
+                const float begin=(dt-remaining)/dt,finish=(dt-remaining+slice)/dt;
+                for(auto &fly:haloFlies) {
+                    const auto delta=sub(fly.position,fly.previous);
+                    const auto start=add(fly.previous,mul(delta,begin)),stop=add(fly.previous,mul(delta,finish));
+                    const float hit=segmentSphere(sub(p.position,start),sub(end,stop),{},
+                        p.radius+HaloSourceContactRadius*HaloSpace*haloOfFlies.contactRadius);
+                    if(hit<best){best=hit;haloHit=&fly;}
+                }
+            }
             if (best > 1) {
                 p.traveled+=distance(p.position,end);
                 p.position = end;
@@ -1656,6 +1667,13 @@ void Simulation::updateProjectiles(float dt) {
             p.traveled+=distance(p.position,end)*best;
             p.position = add(p.position, mul(sub(end, p.position), best));
             remaining-=slice*best;
+            if(haloHit) {
+                ++haloHit->blockedShots;p.alive=false;
+                effectVisual(p.position,.2f,0,.12f);
+                // Retain existing projectile death effects; blocking is not a
+                // global cancellation or immunity against explosions/lasers.
+                break;
+            }
             if(caught){p.alive=false;break;}
             if(target)if(auto *body=findEnemy(target);body&&reflectBouncer(*body,p)) {
                 remaining=std::max(0.f,remaining-.0001f);continue;
@@ -1833,6 +1851,7 @@ void Simulation::step(const Input &input, float dt) {
     updateOrdinaryBombs(dt);
     updateChestSupplies(dt);
     updateChests(dt);
+    updateHaloOfFlies(dt);
     updateBrotherBobby(input,dt);
     updateBlueFlies(dt);
     // After the room transition, each actor advances either its idle or combat

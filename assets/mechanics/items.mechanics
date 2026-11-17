@@ -84,3 +84,8 @@ end
 # PW-T02: second held trinket; independent Shot Speed contribution.
 item "isaac:trinket:27" "Whip Worm" "TRINKET" "Adds 0.5 Shot Speed while held. Firing rate and maximum range stay unchanged. Swap or drop it to remove the effect."
 end
+
+# PW-F02: persistent protective orbitals, ordinary restricted treasure offering.
+item "isaac:collectible:10" "Halo of Flies" "FAMILIAR" "Two orbiting flies block enemy shots and kill fly enemies on contact. Copies add two flies, up to ten."
+category familiar
+end

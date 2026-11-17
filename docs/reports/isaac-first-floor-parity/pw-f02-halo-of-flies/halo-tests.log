@@ -1,0 +1,6 @@
+PASS 9 native copy counts,36 orbit angles,22 NPC decisions
+HALO_WITNESS seed=7 room=8
+PASS acquisition/copies/room/revisit/Apply/floor/removal and three canyon sizes
+PASS swept interception/gaps/friendly/ignore at30/60/120Hz, earlier wall, real NPC kill/no-damage
+PASS orbit partitions/pause/live phase continuity
+PASS accepted preset migration, full roundtrip, invalid rejection and campaign interruption history
