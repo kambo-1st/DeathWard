@@ -865,6 +865,44 @@ void whipWormInputCheck(const std::filesystem::path &directory) {
     std::cout<<"PASS PW-T02 actual mouse swaps/arrows/drop/build/rebind/live/export/load/Apply/retry/ordinary reload\n";
 }
 
+
+void monstroInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
+    const auto save=directory/"monstro.save",file=directory/"monstro.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="69";game.reviewRoomIndex=8;
+    game.loadBalancePreset(root/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json");game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.error.empty()&&game.run->hasSourceBoss(game.run->room)&&!game.run->godMode,"ordinary main-game boss direct review");
+    auto &run=*game.run;Renderer renderer;
+    auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);if(!game.error.empty())std::cerr<<game.error<<'\n';check(game.error.empty(),"Monstro Game error");};
+    auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"Monstro capture");UnloadImage(im);EndDrawing();};
+    check(run.livingEnemies()==1&&run.player.hp==6&&game.cameraZoomPercent()==165,"one boss, original health and zoom");
+    run.godMode=true;game.updateCamera(10);for(int n=0;n<120;++n)frame();capture("artifacts/monstro-fight.png");
+    game.perform(Action::OpenBalance);click(970,143);click(990,189);check(game.balanceMonstroOpen,"mouse boss tuning tab");
+    click(800,295);click(800,350);click(970,400);
+    check(run.monstroTuning.health==.95f&&run.monstroTuning.movement==.95f&&run.monstroTuning.shotSpeed==1.05f,"three live boss controls");
+    capture("artifacts/monstro-tuning.png");game.exportBalancePreset();game.rememberBalancePreset();
+    game.perform(Action::ResetMonstro);game.loadBalancePreset(file);check(run.monstroTuning.health==.95f&&game.cameraZoomPercent()==165,"actual preset reload");
+    game.perform(Action::CloseBalance);frame();
+    EntityId id=0;for(auto &e:run.enemies)if(e.alive&&e.monstro)id=e.id;check(id!=0,"live controller exists");
+    run.player.position=add(run.arena.rooms.back().center,{3,0,0});run.player.position.y=.85f;
+    Event kill;kill.type=EventType::Damage;kill.target=id;kill.damage=10000;run.queueRoot(kill);run.drainEvents();for(int n=0;n<10;++n)frame();
+    check(run.roomClear&&run.rewardAvailable(run.room)&&run.canUseFloorExit(),"normal damage-death cleanup/reward/exit");
+    game.updateCamera(10);frame();capture("artifacts/monstro-reward.png");
+    auto target=run.rewardPosition(run.room);target.y=0;auto screen=GetWorldToScreen(target,game.camera);click(int(screen.x),int(screen.y));
+    for(int n=0;n<500&&!run.itemStacks({"isaac",ItemKind::Collectible,25});++n)frame();
+    check(run.itemStacks({"isaac",ItemKind::Collectible,25})==1&&run.player.maxHp==8,"actual mouse collects Breakfast");capture("artifacts/monstro-collected.png");
+    target=run.arena.exit;target.y=0;game.updateCamera(10);frame();screen=GetWorldToScreen(target,game.camera);click(int(screen.x),int(screen.y));
+    for(int n=0;n<500&&run.floor==0;++n)frame();
+    check(run.floor==1&&run.player.maxHp==8&&run.itemStacks({"isaac",ItemKind::Collectible,25})==1,"actual mouse exit descends preserving health item");capture("artifacts/monstro-next-floor.png");
+    game.perform(Action::OpenBalance);game.perform(Action::BalanceEnemiesTab);game.perform(Action::BalanceMonstroTab);game.perform(Action::ToggleMonstro);
+    check(run.monstroTuning.enabled&&game.hasPendingMapChanges(),"boss policy waits for Apply");game.perform(Action::ApplyMapChanges);check(!run.monstroTuning.enabled,"Apply stages new policy while retaining build");
+    game.perform(Action::ToggleMonstro);game.perform(Action::ApplyMapChanges);game.perform(Action::CloseBalance);
+    run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->hasSourceBoss(game.run->room)&&game.run->items.empty()&&game.run->player.hp==6&&game.run->monstroTuning.health==.95f,"retry restores direct encounter and configuration, fresh build");
+    game.close();renderer.unload();std::cout<<"PASS D13a actual Game/Renderer boss, mouse tuning, collection, mouse descent, Apply, preset reload and retry\n";
+}
+
 void bookOfShadowsInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
@@ -3092,6 +3130,9 @@ int main(int argc, char **argv) {
         }
         if(mode=="--yum-heart-only") {
             yumHeartInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--monstro-only") {
+            monstroInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--book-of-shadows-only") {
             bookOfShadowsInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

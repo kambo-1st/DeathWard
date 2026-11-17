@@ -11,6 +11,7 @@ const char *bossName(BossKind kind) {
     }
 }
 const char *bossHint(const Enemy &e) {
+    if(e.monstro)return "KEEP MOVING / WATCH THE SPIT AND LANDING";
     if(e.monster==monsterId(906))return e.phase?"HE IS RUNNING FOR A RAIL DOOR":"WATCH THE TRACKS AND THE BOMBS";
     if(e.monster.type==69)return e.monster.variant==1?"CARDINAL / DIAGONAL / CARDINAL — WATCH BOTH HALVES":"CARDINAL / DIAGONAL / CARDINAL — WATCH THE FLIES";
     if(e.monster==monsterId(19,3))return "BOMBS BREAK BONE ARMOR / SHOOT EXPOSED SEGMENTS";
@@ -136,6 +137,7 @@ void Simulation::rewardCanyonBoss(const Enemy &enemy) {
     for(auto &prop:arena.breakables)if(prop.room==room&&prop.kind==BreakableKind::PowderBarrel)prop.fuse=-1;
     if(progress.bossPaid)return;
     progress.bossPaid=true;
+    if(hasSourceBoss(room)){checkpointNeeded=true;return;} // One collectible, no legacy money/dynamite payout.
     const auto &layout=arena.rooms[size_t(room)];
     const auto at=arena.rails?layout.reward:layout.center;
     moneyPickups.push_back({at,6+2*std::max(0,arena.profile.band),0,true});

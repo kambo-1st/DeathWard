@@ -1,0 +1,25 @@
+{
+  "delivery": "D13a",
+  "status": "scoped accepted",
+  "date": "2026-11-17",
+  "feedback": "nice thx, it works! Commit, then whast next?",
+  "scope": "User accepted the launched main-game Monstro, collectible and descent review and authorized this checkpoint commit. This is scoped acceptance, not certification of full native parity.",
+  "review": {
+    "seed": 69,
+    "displayed_room": 9,
+    "zoom_percent": 165,
+    "starting_red_half_hearts": 6,
+    "god_mode": false,
+    "mute": true
+  },
+  "commit_authorized": true,
+  "next_selected": null,
+  "next_proposed": "D13b: ordinary Duke of Flies, including summoned flies, the established reward/descent path, live tuning/export/load and one short main-game review.",
+  "still_open": [
+    "Full native Monstro actor/wrappers/scheduler/target/grid/RNG/status/item/collision acceptance",
+    "Full boss and collectible reward selection/pools/profile gates",
+    "Separate Peep starting-kit bot-test failure",
+    "Wider first-floor content allocation/coverage",
+    "Full live expedition save/resume"
+  ]
+}

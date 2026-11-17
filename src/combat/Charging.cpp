@@ -6,6 +6,7 @@ Vector3 Simulation::chargeTailPosition(const Enemy &e) const {
     return c?add(e.position,mul(unit(horizontal(e.facing)),-c->tailOffset*e.radius)):e.position;
 }
 float Simulation::enemyProjectileHit(const Enemy &e,Vector3 from,Vector3 to,float radius,bool &weak) const {
+    if(e.monstro&&e.monstro->intangible){weak=false;return 2.f;}
     weak=false;const auto *c=content->charge(e.monster);
     if(e.adultLeech&&e.adultLeech->intangible)return 2.f;
     if(e.rockSpider) {

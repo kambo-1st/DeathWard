@@ -219,7 +219,7 @@ void buildCanyon(Arena &arena, bool river) {
     // A centered treasure pedestal needs room for the player's whole footprint,
     // including diagonal approaches and the outcrop's irregular silhouette.
     // Filter after all seeded draws; other rooms keep their original cover.
-    for(auto &room:arena.rooms)if(room.kind==RoomKind::Power) {
+    for(auto &room:arena.rooms)if(room.kind==RoomKind::Power||(room.kind==RoomKind::Boss&&arena.profile.bossMonster==monsterId(20))) {
         std::erase_if(rocks,[&](const Outcrop &rock) {
             return planarDistance(rock.center,room.center)<std::max(rock.rx,rock.rz)+5.f;
         });

@@ -1,0 +1,57 @@
+{
+  "source": "Repentance 1.7.9b",
+  "inputs": {
+    "bosspools.xml": {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/bosspools.xml",
+      "sha256": "8e3f794d8951344bd9f96f463cfbb2644b6fa10d27689d31ba80e27dcced4017"
+    },
+    "bossportraits.xml": {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/bossportraits.xml",
+      "sha256": "826cc8bee76599409b3563047b65c677fb30fa09eedb90875bda17b95536451a"
+    },
+    "items.xml": {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/items.xml",
+      "sha256": "ee567ed920b1bcada61f2a2d65e48563286fe7e8bf00363ad763ac2aa3ae64b7"
+    },
+    "itempools.xml": {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/itempools.xml",
+      "sha256": "da5391ba59626b0fe349fa6d143df82cd7c19c648f04311d8e21a441d5aa502c"
+    },
+    "entities2.xml": {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+      "sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75"
+    }
+  },
+  "boss": {
+    "type": 20,
+    "variant": 0,
+    "subtype": 0,
+    "base_hp": 250,
+    "stage_hp": 0,
+    "internal_conversion": 3.2,
+    "bounded_selection": "ordinary Monstro only, opening canyon floor; full native selection gates/history/RNG remain unverified",
+    "collision_radius_source": 40,
+    "collision_adapter": "accepted Gaper body .6 / source13",
+    "collision_radius_world": 1.8461538461538463,
+    "movement_adapter": "accepted4.8 / (native4.414238452911377 *60)",
+    "projectile_planar_adapter": "same fixed D04-D06 movement adapter *30Hz; vertical and radius explicit"
+  },
+  "reward": {
+    "xml": {
+      "description": "#BREAKFAST_DESCRIPTION",
+      "gfx": "Collectibles_025_Breakfast.png",
+      "hearts": "4",
+      "id": "25",
+      "maxhearts": "2",
+      "name": "#BREAKFAST_NAME"
+    },
+    "boss_pool_entry": {
+      "Id": "25",
+      "Weight": "1",
+      "DecreaseBy": "1",
+      "RemoveOn": "0.1"
+    },
+    "bounded_selection": "Breakfast only, one pedestal; full native reward pool/selector not enabled"
+  },
+  "scope": "User-selected D13a main-game boss loop; other bosses/rewards deferred"
+}

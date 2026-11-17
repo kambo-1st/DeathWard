@@ -110,6 +110,7 @@ struct Arena {
     uint64_t visualSeed = 0;
     MissionTheme theme = MissionTheme::Mine;
     FloorProfile profile;
+    std::optional<Vector3> bossRewardPedestal; // Born after D13a clear; empty base persists.
     std::shared_ptr<CanyonTerrain> canyon;
     std::optional<RailNetwork> rails;
     // Default construction provides an empty test arena; expeditions always supply a seed.

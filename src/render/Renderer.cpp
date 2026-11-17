@@ -295,6 +295,7 @@ void frontierBossModel(const Enemy &e,bool drawShadow) {
 void enemyModel(const Enemy &enemy, const MechanicsLibrary &content, bool drawShadow = true) {
     if(enemy.monster==monsterId(227)||enemy.monster==monsterId(277)){drawBonyModel(enemy,drawShadow);return;}
     if(const auto *rules=content.environmentActor(enemy.monster)){drawEnvironmentActorModel(enemy,*rules,drawShadow);return;}
+    if(enemy.monstro){drawMonstroModel(enemy,drawShadow);return;}
     if(enemy.bossKind==BossKind::Ridgeback){ridgebackModel(enemy,drawShadow);return;}
     if(enemy.bossKind==BossKind::PowderForeman||enemy.bossKind==BossKind::StormMarshal){frontierBossModel(enemy,drawShadow);return;}
     if(enemy.segmentedEncounter){drawSegmentedBossModel(enemy,drawShadow);return;}
@@ -945,14 +946,20 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         }
         for (int i = 0; i < run.arena.roomCount(); ++i) {
             const auto &room = run.arena.rooms[size_t(i)];
-            if ((room.kind!=RoomKind::Power&&!run.rewardAvailable(i))||distance(run.player.position,run.rewardPosition(i))>60)
+            if ((room.kind!=RoomKind::Power&&!run.rewardAvailable(i)&&!(run.hasSourceBoss(i)&&run.arena.bossRewardPedestal))||distance(run.player.position,run.rewardPosition(i))>60)
                 continue;
+            if(run.hasSourceBoss(i)&&!run.arena.bossRewardPedestal)continue;
             const auto p=run.rewardPosition(i);
             DrawCylinder({p.x, 0, p.z},pedestalGeometry::TopRadius,pedestalGeometry::BaseRadius,
                          pedestalGeometry::Height,pedestalGeometry::Sides,Border);
             if(run.hasSourceTreasure(i)&&run.rewardAvailable(i)) {
                 const float y=1.35f+.07f*std::sin(float(run.stats.duration)*2);
-                if(run.treasureUpgradeItem(i)==58) {
+                if(run.treasureUpgradeItem(i)==25) {
+                    // Small tin of provisions; original Western presentation.
+                    DrawCylinder({p.x,y-.2f,p.z},.30f,.30f,.50f,12,Paper);
+                    DrawCylinder({p.x,y-.03f,p.z},.305f,.305f,.18f,12,Color{169,61,48,255});
+                    DrawCylinder({p.x,y+.3f,p.z},.32f,.32f,.04f,12,Gold);
+                } else if(run.treasureUpgradeItem(i)==58) {
                     // Original leather-bound book with brass spine/corners.
                     const Color leather{49,37,60,255};
                     DrawCubeV({p.x,y,p.z},{.67f,.12f,.84f},Paper);
@@ -2053,7 +2060,7 @@ Action Renderer::expedition(const Game &game) {
     if (const auto *boss = run.boss()) {
         panel(412, 24, 476, 70, Panel);
         const auto bossLabel=boss->bossKind==BossKind::Isaac?run.content->monster(boss->monster)->name:std::string(bossName(boss->bossKind));
-        text(bossLabel+(boss->segmentedEncounter?"":" / PHASE " + std::to_string(boss->phase + 1)), 429, 37, 14, Paper,442);
+        text(bossLabel+((boss->segmentedEncounter||boss->monstro)?"":" / PHASE " + std::to_string(boss->phase + 1)), 429, 37, 14, Paper,442);
         if(canyonBoss(boss->bossKind))text(bossHint(*boss),429,53,10,Gold);
         panel(429, 66, 442, 9, Ink);
         DrawRectangle(int(429 * sx_), int(66 * sy_), int(442 * sx_ * run.bossHealthFraction(*boss)),
@@ -2430,9 +2437,10 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::BalanceDoorsTab,"DOORS",920,175,155,28,game.balanceDoorsOpen))return Action::BalanceDoorsTab;
     }
     if(game.balanceEnemiesOpen) {
-        if(button(Action::BalanceChasersTab,"GAPER / SPIDER",645,175,240,28,!game.balancePooterOpen))return Action::BalanceChasersTab;
-        if(button(Action::BalancePooterTab,"POOTER",905,175,170,28,game.balancePooterOpen))return Action::BalancePooterTab;
+        if(button(Action::BalanceChasersTab,"GAPER / SPIDER",470,175,240,28,!game.balancePooterOpen&&!game.balanceMonstroOpen))return Action::BalanceChasersTab;
+        if(button(Action::BalancePooterTab,"POOTER",730,175,150,28,game.balancePooterOpen))return Action::BalancePooterTab;
     }
+    if(game.balanceEnemiesOpen&&button(Action::BalanceMonstroTab,"MONSTRO",905,175,170,28,game.balanceMonstroOpen))return Action::BalanceMonstroTab;
     if(game.balanceRewardsOpen) {
         if(button(Action::BalanceShopTab,"SHOP",470,175,150,28,game.balanceShopOpen))return Action::BalanceShopTab;
         if(button(Action::BalanceClearHeartsTab,"AFTER CLEAR",650,175,200,28,!game.balanceRoomHeartsOpen&&!game.balanceShopOpen))return Action::BalanceClearHeartsTab;
@@ -2565,6 +2573,21 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::ResetCombat,"RESET DAMAGE / HP",205,465,370,36))return Action::ResetCombat;
         const auto next=game.nextBalancePreset.value_or(BalancePreset{});
         text("Next: "+decimal(next.playerDamage)+" damage / "+decimal(next.regularHealthMultiplier*100)+"% HP",600,478,13,Teal);
+    } else if(game.balanceEnemiesOpen&&game.balanceMonstroOpen) {
+        const auto &t=game.balancePreset.monstro;
+        text("MONSTRO",205,185,22,Gold);
+        if(button(Action::ToggleMonstro,game.balanceDraft.monstro.enabled?"OPENING BOSS: MONSTRO":"OPENING BOSS: LEGACY",205,220,445,36))return Action::ToggleMonstro;
+        if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",680,220,395,36))return Action::ApplyMapChanges;
+        const char *labels[]={"HEALTH","MOVEMENT","SHOT SPEED"};const float values[]={t.health,t.movement,t.shotSpeed};
+        for(int i=0;i<3;++i) {
+            const float y=277+i*54;const auto down=Action(int(Action::MonstroHealthDown)+i*2),up=Action(int(down)+1);
+            text(labels[i],205,y+10,17,Paper);text(decimal(values[i]*100)+"%",485,y+7,24,Paper);
+            if(button(down,"- 5%",760,y,130,38))return down;
+            if(button(up,"+ 5%",905,y,130,38))return up;
+        }
+        text("Health keeps damage taken proportionally. New volleys use new shot speed.",205,442,13,Teal);
+        if(button(Action::ResetMonstro,"RESET BOSS VALUES",205,468,350,35))return Action::ResetMonstro;
+        text(game.hasPendingMapChanges()?"BOSS / MAP CHANGES PENDING":"BOSS / MAP SETTINGS APPLIED",585,480,13,Muted);
     } else if(game.balanceEnemiesOpen&&game.balancePooterOpen) {
         const auto &p=game.balancePreset;
         text("ORDINARY POOTER",205,185,22,Gold);

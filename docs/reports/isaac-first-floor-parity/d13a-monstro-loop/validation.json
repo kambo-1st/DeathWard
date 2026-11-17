@@ -1,0 +1,114 @@
+{
+  "date": "2026-11-17",
+  "status": "implemented_developer_verified_scoped_human_accepted",
+  "mechanics_fingerprint": "2c3f2a99dc3331bf",
+  "schema": 43,
+  "native_kernels": {
+    "decisions": 48,
+    "forces": 32,
+    "projectile_payloads": 24,
+    "pass": true,
+    "animation_metadata_check": true
+  },
+  "focused_suites": {
+    "pass": true,
+    "names": [
+      "monstro_boss_loop",
+      "core_contracts",
+      "balance_preset_contract",
+      "book_of_shadows",
+      "treasure_upgrade"
+    ]
+  },
+  "generated_loop_sizes": [
+    {
+      "scale": 0.75,
+      "min": 5,
+      "max": 5
+    },
+    {
+      "scale": 1.1,
+      "min": 7,
+      "max": 9
+    },
+    {
+      "scale": 1.5,
+      "min": 10,
+      "max": 10
+    }
+  ],
+  "actual_game_renderer": {
+    "mode": "--monstro-only",
+    "pass": true,
+    "scope": [
+      "direct ordinary encounter, normal starting health",
+      "mouse tuning, export/load",
+      "normal damage death, once-only mouse Breakfast pickup",
+      "mouse exit and actual floor advance",
+      "owned health/build retention",
+      "staged boss selection, Apply and retry"
+    ],
+    "developer_setup": "God mode enabled for UI exercise; explicit damage event kills boss to isolate reward/input lifecycle. Not a human pressure acceptance test."
+  },
+  "cli": {
+    "cases": [
+      {
+        "case": "schema5",
+        "pass": true,
+        "balance": "BALANCE monstro=1 boss_hp=1 boss_movement=1 boss_shots=1 speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 whip_strength=1 cancer_strength=1 trinket_rewards=1 trinket_key=U book_duration=10 book_recharge=1 yum_healing=2 yum_recharge=1 active_key=C halo_orbit_speed=1 halo_orbit_radius=1 halo_contact_radius=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=000e12fc69f31c20 profile=custom",
+        "input_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf"
+      },
+      {
+        "case": "schema42",
+        "pass": true,
+        "balance": "BALANCE monstro=1 boss_hp=1 boss_movement=1 boss_shots=1 speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 whip_strength=1 cancer_strength=1 trinket_rewards=1 trinket_key=U book_duration=9.5 book_recharge=2 yum_healing=2 yum_recharge=1 active_key=X halo_orbit_speed=1 halo_orbit_radius=1 halo_contact_radius=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=5d274cefacb20d53 profile=custom",
+        "input_sha256": "86662a9dfa7e387f83cb1d9779b964c981932cc93793c06733a9023ef2981722"
+      },
+      {
+        "case": "schema43",
+        "pass": true,
+        "balance": "BALANCE monstro=1 boss_hp=1 boss_movement=1 boss_shots=1 speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 whip_strength=1 cancer_strength=1 trinket_rewards=1 trinket_key=U book_duration=10 book_recharge=1 yum_healing=2 yum_recharge=1 active_key=C halo_orbit_speed=1 halo_orbit_radius=1 halo_contact_radius=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=000e12fc69f31c20 profile=custom",
+        "input_sha256": "59bb2f8f929926e3611bcb8323d99f9905b88ea4b6dc99460bdba580de5c31e3"
+      }
+    ],
+    "original_preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+    "original_sha256_before": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+    "original_sha256_after": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+    "original_unchanged": true,
+    "pass": true
+  },
+  "other_test_failure": {
+    "suite": "monster_boss_components",
+    "case": "Peep starting-kit bot exceeds150s, no kills, hp3",
+    "reproduced_without_d13_catalog": true,
+    "evidence": "peep-legacy-catalog-check.json",
+    "scope": "Unchanged Peep controller, original HEAD mechanics catalog; not a full HEAD binary comparison. No Peep balance or test weakening applied."
+  },
+  "human_acceptance": true,
+  "commit": "included in accepted D13a checkpoint",
+  "remaining": [
+    "Full native actor appearance/death scheduling, RNG/target/grid/status/contact/item behavior",
+    "Complete native boss and reward selectors/pools/profile gates",
+    "Separate Peep bot-test failure",
+    "Full live expedition save/resume"
+  ],
+  "evidence_sha256": {
+    "initial-regressions.log": "faf2685cd9826fc31a068b213f0402cbacd1e93012ab34eb3498480347730d1d",
+    "focused-tests.log": "91fcb437b36af80aea5a2ca851c9df3d28beb1ccb8f846df0c855be88e158116",
+    "monstro-next-floor.png": "506dc3a3899b7333395652cc71225b0e88d21dba78493c0d8098cf999f08a5bb",
+    "source-manifest.json": "45214e43c435b1e8a08abae004205fd9221316f70913d46564a330d0d90f0cf4",
+    "monstro-fight.png": "b90f7e5c67c08f0ccc543541265bdde72afdfbcd1aff5ad0993134836068607f",
+    "peep-legacy-catalog-check.log": "9430559657ec3ad0fbfa175efce4f5274779f312bd1d02f5ec4b01a278f0b455",
+    "game-input.log": "1a32b68670fbdc24724da26db886be5908ecd0b45889cd289c70da69f8ee642b",
+    "build.log": "fb1a6b43f5e56f2c745dc16375652a7c292e61bb4257b0d3d5aced29135e62d7",
+    "cli-validation.json": "c1af0700f1124a9d4c5eca6bf690c20ee1605af7cc604d5112ca1f7533d8b3c1",
+    "peep-legacy-catalog-check.json": "5d838bc7ff23ff875312613b28e3edbc5e19f0c74d70a567777db6966987de86",
+    "schema42-cli.log": "d8e114ce17f25a26e68b3fad0de296624dda454f3018b3c91defbcf4213f3704",
+    "monstro-tuning.png": "8fc21dafccbc410fdd7a0646a535c6d0c260600ad5d75ecc5ad7cfd6dc6c6da1",
+    "schema43-cli.log": "906c12b495fc449c581903df1b7e20b40f566b51d6a895221fd0947ad605cbac",
+    "schema5-cli.log": "906c12b495fc449c581903df1b7e20b40f566b51d6a895221fd0947ad605cbac",
+    "migrated-preset-v43.json": "59bb2f8f929926e3611bcb8323d99f9905b88ea4b6dc99460bdba580de5c31e3",
+    "human-acceptance.json": "32240cead1bf4db9fd442d21016ea881db694717e45ac2ceec72404ec4adf3fc"
+  },
+  "human_acceptance_evidence": "human-acceptance.json"
+}

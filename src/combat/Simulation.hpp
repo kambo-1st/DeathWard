@@ -1,4 +1,5 @@
 #pragma once
+#include "combat/Monstro.hpp"
 #include "combat/BrotherBobby.hpp"
 #include "combat/HaloOfFlies.hpp"
 #include "combat/ActiveItem.hpp"
@@ -566,6 +567,7 @@ struct Enemy {
     std::optional<TargetHopRuntime> targetHop;
     std::optional<LeaperRuntime> leaper;
     std::optional<EggyRuntime> eggy;
+    std::optional<MonstroRuntime> monstro;
     std::optional<AdaptiveArmorRuntime> adaptiveArmor;
     std::optional<HopRingRuntime> hopRings;
     std::optional<BuzzFlyRuntime> buzz;
@@ -1162,7 +1164,7 @@ class Simulation {
                MissionTheme theme = MissionTheme::Mine, bool canyonRiver = true, bool tutorial = false,
                WitnessAccount account = WitnessAccount::None, int floor = 0,
                ExpeditionPacing pacing = ExpeditionPacing::Compact,
-               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics(), float roomSizeScale = 1, int roomMinHalfTiles = 0, int roomMaxHalfTiles = 0, float routeLengthScale = 1, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool coinClearRewards = false, bool sourceRoomLocks = false, bool sourceTreasureUpgrade = false, bool sourceShopHeart = false, bool sourceShopKey = false, bool sourceShopVariation = false, int shopCollectiblePool = 0, int treasureCollectiblePool = 0);
+               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics(), float roomSizeScale = 1, int roomMinHalfTiles = 0, int roomMaxHalfTiles = 0, float routeLengthScale = 1, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool coinClearRewards = false, bool sourceRoomLocks = false, bool sourceTreasureUpgrade = false, bool sourceShopHeart = false, bool sourceShopKey = false, bool sourceShopVariation = false, int shopCollectiblePool = 0, int treasureCollectiblePool = 0, MonstroTuning monstro = {false});
     std::shared_ptr<const MechanicsLibrary> content;
     ExpeditionPlan expedition;
     int floor = 0;
@@ -1182,6 +1184,7 @@ class Simulation {
     bool spawnTrinket(Vector3 at,const ItemKey &item=CancerKey,uint32_t seed=1,bool preplaced=false);
     std::vector<TrinketPickup> trinketPickups;
     YumHeartTuning yumHeart{};
+    MonstroTuning monstroTuning{false};
     BookOfShadowsTuning bookOfShadows{};
     double bookProtectionRemaining=0; // Independent of held slot, dodge and hurt immunity.
     bool beginActiveReview();
@@ -1302,7 +1305,7 @@ class Simulation {
     bool canUseFloorExit() const;
     bool advanceFloor();
     bool canResizeRooms() const;
-    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1, std::optional<bool> sourceRoom = std::nullopt, std::optional<int> heartLayouts = std::nullopt, std::optional<bool> roomLocks = std::nullopt, std::optional<bool> treasureUpgrade = std::nullopt, std::optional<bool> shopHeart = std::nullopt, std::optional<bool> shopKey = std::nullopt, std::optional<bool> shopVariation = std::nullopt, std::optional<int> collectiblePool = std::nullopt, std::optional<int> treasurePool = std::nullopt);
+    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1, std::optional<bool> sourceRoom = std::nullopt, std::optional<int> heartLayouts = std::nullopt, std::optional<bool> roomLocks = std::nullopt, std::optional<bool> treasureUpgrade = std::nullopt, std::optional<bool> shopHeart = std::nullopt, std::optional<bool> shopKey = std::nullopt, std::optional<bool> shopVariation = std::nullopt, std::optional<int> collectiblePool = std::nullopt, std::optional<int> treasurePool = std::nullopt, std::optional<MonstroTuning> monstro = std::nullopt);
     int finalRoom() const { return arena.roomCount()-1; }
     Vector3 surveyPosition() const { return arena.rooms.back().objective; }
     bool canReturn() const { return lastFloor()&&canUseFloorExit(); }
@@ -1375,6 +1378,9 @@ class Simulation {
     void healDebug();
     void tunePlayer(float baseHealth, float shotDamage);
     void applyCombatBalance(float sourceDamage,float regularHealthMultiplier);
+    void applyMonstroTuning(MonstroTuning tuning);
+    bool hasSourceBoss(int index) const;
+    void admitBossPedestal();
     void startStress();
     void interact();
     void openShop();
@@ -1582,7 +1588,10 @@ class Simulation {
     void reconcileShell(SegmentedEncounterRuntime &group);
     bool settleShellSegment(Enemy &enemy,float dt);
     float segmentDamage(Enemy &enemy,const Event &event);
-    void updateMonsterBoss(Enemy &enemy,float dt);
+    void updateMonstro(Enemy &e,float dt);
+    bool flushMonstroShots(Enemy &e);
+    void selectMonstroShots(Enemy &e,bool radial);
+    void updateMonsterBoss(Enemy &e,float dt);
     EntityId spawnLoki(MonsterId id,Vector3 center);
     bool lokiPositionClear(const Enemy &enemy,Vector3 point,float playerClearance) const;
     void updateLoki(Enemy &enemy,float dt);

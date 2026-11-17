@@ -7,6 +7,7 @@ void Simulation::initializeMonsterBoss(Enemy &e,BossForm form) {
     if(const auto *p=content->peep(e.monster);p&&form==BossForm::Yellow)e.radius*=p->yellowScale;
     if(content->bloat(e.monster))e.facing={0,0,1}; // Source down is fixed in world space, not toward the camera/player.
     e.position.y=e.radius+.05f;e.home=e.position;e.cooldown=1.2f;
+    if(content->monstro(e.monster)){e.monstro.emplace();e.position.y=.85f;e.home=e.position;e.cooldown=0;e.hp=e.maxHp=content->monsterHealth(e.monster,arena.profile.sourceStage)*monstroTuning.health;}
     requestBossComponents(e);
 }
 void Simulation::bossCreep(const Enemy &e,float radius,float duration,Color tint,float damage) {
@@ -20,6 +21,7 @@ void Simulation::bossCreep(const Enemy &e,float radius,float duration,Color tint
     h.damage=damage;h.context.sourceEntity=e.id;h.tint=tint;addHazard(h);
 }
 void Simulation::updateMonsterBoss(Enemy &e,float dt) {
+    if(content->monstro(e.monster)){updateMonstro(e,dt);return;}
     if(content->hornfel(e.monster)){updateHornfel(e,dt);return;}
     if(content->loki(e.monster)){updateLoki(e,dt);return;}
     if(content->bloat(e.monster)){updateBloat(e,dt);return;}
@@ -28,6 +30,7 @@ void Simulation::updateMonsterBoss(Enemy &e,float dt) {
     const float pace=e.bossForm==BossForm::Yellow?p->yellowSpeed:1;
     e.age+=dt;e.flash=std::max(0.f,e.flash-dt);e.velocity={};e.auxiliary-=dt;
     e.trailTime-=dt;e.cooldown-=dt*pace/(EnemyCooldownMultiplier*arena.profile.cooldownScale);
+    if(content->monstro(e.monster)){e.monstro.emplace();e.position.y=.85f;e.home=e.position;e.cooldown=0;e.hp=e.maxHp=content->monsterHealth(e.monster,arena.profile.sourceStage)*monstroTuning.health;}
     requestBossComponents(e);e.phase=std::popcount(e.bossParts);
     auto volley=[&](int count) {
         const float angle=combatRng.real(0,2*Pi);

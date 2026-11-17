@@ -193,6 +193,7 @@ std::vector<Vector3> Arena::path(Vector3 from, Vector3 target, float radius) con
     // Bounding corners supply route candidates; clearance uses the octagon.
     for(const auto &room:rooms)if(room.kind==RoomKind::Power)
         navigationWalls.push_back(pedestalGeometry::bounds(room.objective));
+    if(bossRewardPedestal)navigationWalls.push_back(pedestalGeometry::bounds(*bossRewardPedestal));
     for(const auto &room:rooms)if(room.kind==RoomKind::Shop)navigationWalls.push_back(shopCartGeometry::bounds(room.center));
     auto valid = [&](Vector3 p) { return contains(p) && !blocked(p, radius); };
     // A click on solid cover lands at its nearest walkable edge.
@@ -334,10 +335,11 @@ void Simulation::requestMove(Vector3 target, bool interactAtDestination) {
     }
     // The stone stays solid after collection. Clicking it approaches a legal
     // edge; source collectibles pay on contact, legacy relics retain their menu.
-    if(site.kind==RoomKind::Power&&planarDistance(target,site.objective)<2.4f) {
+    const auto pedestal=rewardPosition(room);
+    if((site.kind==RoomKind::Power||(hasSourceBoss(room)&&arena.bossRewardPedestal))&&planarDistance(target,pedestal)<2.4f) {
         float best=std::numeric_limits<float>::infinity();
         auto consider=[&](Vector3 direction) {
-            const auto point=pedestalGeometry::approach(site.objective,direction,target.y);
+            const auto point=pedestalGeometry::approach(pedestal,direction,target.y);
             if(arena.blocked(point,pedestalGeometry::PlayerRadius))return;
             auto route=arena.path(player.position,point,pedestalGeometry::PlayerRadius);
             if(route.empty())return;
@@ -345,7 +347,7 @@ void Simulation::requestMove(Vector3 target, bool interactAtDestination) {
             for(auto next:route){cost+=planarDistance(previous,next);previous=next;}
             if(cost<best){best=cost;movePath_=std::move(route);}
         };
-        consider(sub(player.position,site.objective));
+        consider(sub(player.position,pedestal));
         for(auto normal:pedestalGeometry::Normals)consider(normal);
         interactOnArrival_=!movePath_.empty()&&rewardAvailable(room)&&!hasSourceTreasure(room);
         if(movePath_.empty())announce("That pedestal cannot be reached.",2);
@@ -395,7 +397,7 @@ std::string Simulation::nearbyInteraction() const {
         arena.sight(player.position, arena.rooms[size_t(room)].objective))
         return "TRADE";
     if (rewardAvailable(room)&&distance(player.position,rewardPosition(room))<2.6f&&arena.sight(player.position,rewardPosition(room)))
-        return hasSourceTreasure(room)?"THE SAD ONION / TOUCH TO COLLECT":"CLAIM POWER";
+        return hasSourceTreasure(room)?(content->item({"isaac",ItemKind::Collectible,uint32_t(treasureUpgradeItem(room))})->name+" / TOUCH TO COLLECT"):"CLAIM POWER";
     if (legacyObjectives() && !rescued && distance(player.position, arena.miners) < 2.6f)
         return "FREE MINERS";
     if (legacyObjectives() && !altarDestroyed && distance(player.position, arena.altar) < 2.6f)

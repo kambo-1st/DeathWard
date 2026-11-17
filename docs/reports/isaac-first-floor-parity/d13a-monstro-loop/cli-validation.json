@@ -1,0 +1,27 @@
+{
+  "cases": [
+    {
+      "case": "schema5",
+      "pass": true,
+      "balance": "BALANCE monstro=1 boss_hp=1 boss_movement=1 boss_shots=1 speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 whip_strength=1 cancer_strength=1 trinket_rewards=1 trinket_key=U book_duration=10 book_recharge=1 yum_healing=2 yum_recharge=1 active_key=C halo_orbit_speed=1 halo_orbit_radius=1 halo_contact_radius=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=000e12fc69f31c20 profile=custom",
+      "input_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf"
+    },
+    {
+      "case": "schema42",
+      "pass": true,
+      "balance": "BALANCE monstro=1 boss_hp=1 boss_movement=1 boss_shots=1 speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 whip_strength=1 cancer_strength=1 trinket_rewards=1 trinket_key=U book_duration=9.5 book_recharge=2 yum_healing=2 yum_recharge=1 active_key=X halo_orbit_speed=1 halo_orbit_radius=1 halo_contact_radius=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=5d274cefacb20d53 profile=custom",
+      "input_sha256": "86662a9dfa7e387f83cb1d9779b964c981932cc93793c06733a9023ef2981722"
+    },
+    {
+      "case": "schema43",
+      "pass": true,
+      "balance": "BALANCE monstro=1 boss_hp=1 boss_movement=1 boss_shots=1 speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 whip_strength=1 cancer_strength=1 trinket_rewards=1 trinket_key=U book_duration=10 book_recharge=1 yum_healing=2 yum_recharge=1 active_key=C halo_orbit_speed=1 halo_orbit_radius=1 halo_contact_radius=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=000e12fc69f31c20 profile=custom",
+      "input_sha256": "59bb2f8f929926e3611bcb8323d99f9905b88ea4b6dc99460bdba580de5c31e3"
+    }
+  ],
+  "original_preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+  "original_sha256_before": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "original_sha256_after": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "original_unchanged": true,
+  "pass": true
+}

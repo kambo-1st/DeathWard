@@ -338,6 +338,20 @@ inline void drawSegmentedBossModel(const Enemy &e,bool drawShadow=true) {
         DrawSphereEx(add(p,mul(facing,r*.85f)),r*.28f,5,7,{40,28,32,255});
     }
 }
+inline void drawMonstroModel(const Enemy &e,bool drawShadow=true) {
+    const float r=e.radius;const auto p=add(e.position,{0,r*.35f+e.lift,0});
+    const auto forward=unit(horizontal(e.facing));const Vector3 side{-forward.z,0,forward.x};
+    const Color skin=e.flash>0?Color{245,233,206,255}:Color{174,111,104,255},dark{51,29,38,255};
+    if(drawShadow)DrawCircle3D({p.x,.04f,p.z},r,{1,0,0},90,{43,34,35,110});
+    DrawSphereEx(p,r,8,12,skin);
+    for(float sign:{-1.f,1.f}) {
+        const auto eye=add(p,add(mul(forward,r*.88f),add(mul(side,sign*r*.35f),{0,r*.18f,0})));
+        DrawSphereEx(eye,r*.11f,5,7,dark);
+    }
+    const bool spit=e.monstro&&e.monstro->action==MonstroAction::Spit;
+    const auto mouth=add(p,add(mul(forward,r*.91f),{0,-r*.32f,0}));
+    DrawSphereEx(mouth,r*(spit?.33f:.17f),6,8,dark);
+}
 inline void drawPeepModel(const Enemy &e,bool drawShadow=true) {
     const auto p=e.position;const float r=e.radius;
     const bool bloat=e.monster==monsterId(68,1);

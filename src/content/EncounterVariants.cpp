@@ -276,6 +276,7 @@ const StatueDefinition *MechanicsLibrary::statue(MonsterId id) const {
     const auto it=statues_.find(id);return it==statues_.end()?nullptr:&it->second;
 }
 bool MechanicsLibrary::bossFormAllowed(MonsterId id,BossForm form) const {
+    if(monstro(id))return form==BossForm::Normal;
     if(peep(id))return form==BossForm::Normal||form==BossForm::Cyan||form==BossForm::Yellow;
     if(bloat(id))return form==BossForm::Normal||form==BossForm::Green;
     if(segmentedBoss(id)||loki(id)||hornfel(id))return form==BossForm::Normal;

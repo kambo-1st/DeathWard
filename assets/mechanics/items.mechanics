@@ -94,3 +94,7 @@ end
 item "isaac:collectible:58" "Book of Shadows" "ACTIVE" "Protects you from damage for ten seconds. Uses three charges; combat room clears recharge it. Replaces your held active item."
 category active
 end
+
+# D13a bounded boss collectible. Installed items.xml: maxhearts2, hearts4.
+item "isaac:collectible:25" "Breakfast" "HEALTH UP" "Adds one red-heart container and heals up to two red hearts. Permanent; keeps your active item."
+end

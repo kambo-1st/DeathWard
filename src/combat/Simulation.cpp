@@ -21,8 +21,8 @@
 
 namespace dw {
 Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, MissionTheme theme,
-                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library, float requestedRoomScale, int roomMinimum, int roomMaximum, float requestedRouteScale, bool requestedSourceRoom, int requestedHeartLayouts, bool requestedCoins, bool requestedRoomLocks, bool requestedTreasureUpgrade, bool requestedShopHeart, bool requestedShopKey, bool requestedShopVariation, int requestedCollectiblePool, int requestedTreasurePool)
-    : content(library ? std::move(library) : defaultMechanics()), expedition(seed,tutorial,account,pacing),floor(level),roomSizeScale(requestedRoomScale),routeLengthScale(requestedRouteScale),sourceRoomLocks(requestedRoomLocks),sourceTreasureUpgrade(requestedTreasureUpgrade),treasureCollectiblePool(requestedTreasurePool),sourceShopHeart(requestedShopHeart),sourceShopKey(requestedShopKey),sourceShopVariation(requestedShopVariation),shopCollectiblePool(requestedCollectiblePool),sourceCombatRoom(requestedSourceRoom),roomHeartLayouts(requestedHeartLayouts),roomMinHalfTiles(roomMinimum),roomMaxHalfTiles(roomMaximum),
+                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library, float requestedRoomScale, int roomMinimum, int roomMaximum, float requestedRouteScale, bool requestedSourceRoom, int requestedHeartLayouts, bool requestedCoins, bool requestedRoomLocks, bool requestedTreasureUpgrade, bool requestedShopHeart, bool requestedShopKey, bool requestedShopVariation, int requestedCollectiblePool, int requestedTreasurePool, MonstroTuning requestedMonstro)
+    : content(library ? std::move(library) : defaultMechanics()), expedition(seed,tutorial,account,pacing),floor(level),roomSizeScale(requestedRoomScale),routeLengthScale(requestedRouteScale),sourceRoomLocks(requestedRoomLocks),sourceTreasureUpgrade(requestedTreasureUpgrade),monstroTuning(requestedMonstro),treasureCollectiblePool(requestedTreasurePool),sourceShopHeart(requestedShopHeart),sourceShopKey(requestedShopKey),sourceShopVariation(requestedShopVariation),shopCollectiblePool(requestedCollectiblePool),sourceCombatRoom(requestedSourceRoom),roomHeartLayouts(requestedHeartLayouts),roomMinHalfTiles(roomMinimum),roomMaxHalfTiles(roomMaximum),
       arena(expedition.floorSeed(level), theme, canyonRiver, tutorial, expedition.storyAt(level),
             expedition.roomsOnFloor(level),[&]{auto dimensions=expedition.dimensionsOnFloor(level);
                 dimensions.roomSizeScale=roomSizeScale;dimensions.routeLengthScale=routeLengthScale;
@@ -32,7 +32,12 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
                     dimensions.smallerRooms=true;dimensions.minHalfTiles=roomMinHalfTiles;dimensions.maxHalfTiles=roomMaxHalfTiles;
                 }
                 return dimensions;}(),
-            theme==MissionTheme::Canyon?content->configureFloor(expedition.profileOnFloor(level),expedition.floorSeed(level)):FloorProfile{},sourceCombatRoom,roomHeartLayouts,sourceRoomLocks),
+            [&]{requestedMonstro.validate();auto profile=theme==MissionTheme::Canyon?content->configureFloor(expedition.profileOnFloor(level),expedition.floorSeed(level)):FloorProfile{};
+                if(requestedMonstro.enabled&&level==0&&!tutorial&&profile.active()&&content->monstro(monsterId(20))) {
+                    profile.boss=BossKind::Isaac;profile.bossMonster=monsterId(20);profile.bossForm=BossForm::Normal;
+                    profile.doubleBossRoom=false;profile.bossRails.reset();
+                }
+                return profile;}(),sourceCombatRoom,roomHeartLayouts,sourceRoomLocks),
       encounterRng(expedition.floorSeed(level) ^ 0x454e434f554e5445ULL),
       rewardRng(expedition.floorSeed(level) ^ 0x5245574152445354ULL),
       combatRng(expedition.floorSeed(level) ^ 0x434f4d424154524eULL), seed_(expedition.floorSeed(level)),
@@ -102,7 +107,8 @@ bool Simulation::canUseFloorExit() const {
 bool Simulation::canResizeRooms() const {
     return !arena.rooms.empty(); // Explicit testing control; exploration/combat do not lock it.
 }
-void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScale,std::optional<bool> sourceRoom,std::optional<int> heartLayouts,std::optional<bool> roomLocks,std::optional<bool> treasureUpgrade, std::optional<bool> shopHeart, std::optional<bool> shopKey, std::optional<bool> shopVariation, std::optional<int> collectiblePool, std::optional<int> treasurePool) {
+void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScale,std::optional<bool> sourceRoom,std::optional<int> heartLayouts,std::optional<bool> roomLocks,std::optional<bool> treasureUpgrade, std::optional<bool> shopHeart, std::optional<bool> shopKey, std::optional<bool> shopVariation, std::optional<int> collectiblePool, std::optional<int> treasurePool, std::optional<MonstroTuning> monstro) {
+    const auto boss=monstro.value_or(monstroTuning);boss.validate();
     const bool treasure=treasureUpgrade.value_or(sourceTreasureUpgrade);
     const bool shop=shopHeart.value_or(sourceShopHeart);
     const bool keyStock=shopKey.value_or(sourceShopKey);
@@ -114,10 +120,10 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     const bool locks=roomLocks.value_or(sourceRoomLocks);
     const bool enabled=sourceRoom.value_or(sourceCombatRoom);
     const int heartMode=heartLayouts.value_or(roomHeartLayouts);
-    if(treasureChoice==treasureCollectiblePool&&pool==shopCollectiblePool&&variation==sourceShopVariation&&keyStock==sourceShopKey&&shop==sourceShopHeart&&treasure==sourceTreasureUpgrade&&locks==sourceRoomLocks&&heartMode==roomHeartLayouts&&enabled==sourceCombatRoom&&scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
+    if(boss.enabled==monstroTuning.enabled&&treasureChoice==treasureCollectiblePool&&pool==shopCollectiblePool&&variation==sourceShopVariation&&keyStock==sourceShopKey&&shop==sourceShopHeart&&treasure==sourceTreasureUpgrade&&locks==sourceRoomLocks&&heartMode==roomHeartLayouts&&enabled==sourceCombatRoom&&scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
     if(!canResizeRooms())throw std::runtime_error("No floor to resize");
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
-                    expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice);
+                    expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice,boss);
     next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
@@ -197,7 +203,7 @@ bool Simulation::advanceFloor() {
     if(!floorExitRequested||lastFloor()||dead||!canUseFloorExit())return false;
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
-                    expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool);
+                    expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool,monstroTuning);
     next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
@@ -314,6 +320,10 @@ void Simulation::grant(const ItemKey &item) {
         activeItem=ActiveItemState{item,activeCapacity(item)};
     }
     items.push_back(item);
+    if(item==ItemKey{"isaac",ItemKind::Collectible,25}) {
+        auto health=player.sourceHealth();health.addMaxRed(2);health.addRed(4);
+        applyPlayerHealth(std::move(health));
+    }
     audioCues.push(AudioCueKind::Pickup, player.position);
     if (definition->pickupHealthMultiplier != 1) {
         auto health=player.sourceHealth();
@@ -374,7 +384,29 @@ void Simulation::tunePlayer(float baseHealth, float shotDamage) {
     }
     player.shotDamage = shotDamage;
 }
+bool Simulation::hasSourceBoss(int index) const {
+    return monstroTuning.enabled&&floor==0&&!surveyTutorial&&arena.theme==MissionTheme::Canyon&&
+        arena.profile.active()&&arena.profile.bossMonster==monsterId(20)&&index==finalRoom();
+}
+void Simulation::applyMonstroTuning(MonstroTuning tuning) {
+    tuning.validate();
+    if(tuning.enabled!=monstroTuning.enabled)throw std::invalid_argument("Boss selection requires Apply map changes");
+    const float ratio=tuning.health/monstroTuning.health;
+    const auto scale=[&](Enemy &e){if(e.monstro){e.hp*=ratio;e.maxHp*=ratio;}};
+    for(auto &e:enemies)scale(e);
+    for(auto &site:rooms)for(auto &e:site.residents)scale(e);
+    monstroTuning=tuning;checkpointNeeded=true;
+}
+void Simulation::admitBossPedestal() {
+    if(!hasSourceBoss(room)||!roomClear||!rooms[size_t(room)].bossPaid||arena.bossRewardPedestal)return;
+    const auto at=rewardPosition(room);
+    // Wait if the player occupies the birth footprint. Never create a collider
+    // through the player or move them unexpectedly after defeating the boss.
+    if(pedestalGeometry::intersects(player.position,player.position,at,.5f))return;
+    arena.bossRewardPedestal=at;
+}
 bool Simulation::hasSourceTreasure(int index) const {
+    if(hasSourceBoss(index))return true;
     return sourceTreasureUpgrade&&floor==0&&!surveyTutorial&&arena.theme==MissionTheme::Canyon&&
         arena.profile.active()&&index>=0&&index<arena.roomCount()&&arena.rooms[size_t(index)].kind==RoomKind::Power;
 }
@@ -388,6 +420,7 @@ SourcePlayerStats Simulation::effectivePlayerStats() const {
 }
 int Simulation::treasureUpgradeItem(int index) const {
     if(!hasSourceTreasure(index))return 0;
+    if(hasSourceBoss(index))return 25;
     if(powerupReview&&powerupReview->treasureRoom==index&&powerupReview->collected<4)
         return PowerupReviewState::Offerings[size_t(powerupReview->collected)];
     if(activeReviewRoom==index&&activeReviewCollected<2)return activeReviewCollected?58:45;
@@ -417,7 +450,7 @@ bool Simulation::useActiveItem() {
     return true;
 }
 bool Simulation::collectTreasureUpgrade() {
-    if(!hasSourceTreasure(room))return false;
+    if(!hasSourceTreasure(room)||(hasSourceBoss(room)&&!arena.bossRewardPedestal))return false;
     auto &progress=rooms[size_t(room)];const auto at=rewardPosition(room);
     const bool touching=pedestalGeometry::touching(player.position,at);
     if(!touching){progress.activePickupContact=false;return false;}
@@ -451,7 +484,7 @@ bool Simulation::collectTreasureUpgrade() {
         progress.activePickupContact=true;
     }
     checkpointNeeded=true;
-    announce(definition->name+" / "+(activeCapacity(item)?"ACTIVE ITEM":(item.number==8||item.number==10)?"FAMILIAR":item.number==4?"DAMAGE UP":"TEARS UP"),3);
+    announce(definition->name+" / "+(activeCapacity(item)?"ACTIVE ITEM":(item.number==8||item.number==10)?"FAMILIAR":item.number==25?"HEALTH UP":item.number==4?"DAMAGE UP":"TEARS UP"),3);
     return true;
 }
 bool Simulation::rewardAvailable(int index) const {
@@ -1861,6 +1894,7 @@ void Simulation::step(const Input &input, float dt) {
             enterRoom(location);
     }
     collectKeys();
+    admitBossPedestal();
     collectTreasureUpgrade();
     collectShopUpgrade();
     updateMoney(dt);

@@ -1,0 +1,6 @@
+{
+  "exit_code": 1,
+  "head": "13bd0b4b",
+  "method": "Original HEAD mechanics catalog, existing Peep starting-kit bot, current core with D13 disabled; Peep controller branch unchanged. Not a full HEAD binary comparison.",
+  "result": "PRE-D13 catalog 80e8405b577845d2 Monstro=0\nPEEP_STARTING_KIT form=0 seconds=150 hp=3 kills=0\nunmodified 6 half-heart units / 24-damage kit defeats each form without bombs or invulnerability\n"
+}

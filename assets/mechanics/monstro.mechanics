@@ -1,0 +1,8 @@
+DEATHWARD_MECHANICS 1
+# D13a ordinary20.0.0. Source HP250 + stage0; explicit shared damage unit x3.2.
+# Radius40 uses the accepted ordinary-Gaper body adapter .6/13, separately
+# from the D04 player-relative movement adapter; source body-size ratio is retained.
+# Selection is one supported opening-floor boss, not the complete native pool.
+monster 20.0.0 "Monstro" Still None Blob 800 0 1.84615385 1 0 1 0 1 0 0 legacy
+stage_health 20.0.0 250 0 3.2
+boss_monstro 20.0.0

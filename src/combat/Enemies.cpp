@@ -64,6 +64,7 @@ float Simulation::enemyDamage(const Enemy &enemy, const Event &event) const {
     }))return 0;
     // Source radial-damage collection skips EntityCollisionClass 0. A direct
     // scripted damage call is separate and is not granted blanket immunity.
+    if(enemy.monstro&&enemy.monstro->intangible&&event.areaDamage)return 0;
     if(enemy.adultLeech&&enemy.adultLeech->intangible&&event.areaDamage)return 0;
     if(enemy.rockSpider&&enemy.rockSpider->height<content->rockSpider(enemy.monster)->entityHeight&&event.areaDamage)return 0;
     if(const auto *p=content->hardy(enemy.monster);p&&(event.explosionDamage||event.damageKind==DamageKind::Crush))return event.damage*p->blastMultiplier;

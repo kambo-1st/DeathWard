@@ -38,6 +38,7 @@ add_library(deathward_core
     src/content/ContentId.cpp
     src/content/Mechanics.cpp
     src/content/EncounterVariants.cpp
+    src/combat/Monstro.cpp
     src/combat/MonsterBoss.cpp
     src/combat/LokiBoss.cpp
     src/combat/HornfelBoss.cpp
@@ -1173,4 +1174,11 @@ if(BUILD_TESTING)
     add_executable(deathward_western_assets_tests tests/western_assets_tests.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp)
     target_link_libraries(deathward_western_assets_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_western_assets_tests)
+endif()
+
+if(BUILD_TESTING)
+    add_executable(deathward_monstro_loop_tests tests/monstro_loop_tests.cpp)
+    target_link_libraries(deathward_monstro_loop_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_monstro_loop_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
+    add_test(NAME monstro_boss_loop COMMAND deathward_monstro_loop_tests)
 endif()
