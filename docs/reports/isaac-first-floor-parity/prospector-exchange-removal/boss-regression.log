@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 188: duke_boss_loop
+1/2 Test #188: duke_boss_loop ...................   Passed    3.40 sec
+    Start 189: monstro_boss_loop
+2/2 Test #189: monstro_boss_loop ................   Passed    2.86 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   6.27 sec

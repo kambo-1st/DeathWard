@@ -361,7 +361,7 @@ int main(int argc, char **argv) {
                          "                      build-bank, build-shrapnel, build-return, build-braid,\n"
                          "                      ridgeback, foreman, marshal (also -late or -fight),\n"
                          "                      profile-quarry, profile-works, profile-storm,\n"
-                         "                      service-exchange, service-surgeon, service-bargain, boss-reward,\n"
+                         "                      service-surgeon, service-bargain, boss-reward,\n"
                          "                      enemy-TYPE.VARIANT.SUBTYPE (isolated enemy capture; with --smoke)\n  --benchmark          Render the 100-enemy / "
                          "600-shot stress scenario\n  --frames N           Scripted frame count (default "
                          "180)\n  --screenshot PATH    Save a PNG before scripted exit\n"
@@ -447,7 +447,7 @@ int main(int argc, char **argv) {
         scene != "demolition" && scene != "demolition-open" && scene != "demolition-run" &&
         scene != "build-bank" && scene != "build-shrapnel" && scene != "build-return" && scene != "build-braid" &&
         scene != "ridgeback" && scene != "ridgeback-late" && scene != "ridgeback-fight" &&
-        scene != "service-exchange" && scene != "service-surgeon" && scene != "service-bargain" && scene != "boss-reward" &&
+        scene != "service-surgeon" && scene != "service-bargain" && scene != "boss-reward" &&
         scene != "foreman" && scene != "foreman-late" && scene != "foreman-fight" &&
         scene != "marshal" && scene != "marshal-late" && scene != "marshal-fight" &&
         scene != "profile-quarry" && scene != "profile-works" && scene != "profile-storm") {
@@ -794,8 +794,7 @@ int main(int argc, char **argv) {
                 int at=-1;for(int i=0;i<game.run->arena.roomCount();++i)
                     if(game.run->arena.rooms[size_t(i)].kind==dw::RoomKind::Service){at=i;break;}
                 if(at<0)throw std::runtime_error("No service room in smoke floor");
-                game.run->arena.rooms[size_t(at)].service=scene=="service-exchange"?dw::RoomService::Exchange:
-                    scene=="service-surgeon"?dw::RoomService::Surgeon:dw::RoomService::Smuggler;
+                game.run->arena.rooms[size_t(at)].service=scene=="service-surgeon"?dw::RoomService::Surgeon:dw::RoomService::Smuggler;
                 game.run->rooms[size_t(at)].offers={dw::ItemId::Judas,dw::ItemId::Cap};
                 game.run->jumpDebug(at);game.run->player.position=game.run->arena.rooms[size_t(at)].objective;
                 game.run->keys=2;game.run->moneyCollected=100;game.run->player.hp=2;game.run->openShop();

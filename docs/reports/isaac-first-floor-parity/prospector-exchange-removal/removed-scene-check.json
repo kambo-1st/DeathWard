@@ -1,0 +1,6 @@
+{
+  "command": "build/deathward --smoke --mute --scene service-exchange",
+  "exit_code": 2,
+  "output": "Unknown smoke scene: service-exchange\n",
+  "pass": true
+}

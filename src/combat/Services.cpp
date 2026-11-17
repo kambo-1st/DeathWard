@@ -21,9 +21,6 @@ float Simulation::bargainMaxHealth(int index) const {
 ServiceOffer Simulation::serviceOffer(int index) const {
     if(index<0||index>=2)return {};
     switch(arena.rooms[size_t(room)].service) {
-    case RoomService::Exchange:
-        return index==0?ServiceOffer{"Three sticks","Trade two keys for three dynamite sticks. Keep keys for armories, or invest in demolition.","2 KEYS"}:
-            ServiceOffer{"Sell one stick","Trade one dynamite stick for four coins. Each offer can be used once on this floor.","1 DYNAMITE"};
     case RoomService::Surgeon:
         return index==0?ServiceOffer{"Treat wounds","Restore up to three red hearts. Keep your containers. One treatment per floor.","20 COINS"}:
             ServiceOffer{"Strengthening tonic","Gain one filled red-heart container for this expedition. One tonic per floor.","35 COINS"};
@@ -44,15 +41,6 @@ std::string Simulation::serviceUnavailable(int index) const {
        !arena.sight(player.position,arena.rooms[size_t(room)].objective))return "TRADE CLOSED";
     if(rooms[size_t(room)].serviceSold[size_t(index)])return "ALREADY USED";
     switch(arena.rooms[size_t(room)].service) {
-    case RoomService::Exchange:
-        if(index==0) {
-            if(keys<2)return "NEED 2 KEYS";
-            if(dynamite>MaxDynamite-3)return "DYNAMITE FULL";
-        } else {
-            if(dynamite<1)return "NEED 1 DYNAMITE";
-            if(money()>MaxMoney-4||moneyCollected>MaxMoney-4)return "WALLET FULL";
-        }
-        break;
     case RoomService::Surgeon:
         if(money()<uint64_t(index?35:20))return "NOT ENOUGH COINS";
         if(index==0&&player.hp>=player.redHealthCapacity())return "HEALTH FULL";
@@ -71,9 +59,6 @@ bool Simulation::buyService(int index) {
     auto &progress=rooms[size_t(room)];
     progress.serviceSold[size_t(index)]=true;
     switch(arena.rooms[size_t(room)].service) {
-    case RoomService::Exchange:
-        if(index==0){keys-=2;dynamite+=3;}else{--dynamite;moneyCollected+=4;}
-        break;
     case RoomService::Surgeon:
         moneySpent+=index?35:20;
         if(index)addRedContainers(2,true);

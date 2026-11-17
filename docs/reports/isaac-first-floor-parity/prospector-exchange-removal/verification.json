@@ -1,0 +1,27 @@
+{
+  "status": "implemented; developer checks passed; user acknowledgment and commit authorization recorded",
+  "accepted_duke_commit": "6062cb35",
+  "seed_comparison_floors": 108,
+  "removed_exchange_rooms": 71,
+  "unchanged_retained_specialist_rooms": 98,
+  "service_reachability_floors": 98,
+  "tests": [
+    "deathward_expedition_economy_tests --services-only",
+    "deathward_input_tests --economy-only",
+    "duke_boss_loop",
+    "monstro_boss_loop",
+    "removed smoke scene rejected",
+    "node --check web/expedition-economy-test.cjs",
+    "git diff --check"
+  ],
+  "full_economy_suite": "pre-existing item-pool assertion failure, not counted passing",
+  "browser_runtime_tested": false,
+  "visual_witness": {
+    "seed": 4,
+    "displayed_room": 2,
+    "preset": "d03-shooting/user-preset-2026-11-11.json",
+    "screenshot": "artifacts/removed-exchange.png"
+  },
+  "original_user_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "commit_authorized": true
+}

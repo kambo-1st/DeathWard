@@ -14,7 +14,7 @@ inline constexpr int MinFloorRooms = 9;
 inline constexpr float FloorTile = 2;
 using FloorCell = std::pair<int, int>;
 enum class RoomKind { Combat, Power, Boss, Empty, Shop, Service };
-enum class RoomService { None, Exchange, Surgeon, Smuggler };
+enum class RoomService { None=0, Surgeon=2, Smuggler=3 }; // Retired value1 is not reused.
 const char *roomServiceName(RoomService service);
 struct RoomGraph {
     std::vector<FloorCell> cells = std::vector<FloorCell>(RoomCount);
@@ -48,6 +48,7 @@ struct RoomLayout {
     RoomKind kind = RoomKind::Combat;
     StoryRoom story = StoryRoom::None;
     RoomService service = RoomService::None;
+    bool vacantServiceSite = false; // Quiet former service slot; excluded from content reselection.
     // Room-wide condition (e.g. a future Flush effect). A river crossing is
     // not automatically a flooded room: dry banks must remain dry gameplay.
     bool flooded = false;

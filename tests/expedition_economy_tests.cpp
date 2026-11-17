@@ -59,7 +59,11 @@ void reachability() {
                     check(physicalRoom==i&&traderRooms.insert(physicalRoom).second,"each trader occupies its own room");
                     check((i==run.arena.shopRoom)==(r.kind==RoomKind::Shop),"shop and specialist roles never share a room");
                 }
+                if(r.vacantServiceSite) {
+                    check(r.kind==RoomKind::Empty&&r.service==RoomService::None&&run.roomEnemies(i).empty(),"removed service leaves a quiet room without a trader");
+                }
                 if(r.kind==RoomKind::Service) {
+                    check(r.service==RoomService::Surgeon||r.service==RoomService::Smuggler,"only retained services generate");
                     ++count;services.insert(r.service);
                     check(floor>=3||r.service!=RoomService::Surgeon,"no doctor on floors one through three");
                     if(floor==3&&r.service==RoomService::Surgeon)++surgeonsOnFourthFloor;
@@ -70,40 +74,47 @@ void reachability() {
                 if(r.kind==RoomKind::Power)for(auto item:run.rooms[size_t(i)].offers)
                     check(itemPoolWeight(ItemPool::Armory,item)>0,"armory uses armory pool");
             }
-            check(count>=1&&count<=2&&combat>=3,"small optional subset within existing room budget");
+            check(count>=0&&count<=2&&combat>=3,"small optional subset within existing room budget");
             for(int i=1;i<=2;++i)check(itemPoolWeight(ItemPool::Shop,run.shopOffers[size_t(i)].item)>0,"shop uses utility pool");
             for(auto item:run.rooms.back().offers)check(itemPoolWeight(ItemPool::Boss,item)>0,"boss has its own rewards");
             const auto pos=run.rewardPosition(run.finalRoom());
             check(!run.arena.blocked(pos,1.1f)&&distance(pos,run.arena.exit)>=4&&distance(pos,run.arena.rooms.back().objective)>=4,"boss reward separated from evidence/exit");
         }
     }
-    check(lengths.size()==5&&services.size()==3,"all run lengths and optional functions occur");
+    check(lengths.size()==5&&services.size()==2,"all run lengths and optional functions occur");
     check(surgeonsOnFourthFloor>0,"doctors can first appear on floor four");
     std::cout<<"Validated "<<floors<<" actual floors with zero-resource mandatory routes\n";
 }
 void enterService(Simulation &run,RoomService service) {
     int room=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.arena.rooms[size_t(i)].kind==RoomKind::Service){room=i;break;}
-    check(room>=0,"generated service room exists");
+    if(room<0)for(int i=1;i<run.arena.roomCount()-1;++i)if(run.arena.rooms[size_t(i)].vacantServiceSite) {
+        room=i;run.arena.rooms[size_t(i)].kind=RoomKind::Service;run.arena.rooms[size_t(i)].vacantServiceSite=false;break;
+    }
+    check(room>=0,"transaction fixture has a reachable service site");
     run.arena.rooms[size_t(room)].service=service;run.jumpDebug(room);
     run.player.position=run.arena.rooms[size_t(room)].objective;run.openShop();check(run.shopOpen,"service opens through shop modal");
 }
+void removedSite() {
+    Simulation run(4,1,{},MissionTheme::Canyon,true,false,WitnessAccount::None,0,ExpeditionPacing::Compact,
+        defaultMechanics(),1.1f,7,9,.26f,true,1,true,true,true,true,true,true,1,1,MonstroTuning{});
+    int count=0;
+    for(int i=0;i<run.arena.roomCount();++i)if(run.arena.rooms[size_t(i)].vacantServiceSite) {
+        ++count;const auto &r=run.arena.rooms[size_t(i)];
+        check(r.kind==RoomKind::Empty&&r.service==RoomService::None&&r.sourceHeartTemplate<0&&r.sourceCombatTemplate<0&&r.sourceObstacleTemplate<0,"former exchange stays quiet with production source layouts enabled");
+        run.jumpDebug(i);run.player.position=r.objective;run.openShop();
+        const auto keys=run.keys,bombs=run.dynamite;const auto money=run.money();
+        check(!run.shopOpen&&!run.buyShop(0)&&!run.buyShop(1)&&run.keys==keys&&run.dynamite==bombs&&run.money()==money,"removed trader cannot open or convert resources");
+    }
+    check(count==1,"recorded former exchange is exercised");
+}
 void transactions() {
     WorldState world;world.money=100;
-    Simulation exchange(1866,1,world,MissionTheme::Canyon);enterService(exchange,RoomService::Exchange);
-    exchange.keys=2;exchange.dynamite=3;
-    check(exchange.buyShop(0)&&exchange.keys==0&&exchange.dynamite==6,"two keys buy three sticks");
-    check(exchange.buyShop(1)&&exchange.dynamite==5&&exchange.money()==104,"one stick buys four coins");
-    for(int i=0;i<100;++i)check(!exchange.buyShop(i%4),"no repeatable conversion loop or hidden third offer");
-    const auto service=exchange.room;exchange.closeShop();exchange.jumpDebug(0);exchange.jumpDebug(service);
-    exchange.player.position=exchange.arena.rooms[size_t(service)].objective;exchange.openShop();
-    check(!exchange.buyShop(0)&&!exchange.buyShop(1),"revisits retain exhausted offers");
-    check(!exchange.shopOffers[3].sold,"service stock separate from shop stock");
-    Simulation surgeon(1866,1,world,MissionTheme::Canyon);enterService(surgeon,RoomService::Surgeon);
+    Simulation surgeon(6,1,world,MissionTheme::Canyon);enterService(surgeon,RoomService::Surgeon);
     check(!surgeon.buyShop(0),"cannot pay for wasted healing at full HP");
     surgeon.player.hp=1;check(surgeon.buyShop(0)&&surgeon.player.hp==6&&surgeon.money()==80,"explicit healing price and cap");
     check(surgeon.buyShop(1)&&surgeon.player.maxHp==8&&surgeon.player.hp==8&&surgeon.money()==45,"finite expedition vitality improvement");
     check(!surgeon.buyShop(1),"tonic not repeatable");
-    Simulation deal(1866,1,world,MissionTheme::Canyon);enterService(deal,RoomService::Smuggler);
+    Simulation deal(6,1,world,MissionTheme::Canyon);enterService(deal,RoomService::Smuggler);
     deal.rooms[size_t(deal.room)].offers={ItemId::Judas,ItemId::Cap};deal.player.hp=3;
     check(deal.bargainMaxHealth(0)==2&&deal.serviceOffer(0).cost.find("1 RED CONTAINER")!=std::string::npos,"exact preview includes Judas's extra tax");
     check(deal.buyShop(0)&&deal.player.maxHp==2&&deal.player.hp==2&&deal.itemStacks(ItemId::Judas)==1,"preview agrees with actual cost");
@@ -124,4 +135,4 @@ void transactions() {
     check(reward.canUseFloorExit(),"optional boss reward does not gate floor exit");
 }
 }
-int main(){try{pools();transactions();reachability();std::cout<<"PASS optional rooms, resource reachability, finite economy and distinct pools\n";}catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}
+int main(int argc,char **argv){try{if(argc<2||std::string(argv[1])!="--services-only")pools();removedSite();transactions();reachability();std::cout<<"PASS optional rooms, resource reachability, finite economy and distinct pools\n";}catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

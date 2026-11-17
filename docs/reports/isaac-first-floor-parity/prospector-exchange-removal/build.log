@@ -1,0 +1,288 @@
+-- Testing if -Werror=pointer-arith can be used -- compiles
+-- Testing if -Werror=implicit-function-declaration can be used -- compiles
+-- Testing if -fno-strict-aliasing can be used -- compiles
+-- Using raylib's GLFW
+-- Including X11 support
+-- Audio Backend: miniaudio
+-- Building raylib static library
+-- SUPPORT_MODULE_RSHAPES=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- SUPPORT_MODULE_RTEXT=ON
+-- SUPPORT_MODULE_RMODELS=ON
+-- SUPPORT_MODULE_RAUDIO=ON
+-- SUPPORT_CAMERA_SYSTEM=ON
+-- SUPPORT_GESTURES_SYSTEM=ON
+-- SUPPORT_RPRAND_GENERATOR=ON
+-- SUPPORT_MOUSE_GESTURES=ON
+-- SUPPORT_SSH_KEYBOARD_RPI=ON
+-- SUPPORT_WINMM_HIGHRES_TIMER=ON
+-- SUPPORT_PARTIALBUSY_WAIT_LOOP=ON
+-- SUPPORT_SCREEN_CAPTURE=ON
+-- SUPPORT_GIF_RECORDING=ON
+-- SUPPORT_COMPRESSION_API=ON
+-- SUPPORT_AUTOMATION_EVENTS=ON
+-- RL_SUPPORT_MESH_GPU_SKINNING=ON
+-- SUPPORT_QUADS_DRAW_MODE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_FILEFORMAT_GIF=ON
+-- SUPPORT_FILEFORMAT_QOI=ON
+-- SUPPORT_FILEFORMAT_DDS=ON
+-- SUPPORT_IMAGE_EXPORT=ON
+-- SUPPORT_IMAGE_GENERATION=ON
+-- SUPPORT_IMAGE_MANIPULATION=ON
+-- SUPPORT_DEFAULT_FONT=ON
+-- SUPPORT_FILEFORMAT_TTF=ON
+-- SUPPORT_FILEFORMAT_FNT=ON
+-- SUPPORT_TEXT_MANIPULATION=ON
+-- SUPPORT_FONT_ATLAS_WHITE_REC=ON
+-- SUPPORT_FILEFORMAT_OBJ=ON
+-- SUPPORT_FILEFORMAT_MTL=ON
+-- SUPPORT_FILEFORMAT_IQM=ON
+-- SUPPORT_FILEFORMAT_GLTF=ON
+-- SUPPORT_FILEFORMAT_VOX=ON
+-- SUPPORT_FILEFORMAT_M3D=ON
+-- SUPPORT_MESH_GENERATION=ON
+-- SUPPORT_FILEFORMAT_WAV=ON
+-- SUPPORT_FILEFORMAT_OGG=ON
+-- SUPPORT_FILEFORMAT_MP3=ON
+-- SUPPORT_FILEFORMAT_QOA=ON
+-- SUPPORT_FILEFORMAT_XM=ON
+-- SUPPORT_FILEFORMAT_MOD=ON
+-- SUPPORT_STANDARD_FILEIO=ON
+-- SUPPORT_TRACELOG=ON
+-- SUPPORT_CLIPBOARD_IMAGE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- Generated build type: Release
+-- Compiling with the flags:
+--   PLATFORM=PLATFORM_DESKTOP
+--   GRAPHICS=GRAPHICS_API_OPENGL_33
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/kambo/workspace/DeathWard/build
+Consolidate compiler generated dependencies of target glfw
+[ 13%] Built target glfw
+Consolidate compiler generated dependencies of target raylib
+[ 17%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Duke.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelBoss.cpp.o
+[ 17%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Monstro.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LokiBoss.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelDecoys.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelEscorts.cpp.o
+[ 21%] Built target deathward_runtime_assets
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/RailTraffic.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnvironmentActors.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SegmentedBoss.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ShellBoss.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BoomFlies.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BloatBoss.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Charging.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Companions.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Statues.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/OwnedComponents.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Behavior.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireReactions.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Mortality.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LobWalkers.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HeadShooters.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MawFamily.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Spitties.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/CardinalWalkers.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Brains.cpp.o
+[ 34%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LinkedHeads.cpp.o
+[ 34%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Babies.cpp.o
+[ 34%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Vis.cpp.o
+[ 34%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Guts.cpp.o
+[ 34%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Mirrors.cpp.o
+[ 34%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Leeches.cpp.o
+[ 34%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Lumps.cpp.o
+[ 34%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/AdultLeeches.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Dips.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MemBrains.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MasksAndRemnants.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ReturningBodies.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Hosts.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Mushrooms.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/TargetHops.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Leapers.cpp.o
+[ 43%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/AdaptiveArmor.cpp.o
+[ 43%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Eggies.cpp.o
+[ 43%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BuzzFlies.cpp.o
+[ 43%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Evaders.cpp.o
+[ 43%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Swimmers.cpp.o
+[ 43%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Spiders.cpp.o
+[ 43%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Hardies.cpp.o
+[ 43%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Dannies.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Faceless.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Gapers.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/GroundPursuit.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnemyStatuses.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/CreatureCycles.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Champions.cpp.o
+/home/kambo/workspace/DeathWard/src/combat/Hardies.cpp: In member function ‘void dw::Simulation::updateHardy(dw::Enemy&, float)’:
+/home/kambo/workspace/DeathWard/src/combat/Hardies.cpp:95:17: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   95 |                 if(r.blocked)++r.collisions;r.blocked=false;
+      |                 ^~
+/home/kambo/workspace/DeathWard/src/combat/Hardies.cpp:95:45: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   95 |                 if(r.blocked)++r.collisions;r.blocked=false;
+      |                                             ^
+[ 47%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Charm.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BlackGlobin.cpp.o
+[ 52%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LeperFlesh.cpp.o
+[ 52%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Lepers.cpp.o
+[ 52%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/RottenGapers.cpp.o
+[ 52%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SmallMaggots.cpp.o
+[ 52%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Headless.cpp.o
+[ 52%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/RockSpiders.cpp.o
+[ 52%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SpiderVariants.cpp.o
+[ 52%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LongLegs.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Boils.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Willos.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireWaves.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Hopping.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownNavigation.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/world/HubWorld.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Animals.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownCharacters.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/world/ArrivalQuest.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/world/SaveSlots.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Dungeon.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/world/RailArena.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/world/FlightNavigation.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Breakables.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/world/RoomHeartLayouts.cpp.o
+[ 60%] Building CXX object CMakeFiles/deathward_core.dir/src/world/FloorDressing.cpp.o
+[ 60%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FloorEncounters.cpp.o
+[ 60%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/CanyonBoss.cpp.o
+[ 60%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FrontierBoss.cpp.o
+[ 60%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonTerrain.cpp.o
+[ 60%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonAppearance.cpp.o
+[ 60%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonRiver.cpp.o
+[ 60%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonRoad.cpp.o
+[ 60%] Building CXX object CMakeFiles/deathward_core.dir/src/world/RoomGraph.cpp.o
+[ 60%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/PowerupReview.cpp.o
+[ 60%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Trinkets.cpp.o
+[ 60%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Keys.cpp.o
+[ 60%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Bombs.cpp.o
+[ 65%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Chests.cpp.o
+[ 65%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/RedHeartRewards.cpp.o
+[ 65%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/RoomHearts.cpp.o
+/home/kambo/workspace/DeathWard/src/combat/PowerupReview.cpp: In member function ‘bool dw::Simulation::beginTrinketReview()’:
+/home/kambo/workspace/DeathWard/src/combat/PowerupReview.cpp:45:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   45 |         if(!best)return false;points.push_back(*best);
+      |         ^~
+/home/kambo/workspace/DeathWard/src/combat/PowerupReview.cpp:45:31: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   45 |         if(!best)return false;points.push_back(*best);
+      |                               ^~~~~~
+[ 65%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/PlayerHealth.cpp.o
+[ 65%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Simulation.cpp.o
+[ 65%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Loot.cpp.o
+[ 65%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Shop.cpp.o
+[ 65%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Services.cpp.o
+[ 69%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Dynamite.cpp.o
+[ 69%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SuppliedBombs.cpp.o
+[ 69%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FlyBombs.cpp.o
+[ 69%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnemyBombs.cpp.o
+[ 69%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Destruction.cpp.o
+[ 69%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ProjectileMotion.cpp.o
+[ 69%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Enemies.cpp.o
+[ 69%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Encounters.cpp.o
+[ 73%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Monsters.cpp.o
+[ 73%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterMovement.cpp.o
+/home/kambo/workspace/DeathWard/src/combat/Monsters.cpp: In member function ‘void dw::Simulation::queueMonster(dw::MonsterId, Vector3, dw::EntityId, int, bool, float, int, dw::EntityId, dw::EntityId, int, std::optional<dw::ItemKey>, bool, std::optional<dw::ThrownOffspringRuntime>, Vector3)’:
+/home/kambo/workspace/DeathWard/src/combat/Monsters.cpp:158:31: warning: missing initializer for member ‘dw::MonsterSpawn::dukeChild’ [-Wmissing-field-initializers]
+  158 |     pendingMonsters_.push_back({id, at, partner, generation, collapsed, healthScale, regrowthSplits, summoner,componentOwner,componentSlot,sourceItem,retained,0,thrown,impulse,{},{},{}});
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[ 73%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Formations.cpp.o
+[ 73%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Navigation.cpp.o
+[ 73%] Building CXX object CMakeFiles/deathward_core.dir/src/items/Items.cpp.o
+[ 73%] Linking CXX static library libdeathward_core.a
+[ 86%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_skinning
+Consolidate compiler generated dependencies of target deathward_particles
+Consolidate compiler generated dependencies of target deathward_mission_lighting
+[ 86%] Built target deathward_cloth
+[ 86%] Building CXX object CMakeFiles/deathward_particles.dir/src/render/ParticleEffects.cpp.o
+[ 86%] Building CXX object CMakeFiles/deathward_mission_lighting.dir/src/render/GroundSurface.cpp.o
+[ 91%] Built target deathward_skinning
+[ 91%] Linking CXX static library libdeathward_mission_lighting.a
+[ 91%] Built target deathward_mission_lighting
+[ 91%] Linking CXX static library libdeathward_particles.a
+[ 91%] Built target deathward_particles
+Consolidate compiler generated dependencies of target deathward
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/core/FrontEnd.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/editor/CinematicEditor.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditor.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorAnimals.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/main.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorNavigation.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/render/Renderer.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/render/PlayerModel.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/render/AnimalModels.cpp.o
+In file included from /home/kambo/workspace/DeathWard/src/render/Renderer.hpp:11,
+                 from /home/kambo/workspace/DeathWard/src/main.cpp:7:
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp: In member function ‘bool dw::KeyModel::prepare()’:
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp:31:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   31 |         if(attempted_)return ready();attempted_=true;
+      |         ^~
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp:31:38: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   31 |         if(attempted_)return ready();attempted_=true;
+      |                                      ^~~~~~~~~~
+In file included from /home/kambo/workspace/DeathWard/src/render/Renderer.hpp:11,
+                 from /home/kambo/workspace/DeathWard/src/render/Renderer.cpp:1:
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp: In member function ‘bool dw::KeyModel::prepare()’:
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp:31:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   31 |         if(attempted_)return ready();attempted_=true;
+      |         ^~
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp:31:38: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   31 |         if(attempted_)return ready();attempted_=true;
+      |                                      ^~~~~~~~~~
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/render/WesternScene.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/render/CanyonScene.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/core/Game.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/core/GameTuning.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/core/GameQuest.cpp.o
+[ 95%] Linking CXX executable deathward
+[100%] Built target deathward
+Consolidate compiler generated dependencies of target deathward_core
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_expedition_economy_tests
+[100%] Building CXX object CMakeFiles/deathward_expedition_economy_tests.dir/tests/expedition_economy_tests.cpp.o
+[100%] Linking CXX executable deathward_expedition_economy_tests
+[100%] Built target deathward_expedition_economy_tests
+[ 13%] Built target glfw
+[ 18%] Built target raylib
+[ 90%] Built target deathward_core
+[ 90%] Built target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_particles
+Consolidate compiler generated dependencies of target deathward_mission_lighting
+[ 95%] Built target deathward_skinning
+[ 95%] Built target deathward_particles
+[ 95%] Built target deathward_mission_lighting
+[ 95%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward_input_tests
+[ 95%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/core/Game.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/core/GameQuest.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/PlayerModel.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/core/GameTuning.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward_input_tests.dir/tests/input_tests.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/WesternScene.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/AnimalModels.cpp.o
+[100%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/Renderer.cpp.o
+[100%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/CanyonScene.cpp.o
+[100%] Linking CXX executable deathward_input_tests
+[100%] Built target deathward_input_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_duke_loop_tests
+[100%] Building CXX object CMakeFiles/deathward_duke_loop_tests.dir/tests/duke_loop_tests.cpp.o
+[100%] Linking CXX executable deathward_duke_loop_tests
+[100%] Built target deathward_duke_loop_tests
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monstro_loop_tests
+[100%] Building CXX object CMakeFiles/deathward_monstro_loop_tests.dir/tests/monstro_loop_tests.cpp.o
+[100%] Linking CXX executable deathward_monstro_loop_tests
+[100%] Built target deathward_monstro_loop_tests

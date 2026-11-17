@@ -16,8 +16,8 @@ const fs=require('node:fs');
  };
  fs.mkdirSync('artifacts',{recursive:true});
  try {
-  for(const scene of (process.env.DEATHWARD_ECONOMY_ONLY?['service-exchange','service-surgeon','service-bargain','boss-reward']:['foreman','foreman-late','foreman-fight','marshal','marshal-late','marshal-fight','service-exchange','service-surgeon','service-bargain','boss-reward'])) {
-   await page.goto(`${process.env.DEATHWARD_WEB_URL||'http://127.0.0.1:8091/'}?verify&mute&smoke&frames=100000&theme=canyon&scene=${scene}`);
+  for(const scene of (process.env.DEATHWARD_ECONOMY_ONLY?['service-surgeon','service-bargain','boss-reward']:['foreman','foreman-late','foreman-fight','marshal','marshal-late','marshal-fight','service-surgeon','service-bargain','boss-reward'])) {
+   await page.goto(`${process.env.DEATHWARD_WEB_URL||'http://127.0.0.1:8091/'}?verify&mute&smoke&frames=100000${scene.startsWith('service-')?'&seed=69':''}&theme=canyon&scene=${scene}`);
    await page.waitForFunction(()=>window.Module?.ready,null,{timeout:90000});await page.locator('#start').click({noWaitAfter:true});
    await page.waitForFunction(()=>Module.economy&&Module.state.frame>3,null,{timeout:90000});
    if(scene.endsWith('-fight')) {
@@ -35,7 +35,6 @@ const fs=require('node:fs');
     await click(425,572);
     await page.waitForFunction(()=>Module.economy.sold0,null,{timeout:10000});
     const e=await page.evaluate(()=>Module.economy);
-    if(scene==='service-exchange'){assert.equal(e.keys,0);assert.equal(e.dynamite,6);assert.equal(e.coins,100);}
     if(scene==='service-surgeon'){assert.equal(e.hp,100);assert.equal(e.maxHP,100);assert.equal(e.coins,80);}
     if(scene==='service-bargain'){assert.equal(e.hp,50);assert.equal(e.maxHP,64);assert.equal(e.itemCount,1);assert.ok(e.sold1);}
     await click(425,572);assert.deepEqual(await page.evaluate(()=>Module.economy),e);

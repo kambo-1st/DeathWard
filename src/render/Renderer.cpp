@@ -462,9 +462,6 @@ void servicePerson(Vector3 p,RoomService service,float time,bool drawShadow) {
         DrawCube(at,.7f,.35f,.45f,Paper);
         DrawCube(add(at,{0,0,-.24f}),.12f,.28f,.025f,Teal);
         DrawCube(add(at,{0,0,-.24f}),.38f,.09f,.025f,Teal);
-    } else if(service==RoomService::Exchange) {
-        for(float z:{-.12f,.12f})DrawCylinderEx(add(at,{-.35f,0,z}),add(at,{.35f,0,z}),.1f,.1f,6,Rust);
-        DrawSphereEx(add(at,{0,.25f,0}),.16f,4,6,Gold);
     } else {
         DrawCube(at,.7f,.3f,.4f,Color{66,43,75,255});
         DrawSphereEx(add(at,{0,.32f,0}),.22f,5,6,Teal);
@@ -1892,8 +1889,7 @@ void Renderer::dungeonMap(const Game &game) {
             rectangle(box, i == run.room ? Gold : run.rooms[size_t(i)].cleared ? Teal : Border);
         auto at = point(run.arena.rooms[size_t(i)].center);
         const auto kind = run.arena.rooms[size_t(i)].kind;
-        std::string label = kind==RoomKind::Service?(run.arena.rooms[size_t(i)].service==RoomService::Exchange?"X":
-            run.arena.rooms[size_t(i)].service==RoomService::Surgeon?"H":"D"):kind == RoomKind::Shop    ? "S"
+        std::string label = kind==RoomKind::Service?(run.arena.rooms[size_t(i)].service==RoomService::Surgeon?"H":"D"):kind == RoomKind::Shop    ? "S"
                             : kind == RoomKind::Power ? "P"
                             : kind == RoomKind::Boss  ? "B"
                             : kind == RoomKind::Empty ? "E"

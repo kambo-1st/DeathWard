@@ -3,7 +3,6 @@
 namespace dw {
 const char *roomServiceName(RoomService service) {
     switch(service) {
-    case RoomService::Exchange:return "Prospector Exchange";
     case RoomService::Surgeon:return "Field Surgeon";
     case RoomService::Smuggler:return "Smuggler's Bargain";
     default:return "Rest Stop";
@@ -20,14 +19,17 @@ void Arena::allocateServices() {
     for(size_t i=0;i<sites.size();++i)std::swap(sites[i],sites[i+rng.bounded(uint32_t(sites.size()-i))]);
     // Prefer side branches, without moving any story site or adding graph nodes.
     std::stable_sort(sites.begin(),sites.end(),[&](int a,int b){return rooms[size_t(a)].passages.size()<rooms[size_t(b)].passages.size();});
-    std::vector<RoomService> kinds{RoomService::Exchange,RoomService::Smuggler};
+    // Keep the old shuffle slots/draw count so retained specialists keep their seeded sites.
+    std::vector<RoomService> kinds{RoomService::None,RoomService::Smuggler};
     if(profile.floor>=3)kinds.push_back(RoomService::Surgeon);
     for(size_t i=0;i<kinds.size();++i)std::swap(kinds[i],kinds[i+rng.bounded(uint32_t(kinds.size()-i))]);
     int count=0;
     for(int index:sites) {
         auto &r=rooms[size_t(index)];
         if(r.kind==RoomKind::Combat&&combat<=3)continue;
-        combat-=r.kind==RoomKind::Combat;r.kind=RoomKind::Service;r.service=kinds[size_t(count++)];
+        combat-=r.kind==RoomKind::Combat;r.service=kinds[size_t(count++)];
+        r.vacantServiceSite=r.service==RoomService::None;
+        r.kind=r.vacantServiceSite?RoomKind::Empty:RoomKind::Service;
         if(count>=(roomCount()>=12?2:1))break;
     }
 }

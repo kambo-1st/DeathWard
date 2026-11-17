@@ -23,7 +23,7 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode) {
     std::vector<int> eligible;
     for(int i=1;i<roomCount()-1;++i) {
         const auto &layout=rooms[size_t(i)];
-        if((layout.kind==RoomKind::Combat||layout.kind==RoomKind::Empty)&&layout.story==StoryRoom::None&&
+        if(!layout.vacantServiceSite&&(layout.kind==RoomKind::Combat||layout.kind==RoomKind::Empty)&&layout.story==StoryRoom::None&&
            layout.sourceCombatTemplate<0)eligible.push_back(i);
     }
     std::stable_sort(eligible.begin(),eligible.end(),[&](int a,int b){return rooms[size_t(a)].depth<rooms[size_t(b)].depth;});

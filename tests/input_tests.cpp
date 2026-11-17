@@ -3005,8 +3005,18 @@ void vegetationInputCheck(const std::filesystem::path &directory) {
 }
 void economyInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
-    Game game(directory/"economy.save");game.seedText="1866";game.themeChoice=ThemeChoice::Canyon;game.launch();
+    Game game(directory/"economy.save");game.seedText="6";game.themeChoice=ThemeChoice::Canyon;BalancePreset legacy{1,defaultMechanics()->fingerprint()};legacy.monstro.enabled=false;game.nextBalancePreset=legacy;game.launch();
     Renderer renderer;auto &run=*game.run;
+    {
+        Game quiet(directory/"vacant-service.save");quiet.themeChoice=ThemeChoice::Canyon;quiet.seedText="4";quiet.reviewRoomIndex=1;
+        const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
+        quiet.loadBalancePreset(root/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json");quiet.rememberBalancePreset();quiet.launch(true);
+        check(quiet.run&&quiet.run->arena.rooms[size_t(quiet.run->room)].vacantServiceSite,"actual main-game review enters retired service site");
+        auto &q=*quiet.run;q.player.position=q.arena.rooms[size_t(q.room)].objective;q.openShop();
+        check(!q.shopOpen&&q.roomThreats()==0,"vacant service has no trader dialog or enemies");
+        quiet.updateCamera(10);BeginDrawing();renderer.draw(quiet);rlDrawRenderBatchActive();
+        std::filesystem::create_directories("artifacts");auto im=LoadImageFromScreen();check(ExportImage(im,"artifacts/removed-exchange.png"),"vacant room capture");UnloadImage(im);EndDrawing();quiet.close();
+    }
     const auto frame=[&] {
         game.update(.1f,[&](const Simulation &simulation,const Camera3D &camera,Ray ray){return renderer.pickScenery(simulation,camera,ray);});
         BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);
@@ -3019,7 +3029,7 @@ void economyInputCheck(const std::filesystem::path &directory) {
     const auto key=[&](int value){mouseEvent(KeyDown,value);frame();mouseEvent(KeyUp,value);frame();};
     int site=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.arena.rooms[size_t(i)].kind==RoomKind::Service){site=i;break;}
     check(site>=0,"native fixture contains a generated service room");
-    for(auto service:{RoomService::Exchange,RoomService::Surgeon,RoomService::Smuggler}) {
+    for(auto service:{RoomService::Surgeon,RoomService::Smuggler}) {
         run.arena.rooms[size_t(site)].service=service;run.rooms[size_t(site)].serviceSold={false,false};
         run.rooms[size_t(site)].offers={ItemId::Judas,ItemId::Cap};
         run.jumpDebug(site);run.keys=2;run.dynamite=3;run.moneyCollected=100;run.moneySpent=0;run.player.hp=2;
@@ -3034,9 +3044,8 @@ void economyInputCheck(const std::filesystem::path &directory) {
         for(int i=0;i<200&&!run.shopOpen;++i)frame();
         check(run.shopOpen,"clicking service person walks over and opens the rendered offer");
         const auto frozen=run.stats.duration;key(KEY_UP);check(run.stats.duration==frozen,"trade modal pauses simulation and arrows");
-        if(service==RoomService::Exchange)key(KEY_ONE);else click(425,572);
+        if(service==RoomService::Surgeon)key(KEY_ONE);else click(425,572);
         check(run.rooms[size_t(site)].serviceSold[0],"keyboard or mouse accepts displayed trade");
-        if(service==RoomService::Exchange)check(run.keys==0&&run.dynamite==6,"native exchange spends exact resources");
         if(service==RoomService::Surgeon)check(run.player.hp==6&&run.money()==80,"native surgeon charges exact healing price");
         if(service==RoomService::Smuggler)check(run.player.maxHp==2&&run.items.size()==1,"native bargain includes Judas health loss");
         key(KEY_ESCAPE);check(!run.shopOpen&&!game.paused,"Escape leaves service without opening pause");
