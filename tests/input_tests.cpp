@@ -866,6 +866,51 @@ void whipWormInputCheck(const std::filesystem::path &directory) {
 }
 
 
+void seededBossInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
+    for(int seed:{0,1}) {
+        const auto save=directory/("seeded-boss-"+std::to_string(seed)+".save");
+        const auto file=directory/("seeded-boss-"+std::to_string(seed)+".json"),fixed=directory/("fixed-boss-"+std::to_string(seed)+".json");
+        Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText=std::to_string(seed);game.reviewRoomIndex=8;
+        auto p=BalancePreset::load(root/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json",defaultMechanics()->fingerprint());
+        p.seededBosses=true;game.nextBalancePreset=p;game.balanceFile=file.string();game.launch(true);
+        const int expected=seed==0?20:67,other=seed==0?67:20;
+        check(game.run&&game.error.empty()&&game.run->arena.profile.bossMonster==monsterId(expected)&&game.run->seededBosses,"actual main-game seeded actor witness");
+        check(game.run->player.hp==6&&!game.run->godMode&&game.cameraZoomPercent()==165,"normal review health and chosen zoom");
+        auto &run=*game.run;Renderer renderer;
+        auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"seeded boss Game error");};
+        auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+        auto actual=[&]()->Enemy&{for(auto &e:run.enemies)if(e.alive&&e.kind==EnemyKind::Boss)return e;throw std::runtime_error("missing seeded boss actor");};
+        run.godMode=true;game.updateCamera(10);for(int n=0;n<20;++n)frame();
+        game.perform(Action::OpenBalance);game.perform(Action::BalanceEnemiesTab);click(990,189);
+        check(game.balanceDukeValues==(expected==67),"boss tuning opens the selected actor's values");
+        const auto id=actual().id;const auto maximum=actual().maxHp;click(800,295);
+        check(std::abs(actual().maxHp-maximum*.95f)<.001f&&actual().id==id,"live selected boss HP does not regenerate fight");
+        click(320,189);check(game.balanceDukeValues==(other==67),"other actor values editable without changing encounter");
+        const float unchanged=actual().maxHp;click(800,295);
+        check(actual().maxHp==unchanged&&run.monstroTuning.health==.95f&&run.dukeTuning.health==.95f,"both independent boss tunings retained");
+        std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto image=LoadImageFromScreen();
+        check(ExportImage(image,("artifacts/seeded-boss-"+std::to_string(seed)+".png").c_str()),"seeded boss UI capture");UnloadImage(image);EndDrawing();
+        game.exportBalancePreset();game.rememberBalancePreset();
+        click(other==67?610:430,238);
+        check(game.hasPendingMapChanges()&&run.seededBosses&&actual().monster==monsterId(expected),"fixed choice stays pending during fight");
+        game.balanceFile=fixed.string();game.exportBalancePreset();const auto selected=BalancePreset::load(fixed,defaultMechanics()->fingerprint());
+        check(!selected.seededBosses&&selected.duke.enabled==(other==67),"staged fixed choice exports correctly");
+        click(975,238);check(!run.seededBosses&&actual().monster==monsterId(other),"Apply enables fixed selected encounter");
+        game.loadBalancePreset(file);check(!run.seededBosses&&actual().monster==monsterId(other)&&game.hasPendingMapChanges(),"loading seeded preset keeps map change pending");
+        click(975,238);check(run.seededBosses&&actual().monster==monsterId(expected),"loaded seeded mode restores same boss");
+        game.perform(Action::RoomSizeUp);check(game.hasPendingMapChanges(),"map-size change staged");click(975,238);
+        check(run.seededBosses&&actual().monster==monsterId(expected)&&std::abs(run.roomSizeScale-1.11f)<.0001f,"map resize keeps seeded boss");
+        game.rememberBalancePreset();game.perform(Action::CloseBalance);run.finishDebug(false);game.retryExpedition();
+        check(game.run&&game.run->seededBosses&&game.run->arena.profile.bossMonster==monsterId(expected)&&game.run->player.hp==6&&!game.run->godMode,"retry restores same seeded boss and normal starting state");
+        game.close();renderer.unload();
+        Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText=std::to_string(seed);fresh.reviewRoomIndex=8;fresh.launch(true);
+        check(fresh.run&&fresh.run->seededBosses&&fresh.run->arena.profile.bossMonster==monsterId(expected)&&fresh.cameraZoomPercent()==165&&fresh.run->dukeTuning.health==.95f&&fresh.run->monstroTuning.health==.95f,"remembered mode and both settings survive new Game construction");fresh.close();
+    }
+    std::cout<<"PASS D13c actual Game/Renderer two seeded bosses, independent live values, staged choice/export/load/Apply, resize, retry and fresh launch\n";
+}
+
 void dukeInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
@@ -3005,7 +3050,7 @@ void vegetationInputCheck(const std::filesystem::path &directory) {
 }
 void economyInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
-    Game game(directory/"economy.save");game.seedText="6";game.themeChoice=ThemeChoice::Canyon;BalancePreset legacy{1,defaultMechanics()->fingerprint()};legacy.monstro.enabled=false;game.nextBalancePreset=legacy;game.launch();
+    Game game(directory/"economy.save");game.seedText="6";game.themeChoice=ThemeChoice::Canyon;BalancePreset legacy{1,defaultMechanics()->fingerprint()};legacy.monstro.enabled=false;legacy.seededBosses=false;game.nextBalancePreset=legacy;game.launch();
     Renderer renderer;auto &run=*game.run;
     {
         Game quiet(directory/"vacant-service.save");quiet.themeChoice=ThemeChoice::Canyon;quiet.seedText="4";quiet.reviewRoomIndex=1;
@@ -3181,6 +3226,9 @@ int main(int argc, char **argv) {
         }
         if(mode=="--yum-heart-only") {
             yumHeartInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--seeded-boss-only") {
+            seededBossInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--duke-only") {
             dukeInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

@@ -1,5 +1,7 @@
 # Basement boss inventory
 
+Current bounded production update (2026-11-17): [D13c](../d13c-seeded-bosses/README.md) enables a supported Monstro/Duke subset using XML weights1/1 and a separate DeathWard seed stream. This does not complete the native selector/gates covered by the historical audit below.
+
 Target: preserved installed Repentance 1.7.9b XML. This inventories the eleven entries of the Basement pool; it does not establish the complete eligible first-floor denominator, native gates or selection behavior.
 
 Pool boss IDs and entity identities are different namespaces. Multi-body XML HP is per entity; encounter totals remain unverified.

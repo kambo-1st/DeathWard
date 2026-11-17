@@ -2572,12 +2572,18 @@ Action Renderer::balancePanel(const Game &game) {
         text("Next: "+decimal(next.playerDamage)+" damage / "+decimal(next.regularHealthMultiplier*100)+"% HP",600,478,13,Teal);
     } else if(game.balanceEnemiesOpen&&game.balanceMonstroOpen) {
         const auto &t=game.balancePreset.monstro;
-        const bool duke=game.balancePreset.duke.enabled;const auto &d=game.balancePreset.duke;
-        text(duke?"DUKE OF FLIES":"MONSTRO",205,185,22,Gold);
-        if(button(Action::SelectLegacyBoss,"LEGACY",205,220,150,36,!game.balanceDraft.monstro.enabled&&!game.balanceDraft.duke.enabled))return Action::SelectLegacyBoss;
-        if(button(Action::ToggleMonstro,"MONSTRO",370,220,180,36,game.balanceDraft.monstro.enabled&&!game.balanceDraft.duke.enabled))return Action::ToggleMonstro;
-        if(button(Action::ToggleDuke,"DUKE OF FLIES",565,220,230,36,game.balanceDraft.duke.enabled))return Action::ToggleDuke;
-        if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",810,220,265,36))return Action::ApplyMapChanges;
+        const bool duke=game.balanceDukeValues;const auto &d=game.balancePreset.duke;
+        if(button(Action::CycleBossTuning,duke?"DUKE VALUES >":"MONSTRO VALUES >",205,175,240,28))return Action::CycleBossTuning;
+        const auto &draft=game.balanceDraft;
+        if(button(Action::SelectSeededBosses,"SEEDED",205,220,130,36,draft.seededBosses))return Action::SelectSeededBosses;
+        if(button(Action::ToggleMonstro,"MONSTRO",350,220,155,36,!draft.seededBosses&&draft.monstro.enabled&&!draft.duke.enabled))return Action::ToggleMonstro;
+        if(button(Action::ToggleDuke,"DUKE OF FLIES",520,220,190,36,!draft.seededBosses&&draft.duke.enabled))return Action::ToggleDuke;
+        if(button(Action::SelectLegacyBoss,"LEGACY",725,220,130,36,!draft.seededBosses&&!draft.monstro.enabled&&!draft.duke.enabled))return Action::SelectLegacyBoss;
+        if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",870,220,205,36))return Action::ApplyMapChanges;
+        if(game.run&&game.balancePreset.seededBosses) {
+            const auto type=seededOpeningBossType(game.run->expedition.floorSeed(0));
+            text(type==67?"THIS SEED: DUKE OF FLIES / OPENING FLOOR":"THIS SEED: MONSTRO / OPENING FLOOR",205,260,12,Teal);
+        }
         const char *labels[]={"HEALTH","MOVEMENT",duke?"FLY SPEED":"SHOT SPEED"};const float values[]={duke?d.health:t.health,duke?d.movement:t.movement,duke?d.flySpeed:t.shotSpeed};
         for(int i=0;i<3;++i) {
             const float y=277+i*54;const auto down=Action(int(Action::MonstroHealthDown)+i*2),up=Action(int(down)+1);

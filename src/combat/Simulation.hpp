@@ -1,6 +1,7 @@
 #pragma once
 #include "combat/Monstro.hpp"
 #include "combat/Duke.hpp"
+#include "world/OpeningBossSelection.hpp"
 #include "combat/BrotherBobby.hpp"
 #include "combat/HaloOfFlies.hpp"
 #include "combat/ActiveItem.hpp"
@@ -1168,7 +1169,7 @@ class Simulation {
                MissionTheme theme = MissionTheme::Mine, bool canyonRiver = true, bool tutorial = false,
                WitnessAccount account = WitnessAccount::None, int floor = 0,
                ExpeditionPacing pacing = ExpeditionPacing::Compact,
-               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics(), float roomSizeScale = 1, int roomMinHalfTiles = 0, int roomMaxHalfTiles = 0, float routeLengthScale = 1, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool coinClearRewards = false, bool sourceRoomLocks = false, bool sourceTreasureUpgrade = false, bool sourceShopHeart = false, bool sourceShopKey = false, bool sourceShopVariation = false, int shopCollectiblePool = 0, int treasureCollectiblePool = 0, MonstroTuning monstro = {false}, DukeTuning duke = {});
+               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics(), float roomSizeScale = 1, int roomMinHalfTiles = 0, int roomMaxHalfTiles = 0, float routeLengthScale = 1, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool coinClearRewards = false, bool sourceRoomLocks = false, bool sourceTreasureUpgrade = false, bool sourceShopHeart = false, bool sourceShopKey = false, bool sourceShopVariation = false, int shopCollectiblePool = 0, int treasureCollectiblePool = 0, MonstroTuning monstro = {false}, DukeTuning duke = {}, bool seededBosses = false);
     std::shared_ptr<const MechanicsLibrary> content;
     ExpeditionPlan expedition;
     int floor = 0;
@@ -1190,6 +1191,7 @@ class Simulation {
     YumHeartTuning yumHeart{};
     MonstroTuning monstroTuning{false};
     DukeTuning dukeTuning{};
+    bool seededBosses=false; // Staged opening-floor selection; direct fixtures keep their old defaults.
     BookOfShadowsTuning bookOfShadows{};
     double bookProtectionRemaining=0; // Independent of held slot, dodge and hurt immunity.
     bool beginActiveReview();
@@ -1310,7 +1312,7 @@ class Simulation {
     bool canUseFloorExit() const;
     bool advanceFloor();
     bool canResizeRooms() const;
-    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1, std::optional<bool> sourceRoom = std::nullopt, std::optional<int> heartLayouts = std::nullopt, std::optional<bool> roomLocks = std::nullopt, std::optional<bool> treasureUpgrade = std::nullopt, std::optional<bool> shopHeart = std::nullopt, std::optional<bool> shopKey = std::nullopt, std::optional<bool> shopVariation = std::nullopt, std::optional<int> collectiblePool = std::nullopt, std::optional<int> treasurePool = std::nullopt, std::optional<MonstroTuning> monstro = std::nullopt, std::optional<DukeTuning> duke = std::nullopt);
+    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1, std::optional<bool> sourceRoom = std::nullopt, std::optional<int> heartLayouts = std::nullopt, std::optional<bool> roomLocks = std::nullopt, std::optional<bool> treasureUpgrade = std::nullopt, std::optional<bool> shopHeart = std::nullopt, std::optional<bool> shopKey = std::nullopt, std::optional<bool> shopVariation = std::nullopt, std::optional<int> collectiblePool = std::nullopt, std::optional<int> treasurePool = std::nullopt, std::optional<MonstroTuning> monstro = std::nullopt, std::optional<DukeTuning> duke = std::nullopt, std::optional<bool> seededBosses = std::nullopt);
     int finalRoom() const { return arena.roomCount()-1; }
     Vector3 surveyPosition() const { return arena.rooms.back().objective; }
     bool canReturn() const { return lastFloor()&&canUseFloorExit(); }

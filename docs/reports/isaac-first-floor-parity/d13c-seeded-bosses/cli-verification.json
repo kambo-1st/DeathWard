@@ -1,0 +1,50 @@
+{
+  "cases": [
+    {
+      "case": "schema5-fixed",
+      "seed": 1,
+      "policy": "fixed",
+      "boss": 20,
+      "normal_health": true,
+      "zoom": 165,
+      "passed": true
+    },
+    {
+      "case": "schema44-duke",
+      "seed": 0,
+      "policy": "fixed",
+      "boss": 67,
+      "normal_health": true,
+      "zoom": 165,
+      "passed": true
+    },
+    {
+      "case": "schema45-monstro",
+      "seed": 0,
+      "policy": "seeded",
+      "boss": 20,
+      "normal_health": true,
+      "zoom": 165,
+      "passed": true
+    },
+    {
+      "case": "schema45-duke",
+      "seed": 1,
+      "policy": "seeded",
+      "boss": 67,
+      "normal_health": true,
+      "zoom": 165,
+      "passed": true
+    },
+    {
+      "case": "schema45-repeat",
+      "seed": 1,
+      "policy": "seeded",
+      "boss": 67,
+      "normal_health": true,
+      "zoom": 165,
+      "passed": true
+    }
+  ],
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf"
+}

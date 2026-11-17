@@ -1,0 +1,22 @@
+{
+  "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/bosspools.xml",
+  "sha256": "8e3f794d8951344bd9f96f463cfbb2644b6fa10d27689d31ba80e27dcced4017",
+  "pool": "basement",
+  "supported_entries": [
+    {
+      "pool_id": 1,
+      "weight": 1.0
+    },
+    {
+      "pool_id": 13,
+      "weight": 1.0
+    }
+  ],
+  "entity_mapping": {
+    "1": "20.0.0",
+    "13": "67.0.0"
+  },
+  "selection": "dedicated DeathWard SplitMix64 stream, floorSeed XOR 0x44313343424f5353, weighted supported subset",
+  "native_full_pool_or_probabilities_claimed": false,
+  "native_unlock_history_global_rng_verified": false
+}

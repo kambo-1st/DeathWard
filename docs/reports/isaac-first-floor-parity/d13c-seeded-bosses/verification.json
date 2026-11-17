@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-17",
+  "exchange_removal_commit": "2142ab9c",
+  "preset_schema": 45,
+  "mechanics_fingerprint": "471220612b68af40",
+  "core_suites_passed": [
+    "seeded_opening_bosses",
+    "duke_boss_loop",
+    "monstro_boss_loop",
+    "core_contracts",
+    "balance_preset_contract"
+  ],
+  "actual_game_modes_passed": [
+    "--seeded-boss-only",
+    "--duke-only",
+    "--monstro-only"
+  ],
+  "cli_cases_passed": 5,
+  "seed_witnesses": {
+    "0": 20,
+    "1": 67,
+    "69": 67
+  },
+  "developer_ui_uses_god_mode_and_direct_damage": true,
+  "human_acceptance": "scoped acceptance: user said it works next step1",
+  "full_native_pool_or_actor_acceptance": false,
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "source_pool_evidence": "source-pool-evidence.json",
+  "cli_evidence": "cli-verification.json"
+}

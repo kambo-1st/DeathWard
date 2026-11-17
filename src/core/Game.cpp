@@ -231,7 +231,7 @@ void Game::launch(bool freeMission) {
                                                   nextBalancePreset?nextBalancePreset->shopCollectiblePool:1,
                                                   nextBalancePreset?nextBalancePreset->treasureCollectiblePool:1,
                                                   nextBalancePreset?nextBalancePreset->monstro:MonstroTuning{},
-                                                  nextBalancePreset?nextBalancePreset->duke:DukeTuning{});
+                                                  nextBalancePreset?nextBalancePreset->duke:DukeTuning{},nextBalancePreset?nextBalancePreset->seededBosses:true);
     startExpedition(std::move(candidate));
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
     if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
@@ -281,7 +281,7 @@ void Game::perform(Action action) {
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
            (action<Action::BalanceDamageHealthTab||action>Action::ResetYumHeart)&&
            (action<Action::BalanceTrinketTab||action>Action::ResetTrinkets)&&action!=Action::WhipDown&&action!=Action::WhipUp&&
-           (action<Action::BalanceHaloTab||action>Action::SelectLegacyBoss))return;
+           (action<Action::BalanceHaloTab||action>Action::CycleBossTuning))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -496,15 +496,19 @@ void Game::perform(Action action) {
                              BalancePreset::MinRegularHealth,BalancePreset::MaxRegularHealth));break;
         case Action::ResetCombat:setCombatBalance(BalancePreset::ReferenceDamage,BalancePreset::ReferenceRegularHealth);break;
         case Action::BalanceChasersTab:balanceMonstroOpen=false;balancePooterOpen=false;break;
-        case Action::BalanceMonstroTab:balanceMonstroOpen=true;balancePooterOpen=false;break;
-        case Action::SelectLegacyBoss:balanceDraft.duke.enabled=false;balanceDraft.monstro.enabled=false;balanceNotice="Boss selection pending: Apply map changes resets floor encounters.";break;
-        case Action::ToggleDuke:balanceDraft.duke.enabled=true;balanceDraft.monstro.enabled=true;balanceNotice="Boss selection pending: Apply map changes resets floor encounters.";break;
-        case Action::ToggleMonstro:balanceDraft.duke.enabled=false;balanceDraft.monstro.enabled=true;balanceNotice="Boss selection pending: Apply map changes resets floor encounters.";break;
+        case Action::BalanceMonstroTab:
+            balanceMonstroOpen=true;balancePooterOpen=false;
+            balanceDukeValues=openingBossType(run?run->expedition.floorSeed(0):0,balancePreset.seededBosses,balancePreset.monstro.enabled,balancePreset.duke.enabled)==67;break;
+        case Action::CycleBossTuning:balanceDukeValues=!balanceDukeValues;break;
+        case Action::SelectSeededBosses:balanceDukeValues=seededOpeningBossType(run?run->expedition.floorSeed(0):0)==67;balanceDraft.seededBosses=true;balanceDraft.duke.enabled=false;balanceDraft.monstro.enabled=true;balanceNotice="Seeded boss selection pending: Apply map changes resets floor encounters.";break;
+        case Action::SelectLegacyBoss:balanceDraft.seededBosses=false;balanceDraft.duke.enabled=false;balanceDraft.monstro.enabled=false;balanceNotice="Boss selection pending: Apply map changes resets floor encounters.";break;
+        case Action::ToggleDuke:balanceDukeValues=true;balanceDraft.seededBosses=false;balanceDraft.duke.enabled=true;balanceDraft.monstro.enabled=true;balanceNotice="Boss selection pending: Apply map changes resets floor encounters.";break;
+        case Action::ToggleMonstro:balanceDukeValues=false;balanceDraft.seededBosses=false;balanceDraft.duke.enabled=false;balanceDraft.monstro.enabled=true;balanceNotice="Boss selection pending: Apply map changes resets floor encounters.";break;
         case Action::MonstroHealthDown:case Action::MonstroHealthUp:
         case Action::MonstroMovementDown:case Action::MonstroMovementUp:
         case Action::MonstroShotDown:case Action::MonstroShotUp:case Action::ResetMonstro: {
             auto p=balancePreset;
-            if(p.duke.enabled) {
+            if(balanceDukeValues) {
                 auto &t=p.duke;
                 if(action==Action::ResetMonstro)t.health=t.movement=t.flySpeed=1;
                 else {const int offset=int(action)-int(Action::MonstroHealthDown);
@@ -1091,7 +1095,7 @@ std::vector<Action> Game::menuActions() const {
             balanceCombatOpen?
             std::vector<Action>{Action::BalanceDamageHealthTab,Action::BalanceBombsTab,Action::BalanceDoorsTab,Action::CombatDamageDown,Action::CombatDamageUp,Action::RegularHealthDown,Action::RegularHealthUp,Action::ResetCombat}:
             balanceEnemiesOpen&&balanceMonstroOpen?
-            std::vector<Action>{Action::SelectLegacyBoss,Action::ToggleMonstro,Action::ToggleDuke,Action::MonstroHealthDown,Action::MonstroHealthUp,Action::MonstroMovementDown,Action::MonstroMovementUp,Action::MonstroShotDown,Action::MonstroShotUp,Action::ResetMonstro,Action::ApplyMapChanges}:
+            std::vector<Action>{Action::CycleBossTuning,Action::SelectSeededBosses,Action::SelectLegacyBoss,Action::ToggleMonstro,Action::ToggleDuke,Action::MonstroHealthDown,Action::MonstroHealthUp,Action::MonstroMovementDown,Action::MonstroMovementUp,Action::MonstroShotDown,Action::MonstroShotUp,Action::ResetMonstro,Action::ApplyMapChanges}:
             balanceEnemiesOpen&&balancePooterOpen?
             std::vector<Action>{Action::PooterMovementDown,Action::PooterMovementUp,Action::PooterShotDown,Action::PooterShotUp,Action::PooterDelayDown,Action::PooterDelayUp,Action::ResetPooter}:
             balanceEnemiesOpen?
