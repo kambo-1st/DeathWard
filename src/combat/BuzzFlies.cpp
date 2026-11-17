@@ -16,6 +16,8 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
             p.shot->cooldownFrames=std::max(1,int(std::round(p.shot->cooldownFrames*pooterTuning->attackInterval)));
         }
     }
+    if(e.dukeChild)p.scale=GaperMovementScale;
+    const float motionScale=p.scale*30*(e.dukeChild?dukeTuning.flySpeed:1);
     if(!e.buzz)e.buzz=BuzzFlyRuntime{};
     auto &r=*e.buzz;
     auto requestContactDeath=[&] {
@@ -27,9 +29,9 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
     if(e.selfDetonated){requestContactDeath();return;}
     if(!r.initialized) {
         r.tick=uint64_t(std::max(0.,std::floor((stats.duration-dt)*30+.00001)));
-        r.momentum=mul(horizontal(e.velocity),1/(p.scale*30));r.initialized=true;
+        r.momentum=mul(horizontal(e.velocity),1/motionScale);r.initialized=true;
     }
-    r.momentum=mul(horizontal(e.velocity),1/(p.scale*30));
+    r.momentum=mul(horizontal(e.velocity),1/motionScale);
     e.age+=dt;e.flash=std::max(0.f,e.flash-dt);e.fireContactCooldown=std::max(0.f,e.fireContactCooldown-dt);
     const bool suppressed=p.suppressor&&!e.friendly&&itemStacks(*p.suppressor)>0;
     const bool itemMorph=p.morphItem&&!e.friendly&&itemStacks(*p.morphItem)>0;
@@ -46,7 +48,7 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
         if(e.stateTime<=0)e.state=EnemyState::Ready;
         return;
     }
-    const int sourceUpdates=sourceControllerUpdates(r.clock,dt,tuned||(nativeBurstWanderReview&&e.monster==monsterId(14)));
+    const int sourceUpdates=sourceControllerUpdates(r.clock,dt,tuned||bool(e.dukeChild)||(nativeBurstWanderReview&&e.monster==monsterId(14)));
     for(int sourceUpdate=0;sourceUpdate<sourceUpdates;++sourceUpdate) {++r.tick;
         if(r.healingTicks>0) {
             e.hp=std::min(e.maxHp,e.hp+e.maxHp/float(r.healingDivisor));--r.healingTicks;
@@ -135,6 +137,11 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
             if(r.targetReady&&r.tick%unsigned(c.forceFrames)==0) {
                 auto delta=mul(horizontal(sub(r.target,e.position)),1/p.scale);
                 delta.z*=c.axisScale;
+                if(e.dukeChild&&e.dukeChild->cohort) {
+                    const auto *parent=findEnemy(e.dukeChild->parent);
+                    if(parent&&parent->alive)delta=mul(delta,.2f);
+                    else {e.dukeChild->cohort=false;e.dukeChild->parent=0;}
+                }
                 if(r.diesOnContact)friction*=r.contactRetention;
                 const float distance=length(delta);
                 if(distance>c.deadzone)r.momentum=add(r.momentum,mul(unit(delta),std::min((distance-c.deadzone)*c.gain,c.force)*e.championSpeed/friction));
@@ -155,10 +162,12 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
             // x80/540/y230/420. Preserve those offsets in adapted canyon rooms.
             const float left=sourceRoom?1:bounds.min.x+(tuned?20*p.scale:margin),right=sourceRoom?24:bounds.max.x-(tuned?40*p.scale:margin);
             const float top=sourceRoom?4.5f:bounds.min.z+(tuned?90*p.scale:margin),bottom=sourceRoom?14:bounds.max.z-(tuned?0:margin);
+            if(e.spawnerType!=67) {
             if(e.position.x<left)r.wander.x+=p.edge;
             else if(e.position.x>right)r.wander.x-=p.edge;
             if(e.position.z<top)r.wander.z+=p.edge;
             else if(e.position.z>bottom)r.wander.z-=p.edge;
+            }
             // AddVelocity divides its impulse by current friction before the
             // common movement update applies friction. Pooter's cooldown slows
             // existing momentum without suppressing the same-frame buzz force.
@@ -166,11 +175,11 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
         }
         r.momentum=mul(r.momentum,friction);
     }
-    auto velocity=mul(r.momentum,p.scale*30);
-    if(length(velocity)>p.speedCap)velocity=mul(unit(velocity),p.speedCap);
+    auto velocity=mul(r.momentum,motionScale);
+    if(!e.dukeChild&&length(velocity)>p.speedCap)velocity=mul(unit(velocity),p.speedCap);
     const auto previous=e.position;
     moveMonster(e,velocity,dt);
-    r.momentum=mul(horizontal(e.velocity),1/(p.scale*30));
+    r.momentum=mul(horizontal(e.velocity),1/motionScale);
     if(length(horizontal(e.velocity))>.001f)e.facing=unit(horizontal(e.velocity));
     if(r.attackFrame>=0&&!r.fired)e.target=player.position;
     // Preserve vertical separation and test relative motion, including dodges.

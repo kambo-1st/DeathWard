@@ -1689,6 +1689,10 @@ std::shared_ptr<const MechanicsLibrary> MechanicsLibrary::load(const std::filesy
                         p.teleportClearance>=2&&p.teleportClearance<=20&&p.initialDelay>=Tick&&p.initialDelay<=10&&
                         std::any_of(p.weights.begin(),p.weights.end(),[](int w){return w>0;}),"Invalid Loki controller values");
                     require(lib->lokis_.emplace(id,p).second,"Duplicate Loki controller");
+                } else if(command=="boss_duke") {
+                    require(!item&&!rule&&!graph&&!death,"boss_duke inside definition");
+                    const auto id=parseMonsterId(word(row));
+                    require(id==monsterId(67)&&lib->dukes_.insert(id).second,"Only ordinary Duke67.0.0 is currently supported");
                 } else if(command=="boss_monstro") {
                     require(!item&&!rule&&!graph&&!death,"boss_monstro inside definition");
                     const auto id=parseMonsterId(word(row));
@@ -2265,6 +2269,12 @@ std::shared_ptr<const MechanicsLibrary> MechanicsLibrary::load(const std::filesy
         for(const auto &passenger:p.passengers)if(passenger.available)
             require(lib->environmentActor(passenger.actor),"Passenger behavior is not implemented: "+monsterIdText(passenger.actor));
     }
+    for(const auto id:lib->dukes_) {
+        const auto *d=lib->monster(id);
+        require(d&&d->contact&&!d->roomHazard&&!d->natural&&d->flying&&d->motion==MonsterMotion::Still&&
+            d->attack==MonsterAttack::None&&d->behavior=="legacy"&&lib->stageHealth(id)&&
+            lib->buzzFly(monsterId(13))&&lib->buzzFly(monsterId(18))&&!lib->component(id)&&!lib->companion(id),"Invalid ordinary Duke body/controller dependencies");
+    }
     for(const auto id:lib->monstros_) {
         const auto *d=lib->monster(id);
         require(d&&d->contact&&!d->roomHazard&&!d->natural&&!d->flying&&d->motion==MonsterMotion::Still&&
@@ -2649,7 +2659,7 @@ std::shared_ptr<const MechanicsLibrary> MechanicsLibrary::load(const std::filesy
     }
     for(const auto &[id,p]:lib->stageHealth_) {
         const auto *d=lib->monster(id);
-        require(d&&(!lib->monsterBoss(id)||lib->monstro(id))&&!lib->component(id)&&!lib->companion(id)&&
+        require(d&&(!lib->monsterBoss(id)||lib->monstro(id)||lib->duke(id))&&!lib->component(id)&&!lib->companion(id)&&
             std::abs(d->hp-lib->monsterHealth(id,1))<.001f,"Stage health needs an independent actor with matching stage-one fallback HP");
     }
     for(size_t i=1;i<lib->sourceStages_.size();++i)

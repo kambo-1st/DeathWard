@@ -39,6 +39,7 @@ add_library(deathward_core
     src/content/Mechanics.cpp
     src/content/EncounterVariants.cpp
     src/combat/Monstro.cpp
+    src/combat/Duke.cpp
     src/combat/MonsterBoss.cpp
     src/combat/LokiBoss.cpp
     src/combat/HornfelBoss.cpp
@@ -1177,6 +1178,10 @@ if(BUILD_TESTING)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(deathward_duke_loop_tests tests/duke_loop_tests.cpp)
+    target_link_libraries(deathward_duke_loop_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_duke_loop_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
+    add_test(NAME duke_boss_loop COMMAND deathward_duke_loop_tests)
     add_executable(deathward_monstro_loop_tests tests/monstro_loop_tests.cpp)
     target_link_libraries(deathward_monstro_loop_tests PRIVATE deathward_core)
     target_compile_definitions(deathward_monstro_loop_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")

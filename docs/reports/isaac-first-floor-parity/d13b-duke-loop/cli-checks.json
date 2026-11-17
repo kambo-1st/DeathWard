@@ -1,0 +1,29 @@
+[
+  {
+    "schema": 5,
+    "duke_enabled": false,
+    "room": 9,
+    "hp": 6,
+    "god": false,
+    "zoom": 165,
+    "pass": true
+  },
+  {
+    "schema": 43,
+    "duke_enabled": false,
+    "room": 9,
+    "hp": 6,
+    "god": false,
+    "zoom": 165,
+    "pass": true
+  },
+  {
+    "schema": 44,
+    "duke_enabled": true,
+    "room": 9,
+    "hp": 6,
+    "god": false,
+    "zoom": 165,
+    "pass": true
+  }
+]

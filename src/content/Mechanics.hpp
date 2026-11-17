@@ -1050,8 +1050,9 @@ class MechanicsLibrary {
     const std::vector<StatuePoolEntry> &statuePool(int band) const { return statuePools_.at(size_t(band)); }
     int statueChance(int band) const { return statueChances_.at(size_t(band)); }
     std::span<const ContactFamiliarDefinition> contactFamiliars() const { return contactFamiliars_; }
+    bool duke(MonsterId id) const {return dukes_.contains(id);}
     bool monstro(MonsterId id) const { return monstros_.contains(id); }
-    bool monsterBoss(MonsterId id) const { return monstro(id)||peep(id)||bloat(id)||segmentedBoss(id)||loki(id)||hornfel(id); }
+    bool monsterBoss(MonsterId id) const { return duke(id)||monstro(id)||peep(id)||bloat(id)||segmentedBoss(id)||loki(id)||hornfel(id); }
     bool bossFormAllowed(MonsterId id,BossForm form) const;
     const ComponentDefinition *component(MonsterId id) const;
     const FlyBombDefinition *flyBomb(MonsterId id) const;
@@ -1094,6 +1095,7 @@ class MechanicsLibrary {
     std::map<MonsterId,HopRingDefinition> hopRings_;
     std::map<MonsterId,AdaptiveArmorDefinition> adaptiveArmor_;
     std::set<MonsterId> monstros_;
+    std::set<MonsterId> dukes_;
     std::map<MonsterId,PeepDefinition> peeps_;
     std::map<MonsterId,LokiDefinition> lokis_;
     std::map<MonsterId,HornfelDefinition> hornfels_;

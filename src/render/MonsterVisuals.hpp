@@ -338,6 +338,20 @@ inline void drawSegmentedBossModel(const Enemy &e,bool drawShadow=true) {
         DrawSphereEx(add(p,mul(facing,r*.85f)),r*.28f,5,7,{40,28,32,255});
     }
 }
+inline void drawDukeModel(const Enemy &e,bool drawShadow=true) {
+    const float r=e.radius;auto p=e.position;
+    const Color flesh=e.flash>0?Color{248,236,207,255}:Color{132,96,80,255};
+    if(drawShadow)DrawCircle3D({p.x,.03f,p.z},r*.85f,{1,0,0},90,{43,34,35,75});
+    const float breath=e.duke&&e.duke->state!=4?1.08f:1.f;
+    DrawSphereEx(p,r*breath,8,10,flesh);
+    const auto front=unit(horizontal(e.facing));const Vector3 side{-front.z,0,front.x};
+    DrawSphereEx(add(p,mul(front,r*.9f)),r*.38f,6,8,{53,33,31,255});
+    for(float sign:{-1.f,1.f}) {
+        const auto wing=add(p,add(mul(side,sign*r*.9f),{0,r*(.2f+.15f*std::sin(e.age*35)),0}));
+        DrawSphereEx(wing,r*.65f,4,6,{191,199,184,185});
+        DrawSphereEx(add(p,add(mul(front,r*.76f),add(mul(side,sign*r*.43f),{0,r*.28f,0}))),r*.13f,4,6,{224,197,126,255});
+    }
+}
 inline void drawMonstroModel(const Enemy &e,bool drawShadow=true) {
     const float r=e.radius;const auto p=add(e.position,{0,r*.35f+e.lift,0});
     const auto forward=unit(horizontal(e.facing));const Vector3 side{-forward.z,0,forward.x};

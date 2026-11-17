@@ -21,8 +21,8 @@
 
 namespace dw {
 Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, MissionTheme theme,
-                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library, float requestedRoomScale, int roomMinimum, int roomMaximum, float requestedRouteScale, bool requestedSourceRoom, int requestedHeartLayouts, bool requestedCoins, bool requestedRoomLocks, bool requestedTreasureUpgrade, bool requestedShopHeart, bool requestedShopKey, bool requestedShopVariation, int requestedCollectiblePool, int requestedTreasurePool, MonstroTuning requestedMonstro)
-    : content(library ? std::move(library) : defaultMechanics()), expedition(seed,tutorial,account,pacing),floor(level),roomSizeScale(requestedRoomScale),routeLengthScale(requestedRouteScale),sourceRoomLocks(requestedRoomLocks),sourceTreasureUpgrade(requestedTreasureUpgrade),monstroTuning(requestedMonstro),treasureCollectiblePool(requestedTreasurePool),sourceShopHeart(requestedShopHeart),sourceShopKey(requestedShopKey),sourceShopVariation(requestedShopVariation),shopCollectiblePool(requestedCollectiblePool),sourceCombatRoom(requestedSourceRoom),roomHeartLayouts(requestedHeartLayouts),roomMinHalfTiles(roomMinimum),roomMaxHalfTiles(roomMaximum),
+                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library, float requestedRoomScale, int roomMinimum, int roomMaximum, float requestedRouteScale, bool requestedSourceRoom, int requestedHeartLayouts, bool requestedCoins, bool requestedRoomLocks, bool requestedTreasureUpgrade, bool requestedShopHeart, bool requestedShopKey, bool requestedShopVariation, int requestedCollectiblePool, int requestedTreasurePool, MonstroTuning requestedMonstro,DukeTuning requestedDuke)
+    : content(library ? std::move(library) : defaultMechanics()), expedition(seed,tutorial,account,pacing),floor(level),roomSizeScale(requestedRoomScale),routeLengthScale(requestedRouteScale),sourceRoomLocks(requestedRoomLocks),sourceTreasureUpgrade(requestedTreasureUpgrade),monstroTuning(requestedMonstro),dukeTuning(requestedDuke),treasureCollectiblePool(requestedTreasurePool),sourceShopHeart(requestedShopHeart),sourceShopKey(requestedShopKey),sourceShopVariation(requestedShopVariation),shopCollectiblePool(requestedCollectiblePool),sourceCombatRoom(requestedSourceRoom),roomHeartLayouts(requestedHeartLayouts),roomMinHalfTiles(roomMinimum),roomMaxHalfTiles(roomMaximum),
       arena(expedition.floorSeed(level), theme, canyonRiver, tutorial, expedition.storyAt(level),
             expedition.roomsOnFloor(level),[&]{auto dimensions=expedition.dimensionsOnFloor(level);
                 dimensions.roomSizeScale=roomSizeScale;dimensions.routeLengthScale=routeLengthScale;
@@ -32,9 +32,9 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
                     dimensions.smallerRooms=true;dimensions.minHalfTiles=roomMinHalfTiles;dimensions.maxHalfTiles=roomMaxHalfTiles;
                 }
                 return dimensions;}(),
-            [&]{requestedMonstro.validate();auto profile=theme==MissionTheme::Canyon?content->configureFloor(expedition.profileOnFloor(level),expedition.floorSeed(level)):FloorProfile{};
-                if(requestedMonstro.enabled&&level==0&&!tutorial&&profile.active()&&content->monstro(monsterId(20))) {
-                    profile.boss=BossKind::Isaac;profile.bossMonster=monsterId(20);profile.bossForm=BossForm::Normal;
+            [&]{requestedMonstro.validate();requestedDuke.validate();auto profile=theme==MissionTheme::Canyon?content->configureFloor(expedition.profileOnFloor(level),expedition.floorSeed(level)):FloorProfile{};
+                if((requestedMonstro.enabled||requestedDuke.enabled)&&level==0&&!tutorial&&profile.active()&&content->monstro(monsterId(20))) {
+                    profile.boss=BossKind::Isaac;profile.bossMonster=monsterId(requestedDuke.enabled?67:20);profile.bossForm=BossForm::Normal;
                     profile.doubleBossRoom=false;profile.bossRails.reset();
                 }
                 return profile;}(),sourceCombatRoom,roomHeartLayouts,sourceRoomLocks),
@@ -107,8 +107,9 @@ bool Simulation::canUseFloorExit() const {
 bool Simulation::canResizeRooms() const {
     return !arena.rooms.empty(); // Explicit testing control; exploration/combat do not lock it.
 }
-void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScale,std::optional<bool> sourceRoom,std::optional<int> heartLayouts,std::optional<bool> roomLocks,std::optional<bool> treasureUpgrade, std::optional<bool> shopHeart, std::optional<bool> shopKey, std::optional<bool> shopVariation, std::optional<int> collectiblePool, std::optional<int> treasurePool, std::optional<MonstroTuning> monstro) {
+void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScale,std::optional<bool> sourceRoom,std::optional<int> heartLayouts,std::optional<bool> roomLocks,std::optional<bool> treasureUpgrade, std::optional<bool> shopHeart, std::optional<bool> shopKey, std::optional<bool> shopVariation, std::optional<int> collectiblePool, std::optional<int> treasurePool, std::optional<MonstroTuning> monstro,std::optional<DukeTuning> duke) {
     const auto boss=monstro.value_or(monstroTuning);boss.validate();
+    const auto flies=duke.value_or(dukeTuning);flies.validate();
     const bool treasure=treasureUpgrade.value_or(sourceTreasureUpgrade);
     const bool shop=shopHeart.value_or(sourceShopHeart);
     const bool keyStock=shopKey.value_or(sourceShopKey);
@@ -120,10 +121,10 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     const bool locks=roomLocks.value_or(sourceRoomLocks);
     const bool enabled=sourceRoom.value_or(sourceCombatRoom);
     const int heartMode=heartLayouts.value_or(roomHeartLayouts);
-    if(boss.enabled==monstroTuning.enabled&&treasureChoice==treasureCollectiblePool&&pool==shopCollectiblePool&&variation==sourceShopVariation&&keyStock==sourceShopKey&&shop==sourceShopHeart&&treasure==sourceTreasureUpgrade&&locks==sourceRoomLocks&&heartMode==roomHeartLayouts&&enabled==sourceCombatRoom&&scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
+    if(flies.enabled==dukeTuning.enabled&&boss.enabled==monstroTuning.enabled&&treasureChoice==treasureCollectiblePool&&pool==shopCollectiblePool&&variation==sourceShopVariation&&keyStock==sourceShopKey&&shop==sourceShopHeart&&treasure==sourceTreasureUpgrade&&locks==sourceRoomLocks&&heartMode==roomHeartLayouts&&enabled==sourceCombatRoom&&scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
     if(!canResizeRooms())throw std::runtime_error("No floor to resize");
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
-                    expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice,boss);
+                    expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice,boss,flies);
     next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
@@ -203,7 +204,7 @@ bool Simulation::advanceFloor() {
     if(!floorExitRequested||lastFloor()||dead||!canUseFloorExit())return false;
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
-                    expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool,monstroTuning);
+                    expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool,monstroTuning,dukeTuning);
     next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
@@ -385,8 +386,22 @@ void Simulation::tunePlayer(float baseHealth, float shotDamage) {
     player.shotDamage = shotDamage;
 }
 bool Simulation::hasSourceBoss(int index) const {
-    return monstroTuning.enabled&&floor==0&&!surveyTutorial&&arena.theme==MissionTheme::Canyon&&
-        arena.profile.active()&&arena.profile.bossMonster==monsterId(20)&&index==finalRoom();
+    return (monstroTuning.enabled||dukeTuning.enabled)&&floor==0&&!surveyTutorial&&arena.theme==MissionTheme::Canyon&&
+        arena.profile.active()&&(arena.profile.bossMonster==monsterId(20)||arena.profile.bossMonster==monsterId(67))&&index==finalRoom();
+}
+void Simulation::applyDukeTuning(DukeTuning tuning) {
+    tuning.validate();
+    if(tuning.enabled!=dukeTuning.enabled)throw std::invalid_argument("Boss selection requires Apply map changes");
+    const float hpRatio=tuning.health/dukeTuning.health,speedRatio=tuning.flySpeed/dukeTuning.flySpeed;
+    const auto apply=[&](Enemy &e){
+        if(e.duke){e.hp*=hpRatio;e.maxHp*=hpRatio;}
+        if(e.dukeChild)e.velocity=mul(e.velocity,speedRatio);
+    };
+    for(auto &e:enemies)apply(e);
+    for(auto &site:rooms)for(auto &e:site.residents)apply(e);
+    for(auto &birth:pendingMonsters_)if(birth.dukeChild)birth.impulse=mul(birth.impulse,speedRatio);
+    for(auto &site:rooms)for(auto &birth:site.pendingSpawns)if(birth.dukeChild)birth.impulse=mul(birth.impulse,speedRatio);
+    dukeTuning=tuning;checkpointNeeded=true;
 }
 void Simulation::applyMonstroTuning(MonstroTuning tuning) {
     tuning.validate();
@@ -1257,6 +1272,7 @@ void Simulation::process(const Event &e) {
                 for(auto &child:enemies)if(child.alive&&child.partner==target->id&&child.monster==leech->child)
                     child.alive=false;
             }
+            if(target->duke)dukeDeath(*target,e.debugExecution);
             if(content->deathBlast(target->monster)&&!e.debugExecution) {
                 target->deathBlastPending=true;queueDeathBlast(*target);
             }
@@ -1324,6 +1340,7 @@ void Simulation::drainEvents() {
         reconcileSegmentedBosses(); // Splits see the complete damage batch.
         reconcileHornfelDecoys(); // Explosion flags take precedence over hit-count RNG.
         reconcileEnvironmentActors(); // Fire counts hits; TNT resolves a full damage batch.
+        reconcileDukeDeaths();
         reconcileDeathBlasts(); // Retain mandatory death effects until the event queue admits them.
     }
 }
@@ -1945,6 +1962,7 @@ void Simulation::step(const Input &input, float dt) {
     // Keep the defeated half until its encounter ends: aggregate health and
     // projectile ownership must survive death and inactive-room round trips.
     std::erase_if(enemies, [this](const Enemy &e) {
+        if(e.duke&&(e.duke->deathPending||!e.duke->pending.empty()))return false;
         if(e.championDeathPending||e.chargeDeathPending||(e.creature&&e.creature->deathPending))return false;
         if(e.charmContact&&e.charmContact->pending)return false;
         if(e.headShooter&&!e.headShooter->pendingShots.empty())return false;
@@ -1962,7 +1980,7 @@ void Simulation::step(const Input &input, float dt) {
         return;
     if (!roomClear && roomThreats() == 0 && std::none_of(enemies.begin(),enemies.end(),[](const Enemy &e){return e.championDeathPending||e.chargeDeathPending||(e.creature&&e.creature->deathPending);}) && queue_.empty() && pendingMonsters_.empty()&&!environmentActionsPending()&&
         std::none_of(projectiles.begin(),projectiles.end(),[](const auto &p){return !p.cancelled&&p.hostile&&p.flightRetention>0;})&&
-        std::none_of(enemies.begin(),enemies.end(),[](const auto &e){return e.deathBlastPending||(e.headShooter&&!e.headShooter->pendingShots.empty())||(e.leper&&e.leper->pendingCreep)||(e.leperFlesh&&!e.leperFlesh->pendingShots.empty())||(e.headless&&!e.headless->pendingShots.empty())||(e.faceless&&!e.faceless->pendingShots.empty())||(e.danny&&!e.danny->pendingShots.empty())||(e.hardy&&!e.hardy->pendingShots.empty())||(e.slide&&!e.slide->deathShot.empty())||(e.maw&&e.maw->deathPending)||(e.spitty&&e.spitty->deathPending)||(e.linkedHead&&e.linkedHead->deathPending)||(e.landingCreep&&!e.landingCreep->pending.empty())||(e.knight&&e.knight->pendingImpact);})&&
+        std::none_of(enemies.begin(),enemies.end(),[](const auto &e){return e.deathBlastPending||(e.duke&&(e.duke->deathPending||!e.duke->pending.empty()))||(e.headShooter&&!e.headShooter->pendingShots.empty())||(e.leper&&e.leper->pendingCreep)||(e.leperFlesh&&!e.leperFlesh->pendingShots.empty())||(e.headless&&!e.headless->pendingShots.empty())||(e.faceless&&!e.faceless->pendingShots.empty())||(e.danny&&!e.danny->pendingShots.empty())||(e.hardy&&!e.hardy->pendingShots.empty())||(e.slide&&!e.slide->deathShot.empty())||(e.maw&&e.maw->deathPending)||(e.spitty&&e.spitty->deathPending)||(e.linkedHead&&e.linkedHead->deathPending)||(e.landingCreep&&!e.landingCreep->pending.empty())||(e.knight&&e.knight->pendingImpact);})&&
         (!rooms[size_t(room)].plateObjective||platesComplete()))
         clearRoom();
 }

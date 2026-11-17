@@ -1,0 +1,46 @@
+{
+  "status": "implemented; developer checks passed; scoped human acceptance recorded",
+  "schema": 44,
+  "mechanics_fingerprint": "471220612b68af40",
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "native_states": 3144,
+  "native_births": 4345,
+  "native_releases": 304,
+  "native_maximum_numeric_difference": 0,
+  "focused_suites": [
+    "duke_boss_loop",
+    "monstro_boss_loop",
+    "core_contracts",
+    "balance_preset_contract",
+    "treasure_upgrade"
+  ],
+  "game_renderer_modes": [
+    "duke",
+    "monstro"
+  ],
+  "cli_schemas": [
+    5,
+    43,
+    44
+  ],
+  "room_sizes": [
+    [
+      0.75,
+      5,
+      5
+    ],
+    [
+      1.1,
+      7,
+      9
+    ],
+    [
+      1.5,
+      10,
+      10
+    ]
+  ],
+  "human_accepted": true,
+  "full_native_accepted": false,
+  "checkpoint_commit_authorized": true
+}

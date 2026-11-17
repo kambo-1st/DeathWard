@@ -230,7 +230,8 @@ void Game::launch(bool freeMission) {
                                                   nextBalancePreset?nextBalancePreset->sourceShopVariation:true,
                                                   nextBalancePreset?nextBalancePreset->shopCollectiblePool:1,
                                                   nextBalancePreset?nextBalancePreset->treasureCollectiblePool:1,
-                                                  nextBalancePreset?nextBalancePreset->monstro:MonstroTuning{});
+                                                  nextBalancePreset?nextBalancePreset->monstro:MonstroTuning{},
+                                                  nextBalancePreset?nextBalancePreset->duke:DukeTuning{});
     startExpedition(std::move(candidate));
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
     if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
@@ -280,7 +281,7 @@ void Game::perform(Action action) {
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
            (action<Action::BalanceDamageHealthTab||action>Action::ResetYumHeart)&&
            (action<Action::BalanceTrinketTab||action>Action::ResetTrinkets)&&action!=Action::WhipDown&&action!=Action::WhipUp&&
-           (action<Action::BalanceHaloTab||action>Action::ResetMonstro))return;
+           (action<Action::BalanceHaloTab||action>Action::SelectLegacyBoss))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -496,11 +497,22 @@ void Game::perform(Action action) {
         case Action::ResetCombat:setCombatBalance(BalancePreset::ReferenceDamage,BalancePreset::ReferenceRegularHealth);break;
         case Action::BalanceChasersTab:balanceMonstroOpen=false;balancePooterOpen=false;break;
         case Action::BalanceMonstroTab:balanceMonstroOpen=true;balancePooterOpen=false;break;
-        case Action::ToggleMonstro:balanceDraft.monstro.enabled=!balanceDraft.monstro.enabled;balanceNotice="Boss selection pending: Apply map changes resets floor encounters.";break;
+        case Action::SelectLegacyBoss:balanceDraft.duke.enabled=false;balanceDraft.monstro.enabled=false;balanceNotice="Boss selection pending: Apply map changes resets floor encounters.";break;
+        case Action::ToggleDuke:balanceDraft.duke.enabled=true;balanceDraft.monstro.enabled=true;balanceNotice="Boss selection pending: Apply map changes resets floor encounters.";break;
+        case Action::ToggleMonstro:balanceDraft.duke.enabled=false;balanceDraft.monstro.enabled=true;balanceNotice="Boss selection pending: Apply map changes resets floor encounters.";break;
         case Action::MonstroHealthDown:case Action::MonstroHealthUp:
         case Action::MonstroMovementDown:case Action::MonstroMovementUp:
         case Action::MonstroShotDown:case Action::MonstroShotUp:case Action::ResetMonstro: {
-            auto p=balancePreset;auto &t=p.monstro;
+            auto p=balancePreset;
+            if(p.duke.enabled) {
+                auto &t=p.duke;
+                if(action==Action::ResetMonstro)t.health=t.movement=t.flySpeed=1;
+                else {const int offset=int(action)-int(Action::MonstroHealthDown);
+                    float *v=offset<2?&t.health:offset<4?&t.movement:&t.flySpeed;
+                    *v=std::clamp(std::round((*v+(offset%2?.05f:-.05f))*100)/100,.1f,3.f);}
+                applyBalance(p);balanceNotice="Duke health keeps injury fraction; movement and fly speed apply live.";break;
+            }
+            auto &t=p.monstro;
             if(action==Action::ResetMonstro)t.health=t.movement=t.shotSpeed=1;
             else {const int offset=int(action)-int(Action::MonstroHealthDown);
                 float *v=offset<2?&t.health:offset<4?&t.movement:&t.shotSpeed;
@@ -1079,7 +1091,7 @@ std::vector<Action> Game::menuActions() const {
             balanceCombatOpen?
             std::vector<Action>{Action::BalanceDamageHealthTab,Action::BalanceBombsTab,Action::BalanceDoorsTab,Action::CombatDamageDown,Action::CombatDamageUp,Action::RegularHealthDown,Action::RegularHealthUp,Action::ResetCombat}:
             balanceEnemiesOpen&&balanceMonstroOpen?
-            std::vector<Action>{Action::ToggleMonstro,Action::MonstroHealthDown,Action::MonstroHealthUp,Action::MonstroMovementDown,Action::MonstroMovementUp,Action::MonstroShotDown,Action::MonstroShotUp,Action::ResetMonstro,Action::ApplyMapChanges}:
+            std::vector<Action>{Action::SelectLegacyBoss,Action::ToggleMonstro,Action::ToggleDuke,Action::MonstroHealthDown,Action::MonstroHealthUp,Action::MonstroMovementDown,Action::MonstroMovementUp,Action::MonstroShotDown,Action::MonstroShotUp,Action::ResetMonstro,Action::ApplyMapChanges}:
             balanceEnemiesOpen&&balancePooterOpen?
             std::vector<Action>{Action::PooterMovementDown,Action::PooterMovementUp,Action::PooterShotDown,Action::PooterShotUp,Action::PooterDelayDown,Action::PooterDelayUp,Action::ResetPooter}:
             balanceEnemiesOpen?

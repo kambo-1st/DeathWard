@@ -190,6 +190,13 @@ void Simulation::flushMonsterSpawns(Random *placement, float playerClearance) {
             const auto *parent=findEnemy(request.partner);
             if(!parent||!parent->alive||parent->monster!=pair->body)continue;
         }
+        if(request.dukeChild) {
+            // Preserve native birth coordinates and admit actor overlap. The
+            // existing world geometry adapter may defer the same request.
+            if(arena.roomAt(request.position)!=room||arena.flightBlocked(request.position,d->radius,room)) {
+                retained.push_back(request);continue;
+            }
+        }
         const bool attachedFly=content->eternalFly(request.id)&&request.partner&&request.retained;
         if(attachedFly) {
             const auto *parent=findEnemy(request.partner);
@@ -203,6 +210,7 @@ void Simulation::flushMonsterSpawns(Random *placement, float playerClearance) {
         auto thrown=request.thrown;
         at.y = .85f;
         bool placed = false;
+        if(request.dukeChild){at.y=arena.flightHeight(at,d->radius);placed=true;}
         if(attachedFly){at=findEnemy(request.partner)->position;placed=true;}
         if(content->returningBody(request.id)) {
             // This attack starts inside its parent and passes grid geometry.
@@ -301,6 +309,15 @@ void Simulation::flushMonsterSpawns(Random *placement, float playerClearance) {
         }
         e.summoner = request.summoner;
         e.spawnerType=request.spawnerType;
+        if(request.dukeChild) {
+            e.dukeChild=request.dukeChild;
+            if(e.dukeChild->cohort) {
+                const auto *parent=findEnemy(e.dukeChild->parent);
+                if(!parent||!parent->alive){e.dukeChild->cohort=false;e.dukeChild->parent=0;}
+            }
+            e.championVisual*=e.dukeChild->visualScale;
+        }
+
         if(thrown) {
             e.thrownOffspring=thrown;
             e.position=thrown->origin;e.position.y=.85f-thrown->height*thrown->profile.heightScale;

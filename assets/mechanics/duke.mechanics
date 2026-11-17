@@ -1,0 +1,6 @@
+DEATHWARD_MECHANICS 1
+# Repentance1.7.9b ordinary67.0.0: source110HP/stage0; retained internal HP unit x3.2.
+# Body35 uses accepted Gaper .6/source13, separately from planar movement calibration.
+monster 67.0.0 "Duke of Flies" Still None Fly 352 0 1.61538462 1 0 1 1 1 0 0 legacy
+stage_health 67.0.0 110 0 3.2
+boss_duke 67.0.0

@@ -91,7 +91,7 @@ void Arena::dressFloor() {
 }
 void Arena::prepareBossArena() {
     if(!profile.active()||theme!=MissionTheme::Canyon)return;
-    if(profile.bossMonster==monsterId(20)){rooms.back().reward=rooms.back().center;return;}
+    if((profile.bossMonster==monsterId(20)||profile.bossMonster==monsterId(67))){rooms.back().reward=rooms.back().center;return;}
     if(profile.bossRails){rooms.back().reward=rooms.back().center;return;}
     const int index=roomCount()-1;
     const auto &room=rooms.back();

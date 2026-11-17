@@ -11,6 +11,7 @@ const char *bossName(BossKind kind) {
     }
 }
 const char *bossHint(const Enemy &e) {
+    if(e.duke)return "CLEAR THE FLIES / KEEP YOUR DISTANCE";
     if(e.monstro)return "KEEP MOVING / WATCH THE SPIT AND LANDING";
     if(e.monster==monsterId(906))return e.phase?"HE IS RUNNING FOR A RAIL DOOR":"WATCH THE TRACKS AND THE BOMBS";
     if(e.monster.type==69)return e.monster.variant==1?"CARDINAL / DIAGONAL / CARDINAL — WATCH BOTH HALVES":"CARDINAL / DIAGONAL / CARDINAL — WATCH THE FLIES";
