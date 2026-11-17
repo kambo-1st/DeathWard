@@ -1,0 +1,76 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "item": {
+    "cooldown": "300",
+    "description": "#BOOK_OF_SHADOWS_DESCRIPTION",
+    "gfx": "Collectibles_058_BookOfShadows.png",
+    "id": "58",
+    "maxcharges": "3",
+    "name": "#BOOK_OF_SHADOWS_NAME"
+  },
+  "treasure": {
+    "Id": "58",
+    "Weight": "1",
+    "DecreaseBy": "1",
+    "RemoveOn": "0.1"
+  },
+  "timer_states": 301,
+  "charge_cases": 12,
+  "repeat": {
+    "after_ticks": 90,
+    "remaining_before": 210,
+    "remaining_after": 510
+  },
+  "windows": [
+    {
+      "name": "effect-constructor",
+      "start": "0x427600",
+      "end": "0x42761b",
+      "sha256": "00dd50945abf8846355b0f497a9d037279d348302ead3f33ebbe83eb1181f454"
+    },
+    {
+      "name": "use-effect-caller",
+      "start": "0x5b229c",
+      "end": "0x5b22eb",
+      "sha256": "11fbc91f1813ebf9622ff8064255862091da770d60496c67276f1c3bb90d1e93"
+    },
+    {
+      "name": "effect-add",
+      "start": "0x88b1c0",
+      "end": "0x88b264",
+      "sha256": "06e38689b7a7313b0e7e3f5af5c64cf11b982a7cf0681a555542dc3494c9a7fd"
+    },
+    {
+      "name": "effect-update",
+      "start": "0x88b6f0",
+      "end": "0x88b7b5",
+      "sha256": "ac99bf44b3c1ad0cba31aef7bb01fb1d4c49e2f4a23ae427a3424ccf6c4a2767"
+    },
+    {
+      "name": "player-update-caller",
+      "start": "0x74dd43",
+      "end": "0x74dd6a",
+      "sha256": "583813138f18c6bbecca0a34dc999ce4296b587bee7f09b0b09c175c73fa3138"
+    },
+    {
+      "name": "damage-protection-gate",
+      "start": "0x786a60",
+      "end": "0x786ab6",
+      "sha256": "5243883d86e05b180cb0d604fa207aa37b7eec823fd67a3dc478aab53e5809ef"
+    },
+    {
+      "name": "charge-capacity",
+      "start": "0x757d80",
+      "end": "0x757e40",
+      "sha256": "6fb5958767adbae2d5e2acfdff5b1bc0b6e6162a3f984495f1854660cce30567"
+    },
+    {
+      "name": "charge-update",
+      "start": "0x758030",
+      "end": "0x758149",
+      "sha256": "6969dbcc1c4b7829d9e149ca177a323d198f6c5ee159e873c341a20d2dbad5f9"
+    }
+  ],
+  "scope": "Executed native effect constructor, first/repeated AddTemporaryEffect, all 300 Update ticks including erase, HasCollectibleEffect and primary recharge. Native generic use caller and damage-protection branch are disassembled, not full wrappers executed. Preallocated effect vector; CRT memmove emulated; native costume removal endpoint intercepted. DW uses 30 effect updates/second as its explicit active-gameplay adapter; full source scheduler, transitions, special damage bypass flags, modifiers/co-op/pocket slots and item-pool/factory acceptance remain open.",
+  "full_native_acceptance": false
+}

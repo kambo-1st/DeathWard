@@ -53,7 +53,7 @@ bool Simulation::pulseRockWave(const Hazard &wave,Vector3 at) {
         hit.radius=p.radius;hit.harmsCompanions=true;hit.position=e.position;hit.origin=at;hit.direction=unit(sub(e.position,at));hits.push_back(hit);
     }
     const bool playerHit=!player.launch&&arena.roomAt(player.position)==room&&distance(at,player.position)<p.radius+.48f;
-    const bool playerEvent=playerHit&&!godMode&&player.hurt<=0&&player.dodge<=0;
+    const bool playerEvent=playerHit&&!godMode&&bookProtectionRemaining<=1e-7&&player.hurt<=0&&player.dodge<=0;
     if(((!hits.empty()||playerEvent)&&!limits.eventsPerChain)||queue_.size()+hits.size()+size_t(playerEvent)>limits.queuedEvents)return false;
     for(auto &hit:hits)if(!queueRoot(hit))return false;
     // The native crush pulse disables its entity line check. Its terrain scan

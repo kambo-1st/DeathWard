@@ -1,0 +1,28 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  32: whip_worm_trinket
+      Start  37: cricket_head_treasure
+      Start  38: treasure_upgrade
+      Start  35: halo_of_flies
+ 1/11 Test  #37: cricket_head_treasure ............   Passed    6.10 sec
+      Start  34: book_of_shadows
+ 2/11 Test  #35: halo_of_flies ....................   Passed    8.56 sec
+      Start  33: yum_heart
+ 3/11 Test  #32: whip_worm_trinket ................   Passed    9.74 sec
+      Start  31: cancer_trinket
+ 4/11 Test  #34: book_of_shadows ..................   Passed    4.02 sec
+      Start  30: powerup_categories
+ 5/11 Test  #30: powerup_categories ...............   Passed    1.76 sec
+      Start  36: brother_bobby
+ 6/11 Test  #31: cancer_trinket ...................   Passed    2.63 sec
+      Start 147: core_contracts
+ 7/11 Test  #33: yum_heart ........................   Passed    4.40 sec
+      Start 149: balance_preset_contract
+ 8/11 Test #149: balance_preset_contract ..........   Passed    0.35 sec
+ 9/11 Test #147: core_contracts ...................   Passed    1.25 sec
+10/11 Test  #36: brother_bobby ....................   Passed    1.90 sec
+11/11 Test  #38: treasure_upgrade .................   Passed   13.85 sec
+
+100% tests passed, 0 tests failed out of 11
+
+Total Test time (real) =  13.85 sec

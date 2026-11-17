@@ -39,7 +39,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
       runId_(runId), canyonRiver_(canyonRiver), startingWorld_(world) {
     if(account!=WitnessAccount::None&&account!=WitnessAccount::Rourke)
         throw std::invalid_argument("This testimony has not been authored yet.");
-    if(treasureCollectiblePool<0||treasureCollectiblePool>5)throw std::invalid_argument("Invalid treasure pool");
+    if(treasureCollectiblePool<0||treasureCollectiblePool>6)throw std::invalid_argument("Invalid treasure pool");
     coinClearRewards=requestedCoins;
     surveyTutorial=tutorial;
     rooms.resize(arena.rooms.size());
@@ -108,7 +108,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     const bool keyStock=shopKey.value_or(sourceShopKey);
     const bool variation=shopVariation.value_or(sourceShopVariation);
     const int treasureChoice=treasurePool.value_or(treasureCollectiblePool);
-    if(treasureChoice<0||treasureChoice>5)throw std::invalid_argument("Invalid treasure pool");
+    if(treasureChoice<0||treasureChoice>6)throw std::invalid_argument("Invalid treasure pool");
     const int pool=collectiblePool.value_or(shopCollectiblePool);
     if(pool<0||pool>2)throw std::invalid_argument("Invalid shop collectible pool");
     const bool locks=roomLocks.value_or(sourceRoomLocks);
@@ -119,6 +119,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
                     expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice);
     next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
+    next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
     next.haloOfFlies=haloOfFlies;next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
     const int targetRoom=std::clamp(room,0,next.finalRoom());
@@ -198,6 +199,7 @@ bool Simulation::advanceFloor() {
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
                     expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool);
     next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
+    next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
     next.haloOfFlies=haloOfFlies;next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
     next.canonicalShooting=canonicalShooting;
@@ -308,8 +310,8 @@ void Simulation::grant(const ItemKey &item) {
     if (!definition || items.size() >= 256)
         return;
     if(definition->category==CollectibleCategory::Active) {
-        if(item!=YumHeartKey||activeItem)return;
-        activeItem=ActiveItemState{};
+        if(!activeCapacity(item)||activeItem)return;
+        activeItem=ActiveItemState{item,activeCapacity(item)};
     }
     items.push_back(item);
     audioCues.push(AudioCueKind::Pickup, player.position);
@@ -388,20 +390,29 @@ int Simulation::treasureUpgradeItem(int index) const {
     if(!hasSourceTreasure(index))return 0;
     if(powerupReview&&powerupReview->treasureRoom==index&&powerupReview->collected<4)
         return PowerupReviewState::Offerings[size_t(powerupReview->collected)];
+    if(activeReviewRoom==index&&activeReviewCollected<2)return activeReviewCollected?58:45;
     if(rooms[size_t(index)].droppedActive)return int(rooms[size_t(index)].droppedActive->item.number);
-    const int choice=treasureCollectiblePool==0?1:treasureCollectiblePool==2?4:treasureCollectiblePool==3?8:treasureCollectiblePool==4?45:treasureCollectiblePool==5?10:
-        sourceTreasureChoice(canyonTreasureSeed(seed_,index),true,true,true);
+    const int choice=treasureCollectiblePool==0?1:treasureCollectiblePool==2?4:treasureCollectiblePool==3?8:treasureCollectiblePool==4?45:treasureCollectiblePool==5?10:treasureCollectiblePool==6?58:
+        sourceTreasureChoice(canyonTreasureSeed(seed_,index),true,true,true,true);
     return choice?choice:1; // Empty numeric draw: fixed fallback, never reroll.
 }
 bool Simulation::useActiveItem() {
-    if(!activeItem||activeItem->item!=YumHeartKey||activeItem->charge<YumHeartCharges||
+    if(!activeItem||!activeCapacity(activeItem->item)||activeItem->charge!=activeCapacity(activeItem->item)||
        dead||finished||player.totalHealth()<=0||rewardOpen||shopOpen||letterOpen||
        storyOpen!=StoryRoom::None||floorExitRequested)return false;
-    yumHeart.validate();
-    // Source ordinary effect spends its charge even when AddHearts changes nothing.
-    const bool healed=collectHeart(HeartKind::Red,yumHeart.healing);
+    activeItem->validate();
+    if(activeItem->item==BookOfShadowsKey) {
+        bookOfShadows.validate();
+        // Native repeated temporary-effect application adds duration. Swapping
+        // the item does not own or reset an already activated protection effect.
+        bookProtectionRemaining+=bookOfShadows.duration;
+        announce("BOOK OF SHADOWS / PROTECTED",2);
+    } else {
+        yumHeart.validate();
+        const bool healed=collectHeart(HeartKind::Red,yumHeart.healing);
+        announce(healed?"YUM HEART / RED HEALTH RESTORED":"YUM HEART / NO RED HEALTH RESTORED",2);
+    }
     activeItem->charge=0;
-    announce(healed?"YUM HEART / RED HEALTH RESTORED":"YUM HEART / NO RED HEALTH RESTORED",2);
     checkpointNeeded=true;
     return true;
 }
@@ -414,10 +425,11 @@ bool Simulation::collectTreasureUpgrade() {
        shopOpen||rewardOpen||player.totalHealth()<=0||!arena.sight(player.position,at))return false;
     const ItemKey item{"isaac",ItemKind::Collectible,uint32_t(treasureUpgradeItem(room))};
     const auto *definition=content->item(item);if(!definition)return false;
-    if(items.size()>=256&&!(item==YumHeartKey&&activeItem))return false;
-    const bool first=!progress.rewardTaken;
-    if(item==YumHeartKey) {
-        const auto incoming=progress.droppedActive.value_or(ActiveItemState{});
+    if(items.size()>=256&&!(activeCapacity(item)&&activeItem))return false;
+    const bool first=!progress.rewardTaken&&!(activeReviewRoom==room&&activeReviewCollected>0);
+    if(activeCapacity(item)) {
+        const auto incoming=(activeReviewRoom==room&&activeReviewCollected<2)?ActiveItemState{item,activeCapacity(item)}:
+            progress.droppedActive.value_or(ActiveItemState{item,activeCapacity(item)});
         incoming.validate();
         const auto outgoing=activeItem;
         if(outgoing) {
@@ -433,8 +445,13 @@ bool Simulation::collectTreasureUpgrade() {
         ++powerupReview->collected;progress.rewardTaken=powerupReview->collected==4;
         progress.activePickupContact=true; // Each review offering still requires a separate pickup.
     }
+    if(activeReviewRoom==room&&activeReviewCollected<2) {
+        ++activeReviewCollected;
+        if(activeReviewCollected<2)progress.rewardTaken=false;
+        progress.activePickupContact=true;
+    }
     checkpointNeeded=true;
-    announce(definition->name+" / "+(item==YumHeartKey?"ACTIVE ITEM":(item.number==8||item.number==10)?"FAMILIAR":item.number==4?"DAMAGE UP":"TEARS UP"),3);
+    announce(definition->name+" / "+(activeCapacity(item)?"ACTIVE ITEM":(item.number==8||item.number==10)?"FAMILIAR":item.number==4?"DAMAGE UP":"TEARS UP"),3);
     return true;
 }
 bool Simulation::rewardAvailable(int index) const {
@@ -548,7 +565,8 @@ void Simulation::clearRoom() {
         return;
     progress.cleared = roomClear = true;
     if(progress.activeChargeEligible&&activeChargeClears_.insert(room).second&&activeItem) {
-        yumHeart.validate();activeItem->charge=std::min(YumHeartCharges,activeItem->charge+yumHeart.recharge);
+        yumHeart.validate();bookOfShadows.validate();activeItem->validate();
+        activeItem->charge=std::min(activeCapacity(activeItem->item),activeItem->charge+(activeItem->item==BookOfShadowsKey?bookOfShadows.recharge:yumHeart.recharge));
     }
     roomClearedAt=stats.duration;
     refillRottenHeartFlies();
@@ -1820,6 +1838,7 @@ void Simulation::step(const Input &input, float dt) {
     const bool drop=input.dropTrinket&&!trinketInputHeld_;trinketInputHeld_=input.dropTrinket;
     if(drop)dropTrinket();
     if(!roomClear&&roomThreats()>0)rooms[size_t(room)].activeChargeEligible=true;
+    bookProtectionRemaining=std::max(0.0,bookProtectionRemaining-double(dt));
     stats.duration += dt;
     syncMovementBodies();
     refreshStatueAttraction(dt);

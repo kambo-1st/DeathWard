@@ -18,6 +18,16 @@ std::optional<Vector3> reviewPosition(const Simulation &s,int index,Vector3 pref
     return best;
 }
 }
+bool Simulation::beginActiveReview() {
+    if(floor!=0||surveyTutorial||stats.duration!=0||!items.empty()||activeItem||powerupReview||activeReviewRoom>=0)return false;
+    int target=-1;for(int i=0;i<arena.roomCount();++i)if(hasSourceTreasure(i)){target=i;break;}
+    if(target<0)return false;
+    const auto start=reviewPosition(*this,target,add(rewardPosition(target),{0,0,4}));if(!start)return false;
+    activeReviewRoom=target;activeReviewCollected=0;
+    player.position=*start;cancelMove();enterRoom(target);
+    announce("ACTIVE REVIEW / Test offerings: Yum Heart, then Book of Shadows. Step away between pickups.",8);
+    checkpointNeeded=true;return true;
+}
 bool Simulation::beginTrinketReview() {
     if(floor!=0||surveyTutorial||stats.duration!=0||!items.empty()||activeItem||heldTrinket||powerupReview||!trinketPickups.empty())return false;
     const auto start=reviewPosition(*this,0,arena.rooms.front().center);if(!start)return false;
@@ -60,7 +70,7 @@ bool Simulation::beginPowerupReview() {
     checkpointNeeded=true;return true;
 }
 bool Simulation::visitPowerupReviewEncounter(bool bossRoom) {
-    if(!powerupReview||powerupReview->collected<4||!roomClear||dead||finished||rewardOpen||shopOpen||
+    if(((!powerupReview||powerupReview->collected<4)&&activeReviewCollected<2)||!roomClear||dead||finished||rewardOpen||shopOpen||
        letterOpen||storyOpen!=StoryRoom::None||floorExitRequested)return false;
     int target=-1;
     if(bossRoom)target=finalRoom();
@@ -76,7 +86,7 @@ bool Simulation::visitPowerupReviewEncounter(bool bossRoom) {
     // The normal enemy-clearance checks still apply; this changes only review travel.
     const auto point=reviewPosition(*this,target,arena.rooms[size_t(target)].center);if(!point)return false;
     player.position=*point;cancelMove();enterRoom(target);
-    announce("CATEGORY REVIEW / Ordinary encounter / no health or charge refill",4);
+    announce("ITEM REVIEW / Ordinary encounter / no health or charge refill",4);
     checkpointNeeded=true;return true;
 }
 } // namespace dw

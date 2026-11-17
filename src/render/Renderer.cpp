@@ -952,7 +952,15 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                          pedestalGeometry::Height,pedestalGeometry::Sides,Border);
             if(run.hasSourceTreasure(i)&&run.rewardAvailable(i)) {
                 const float y=1.35f+.07f*std::sin(float(run.stats.duration)*2);
-                if(run.treasureUpgradeItem(i)==45) {
+                if(run.treasureUpgradeItem(i)==58) {
+                    // Original leather-bound book with brass spine/corners.
+                    const Color leather{49,37,60,255};
+                    DrawCubeV({p.x,y,p.z},{.67f,.12f,.84f},Paper);
+                    for(float side:{-1.f,1.f})DrawCubeV({p.x,y+side*.085f,p.z},{.75f,.055f,.91f},leather);
+                    DrawCubeV({p.x-.36f,y,p.z},{.10f,.22f,.91f},Gold);
+                    DrawCubeV({p.x+.08f,y+.12f,p.z},{.13f,.035f,.40f},Gold);
+                    DrawCubeV({p.x+.08f,y+.12f,p.z},{.32f,.035f,.10f},Gold);
+                } else if(run.treasureUpgradeItem(i)==45) {
                     const Color red{186,51,55,255};
                     DrawSphereEx({p.x-.18f,y+.12f,p.z},.27f,7,9,red);
                     DrawSphereEx({p.x+.18f,y+.12f,p.z},.27f,7,9,red);
@@ -1249,6 +1257,14 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         if(pickup.kind==HeartKind::Red&&pickup.amount==4) {
             heart(add(point,{-.28f,0,0}),false);heart(add(point,{.28f,0,.22f}),false);
         } else heart(point,pickup.kind==HeartKind::Red&&pickup.amount==1);
+    }
+    if(run.bookProtectionRemaining>1e-7&&!run.dead) {
+        const auto at=run.player.position;
+        const float pulse=.85f+.08f*std::sin(float(run.stats.duration)*7);
+        const Color shield=ColorAlpha(Gold,run.bookProtectionRemaining<2?.55f+.4f*std::sin(float(run.stats.duration)*15):.85f);
+        DrawCircle3D({at.x,.14f,at.z},pulse,{1,0,0},90,shield);
+        DrawCircle3D({at.x,at.y+.25f,at.z},pulse,{0,1,0},0,shield);
+        DrawCircle3D({at.x,at.y+.25f,at.z},pulse,{0,1,0},90,shield);
     }
     for(const auto &fly:run.haloFlies) {
         shadow(fly.position,.24f);haloFlyModel(fly.position,float(run.stats.duration));
@@ -2087,6 +2103,12 @@ Action Renderer::expedition(const Game &game) {
         const auto control=[&](Action action,const std::string &label,Rectangle r,bool primary=false) {
             return button(action,label,r.x,r.y,r.width,r.height,primary);
         };
+        if(game.reviewActives) {
+            const auto r=expeditionHud::categoryReview(run.activeReviewCollected>=2&&run.roomClear);panel(r.x,r.y,r.width,r.height,Panel);
+            text("ACTIVE REVIEW / TEST OFFERINGS",354,33,18,Gold);
+            text(run.activeReviewRoom<0?"Map regenerated: staged offerings ended; held build retained.":run.activeReviewCollected<2?"Touch pedestal: Yum Heart, step away, then Book. C: use.":"C: use. Touch pedestal to swap. Each item keeps its charge.",354,58,13,Paper);
+            if(run.activeReviewCollected>=2&&run.roomClear&&control(Action::ReviewPowerupFight,"NEXT ENCOUNTER",expeditionHud::ReviewFight))controls=Action::ReviewPowerupFight;
+        }
         if(game.reviewTrinkets) {
             const auto r=expeditionHud::categoryReview(false);panel(r.x,r.y,r.width,r.height,Panel);
             text("TRINKET REVIEW / TEST PICKUPS",354,33,18,Gold);
@@ -2108,8 +2130,13 @@ Action Renderer::expedition(const Game &game) {
             controls=Action::Dynamite;
         if(run.activeItem) {
             const auto r=expeditionHud::Active;
-            if(control(Action::UseActiveItem,std::string(run.yumHeart.keyName())+" / YUM HEART "+std::to_string(run.activeItem->charge)+"/4",r,run.activeItem->charge==4))controls=Action::UseActiveItem;
-            for(int i=0;i<4;++i)DrawRectangleRec({(r.x+3+i*(r.width-6)/4)*sx_,(r.y+r.height-4)*sy_,(r.width-10)*sx_/4,3*sy_},i<run.activeItem->charge?Teal:Border);
+            const int capacity=activeCapacity(run.activeItem->item);
+            if(control(Action::UseActiveItem,std::string(run.yumHeart.keyName())+" / "+activeName(run.activeItem->item)+" "+std::to_string(run.activeItem->charge)+"/"+std::to_string(capacity),r,run.activeItem->charge==capacity))controls=Action::UseActiveItem;
+            for(int i=0;i<capacity;++i)DrawRectangleRec({(r.x+3+i*(r.width-6)/capacity)*sx_,(r.y+r.height-4)*sy_,(r.width-10)*sx_/capacity,3*sy_},i<run.activeItem->charge?Teal:Border);
+        }
+        if(run.bookProtectionRemaining>1e-7) {
+            panel(452,716,128,40,Panel);text("PROTECTED",462,722,12,Gold);
+            text(TextFormat("%.1fs",run.bookProtectionRemaining),462,737,14,Paper);
         }
         if(run.heldTrinket&&control(Action::DropTrinket,std::string(run.trinkets.keyName())+" / DROP "+trinketName(*run.heldTrinket),expeditionHud::Trinket))controls=Action::DropTrinket;
         const auto dodge=expeditionHud::Dodge;
@@ -2632,8 +2659,25 @@ Action Renderer::balancePanel(const Game &game) {
         text("Drop, walk away, then return to collect.",585,421,14,Muted);
         if(button(Action::ResetTrinkets,"RESET TRINKET SETTINGS",205,459,350,36))return Action::ResetTrinkets;
         if(game.run)text(std::string(game.run->heldTrinket?trinketName(*game.run->heldTrinket):"EMPTY SLOT")+" / SHOT SPEED "+decimal(game.run->effectivePlayerStats().shotSpeed),585,470,14,Teal);
+    } else if(game.balanceActiveOpen&&game.balanceBookOpen) {
+        text("ACTIVE / BOOK OF SHADOWS",205,182,22,Gold);
+        if(button(Action::BalanceActiveTab,"YUM HEART",710,169,220,40))return Action::BalanceActiveTab;
+        if(button(Action::BalanceTreasureTab,"TREASURE",945,169,130,40))return Action::BalanceTreasureTab;
+        const auto &t=game.balancePreset.bookOfShadows;
+        text("PROTECTION",205,250,18,Gold);text(decimal(t.duration)+" SECONDS",460,250,22,Paper);
+        if(button(Action::BookDurationDown,"- 0.5s",760,238,130,40))return Action::BookDurationDown;
+        if(button(Action::BookDurationUp,"+ 0.5s",905,238,130,40))return Action::BookDurationUp;
+        text("CHARGE / COMBAT CLEAR",205,313,18,Gold);text(std::to_string(t.recharge),590,313,22,Paper);
+        if(button(Action::BookRechargeDown,"- 1",760,301,130,40))return Action::BookRechargeDown;
+        if(button(Action::BookRechargeUp,"+ 1",905,301,130,40))return Action::BookRechargeUp;
+        if(button(Action::CycleActiveBinding,std::string("USE KEY: ")+game.balancePreset.yumHeart.keyName()+" / CHANGE",205,364,350,40))return Action::CycleActiveBinding;
+        text("One use action for your held active item.",585,378,14,Muted);
+        text("Reference: 10 seconds; three charges. Dodge stays independent.",205,427,14,Muted);
+        if(button(Action::ResetBook,"RESET BOOK SETTINGS",205,453,350,40))return Action::ResetBook;
+        text("Edits apply on next use / future first combat clears.",585,468,13,Teal);
     } else if(game.balanceActiveOpen) {
         text("ACTIVE / YUM HEART",205,182,22,Gold);
+        if(button(Action::BalanceBookTab,"BOOK OF SHADOWS",650,169,280,40))return Action::BalanceBookTab;
         if(button(Action::BalanceTreasureTab,"TREASURE",945,169,130,40))return Action::BalanceTreasureTab;
         const auto &t=game.balancePreset.yumHeart;
         text("HEALING",205,250,18,Gold);text(std::to_string(t.healing)+" HALF-HEARTS",460,250,22,Paper);
@@ -2686,7 +2730,7 @@ Action Renderer::balancePanel(const Game &game) {
         text("One upgrade per opening-floor treasure pedestal. Touch it to collect once.",205,220,14,Paper);
         if(button(Action::ToggleTreasureUpgrade,game.balanceDraft.sourceTreasureUpgrade?"COLLECTIBLE PEDESTAL":"LEGACY RELIC CHOICES",205,252,490,40,game.balanceDraft.sourceTreasureUpgrade))return Action::ToggleTreasureUpgrade;
         const int treasurePool=game.balanceDraft.treasureCollectiblePool;
-        if(button(Action::CycleTreasureCollectiblePool,treasurePool==1?"POOL: FIVE ITEMS":treasurePool==5?"TEST: HALO OF FLIES":treasurePool==4?"TEST: YUM HEART":treasurePool==3?"TEST: BROTHER BOBBY":treasurePool==2?"TEST: CRICKET'S HEAD":"TEST: SAD ONION",720,252,355,40))return Action::CycleTreasureCollectiblePool;
+        if(button(Action::CycleTreasureCollectiblePool,treasurePool==1?"POOL: SIX ITEMS":treasurePool==6?"TEST: BOOK OF SHADOWS":treasurePool==5?"TEST: HALO OF FLIES":treasurePool==4?"TEST: YUM HEART":treasurePool==3?"TEST: BROTHER BOBBY":treasurePool==2?"TEST: CRICKET'S HEAD":"TEST: SAD ONION",720,252,355,40))return Action::CycleTreasureCollectiblePool;
         text("SAD ONION STRENGTH",205,324,18,Gold);
         text(decimal(game.balancePreset.sadOnionStrength*100)+"%",470,319,24,Paper);
         if(button(Action::SadOnionDown,"- 5%",650,310,130,40))return Action::SadOnionDown;

@@ -1,0 +1,14 @@
+{
+  "delivery": "PW-A02",
+  "status": "scoped accepted",
+  "date": "2026-11-17",
+  "feedback": "ok, cool, commit... Then Whats next (discuss)",
+  "scope": "User accepted the Book of Shadows main-game playtest and authorized its checkpoint commit. This does not certify full native parity.",
+  "commit_authorized": true,
+  "next_selected": null,
+  "still_open": [
+    "full native wrappers/scheduler/transitions/special damage/synergies/pool/physics",
+    "broader catalog",
+    "full live expedition resume"
+  ]
+}

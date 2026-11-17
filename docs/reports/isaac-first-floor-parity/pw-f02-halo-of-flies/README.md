@@ -1,6 +1,6 @@
 # PW-F02 — Halo of Flies
 
-Status: selected after accepted Whip Worm commit `fd7b4b58`; main-game implementation and focused native/gameplay checks pass. Halo's actual Game/Renderer review, Brother Bobby/Cricket UI regressions and CLI loading pass. The user accepted the scoped playtest: "ok, cool, it works... Whats next?". Book of Shadows and catalog expansion remain unselected.
+Status: selected after accepted Whip Worm commit `fd7b4b58`; main-game implementation and focused native/gameplay checks pass. Halo's actual Game/Renderer review, Brother Bobby/Cricket UI regressions and CLI loading pass. The user accepted the scoped playtest: "ok, cool, it works... Whats next?". Halo is committed as `5945b526`; the user subsequently selected PW-A02 Book of Shadows. Catalog expansion remains unselected.
 
 ## Source evidence
 
@@ -57,4 +57,4 @@ This opens the naturally generated Halo pedestal directly. There is no forced pi
 2. Follow the room's only corridor into displayed room4 and approach the orange Pooter so it fires. Watch the flies block shots that actually touch them; gaps remain vulnerable.
 3. Revisit the treasure room after clearing the fight; the item remains owned and the pedestal stays spent. Death retry returns to room8 with a fresh build.
 
-Remaining: checkpoint commit; full native cache/group/factory/scheduler/physical and special-projectile/synergy equivalence; broader catalog and full live expedition resume. Next, commit this accepted checkpoint. Next proposed delivery is PW-A02 Book of Shadows, requiring a separate selection.
+Remaining: full native cache/group/factory/scheduler/physical and special-projectile/synergy equivalence; broader catalog and full live expedition resume. Checkpoint committed as `5945b526`. PW-A02 Book of Shadows is now selected; see [its report](../pw-a02-book-of-shadows/README.md). The natural seed38 Halo witness above describes this five-item checkpoint; the later six-item pool changes it to Yum Heart. Current natural Halo witness: seed9/room8.

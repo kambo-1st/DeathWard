@@ -54,7 +54,7 @@ void producer() {
 }
 void persistence() {
     const auto dir=std::filesystem::temp_directory_path()/("deathward-whip-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));std::filesystem::create_directories(dir);
-    const auto fp=defaultMechanics()->fingerprint();check(fp=="7475c3faee57bd46","Audited additive content hash");
+    const auto fp=defaultMechanics()->fingerprint();check(fp=="80e8405b577845d2","Audited additive content hash");
     for(const auto file:{"d03-shooting/user-preset-2026-11-11.json","pw-t01-cancer/cancer-preset.json","pw-c01-category-check/combined-preset.json"}){const auto p=BalancePreset::load(Root/"docs/reports/isaac-first-floor-parity"/file,fp);check(p.defaultZoomPercent==165&&p.trinkets.whipStrength==1,"Old schema preserves accepted view, adds baseline Whip");}
     BalancePreset p{1,fp};p.trinkets={.75f,false,1,1.35f};p.save(dir/"preset.json");check(BalancePreset::load(dir/"preset.json",fp).json()==p.json(),"Exact independent trinket roundtrip");
     auto bad=p.json();auto pos=bad.find("\"whip_strength\": 1.35");check(pos!=bad.npos,"Custom strength field");bad.replace(pos,21,"\"whip_strength\": 3.35");std::ofstream(dir/"bad.json")<<bad;bool rejected=false;try{BalancePreset::load(dir/"bad.json",fp);}catch(...){rejected=true;}check(rejected,"Invalid strength rejected atomically");

@@ -1,0 +1,47 @@
+{
+  "status": "developer_verified_scoped_human_accepted",
+  "date": "2026-11-17",
+  "accepted_halo_commit": "5945b526",
+  "mechanics_fingerprint": "80e8405b577845d2",
+  "preset_schema": 42,
+  "campaign_version": 11,
+  "native_timer_states": 301,
+  "native_charge_cases": 12,
+  "focused_suites": 11,
+  "focused_suites_passed": 11,
+  "ui_modes": [
+    "book-of-shadows",
+    "yum-heart",
+    "halo-of-flies",
+    "brother-bobby",
+    "cricket-head"
+  ],
+  "cli_schemas": [
+    5,
+    41,
+    42
+  ],
+  "natural_book": {
+    "seed": 5,
+    "displayed_room": 8
+  },
+  "natural_halo": {
+    "seed": 9,
+    "displayed_room": 8
+  },
+  "preserved_user_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "full_native_acceptance": false,
+  "human_acceptance": "scoped accepted; see human-acceptance.json",
+  "notes": [
+    "Halo interface regression uses fixed mode5 on seed38, retaining its ordinary Pooter encounter; six-item natural Halo witness is seed9.",
+    "Book interface clear-charge check uses explicit developer enemy removal, then ordinary Game clear scheduling; not a manual combat-acceptance claim.",
+    "Campaign serialization records interruption history, not active timer/world-pedestal live resume."
+  ],
+  "unfinished": [
+    "full native wrappers/scheduler/transitions/special damage/synergies/pool/physics",
+    "broader catalog",
+    "full live expedition resume"
+  ],
+  "commit_authorized": true,
+  "next_selected": null
+}

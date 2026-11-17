@@ -865,6 +865,49 @@ void whipWormInputCheck(const std::filesystem::path &directory) {
     std::cout<<"PASS PW-T02 actual mouse swaps/arrows/drop/build/rebind/live/export/load/Apply/retry/ordinary reload\n";
 }
 
+void bookOfShadowsInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
+    const auto save=directory/"book.save",file=directory/"book.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="1";game.reviewActives=true;
+    game.loadBalancePreset(root/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json");game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.error.empty()&&game.run->items.empty()&&game.run->activeReviewRoom>=0,"Active review starts empty");
+    auto &run=*game.run;Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"Book Game error");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"Book capture");UnloadImage(im);EndDrawing();};
+    const auto start=run.player.position;const int owner=run.room;game.updateCamera(10);frame();capture("artifacts/book-review-start.png");
+    const auto collect=[&](const ItemKey &item){
+        auto at=run.rewardPosition(owner);at.y=0;game.updateCamera(10);frame();const auto screen=GetWorldToScreen(at,game.camera);click(int(screen.x),int(screen.y));
+        for(int n=0;n<500&&(!run.activeItem||run.activeItem->item!=item);++n)frame();
+        check(run.activeItem&&run.activeItem->item==item,"Actual mouse active pickup");
+    };
+    collect(YumHeartKey);key(KEY_C);check(run.activeItem->charge==0&&run.player.hp==6,"Yum spends at full health");
+    mouseWalk(game,frame,start,.25f);capture("artifacts/book-pedestal.png");collect(BookOfShadowsKey);
+    check(run.items.size()==1&&run.activeItem->charge==3&&run.rooms[size_t(owner)].droppedActive==ActiveItemState{YumHeartKey,0},"Different-item swap, outgoing charge intact");
+    for(int n=0;n<40;++n)frame();check(run.activeItem->item==BookOfShadowsKey,"Contact cannot immediately swap back");
+    mouseWalk(game,frame,start,.25f);key(KEY_C);check(run.bookProtectionRemaining>9.8&&run.activeItem->charge==0,"Actual Book activation");capture("artifacts/book-protected.png");
+    game.perform(Action::Pause);const auto paused=run.bookProtectionRemaining;for(int n=0;n<30;++n)frame();key(KEY_C);check(run.bookProtectionRemaining==paused&&run.activeItem->charge==0,"Pause preserves effect and charge");game.perform(Action::Resume);frame();
+    click(374,642);click(710,143);click(1010,189);click(805,189);click(790,189);
+    check(game.balanceOpen&&game.balanceActiveOpen&&game.balanceBookOpen,"Actual Book tuning panel");const auto effect=run.bookProtectionRemaining;
+    click(810,260);click(970,320);click(370,380);check(run.bookOfShadows==BookOfShadowsTuning{9.5f,2}&&run.yumHeart.binding==1&&run.bookProtectionRemaining==effect,"Live configuration leaves timer intact");
+    click(335,605);const auto exported=BalancePreset::load(file,run.content->fingerprint());check(exported.bookOfShadows==run.bookOfShadows&&exported.defaultZoomPercent==165,"Book export preserves view");
+    click(370,470);check(!run.bookOfShadows.custom()&&run.activeItem->charge==0&&run.bookProtectionRemaining==effect,"Reset never refills/retimes");click(600,605);check(run.bookOfShadows==exported.bookOfShadows&&run.bookProtectionRemaining==effect,"Reload consumer and effect boundary");capture("artifacts/book-panel.png");
+    std::filesystem::copy_file(file,"artifacts/book-preset.json",std::filesystem::copy_options::overwrite_existing);game.perform(Action::CloseBalance);frame();
+    collect(YumHeartKey);check(run.activeItem->charge==0&&run.rooms[size_t(owner)].droppedActive==ActiveItemState{BookOfShadowsKey,0},"Mouse swap back retains spent charges");
+    mouseWalk(game,frame,start,.25f);collect(BookOfShadowsKey);mouseWalk(game,frame,start,.25f);capture("artifacts/book-swap-back.png");
+    while(run.bookProtectionRemaining>1e-7)frame();check(run.takeHeartDamage(1)&&run.player.hp==5,"Damage returns after real Game timer expiry");
+    key(KEY_TAB);check(game.buildOpen,"Build inspector");capture("artifacts/book-build.png");click(970,728);
+    click(480,112);check(run.room!=owner&&!run.roomClear&&run.player.hp==5&&run.activeItem->charge==0,"Review encounter shortcut preserves health and charge");
+    // Developer-only enemy removal isolates actual main-game first-clear charging.
+    run.killAll();for(int n=0;n<300&&!run.roomClear;++n)frame();check(run.roomClear&&run.activeItem->charge==2,"Game first-clear consumes live Book recharge");
+    game.perform(Action::OpenBalance);game.perform(Action::BalanceWorldTab);game.perform(Action::RoomSizeUp);game.perform(Action::ApplyMapChanges);check(run.activeItem->item==BookOfShadowsKey&&run.activeItem->charge==2&&run.bookProtectionRemaining==0&&run.bookOfShadows==exported.bookOfShadows,"Apply retains held charge/config");game.perform(Action::CloseBalance);frame();
+    game.exportBalancePreset();game.rememberBalancePreset();run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->items.empty()&&!game.run->activeItem&&game.run->bookProtectionRemaining==0&&game.run->activeReviewRoom>=0&&game.run->bookOfShadows==exported.bookOfShadows,"Retry unowned, effect cleared, config retained");game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="1";fresh.loadBalancePreset(file);fresh.launch(true);check(fresh.run&&fresh.run->items.empty()&&fresh.run->activeReviewRoom<0&&fresh.run->bookOfShadows==exported.bookOfShadows&&fresh.cameraZoomPercent()==165,"Ordinary next expedition loads settings without test actors");fresh.close();
+    std::cout<<"PASS Book actual mouse pickup/swap-back, key use, pause/expiry, live UI/export/load/Apply/retry and ordinary reload\n";
+}
+
 void powerupCategoryInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
@@ -1024,9 +1067,9 @@ void haloOfFliesInputCheck(const std::filesystem::path &directory) {
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"halo.save",file=directory/"halo.json";
     Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="38";game.reviewRoomIndex=7;
-    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    game.loadBalancePreset(source);game.balanceDraft.treasureCollectiblePool=5;game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
     check(game.run&&game.error.empty(),"Halo direct main-game launch");auto &run=*game.run;const ItemKey item{"isaac",ItemKind::Collectible,10};
-    check(run.room==7&&run.hasSourceTreasure(7)&&run.treasureUpgradeItem(7)==10,"natural seed38 treasure in room8");
+    check(run.room==7&&run.hasSourceTreasure(7)&&run.treasureUpgradeItem(7)==10,"fixed Halo fixture on seed38 in room8; natural six-item pool witness is seed9");
     Renderer renderer;
     const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"Halo UI error");};
     const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
@@ -1041,7 +1084,7 @@ void haloOfFliesInputCheck(const std::filesystem::path &directory) {
     check(game.balanceOpen&&game.balanceFamiliarOpen&&game.balanceHaloOpen,"actual mouse Halo tab");const auto position=run.haloFlies[0].position;
     click(710,260);click(850,320);click(850,380);check(std::abs(run.haloOfFlies.orbitSpeed-.95f)<.0001f&&std::abs(run.haloOfFlies.orbitRadius-1.05f)<.0001f&&std::abs(run.haloOfFlies.contactRadius-1.05f)<.0001f,"three live consumers");check(distance(position,run.haloFlies[0].position)==0,"tuning pauses runtime");
     click(335,605);const auto exported=BalancePreset::load(file,run.content->fingerprint());check(exported.haloOfFlies==run.haloOfFlies&&exported.defaultZoomPercent==165,"mouse export");click(350,474);check(!run.haloOfFlies.custom(),"reset Halo");click(600,605);check(run.haloOfFlies==exported.haloOfFlies,"mouse reload");capture("artifacts/halo-panel.png");std::filesystem::copy_file(file,"artifacts/halo-preset.json",std::filesystem::copy_options::overwrite_existing);
-    click(1010,189);for(int i=0;i<4;++i)click(865,270);check(game.hasPendingMapChanges()&&game.balanceDraft.treasureCollectiblePool==5&&run.treasureCollectiblePool==1,"fixed Halo staged");click(380,460);check(run.itemStacks(item)==1&&run.haloOfFlies==exported.haloOfFlies&&run.treasureCollectiblePool==5,"Apply keeps build/settings");game.perform(Action::CloseBalance);frame();check(run.haloFlies.size()==2,"Apply reconstructs orbitals");
+    click(1010,189);click(865,270);check(game.hasPendingMapChanges()&&game.balanceDraft.treasureCollectiblePool==6&&run.treasureCollectiblePool==5,"fixed Book staged while Halo remains owned");click(380,460);check(run.itemStacks(item)==1&&run.haloOfFlies==exported.haloOfFlies&&run.treasureCollectiblePool==6,"Apply keeps build/settings");game.perform(Action::CloseBalance);frame();check(run.haloFlies.size()==2,"Apply reconstructs orbitals");
     // Real generated adjacent Pooter encounter, no injected enemies or immunity.
     bool adjacent=false;for(int link:run.arena.rooms[7].passages){const auto &p=run.arena.passages[size_t(link)];adjacent|=p.rooms[0]==3||p.rooms[1]==3;}check(adjacent,"single treasure exit leads to Pooter room4");
     run.jumpDebug(3);game.updateCamera(10);frame();check(std::any_of(run.enemies.begin(),run.enemies.end(),[](const auto &e){return e.alive&&e.monster==MonsterId{14,0,0};}),"ordinary generated Pooter");
@@ -1061,7 +1104,7 @@ void haloOfFliesInputCheck(const std::filesystem::path &directory) {
     check(fired,"Pooter fires through actual main-game scheduler");capture("artifacts/halo-encounter.png");
     game.exportBalancePreset();game.rememberBalancePreset();if(!run.dead)run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->room==7&&game.run->items.empty()&&game.run->haloFlies.empty()&&game.run->haloOfFlies==exported.haloOfFlies,"retry fresh ownership, configured orbitals");game.close();renderer.unload();
     Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="38";fresh.reviewRoomIndex=7;fresh.loadBalancePreset(file);fresh.launch(true);check(fresh.run&&fresh.run->haloOfFlies==exported.haloOfFlies&&fresh.cameraZoomPercent()==165,"fresh next-expedition preset");fresh.close();
-    std::cout<<"PASS Halo main-game natural mouse pickup/model/inspector, live UI/export/load/Apply/retry, ordinary Pooter shots; seed38 room8 -> room4\n";
+    std::cout<<"PASS Halo main-game fixed-offering mouse pickup/model/inspector, live UI/export/load/Apply/retry, ordinary Pooter shots; seed38 room8 -> room4\n";
 }
 
 void brotherBobbyInputCheck(const std::filesystem::path &directory) {
@@ -1145,7 +1188,7 @@ void cricketHeadInputCheck(const std::filesystem::path &directory) {
     click(374,642);click(710,143);click(1010,189);check(game.balanceOpen&&game.balanceShootingOpen&&game.balanceTreasureOpen,"treasure page via mouse");
     click(865,270);check(game.hasPendingMapChanges()&&game.balanceDraft.treasureCollectiblePool==2&&run.treasureCollectiblePool==1,"pool selection staged");
     click(380,460);check(run.treasureCollectiblePool==2&&run.itemStacks({"isaac",ItemKind::Collectible,4})==1&&run.rewardAvailable(owner),"Apply changes pool while retaining owned Cricket");
-    for(int i=0;i<4;++i)click(865,270);click(380,460);check(run.treasureCollectiblePool==0&&run.treasureUpgradeItem(owner)==1,"Apply fixed Onion comparison");
+    for(int i=0;i<5;++i)click(865,270);click(380,460);check(run.treasureCollectiblePool==0&&run.treasureUpgradeItem(owner)==1,"Apply fixed Onion comparison");
     click(865,270);click(380,460);check(run.treasureCollectiblePool==1&&run.treasureUpgradeItem(owner)==4&&!game.hasPendingMapChanges(),"Apply restores natural Cricket pool");
     const auto terrain=run.arena.canyon.get();click(430,270);check(game.hasPendingMapChanges()&&run.sourceTreasureUpgrade,"offering toggle staged");
     const float wait=run.player.fireCooldown;click(715,399);check(std::abs(run.cricketHeadStrength-.95f)<.0001f&&run.player.fireCooldown==wait&&run.arena.canyon.get()==terrain,"strength live with pending map and retained wait");
@@ -3049,6 +3092,9 @@ int main(int argc, char **argv) {
         }
         if(mode=="--yum-heart-only") {
             yumHeartInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--book-of-shadows-only") {
+            bookOfShadowsInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--halo-of-flies-only") {
             haloOfFliesInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;

@@ -1,6 +1,6 @@
 # Power-up categories: small main-game deliveries
 
-Status: plan requested on 2026-11-16. The user clarified: **establish support for each category with one or two items first; implement the remaining catalog later.** The user subsequently selected **PW-F01 — Brother Bobby**; implementation and developer verification are complete; the scoped human review is accepted. PW-A01 Yum Heart is accepted. PW-T01 Cancer is implemented, developer-verified and scoped human-accepted; see [its progress report](reports/isaac-first-floor-parity/pw-t01-cancer/README.md). PW-C01 is scoped human-accepted. PW-T02 Whip Worm is scoped human-accepted; PW-F02 Halo of Flies is now selected. Book of Shadows remains unselected. The automatic bulk parity effort remains paused; the user selects each named delivery before it starts.
+Status: plan requested on 2026-11-16. The user clarified: **establish support for each category with one or two items first; implement the remaining catalog later.** The user subsequently selected **PW-F01 — Brother Bobby**; implementation and developer verification are complete; the scoped human review is accepted. PW-A01 Yum Heart is accepted. PW-T01 Cancer is implemented, developer-verified and scoped human-accepted; see [its progress report](reports/isaac-first-floor-parity/pw-t01-cancer/README.md). PW-C01 is scoped human-accepted. PW-T02 Whip Worm is scoped human-accepted; PW-F02 Halo of Flies is scoped human-accepted and committed as `5945b526`. PW-A02 Book of Shadows is implemented, developer-verified and scoped human-accepted. Its accepted checkpoint completes the two-example foundation for all four categories. The automatic bulk parity effort remains paused; the user selects each named delivery before it starts.
 
 ## First milestone
 
@@ -10,7 +10,7 @@ Make all four categories usable together in an ordinary DeathWard expedition:
 | --- | --- | --- | --- |
 | Passive | The Sad Onion — collectible1 | Cricket's Head — collectible4 | Both enabled and scoped human-accepted; retain them. |
 | Familiar | Brother Bobby — collectible8 | Halo of Flies — collectible10 | Brother Bobby accepted; Halo of Flies enabled, developer-verified and scoped human-accepted. |
-| Active | Yum Heart — collectible45 | Book of Shadows — collectible58 | Yum Heart scoped human-accepted. Second example unselected. |
+| Active | Yum Heart — collectible45 | Book of Shadows — collectible58 | Yum Heart scoped human-accepted; Book of Shadows implemented, developer-verified and scoped human-accepted. |
 | Trinket | Cancer — trinket39 | Whip Worm — trinket27 | Cancer and Whip Worm scoped human-accepted. |
 
 The first milestone therefore needs **five example items total: two existing passives and one example from each missing category**. Second examples bring that to eight and follow after the four-category milestone. Existing Steam Sale, BOGO Bombs and DeathWard items remain available under their current rules.
@@ -117,7 +117,7 @@ Exercise floor transition, death retry and configuration reload. Audit newly int
 
 ## Optional second examples, after the first milestone
 
-PW-T02 Whip Worm is implemented, developer-verified and scoped human-accepted after PW-C01 (`81138b55`). See [PW-T02 report](reports/isaac-first-floor-parity/pw-t02-whip-worm/README.md). Halo of Flies is now enabled, developer-verified and scoped human-accepted. Book of Shadows remains unselected.
+PW-T02 Whip Worm is implemented, developer-verified and scoped human-accepted after PW-C01 (`81138b55`). See [PW-T02 report](reports/isaac-first-floor-parity/pw-t02-whip-worm/README.md). Halo of Flies is now enabled, developer-verified and scoped human-accepted. Book of Shadows is implemented, developer-verified and scoped human-accepted.
 
 | Delivery | Item | Additional capability exercised | Short visible check |
 | --- | --- | --- | --- |
@@ -155,4 +155,4 @@ Maintain one row per item with identity, category, source effects/evidence, elig
 
 **PW-F02 — Halo of Flies10: implemented, developer-verified and scoped human-accepted.** See [the report](reports/isaac-first-floor-parity/pw-f02-halo-of-flies/README.md) for the natural pedestal/Pooter route, source evidence, live configuration and checks. PW-T02 is accepted and committed as `fd7b4b58`.
 
-Next: commit the accepted Halo checkpoint. **PW-A02 Book of Shadows** remains the proposed next example and requires selection. Full-catalog expansion, full native equivalence and full live expedition resume remain open.
+Halo is committed as `5945b526`. The user selected **PW-A02 Book of Shadows**, including the single active slot, charge-preserving Yum/Book swaps and permanent passive ownership. See [its progress report](reports/isaac-first-floor-parity/pw-a02-book-of-shadows/README.md). The user accepted the scoped swap/use/expiry review and requested this checkpoint commit. The two-example category foundation is complete. Next steps are for discussion only; no further delivery is selected. Full-catalog expansion, full native equivalence and full live expedition resume remain open.

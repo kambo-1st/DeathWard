@@ -89,3 +89,8 @@ end
 item "isaac:collectible:10" "Halo of Flies" "FAMILIAR" "Two orbiting flies block enemy shots and kill fly enemies on contact. Copies add two flies, up to ten."
 category familiar
 end
+
+# PW-A02: second supported active; swaps preserve each item's charge.
+item "isaac:collectible:58" "Book of Shadows" "ACTIVE" "Protects you from damage for ten seconds. Uses three charges; combat room clears recharge it. Replaces your held active item."
+category active
+end

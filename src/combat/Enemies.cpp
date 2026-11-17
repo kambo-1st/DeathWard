@@ -21,7 +21,7 @@ bool Simulation::hurtPlayer(float damage, const Context &context, bool hostile) 
     return takeHeartDamage(std::max(1.f,damage/10),false,context,hostile);
 }
 bool Simulation::takeHeartDamage(float halves,bool redFirst,const Context &context,bool hostile) {
-    if(dead||finished||godMode||player.dodge>0||player.hurt>1e-6f||!std::isfinite(halves)||halves<=0||halves>1000000)return false;
+    if(dead||finished||godMode||bookProtectionRemaining>1e-7||player.dodge>0||player.hurt>1e-6f||!std::isfinite(halves)||halves<=0||halves>1000000)return false;
     // Retain room-effect recipients under event-queue pressure. Admission
     // stalls damage rather than dropping an already-triggered black burst.
     if(pendingHealthEvents_.size()+enemies.size()*12>65536)return false;

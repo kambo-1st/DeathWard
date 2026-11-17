@@ -1182,6 +1182,10 @@ class Simulation {
     bool spawnTrinket(Vector3 at,const ItemKey &item=CancerKey,uint32_t seed=1,bool preplaced=false);
     std::vector<TrinketPickup> trinketPickups;
     YumHeartTuning yumHeart{};
+    BookOfShadowsTuning bookOfShadows{};
+    double bookProtectionRemaining=0; // Independent of held slot, dodge and hurt immunity.
+    bool beginActiveReview();
+    int activeReviewRoom=-1,activeReviewCollected=0;
     std::optional<ActiveItemState> activeItem;
     bool useActiveItem();
     int treasureCollectiblePool=0; // 0 Onion test, 1 restricted pool, 2 Cricket test.

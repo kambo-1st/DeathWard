@@ -279,7 +279,7 @@ void Game::perform(Action action) {
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
            (action<Action::BalanceDamageHealthTab||action>Action::ResetYumHeart)&&
            (action<Action::BalanceTrinketTab||action>Action::ResetTrinkets)&&action!=Action::WhipDown&&action!=Action::WhipUp&&
-           (action<Action::BalanceHaloTab||action>Action::ResetHalo))return;
+           (action<Action::BalanceHaloTab||action>Action::ResetBook))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -341,7 +341,16 @@ void Game::perform(Action action) {
             }
             applyBalance(std::move(preset));balanceNotice="Following updates next tick. New shots use edits; current waits and flying shots stay fixed.";break;
         }
-        case Action::BalanceActiveTab:balanceTrinketOpen=false;balanceActiveOpen=true;balanceFamiliarOpen=balanceTreasureOpen=false;break;
+        case Action::BalanceActiveTab:balanceBookOpen=false;balanceTrinketOpen=false;balanceActiveOpen=true;balanceFamiliarOpen=balanceTreasureOpen=false;break;
+        case Action::BalanceBookTab:balanceBookOpen=true;balanceActiveOpen=true;balanceTrinketOpen=balanceFamiliarOpen=balanceTreasureOpen=false;break;
+        case Action::BookDurationDown:case Action::BookDurationUp:case Action::BookRechargeDown:case Action::BookRechargeUp:case Action::ResetBook: {
+            auto preset=balancePreset;auto &t=preset.bookOfShadows;
+            if(action==Action::ResetBook)t={};
+            else if(action==Action::BookDurationDown||action==Action::BookDurationUp)t.duration=std::clamp(t.duration+(action==Action::BookDurationUp?.5f:-.5f),1.f,30.f);
+            else t.recharge=std::clamp(t.recharge+(action==Action::BookRechargeUp?1:-1),0,3);
+            applyBalance(std::move(preset));activeQueued_=false;
+            balanceNotice="Duration applies on next use; recharge on future first combat clears. Current protection and charge stay fixed.";break;
+        }
         case Action::YumHealingDown:case Action::YumHealingUp:
         case Action::YumRechargeDown:case Action::YumRechargeUp:
         case Action::CycleActiveBinding:case Action::ResetYumHeart: {
@@ -366,7 +375,7 @@ void Game::perform(Action action) {
             balanceNotice="Owned effect changes next attack; current wait and flying shots stay fixed. Rewards apply to future first clears.";break;
         }
         case Action::CycleTreasureCollectiblePool:
-            balanceDraft.treasureCollectiblePool=(balanceDraft.treasureCollectiblePool+1)%6;
+            balanceDraft.treasureCollectiblePool=(balanceDraft.treasureCollectiblePool+1)%7;
             balanceNotice="Treasure selection pending / Apply resets this floor";break;
         case Action::CricketHeadDown:case Action::CricketHeadUp:case Action::ResetCricketHead: {
             auto preset=balancePreset;
@@ -990,7 +999,7 @@ bool Game::pointerOverControls() const {
     const auto over=[&](Rectangle r){return CheckCollisionPointRec({x,y},r);};
     const bool live=run&&!paused&&!run->dead&&!run->rewardOpen&&!run->shopOpen;
     return (run&&(run->surveyTutorial||run->testimony())&&x>=964&&x<=1256&&y>=22&&y<=153)||
-           (live&&((reviewTrinkets&&over(expeditionHud::categoryReview(false)))||(run->powerupReview&&over(expeditionHud::categoryReview(run->roomClear&&run->powerupReview->collected==4)))||over(expeditionHud::Dynamite)||
+           (live&&(((reviewActives||reviewTrinkets)&&over(expeditionHud::categoryReview(reviewActives&&run->activeReviewCollected>=2&&run->roomClear)))||(run->powerupReview&&over(expeditionHud::categoryReview(run->roomClear&&run->powerupReview->collected==4)))||over(expeditionHud::Dynamite)||
                (run->heldTrinket&&over(expeditionHud::Trinket))||(run->activeItem&&over(expeditionHud::Active))||over(expeditionHud::Dodge)||over(expeditionHud::Pause)||over(expeditionHud::Tuning)||
                (ownedItemTypes()>0&&over(expeditionHud::items(ownedItemTypes())))))||
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||
@@ -1062,8 +1071,10 @@ std::vector<Action> Game::menuActions() const {
             std::vector<Action>{Action::GaperMovementDown,Action::GaperMovementUp,Action::GaperMovementReset,Action::SpiderMovementDown,Action::SpiderMovementUp,Action::SpiderMovementReset}:
             balanceShootingOpen&&balanceTrinketOpen?
             std::vector<Action>{Action::BalanceTreasureTab,Action::CancerDown,Action::CancerUp,Action::WhipDown,Action::WhipUp,Action::ToggleTrinketRewards,Action::CycleTrinketBinding,Action::ResetTrinkets}:
+            balanceShootingOpen&&balanceActiveOpen&&balanceBookOpen?
+            std::vector<Action>{Action::BalanceTreasureTab,Action::BalanceActiveTab,Action::BookDurationDown,Action::BookDurationUp,Action::BookRechargeDown,Action::BookRechargeUp,Action::CycleActiveBinding,Action::ResetBook}:
             balanceShootingOpen&&balanceActiveOpen?
-            std::vector<Action>{Action::BalanceTreasureTab,Action::YumHealingDown,Action::YumHealingUp,Action::YumRechargeDown,Action::YumRechargeUp,Action::CycleActiveBinding,Action::ResetYumHeart}:
+            std::vector<Action>{Action::BalanceTreasureTab,Action::BalanceBookTab,Action::YumHealingDown,Action::YumHealingUp,Action::YumRechargeDown,Action::YumRechargeUp,Action::CycleActiveBinding,Action::ResetYumHeart}:
             balanceShootingOpen&&balanceFamiliarOpen&&balanceHaloOpen?
             std::vector<Action>{Action::BalanceTreasureTab,Action::BalanceFamiliarTab,Action::HaloSpeedDown,Action::HaloSpeedUp,Action::HaloRadiusDown,Action::HaloRadiusUp,Action::HaloContactDown,Action::HaloContactUp,Action::ResetHalo}:
             balanceShootingOpen&&balanceFamiliarOpen?
