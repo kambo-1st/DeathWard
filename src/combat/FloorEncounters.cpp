@@ -1,3 +1,5 @@
+#include "world/SourceFullFlyRoom.hpp"
+#include "world/SourcePropRooms.hpp"
 #include "combat/Simulation.hpp"
 #include "world/SourceCombatRockRooms.hpp"
 
@@ -6,6 +8,14 @@ EncounterPlan Simulation::floorEncounter(int index) const {
     EncounterPlan result;
     const auto &r=arena.rooms.at(size_t(index));const auto &p=arena.profile;
     if(!p.active()||r.kind!=RoomKind::Combat)return result;
+    if(r.sourceCombatTemplate==FullFlyRoomTemplate) {
+        result.monsters.assign(2,monsterId(249));result.originalMonsters=result.monsters;
+        result.budget=result.spent=2;return result;
+    }
+    if(const auto *props=sourcePropRoom(r.sourceCombatTemplate)) {
+        for(const auto &slot:props->entries)if(slot.type==10||slot.type==14)result.monsters.push_back(monsterId(slot.type,slot.variant));
+        result.originalMonsters=result.monsters;result.budget=result.spent=int(result.monsters.size());return result;
+    }
     const auto *source=sourceCombatRockRoom(r.sourceCombatTemplate);
     if(r.sourceCombatTemplate==47||source) {
         const int count=source?int(source->gapers.size()):2;

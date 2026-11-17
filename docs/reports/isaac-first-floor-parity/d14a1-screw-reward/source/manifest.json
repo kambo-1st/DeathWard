@@ -1,0 +1,51 @@
+{
+  "version": "Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "item": {
+    "cache": "firedelay shotspeed",
+    "description": "#SCREW_DESCRIPTION",
+    "gfx": "collectibles_255_screw.png",
+    "id": "255",
+    "name": "#SCREW_NAME"
+  },
+  "boss_pool_entry": {
+    "Id": "255",
+    "Weight": "1",
+    "DecreaseBy": "1",
+    "RemoveOn": "0.1"
+  },
+  "tear_cases": 240,
+  "shot_cases": 18,
+  "windows": [
+    {
+      "name": "screw-tear-contribution",
+      "start": "0x72fbcd",
+      "end": "0x72fc21",
+      "sha256": "afa64309b71b8dd6acc374cc37614ee1e5ab2b92a3296fbc556b14b29d30173a"
+    },
+    {
+      "name": "ordinary-tear-curve",
+      "start": "0x73006a",
+      "end": "0x730143",
+      "sha256": "3704b8e20e6209cf978acac5c8105c3f70752547ea0187a8f65b5d3f2f025552"
+    },
+    {
+      "name": "screw-shot-contribution",
+      "start": "0x7327d2",
+      "end": "0x732818",
+      "sha256": "f96bd803ad184663ab69ff10c816fe45b24cfe03834ecbf697ddc64e1c092b3a"
+    },
+    {
+      "name": "shot-speed-cache-block",
+      "start": "0x732646",
+      "end": "0x732c33",
+      "sha256": "8b96504460540989342345d3d474714c6db283c08ff4facfee0bfcdff65bb21a"
+    }
+  ],
+  "xml_sha256": {
+    "items.xml": "ee567ed920b1bcada61f2a2d65e48563286fe7e8bf00363ad763ac2aa3ae64b7",
+    "itempools.xml": "da5391ba59626b0fe349fa6d143df82cd7c19c648f04311d8e21a441d5aa502c"
+  },
+  "scope": "Original inventory count query and +0.5 raw tear-stat contribution; supplied base/Onion contribution into original ordinary curve. Complete ordinary shot-speed cache block with real count query and optional Whip Worm: +0.2 per copy. Neutral cache-effect multiplier local is explicitly1; callbacks/full cache order, other characters/modifiers, pool RNG and physical actors remain unaccepted.",
+  "full_native_acceptance": false
+}

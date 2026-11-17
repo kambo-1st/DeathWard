@@ -200,3 +200,5 @@ stage_health 222.0.0 5 0 6.4
 stage_health 819.0.0 7 0 3.2
 # Cloggy: adaptation=1.47058823529; stage1=80 HP.
 stage_health 872.0.0 15 2 4.70588235294
+
+regular_health 249.0.0 # Full Fly; shared scaling includes champions and lifecycle

@@ -1,0 +1,44 @@
+{
+  "date": "2026-11-17",
+  "accepted_checkpoint": "1003c611",
+  "status": "capture preparation; awaiting a running paused source first floor",
+  "native_process_found": false,
+  "captured_floor": false,
+  "runtime_gameplay_changed": false,
+  "reader": "scripts/isaac-reference/read-live-floor.ps1",
+  "reader_sha256": "87809b58ee3566757ea4742e84d0df6f4c6c6ede53f324059e6325c3834d0034",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "reader_validation": {
+    "powershell_parse": "pass",
+    "embedded_csharp_compile": "pass",
+    "live_capture": "not exercised",
+    "direct_unc_script_launch": "blocked by unsigned-script execution policy; policy unchanged"
+  },
+  "descriptor_evidence": {
+    "allocation_range": [
+      "0x706680",
+      "0x70676c"
+    ],
+    "sha256": "83371fe16c634e327210b66ab0027ebb6373d84d76211d8028705cdb42c21091",
+    "table_offset": "0x14",
+    "stride": "0xb8",
+    "count_offset": "0x1815c",
+    "capacity": 507,
+    "current_room_offset": "0x18190",
+    "config_offset": "0x10",
+    "source_links": [
+      "../native-room-eligibility/placement-seeds.asm",
+      "../native-room-eligibility/descriptor-seeds.asm",
+      "../native-room-selection-placement/spawn_loop.asm",
+      "../native-room-selection-placement/manifest.json",
+      "../room-scale-timing/live-room-snapshot.json"
+    ]
+  },
+  "remaining": [
+    "live capture and field cross-checks",
+    "confirm source profile/stage type and observed item results",
+    "supported-content dependency audit",
+    "main-game content mapping and playable review",
+    "human acceptance"
+  ]
+}

@@ -103,6 +103,7 @@ void Simulation::prepareShop() {
 }
 void Simulation::openShop() {
     if(hasSourceShop(room))return; // Priced floor pickups use ordinary touch collection.
+    if(arena.rooms[size_t(room)].kind==RoomKind::Service&&arena.rooms[size_t(room)].service!=RoomService::Surgeon)return;
     if ((room != arena.shopRoom && arena.rooms[size_t(room)].kind!=RoomKind::Service) || dead || finished || rewardOpen || !roomClear ||
         roomThreats() != 0 || distance(player.position, arena.rooms[size_t(room)].objective) > 2.6f ||
         !arena.sight(player.position, arena.rooms[size_t(room)].objective))

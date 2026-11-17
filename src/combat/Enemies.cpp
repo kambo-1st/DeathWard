@@ -413,6 +413,7 @@ void Simulation::updateEnemies(float dt) {
     for (auto &enemy : enemies) {
         if(enemy.leper&&enemy.leper->pendingCreep)flushLeperCreep(enemy);
         if (!enemy.alive) {
+            if(enemy.buzz&&enemy.buzz->fullFlyDeathPending)flushFullFlyDeath(enemy);
             if(enemy.headShooter&&!enemy.headShooter->pendingShots.empty())flushReactiveShot(enemy);
             if(enemy.creature&&enemy.creature->deathPending)flushCreatureShots(enemy);
             if(enemy.championDeathPending)flushChampionDeath(enemy);

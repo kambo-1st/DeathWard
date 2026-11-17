@@ -1,0 +1,13 @@
+# Vegetation up to 500%
+
+The user requested extending vegetation beyond 200%, up to 500%. Pause-menu LESS/MORE now supports 0–500% in the existing 25-point steps. Front-end Settings supports the same range with its existing 10-point steps and a correctly scaled slider. Changes apply live; the existing visual-settings file saves and reloads 500%, including through front-end Apply. Default vegetation remains 100%; the user's balance preset is unchanged.
+
+This adds real candidate tiers through 500% for canyon and mine vegetation. The original 0–200% candidate prefix and density random stream are retained, with a separate stream for the new tiers. Canyon capacity rises from 2,200 to 5,500 candidates/instances only for the new tiers; the old prefix retains its 2,200 cap. Smaller custom caps remain hard limits. Extra plants reuse existing support, spacing, protected-object and route checks. Density changes filter the cached placements without rebuilding terrain or changing gameplay geometry. Percentages select density tiers; constrained terrain does not guarantee an exact fivefold plant count.
+
+The broader check also exposed a baseline cactus at seed69175541 whose root pad crossed a detailed cliff face (visibility threshold64, so it also appeared at100%). Cacti now receive a final visible-surface footprint check in addition to the original-cap support test. Unsupported candidates are rejected and valid roots are seated on that footprint. This can remove an existing unsupported cactus; the review seed's original394 plants remain unchanged. Terrain and gameplay collision are not modified by this correction.
+
+In the accepted seed-69 review, 100% still draws the previously recorded 394 plants; 200% draws 687 and 500% draws 1,333. Returning to 100% restores the original count. Screenshots use the same camera: `100.png`, `200.png`, `500.png`. `front-settings.png` shows the front-end slider at 500%.
+
+The main-game build, actual pause controls/save/reload, front-end slider/Apply/reload, HUD and tuning-menu checks, ordinary-prop suite and canyon visual-geometry suite pass. Scenery checks pass five seeds in both themes, covering22,295 placements: 500% adds vegetation beyond200%, lower-density subsets are stable, non-vegetation scenery is fixed, cacti have supported roots, routes remain clear and terrain meshes are retained. See `verification.json` and `assets-tests.log`. The old200% budget can already be full in large canyon fixtures; that preserved limit is explicitly checked rather than requiring it to admit more plants.
+
+Human acceptance of the 500% appearance remains pending. This does not claim full native parity or a performance target across all hardware.

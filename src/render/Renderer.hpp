@@ -7,6 +7,7 @@
 #include "render/TownScene.hpp"
 #include "render/WesternScene.hpp"
 #include "render/ChestModel.hpp"
+#include "render/CampfireModel.hpp"
 #include "render/ShopCartModel.hpp"
 #include "render/KeyModel.hpp"
 #include "render/MainFont.hpp"
@@ -21,6 +22,7 @@ class Renderer {
     bool keyModelReady() const { return keyModel_.ready(); }
     bool mainFontReady() const { return mainFont_.ready(); }
     bool shopCartModelReady() const { return shopCartModel_.ready(); }
+    bool campfireModelReady() const { return campfireModel_.ready(); }
     bool chestModelReady() const { return chestModel_.ready(); }
     bool missionShadowsReady() const {
         return westernScene_.lighting().ready();
@@ -47,7 +49,7 @@ class Renderer {
     void unload() {
         mainFont_.unload();
         keyModel_.unload();
-        chestModel_.unload();shopCartModel_.unload();
+        campfireModel_.unload();chestModel_.unload();shopCartModel_.unload();
         playerModel_.unload();
         animalModels_.unload();
         characterModels_.unload();
@@ -64,6 +66,7 @@ class Renderer {
     float sx_ = 1, sy_ = 1;
     float sandstormStrength_ = 0;
     Action keyboardFocus_ = Action::None;
+    CampfireModel campfireModel_;
     ChestModel chestModel_;
     ShopCartModel shopCartModel_;
     KeyModel keyModel_;

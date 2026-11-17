@@ -84,7 +84,7 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
 } // namespace
 
 Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tutorial, StoryRoom story,
-             int requestedRooms, FloorDimensions dimensions, FloorProfile floorProfile, bool sourceCombatRoom,int roomHeartLayouts,bool requestedRoomLocks)
+             int requestedRooms, FloorDimensions dimensions, FloorProfile floorProfile, bool sourceCombatRoom,int roomHeartLayouts,bool requestedRoomLocks,int propLayouts)
     : visualSeed(seed), theme(missionTheme), profile(floorProfile) {
     if(roomHeartLayouts<0||roomHeartLayouts>2)throw std::invalid_argument("Invalid room-heart layout mode");
     if(dimensions.minHalfTiles<5||dimensions.maxHalfTiles<dimensions.minHalfTiles||dimensions.maxHalfTiles>10||
@@ -481,7 +481,7 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
         }
         if(chosen>=0)rooms[size_t(chosen)].sourceCombatTemplate=BasementGaperTemplate;
     }
-    if(!tutorial)prepareRoomHeartLayouts(seed,roomHeartLayouts);
+    if(!tutorial)prepareRoomHeartLayouts(seed,roomHeartLayouts,propLayouts);
     rebuildWalls();
     if (theme == MissionTheme::Canyon)
         buildCanyon(*this, canyonRiver);

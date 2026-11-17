@@ -78,7 +78,7 @@ void main() {
     // Keep undefined normals out of lighting and the downstream bloom blur.
     float normalLengthSquared=dot(rawNormal,rawNormal);
     vec3 n=normalLengthSquared>1e-12 ? rawNormal*inversesqrt(normalLengthSquared) : vec3(0.,1.,0.);
-    finalColor=vec4(worldSurfaceColor(surface.rgb)*westernDaylight(n,missionSun,missionVisibility(world,n)),surface.a);
+    finalColor=vec4(worldSurfaceColor(surface.rgb)*(westernDaylight(n,missionSun,missionVisibility(world,n))+missionFireLight(world,n)),surface.a);
 }
 )GLSL";
 constexpr const char *ShadowFunctions = R"GLSL(
@@ -86,6 +86,19 @@ uniform sampler2D shadowMap;
 uniform mat4 lightVP;
 uniform int shadowEnabled;
 uniform float shadowTexelDepth;
+uniform int fireCount;
+uniform vec3 firePositions[4];
+uniform vec3 fireColors[4];
+uniform float fireRanges[4];
+vec3 missionFireLight(vec3 position,vec3 n) {
+    vec3 light=vec3(0.);
+    for(int i=0;i<fireCount;i++) {
+        vec3 delta=firePositions[i]-position;
+        float attenuation=pow(max(0.,1.-length(delta)/fireRanges[i]),2.);
+        light+=fireColors[i]*attenuation*max(.12,dot(n,normalize(delta+vec3(.0001))));
+    }
+    return light;
+}
 const vec3 missionSun=normalize(vec3(-.55,.85,.38));
 float missionVisibility(vec3 position, vec3 n) {
     if (shadowEnabled==0) return 1.;
@@ -143,6 +156,7 @@ MissionLighting::~MissionLighting() {
     unload();
 }
 void MissionLighting::unload() {
+    fireLights_.clear();
     if (shadow_.id)
         UnloadRenderTexture(shadow_);
     if (staticShadow_.id)
@@ -256,6 +270,15 @@ void MissionLighting::prepare(const Camera3D &camera, const std::function<void(S
 void MissionLighting::bind(Shader shader) const {
     if (!shader.id)
         return;
+    const int fireCount=int(fireLights_.size());
+    SetShaderValue(shader,GetShaderLocation(shader,"fireCount"),&fireCount,SHADER_UNIFORM_INT);
+    if(fireCount) {
+        std::array<Vector3,4> positions{},colors{};std::array<float,4> ranges{};
+        for(int i=0;i<fireCount;++i){positions[size_t(i)]=fireLights_[size_t(i)].position;colors[size_t(i)]=fireLights_[size_t(i)].color;ranges[size_t(i)]=fireLights_[size_t(i)].range;}
+        SetShaderValueV(shader,GetShaderLocation(shader,"firePositions"),positions.data(),SHADER_UNIFORM_VEC3,fireCount);
+        SetShaderValueV(shader,GetShaderLocation(shader,"fireColors"),colors.data(),SHADER_UNIFORM_VEC3,fireCount);
+        SetShaderValueV(shader,GetShaderLocation(shader,"fireRanges"),ranges.data(),SHADER_UNIFORM_FLOAT,fireCount);
+    }
     const int enabled = prepared_ ? 1 : 0;
     const int style = int(visualStyle_);
     SetShaderValue(shader, GetShaderLocation(shader, "visualStyle"), &style, SHADER_UNIFORM_INT);

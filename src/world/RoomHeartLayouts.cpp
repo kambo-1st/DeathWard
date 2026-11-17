@@ -1,4 +1,7 @@
+#include "world/SourceFullFlyRoom.hpp"
+#include "world/SourcePropRooms.hpp"
 #include "world/Dungeon.hpp"
+#include "world/DungGeometry.hpp"
 #include "world/SourceRoomHeartsData.hpp"
 #include "world/SourceRoomSelection.hpp"
 #include "world/SourceHeartRockRoom.hpp"
@@ -17,9 +20,9 @@ Vector3 heartCell(const RoomLayout &layout,int x,int y) {
     return sourceHeartCell(layout,x,y);
 }
 }
-void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode) {
+void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode,int propLayouts) {
     if(mode<0||mode>2)throw std::invalid_argument("Invalid room-heart layout mode");
-    if(!mode||profile.floor!=0||!profile.active()||theme!=MissionTheme::Canyon)return;
+    if((!mode&&propLayouts!=2)||profile.floor!=0||!profile.active()||theme!=MissionTheme::Canyon)return;
     std::vector<int> eligible;
     for(int i=1;i<roomCount()-1;++i) {
         const auto &layout=rooms[size_t(i)];
@@ -30,6 +33,7 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode) {
     std::vector<float> weights;weights.reserve(BasementHeartLayouts.size());
     for(const auto &source:BasementHeartLayouts)weights.push_back(source.weight);
     for(int index:eligible) {
+        if(!mode)break;
         auto &layout=rooms[size_t(index)];
         Random rng(seed^0x524f4f4d48454152ULL^(uint64_t(index+1)*0x9e3779b97f4a7c15ULL));
         auto append=[&](int x,int y,int sourceSubtype,int subtype,uint32_t seed) {
@@ -133,12 +137,59 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode) {
             layout.sourceCombatTemplate=layout.sourceObstacleTemplate=layout.sourceHeartTemplate;
             layout.kind=RoomKind::Combat;
         }
+        if(mode==1&&propLayouts&&sourcePropRoom(layout.sourceHeartTemplate)&&index!=2&&index!=3&&
+           std::none_of(keys.begin(),keys.end(),[&](const auto &key){return key.room==index;})) {
+            layout.sourceCombatTemplate=layout.sourceObstacleTemplate=layout.sourceHeartTemplate;
+            layout.kind=layout.sourceHeartTemplate==26?RoomKind::Empty:RoomKind::Combat;
+        }
         if(mode==2)break;
+    }
+    // D14a.2 bounded recorded encounter allocation. Source704 is shape5,
+    // outside the13x7 native-selection pool. Do not falsify its shape or add
+    // a second source selection roll. Preserve all already complete rooms.
+    if(mode==1&&propLayouts!=2)for(auto it=eligible.rbegin();it!=eligible.rend();++it) {
+        const int index=*it;auto &layout=rooms[size_t(index)];
+        if(index==2||index==3||layout.sourceCombatTemplate>=0||layout.sourceObstacleTemplate>=0||
+           !layout.heartSpawns.empty()||std::any_of(keys.begin(),keys.end(),[&](const auto &key){return key.room==index;}))continue;
+        layout.sourceHeartTemplate=layout.sourceCombatTemplate=layout.sourceObstacleTemplate=FullFlyRoomTemplate;
+        layout.kind=RoomKind::Combat;
+        // The fixed content layer uses its own reproducible DW descriptor seed.
+        Random allocation(seed^0x46554c4c464c5900ULL^uint64_t(index));
+        layout.sourceRoomSelectionSeed=uint32_t(allocation.next());
+        if(!layout.sourceRoomSelectionSeed)layout.sourceRoomSelectionSeed=1;
+        layout.sourceRoomSpawnSeed=sourceRoomDescriptorSeeds(layout.sourceRoomSelectionSeed).spawn;
+        break;
+    }
+    if(propLayouts==2)for(int index:eligible) {
+        if(index==2||index==3||std::any_of(keys.begin(),keys.end(),[&](const auto &key){return key.room==index;}))continue;
+        auto &layout=rooms[size_t(index)];
+        layout.sourceHeartTemplate=layout.sourceCombatTemplate=layout.sourceObstacleTemplate=PropReviewRoom;
+        layout.kind=RoomKind::Empty;
+        layout.heartSpawns.clear();layout.chestSpawns.clear();layout.coinSpawns.clear();layout.keySpawns.clear();layout.bombSpawns.clear();
+        if(!layout.sourceRoomSpawnSeed)layout.sourceRoomSpawnSeed=uint32_t(seed)^uint32_t(index+1)*2654435761u;
+        if(!layout.sourceRoomSpawnSeed)layout.sourceRoomSpawnSeed=1;
+        break;
     }
 }
 void Arena::prepareSourceHeartRocks() {
     for(int index=0;index<roomCount();++index) {
         const auto &layout=rooms[size_t(index)];
+        if(const auto *source=sourcePropRoom(layout.sourceObstacleTemplate)) {
+            const float half=sourceHeartCellSize(layout)*.5f;
+            for(const auto &slot:source->entries)if(slot.type==1000||slot.type==1500) {
+                const auto at=sourceHeartCell(layout,slot.x,slot.y);
+                Breakable prop;prop.room=index;prop.kind=slot.type==1500?BreakableKind::Dung:BreakableKind::CrackedRock;
+                prop.sourceGridIndex=(slot.y+1)*15+slot.x+1;
+                prop.id=0x535243000000ULL+uint64_t(index)*256+uint64_t(prop.sourceGridIndex);
+                prop.bounds={{at.x-half,0,at.z-half},{at.x+half,slot.type==1500?1.1f:1.35f,at.z+half}};
+                if(prop.kind==BreakableKind::Dung)prop.bounds=dungBounds(prop.bounds);
+                prop.rewardPosition=at;prop.paid=slot.type!=1500;
+                prop.health=prop.initialHealth=slot.type==1500?4:1;
+                prop.lootSeed=propSlotSeed(layout.sourceRoomSpawnSeed,slot.ordinal);
+                breakables.push_back(prop);
+            }
+            rebuildWalls();continue;
+        }
         std::span<const std::array<int,2>> rocks;
         if(layout.sourceObstacleTemplate==91)rocks=Basement91Rocks;
         else if(layout.sourceObstacleTemplate==SourceChestRockRoom)rocks=Basement31Rocks;

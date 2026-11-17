@@ -1,0 +1,32 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "drop_cases": 1024,
+  "windows": [
+    {
+      "name": "fire-drops",
+      "start": "0x6a7839",
+      "end": "0x6a79f0",
+      "sha256": "8ba1425893d8499bdb559482f010243a7f474b9e669c3d1e88a0a7211d835633"
+    },
+    {
+      "name": "poop-drops",
+      "start": "0x6e7f7e",
+      "end": "0x6e8374",
+      "sha256": "031ca7ab7e5c8bb89742d6433f343f96791ff1c049a9b7ae7036b9d8328efee3"
+    },
+    {
+      "name": "fire-hit-loss",
+      "start": "0x6a8134",
+      "end": "0x6a822e",
+      "sha256": "d80615148a8fdae8c0170125857886c85e98492f75c6b0f889753e3a66ef6926"
+    },
+    {
+      "name": "poop-hit-loss",
+      "start": "0x6e646a",
+      "end": "0x6e64d8",
+      "sha256": "25693ed6059b61765df8b6336b8136c9753f01dfa5d753a3d38349fa0c04fecb"
+    }
+  ],
+  "scope": "Original ordinary Normal-mode drop branch and pickup subtype resolver; no held drop modifiers or rare unlocks. Fire supplied drop RNG1/11/6, poop grid RNG1/5/16. Stops before world spawning; full native constructor/global seed mapping, special variants and modifier wrappers remain open.",
+  "full_native_acceptance": false
+}

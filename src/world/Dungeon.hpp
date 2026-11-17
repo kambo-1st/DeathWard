@@ -1,4 +1,5 @@
 #pragma once
+#include "world/RoomProps.hpp"
 #include "core/Types.hpp"
 #include "world/CanyonTerrain.hpp"
 #include "world/MissionTheme.hpp"
@@ -14,7 +15,7 @@ inline constexpr int MinFloorRooms = 9;
 inline constexpr float FloorTile = 2;
 using FloorCell = std::pair<int, int>;
 enum class RoomKind { Combat, Power, Boss, Empty, Shop, Service };
-enum class RoomService { None=0, Surgeon=2, Smuggler=3 }; // Retired value1 is not reused.
+enum class RoomService { None=0, Surgeon=2, Smuggler=3 }; // Values1 and3 are retired; preserve their identities.
 const char *roomServiceName(RoomService service);
 struct RoomGraph {
     std::vector<FloorCell> cells = std::vector<FloorCell>(RoomCount);
@@ -100,6 +101,7 @@ struct Breakable {
     bool destroyed = false, paid = false;
     int initialHealth = 1;
     int sourceGridIndex = -1;
+    PropRewardState propReward;
     bool solid() const { return !destroyed; }
 };
 struct SupplyCache {
@@ -137,10 +139,10 @@ struct Arena {
     Arena() = default;
     explicit Arena(uint64_t seed, MissionTheme missionTheme = MissionTheme::Mine, bool canyonRiver = true,
                    bool tutorial = false, StoryRoom story = StoryRoom::None, int rooms = RoomCount,
-                   FloorDimensions dimensions = {}, FloorProfile profile = {}, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool sourceRoomLocks = false);
+                   FloorDimensions dimensions = {}, FloorProfile profile = {}, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool sourceRoomLocks = false,int propLayouts=0);
     bool sourceRoomLocks = false; // Ordinary source lock policy adapted to canyon connections.
     void applyRoomLockPolicy();
-    void prepareRoomHeartLayouts(uint64_t seed,int mode);
+    void prepareRoomHeartLayouts(uint64_t seed,int mode,int propLayouts=0);
     void prepareSourceHeartRocks();
     bool ordinaryRockBlastClear(Vector3 from, Vector3 to) const;
     void sealRoom(int index);

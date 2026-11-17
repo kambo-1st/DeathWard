@@ -59,7 +59,7 @@ void main() {
     vec3 sediment = surface*vec3(.88,.91,.89);
     sediment *= .96 + .08*gravel;
     surface = mix(surface,sediment,bank);
-    vec3 color = worldSurfaceColor(surface)*westernDaylight(n,sun,shade);
+    vec3 color = worldSurfaceColor(surface)*(westernDaylight(n,sun,shade)+missionFireLight(world,n));
     if(terracedCliffs != 0 && world.y > .15 && n.y < .72)
         color += worldSurfaceColor(surface)*vec3(.14,.095,.045)*(1.-max(dot(n,sun),0.)*shade);
     finalColor=playerOcclusionSurface(world,vec4(color,1.));
@@ -300,8 +300,9 @@ void WesternScene::generateCanyon(const Arena &arena) {
         return;
     if (parameters.enabled) {
         for (const auto &d : canyonAppearance_->decorations) {
-            if (int(placements_.size()) >= parameters.maxDecorations)
-                break;
+            const int limit=d.vegetationTier<2?parameters.baseDecorationLimit():parameters.maxDecorations;
+            if (int(placements_.size()) >= limit)
+                continue;
             WesternAsset asset = d.kind == CanyonDecorationKind::Tree     ? WesternAsset::DesertTree
                                  : d.kind == CanyonDecorationKind::Rock   ? WesternAsset::RockA
                                  : d.kind == CanyonDecorationKind::Cactus ? WesternAsset::CactusA
@@ -331,11 +332,18 @@ void WesternScene::generateCanyon(const Arena &arena) {
             if (!canyonAppearance_->supports(d.position, supportRadius, cactus ? .1f : .18f))
                 continue;
             float base = d.position.y;
-            if (cactus)
-                for (float dx = -supportRadius; dx <= supportRadius + .001f; dx += .12f)
-                    for (float dz = -supportRadius; dz <= supportRadius + .001f; dz += .12f)
-                        base = std::min(
-                            base, canyonAppearance_->height(d.position.x + dx, d.position.z + dz) - .025f);
+            if (cactus) {
+                // The support query uses the original caps. Also check the final
+                // visible surface: a detailed wall can project into a root pad.
+                float low=10000,high=-10000;
+                for(float x=d.position.x-size.x*.5f-.35f;x<=d.position.x+size.x*.5f+.35f;x+=.12f)
+                    for(float z=d.position.z-size.z*.5f-.35f;z<=d.position.z+size.z*.5f+.35f;z+=.12f) {
+                        const float height=canyonAppearance_->height(x,z);
+                        low=std::min(low,height);high=std::max(high,height);
+                    }
+                if(high-low>.1f||low<-.015f)continue;
+                base=low-.025f;
+            }
             placements_.push_back({asset,
                                    {{d.position.x - size.x / 2, base, d.position.z - size.z / 2},
                                     {d.position.x + size.x / 2, base + size.y, d.position.z + size.z / 2}},
@@ -343,9 +351,9 @@ void WesternScene::generateCanyon(const Arena &arena) {
                                    true,
                                    d.room,
                                    scale,
-                                   d.extraVegetation ? 101 : 0});
+                                   d.vegetationTier ? d.vegetationTier*100+1 : 0});
             if (d.kind == CanyonDecorationKind::Rock && asset != WesternAsset::StickA) {
-                for (int j = 0; j < 2 && int(placements_.size()) < parameters.maxDecorations; ++j) {
+                for (int j = 0; j < 2 && int(placements_.size()) < parameters.baseDecorationLimit(); ++j) {
                     float angle = d.yaw + float(j) * 2.7f;
                     auto at = add(d.position,
                                   {std::cos(angle) * d.span * .28f, 0, std::sin(angle) * d.span * .28f});
@@ -433,6 +441,7 @@ void WesternScene::generateCanyon(const Arena &arena) {
     // bank rocks, the terrain or the baseline random stream.
     Random extra(arena.visualSeed ^ 0x6578747261636163ULL);
     const size_t baseline = placements_.size();
+    for(int tier=1;tier<VisualSettings::MaxVegetation/100;++tier)
     for (size_t i = 0; i < baseline; ++i) {
         const auto original = placements_[i];
         if (!isVegetation(original.asset))
@@ -453,7 +462,7 @@ void WesternScene::generateCanyon(const Arena &arena) {
                 continue;
             auto placed = original;
             placed.bounds = {{box.min.x, *base, box.min.z}, {box.max.x, *base + size.y, box.max.z}};
-            placed.vegetationLevel = 101;
+            placed.vegetationLevel = tier*100+1;
             placements_.push_back(placed);
             break;
         }

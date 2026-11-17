@@ -53,7 +53,7 @@ void main() {
     if (surface.a < 0.02) discard;
     surface = playerOcclusionSurface(world,surface);
     vec3 litNormal = gl_FrontFacing ? normalize(normal) : -normalize(normal);
-    finalColor = vec4(worldSurfaceColor(surface.rgb) * westernDaylight(litNormal,missionSun,missionVisibility(world,litNormal)), surface.a);
+    finalColor = vec4(worldSurfaceColor(surface.rgb) * (westernDaylight(litNormal,missionSun,missionVisibility(world,litNormal))+missionFireLight(world,litNormal)), surface.a);
 }
 )GLSL";
 int desertAccentFor(WesternAsset asset) {
@@ -240,9 +240,11 @@ void WesternScene::prepare(const Arena &arena) {
         if (terrainMaterial_.maps)
             terrainMaterial_.maps[MATERIAL_MAP_OCCLUSION].texture = ground_.texture();
         Random densityRandom(arena.visualSeed ^ 0x7665676574617465ULL);
+        Random extraDensityRandom(arena.visualSeed ^ 0x64656e7365353030ULL);
         for (auto &p : placements_)
             if (isVegetation(p.asset))
-                p.vegetationLevel = (p.vegetationLevel ? 101 : 1) + int(densityRandom.bounded(100));
+                p.vegetationLevel = (p.vegetationLevel ? p.vegetationLevel : 1) +
+                    int((p.vegetationLevel>200?extraDensityRandom:densityRandom).bounded(100));
         allPlacements_ = std::move(placements_);
         applyVegetationDensity();
         lastArena_ = &arena;
@@ -426,6 +428,7 @@ void WesternScene::generate(const Arena &arena) {
     // Extra cacti use their own stream after all baseline scenery is fixed.
     Random extraCacti(arena.visualSeed ^ 0x6578747261636163ULL);
     const size_t baseline = placements_.size();
+    for(int tier=1;tier<VisualSettings::MaxVegetation/100;++tier)
     for (size_t i = 0; i < baseline; ++i) {
         const auto original = placements_[i];
         if (original.asset != WesternAsset::CactusA && original.asset != WesternAsset::CactusB)
@@ -436,7 +439,7 @@ void WesternScene::generate(const Arena &arena) {
             center.z += extraCacti.real(-4, 4);
             if (exteriorPiece(original.asset, center, extraCacti.real(.8f, 1.3f),
                               float(extraCacti.bounded(4)) * Pi / 2)) {
-                placements_.back().vegetationLevel = 101;
+                placements_.back().vegetationLevel = tier*100+1;
                 break;
             }
         }
@@ -556,7 +559,7 @@ void WesternScene::generateRoomDecorations(const Arena &arena) {
         std::vector<Box> footprints;
         bool skull = false, bones = false;
         std::vector<WesternPlacement> grasses;
-        auto placeMember = [&](WesternAsset asset, Vector3 anchor, bool extra) {
+        auto placeMember = [&](WesternAsset asset, Vector3 anchor, int extra) {
             const auto source = sub(assetBounds(asset).max, assetBounds(asset).min);
             float span = random.real(.45f, .85f), maxHeight = .3f;
             if (asset == WesternAsset::GrassA || asset == WesternAsset::GrassB) {
@@ -583,7 +586,7 @@ void WesternScene::generateRoomDecorations(const Arena &arena) {
                 if (std::any_of(footprints.begin(), footprints.end(),
                                 [&](auto other) { return overlaps(box, other, .1f); }))
                     continue;
-                placements_.push_back({asset, box, yaw, false, index, scale, extra ? 101 : 0});
+                placements_.push_back({asset, box, yaw, false, index, scale, extra ? extra*100+1 : 0});
                 if (!extra && isVegetation(asset))
                     grasses.push_back(placements_.back());
                 footprints.push_back(box);
@@ -621,11 +624,12 @@ void WesternScene::generateRoomDecorations(const Arena &arena) {
             if (footprints.size() > before)
                 clusters.push_back(anchor);
         }
-        // Add candidates for 100–200% only after baseline debris and vegetation
+        // Add candidates through 500% only after baseline debris and vegetation
         // are fixed. Lower settings are stable subsets of this same candidate pool.
+        for(int tier=1;tier<VisualSettings::MaxVegetation/100;++tier)
         for (const auto &grass : grasses) {
             const auto anchor = mul(add(grass.bounds.min, grass.bounds.max), .5f);
-            placeMember(grass.asset, anchor, true);
+            placeMember(grass.asset, anchor, tier);
         }
     }
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "core/VisualStyle.hpp"
 #include "core/Types.hpp"
+#include "render/ParticleEffects.hpp"
 #include <functional>
 #include <string>
 
@@ -14,6 +15,7 @@ class MissionLighting {
     MissionLighting(const MissionLighting &) = delete;
     MissionLighting &operator=(const MissionLighting &) = delete;
     void unload();
+    void setFireLights(const std::vector<ParticleLight> &lights) { fireLights_.assign(lights.begin(),lights.begin()+std::min(size_t(4),lights.size())); }
     void setVisualStyle(VisualStyle style) { visualStyle_ = style; }
     void invalidate() {
         dirty_ = true;
@@ -42,6 +44,7 @@ class MissionLighting {
   private:
     static constexpr int Size = 2048;
     RenderTexture2D shadow_{}, staticShadow_{};
+    std::vector<ParticleLight> fireLights_;
     Shader instanceDepth_{}, meshDepth_{}, primitiveDepth_{}, actor_{}, primitive_{};
     Matrix view_{}, lightVP_{};
     Vector3 focus_{};

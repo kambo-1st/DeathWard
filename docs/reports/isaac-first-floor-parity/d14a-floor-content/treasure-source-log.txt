@@ -1,0 +1,33 @@
+[INFO] - RNG Start Seed: 2FFX 8XJH (3466870960) [New, 2]
+[INFO] - Initialized player with Variant 0 and Subtype 0
+[INFO] - Level::Init m_Stage 1, m_StageType 0 Seed 1761530316
+[INFO] - delete 0 generated rooms.
+[INFO] - generate...
+[INFO] - place_room: shape 5
+[INFO] - place_room: shape 8
+[INFO] - 9 rooms in 4 loops
+[INFO] - placing rooms...
+[INFO] - Map Generated in 1 Loops
+[INFO] - CURRENT ROOM INDEX 84 29a72bfc
+[INFO] - Room 1.2(Start Room)
+[INFO] - SpawnRNG seed: 3382453641
+[INFO] - Lua mem usage: 801 KB and 201 bytes
+[INFO] - Saving PersistentGameData to Steam Cloud: rep_persistentgamedata2.dat.
+[INFO] - Total entity spawn time: 143 ms
+[INFO] - Total ANM2 loading time: 89 ms
+[INFO] - AnmCache memory usage: 2193056 bytes in 129 entries.
+[INFO] - music stopped playing
+[INFO] - Room 1.704(New Room (copy))
+[INFO] - SpawnRNG seed: 4285633627
+[INFO] - Spawn Entity with Type(249), Variant(0), Pos(320.00,360.00)
+[INFO] - Spawn Entity with Type(249), Variant(0), Pos(320.00,480.00)
+[INFO] - Lua mem usage: 801 KB and 201 bytes
+[INFO] - Queued Path music/Diptera Layer.ogg
+[INFO] - Queued Path music/Diptera Sonata(Basement).ogg
+[INFO] - Room 1.51()
+[INFO] - SpawnRNG seed: 2960478434
+[INFO] - Spawn Entity with Type(10), Variant(0), Pos(320.00,240.00)
+[INFO] - Spawn Entity with Type(10), Variant(0), Pos(320.00,320.00)
+[INFO] - Lua mem usage: 801 KB and 201 bytes
+[INFO] - Room 4.6()
+[INFO] - SpawnRNG seed: 835929943

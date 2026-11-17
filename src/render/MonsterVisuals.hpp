@@ -701,6 +701,11 @@ inline void drawMonsterModel(const Enemy &e, const MonsterDefinition &d, bool dr
     case MonsterShape::Fly: {
         p.y += .25f + bob;
         sphere(p, r, type==96?Color{225,218,193,255}:skin);
+        if(type==249) {
+            // Original canyon art: swollen crimson abdomen, separate from Pooter.
+            sphere(add(p,mul(dir,-r*.65f)),r*1.05f,e.flash>0?skin:Color{154,49,57,255});
+            for(float sideSign:{-1.f,1.f})sphere(add(p,add(mul(side,sideSign*r*.5f),{0,r*.25f,0})),r*.22f,bone);
+        }
         sphere(add(p, mul(dir, r * .65f)), r * .55f, dark);
         for (float sign : {-1.f, 1.f}) {
             const auto wing =

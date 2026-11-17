@@ -1,4 +1,5 @@
 #include "world/CanyonAppearance.hpp"
+#include "core/VisualSettings.hpp"
 #include "world/CliffWallTopology.hpp"
 #include <tuple>
 #include "world/Dungeon.hpp"
@@ -701,13 +702,15 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
                 return true;
         return arena.supplyCache.room >= 0 && overlaps(foot, arena.supplyCache.bounds, .6f);
     };
-    for (int phase = 0; phase < 2; ++phase)
-        for (int room = 0; room < arena.roomCount() && int(out.decorations.size()) < p.maxDecorations;
+    auto addDecorationPhases = [&](int begin, int end) {
+    const int limit=begin<2?p.baseDecorationLimit():p.maxDecorations;
+    for (int phase = begin; phase < end; ++phase)
+        for (int room = 0; room < arena.roomCount() && int(out.decorations.size()) < limit;
              ++room) {
             const auto &bounds = arena.rooms[size_t(room)].bounds;
             Random rng(out.seed ^ 0x5445525241434553ULL ^ uint64_t(room + 1) * 0x9e3779b97f4a7c15ULL ^
                        uint64_t(phase) * 0x4558545241564547ULL);
-            for (int n = 0; n < p.candidatesPerRoom && int(out.decorations.size()) < p.maxDecorations; ++n) {
+            for (int n = 0; n < p.candidatesPerRoom && int(out.decorations.size()) < limit; ++n) {
                 const float skirt = n % 5 == 0 ? p.extent * .6f : 3.f;
                 Vector3 at{rng.real(bounds.min.x - skirt, bounds.max.x + skirt), 0,
                            rng.real(bounds.min.z - skirt, bounds.max.z + skirt)};
@@ -764,17 +767,19 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
                     continue;
                 at.y = h - .025f;
                 out.decorations.push_back(
-                    {kind, zone, at, span, height, rng.real(0, 2 * Pi), room, phase != 0});
+                    {kind, zone, at, span, height, rng.real(0, 2 * Pi), room, phase});
             }
         }
+    };
+    addDecorationPhases(0,2);
     // Give suitable upper room corners a sparse background canopy. Trees use
     // trunk/root support, not their overhanging crown as a ground footprint.
     if (p.plateauVegetation > 0 && p.candidatesPerRoom > 0)
         for (int room = 0; room < arena.roomCount(); ++room) {
-            if (int(out.decorations.size()) >= p.maxDecorations)
+            if (int(out.decorations.size()) >= p.baseDecorationLimit())
                 break;
             if (std::any_of(out.decorations.begin(), out.decorations.end(), [&](const auto &d) {
-                    return d.room == room && d.kind == CanyonDecorationKind::Tree && !d.extraVegetation;
+                    return d.room == room && d.kind == CanyonDecorationKind::Tree && !d.vegetationTier;
                 }))
                 continue;
             Random rng(out.seed ^ 0x43414e4f5059ULL ^ uint64_t(room + 1) * 0x9e3779b97f4a7c15ULL);
@@ -800,10 +805,10 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
     // reference's foreground green accent without occupying the combat center.
     if (p.baseVegetation > 0 && p.candidatesPerRoom > 0)
         for (int room = 0; room < arena.roomCount(); ++room) {
-            if (int(out.decorations.size()) >= p.maxDecorations)
+            if (int(out.decorations.size()) >= p.baseDecorationLimit())
                 break;
             if (std::any_of(out.decorations.begin(), out.decorations.end(), [&](const auto &d) {
-                    return d.room == room && d.kind == CanyonDecorationKind::Cactus && !d.extraVegetation &&
+                    return d.room == room && d.kind == CanyonDecorationKind::Cactus && !d.vegetationTier &&
                            source.height(d.position.x, d.position.z) <= CanyonTerrain::WalkableHeight;
                 }))
                 continue;
@@ -829,7 +834,9 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
             }
         }
     std::stable_partition(out.decorations.begin(), out.decorations.end(),
-                          [](const auto &d) { return !d.extraVegetation; });
+                          [](const auto &d) { return !d.vegetationTier; });
+    // Preserve all original candidates and accents before adding denser tiers.
+    addDecorationPhases(2,VisualSettings::MaxVegetation/100);
     if (p.irregularFacets && p.facets > 0) {
         // Only wall interiors change. Top/bottom contours and all non-wall triangles
         // stay fixed. Connected faces share a 2D network rather than a fan per column.

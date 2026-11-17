@@ -1,0 +1,31 @@
+{
+  "range": [
+    0,
+    500
+  ],
+  "default": 100,
+  "pause_step": 25,
+  "front_step": 10,
+  "main_build": "pass",
+  "hud_input": "pass",
+  "tuning_menu_and_persistence": "pass",
+  "vegetation_pause_input_and_reload": "pass",
+  "front_slider_apply_reload": "pass",
+  "ordinary_room_props": "pass",
+  "canyon_visual_geometry": "pass",
+  "western_assets": "pass: five seeds per theme, 22295 placements",
+  "review_seed": 69,
+  "review_template": 1000000,
+  "review_plant_counts": {
+    "100": 394,
+    "200": 687,
+    "500": 1333
+  },
+  "prior_review_100_count": 394,
+  "baseline_cactus_correction": "reject root pads crossing final detailed cliff faces; seed69175541 threshold64 witness",
+  "original_user_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "remaining": [
+    "human visual acceptance of HUD cleanup",
+    "human visual acceptance of 500% vegetation"
+  ]
+}

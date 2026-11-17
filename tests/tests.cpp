@@ -283,12 +283,12 @@ void testMouseMovement() {
     click.moveTarget = run.arena.miners;
     run.step(click);
     tick(run, 600);
-    check(run.rescued && !run.moveDestination(), "mouse destination rescues miners on arrival");
+    check(!run.rescued && !run.moveDestination(), "former miner location is ordinary walkable ground");
     run.room = 3;
     click.moveTarget = run.arena.altar;
     run.step(click);
     tick(run, 600);
-    check(run.altarDestroyed && !run.moveDestination(), "mouse destination destroys altar on arrival");
+    check(!run.altarDestroyed && !run.moveDestination(), "former altar location is ordinary walkable ground");
 }
 void testSafety() {
     auto run = fixture();
@@ -344,13 +344,17 @@ void testCampaign(const std::filesystem::path &path) {
     uint64_t id = store.begin(123);
     auto run = dw::Simulation(123, id, store.data().world);
     run.grant(dw::ItemId::Judas);
-    run.rescued = true;
+    run.rescued = run.altarDestroyed = true;
+    check(!run.summary().rescued&&!run.summary().altarDestroyed,"new summaries omit retired quest flags");
+    store.setFlag("miners_stranded",true);store.setFlag("something_followed",true);
     store.checkpoint(run.summary());
     {
         dw::CampaignStore restart(path);
         check(restart.recover(), "pending run recovers as retreat");
-        check(restart.data().world.population == 48 && restart.data().world.prosperity == 42,
-              "rescue survives interrupted retreat");
+        check(restart.data().world.population == 42 && restart.data().world.prosperity == 42,
+              "retired rescue cannot award population on interrupted retreat");
+        check(!restart.data().world.flags.contains("miners_stranded")&&!restart.data().world.flags.contains("something_followed"),
+              "old quest penalties clear when an interrupted expedition resolves");
         check(restart.data().history.size() == 1 && restart.data().history.back().interrupted,
               "partial history marked interrupted");
     }
@@ -368,13 +372,13 @@ void testCampaign(const std::filesystem::path &path) {
     auto won = restart.resolve(next.summary(), dw::EndReason::Victory);
     check(restart.data().world.mineOpen && restart.data().world.prosperity == 62,
           "later victory restores setback and reopens mine");
-    check(!restart.data().world.flags.contains("something_followed"), "altar clears persistent haunting");
+    check(!restart.data().world.flags.contains("something_followed"), "retired altar never creates haunting");
     id = restart.begin(456);
     dw::Simulation revisit(456, id, restart.data().world);
-    check(revisit.rescued && revisit.followup, "revisit remembers rescue and boss");
+    check(!revisit.rescued && revisit.followup, "revisit retains boss progress without retired objectives");
     revisit.finishDebug(true);
     restart.resolve(revisit.summary(), dw::EndReason::Victory);
-    check(restart.data().world.population == 48 && restart.data().world.prosperity == 62,
+    check(restart.data().world.population == 42 && restart.data().world.prosperity == 62,
           "revisit cannot duplicate rescue or prosperity rewards");
     dw::CampaignStore reloaded(path);
     check(reloaded.data().history.size() == 3 && reloaded.data().world.mineOpen,
@@ -386,8 +390,9 @@ void testCampaign(const std::filesystem::path &path) {
     dw::Simulation hollow(789, id, reloaded.data().world);
     hollow.finishDebug(true);
     reloaded.resolve(hollow.summary(), dw::EndReason::Victory);
-    check(!reloaded.data().world.mineOpen && reloaded.data().world.flags.contains("miners_stranded"),
-          "victory without rescue is a distinct outcome");
+    check(reloaded.data().world.mineOpen && !reloaded.data().world.minersRescued &&
+          !reloaded.data().world.flags.contains("miners_stranded") && !reloaded.data().world.flags.contains("something_followed"),
+          "victory reopens mine without removed rescue or altar requirements");
     std::ofstream corrupt(path, std::ios::app);
     corrupt << "damage";
     corrupt.close();
@@ -505,12 +510,12 @@ void testLoop() {
         if (room == 2) {
             run.player.position = run.arena.miners;
             run.interact();
-            check(run.rescued, "in-world rescue interaction");
+            check(!run.rescued && run.nearbyInteraction()!="FREE MINERS", "retired miners have no interaction or prompt");
         }
         if (room == 3) {
             run.player.position = run.arena.altar;
             run.interact();
-            check(run.altarDestroyed, "in-world altar interaction");
+            check(!run.altarDestroyed && run.nearbyInteraction()!="BREAK ALTAR", "retired altar has no interaction or prompt");
         }
         for (int passage : run.arena.rooms[size_t(room)].passages) {
             const auto &door = run.arena.passages[size_t(passage)];

@@ -1,4 +1,5 @@
 #include "render/ParticleEffects.hpp"
+#include "render/CampfirePlacement.hpp"
 #include "platform/Assets.hpp"
 #include "combat/Simulation.hpp"
 #include <set>
@@ -135,6 +136,44 @@ void ParticleEffects::animate(const ObjectAnimationSystem &animation) {
     }
     time_ = nextTime;
 }
+void ParticleEffects::appendBound(const Bound &b,Matrix view) {
+    const auto &a = library_.attachments[b.attachment];
+    const auto center = Vector3Transform(a.offset, b.transform);
+    const float worldScale = scaleOf(b.transform);
+    if (a.lightRange > 0 && lights_.size() < 4) {
+        const float phase = float(b.seed % 1024);
+        const float flicker = 1.65f + .18f * std::sin(float(time_ * 7.1) + phase) +
+                              .11f * std::sin(float(time_ * 13.7) + phase * .37f);
+        lights_.push_back({add(center,{0,.32f*worldScale,0}), mul({1,.32f,.065f},flicker),
+                           a.lightRange * worldScale});
+    }
+    const auto &e = library_.emitters[a.emitter];
+    for (const auto &p : ParticleLibrary::sample(e, time_, b.seed)) {
+        if (particles_.size() >= 4096) break;
+        const float size = p.size * a.scale;
+        const auto local = add(a.offset, mul(p.position, a.scale));
+        if (a.trail && !b.trail.empty()) {
+            // Place each puff where the stack was when it emitted it. World
+            // gravity/wind then act independently of the train's current pose.
+            const double birth = time_ - p.age;
+            Vector3 origin = b.trail.front().second;
+            for (size_t n = 1; n < b.trail.size(); ++n) {
+                const auto &[ta, pa] = b.trail[n-1];
+                const auto &[tb, pb] = b.trail[n];
+                origin = Vector3Lerp(pa,pb,float(std::clamp((birth-ta)/(tb-ta),0.,1.)));
+                if (birth <= tb) break;
+            }
+            append(a.emitter,p,add(origin,mul(p.position,a.scale*worldScale)),a.scale*worldScale,view);
+            continue;
+        }
+        const auto position = Vector3Transform(local, b.transform);
+        const auto transform = MatrixMultiply(MatrixMultiply(MatrixMultiply(MatrixScale(size,size,size),
+            MatrixRotateY(p.rotation)), MatrixTranslate(local.x,local.y,local.z)), b.transform);
+        particles_.push_back({a.emitter, transform, position,
+            {byte(p.color.x),byte(p.color.y),byte(p.color.z),byte(p.alpha)},
+            size * worldScale, p.rotation * RAD2DEG, -Vector3Transform(position, view).z});
+    }
+}
 void ParticleEffects::prepare(const Camera3D &camera) {
     particles_.clear(); lights_.clear();
     std::vector<std::pair<float, size_t>> visible;
@@ -149,43 +188,7 @@ void ParticleEffects::prepare(const Camera3D &camera) {
     for (const auto &[d, index] : visible) {
         (void)d;
         if (particles_.size() >= 4096) break;
-        const auto &b = bound_[index];
-        const auto &a = library_.attachments[b.attachment];
-        const auto center = Vector3Transform(a.offset, b.transform);
-        const float worldScale = scaleOf(b.transform);
-        if (a.lightRange > 0 && lights_.size() < 4) {
-            const float phase = float(b.seed % 1024);
-            const float flicker = 1.65f + .18f * std::sin(float(time_ * 7.1) + phase) +
-                                  .11f * std::sin(float(time_ * 13.7) + phase * .37f);
-            lights_.push_back({add(center,{0,.32f*worldScale,0}), mul({1,.32f,.065f},flicker),
-                               a.lightRange * worldScale});
-        }
-        const auto &e = library_.emitters[a.emitter];
-        for (const auto &p : ParticleLibrary::sample(e, time_, b.seed)) {
-            if (particles_.size() >= 4096) break;
-            const float size = p.size * a.scale;
-            const auto local = add(a.offset, mul(p.position, a.scale));
-            if (a.trail && !b.trail.empty()) {
-                // Place each puff where the stack was when it emitted it. World
-                // gravity/wind then act independently of the train's current pose.
-                const double birth = time_ - p.age;
-                Vector3 origin = b.trail.front().second;
-                for (size_t n = 1; n < b.trail.size(); ++n) {
-                    const auto &[ta, pa] = b.trail[n-1];
-                    const auto &[tb, pb] = b.trail[n];
-                    origin = Vector3Lerp(pa,pb,float(std::clamp((birth-ta)/(tb-ta),0.,1.)));
-                    if (birth <= tb) break;
-                }
-                append(a.emitter,p,add(origin,mul(p.position,a.scale*worldScale)),a.scale*worldScale,view);
-                continue;
-            }
-            const auto position = Vector3Transform(local, b.transform);
-            const auto transform = MatrixMultiply(MatrixMultiply(MatrixMultiply(MatrixScale(size,size,size),
-                MatrixRotateY(p.rotation)), MatrixTranslate(local.x,local.y,local.z)), b.transform);
-            particles_.push_back({a.emitter, transform, position,
-                {byte(p.color.x),byte(p.color.y),byte(p.color.z),byte(p.alpha)},
-                size * worldScale, p.rotation * RAD2DEG, -Vector3Transform(position, view).z});
-        }
+        appendBound(bound_[index],view);
     }
     if (artDust) {
         const auto e = std::find_if(library_.emitters.begin(), library_.emitters.end(),
@@ -273,6 +276,21 @@ void ParticleEffects::prepareMission(const Simulation &run, const Camera3D &came
                 append(index,p,position,burst.scale,view,burst.direction);
             }
         }
+    }
+    // Reuse the exact town attachment sampler, offsets, mesh effects and
+    // flickering lights. Spent/dead fires have neither particles nor lights.
+    std::vector<std::pair<float,const Enemy *>> fires;
+    for(int room=0;room<int(run.rooms.size());++room)for(const auto &e:run.roomEnemies(room)) {
+        if(!e.alive||e.railCarrier||e.monster!=monsterId(33)||!e.environment||e.environment->spent||e.state==EnemyState::Teleporting)continue;
+        const float distanceToView=distance(e.position,camera.target);
+        if(distanceToView<65)fires.emplace_back(distanceToView,&e);
+    }
+    std::stable_sort(fires.begin(),fires.end(),[](const auto &a,const auto &b){return a.first<b.first;});
+    for(const auto &[d,enemy]:fires) {
+        (void)d;const auto transform=campfireTransform(enemy->position,enemy->radius);
+        const auto identity="expedition-fire-"+std::to_string(enemy->id);
+        for(size_t a=0;a<library_.attachments.size();++a)if(library_.attachments[a].label==TownCampfireLabel)
+            appendBound({0,a,transform,seedFor(identity,a),{}},view);
     }
     if (run.arena.theme == MissionTheme::Canyon && run.arena.canyon) {
         if (!dustReady_ || dustSeed_ != run.arena.visualSeed || dustRoomCount_ != run.arena.roomCount()) {

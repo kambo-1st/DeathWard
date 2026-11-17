@@ -1,10 +1,13 @@
 #include "combat/Simulation.hpp"
 #include "combat/SourceTime.hpp"
+#include "world/DungGeometry.hpp"
 
 namespace dw {
 void Simulation::updateBuzzFly(Enemy &e,float dt) {
     auto p=*content->buzzFly(e.monster);
     const bool tuned=tunedPooter(e);
+    const bool full=e.monster==monsterId(249);
+    const bool fullSkatole=full&&!e.friendly&&itemStacks(ItemKey{"isaac",ItemKind::Collectible,9})>0;
     if(tuned) {
         const float authoredScale=p.scale;
         p.scale=GaperMovementScale;
@@ -16,7 +19,8 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
             p.shot->cooldownFrames=std::max(1,int(std::round(p.shot->cooldownFrames*pooterTuning->attackInterval)));
         }
     }
-    if(e.dukeChild)p.scale=GaperMovementScale;
+    if(e.dukeChild||full)p.scale=GaperMovementScale;
+    if(full){p.jitter*=fullFlyTuning.movement;p.edge*=fullFlyTuning.movement;}
     const float motionScale=p.scale*30*(e.dukeChild?dukeTuning.flySpeed:1);
     if(!e.buzz)e.buzz=BuzzFlyRuntime{};
     auto &r=*e.buzz;
@@ -48,7 +52,7 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
         if(e.stateTime<=0)e.state=EnemyState::Ready;
         return;
     }
-    const int sourceUpdates=sourceControllerUpdates(r.clock,dt,tuned||bool(e.dukeChild)||(nativeBurstWanderReview&&e.monster==monsterId(14)));
+    const int sourceUpdates=sourceControllerUpdates(r.clock,dt,tuned||full||bool(e.dukeChild)||(nativeBurstWanderReview&&e.monster==monsterId(14)));
     for(int sourceUpdate=0;sourceUpdate<sourceUpdates;++sourceUpdate) {++r.tick;
         if(r.healingTicks>0) {
             e.hp=std::min(e.maxHp,e.hp+e.maxHp/float(r.healingDivisor));--r.healingTicks;
@@ -136,6 +140,9 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
             if(r.tick%unsigned(c.targetFrames)==0){r.target=player.position;r.targetReady=true;}
             if(r.targetReady&&r.tick%unsigned(c.forceFrames)==0) {
                 auto delta=mul(horizontal(sub(r.target,e.position)),1/p.scale);
+                if(full) {
+                    r.momentum=add(r.momentum,mul(fullFlyPursuit(delta,fullSkatole),fullFlyTuning.movement*e.championSpeed/friction));
+                } else {
                 delta.z*=c.axisScale;
                 if(e.dukeChild&&e.dukeChild->cohort) {
                     const auto *parent=findEnemy(e.dukeChild->parent);
@@ -145,11 +152,20 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
                 if(r.diesOnContact)friction*=r.contactRetention;
                 const float distance=length(delta);
                 if(distance>c.deadzone)r.momentum=add(r.momentum,mul(unit(delta),std::min((distance-c.deadzone)*c.gain,c.force)*e.championSpeed/friction));
+                }
             }
         // Ordinary Fly/Pooter discard their temporary dung-search target. Their
         // actual pursuit is an intermittent impulse, not a path-following chase.
         } else if(combatRng.bounded(unsigned(p.pursuitChance))==0)
             r.momentum=add(r.momentum,mul(unit(horizontal(sub(player.position,e.position))),p.pursuit*e.championSpeed));
+        if(full) {
+            // Native grid impact supplies an outward collision vector. Canyon
+            // flight supplies the rejected velocity; RNG remains the DW stream.
+            if(length(r.fullFlyWallNormal)>.001f&&combatRng.bounded(3)==0)
+                r.fullFlyRecoil=mul(unit(r.fullFlyWallNormal),-2-combatRng.real(0,1.5f));
+            r.fullFlyWallNormal={};
+            r.momentum=add(r.momentum,mul(fullFlyRecoil(r.fullFlyRecoil),fullFlyTuning.movement*e.championSpeed/friction));
+        }
         if(r.tick%4==1)
             r.wander=mul(add(r.wander,rotateY({p.jitter,0,0},combatRng.real(0,2*Pi))),p.jitterRetention);
         if(r.tick%3==2) {
@@ -176,9 +192,10 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
         r.momentum=mul(r.momentum,friction);
     }
     auto velocity=mul(r.momentum,motionScale);
-    if(!e.dukeChild&&length(velocity)>p.speedCap)velocity=mul(unit(velocity),p.speedCap);
+    if(!full&&!e.dukeChild&&length(velocity)>p.speedCap)velocity=mul(unit(velocity),p.speedCap);
     const auto previous=e.position;
     moveMonster(e,velocity,dt);
+    if(full&&length(sub(velocity,e.velocity))>.01f)r.fullFlyWallNormal=sub(velocity,e.velocity);
     r.momentum=mul(horizontal(e.velocity),1/motionScale);
     if(length(horizontal(e.velocity))>.001f)e.facing=unit(horizontal(e.velocity));
     if(r.attackFrame>=0&&!r.fired)e.target=player.position;
@@ -187,9 +204,25 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
     if(!e.friendly&&(p.chase||r.diesOnContact)&&
        segmentSphere(sub(previous,playerStepStart_),sub(e.position,player.position),{},e.radius+.48f)<=1&&
        arena.sight(e.position,player.position)) {
-        if(p.chase&&!itemMorph){Context source;source.sourceEntity=e.id;hurtPlayer(p.chase->contact,source);}
+        if(p.chase&&!itemMorph&&!fullSkatole){Context source;source.sourceEntity=e.id;hurtPlayer(p.chase->contact,source);}
         if(r.diesOnContact){e.selfDetonated=true;requestContactDeath();}
     }
+}
+
+bool Simulation::flushFullFlyDeath(Enemy &e) {
+    if(!e.buzz||!e.buzz->fullFlyDeathPending)return true;
+    auto &r=*e.buzz;
+    while(r.fullFlyDeathIndex<6) {
+        const auto queued=std::count_if(queue_.begin(),queue_.end(),[](const Event &v){return v.type==EventType::Shot;});
+        if(queue_.size()>=limits.queuedEvents||projectiles.size()+size_t(queued)>=limits.projectiles)return false;
+        const auto velocity=fullFlyDeathVelocity(r.fullFlyDeathIndex,GaperMovementScale,r.fullFlyDeathSpeed);
+        Event shot;shot.hostile=true;shot.context.sourceEntity=e.id;shot.position=shot.origin=e.position;
+        shot.direction=unit(velocity);shot.speed=length(velocity);shot.damage=10;
+        shot.pooterFlight=true;shot.fullFlyDeathShot=true;
+        if(!queueRoot(shot))return false;
+        ++r.fullFlyDeathIndex;
+    }
+    r.fullFlyDeathPending=false;return true;
 }
 
 void Simulation::prepareDung() {
@@ -227,7 +260,7 @@ void Simulation::prepareDung() {
             }
             if(!clear||arena.path(layout.center,at,.48f).empty())continue;
             Breakable prop;prop.id=0xd0000000ULL+uint64_t(index);prop.lootSeed=seed_^prop.id;
-            prop.kind=BreakableKind::Dung;prop.room=index;prop.bounds=box;prop.rewardPosition=at;prop.health=p.hits;prop.initialHealth=p.hits;
+            prop.kind=BreakableKind::Dung;prop.room=index;prop.bounds=dungBounds(box);prop.rewardPosition=at;prop.health=p.hits;prop.initialHealth=p.hits;
             arena.breakables.push_back(prop);arena.rebuildWalls();++placed;break;
         }
     }

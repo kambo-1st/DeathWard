@@ -10,7 +10,7 @@
 namespace dw {
 namespace {
 constexpr Vector3 CameraOffset{23, 30, 23};
-constexpr float MinCameraZoom = 0.35f, MaxCameraZoom = 1.5f;
+constexpr float MinCameraZoom = 100.f/BalancePreset::MaxZoom, MaxCameraZoom = 100.f/BalancePreset::MinZoom;
 constexpr float MinCameraPitch = 25 * DEG2RAD, MaxCameraPitch = 75 * DEG2RAD;
 struct PointerTarget {
     EntityId enemy = 0;
@@ -56,10 +56,6 @@ PointerTarget pickTarget(const Simulation &run, Ray ray, const std::optional<Ray
         objective(run.surveyPosition(),1.1f,1.4f);
     if(run.arena.rooms[size_t(run.room)].story!=StoryRoom::None&&run.roomClear)
         objective(run.arena.rooms[size_t(run.room)].objective,1.2f,1.6f);
-    if (run.legacyObjectives() && !run.rescued)
-        objective(run.arena.miners, 1.7f, 2.0f);
-    if (run.legacyObjectives() && !run.altarDestroyed)
-        objective(run.arena.altar, 1.0f, 2.9f);
     if (run.canUseFloorExit())
         objective(run.arena.exit, 2.0f, 3.2f);
     if (run.rewardAvailable(run.room))
@@ -231,7 +227,7 @@ void Game::launch(bool freeMission) {
                                                   nextBalancePreset?nextBalancePreset->shopCollectiblePool:1,
                                                   nextBalancePreset?nextBalancePreset->treasureCollectiblePool:1,
                                                   nextBalancePreset?nextBalancePreset->monstro:MonstroTuning{},
-                                                  nextBalancePreset?nextBalancePreset->duke:DukeTuning{},nextBalancePreset?nextBalancePreset->seededBosses:true);
+                                                  nextBalancePreset?nextBalancePreset->duke:DukeTuning{},nextBalancePreset?nextBalancePreset->seededBosses:true,nextBalancePreset?nextBalancePreset->bossRewardItem:25,nextBalancePreset?nextBalancePreset->roomProps:RoomPropsTuning{});
     startExpedition(std::move(candidate));
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
     if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
@@ -281,7 +277,7 @@ void Game::perform(Action action) {
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
            (action<Action::BalanceDamageHealthTab||action>Action::ResetYumHeart)&&
            (action<Action::BalanceTrinketTab||action>Action::ResetTrinkets)&&action!=Action::WhipDown&&action!=Action::WhipUp&&
-           (action<Action::BalanceHaloTab||action>Action::CycleBossTuning))return;
+           (action<Action::BalanceHaloTab||action>Action::TogglePropRewards))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -297,9 +293,9 @@ void Game::perform(Action action) {
             balanceOpen=balancePathEditing=false;accumulator=0;resetPointerInput();break;
         case Action::BalanceWorldTab:balanceRewardsOpen=balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
         case Action::BalanceShootingTab:balanceTrinketOpen=false;balanceActiveOpen=balanceFamiliarOpen=balanceTreasureOpen=false;balanceShootingOpen=true;balanceEnemiesOpen=balanceRewardsOpen=balanceCombatOpen=false;break;
-        case Action::BalanceEnemiesTab:balanceMonstroOpen=false;balanceEnemiesOpen=true;balanceShootingOpen=balanceRewardsOpen=balanceCombatOpen=false;balancePooterOpen=false;break;
+        case Action::BalanceEnemiesTab:balanceFullFlyOpen=false;balanceMonstroOpen=false;balanceEnemiesOpen=true;balanceShootingOpen=balanceRewardsOpen=balanceCombatOpen=false;balancePooterOpen=false;break;
         case Action::BalanceRewardsTab:balanceShopOpen=false;balanceRewardsOpen=true;balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
-        case Action::BalanceShopTab:balanceShopOpen=true;balanceShopKeyOpen=balanceShopStockOpen=balanceShopBombOpen=balanceShopSoulHeartOpen=false;break;
+        case Action::BalanceShopTab:balancePropsOpen=false;balanceShopOpen=true;balanceShopKeyOpen=balanceShopStockOpen=balanceShopBombOpen=balanceShopSoulHeartOpen=false;break;
         case Action::BalanceShopHeartTab:balanceShopKeyOpen=balanceShopStockOpen=balanceShopBombOpen=balanceShopSoulHeartOpen=false;break;
         case Action::BalanceShopKeyTab:balanceShopKeyOpen=true;balanceShopStockOpen=balanceShopBombOpen=balanceShopSoulHeartOpen=false;break;
         case Action::BalanceShopStockTab:balanceShopStockOpen=true;balanceShopKeyOpen=balanceShopBombOpen=balanceShopSoulHeartOpen=false;break;
@@ -428,8 +424,18 @@ void Game::perform(Action action) {
             applyBalance(std::move(preset));
             balanceNotice="Owned Sad Onion: next firing interval. Current wait and emitted shots retained.";break;
         }
-        case Action::BalanceRoomHeartsTab:balanceShopOpen=false;balanceRoomHeartsOpen=true;break;
-        case Action::BalanceClearHeartsTab:balanceShopOpen=false;balanceRoomHeartsOpen=false;break;
+        case Action::BalanceRoomHeartsTab:balancePropsOpen=false;balanceShopOpen=false;balanceRoomHeartsOpen=true;break;
+        case Action::BalanceClearHeartsTab:balancePropsOpen=false;balanceShopOpen=false;balanceRoomHeartsOpen=false;break;
+        case Action::BalancePropsTab:balancePropsOpen=true;balanceShopOpen=balanceRoomHeartsOpen=false;break;
+        case Action::PropsOff:case Action::PropsSource:case Action::PropsTest:
+            balanceDraft.roomProps.layouts=action==Action::PropsOff?0:action==Action::PropsSource?1:2;
+            balanceNotice="Prop layout pending. APPLY MAP CHANGES resets this floor; player/build retained.";break;
+        case Action::FireDamageDown:case Action::FireDamageUp:case Action::TogglePropRewards: {
+            auto preset=balancePreset;
+            if(action==Action::TogglePropRewards)preset.roomProps.rewards=!preset.roomProps.rewards;
+            else preset.roomProps.fireDamageHalfHearts=std::clamp(preset.roomProps.fireDamageHalfHearts+(action==Action::FireDamageUp?1:-1),0,6);
+            applyBalance(std::move(preset));balanceNotice="Fire contact and future destruction updated. Resolved drops stay fixed.";break;
+        }
         case Action::RoomHeartsOff:setRoomHeartLayouts(0);break;
         case Action::RoomHeartsSource:setRoomHeartLayouts(1);break;
         case Action::RoomHeartsTest:setRoomHeartLayouts(2);break;
@@ -495,10 +501,24 @@ void Game::perform(Action action) {
             setCombatBalance(balancePreset.playerDamage,std::clamp(std::round((balancePreset.regularHealthMultiplier+(action==Action::RegularHealthUp?.05f:-.05f))*100)/100,
                              BalancePreset::MinRegularHealth,BalancePreset::MaxRegularHealth));break;
         case Action::ResetCombat:setCombatBalance(BalancePreset::ReferenceDamage,BalancePreset::ReferenceRegularHealth);break;
-        case Action::BalanceChasersTab:balanceMonstroOpen=false;balancePooterOpen=false;break;
-        case Action::BalanceMonstroTab:
-            balanceMonstroOpen=true;balancePooterOpen=false;
+        case Action::BalanceChasersTab:balanceFullFlyOpen=false;balanceMonstroOpen=false;balancePooterOpen=false;break;
+        case Action::BalanceMonstroTab:balanceFullFlyOpen=false;
+            balanceMonstroOpen=true;balancePooterOpen=false;balanceBossRewardOpen=false;
             balanceDukeValues=openingBossType(run?run->expedition.floorSeed(0):0,balancePreset.seededBosses,balancePreset.monstro.enabled,balancePreset.duke.enabled)==67;break;
+        case Action::BalanceBossRewardTab:balanceFullFlyOpen=false;balanceEnemiesOpen=balanceMonstroOpen=balanceBossRewardOpen=true;balancePooterOpen=false;break;
+        case Action::SelectBreakfastReward:case Action::SelectScrewReward:
+            balanceDraft.bossRewardItem=action==Action::SelectScrewReward?255:25;
+            balanceNotice="Boss reward pending: Apply map changes regenerates this floor.";break;
+        case Action::ScrewTearsDown:case Action::ScrewTearsUp:case Action::ScrewShotDown:case Action::ScrewShotUp:case Action::ResetScrew: {
+            auto p=balancePreset;
+            if(action==Action::ResetScrew)p.screw={};
+            else {
+                const int offset=int(action)-int(Action::ScrewTearsDown);
+                auto &v=offset<2?p.screw.tearsStrength:p.screw.shotSpeedStrength;
+                v=std::clamp(std::round((v+(offset%2?.05f:-.05f))*100)/100,0.f,2.f);
+            }
+            applyBalance(p);balanceNotice="Screw effects apply to new shots. Existing shots and firing wait are retained.";break;
+        }
         case Action::CycleBossTuning:balanceDukeValues=!balanceDukeValues;break;
         case Action::SelectSeededBosses:balanceDukeValues=seededOpeningBossType(run?run->expedition.floorSeed(0):0)==67;balanceDraft.seededBosses=true;balanceDraft.duke.enabled=false;balanceDraft.monstro.enabled=true;balanceNotice="Seeded boss selection pending: Apply map changes resets floor encounters.";break;
         case Action::SelectLegacyBoss:balanceDraft.seededBosses=false;balanceDraft.duke.enabled=false;balanceDraft.monstro.enabled=false;balanceNotice="Boss selection pending: Apply map changes resets floor encounters.";break;
@@ -523,7 +543,7 @@ void Game::perform(Action action) {
                 *v=std::clamp(std::round((*v+(offset%2?.05f:-.05f))*100)/100,.1f,3.f);}
             applyBalance(p);balanceNotice="Boss health keeps injury fraction; movement live; new volleys use new speed.";break;
         }
-        case Action::BalancePooterTab:balanceMonstroOpen=false;balancePooterOpen=true;break;
+        case Action::BalancePooterTab:balanceFullFlyOpen=false;balanceMonstroOpen=false;balancePooterOpen=true;break;
         case Action::PooterMovementDown:case Action::PooterMovementUp:
             setPooterTuning(std::clamp(std::round((balancePreset.pooterMovementMultiplier+(action==Action::PooterMovementUp?.05f:-.05f))*100)/100,
                            BalancePreset::MinPooterMovement,BalancePreset::MaxPooterMovement),balancePreset.pooterShotSpeedMultiplier,balancePreset.pooterAttackIntervalMultiplier);break;
@@ -534,6 +554,19 @@ void Game::perform(Action action) {
             setPooterTuning(balancePreset.pooterMovementMultiplier,balancePreset.pooterShotSpeedMultiplier,std::clamp(std::round((balancePreset.pooterAttackIntervalMultiplier+(action==Action::PooterDelayUp?.05f:-.05f))*100)/100,
                            BalancePreset::MinPooterInterval,BalancePreset::MaxPooterInterval));break;
         case Action::ResetPooter:setPooterTuning(1,1,1);break;
+        case Action::BalanceFullFlyTab:balanceFullFlyOpen=true;balanceMonstroOpen=balancePooterOpen=false;break;
+        case Action::FullFlyMovementDown:case Action::FullFlyMovementUp:
+        case Action::FullFlyShotDown:case Action::FullFlyShotUp:case Action::ResetFullFly: {
+            auto p=balancePreset;
+            if(action==Action::ResetFullFly)p.fullFly={};
+            else {
+                const bool movement=action==Action::FullFlyMovementDown||action==Action::FullFlyMovementUp;
+                const bool up=action==Action::FullFlyMovementUp||action==Action::FullFlyShotUp;
+                float &v=movement?p.fullFly.movement:p.fullFly.shotSpeed;
+                v=std::clamp(std::round((v+(up?.05f:-.05f))*100)/100,.1f,2.f);
+            }
+            applyBalance(std::move(p));balanceNotice="Full Fly movement: next steering tick. Death shots: next death; emitted bursts retained.";break;
+        }
         case Action::GaperMovementDown:case Action::GaperMovementUp:
             setGaperMovement(std::clamp(std::round((balancePreset.gaperMovementMultiplier+(action==Action::GaperMovementUp?.05f:-.05f))*100)/100,
                                        BalancePreset::MinGaperMovement,BalancePreset::MaxGaperMovement));break;
@@ -1028,8 +1061,8 @@ bool Game::pointerOverControls() const {
     const auto over=[&](Rectangle r){return CheckCollisionPointRec({x,y},r);};
     const bool live=run&&!paused&&!run->dead&&!run->rewardOpen&&!run->shopOpen;
     return (run&&(run->surveyTutorial||run->testimony())&&x>=964&&x<=1256&&y>=22&&y<=153)||
-           (live&&(((reviewActives||reviewTrinkets)&&over(expeditionHud::categoryReview(reviewActives&&run->activeReviewCollected>=2&&run->roomClear)))||(run->powerupReview&&over(expeditionHud::categoryReview(run->roomClear&&run->powerupReview->collected==4)))||over(expeditionHud::Dynamite)||
-               (run->heldTrinket&&over(expeditionHud::Trinket))||(run->activeItem&&over(expeditionHud::Active))||over(expeditionHud::Dodge)||over(expeditionHud::Pause)||over(expeditionHud::Tuning)||
+           (live&&(((reviewActives||reviewTrinkets)&&over(expeditionHud::categoryReview(reviewActives&&run->activeReviewCollected>=2&&run->roomClear)))||(run->powerupReview&&over(expeditionHud::categoryReview(run->roomClear&&run->powerupReview->collected==4)))||
+               (run->heldTrinket&&over(expeditionHud::Trinket))||(run->activeItem&&over(expeditionHud::Active))||over(expeditionHud::Dodge)||
                (ownedItemTypes()>0&&over(expeditionHud::items(ownedItemTypes())))))||
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||
            (debug && debugPanelOpen && x >= 24 && x <= 539 && y >= 133 && y <= 592);
@@ -1084,8 +1117,10 @@ std::vector<Action> Game::menuActions() const {
                 balanceShopSoulHeartOpen?Action::ShopSoulHeartPriceDown:balanceShopBombOpen?Action::ShopBombPriceDown:balanceShopKeyOpen?Action::ShopKeyPriceDown:Action::ShopHeartPriceDown,
                 balanceShopSoulHeartOpen?Action::ShopSoulHeartPriceUp:balanceShopBombOpen?Action::ShopBombPriceUp:balanceShopKeyOpen?Action::ShopKeyPriceUp:Action::ShopHeartPriceUp,
                 balanceShopSoulHeartOpen?Action::ResetShopSoulHeartPrice:balanceShopBombOpen?Action::ResetShopBombPrice:balanceShopKeyOpen?Action::ResetShopKeyPrice:Action::ResetShopHeartPrice,Action::ApplyMapChanges}:
+            balanceRewardsOpen&&balancePropsOpen?
+            std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::PropsOff,Action::PropsSource,Action::PropsTest,Action::FireDamageDown,Action::FireDamageUp,Action::TogglePropRewards,Action::ApplyMapChanges}:
             balanceRewardsOpen&&balanceRoomHeartsOpen?
-            std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::RoomHeartsOff,Action::RoomHeartsSource,Action::RoomHeartsTest,Action::ApplyMapChanges}:
+            std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::RoomHeartsOff,Action::RoomHeartsSource,Action::RoomHeartsTest,Action::BalancePropsTab,Action::ApplyMapChanges}:
             balanceRewardsOpen?
             std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::ToggleRedHeartRewards,Action::ToggleCoinRewards,Action::ToggleChestRewards,Action::ToggleKeyRewards,Action::ToggleBombRewards,Action::RewardLuckDown,Action::RewardLuckUp,Action::ResetRewardLuck,Action::HeartAppearanceDown,Action::HeartAppearanceUp,Action::ResetHeartAppearance}:
             balanceCombatOpen&&balanceDoorsOpen?
@@ -1094,12 +1129,16 @@ std::vector<Action> Game::menuActions() const {
             std::vector<Action>{Action::BalanceDamageHealthTab,Action::BalanceBombsTab,Action::BalanceDoorsTab,Action::BombFuseDown,Action::BombFuseUp,Action::BombRadiusDown,Action::BombRadiusUp,Action::BombDamageDown,Action::BombDamageUp,Action::BombSelfDamageDown,Action::BombSelfDamageUp,Action::ToggleRockBlastShielding,Action::ResetInventoryBombs}:
             balanceCombatOpen?
             std::vector<Action>{Action::BalanceDamageHealthTab,Action::BalanceBombsTab,Action::BalanceDoorsTab,Action::CombatDamageDown,Action::CombatDamageUp,Action::RegularHealthDown,Action::RegularHealthUp,Action::ResetCombat}:
+            balanceEnemiesOpen&&balanceMonstroOpen&&balanceBossRewardOpen?
+            std::vector<Action>{Action::SelectBreakfastReward,Action::SelectScrewReward,Action::ScrewTearsDown,Action::ScrewTearsUp,Action::ScrewShotDown,Action::ScrewShotUp,Action::ResetScrew,Action::ApplyMapChanges}:
             balanceEnemiesOpen&&balanceMonstroOpen?
-            std::vector<Action>{Action::CycleBossTuning,Action::SelectSeededBosses,Action::SelectLegacyBoss,Action::ToggleMonstro,Action::ToggleDuke,Action::MonstroHealthDown,Action::MonstroHealthUp,Action::MonstroMovementDown,Action::MonstroMovementUp,Action::MonstroShotDown,Action::MonstroShotUp,Action::ResetMonstro,Action::ApplyMapChanges}:
+            std::vector<Action>{Action::CycleBossTuning,Action::SelectSeededBosses,Action::SelectLegacyBoss,Action::ToggleMonstro,Action::ToggleDuke,Action::MonstroHealthDown,Action::MonstroHealthUp,Action::MonstroMovementDown,Action::MonstroMovementUp,Action::MonstroShotDown,Action::MonstroShotUp,Action::ResetMonstro,Action::BalanceBossRewardTab,Action::ApplyMapChanges}:
+            balanceEnemiesOpen&&balanceFullFlyOpen?
+            std::vector<Action>{Action::FullFlyMovementDown,Action::FullFlyMovementUp,Action::FullFlyShotDown,Action::FullFlyShotUp,Action::ResetFullFly}:
             balanceEnemiesOpen&&balancePooterOpen?
             std::vector<Action>{Action::PooterMovementDown,Action::PooterMovementUp,Action::PooterShotDown,Action::PooterShotUp,Action::PooterDelayDown,Action::PooterDelayUp,Action::ResetPooter}:
             balanceEnemiesOpen?
-            std::vector<Action>{Action::GaperMovementDown,Action::GaperMovementUp,Action::GaperMovementReset,Action::SpiderMovementDown,Action::SpiderMovementUp,Action::SpiderMovementReset}:
+            std::vector<Action>{Action::BalanceFullFlyTab,Action::GaperMovementDown,Action::GaperMovementUp,Action::GaperMovementReset,Action::SpiderMovementDown,Action::SpiderMovementUp,Action::SpiderMovementReset}:
             balanceShootingOpen&&balanceTrinketOpen?
             std::vector<Action>{Action::BalanceTreasureTab,Action::CancerDown,Action::CancerUp,Action::WhipDown,Action::WhipUp,Action::ToggleTrinketRewards,Action::CycleTrinketBinding,Action::ResetTrinkets}:
             balanceShootingOpen&&balanceActiveOpen&&balanceBookOpen?

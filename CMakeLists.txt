@@ -46,6 +46,7 @@ add_library(deathward_core
     src/combat/HornfelDecoys.cpp
     src/combat/HornfelEscorts.cpp
     src/combat/RailTraffic.cpp
+    src/combat/RoomProps.cpp
     src/combat/EnvironmentActors.cpp
     src/combat/SegmentedBoss.cpp
     src/combat/ShellBoss.cpp
@@ -269,6 +270,9 @@ function(deathward_assets target)
     add_custom_command(TARGET deathward_runtime_assets POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/props/shop-cart" "$<TARGET_FILE_DIR:deathward>/assets/props/shop-cart"
         VERBATIM)
+    add_custom_command(TARGET deathward_runtime_assets POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/props/campfire" "$<TARGET_FILE_DIR:deathward>/assets/props/campfire"
+        VERBATIM)
     foreach(western_file western.glb western.catalog)
         set(western_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/western/${western_file}")
         add_custom_command(TARGET deathward_runtime_assets POST_BUILD
@@ -346,7 +350,7 @@ if(EMSCRIPTEN)
     list(APPEND web_assets ${web_audio})
     file(GLOB web_cast CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "assets/cinematic_cast/*.glb")
     list(APPEND web_assets ${web_cast} assets/train_opening/arrival.cinematic)
-    list(APPEND web_assets assets/props/shop-cart/shop-cart.glb assets/pickups/chest/base.glb assets/pickups/chest/lid.glb assets/pickups/key/key.glb)
+    list(APPEND web_assets assets/props/campfire/campfire.glb assets/props/shop-cart/shop-cart.glb assets/pickups/chest/base.glb assets/pickups/chest/lid.glb assets/pickups/key/key.glb)
     foreach(asset IN LISTS web_assets)
         target_link_options(deathward PRIVATE "SHELL:--preload-file '${CMAKE_CURRENT_SOURCE_DIR}/${asset}@/${asset}'")
         set_property(TARGET deathward APPEND PROPERTY LINK_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${asset}")
@@ -1179,6 +1183,18 @@ if(BUILD_TESTING)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(deathward_full_fly_tests tests/full_fly_tests.cpp)
+    target_link_libraries(deathward_full_fly_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_full_fly_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
+    add_test(NAME full_fly_delivery COMMAND deathward_full_fly_tests)
+    add_executable(deathward_room_props_tests tests/room_props_tests.cpp)
+    target_link_libraries(deathward_room_props_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_room_props_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
+    add_test(NAME ordinary_room_props COMMAND deathward_room_props_tests)
+    add_executable(deathward_screw_reward_tests tests/screw_reward_tests.cpp)
+    target_link_libraries(deathward_screw_reward_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_screw_reward_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
+    add_test(NAME screw_boss_reward COMMAND deathward_screw_reward_tests)
     add_executable(deathward_seeded_boss_tests tests/seeded_boss_tests.cpp)
     target_link_libraries(deathward_seeded_boss_tests PRIVATE deathward_core)
     target_compile_definitions(deathward_seeded_boss_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")

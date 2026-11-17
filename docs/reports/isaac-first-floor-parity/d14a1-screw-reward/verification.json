@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-17",
+  "schema": 46,
+  "core_suites_passed": 7,
+  "native_tear_cases": 240,
+  "native_shot_cases": 18,
+  "game_renderer": "passed",
+  "cli_schemas": [
+    5,
+    46
+  ],
+  "zoom_bounds": [
+    25,
+    500
+  ],
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "human_acceptance": "scoped Screw and wider-zoom playtest accepted 2026-11-17",
+  "full_native_acceptance": false,
+  "complete_recorded_floor": false
+}

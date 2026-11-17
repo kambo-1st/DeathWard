@@ -1,0 +1,174 @@
+{
+  "native_drop_cases": 1024,
+  "source_regeneration": "pass",
+  "cpp_native_comparison": "pass",
+  "ctest_suites": [
+    "ordinary_room_props",
+    "rail_passengers",
+    "buzzing_flies",
+    "balance_preset_contract",
+    "screw_boss_reward"
+  ],
+  "ctest": "5/5 pass",
+  "game_renderer_ui": "pass",
+  "natural_generation_cases": 9,
+  "natural_cases_retaining_target": 7,
+  "test_layout_size_cases": 3,
+  "preset_schemas": [
+    5,
+    46,
+    47
+  ],
+  "cli_review_admission": "pass",
+  "interactive_pid": 3608081,
+  "original_user_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "human_acceptance": "pending",
+  "full_native_acceptance": false,
+  "remaining": [
+    "human visual/play acceptance",
+    "special prop variants and modifier rewards",
+    "full native factory/grid/RNG/physics",
+    "complete D14a floor contents",
+    "live gameplay resume"
+  ],
+  "town_fireplace_correction": {
+    "asset": "Black Creek SM_Env_CampFire_01",
+    "asset_extraction": "byte-for-byte --check passed",
+    "main_game_render": "pass: existing model, flame/smoke/lights, pause, extinguish, revisit",
+    "town_render_regression": "pass",
+    "core_checks": {
+      "ordinary_room_props": "pass",
+      "rail_passengers": "pass",
+      "particle_emission": "fails existing mine-obstacle bullet-impact fixture; no core/library changes in this correction"
+    },
+    "repeat_ui_process": "interrupted with143 after completed initial UI pass; not counted as an additional pass",
+    "interactive_pid": 3614300,
+    "human_acceptance": "pending",
+    "browser_runtime": "unverified"
+  },
+  "poop_remains": {
+    "build": "pass",
+    "render_capture": "three destroyed piles with separated low crumbs; no continuous slab",
+    "screenshot": "poop-remains-crumbs.png",
+    "human_acceptance": "acknowledged by user; requested smaller piles next",
+    "gameplay_changed": false
+  },
+  "smaller_poop": {
+    "footprint_scale": 0.7,
+    "height_scale": 1.05,
+    "height_increase_from_accepted_short_version": 0.5,
+    "applies_to": [
+      "source-layout dung",
+      "legacy-generated dung"
+    ],
+    "collision_matches_size": true,
+    "build": "pass",
+    "ctest": "ordinary_room_props passed with +50% height",
+    "render_capture": "poop-height-50-current.png",
+    "human_acceptance": "accepted by user: ok, nice now; subsequent HUD request is separate",
+    "height_render_audit": {
+      "before_world_height": 0.77,
+      "current_world_height": 1.155,
+      "width_unchanged": 1.83379,
+      "intact_health": "4/4 for all three piles",
+      "viewport": [
+        1440,
+        900
+      ],
+      "zoom_percent": 165,
+      "projected_tip_gain_pixels": [
+        12.0566,
+        12.2091,
+        12.0329
+      ],
+      "screenshots": [
+        "poop-height-50-before.png",
+        "poop-height-50-current.png"
+      ],
+      "result": "actual Game/Renderer comparison confirms +50% height from accepted short version"
+    }
+  },
+  "smaller_poop_85_percent_superseded": {
+    "scale": 0.85,
+    "applies_to": [
+      "source-layout dung",
+      "legacy-generated dung"
+    ],
+    "collision_matches_size": true,
+    "build": "pass",
+    "ctest": "ordinary_room_props and buzzing_flies passed",
+    "render_capture": "poop-smaller.png",
+    "human_acceptance": "user requested 20% reduction instead of 15%"
+  },
+  "smaller_poop_80_percent_superseded": {
+    "scale": 0.8,
+    "applies_to": [
+      "source-layout dung",
+      "legacy-generated dung"
+    ],
+    "collision_matches_size": true,
+    "build": "pass",
+    "ctest": "ordinary_room_props passed at revised size",
+    "render_capture": "not repeated; earlier poop-smaller.png is superseded 85% size",
+    "human_acceptance": "user requested 25% reduction instead of 20%"
+  },
+  "smaller_poop_75_percent_superseded": {
+    "scale": 0.75,
+    "applies_to": [
+      "source-layout dung",
+      "legacy-generated dung"
+    ],
+    "collision_matches_size": true,
+    "build": "pass",
+    "ctest": "ordinary_room_props passed at revised 75% size",
+    "render_capture": "not repeated; earlier poop-smaller.png is superseded 85% size",
+    "human_acceptance": "user requested 30% reduction instead of 25%"
+  },
+  "smaller_poop_uniform_70_percent_superseded": {
+    "scale": 0.7,
+    "applies_to": [
+      "source-layout dung",
+      "legacy-generated dung"
+    ],
+    "collision_matches_size": true,
+    "build": "pass",
+    "ctest": "ordinary_room_props passed at revised 70% size",
+    "render_capture": "not repeated; earlier poop-smaller.png is superseded 85% size",
+    "human_acceptance": "user accepted smaller size and requested 25% more height"
+  },
+  "smaller_poop_height_25_percent_superseded": {
+    "footprint_scale": 0.7,
+    "height_scale": 0.875,
+    "height_increase_from_previous": 0.25,
+    "applies_to": [
+      "source-layout dung",
+      "legacy-generated dung"
+    ],
+    "collision_matches_size": true,
+    "build": "pass",
+    "ctest": "ordinary_room_props passed with taller proportions",
+    "render_capture": "earlier poop-smaller.png is superseded uniform 85% size",
+    "human_acceptance": "user reports height difference is not visible enough; visual acceptance remains open",
+    "height_render_audit": {
+      "before_world_height": 0.77,
+      "current_world_height": 0.9625,
+      "width_unchanged": 1.83379,
+      "intact_health": "4/4 for all three piles",
+      "viewport": [
+        1440,
+        900
+      ],
+      "zoom_percent": 165,
+      "projected_tip_gain_pixels": [
+        5.99841,
+        6.07074,
+        5.97864
+      ],
+      "screenshots": [
+        "poop-height-before.png",
+        "poop-height-current.png"
+      ],
+      "result": "25% world-height increase is rendered, but visible difference is subtle; no further gameplay change made"
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "pursuit_cases": 70,
+  "recoil_cases": 6,
+  "burst_cases": 6,
+  "constants": {
+    "recoil_angle": -2.0,
+    "recoil_spread": 1.5
+  },
+  "windows": [
+    {
+      "name": "shared-update",
+      "start": "0x4f4e30",
+      "end": "0x4f6ed0",
+      "sha256": "8f155c59499d59196f8783062d371595c24b0782f5b2cc6193d563696ca13eb2"
+    },
+    {
+      "name": "mode9",
+      "start": "0x6a2e74",
+      "end": "0x6a301f",
+      "sha256": "9e03b58cae8bde82df2a1251a81cce99154457ad9905adab3cf838daf9c4612f"
+    },
+    {
+      "name": "params",
+      "start": "0x430d70",
+      "end": "0x430ef9",
+      "sha256": "fb85f96ec31cdc3275b4b3b1f6129f9165f6f7fce48b67d47a17522178aa1fa4"
+    }
+  ],
+  "numeric": {
+    "path": "/mnt/c/Windows/SysWOW64/ucrtbase.dll",
+    "sha256": "e4f8f92eef00ff6a0c6d418af756a59d5a4b818d0d1de0d96cc193b4d6759432",
+    "image_base": "0x10000000",
+    "links": {
+      "_libm_sse2_sin_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa0653c",
+        "export": "0x10093a60"
+      },
+      "_libm_sse2_pow_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06540",
+        "export": "0x10092be0"
+      },
+      "_libm_sse2_cos_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06568",
+        "export": "0x100905d0"
+      }
+    },
+    "calls": {
+      "_libm_sse2_cos_precise": 6,
+      "_libm_sse2_sin_precise": 6,
+      "_libm_sse2_pow_precise": 0
+    },
+    "x87_control_word": "0x027f",
+    "mxcsr": "0x1f80",
+    "scope": "Original local x86 UCRT numeric instructions for finite ordinary inputs. Loader-style IAT resolution in emulated memory only; no host math or instruction substitutions. DLL initialization/OS error paths and live process loader selection are not claimed."
+  },
+  "scope": "Original ordinary pursuit with supplied target/cadence, optional Skatole; original recoil application with supplied impulse; original mode9 six velocity calculations. World actor allocation, global RNG order, collision-normal generation, complete status/animation/scheduler wrappers remain unverified.",
+  "full_native_acceptance": false
+}

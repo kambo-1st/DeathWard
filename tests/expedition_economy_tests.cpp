@@ -63,7 +63,7 @@ void reachability() {
                     check(r.kind==RoomKind::Empty&&r.service==RoomService::None&&run.roomEnemies(i).empty(),"removed service leaves a quiet room without a trader");
                 }
                 if(r.kind==RoomKind::Service) {
-                    check(r.service==RoomService::Surgeon||r.service==RoomService::Smuggler,"only retained services generate");
+                    check(r.service==RoomService::Surgeon,"only retained services generate");
                     ++count;services.insert(r.service);
                     check(floor>=3||r.service!=RoomService::Surgeon,"no doctor on floors one through three");
                     if(floor==3&&r.service==RoomService::Surgeon)++surgeonsOnFourthFloor;
@@ -81,7 +81,7 @@ void reachability() {
             check(!run.arena.blocked(pos,1.1f)&&distance(pos,run.arena.exit)>=4&&distance(pos,run.arena.rooms.back().objective)>=4,"boss reward separated from evidence/exit");
         }
     }
-    check(lengths.size()==5&&services.size()==2,"all run lengths and optional functions occur");
+    check(lengths.size()==5&&services.size()==1,"all run lengths and optional functions occur");
     check(surgeonsOnFourthFloor>0,"doctors can first appear on floor four");
     std::cout<<"Validated "<<floors<<" actual floors with zero-resource mandatory routes\n";
 }
@@ -114,18 +114,16 @@ void transactions() {
     surgeon.player.hp=1;check(surgeon.buyShop(0)&&surgeon.player.hp==6&&surgeon.money()==80,"explicit healing price and cap");
     check(surgeon.buyShop(1)&&surgeon.player.maxHp==8&&surgeon.player.hp==8&&surgeon.money()==45,"finite expedition vitality improvement");
     check(!surgeon.buyShop(1),"tonic not repeatable");
-    Simulation deal(6,1,world,MissionTheme::Canyon);enterService(deal,RoomService::Smuggler);
-    deal.rooms[size_t(deal.room)].offers={ItemId::Judas,ItemId::Cap};deal.player.hp=3;
-    check(deal.bargainMaxHealth(0)==2&&deal.serviceOffer(0).cost.find("1 RED CONTAINER")!=std::string::npos,"exact preview includes Judas's extra tax");
-    check(deal.buyShop(0)&&deal.player.maxHp==2&&deal.player.hp==2&&deal.itemStacks(ItemId::Judas)==1,"preview agrees with actual cost");
-    check(!deal.buyShop(1),"bargain alternatives mutually exclusive");
-    deal.closeShop();deal.startBoss();deal.killAll();deal.step({});
-    deal.floorExitRequested=true;check(deal.advanceFloor(),"advance after service purchase");
-    check(deal.player.maxHp==2&&deal.itemStacks(ItemId::Judas)==1,"health sacrifice and item persist between floors");
-    enterService(deal,RoomService::Smuggler);deal.rooms[size_t(deal.room)].offers={ItemId::Judas,ItemId::Cap};
-    deal.player.maxHp=1;deal.player.hp=1;
-    check(!deal.buyShop(0)&&!deal.buyShop(1)&&deal.player.hp==1,"low maximum HP cannot create lethal menu transaction");
-    deal.player.maxHp=4;check(deal.buyShop(1)&&deal.player.maxHp==2&&deal.player.hp==1,"nonfatal exact lower boundary");
+    // A stale retired identity must not re-enable trading or spend health/items.
+    Simulation deal(6,1,world,MissionTheme::Canyon);enterService(deal,RoomService::Surgeon);
+    deal.closeShop();deal.arena.rooms[size_t(deal.room)].service=RoomService::Smuggler;
+    deal.openShop();check(!deal.shopOpen,"retired bargain cannot open a modal");
+    deal.shopOpen=true;
+    check(deal.serviceOffer(0).name.empty()&&deal.serviceOffer(1).name.empty(),"retired bargain exposes no offers");
+    const auto money=deal.money();
+    check(!deal.buyShop(0)&&!deal.buyShop(1)&&deal.player.maxHp==6&&deal.items.empty()&&deal.money()==money,
+        "retired bargain cannot trade even through a stale modal");
+    check(!deal.rooms[size_t(deal.room)].serviceSold[0]&&!deal.rooms[size_t(deal.room)].serviceSold[1],"rejected trade leaves state intact");
     Simulation reward(1866,1,{},MissionTheme::Canyon);reward.startBoss();reward.killAll();reward.step({});
     check(reward.rewardAvailable(reward.room),"defeated boss opens optional item choice");
     reward.player.position=reward.rewardPosition(reward.room);reward.interact();check(reward.rewardOpen,"boss reward approachable");

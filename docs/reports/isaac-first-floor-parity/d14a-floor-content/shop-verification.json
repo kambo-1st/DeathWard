@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-17",
+  "user_statement": "shop ready",
+  "source_seed": "2FFX 8XJH",
+  "source_template": "2.0.0",
+  "source_title": "Shop L1",
+  "native_list_index": 2,
+  "spawn_seed": 1247876511,
+  "profile": {
+    "stage": 1,
+    "stage_type": 0,
+    "difficulty": 0
+  },
+  "same_all_12_template_identities_and_spawn_seeds": true,
+  "independent_shop_captures_same_frame_and_descriptors": true,
+  "paused_world_frame": 1872,
+  "observed_stock": [
+    {
+      "type": 5,
+      "variant": 100,
+      "subtype": 195,
+      "x": 280,
+      "y": 320,
+      "price": 15
+    },
+    {
+      "type": 5,
+      "variant": 300,
+      "subtype": 15,
+      "x": 360,
+      "y": 320,
+      "price": 5
+    }
+  ],
+  "resolved_offerings": [
+    {
+      "identity": "isaac:collectible:195",
+      "name": "Mom’s Coin Purse",
+      "category": "passive",
+      "price_coins": 15,
+      "source_attributes": {
+        "description": "#MOMS_COIN_PURSE_DESCRIPTION",
+        "gfx": "Collectibles_195_MomsCoinPurse.png",
+        "id": "195",
+        "name": "#MOMS_COIN_PURSE_NAME"
+      },
+      "enabled_in_deathward": false
+    },
+    {
+      "identity": "isaac:card:15",
+      "name": "XIV — Temperance",
+      "category": "tarot card",
+      "price_coins": 5,
+      "source_attributes": {
+        "type": "tarot",
+        "pickup": "1",
+        "description": "#TEMPERANCE_DESCRIPTION",
+        "id": "15",
+        "name": "#TEMPERANCE_NAME",
+        "announcer": "370",
+        "announcerdelay": "60",
+        "mimiccharge": "6"
+      },
+      "enabled_in_deathward": false
+    }
+  ],
+  "price_evidence": {
+    "native_code": "0x6be82e..0x6be861",
+    "pickup_field": "signed int at +0x480",
+    "meaning": "Positive live pickup price compared against player coins by the preserved native coin-admission branch",
+    "source": "docs/reports/isaac-first-floor-parity/d12a-shop-heart/source/coin-affordability.asm",
+    "sha256": "04b5791a93a894bde54bb91f0e5e591163a86905516c927abb4bdb21e03fcfa2"
+  },
+  "source_xml_sha256": {
+    "items.xml": "ee567ed920b1bcada61f2a2d65e48563286fe7e8bf00363ad763ac2aa3ae64b7",
+    "pocketitems.xml": "7217e237b8791354e157c9cc3c6aa104915952831044226d47c68cf25ae4080d"
+  },
+  "source_files": {
+    "shop-observation.json": "9ab116b8b4f275a94b2aaf0f0c292f426be47fb2c41dff0754f24e9791166ac3",
+    "shop-prices-observation.json": "8bffd9c160e232fe8c02bcd292ae9ce52bd89a7dc7503d989cc0b359f16689f6",
+    "shop-source-log.txt": "6f1452ee4006a1be0fe23e69ac4bc830518bd694835169526d2b4b900ee041ff"
+  },
+  "context": {
+    "moms_eye_collected_after_treasure_observation": true,
+    "shop_stock_still_present": true,
+    "initial_inventory_not_fully_verified": true
+  },
+  "method": "VM_READ only; no writes, injection, suspension, input or game-file edits",
+  "runtime_gameplay_changed": false,
+  "remaining": [
+    "boss reward observation",
+    "other special-room outcomes",
+    "Mom’s Eye/Mom’s Coin Purse/card and enemy/obstacle dependencies",
+    "main-game content mapping and human acceptance"
+  ]
+}

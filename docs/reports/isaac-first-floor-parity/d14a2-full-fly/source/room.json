@@ -1,0 +1,57 @@
+{
+  "source": {
+    "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/01.basement.stb",
+    "sha256": "524406fcb10c6275995292c0bd024cfc43d3d30c32b233e55d4d514573d963b0",
+    "templates": 1181
+  },
+  "room": {
+    "type": 1,
+    "variant": 704,
+    "subtype": 0,
+    "difficulty": 5,
+    "shape_metadata_only": 5,
+    "width_metadata_only": 13,
+    "height_metadata_only": 14,
+    "title": "New Room (copy)",
+    "source_weight": 1.0,
+    "allowed_doors": [
+      [
+        6,
+        -1,
+        true
+      ],
+      [
+        6,
+        14,
+        true
+      ]
+    ],
+    "slots": [
+      {
+        "x": 6,
+        "y": 5,
+        "choices": [
+          {
+            "type": 249,
+            "variant": 0,
+            "subtype": 0,
+            "weight": 1.0
+          }
+        ]
+      },
+      {
+        "x": 6,
+        "y": 8,
+        "choices": [
+          {
+            "type": 249,
+            "variant": 0,
+            "subtype": 0,
+            "weight": 1.0
+          }
+        ]
+      }
+    ],
+    "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/01.basement.stb"
+  }
+}

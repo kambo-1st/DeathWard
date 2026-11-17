@@ -1,0 +1,78 @@
+{
+  "date": "2026-11-17",
+  "user_statement": "boss reward ready",
+  "source_seed": "2FFX 8XJH",
+  "source_template": "5.2012.13",
+  "native_list_index": 0,
+  "spawn_seed": 2514600356,
+  "same_all_12_template_identities_and_spawn_seeds": true,
+  "profile": {
+    "stage": 1,
+    "stage_type": 0,
+    "difficulty": 0
+  },
+  "paused_world_frame": 3442,
+  "collectible": {
+    "identity": "isaac:collectible:255",
+    "name": "Screw",
+    "category": "passive",
+    "native_actor": {
+      "type": 5,
+      "variant": 100,
+      "subtype": 255,
+      "x": 320,
+      "y": 360,
+      "price": 0
+    },
+    "source_xml": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/items.xml",
+    "source_xml_sha256": "ee567ed920b1bcada61f2a2d65e48563286fe7e8bf00363ad763ac2aa3ae64b7",
+    "source_attributes": {
+      "cache": "firedelay shotspeed",
+      "description": "#SCREW_DESCRIPTION",
+      "gfx": "collectibles_255_screw.png",
+      "id": "255",
+      "name": "#SCREW_NAME"
+    },
+    "enabled_in_deathward": false,
+    "effect_values_verified_in_this_capture": false
+  },
+  "no_boss_or_fly_actors_present": true,
+  "other_pickups": [
+    {
+      "type": 5,
+      "variant": 10,
+      "subtype": 2,
+      "x": 119.53949,
+      "y": 309.577148,
+      "price": 0
+    },
+    {
+      "type": 5,
+      "variant": 10,
+      "subtype": 1,
+      "x": 124.642029,
+      "y": 175.956161,
+      "price": 0
+    }
+  ],
+  "other_pickup_producers_verified": false,
+  "source_files": {
+    "boss-reward-observation.json": "702135a7c2d644e6e8f28361f6439d3a8b53da4d354df71c030e9bac757e0dec",
+    "boss-reward-source-log.txt": "f57bcac3f106299aa635c290fdf6ba9bc04d698b7d08d1696e32afa1c6d1202e"
+  },
+  "attempt_context": {
+    "moms_eye_collected": true,
+    "shop_visit_in_latest_attempt": false,
+    "observations_span_same_seed_restarts": true,
+    "single_uninterrupted_playthrough_claimed": false
+  },
+  "method": "VM_READ only; no writes, injection, suspension, input or game-file edits",
+  "runtime_gameplay_changed": false,
+  "remaining": [
+    "Screw effect/reward integration",
+    "Mom’s Eye/Mom’s Coin Purse/Temperance effects and dependencies",
+    "Full Fly/Round Worm and recorded mixed encounters/obstacles",
+    "other special-room outcomes and initial inventory",
+    "main-game floor mapping and human acceptance"
+  ]
+}

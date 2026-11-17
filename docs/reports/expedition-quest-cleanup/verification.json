@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-17",
+  "status": "implemented; developer checks passed; scoped human visual acceptance recorded",
+  "removed": [
+    "Smuggler\u2019s Bargain",
+    "six-miner rescue",
+    "altar subquest"
+  ],
+  "tests": {
+    "core_contracts": "pass",
+    "expedition_services": "pass; 98 generated floors",
+    "mechanics_content": "pass",
+    "companion_familiars": "pass",
+    "economy_input": "pass",
+    "renderer_smoke": "pass; HUD screenshot visually inspected",
+    "scoped_diff_check": "pass"
+  },
+  "preserved": [
+    "seeded service-slot layout and Field Surgeon",
+    "historical campaign fields and journal entries",
+    "owned item effects",
+    "accepted controls, balance and configuration workflow"
+  ],
+  "remaining": [
+    "Round Worm and remaining recorded D14a floor dependencies",
+    "full native actor/selection acceptance"
+  ],
+  "human_acceptance": {
+    "user_statement": "looks good! whats next?",
+    "scope": "Smuggler bargain, miner rescue and altar quest cleanup"
+  },
+  "commit_authorized": true,
+  "checkpoint_validation": {
+    "additional_suites": "Full Fly, ordinary props, Screw, balance presets, Whip Worm and treasure upgrade passed",
+    "fixture_correction": "Two historical catalog assertions updated to the verified Screw/Full Fly catalog 6379db35e7cf0d23"
+  }
+}

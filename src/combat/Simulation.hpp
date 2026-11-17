@@ -1,7 +1,9 @@
 #pragma once
 #include "combat/Monstro.hpp"
 #include "combat/Duke.hpp"
+#include "combat/FullFly.hpp"
 #include "world/OpeningBossSelection.hpp"
+#include "items/Screw.hpp"
 #include "combat/BrotherBobby.hpp"
 #include "combat/HaloOfFlies.hpp"
 #include "combat/ActiveItem.hpp"
@@ -92,6 +94,8 @@ struct FlyBombFollowRuntime {
     Vector3 momentum{},wander{},target{}; // Native planar units per 30 Hz tick.
 };
 struct EnvironmentActorRuntime {
+    PropRewardState propReward;
+    uint32_t dropSeed=0;
     bool spent=false,destructionPending=false,explosiveHit=false;
     uint64_t hits=0,baseLoss=0;
     float accumulatedDamage=0;
@@ -271,6 +275,10 @@ struct BuzzFlyRuntime {
     float contactRetention=1;
     int healingTicks=0,healingDivisor=60;
     float attackIntervalMultiplier=1;
+    Vector3 fullFlyRecoil{},fullFlyWallNormal{};
+    bool fullFlyDeathPending=false;
+    int fullFlyDeathIndex=0;
+    float fullFlyDeathSpeed=1;
     float attackShotSpeed=0; // D06 latches the next attack's projectile tuning.
 };
 struct EvaderRuntime {
@@ -707,6 +715,7 @@ struct Projectile {
     bool returning = false, phaseSpent = false, capSpent = false;
     std::optional<PlayerTearFlight> playerFlight;
     std::optional<PooterBulletFlight> pooterFlight;
+    bool fullFlyDeathShot=false;
     float traveled = 0, guidanceTime = 0;
     EntityId guidedTarget = 0;
     float angularVelocity = 0; // Radians/second about world up, independent of shooter lifetime.
@@ -775,6 +784,7 @@ struct Event {
     float projectileGravity=0,projectileBlastRadius=0,projectileBlastDamage=0;
     float projectileFlightRetention=0,projectileRadius=0,projectileBlastPlayerDamage=-1;
     float projectileTimeScale=1;
+    bool fullFlyDeathShot=false;
     bool pooterFlight=false; // Native height lifetime; retained 3D aimed collision is independent of sprite height.
     std::optional<ProjectileSplitDefinition> projectileSplit;
     std::optional<ProjectileBurstDefinition> projectileBurst;
@@ -1169,7 +1179,7 @@ class Simulation {
                MissionTheme theme = MissionTheme::Mine, bool canyonRiver = true, bool tutorial = false,
                WitnessAccount account = WitnessAccount::None, int floor = 0,
                ExpeditionPacing pacing = ExpeditionPacing::Compact,
-               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics(), float roomSizeScale = 1, int roomMinHalfTiles = 0, int roomMaxHalfTiles = 0, float routeLengthScale = 1, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool coinClearRewards = false, bool sourceRoomLocks = false, bool sourceTreasureUpgrade = false, bool sourceShopHeart = false, bool sourceShopKey = false, bool sourceShopVariation = false, int shopCollectiblePool = 0, int treasureCollectiblePool = 0, MonstroTuning monstro = {false}, DukeTuning duke = {}, bool seededBosses = false);
+               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics(), float roomSizeScale = 1, int roomMinHalfTiles = 0, int roomMaxHalfTiles = 0, float routeLengthScale = 1, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool coinClearRewards = false, bool sourceRoomLocks = false, bool sourceTreasureUpgrade = false, bool sourceShopHeart = false, bool sourceShopKey = false, bool sourceShopVariation = false, int shopCollectiblePool = 0, int treasureCollectiblePool = 0, MonstroTuning monstro = {false}, DukeTuning duke = {}, bool seededBosses = false, int bossRewardItem = 25, RoomPropsTuning roomProps = {0});
     std::shared_ptr<const MechanicsLibrary> content;
     ExpeditionPlan expedition;
     int floor = 0;
@@ -1191,6 +1201,10 @@ class Simulation {
     YumHeartTuning yumHeart{};
     MonstroTuning monstroTuning{false};
     DukeTuning dukeTuning{};
+    FullFlyTuning fullFlyTuning{};
+    int bossRewardItem=25; // Staged fixed supported reward; old configurations keep Breakfast.
+    ScrewTuning screw{};
+    RoomPropsTuning roomProps{0};
     bool seededBosses=false; // Staged opening-floor selection; direct fixtures keep their old defaults.
     BookOfShadowsTuning bookOfShadows{};
     double bookProtectionRemaining=0; // Independent of held slot, dodge and hurt immunity.
@@ -1305,14 +1319,13 @@ class Simulation {
     StoryRoom storyOpen = StoryRoom::None;
     std::vector<StoryEvidence> evidence;
     bool testimony() const { return expedition.account!=WitnessAccount::None; }
-    bool legacyObjectives() const { return !surveyTutorial&&!testimony(); }
     bool lastFloor() const { return floor+1==expedition.floorCount; }
     int storyRoomIndex() const;
     bool storySeen() const;
     bool canUseFloorExit() const;
     bool advanceFloor();
     bool canResizeRooms() const;
-    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1, std::optional<bool> sourceRoom = std::nullopt, std::optional<int> heartLayouts = std::nullopt, std::optional<bool> roomLocks = std::nullopt, std::optional<bool> treasureUpgrade = std::nullopt, std::optional<bool> shopHeart = std::nullopt, std::optional<bool> shopKey = std::nullopt, std::optional<bool> shopVariation = std::nullopt, std::optional<int> collectiblePool = std::nullopt, std::optional<int> treasurePool = std::nullopt, std::optional<MonstroTuning> monstro = std::nullopt, std::optional<DukeTuning> duke = std::nullopt, std::optional<bool> seededBosses = std::nullopt);
+    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1, std::optional<bool> sourceRoom = std::nullopt, std::optional<int> heartLayouts = std::nullopt, std::optional<bool> roomLocks = std::nullopt, std::optional<bool> treasureUpgrade = std::nullopt, std::optional<bool> shopHeart = std::nullopt, std::optional<bool> shopKey = std::nullopt, std::optional<bool> shopVariation = std::nullopt, std::optional<int> collectiblePool = std::nullopt, std::optional<int> treasurePool = std::nullopt, std::optional<MonstroTuning> monstro = std::nullopt, std::optional<DukeTuning> duke = std::nullopt, std::optional<bool> seededBosses = std::nullopt, std::optional<int> bossRewardItem = std::nullopt, std::optional<RoomPropsTuning> roomProps = std::nullopt);
     int finalRoom() const { return arena.roomCount()-1; }
     Vector3 surveyPosition() const { return arena.rooms.back().objective; }
     bool canReturn() const { return lastFloor()&&canUseFloorExit(); }
@@ -1401,7 +1414,6 @@ class Simulation {
     std::string shopUnavailable(int index) const;
     ServiceOffer serviceOffer(int index) const;
     std::string serviceUnavailable(int index) const;
-    float bargainMaxHealth(int index) const;
     std::string nearbyInteraction() const;
     std::string demolitionHint() const;
     std::string demolitionWarning() const;
@@ -1441,7 +1453,10 @@ class Simulation {
     void updateFlyBomb(Enemy &enemy,float dt);
     bool updateFlyBombFollow(Enemy &enemy,float dt);
     void updateBuzzFly(Enemy &enemy,float dt);
+    bool flushFullFlyDeath(Enemy &enemy);
     void prepareDung();
+    void resolvePropReward(PropRewardState &reward,uint32_t seed,bool fire);
+    void deliverPropRewards();
     void updateBoomFly(Enemy &enemy,float dt);
     void updateLobWalker(Enemy &enemy,float dt);
     void updateHeadShooter(Enemy &enemy,float dt);

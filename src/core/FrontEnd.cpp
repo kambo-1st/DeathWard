@@ -101,7 +101,7 @@ void FrontEnd::update(float dt) {
     if(!IsMouseButtonDown(MOUSE_BUTTON_LEFT))dragging_=-1;
     if(page==FrontPage::Settings&&dragging_>=0) {
         const auto fraction=std::clamp((mouse().x-702)/196.f,0.f,1.f);
-        if(dragging_==5)visualSettings.vegetation=int(std::round(fraction*20))*10;
+        if(dragging_==5)visualSettings.vegetation=int(std::round(fraction*(VisualSettings::MaxVegetation/10.f)))*10;
         else {
             float *volume[]={&audioSettings.master,&audioSettings.music,&audioSettings.effects,&audioSettings.ambience};
             *volume[dragging_]=std::round(fraction*100)/100;
@@ -199,13 +199,13 @@ void FrontEnd::draw() const {
             text("Tune the frontier to your liking.",640,164,16,Muted,true);
             if(audioStatus_!=AudioStatus::Ready)text(audioStatus_==AudioStatus::Disabled?"Audio disabled for this launch":"Audio device unavailable",640,208,14,Gold,true);
             const char *labels[]={"Master volume","Music","Effects","Ambience","Mute sound","Vegetation","Ground detail","Canyon rivers"};
-            const float values[]={audioSettings.master,audioSettings.music,audioSettings.effects,audioSettings.ambience,0,visualSettings.vegetation/200.f};
+            const float values[]={audioSettings.master,audioSettings.music,audioSettings.effects,audioSettings.ambience,0,visualSettings.vegetation/float(VisualSettings::MaxVegetation)};
             for(int i=0;i<8;++i) {
                 const auto r=settingRow(i);
                 if(focus_==i||hit(r)) {DrawRectangleRec(r,{38,45,44,255});DrawRectangleLinesEx(r,1,Border);}
                 text(labels[i],r.x+12,r.y+10,18,Paper);
                 if(i<4||i==5) {
-                    text(std::to_string(int(std::round(values[i]*(i==5?200:100))))+"%",628,r.y+11,16,Gold,true);
+                    text(std::to_string(int(std::round(values[i]*(i==5?VisualSettings::MaxVegetation:100))))+"%",628,r.y+11,16,Gold,true);
                     text("-",674,r.y+8,21,Muted,true);text("+",926,r.y+8,21,Muted,true);
                     DrawRectangleRec({702,r.y+20,196,3},Border);DrawRectangleRec({702,r.y+20,196*values[i],3},Gold);
                     DrawCircleV({702+196*values[i],r.y+21},5,Paper);

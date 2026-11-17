@@ -1,6 +1,9 @@
+#include "world/RoomProps.hpp"
 #pragma once
 #include "combat/Monstro.hpp"
 #include "combat/Duke.hpp"
+#include "combat/FullFly.hpp"
+#include "items/Screw.hpp"
 #include "combat/BrotherBobby.hpp"
 #include "combat/HaloOfFlies.hpp"
 #include "combat/ActiveItem.hpp"
@@ -14,7 +17,7 @@ namespace dw {
 // This is not player inventory, a gameplay save or certification of native parity.
 struct BalancePreset {
     static constexpr float ReferenceSpeed = 1, MinSpeed = .1f, MaxSpeed = 2;
-    static constexpr float ReferenceZoom = 160, MinZoom = 67, MaxZoom = 285;
+    static constexpr float ReferenceZoom = 160, MinZoom = 25, MaxZoom = 500;
     static constexpr float ReferenceTears = 30.f/11.f, MinTears = .1f, MaxTears = 10;
     static constexpr float ReferenceShotSpeed = 1, MinShotSpeed = .1f, MaxShotSpeed = 3;
     static constexpr float ReferenceRange = 6.5f, MinRange = .5f, MaxRange = 20;
@@ -70,7 +73,11 @@ struct BalancePreset {
     MonstroTuning monstro{};
     DukeTuning duke{};
     bool seededBosses=true; // New profiles use the supported two-boss pool; older presets retain their fixed choice.
-    bool custom() const { return !seededBosses || duke.custom() || monstro.custom() || bookOfShadows.custom() || haloOfFlies.custom() || trinkets.custom() || yumHeart.custom() || brotherBobby.custom() || treasureCollectiblePool!=1 || cricketHeadStrength!=1 || shopCollectiblePool!=1 || shopSoulHeartPrice!=5 || shopBombPrice!=5 || !sourceShopVariation || !steamSaleDiscounts || shopUpgradePrice!=15 || !sourceShopKey || shopKeyPrice!=5 || !sourceShopHeart || shopHeartPrice!=3 || !sourceTreasureUpgrade || sadOnionStrength!=1 || !sourceRoomLocks || keyedDoorCost!=1 || inventoryBombs.custom() || !bombClearRewards || !keyClearRewards || !chestClearRewards || !coinClearRewards || roomHeartLayouts!=1 || redHeartAppearanceSpeed!=1 || !redHeartClearRewards || playerLuck!=ReferenceLuck || !sourceCombatRoom || playerDamage != ReferenceDamage || regularHealthMultiplier != ReferenceRegularHealth || playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange || gaperMovementMultiplier != ReferenceGaperMovement || spiderMovementMultiplier != ReferenceSpiderMovement || pooterMovementMultiplier != 1 || pooterShotSpeedMultiplier != 1 || pooterAttackIntervalMultiplier != 1; }
+    int bossRewardItem=25;
+    ScrewTuning screw{};
+    RoomPropsTuning roomProps{};
+    FullFlyTuning fullFly{};
+    bool custom() const { return fullFly.custom() || roomProps.custom() || bossRewardItem!=25 || screw.custom() || !seededBosses || duke.custom() || monstro.custom() || bookOfShadows.custom() || haloOfFlies.custom() || trinkets.custom() || yumHeart.custom() || brotherBobby.custom() || treasureCollectiblePool!=1 || cricketHeadStrength!=1 || shopCollectiblePool!=1 || shopSoulHeartPrice!=5 || shopBombPrice!=5 || !sourceShopVariation || !steamSaleDiscounts || shopUpgradePrice!=15 || !sourceShopKey || shopKeyPrice!=5 || !sourceShopHeart || shopHeartPrice!=3 || !sourceTreasureUpgrade || sadOnionStrength!=1 || !sourceRoomLocks || keyedDoorCost!=1 || inventoryBombs.custom() || !bombClearRewards || !keyClearRewards || !chestClearRewards || !coinClearRewards || roomHeartLayouts!=1 || redHeartAppearanceSpeed!=1 || !redHeartClearRewards || playerLuck!=ReferenceLuck || !sourceCombatRoom || playerDamage != ReferenceDamage || regularHealthMultiplier != ReferenceRegularHealth || playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange || gaperMovementMultiplier != ReferenceGaperMovement || spiderMovementMultiplier != ReferenceSpiderMovement || pooterMovementMultiplier != 1 || pooterShotSpeedMultiplier != 1 || pooterAttackIntervalMultiplier != 1; }
     void validate() const;
     std::string json() const;
     std::string revision() const;

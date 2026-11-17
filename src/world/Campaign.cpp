@@ -332,13 +332,9 @@ RunSummary CampaignStore::resolve(const RunSummary &input, EndReason reason) {
         if(s.interrupted)note("Interrupted expedition: recovered documents use the last saved checkpoint.");
         next.history.push_back(s);next.pending.reset();commit(std::move(next));return s;
     }
-    if (s.rescued && !w.minersRescued) {
-        w.minersRescued = true;
-        w.population += 6;
-        w.npcs[1].relationship += 2;
-        w.flags.insert("miners_home");
-        note("Six miners return. Population +6; Mary Bell remembers.");
-    }
+    // Historical save fields/entries remain intact; retired quests have no new consequences.
+    w.flags.erase("miners_stranded");
+    w.flags.erase("something_followed");
     if (s.bossKilled && s.expedition == "Redstone Canyon" && !w.flags.contains("canyon_cleared")) {
         w.flags.insert("canyon_cleared");
         w.law = std::min(100, w.law + 5);
@@ -351,16 +347,9 @@ RunSummary CampaignStore::resolve(const RunSummary &input, EndReason reason) {
         w.flags.insert("hollow_sheriff_dead");
         note("The Hollow Sheriff falls. Law +5; Cole trusts you.");
     }
-    if (s.altarDestroyed && !w.altarDestroyed) {
-        w.altarDestroyed = true;
-        w.flags.insert("altar_destroyed");
-        w.flags.erase("something_followed");
-        w.npcs[2].relationship++;
-        note("The altar is broken. Black Creek sleeps more easily.");
-    }
     if (reason == EndReason::Victory) {
         ++w.completed;
-        if (w.bossDefeated && w.minersRescued) {
+        if (w.bossDefeated) {
             if (w.mineDebt > 0) {
                 int restored = std::min(w.mineDebt, 100 - w.prosperity);
                 w.prosperity += restored;
@@ -374,10 +363,6 @@ RunSummary CampaignStore::resolve(const RunSummary &input, EndReason reason) {
             }
             w.mineOpen = true;
             w.flags.erase("mine_setback");
-        } else {
-            w.mineOpen = false;
-            w.flags.insert("miners_stranded");
-            note("The threat is beaten, but miners remain stranded. Return to rescue them.");
         }
     } else {
         int loss = std::min({8, w.prosperity, 50 - w.mineDebt});
@@ -387,12 +372,6 @@ RunSummary CampaignStore::resolve(const RunSummary &input, EndReason reason) {
         w.flags.insert("mine_setback");
         note("The expedition ends early. Mine closed; prosperity -" + std::to_string(loss) +
              ". A return can repair this.");
-    }
-    if (w.minersRescued)
-        w.flags.erase("miners_stranded");
-    if (!w.altarDestroyed) {
-        w.flags.insert("something_followed");
-        note("The altar remains. Something followed you home.");
     }
     if (s.interrupted)
         note("Interrupted expedition: history uses the last saved checkpoint.");
@@ -449,7 +428,7 @@ std::string outcomeTitle(const RunSummary &s) {
     if (s.reason == EndReason::Retreat)
         return "YOU LIVED TO RETURN";
     if(s.account!=WitnessAccount::None)return "MORE EVIDENCE. MORE QUESTIONS.";
-    return s.rescued ? "SIX SOULS BROUGHT HOME" : "VICTORY HAS A HOLLOW SOUND";
+    return "BACK FROM THE BADLANDS";
 }
 std::string npcDialogue(const WorldState &w, size_t npc) {
     switch (npc) {
@@ -457,16 +436,12 @@ std::string npcDialogue(const WorldState &w, size_t npc) {
         return w.bossDefeated ? "That thing wore my badge. Thank you for ending it."
                               : "Something down there is wearing my face. Put it in the ground.";
     case 1:
-        return w.minersRescued ? "Six places at the table. You brought every one of them home."
-                               : "My brother is still in that mine. Bring them home, please.";
+        return "There is a place at the table. Rest before your next expedition.";
     case 2:
-        return w.flags.contains("something_followed")
-                   ? "Your shadow came through the door a moment before you did."
-               : w.altarDestroyed ? "The church bell finally sounds like a bell again."
-                                  : "If you find an altar below, leave nothing standing.";
+        return "The bell will be here to welcome you home.";
     case 3:
         return w.mineOpen ? "Red Hollow is working again. This town has a tomorrow."
-                          : "No ore, no wages. Clear the mine and get our people back.";
+                          : "No ore, no wages. Clear the threat from the mine.";
     default:
         return w.flags.contains("mine_setback")
                    ? "Rest here. A bad journey need not be your last."

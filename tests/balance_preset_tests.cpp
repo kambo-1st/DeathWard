@@ -25,7 +25,7 @@ int main() {
             BalancePreset p{.8f,"fixture-content",scale,range.first,range.second,route};p.save(file);
             check(BalancePreset::load(file,"fixture-content").revision()==p.revision(),"size and range round-trip");
         }
-        for(float zoom:{67.f,125.f,159.25f,160.f,285.f}) {
+        for(float zoom:{25.f,67.f,125.f,159.25f,160.f,285.f,500.f}) {
             BalancePreset p{.8f,"fixture-content",1.25f,7,9,.65f,zoom};p.save(file);
             const auto loaded=BalancePreset::load(file,"fixture-content");
             check(loaded.defaultZoomPercent==zoom&&loaded.revision()==p.revision(),"default zoom round-trips with independent Speed/map settings");
@@ -290,11 +290,11 @@ int main() {
             replaceOne(valid,"\"chest_clear_rewards\": true","\"chest_clear_rewards\": 1"),
             replaceOne(valid,"pickup-batches-adapted-v1","unverified-chest-policy"),
             valid+"garbage", valid.substr(0,valid.size()-3),
-            replaceOne(valid,"\"schema_version\": 45","\"schema_version\": 46"),
+            replaceOne(valid,"\"schema_version\": 48","\"schema_version\": 49"),
             replaceOne(valid,"\"red_heart_appearance_speed\": 1","\"red_heart_appearance_speed\": 2"),
             replaceOne(valid,"appear33-drop25-collect12-30hz-v1","unverified-timing"),
-            replaceOne(valid,"\"schema_version\": 45","\"schema_version\": 45, \"schema_version\": 45"),
-            replaceOne(valid,"d13c-seeded-bosses-v45","future-contract"),
+            replaceOne(valid,"\"schema_version\": 48","\"schema_version\": 48, \"schema_version\": 48"),
+            replaceOne(valid,"d14a2-full-fly-v48","future-contract"),
             replaceOne(valid,"fixture-content","different-content"),
             replaceOne(valid,"Repentance 1.7.9b","Repentance 1.7.9a"),
             replaceOne(valid,"\"walking_pace_at_speed_one\": 4.8","\"walking_pace_at_speed_one\": 30"),
@@ -316,8 +316,8 @@ int main() {
             replaceOne(routePreset.json(),"\"route_length_scale\": 0.65","\"route_length_scale\": 2.01"),
             replaceOne(routePreset.json(),"\"route_length_scale\": 0.65","\"route_length_scale\": 0.64"),
             replaceOne(valid,"\"default_zoom_percent\": 160","\"default_zoom_percent\": 125"),
-            replaceOne(zoomPreset.json(),"\"default_zoom_percent\": 125","\"default_zoom_percent\": 66.99"),
-            replaceOne(zoomPreset.json(),"\"default_zoom_percent\": 125","\"default_zoom_percent\": 285.01"),
+            replaceOne(zoomPreset.json(),"\"default_zoom_percent\": 125","\"default_zoom_percent\": 24.99"),
+            replaceOne(zoomPreset.json(),"\"default_zoom_percent\": 125","\"default_zoom_percent\": 500.01"),
             replaceOne(zoomPreset.json(),"\"default_zoom_percent\": 125","\"default_zoom_percent\": 126"),
             replaceOne(zoomPreset.json(),"\"default_zoom_percent\": 125","\"default_zoom_percent\": NaN"),
             replaceOne(shots.json(),"\"tears_per_second\": 4","\"tears_per_second\": 0"),

@@ -65,6 +65,7 @@ class ParticleEffects {
     std::vector<Vector3> dustAnchors_, townDustAnchors_;
     void append(size_t emitter, const ParticleSample &sample, Vector3 position, float scale,
                 Matrix view, Vector3 direction = {0,1,0});
+    void appendBound(const Bound &bound,Matrix view);
     void sort();
 };
 } // namespace dw

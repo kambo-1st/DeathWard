@@ -28,6 +28,18 @@ void redHeart(float x,float y,float health,float sx,float sy,Color fill={222,65,
         if(width>0)DrawRectangleRec({pixel.x,pixel.y,pixel.width*width,pixel.height},fill);
     }
 }
+void dynamiteIcon(float x,float y,float sx,float sy,bool filled=true) {
+    // Same 8-by-6, three-pixel grid as the heart icons: red stick, paper bands
+    // and an unlit curved fuse.
+    constexpr std::array<const char *,6> rows{{"000000ff","00000ff0","0rprpr00",
+                                              "rrprpr00","rrprpr00","0ddddd00"}};
+    for(size_t row=0;row<rows.size();++row)for(int col=0;col<8;++col) {
+        const char pixel=rows[row][col];if(pixel=='0')continue;
+        const Color color=!filled?Border:pixel=='p'?Paper:pixel=='f'?Gold:
+            pixel=='d'?Color{136,44,42,255}:Color{222,65,62,255};
+        DrawRectangleRec({(x+float(col)*3)*sx,(y+float(row)*3)*sy,3*sx,3*sy},color);
+    }
+}
 std::string timeLabel(double seconds) {
     int s = int(seconds);
     return std::to_string(s / 60) + ":" + (s % 60 < 10 ? "0" : "") + std::to_string(s % 60);
@@ -98,8 +110,24 @@ void breakableModel(const Breakable &p,float time,Color stone,unsigned char alph
     const auto center=mul(add(p.bounds.min,p.bounds.max),.5f),size=sub(p.bounds.max,p.bounds.min);
     const auto base=Vector3{center.x,.035f,center.z};
     if(p.kind==BreakableKind::Dung) {
-        const float intact=p.destroyed?0.f:float(p.health)/float(std::max(1,p.initialHealth));
         const Color dirt=tint({88,65,39,255}),dry=tint({122,91,53,255});
+        if(p.destroyed) {
+            // Separate low crumbs leave visible floor between them, without a
+            // polygonal foundation or a silhouette resembling intact cover.
+            constexpr std::array<Vector3,5> offsets{{{-.24f,0,-.15f},{.17f,0,-.09f},
+                {-.1f,0,.20f},{.30f,0,.18f},{.01f,0,.01f}}};
+            constexpr std::array<float,5> sizes{.055f,.08f,.04f,.06f,.045f};
+            const float angle=float(p.id%29)*2.399963f;
+            for(size_t i=0;i<offsets.size();++i) {
+                const auto at=add(base,rotateY({offsets[i].x*size.x,0,offsets[i].z*size.z},angle));
+                const float radius=std::min(.18f,size.x*sizes[i]);
+                rlPushMatrix();rlTranslatef(at.x,.02f+radius*.3f,at.z);
+                rlScalef(radius,radius*.4f,radius*.75f);
+                DrawSphereEx({},1,3,6,i%2?dry:dirt);rlPopMatrix();
+            }
+            return;
+        }
+        const float intact=float(p.health)/float(std::max(1,p.initialHealth));
         DrawCylinderEx(base,add(base,{0,.1f,0}),size.x*.48f,size.x*.42f,7,dirt);
         if(!p.destroyed) {
             const float height=.3f+(size.y-.3f)*intact;
@@ -825,6 +853,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     westernScene_.prepare(run.arena);
     westernScene_.setPlayerOcclusion(camera, run.player.position);
     westernScene_.setVisualStyle(visualStyle);
+    westernScene_.setFireLights(missionEffects_.lights());
     const auto &theme = missionTheme(run.arena.theme);
     const bool canyon = run.arena.theme == MissionTheme::Canyon;
     const auto &lighting = westernScene_.lighting();
@@ -832,6 +861,16 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         Vector3 nearest{std::clamp(run.player.position.x, box.min.x, box.max.x), run.player.position.y,
                         std::clamp(run.player.position.z, box.min.z, box.max.z)};
         return distance(nearest, run.player.position) < 65;
+    };
+    std::vector<const Enemy *> campfires;
+    for(int room=0;room<run.arena.roomCount();++room) {
+        if(room!=run.room&&!visible(run.arena.rooms[size_t(room)].bounds))continue;
+        for(const auto &e:run.roomEnemies(room))if(e.alive&&!e.railCarrier&&e.monster==monsterId(33)&&e.environment&&e.state!=EnemyState::Teleporting)
+            campfires.push_back(&e);
+    }
+    if(!campfires.empty())campfireModel_.prepare();
+    const auto drawCampfires=[&](Shader shader,Texture2D shadowMap) {
+        for(const auto *e:campfires)campfireModel_.draw(e->position,e->radius,shader,shadowMap);
     };
     auto enemies = [&](bool depthOnly) {
         for (int room = 0; room < run.arena.roomCount(); ++room) {
@@ -843,6 +882,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                 if (depthOnly &&
                     (enemy.state == EnemyState::Buried || enemy.state == EnemyState::Teleporting))
                     continue;
+                if(!enemy.railCarrier&&enemy.monster==monsterId(33)&&enemy.environment&&campfireModel_.ready())continue;
                 enemyModel(enemy, *run.content, !depthOnly && !lighting.ready());
             }
         }
@@ -939,7 +979,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         // Select the role once instead of drawing independent trader lists.
         for(const auto &site:run.arena.rooms) {
             if(distance(run.player.position,site.objective)>=60)continue;
-            if(site.kind==RoomKind::Service)
+            if(site.kind==RoomKind::Service&&site.service==RoomService::Surgeon)
                 servicePerson(site.objective,site.service,float(run.stats.duration),!depthOnly&&!lighting.ready());
         }
         for (int i = 0; i < run.arena.roomCount(); ++i) {
@@ -952,7 +992,14 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                          pedestalGeometry::Height,pedestalGeometry::Sides,Border);
             if(run.hasSourceTreasure(i)&&run.rewardAvailable(i)) {
                 const float y=1.35f+.07f*std::sin(float(run.stats.duration)*2);
-                if(run.treasureUpgradeItem(i)==25) {
+                if(run.treasureUpgradeItem(i)==255) {
+                    const Color steel{167,182,187,255},shade{74,86,92,255};
+                    DrawCylinder({p.x,y-.40f,p.z},.10f,.035f,.70f,8,steel);
+                    for(int thread=0;thread<5;++thread)
+                        DrawCylinder({p.x,y-.28f+thread*.105f,p.z},.16f,.10f,.045f,8,shade);
+                    DrawCylinder({p.x,y+.25f,p.z},.31f,.28f,.16f,6,steel);
+                    DrawCube({p.x,y+.415f,p.z},.43f,.012f,.075f,Border);
+                } else if(run.treasureUpgradeItem(i)==25) {
                     // Small tin of provisions; original Western presentation.
                     DrawCylinder({p.x,y-.2f,p.z},.30f,.30f,.50f,12,Paper);
                     DrawCylinder({p.x,y-.03f,p.z},.305f,.305f,.18f,12,Color{169,61,48,255});
@@ -1009,27 +1056,6 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             }
             }
         }
-        if (run.legacyObjectives() && distance(run.player.position, run.arena.miners) < 60) {
-            Vector3 p = run.arena.miners;
-            for (int i = 0; i < 6; ++i) {
-                Vector3 person = add(p, {float(i % 3) * 0.75f - 0.75f, 0, float(i / 3) * 0.7f});
-                if (!run.rescued) {
-                    DrawCylinder({person.x, 0, person.z}, 0.22f, 0.3f, 0.9f, 6, Color{128, 120, 87, 255});
-                    DrawSphere({person.x, 1.1f, person.z}, 0.22f, Gold);
-                }
-            }
-            if (!run.rescued)
-                for (int i = 0; i < 5; ++i)
-                    DrawCube({p.x - 1.6f + float(i) * 0.8f, 1.0f, p.z + 1.2f}, 0.07f, 2, 0.07f, Muted);
-        }
-        if (run.legacyObjectives() && distance(run.player.position, run.arena.altar) < 60) {
-            Vector3 p = run.arena.altar;
-            DrawCube({p.x, 0.5f, p.z}, 1.8f, 1, 1.4f, Color{63, 51, 51, 255});
-            if (!run.altarDestroyed) {
-                DrawCube({p.x, 1.7f, p.z}, 0.25f, 2.3f, 0.25f, Rust);
-                DrawCube({p.x, 2.1f, p.z}, 1.5f, 0.25f, 0.25f, Rust);
-            }
-        }
     };
     if(run.arena.shopRoom>=0)shopCartModel_.prepare();
     const auto drawShopCarts=[&](Shader shader,Texture2D shadowMap) {
@@ -1083,6 +1109,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         else
             cowboy(run.player.position, run.player.facing, WHITE, 1, false, false);
         EndShaderMode();
+        drawCampfires(meshDepth,{});
         drawShopCarts(meshDepth,{});
         drawChests(meshDepth,{});
         drawKeys(meshDepth,{});
@@ -1191,6 +1218,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     if(!lighting.ready())for(const auto &chest:run.chests)if(chest.room==run.room)
         shadow(chest.position,chestGeometry::ShadowRadius);
     drawShopCarts(lighting.actorShader(),lighting.texture());
+    drawCampfires(lighting.actorShader(),lighting.texture());
     drawChests(lighting.actorShader(),lighting.texture());
     drawKeys(lighting.actorShader(),lighting.texture());
     for(const auto &supply:run.chestSupplies)if(supply.bomb&&supply.room==run.room) {
@@ -1309,14 +1337,6 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             DrawSphere({p.x, 1.3f, p.z}, .45f, Teal);
             DrawSphereWires({p.x, 1.3f, p.z}, .7f, 6, 8, Gold);
         }
-    }
-    if (run.legacyObjectives() && distance(run.player.position, run.arena.miners) < 60) {
-        const auto p = run.arena.miners;
-        DrawCircle3D({p.x, .1f, p.z}, 2.3f, {1, 0, 0}, 90, run.rescued ? Muted : Teal);
-    }
-    if (run.legacyObjectives() && !run.altarDestroyed && distance(run.player.position, run.arena.altar) < 60) {
-        const auto p = run.arena.altar;
-        DrawSphere({p.x, 1.1f, p.z}, .35f, Teal);
     }
     lantern(run.arena.entrance, Gold, westernScene_.loaded());
     if(run.surveyTutorial&&distance(run.player.position,run.surveyPosition())<60) {
@@ -1613,6 +1633,8 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         });
     for (const auto &e : run.enemies)
         if (e.alive && e.maxHp>0 && !e.dyingEggy() && !(e.adultLeech&&e.adultLeech->intangible) && (e.hp < e.maxHp || e.id == hoveredEnemy) && e.kind != EnemyKind::Boss) {
+            const auto *environment=run.content->environmentActor(e.monster);
+            if(environment&&environment->kind==EnvironmentActorKind::Fireplace)continue;
             Vector2 at = GetWorldToScreen(add(e.position, {0, 1.6f, 0}), camera);
             if (e.id == hoveredEnemy && e.kind == EnemyKind::Monster) {
                 const auto &d = *run.content->monster(e.monster);
@@ -1747,10 +1769,10 @@ Action Renderer::hub(const Game &game) {
         text(std::string(hubName(game.activeHub)) + " / MISSIONS", 270, 130, 17, Gold);
         text(theme.title, 267, 173, 38, Paper);
         wrap(game.offeredTheme() == MissionTheme::Canyon
-                 ? "Face Isaac's monsters. Rescue the miners, break the altar and clear the Infested Mesa."
+                 ? "Explore the Badlands, gather powers and defeat the guardians of the canyon."
              : world.bossDefeated
-                 ? "Bring home anyone still missing and settle unfinished business on the frontier."
-                 : "Face Western outlaws. Bring the miners home, break the altar and defeat the Hollow "
+                 ? "Return to the mine, gather powers and face the threats below."
+                 : "Face Western outlaws. Explore the mine and defeat the Hollow "
                    "Sheriff.",
              270, 238, 727, 21, Paper);
         text(game.expeditionPacing == ExpeditionPacing::Classic
@@ -2042,15 +2064,10 @@ Action Renderer::expedition(const Game &game) {
             std::string(run.storySeen()?"[+] Examined: ":"[?] Examine: ")+storyRoomName(site),982,65,256,16,Paper);
         if(button(Action::ReadJournal, "FIELD JOURNAL",982,120,256,26))return Action::ReadJournal;
     } else {
-    text("BRING SOMETHING BACK", 982, 37, 13, Gold);
-    text(run.rescued ? "[+] Six miners safe" : "[ ] Miners / chamber 3", 982, 65, 15,
-         run.rescued ? Teal : Paper);
-    text(run.altarDestroyed ? "[+] Altar destroyed" : "[ ] Altar / chamber 4", 982, 91, 15,
-         run.altarDestroyed ? Teal : Muted);
-    text(run.arena.theme == MissionTheme::Canyon
-             ? (run.arena.profile.active()?(run.bossKilled?"[+] Canyon guardian defeated":"[ ] Defeat the canyon guardian"):(run.bossKilled ? "[+] Infested Mesa cleared" : "[ ] Clear the Infested Mesa"))
-             : (run.bossKilled ? "[+] Sheriff defeated" : "[ ] Sheriff / locked court"),
-         982, 117, 15, run.bossKilled ? Teal : Muted,256);
+        text("EXPEDITION INTO THE BADLANDS", 982, 37, 12, Gold);
+        text("Floor "+std::to_string(run.floor+1)+" / "+std::to_string(run.expedition.floorCount),982,65,15,Paper);
+        wrap(run.bossKilled?(run.lastFloor()?"Guardian defeated. Return home.":"Guardian defeated. Find the descent."):
+            "Find and defeat this floor's guardian.",982,91,256,15,run.bossKilled?Teal:Paper);
     }
     dungeonMap(game);
     floorExitMarker(game);
@@ -2067,10 +2084,8 @@ Action Renderer::expedition(const Game &game) {
     } else if(run.arena.rooms[size_t(run.room)].kind==RoomKind::Combat&&run.stats.duration-run.roomClearedAt<1.4) {
         text("ROOM CLEAR",440,38,14,Teal);
     }
-    panel(24, 674, 344, 64, Panel);
+    panel(24, 674, 344, 116, Panel);
     text("HEARTS",41,686,12,Muted);
-    std::ostringstream health;health<<std::fixed<<std::setprecision(1)<<run.player.totalHealth()/2;
-    text(health.str(),304,685,14,Paper);
     const auto &hp=run.player;
     const int redSlots=int(std::ceil(hp.maxHp/2));
     const int protectiveSlots=(hp.soulHearts+1)/2+hp.boneHearts;
@@ -2102,6 +2117,13 @@ Action Renderer::expedition(const Game &game) {
         if(hp.eternalHearts>0&&slot==std::max(0,redSlots-1))
             redHeart(x+12,705,1,sx_,sy_,Paper,Color{0,0,0,0});
     }
+    DrawRectangleRec({41*sx_,734*sy_,310*sx_,sy_},Border);
+    text("DYNAMITE",41,744,12,Muted);
+    constexpr int visibleDynamite=10;
+    const int charges=std::clamp(run.dynamite,0,MaxDynamite);
+    for(int i=0;i<std::max(1,std::min(charges,visibleDynamite));++i)
+        dynamiteIcon(41+i*26,765,sx_,sy_,charges>0);
+    if(charges>visibleDynamite)text("+"+std::to_string(charges-visibleDynamite),309,765,14,Paper);
     Action controls = Action::None;
     if (!game.paused && !game.buildOpen && !run.rewardOpen && !run.shopOpen && !run.dead) {
         const auto control=[&](Action action,const std::string &label,Rectangle r,bool primary=false) {
@@ -2129,9 +2151,6 @@ Action Renderer::expedition(const Game &game) {
                 if(control(Action::ReviewPowerupBoss,"BOSS / THEN FLOOR EXIT",expeditionHud::ReviewBoss))controls=Action::ReviewPowerupBoss;
             }
         }
-        const auto bomb=expeditionHud::Dynamite;
-        if(control(Action::Dynamite,"DYNAMITE "+std::to_string(run.dynamite),bomb))
-            controls=Action::Dynamite;
         if(run.activeItem) {
             const auto r=expeditionHud::Active;
             const int capacity=activeCapacity(run.activeItem->item);
@@ -2147,8 +2166,6 @@ Action Renderer::expedition(const Game &game) {
         if(control(Action::Dodge,"DODGE",dodge))controls=Action::Dodge;
         if(run.player.dodgeCooldown>0)
             DrawRectangleRec({dodge.x*sx_,(dodge.y+dodge.height-3)*sy_,dodge.width*sx_*(1-std::clamp(run.player.dodgeCooldown/1.1f,0.f,1.f)),3*sy_},Teal);
-        if(control(Action::Pause,"PAUSE",expeditionHud::Pause))controls=Action::Pause;
-        if(control(Action::OpenBalance,"TUNING",expeditionHud::Tuning))controls=Action::OpenBalance;
         if(const auto action=buildStrip(game);action!=Action::None)controls=action;
     }
     const auto warning=run.demolitionWarning();
@@ -2440,9 +2457,24 @@ Action Renderer::balancePanel(const Game &game) {
     if(game.balanceEnemiesOpen&&button(Action::BalanceMonstroTab,"BOSSES",905,175,170,28,game.balanceMonstroOpen))return Action::BalanceMonstroTab;
     if(game.balanceRewardsOpen) {
         if(button(Action::BalanceShopTab,"SHOP",470,175,150,28,game.balanceShopOpen))return Action::BalanceShopTab;
-        if(button(Action::BalanceClearHeartsTab,"AFTER CLEAR",650,175,200,28,!game.balanceRoomHeartsOpen&&!game.balanceShopOpen))return Action::BalanceClearHeartsTab;
+        if(button(Action::BalanceClearHeartsTab,"AFTER CLEAR",650,175,200,28,!game.balancePropsOpen&&!game.balanceRoomHeartsOpen&&!game.balanceShopOpen))return Action::BalanceClearHeartsTab;
         if(button(Action::BalanceRoomHeartsTab,"ROOM LAYOUTS",875,175,200,28,game.balanceRoomHeartsOpen))return Action::BalanceRoomHeartsTab;
-        if(game.balanceShopOpen) {
+        if(game.balancePropsOpen) {
+            const auto &p=game.balancePreset.roomProps;const int mode=game.balanceDraft.roomProps.layouts;
+            text("FIRE / POOP",205,184,22,Gold);
+            if(button(Action::PropsOff,"LEGACY",205,224,200,40,mode==0))return Action::PropsOff;
+            if(button(Action::PropsSource,"SOURCE ROOMS",425,224,300,40,mode==1))return Action::PropsSource;
+            if(button(Action::PropsTest,"TEST BOTH",745,224,330,40,mode==2))return Action::PropsTest;
+            text("Source: selected opening-floor layouts. Test: two fires, three poop piles.",205,278,14,Muted);
+            text("FIRE CONTACT",205,321,18,Paper);text(decimal(float(p.fireDamageHalfHearts)*.5f)+" HEARTS",485,313,24,Paper);
+            if(button(Action::FireDamageDown,"- 0.5",795,305,130,40))return Action::FireDamageDown;
+            if(button(Action::FireDamageUp,"+ 0.5",945,305,130,40))return Action::FireDamageUp;
+            text("Ordinary fire: half a heart. Poop is harmless; shoot or blast both props.",205,361,14,Teal);
+            if(button(Action::TogglePropRewards,p.rewards?"DESTRUCTION DROPS: ON":"DESTRUCTION DROPS: OFF",205,390,460,40))return Action::TogglePropRewards;
+            text("Future destructions only; existing rolls stay fixed.",680,404,12,Muted);
+            if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,449,420,40))return Action::ApplyMapChanges;
+            text(game.hasPendingMapChanges()?"PENDING / RESETS FLOOR":"MAP SETTINGS APPLIED",655,465,14,Muted);
+        } else if(game.balanceShopOpen) {
             const bool key=game.balanceShopKeyOpen,stock=game.balanceShopStockOpen,bomb=game.balanceShopBombOpen,soul=game.balanceShopSoulHeartOpen;
             text(soul?"SHOP SOUL HEART":bomb?"SHOP DYNAMITE":stock?"SHOP STOCK":key?"SHOP KEY":"SHOP HEART",205,184,22,Gold);
             text(soul?"Adds one protective soul heart, up to available health capacity. Walk up to buy.":bomb?"Dynamite when selected. Walk up to buy; capacity 99 charges.":stock?"Steam Sale or BOGO Bombs beside supplies. Unfinished stock keeps the fixed pair.":key?"Ordinary key when selected. Walk up to buy; capacity 99 keys.":"Opening-floor heart when selected. Walk up to buy when injured.",205,221,14,Paper);
@@ -2493,6 +2525,7 @@ Action Renderer::balancePanel(const Game &game) {
             }
             text(locations.empty()?"Current floor: no placed pickup rooms.":"Current floor: placed pickup room(s) "+locations,205,395,14,Paper);
             if(button(Action::ApplyMapChanges,game.hasPendingMapChanges()?"APPLY MAP CHANGES":"MAP SETTINGS APPLIED",205,427,420,40,game.hasPendingMapChanges()))return Action::ApplyMapChanges;
+            if(button(Action::BalancePropsTab,"FIRE / POOP",655,427,420,40))return Action::BalancePropsTab;
             text("Apply resets floor encounters/pickups; keeps your player and build.",205,480,13,Muted);
         } else {
         const auto &p=game.balancePreset;
@@ -2570,6 +2603,24 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::ResetCombat,"RESET DAMAGE / HP",205,465,370,36))return Action::ResetCombat;
         const auto next=game.nextBalancePreset.value_or(BalancePreset{});
         text("Next: "+decimal(next.playerDamage)+" damage / "+decimal(next.regularHealthMultiplier*100)+"% HP",600,478,13,Teal);
+    } else if(game.balanceEnemiesOpen&&game.balanceMonstroOpen&&game.balanceBossRewardOpen) {
+        if(button(Action::BalanceMonstroTab,"< BOSS VALUES",205,175,240,28))return Action::BalanceMonstroTab;
+        const auto &draft=game.balanceDraft;const auto &t=game.balancePreset.screw;
+        if(button(Action::SelectBreakfastReward,"BREAKFAST",205,220,190,36,draft.bossRewardItem==25))return Action::SelectBreakfastReward;
+        if(button(Action::SelectScrewReward,"SCREW",410,220,190,36,draft.bossRewardItem==255))return Action::SelectScrewReward;
+        if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",870,220,205,36))return Action::ApplyMapChanges;
+        text("SCREW EFFECT STRENGTH",205,268,13,Gold);
+        const char *labels[]={"TEARS","SHOT SPEED"};const float values[]={t.tearsStrength,t.shotSpeedStrength};
+        for(int i=0;i<2;++i) {
+            const float y=290+i*64;const auto down=Action(int(Action::ScrewTearsDown)+i*2),up=Action(int(down)+1);
+            text(labels[i],205,y+10,17,Paper);text(decimal(values[i]*100)+"%",485,y+7,24,Paper);
+            if(button(down,"- 5%",760,y,130,38))return down;
+            if(button(up,"+ 5%",905,y,130,38))return up;
+        }
+        text("Permanent passive. Effects stack per copy and apply to new shots.",205,415,13,Teal);
+        text("Reward choice applies when you regenerate the floor. Range is retained.",205,442,13,Muted);
+        if(button(Action::ResetScrew,"RESET SCREW EFFECTS",205,468,350,35))return Action::ResetScrew;
+        text(game.hasPendingMapChanges()?"REWARD / MAP CHANGES PENDING":"REWARD / MAP SETTINGS APPLIED",585,480,13,Muted);
     } else if(game.balanceEnemiesOpen&&game.balanceMonstroOpen) {
         const auto &t=game.balancePreset.monstro;
         const bool duke=game.balanceDukeValues;const auto &d=game.balancePreset.duke;
@@ -2593,7 +2644,22 @@ Action Renderer::balancePanel(const Game &game) {
         }
         text(duke?"Health keeps injury fraction. Movement and fly speed apply live.":"Health keeps damage taken proportionally. New volleys use new shot speed.",205,442,13,Teal);
         if(button(Action::ResetMonstro,"RESET BOSS VALUES",205,468,350,35))return Action::ResetMonstro;
-        text(game.hasPendingMapChanges()?"BOSS / MAP CHANGES PENDING":"BOSS / MAP SETTINGS APPLIED",585,480,13,Muted);
+        if(button(Action::BalanceBossRewardTab,game.balanceDraft.bossRewardItem==255?"REWARD: SCREW >":"REWARD: BREAKFAST >",585,468,490,35))return Action::BalanceBossRewardTab;
+    } else if(game.balanceEnemiesOpen&&game.balanceFullFlyOpen) {
+        const auto &t=game.balancePreset.fullFly;
+        text("FULL FLY",205,185,22,Gold);
+        const float values[]={t.movement,t.shotSpeed};
+        const char *labels[]={"MOVEMENT","DEATH SHOT SPEED"};
+        for(int i=0;i<2;++i) {
+            const float y=235+i*70;const auto down=Action(int(Action::FullFlyMovementDown)+i*2),up=Action(int(down)+1);
+            text(labels[i],205,y+12,18,Paper);text(decimal(values[i]*100)+"%",490,y+7,26,Paper);
+            if(button(down,"- 5%",650,y,130,40))return down;
+            if(button(up,"+ 5%",795,y,130,40))return up;
+        }
+        text("10 - 200%. Movement applies at the next steering tick.",205,380,14,Muted);
+        text("Six death shots use the setting at death; flying shots retain their speed.",205,409,14,Muted);
+        text("Recorded two-fly encounter uses SOURCE ROOM LAYOUTS / Apply map changes.",205,438,13,Teal);
+        if(button(Action::ResetFullFly,"RESET FULL FLY TO 100%",205,466,410,36))return Action::ResetFullFly;
     } else if(game.balanceEnemiesOpen&&game.balancePooterOpen) {
         const auto &p=game.balancePreset;
         text("ORDINARY POOTER",205,185,22,Gold);
@@ -2620,6 +2686,7 @@ Action Renderer::balancePanel(const Game &game) {
         text("Next: "+decimal(next.pooterMovementMultiplier*100)+" / "+decimal(next.pooterShotSpeedMultiplier*100)+" / "+decimal(next.pooterAttackIntervalMultiplier*100)+"%",600,478,13,Teal);
     } else if(game.balanceEnemiesOpen) {
         text("ORDINARY GAPER",205,185,22,Gold);
+        if(button(Action::BalanceFullFlyTab,"FULL FLY >",945,224,130,40))return Action::BalanceFullFlyTab;
         text("MOVEMENT",205,238,18,Paper);
         text(decimal(game.balancePreset.gaperMovementMultiplier*100)+"%",400,230,28,Paper);
         if(button(Action::GaperMovementDown,"- 5%",650,224,130,40))return Action::GaperMovementDown;

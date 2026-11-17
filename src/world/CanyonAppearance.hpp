@@ -13,7 +13,10 @@ struct CanyonVisualParameters {
           plateauVegetation = .85f;
     float extent = 24;
     float composition = .85f;
-    int candidatesPerRoom = 360, maxDecorations = 2200;
+    int candidatesPerRoom = 360, maxDecorations = 5500;
+    // Retain the original 0–200% candidate prefix; extra capacity belongs only
+    // to the newly supported vegetation tiers.
+    int baseDecorationLimit() const { return std::min(maxDecorations,2200); }
     static CanyonVisualParameters load(const std::filesystem::path &path);
     void validate() const;
 };
@@ -25,7 +28,7 @@ struct CanyonDecoration {
     Vector3 position{};
     float span = 0, height = 0, yaw = 0;
     int room = -1;
-    bool extraVegetation = false;
+    int vegetationTier = 0; // 0: baseline; 1–4: additions through 200–500%.
 };
 // Cosmetic copy only. Arena::canyon remains the authoritative gameplay field.
 struct CanyonSurfaceTriangle {

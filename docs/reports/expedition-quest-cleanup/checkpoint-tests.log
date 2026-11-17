@@ -1,0 +1,33 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  33: whip_worm_trinket
+    Start 190: screw_boss_reward
+    Start 188: full_fly_delivery
+1/6 Test #190: screw_boss_reward ................   Passed    2.20 sec
+    Start  39: treasure_upgrade
+2/6 Test #188: full_fly_delivery ................   Passed    3.11 sec
+    Start 189: ordinary_room_props
+3/6 Test #189: ordinary_room_props ..............   Passed    3.48 sec
+    Start 150: balance_preset_contract
+4/6 Test #150: balance_preset_contract ..........   Passed    0.15 sec
+5/6 Test  #33: whip_worm_trinket ................***Failed    6.95 sec
+PASS 24 native Whip cache cases and 8 native pair draws
+PASS actual attacks, Cancer/Whip swaps/drop/recollect, other categories and floor/Apply lifecycle
+WHIP_WITNESS seed=32 room=5 pickup_seed=3303011089
+PASS natural Whip producer, three sizes, capacity and immutable pending identity
+FAIL Audited additive content hash
+
+6/6 Test  #39: treasure_upgrade .................***Failed    9.83 sec
+PASS 27 generated geometry/route collection cases
+PASS 16-direction keyboard/dodge/click routing, persistent collision, safe Apply and legacy offering
+FAIL: audited additive catalog hash
+
+
+67% tests passed, 2 tests failed out of 6
+
+Total Test time (real) =  12.04 sec
+
+The following tests FAILED:
+	 33 - whip_worm_trinket (Failed)
+	 39 - treasure_upgrade (Failed)
+Errors while running CTest

@@ -4,7 +4,6 @@ namespace dw {
 const char *roomServiceName(RoomService service) {
     switch(service) {
     case RoomService::Surgeon:return "Field Surgeon";
-    case RoomService::Smuggler:return "Smuggler's Bargain";
     default:return "Rest Stop";
     }
 }
@@ -20,7 +19,7 @@ void Arena::allocateServices() {
     // Prefer side branches, without moving any story site or adding graph nodes.
     std::stable_sort(sites.begin(),sites.end(),[&](int a,int b){return rooms[size_t(a)].passages.size()<rooms[size_t(b)].passages.size();});
     // Keep the old shuffle slots/draw count so retained specialists keep their seeded sites.
-    std::vector<RoomService> kinds{RoomService::None,RoomService::Smuggler};
+    std::vector<RoomService> kinds{RoomService::None,RoomService::None};
     if(profile.floor>=3)kinds.push_back(RoomService::Surgeon);
     for(size_t i=0;i<kinds.size();++i)std::swap(kinds[i],kinds[i+rng.bounded(uint32_t(kinds.size()-i))]);
     int count=0;

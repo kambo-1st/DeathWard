@@ -154,7 +154,7 @@ void verify() {
                   "broad flat caps and vertical walls dominate small bevels");
             check(look.triangles.size() < size_t((look.surface.width - 1) * (look.surface.depth - 1) * 8),
                   "bounded contour extrusion geometry");
-            check(look.decorations.size() <= 2200, "cosmetic budget bounded");
+            check(look.decorations.size() <= size_t(look.parameters.maxDecorations), "cosmetic budget bounded");
             for (size_t i = 0; i < look.decorations.size(); ++i) {
                 const auto &a = look.decorations[i], &b = repeat.decorations[i];
                 check(distance(a.position, b.position) < .00001f && a.kind == b.kind && a.zone == b.zone &&

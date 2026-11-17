@@ -1,0 +1,61 @@
+{
+  "date": "2026-11-17",
+  "user_statement": "treasure ready.",
+  "source_seed": "2FFX 8XJH",
+  "source_template": "4.6.0",
+  "native_list_index": 3,
+  "spawn_seed": 835929943,
+  "same_all_12_template_identities_and_spawn_seeds_after_restart": true,
+  "paused_world_frame": 651,
+  "observed_pickups": [
+    {
+      "type": 5,
+      "variant": 20,
+      "subtype": 1,
+      "x": 240,
+      "y": 280
+    },
+    {
+      "type": 5,
+      "variant": 100,
+      "subtype": 55,
+      "x": 320,
+      "y": 280
+    },
+    {
+      "type": 5,
+      "variant": 20,
+      "subtype": 1,
+      "x": 400,
+      "y": 280
+    }
+  ],
+  "collectible": {
+    "identity": "isaac:collectible:55",
+    "name": "Mom’s Eye",
+    "category": "passive",
+    "source_xml": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/items.xml",
+    "source_xml_sha256": "ee567ed920b1bcada61f2a2d65e48563286fe7e8bf00363ad763ac2aa3ae64b7",
+    "source_attributes": {
+      "description": "#MOMS_EYE_DESCRIPTION",
+      "gfx": "Collectibles_055_MomsEye.png",
+      "id": "55",
+      "name": "#MOMS_EYE_NAME"
+    },
+    "enabled_in_deathward": false
+  },
+  "source_files": {
+    "treasure-observation.json": "6ff3c02832cc0d82173604f6d0e0f74f035b1bf81a0e273bbb291b23909d1514",
+    "treasure-source-log.txt": "03801bf18d3007da7a2d4b189b007aa77b449fac9f6a6c77e2e4829ff90f07b5"
+  },
+  "observation": "Uncollected collectible actor5.100.55 at(320,280), with ordinary penny5.20.1 at(240,280) and(400,280).",
+  "method": "VM_READ only; no writes, injection, suspension, input or game-file edits",
+  "runtime_gameplay_changed": false,
+  "remaining": [
+    "shop stock and prices observation",
+    "boss reward and other special-room outcomes",
+    "initial inventory verification",
+    "Mom’s Eye effect and other content dependencies",
+    "main-game floor mapping and human acceptance"
+  ]
+}

@@ -1,0 +1,20 @@
+[INFO] - RNG Start Seed: 2FFX 8XJH (3466870960) [New, 2]
+[INFO] - Preload sound 0.
+[INFO] - Initialized player with Variant 0 and Subtype 0
+[INFO] - Level::Init m_Stage 1, m_StageType 0 Seed 1761530316
+[INFO] - delete 0 generated rooms.
+[INFO] - [RoomConfig] load stage 1: Basement (mode 0)
+[INFO] - allocate 1181 rooms.
+[INFO] - [RoomConfig] load stage 0: Special Rooms (mode 0)
+[INFO] - allocate 1300 rooms.
+[INFO] - generate...
+[INFO] - place_room: shape 5
+[INFO] - place_room: shape 8
+[INFO] - 9 rooms in 4 loops
+[INFO] - placing rooms...
+[INFO] - [RoomConfig] load stage 13: ??? (mode 0)
+[INFO] - allocate 30 rooms.
+[INFO] - Map Generated in 1 Loops
+[INFO] - CURRENT ROOM INDEX 84 29a72bfc
+[INFO] - Room 1.2(Start Room)
+[INFO] - SpawnRNG seed: 3382453641

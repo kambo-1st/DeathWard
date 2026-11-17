@@ -118,24 +118,14 @@ void roomLifetime() {
     check(s.roomClear&&s.roomThreats()==0&&allies(s)==1,"Living allies do not keep room doors sealed");
     std::cout<<"SHADOW_LIFETIME transition_expiry=1 no_resurrection=1 room_clear=1\n";
 }
-void seededBargain() {
-    check(itemPoolWeight(ItemPool::Bargain,shadow)>0&&itemPoolWeight(ItemPool::Armory,shadow)==0&&
-        itemPoolWeight(ItemPool::Shop,shadow)==0&&itemPoolWeight(ItemPool::Boss,shadow)==0,"Source Devil pool maps only to local bargain");
-    bool found=false;
-    for(uint64_t seed=0;seed<80&&!found;++seed) {
+void retiredBargain() {
+    // Keep the historical item pool/owned item compatible, without a live vendor.
+    check(itemPoolWeight(ItemPool::Bargain,shadow)>0,"historical bargain item remains registered");
+    for(uint64_t seed=0;seed<8;++seed) {
         Simulation s(seed,1,{},MissionTheme::Canyon,true,false,WitnessAccount::Rourke);
-        for(int room=0;room<s.arena.roomCount()&&!found;++room) {
-            if(s.arena.rooms[size_t(room)].service!=RoomService::Smuggler)continue;
-            for(int slot=0;slot<2;++slot)if(s.rooms[size_t(room)].offers[size_t(slot)]==shadow) {
-                s.enterRoom(room);s.player.position=s.arena.rooms[size_t(room)].objective;s.openShop();
-                check(s.buyShop(slot)&&s.itemStacks(shadow)==1,"Actual seeded bargain can acquire My Shadow");
-                s.closeShop();s.step({});check(s.familiars.size()==1,"Acquired item actually creates its producer");
-                std::cout<<"SHADOW_BARGAIN seed="<<seed<<" floor=0 room="<<room<<" slot="<<slot<<" hp="<<s.player.maxHp<<'\n';
-                found=true;break;
-            }
-        }
+        for(const auto &room:s.arena.rooms)
+            check(room.service!=RoomService::Smuggler,"retired bargain cannot naturally produce My Shadow");
     }
-    check(found,"My Shadow must be reachable in seeded normal expedition trade");
 }
 void floorAndJournal() {
     Simulation s(3,1,{},MissionTheme::Canyon);
@@ -163,5 +153,5 @@ void floorAndJournal() {
     std::cout<<"SHADOW_PERSISTENCE floor_carry=1 expired_allies=1 fresh_producer=1 journal_item=1\n";
 }
 }
-int main(){try{producer();delayedPath();chargeAndContact();incoming();projectilesAndRewards();roomLifetime();seededBargain();floorAndJournal();
+int main(){try{producer();delayedPath();chargeAndContact();incoming();projectilesAndRewards();roomLifetime();retiredBargain();floorAndJournal();
     std::cout<<"PASS My Shadow producer, allied combat and room lifetime\n";return 0;}catch(const std::exception &e){std::cerr<<e.what()<<'\n';return 1;}}

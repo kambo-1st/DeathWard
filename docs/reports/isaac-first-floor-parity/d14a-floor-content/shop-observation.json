@@ -1,0 +1,2293 @@
+{
+    "schema":  1,
+    "captured_utc":  "2026-11-17T14:18:54.3444433Z",
+    "pid":  47904,
+    "module_base":  7864320,
+    "stage":  1,
+    "stage_type":  0,
+    "difficulty":  0,
+    "stage_header_raw_base64":  "AQAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "descriptor_count":  12,
+    "current_list_index":  2,
+    "world_frame":  1872,
+    "rooms":  [
+                  {
+                      "list_index":  0,
+                      "grid_index":  30,
+                      "safe_grid_index":  30,
+                      "dimension":  0,
+                      "actual_doors":  4,
+                      "decoration_seed":  3582503282,
+                      "spawn_seed":  2514600356,
+                      "award_seed":  4232017894,
+                      "raw_descriptor_base64":  "HgAAAB4AAAAAAAAAAAAAAJiCpykAAAAABAAAAB0AAAARAAAAHwAAACsAAAD/////////////////////BQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHKpiNWkweGV5nc//IcxVuyAVoAkgI6AJICOgCQQurUjELq1I5DAtSNo2E0nAAAAAMjRdCTI0XQkyN50JAAAAAAAAAAAAAAAAAAAAAAg0F8lJIthJf////8AAAAA/////w==",
+                      "config":  {
+                                     "type":  5,
+                                     "variant":  2012,
+                                     "subtype":  13,
+                                     "difficulty":  1,
+                                     "weight_at_capture":  0.1,
+                                     "allowed_doors":  15,
+                                     "shape_metadata_only":  1,
+                                     "slots":  [
+                                                   {
+                                                       "x":  0,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  5,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  11,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  6,
+                                                       "y":  3,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  67,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  7,
+                                                       "y":  3,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  18,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  8,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   }
+                                               ],
+                                     "raw_base64":  "AAAAAAAAAAAFAAAA3AcAAA0AAADQB9U1BgAAAAMAAAB8gacpEQAAAB8AAAABAAAAAACAP83MzD0PAAAAAAAAANiJvjUIAA0HAQAAAAAAAAAAAAAAAAAAANwHAAA="
+                                 }
+                  },
+                  {
+                      "list_index":  1,
+                      "grid_index":  6,
+                      "safe_grid_index":  6,
+                      "dimension":  0,
+                      "actual_doors":  8,
+                      "decoration_seed":  2776185882,
+                      "spawn_seed":  2681287266,
+                      "award_seed":  2865712891,
+                      "raw_descriptor_base64":  "BgAAAAYAAAABAAAAAAAAAFBSqCkAAAAACAAAAAUAAAD/////BwAAABMAAAD/////////////////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABo8eaViMtGf+07Pqgvj3cegPoEkoHaBJKB2gSQgx7UjIMe1I6DNtSMo2E0nAAAAAFh6ciRYenIkWIdyJAAAAAAAAAAAAAAAAAAAAAAg0F8lJIthJf////8AAAAA/////w==",
+                      "config":  {
+                                     "type":  8,
+                                     "variant":  14,
+                                     "subtype":  20,
+                                     "difficulty":  1,
+                                     "weight_at_capture":  0.1,
+                                     "allowed_doors":  15,
+                                     "shape_metadata_only":  1,
+                                     "slots":  [
+                                                   {
+                                                       "x":  4,
+                                                       "y":  3,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  6,
+                                                                           "variant":  4,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  8,
+                                                       "y":  3,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  6,
+                                                                           "variant":  2,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   }
+                                               ],
+                                     "raw_base64":  "AAAAAAAAAAAIAAAADgAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAABAAAAAACAP83MzD0PAAAAAAAAAMAh1TUCAA0HAQAAAAAAAAAAAAAAAAAAAA4AAAA="
+                                 }
+                  },
+                  {
+                      "list_index":  2,
+                      "grid_index":  20,
+                      "safe_grid_index":  20,
+                      "dimension":  0,
+                      "actual_doors":  9,
+                      "decoration_seed":  4002989231,
+                      "spawn_seed":  1247876511,
+                      "award_seed":  3762145479,
+                      "raw_descriptor_base64":  "FAAAABQAAAACAAAAAAAAANwupykAAAAACQAAABMAAAAHAAAAFQAAACEAAAD/////////////////////BQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAK/EmO6fFWFKx8g94BbzgQegeIEkoLCBJKCwgSSozbUj4M61IyjUtSPI2E0nBAAAAJDVciSQ1XIkkOJyJAgABgADAAQAAgAAAAcAAQAAAAAAAAAAAAIAAwAAAAAA/////w==",
+                      "config":  {
+                                     "type":  2,
+                                     "variant":  0,
+                                     "subtype":  0,
+                                     "difficulty":  1,
+                                     "weight_at_capture":  0.0100000007,
+                                     "allowed_doors":  15,
+                                     "shape_metadata_only":  1,
+                                     "slots":  [
+                                                   {
+                                                       "x":  3,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  6,
+                                                                           "variant":  8,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  5,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  6,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  17,
+                                                                           "variant":  1,
+                                                                           "subtype":  0,
+                                                                           "weight":  0.5
+                                                                       },
+                                                                       {
+                                                                           "type":  17,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  0.5
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  7,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  11,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  5,
+                                                       "y":  4,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  5,
+                                                                           "variant":  150,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  7,
+                                                       "y":  4,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  5,
+                                                                           "variant":  150,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   }
+                                               ],
+                                     "raw_base64":  "AAAAAAAAAAACAAAAAAAAAAAAAABTaG9wIEwxAGkIQQxyCgAPBwAAAA8AAAABAAAAAACAPwvXIzwPAAAAAAAAALiJujUIAA0HAQAAAAAAAAAAAAAAAAAAAAAAAAA="
+                                 }
+                  },
+                  {
+                      "list_index":  3,
+                      "grid_index":  46,
+                      "safe_grid_index":  46,
+                      "dimension":  0,
+                      "actual_doors":  3,
+                      "decoration_seed":  261914119,
+                      "spawn_seed":  835929943,
+                      "award_seed":  3994804713,
+                      "raw_descriptor_base64":  "LgAAAC4AAAADAAAAAAAAAFhDpykAAAAAAwAAAC0AAAAhAAAALwAAADsAAAD/////////////////////BQAAAAEAAABBAAAAAAAAAAAAAAAAAAAAAAAAAAd+nA9XR9Mx6eEb7mO5Ge2gsoEkoOqBJKDqgSQw1LUjMNS1I7DatSOo2E0nAwAAAIjIciSIyHIkiNVyJAAAAAAAAAAAAAAAAAAAAAAg0F8lJIthJf////8AAAAA/////w==",
+                      "config":  {
+                                     "type":  4,
+                                     "variant":  6,
+                                     "subtype":  0,
+                                     "difficulty":  1,
+                                     "weight_at_capture":  0.1,
+                                     "allowed_doors":  15,
+                                     "shape_metadata_only":  1,
+                                     "slots":  [
+                                                   {
+                                                       "x":  4,
+                                                       "y":  3,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  5,
+                                                                           "variant":  20,
+                                                                           "subtype":  1,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  6,
+                                                       "y":  3,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  5,
+                                                                           "variant":  100,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  8,
+                                                       "y":  3,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  5,
+                                                                           "variant":  20,
+                                                                           "subtype":  1,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   }
+                                               ],
+                                     "raw_base64":  "AAAAAAAAAAAEAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAABAAAAAACAP83MzD0PAAAAAAAAABBv8zUDAA0HAQAAAAAAAAAAAAAAAAAAAAYAAAA="
+                                 }
+                  },
+                  {
+                      "list_index":  4,
+                      "grid_index":  85,
+                      "safe_grid_index":  85,
+                      "dimension":  0,
+                      "actual_doors":  1,
+                      "decoration_seed":  1667776829,
+                      "spawn_seed":  2731255046,
+                      "award_seed":  3062104176,
+                      "raw_descriptor_base64":  "VQAAAFUAAAAEAAAAAAAAAJiWqCkAAAAAAQAAAFQAAABIAAAAVgAAAGIAAAD/////////////////////BQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD1BaGMGpcuicACEtlpX9f/A7IEkwCSCJMAkgiS42rUjuNq1IzjhtSOo100nAAAAAHiuciR4rnIkeLtyJAAAAAAAAAAAAAAAAAAAAAAg0F8lJIthJf////8AAAAA/////w==",
+                      "config":  {
+                                     "type":  13,
+                                     "variant":  7,
+                                     "subtype":  0,
+                                     "difficulty":  1,
+                                     "weight_at_capture":  0.1,
+                                     "allowed_doors":  15,
+                                     "shape_metadata_only":  1,
+                                     "slots":  [
+                                                   {
+                                                       "x":  0,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4500,
+                                                                           "variant":  1,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1002,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1002,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  11,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  6,
+                                                       "y":  3,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1930,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1940,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1002,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  11,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1002,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1300,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   }
+                                               ],
+                                     "raw_base64":  "AAAAAAAAAAANAAAABwAAAAAAAAAgKGNvcHkpAAAAAAAAAAAABwAAAA8AAAABAAAAAACAP83MzD0PAAAAAAAAAEDlNycJAA0HAQAAAAAAAAAAAAAAAAAAAAcAAAA="
+                                 }
+                  },
+                  {
+                      "list_index":  5,
+                      "grid_index":  33,
+                      "safe_grid_index":  33,
+                      "dimension":  0,
+                      "actual_doors":  11,
+                      "decoration_seed":  578897751,
+                      "spawn_seed":  985072297,
+                      "award_seed":  963083874,
+                      "raw_descriptor_base64":  "IQAAACEAAAAFAAAAAAAAACRCqCkAAAAACwAAACAAAAAUAAAAIgAAAC4AAAD/////////////////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFdHgSKpArc6Yn5nOZyAQYmACokkgEKJJIBCiSRgenAkYHpwJOCAcCQI2U0nAAAAAJjiciSY4nIkmO9yJAAAAAAAAAAAAAAAAAAAAAAg0F8lJIthJf////8AAAAA/////w==",
+                      "config":  {
+                                     "type":  7,
+                                     "variant":  8,
+                                     "subtype":  0,
+                                     "difficulty":  1,
+                                     "weight_at_capture":  0.1,
+                                     "allowed_doors":  15,
+                                     "shape_metadata_only":  1,
+                                     "slots":  [
+                                                   {
+                                                       "x":  0,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  3000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  6,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1940,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  3000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  5,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1940,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  6,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  17,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  7,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1940,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  6,
+                                                       "y":  2,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1940,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  4,
+                                                       "y":  4,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  5,
+                                                                           "variant":  20,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  6,
+                                                       "y":  4,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  5,
+                                                                           "variant":  20,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  8,
+                                                       "y":  4,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  5,
+                                                                           "variant":  20,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  3000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  3000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   }
+                                               ],
+                                     "raw_base64":  "AAAAAAAAAAAHAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAABAAAAAACAP83MzD0PAAAAAAAAAAgqrDUMAA0HAQAAAAAAAAAAAAAAAAAAAAgAAAA="
+                                 }
+                  },
+                  {
+                      "list_index":  6,
+                      "grid_index":  22,
+                      "safe_grid_index":  22,
+                      "dimension":  0,
+                      "actual_doors":  0,
+                      "decoration_seed":  1683342950,
+                      "spawn_seed":  3715483099,
+                      "award_seed":  4262320988,
+                      "raw_descriptor_base64":  "FgAAABYAAAAGAAAAAAAAAIBZqCkAAAAAAAAAABUAAAAJAAAAFwAAACMAAAD/////////////////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGbGVWTbxXXdXNsN/pEYEPeg8okkoCqKJKAqiiTogHAk6IBwJGiHcCQo100nAAAAAIC7ciSAu3IkgMhyJAAAAAAAAAAAAAAAAAAAAAAg0F8lJIthJf////8AAAAAYwAAAA==",
+                      "config":  {
+                                     "type":  29,
+                                     "variant":  1,
+                                     "subtype":  0,
+                                     "difficulty":  1,
+                                     "weight_at_capture":  0.1,
+                                     "allowed_doors":  15,
+                                     "shape_metadata_only":  1,
+                                     "slots":  [
+                                                   {
+                                                       "x":  0,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  2,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  3,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  4,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  5,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1900,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  7,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1900,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  8,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  9,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  10,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  11,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  2,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1900,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  2,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1900,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  6,
+                                                       "y":  3,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  5,
+                                                                           "variant":  100,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  4,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1900,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  4,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1900,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  2,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  3,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  4,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  5,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1900,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  7,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1900,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  8,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  9,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  10,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  11,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  4000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   }
+                                               ],
+                                     "raw_base64":  "AAAAAAAAAAAdAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAABAAAAAACAP83MzD0PAAAAAAAAAMDDvDUhAA0HAQAAAAAAAAAAAAAAAAAAAAEAAAA="
+                                 }
+                  },
+                  {
+                      "list_index":  7,
+                      "grid_index":  84,
+                      "safe_grid_index":  84,
+                      "dimension":  0,
+                      "actual_doors":  6,
+                      "decoration_seed":  1940158161,
+                      "spawn_seed":  3382453641,
+                      "award_seed":  107900871,
+                      "raw_descriptor_base64":  "VAAAAFQAAAAHAAAAAAAAAPwrpykAAAAABgAAAFMAAABHAAAAVQAAAGEAAAD/////////////////////BQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAANF2pHOJJZzJx29uBvC0PDGgRIkkoHyJJKB8iSRwh3AkqIhwJPCNcCTI1U0nAAAAAKj8ciSo/HIkqAlzJAAAAAAAAAAAAAAAAAAAAAAg0F8lJIthJf////8AAAAA/////w==",
+                      "config":  {
+                                     "type":  1,
+                                     "variant":  2,
+                                     "subtype":  0,
+                                     "difficulty":  1,
+                                     "weight_at_capture":  1,
+                                     "allowed_doors":  15,
+                                     "shape_metadata_only":  1,
+                                     "slots":  [
+
+                                               ],
+                                     "raw_base64":  "AAAAAAAAAAABAAAAAgAAAAAAAABTdGFydCBSb29tAAYFBgcACgAAAA8AAAABAAAAAACAPwAAgD8PAAAAAAAAAAAAAAAAAA0HAQAAAAAAAAAAAAAAAAAAAAIAAAA="
+                                 }
+                  },
+                  {
+                      "list_index":  8,
+                      "grid_index":  58,
+                      "safe_grid_index":  58,
+                      "dimension":  0,
+                      "actual_doors":  10,
+                      "decoration_seed":  2450955543,
+                      "spawn_seed":  4285633627,
+                      "award_seed":  1765871204,
+                      "raw_descriptor_base64":  "OgAAADoAAAAIAAAAAAAAABRPtDUAAAAACgAAAP////8tAAAA/////1QAAAD/////////////////////BQAAAAEAAABBAAAAAAABAAAAAAAAAAAAAAAAABedFpJblHH/ZA5BaRfvWpDALIokwGSKJMBkiiTYc3AkGHdwJFh6cCSI2E0nAAAAALAJcySwCXMksBZzJAAAAAAAAAAAAAAAAAAAAAAg0F8lJIthJf////8AAAAA/////w==",
+                      "config":  {
+                                     "type":  1,
+                                     "variant":  704,
+                                     "subtype":  0,
+                                     "difficulty":  5,
+                                     "weight_at_capture":  0.1,
+                                     "allowed_doors":  10,
+                                     "shape_metadata_only":  5,
+                                     "slots":  [
+                                                   {
+                                                       "x":  6,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  249,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  6,
+                                                       "y":  8,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  249,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   }
+                                               ],
+                                     "raw_base64":  "AQAAAAAAAAABAAAAwAIAAAAAAABOZXcgUm9vbSAoY29weSkADwAAAA8AAAAFAAAAAACAP83MzD0KAAAAAAAAAED81DUCAA0OBQAAAAAAAAAAAAAAAAAAAMACAAA="
+                                 }
+                  },
+                  {
+                      "list_index":  9,
+                      "grid_index":  45,
+                      "safe_grid_index":  45,
+                      "dimension":  0,
+                      "actual_doors":  15,
+                      "decoration_seed":  647507371,
+                      "spawn_seed":  2960478434,
+                      "award_seed":  1717978658,
+                      "raw_descriptor_base64":  "LQAAAC0AAAAJAAAAAAAAAGhkszUAAAAADwAAACwAAAAgAAAALgAAADoAAAD/////////////////////BQAAAAIAAAABAAAAAAABAAAAAAAEAAAAAAAAAKstmCbiUHWwIkZmZskRjb3AoIokwNiKJMDYiiT4jXAk+I1wJHiUcCSI100nAAAAAKDvciSg73IkoPxyJAAAAAAAAAAAAAAAAAAAAAAg0F8lJIthJf////8AAAAA/////w==",
+                      "config":  {
+                                     "type":  1,
+                                     "variant":  51,
+                                     "subtype":  0,
+                                     "difficulty":  1,
+                                     "weight_at_capture":  0.1,
+                                     "allowed_doors":  15,
+                                     "shape_metadata_only":  1,
+                                     "slots":  [
+                                                   {
+                                                       "x":  0,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  11,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  6,
+                                                       "y":  2,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  10,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  6,
+                                                       "y":  4,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  10,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   }
+                                               ],
+                                     "raw_base64":  "AQAAAAAAAAABAAAAMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAABAAAAAACAP83MzD0PAAAAAAAAADijujUIAA0HAQAAAAAAAAAAAAAAAAAAADMAAAA="
+                                 }
+                  },
+                  {
+                      "list_index":  10,
+                      "grid_index":  44,
+                      "safe_grid_index":  44,
+                      "dimension":  0,
+                      "actual_doors":  6,
+                      "decoration_seed":  606624459,
+                      "spawn_seed":  3160044225,
+                      "award_seed":  891374362,
+                      "raw_descriptor_base64":  "LAAAACwAAAAKAAAAAAAAAJAHtDUAAAAABgAAACsAAAAfAAAALQAAADkAAAD/////////////////////BQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMtaKCTBclq8GkshNbQb2qbAZookwJ6KJMCeiiSAlHAkgJRwJACbcCSI1U0nAAAAAMAjcyTAI3MkwDBzJAAAAAAAAAAAAAAAAAAAAAAg0F8lJIthJf////8AAAAA/////w==",
+                      "config":  {
+                                     "type":  1,
+                                     "variant":  505,
+                                     "subtype":  0,
+                                     "difficulty":  5,
+                                     "weight_at_capture":  0.1,
+                                     "allowed_doors":  6,
+                                     "shape_metadata_only":  1,
+                                     "slots":  [
+                                                   {
+                                                       "x":  0,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  244,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  2,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  2,
+                                                       "y":  2,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  3,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  4,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  4,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  2,
+                                                       "y":  4,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  244,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  3,
+                                                       "y":  4,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  2,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  3,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  4,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  5,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  6,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  7,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  8,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  9,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  10,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  11,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  2,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  3,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  4,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  5,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  6,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  7,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  8,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  9,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  10,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  11,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1000,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   }
+                                               ],
+                                     "raw_base64":  "AQAAAAAAAAABAAAA+QEAAAAAAABOZXcgUm9vbQAAAAAAAAAACAAAAA8AAAAFAAAAAACAP83MzD0GAAAAAAAAAPChzzUmAA0HAQAAAAAAAAAAAAAAAAAAAPkBAAA="
+                                 }
+                  },
+                  {
+                      "list_index":  11,
+                      "grid_index":  18,
+                      "safe_grid_index":  18,
+                      "dimension":  0,
+                      "actual_doors":  252,
+                      "decoration_seed":  162545976,
+                      "spawn_seed":  3850768387,
+                      "award_seed":  1665595750,
+                      "raw_descriptor_base64":  "EgAAABIAAAALAAAAAAAAANzmszUAAAAA/AAAABEAAAAFAAAAFAAAACwAAAAeAAAABgAAACEAAAAtAAAABQAAAAEAAAABAAAAAAABAAAAAAAUAAAAAAAAADhBsAkDEIblZvlGYxdhmBhAQJEkQHiRJEB4kSRAYHAk6GNwJMBmcCRI100nAAAAAPDSjyTw0o8k8N+PJAAAAAAAAAAAAAAAAAAAAAAg0F8lJIthJf////8AAAAA/////w==",
+                      "config":  {
+                                     "type":  1,
+                                     "variant":  414,
+                                     "subtype":  0,
+                                     "difficulty":  5,
+                                     "weight_at_capture":  0.1,
+                                     "allowed_doors":  255,
+                                     "shape_metadata_only":  8,
+                                     "slots":  [
+                                                   {
+                                                       "x":  0,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  24,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  25,
+                                                       "y":  0,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  14,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  24,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  14,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  25,
+                                                       "y":  1,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  13,
+                                                       "y":  2,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  18,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  3,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  18,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  4,
+                                                       "y":  4,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  21,
+                                                       "y":  4,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  11,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  18,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  14,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  14,
+                                                       "y":  5,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  18,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  9,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  18,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  13,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  14,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  14,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  16,
+                                                       "y":  6,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  18,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  8,
+                                                       "y":  7,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  18,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  11,
+                                                       "y":  7,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  14,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  7,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  13,
+                                                       "y":  7,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  17,
+                                                       "y":  7,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  18,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  11,
+                                                       "y":  8,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  18,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  13,
+                                                       "y":  8,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  14,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  14,
+                                                       "y":  8,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  18,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  4,
+                                                       "y":  9,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  21,
+                                                       "y":  9,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  13,
+                                                       "y":  10,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  18,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  12,
+                                                       "y":  11,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  18,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  12,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  12,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  14,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  24,
+                                                       "y":  12,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  14,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  25,
+                                                       "y":  12,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  0,
+                                                       "y":  13,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  1,
+                                                       "y":  13,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  24,
+                                                       "y":  13,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   },
+                                                   {
+                                                       "x":  25,
+                                                       "y":  13,
+                                                       "choices":  [
+                                                                       {
+                                                                           "type":  1500,
+                                                                           "variant":  0,
+                                                                           "subtype":  0,
+                                                                           "weight":  1
+                                                                       }
+                                                                   ]
+                                                   }
+                                               ],
+                                     "raw_base64":  "AQAAAAAAAAABAAAAngEAAAAAAABOZXcgUm9vbQDCwv/CwsL/CAAAAA8AAAAFAAAAAACAP83MzD3/AAAAAAAAAND28DUoABoOCAAAAAAAAAAAAAAAAAAAAJ4BAAA="
+                                 }
+                  }
+              ],
+    "current_room_actors":  [
+                                {
+                                    "type":  1,
+                                    "variant":  0,
+                                    "subtype":  0,
+                                    "x":  136.56366,
+                                    "y":  280,
+                                    "character":  0
+                                },
+                                {
+                                    "type":  17,
+                                    "variant":  1,
+                                    "subtype":  4,
+                                    "x":  320,
+                                    "y":  200
+                                },
+                                {
+                                    "type":  5,
+                                    "variant":  100,
+                                    "subtype":  195,
+                                    "x":  280,
+                                    "y":  320
+                                },
+                                {
+                                    "type":  5,
+                                    "variant":  300,
+                                    "subtype":  15,
+                                    "x":  360,
+                                    "y":  320
+                                }
+                            ],
+    "method":  "VM_READ only; no writes, injection, suspension, input or game-file edits",
+    "limits":  [
+                   "Descriptor candidates do not prove resolved pickups, enemies or factory results in unvisited rooms.",
+                   "Unlocks, seed text and initial inventory need independent confirmation.",
+                   "Content capture only; source room shapes and connections are excluded from gameplay implementation.",
+                   "Live field interpretation must be cross-checked against the pinned source configs and log."
+               ],
+    "executable_sha256":  "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6"
+}

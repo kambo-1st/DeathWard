@@ -1,3 +1,5 @@
+#include "world/SourceFullFlyRoom.hpp"
+#include "world/SourcePropRooms.hpp"
 #include "combat/Simulation.hpp"
 #include "world/SourceCombatRoom.hpp"
 #include "world/SourceCombatRockRooms.hpp"
@@ -210,6 +212,25 @@ void Simulation::prepareRoomEnemies(int index) {
 
 void Simulation::spawnRoomEnemies() {
     const auto &layout = arena.rooms[size_t(room)];
+    if(layout.sourceCombatTemplate==FullFlyRoomTemplate) {
+        for(int i=0;i<2;++i) {
+            const auto at=fullFlyRoomPosition(layout,i);
+            if(!roomSpawnClear(at,.39f)||!spawnMonster(monsterId(249),at))
+                throw std::runtime_error("Recorded Full Fly room placement is obstructed");
+        }
+        return;
+    }
+    if(const auto *source=sourcePropRoom(layout.sourceCombatTemplate)) {
+        for(const auto &slot:source->entries)if(slot.type==1400||slot.type==10||slot.type==14) {
+            const auto id=monsterId(slot.type==1400?33:slot.type,slot.variant);
+            const auto at=sourceHeartCell(layout,slot.x,slot.y);
+            const auto *definition=content->monster(id);
+            if(!definition||arena.blocked(at,definition->radius)||!roomSpawnClear(at,definition->radius)||!spawnMonster(id,at))
+                throw std::runtime_error("Ordinary prop room placement is obstructed");
+            if(enemies.back().environment)enemies.back().environment->dropSeed=propSlotSeed(layout.sourceRoomSpawnSeed,slot.ordinal);
+        }
+        return;
+    }
     if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power || layout.kind == RoomKind::Shop || layout.kind==RoomKind::Service)
         return;
     if(layout.sourceCombatTemplate==BasementGaperTemplate) {

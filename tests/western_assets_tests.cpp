@@ -133,8 +133,9 @@ void verifyVegetation(WesternScene &scene, const Arena &arena) {
         return result;
     };
     const auto fixed = nonVegetation();
+    int plantsAt200=0;
     std::vector<WesternPlacement> previous;
-    for (int density : {0, 25, 50, 75, 100, 125, 150, 175, 200}) {
+    for (int density : {0, 25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 300, 400, 500}) {
         scene.setVegetationDensity(density);
         scene.prepare(arena);
         const auto currentFixed = nonVegetation();
@@ -143,9 +144,16 @@ void verifyVegetation(WesternScene &scene, const Arena &arena) {
               "vegetation density never moves or removes rocks, debris, buildings or cover");
         if (!density)
             check(scene.vegetationCount() == 0, "zero vegetation removes every grass patch and cactus");
-        if (density == 200)
-            check(scene.vegetationCount() > baselinePlants,
-                  "more vegetation adds plants beyond the original amount");
+        if (density == 200) {
+            const auto *look=scene.canyonAppearance();
+            const bool originalBudgetFull=look&&look->parameters.enabled&&
+                scene.placements().size()>=size_t(look->parameters.baseDecorationLimit());
+            check(scene.vegetationCount() > baselinePlants ||
+                      (scene.vegetationCount()==baselinePlants&&originalBudgetFull),
+                  "200 percent adds plants unless the preserved original scenery budget is already full");
+            plantsAt200=scene.vegetationCount();
+        }
+        if(density==500)check(scene.vegetationCount()>plantsAt200,"500 percent adds plants beyond the previous 200 percent cap");
         for (const auto &p : previous)
             check(std::any_of(scene.placements().begin(), scene.placements().end(),
                               [&](const auto &other) { return same(p, other); }),
@@ -155,7 +163,7 @@ void verifyVegetation(WesternScene &scene, const Arena &arena) {
             check(scene.terrainChunks()[i].mesh.vaoId == terrainMeshes[i],
                   "density changes keep uploaded terrain instead of rebuilding the canyon");
     }
-    verifyDecorations(scene, arena, 160);
+    verifyDecorations(scene, arena, 400);
     int cacti = 0;
     if (arena.canyon)
         for (const auto &p : scene.placements()) {
@@ -177,7 +185,7 @@ void verifyVegetation(WesternScene &scene, const Arena &arena) {
             check(high - low < .11f && low - p.bounds.min.y >= -.005f && high - p.bounds.min.y < .15f,
                   "all canyon cacti have flat support across their footprint, away from slopes and edges");
         }
-    std::cout << "Vegetation: " << baselinePlants << " at 100%, " << scene.vegetationCount() << " at 200%, "
+    std::cout << "Vegetation: " << baselinePlants << " at 100%, " << plantsAt200 << " at 200%, " << scene.vegetationCount() << " at 500%, "
               << cacti << " flat-terrace cacti\n";
     scene.setVegetationDensity(100);
     check(scene.placements().size() == baseline.size() &&

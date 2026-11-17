@@ -1,3 +1,4 @@
+#include "world/SourcePropRooms.hpp"
 #include "combat/Simulation.hpp"
 #include "combat/ChestGeometry.hpp"
 #include "world/PedestalGeometry.hpp"
@@ -140,7 +141,7 @@ std::vector<Vector3> Arena::path(Vector3 from, Vector3 target, float radius) con
         auto route=floorPath(*this,from,target,radius,floorCells);
         if(route.empty()) {
             const int start=roomAt(from),goal=roomAt(target);
-            const auto sourceRoom=[&](int i){return i>=0&&(sourceCombatRockRoom(rooms[size_t(i)].sourceObstacleTemplate)||
+            const auto sourceRoom=[&](int i){return i>=0&&(sourcePropRoom(rooms[size_t(i)].sourceObstacleTemplate)||sourceCombatRockRoom(rooms[size_t(i)].sourceObstacleTemplate)||
                 rooms[size_t(i)].sourceObstacleTemplate==SourceChestRockRoom||
                 rooms[size_t(i)].sourceObstacleTemplate==SourceCoinRockRoom||
                 rooms[size_t(i)].sourceObstacleTemplate==SourceKeyRockRoom||
@@ -360,12 +361,6 @@ void Simulation::requestMove(Vector3 target, bool interactAtDestination) {
     } else if (((room == arena.shopRoom&&!hasSourceShop(room)) || site.kind==RoomKind::Service) && distance(target, arena.rooms[size_t(room)].objective) < 2.4f) {
         target = arena.rooms[size_t(room)].objective;
         interactOnArrival_ = true;
-    } else if (legacyObjectives() && !rescued && distance(target, arena.miners) < 2.4f) {
-        target = arena.miners;
-        interactOnArrival_ = true;
-    } else if (legacyObjectives() && !altarDestroyed && distance(target, arena.altar) < 2.4f) {
-        target = arena.altar;
-        interactOnArrival_ = true;
     } else if (canUseFloorExit() && distance(target, arena.exit) < 2.4f) {
         target = arena.exit;
         interactOnArrival_ = true;
@@ -398,10 +393,6 @@ std::string Simulation::nearbyInteraction() const {
         return "TRADE";
     if (rewardAvailable(room)&&distance(player.position,rewardPosition(room))<2.6f&&arena.sight(player.position,rewardPosition(room)))
         return hasSourceTreasure(room)?(content->item({"isaac",ItemKind::Collectible,uint32_t(treasureUpgradeItem(room))})->name+" / TOUCH TO COLLECT"):"CLAIM POWER";
-    if (legacyObjectives() && !rescued && distance(player.position, arena.miners) < 2.6f)
-        return "FREE MINERS";
-    if (legacyObjectives() && !altarDestroyed && distance(player.position, arena.altar) < 2.6f)
-        return "BREAK ALTAR";
     if (canUseFloorExit() && distance(player.position, arena.exit) < 2.8f)
         return !lastFloor()?"NEXT FLOOR":surveyTutorial||testimony()?"RETURN TO FORT":"RETURN HOME";
     if (roomClear)
@@ -422,14 +413,13 @@ std::string Simulation::demolitionWarning() const {
 std::string Simulation::demolitionHint() const {
     if(const auto warning=demolitionWarning();!warning.empty())return warning;
     for (const auto &prop : arena.breakables) {
-        if (!prop.solid() || prop.room != room || prop.kind == BreakableKind::CacheSide) continue;
+        if (!prop.solid() || prop.room != room || prop.kind == BreakableKind::CacheSide || prop.kind == BreakableKind::Dung) continue;
         if (distance(player.position,mul(add(prop.bounds.min,prop.bounds.max),.5f)) > 3.8f) continue;
         if (prop.kind == BreakableKind::CacheGate)
             return prop.health == 2 ? "SUPPLY CACHE / TWO DYNAMITE BLASTS" : "CRACKED CACHE SEAL / ONE MORE BLAST";
         if (prop.kind == BreakableKind::PowderBarrel)
             return prop.fuse >= 0 ? "LIT POWDER / KEEP CLEAR" : "POWDER BARREL / GUNFIRE IGNITES IT";
         if (prop.kind == BreakableKind::OreSeam) return "MARKED SEAM / DYNAMITE REVEALS SUPPLIES";
-        if (prop.kind == BreakableKind::Dung) return "DUNG / BREAKABLE";
         return "CRACKED ROCK / DYNAMITE OPENS COVER";
     }
     return {};

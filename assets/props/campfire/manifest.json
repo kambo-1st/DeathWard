@@ -1,0 +1,10 @@
+{
+  "source": "assets/town/town.glb",
+  "source_sha256": "b931bd09b0873de30ff2aefd674aec1a609c83bfa30b4a16b31c6df423c8b8a8",
+  "source_node": "part_0362",
+  "label": "SM_Env_CampFire_01",
+  "town_instance": "fireplace-poc",
+  "output_sha256": "6b5c05c10ce9de1fa594a3f28c8b6138d57cbcf0c73e93fea06b0bbba4285cd4",
+  "triangles": 630,
+  "adaptation": "Unchanged positions, normals, UVs, indices, original material and embedded atlas. Runtime uniform scale fits existing fire radius; particles read the same town.attachments entries."
+}

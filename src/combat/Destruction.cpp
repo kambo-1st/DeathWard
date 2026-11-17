@@ -178,6 +178,8 @@ void Simulation::resolveExplosion(const Event &e) {
     }
 }
 void Simulation::payBreakables() {
+    for(auto &prop:arena.breakables)if(prop.destroyed&&!prop.paid&&prop.kind==BreakableKind::Dung)
+        resolvePropReward(prop.propReward,uint32_t(prop.lootSeed)?uint32_t(prop.lootSeed):uint32_t(prop.id)^0x504f4f50u,false);
     for(auto &p:arena.breakables) {
         if(!p.destroyed||p.paid)continue;
         p.paid=true; // Includes no-loot rolls: re-entry and duplicate hits never reroll.

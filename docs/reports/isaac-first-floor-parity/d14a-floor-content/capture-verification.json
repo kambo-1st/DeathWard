@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-17",
+  "accepted_gameplay_checkpoint": "1003c611",
+  "user_readiness": "ready",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "profile": {
+    "stage": 1,
+    "stage_type": 0,
+    "difficulty": 0,
+    "character": 0,
+    "seed_text": "2FFX 8XJH",
+    "start_seed": 3466870960,
+    "stage_seed": 1761530316
+  },
+  "capture_method": "VM_READ only; no writes, injection, suspension, input or game-file edits",
+  "launch": "C# reader hosted by ordinary PowerShell commands; no .ps1 execution or policy changes",
+  "independent_captures_equal": true,
+  "paused_frame": 82,
+  "descriptors": 12,
+  "exact_stb_matches": 12,
+  "spawn_slots": 163,
+  "unresolved_pickup_slots": 7,
+  "new_gameplay_enabled": false,
+  "complete_floor_accepted": false,
+  "files": {
+    "source-floor-20261117-141752.json": "4401ed4849709c65c1f052424486dece8ea5c07ac5f8eb663228f20befca7c8c",
+    "source-floor-profile.json": "d1298bb4773c3c7cee59a6993f78c714098aee0ad5bc294d5809fc876ae7c3a7",
+    "content-audit.json": "e5646cd58026b7f285d51e7c495217e978d6defcbd21fac93be0fe034c2a186f",
+    "source-start-log.txt": "464fb974c0b7ba89048f37053237417d6e5f389d3c8c2ee6331aee90a02abf76"
+  },
+  "remaining": [
+    "Screw/Mom\u2019s Eye/Mom\u2019s Coin Purse/Temperance item and card implementation",
+    "Full Fly/Round Worm and remaining encounter/obstacle dependencies",
+    "other special-room outcomes, starting inventory and uninterrupted progression acceptance",
+    "canyon content mapping and human review"
+  ],
+  "observations": [
+    "treasure-verification.json",
+    "shop-verification.json",
+    "boss-reward-verification.json"
+  ],
+  "unresolved_pickup_slots_after_observations": 4,
+  "core_route_observations_recorded": true,
+  "observations_span_same_seed_restarts": true,
+  "single_uninterrupted_playthrough_claimed": false
+}

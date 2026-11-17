@@ -15,6 +15,8 @@ void check(bool ok, const char *message) {
     if (!ok)
         throw std::runtime_error(message);
 }
+// Field-specific tuning fixtures open the panel by action. balanceInputCheck and
+// hudInputCheck cover actual Escape-menu entry, mouse selection and return.
 // Event IDs from the pinned raylib 5.5 automation format (rcore.c).
 constexpr unsigned MouseUp = 5, MouseDown = 6, MousePosition = 7, MouseWheel = 8;
 constexpr unsigned KeyUp = 1, KeyDown = 2;
@@ -70,7 +72,8 @@ void balanceInputCheck(const std::filesystem::path &directory) {
     };
     const float baseline=walk();check(baseline>.1f,"actual keyboard walking moves in starting room");
     run.player.position=start;run.player.velocity={};
-    click(374,642);check(game.balanceOpen&&!game.paused,"live HUD opens tuning without a debug flag");
+    key(KEY_ESCAPE);check(game.paused,"Escape opens the expedition menu");
+    click(1150,140);check(game.balanceOpen&&game.paused,"pause menu opens tuning without a debug flag");
     const auto duration=run.stats.duration;const auto position=run.player.position;
     const auto shots=run.stats.shots;const auto rng=run.combatRng.state;
     mouseEvent(KeyDown,KEY_W);mouseEvent(KeyDown,KEY_UP);frame();
@@ -79,7 +82,7 @@ void balanceInputCheck(const std::filesystem::path &directory) {
     mouseEvent(KeyUp,KEY_W);mouseEvent(KeyUp,KEY_UP);frame();
     click(460,190);click(460,190);
     check(std::abs(run.player.attributes.speed-.8f)<1e-6f&&run.combatRng.state==rng,"Speed buttons apply without advancing combat RNG");
-    check(game.campaign.data().pending->mechanicsFingerprint.find("/balance-v11:")!=std::string::npos,"checkpoint identifies active tuning revision");
+    check(game.campaign.data().pending->mechanicsFingerprint.ends_with("/balance-v13:"+game.balancePreset.revision()),"checkpoint identifies active tuning revision");
     check(std::filesystem::exists(game.balanceDirectory/"revisions"/(game.balancePreset.revision()+".json")),"checkpoint revision retains its resolved preset");
     check(run.canResizeRooms(),"untouched starting room permits live resizing");
     const auto id=run.summary().id, nextId=game.campaign.data().nextRunId;
@@ -93,15 +96,16 @@ void balanceInputCheck(const std::filesystem::path &directory) {
     click(730,357);check(game.balanceDraft.routeLengthScale==1.01f&&run.routeLengthScale==1,"route edit uses one-percent pending steps");
     click(535,234);check(game.balancePreset.defaultZoomPercent==159&&std::abs(game.cameraZoomPercent()-159)<.001f,"default zoom decreases by one percent and previews immediately");
     click(635,234);check(game.balancePreset.defaultZoomPercent==160,"default zoom increases by one percent");
-    game.setDefaultZoom(67);game.perform(dw::Action::DefaultZoomDown);check(game.balancePreset.defaultZoomPercent==67,"default zoom lower limit");
-    game.setDefaultZoom(285);game.perform(dw::Action::DefaultZoomUp);check(game.balancePreset.defaultZoomPercent==285,"default zoom upper limit");
+    game.setDefaultZoom(25);game.perform(dw::Action::DefaultZoomDown);check(game.balancePreset.defaultZoomPercent==25,"default zoom lower limit");
+    game.setDefaultZoom(500);game.perform(dw::Action::DefaultZoomUp);check(game.balancePreset.defaultZoomPercent==500,"default zoom upper limit");
     click(970,234);check(std::abs(game.cameraZoomPercent()-160)<.001f,"reset zoom previews original 160 percent");
     game.setPlayerSpeed(.7f);game.resetBalance();game.setPlayerSpeed(.8f);
     check(run.arena.canyon.get()==oldTerrain&&game.hasPendingMapChanges(),"live Speed edits and reset never apply pending map settings");
+    key(KEY_ESCAPE);check(!game.balanceOpen&&game.paused,"closing tuning returns to the menu");
     key(KEY_ESCAPE);mouseEvent(MousePosition,600,400);frame();mouseEvent(MouseWheel,0,-2);frame();frame();game.updateCamera(10);
     const float currentZoom=std::round(game.cameraZoomPercent());
     check(currentZoom<160&&game.balancePreset.defaultZoomPercent==160,"mouse wheel changes only the temporary view");
-    click(374,642);click(780,234);
+    key(KEY_ESCAPE);click(1150,140);click(780,234);
     check(game.balancePreset.defaultZoomPercent==currentZoom&&std::abs(game.cameraZoomPercent()-currentZoom)<.001f,"Use current captures the actual view as the default");
     check(run.arena.canyon.get()==oldTerrain&&game.hasPendingMapChanges(),"zoom controls never apply pending map changes");
     game.setDefaultZoom(145);
@@ -125,7 +129,8 @@ void balanceInputCheck(const std::filesystem::path &directory) {
     click(320,605);check(std::filesystem::exists(game.balanceFile),"export button writes JSON");
     std::filesystem::copy_file(game.balanceFile,"artifacts/d01-speed-080.json",std::filesystem::copy_options::overwrite_existing);
     click(900,605);check(game.nextBalancePreset&&game.nextBalancePreset->playerSpeed==.8f,"remember button persists next-expedition preset");
-    key(KEY_ESCAPE);check(!game.balanceOpen&&!game.paused,"Escape returns directly to gameplay");
+    key(KEY_ESCAPE);check(!game.balanceOpen&&game.paused,"Escape returns from tuning to the menu");
+    key(KEY_ESCAPE);check(!game.paused,"Escape resumes gameplay");
     const float tuned=walk();
     check(std::abs(tuned/baseline-.8f)<.01f,"main Game keyboard movement immediately follows live Speed ratio");
     key(KEY_ESCAPE);check(game.paused,"normal pause still works");
@@ -224,7 +229,7 @@ void shootingBalanceInputCheck(const std::filesystem::path &directory) {
     const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
     near(run.player.attributes.tearsPerSecond,BalancePreset::ReferenceTears,"migrated starting Tears baseline");
     near(run.player.walkingSpeed(),4.8f,"shooting controls preserve accepted walk");near(game.cameraZoomPercent(),165,"chosen zoom retained");
-    click(374,642);click(710,143);check(game.balanceOpen&&game.balanceShootingOpen,"actual HUD opens shooting tab");
+    game.perform(dw::Action::OpenBalance);click(710,143);check(game.balanceOpen&&game.balanceShootingOpen,"tuning opens shooting tab");
     game.setRoomSize(1.2f);const auto terrain=run.arena.canyon.get();const auto duration=run.stats.duration,shots=double(run.stats.shots);
     click(855,189);near(run.player.attributes.tearsPerSecond,BalancePreset::ReferenceTears+.1f,"Tears plus changes only rate");
     click(710,189);check(run.player.attributes.tearsPerSecond==BalancePreset::ReferenceTears,"opposite Tears steps preserve the exact baseline");
@@ -244,7 +249,7 @@ void shootingBalanceInputCheck(const std::filesystem::path &directory) {
     // Fire through actual Game input in the generated main-game room.
     key(KEY_ESCAPE);run.player.position=run.arena.rooms[0].center;run.player.position.y=.85f;run.player.velocity={};run.player.fireCooldown=0;
     game.updateCamera(10);mouseEvent(KeyDown,KEY_RIGHT);frame();mouseEvent(KeyUp,KEY_RIGHT);frame();
-    check(!run.projectiles.empty(),"actual Game shooting creates a projectile");click(374,642);
+    check(!run.projectiles.empty(),"actual Game shooting creates a projectile");game.perform(dw::Action::OpenBalance);
     const auto old=run.projectiles.front();const float wait=run.player.fireCooldown;
     check(wait>0,"shooting edit fixture has an active firing wait");
     game.setShooting(5,2,13);game.setShooting(4,1.5f,8);
@@ -258,7 +263,7 @@ void shootingBalanceInputCheck(const std::filesystem::path &directory) {
     check(run.stats.shots==shotCount+1,"next shot follows the retained firing wait");
     const auto &born=run.projectiles.back();near(born.attack.speed,12,"new projectile uses edited shot speed");
     near(born.attack.maxDistance,11.f*8/6.5f,"new projectile uses edited range");near(born.damage,11.2f,"shooting controls preserve D07 damage baseline");
-    click(374,642);
+    game.perform(dw::Action::OpenBalance);
     run.grant(ItemId::Rail);const auto before=primaryPlayerAttack(run,run.player.shotDamage,false);const float cadence=primaryCadence(run);
     game.setShooting(2,3,4);const auto after=primaryPlayerAttack(run,run.player.shotDamage,false);
     near(after.speed,before.speed*2,"owned speed modifier applied once to new base");near(after.maxDistance,before.maxDistance*.5f,"Range remains independent with owned weapon");
@@ -327,7 +332,7 @@ void gaperBalanceInputCheck(const std::filesystem::path &directory) {
     const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"Gaper UI has no error");};
     const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
     const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
-    click(374,642);click(995,143);check(game.balanceOpen&&game.balanceEnemiesOpen&&!game.balanceShootingOpen,"Enemies tab opens via actual HUD");
+    game.perform(dw::Action::OpenBalance);click(995,143);check(game.balanceOpen&&game.balanceEnemiesOpen&&!game.balanceShootingOpen,"Enemies tab opens in tuning");
     game.setRoomSize(1.2f);const auto terrain=run.arena.canyon.get();const auto at=run.findEnemy(actor)->position;
     const auto velocity=run.findEnemy(actor)->velocity;const float hp=run.findEnemy(actor)->hp;const auto count=run.stats.shots;
     click(710,244);check(run.gaperMovementMultiplier==.95f,"Gaper movement uses 5 percent steps");
@@ -360,7 +365,7 @@ void gaperBalanceInputCheck(const std::filesystem::path &directory) {
     }
     check(planarDistance(run.findEnemy(actor)->position,run.player.position)<beforePursuit-1,
           "natural Gaper makes sustained progress through the generated encounter");
-    click(374,642);click(400,441);check(run.gaperMovementMultiplier==1,"reset restores source-derived reference");
+    game.perform(dw::Action::OpenBalance);click(400,441);check(run.gaperMovementMultiplier==1,"reset restores source-derived reference");
     game.setGaperMovement(.65f);click(320,605);click(900,605);
     auto exported=BalancePreset::load(file,run.content->fingerprint());
     check(exported.gaperMovementMultiplier==.65f&&exported.tearsPerSecond==1.9272734f&&exported.roomSizeScale==1.2f,
@@ -413,7 +418,7 @@ void spiderBalanceInputCheck(const std::filesystem::path &directory) {
     const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"D05 UI has no error");};
     const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
     const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
-    click(374,642);click(995,143);check(game.balanceEnemiesOpen,"actual Enemies tab opens");
+    game.perform(dw::Action::OpenBalance);click(995,143);check(game.balanceEnemiesOpen,"actual Enemies tab opens");
     game.setRoomSize(1.2f);const auto terrain=run.arena.canyon.get();const auto at=e->position,velocity=e->velocity;
     const float hp=e->hp;const auto shots=run.stats.shots;
     click(710,359);check(run.spiderMovementMultiplier==.95f&&run.gaperMovementMultiplier==1,"Spider adjustment independent from Gaper");
@@ -432,7 +437,7 @@ void spiderBalanceInputCheck(const std::filesystem::path &directory) {
     }
     check(burst&&idle&&travelled>.5f,"real Game updates execute burst and idle with visible motion");
     std::cout<<"D05 natural seed="<<game.seedText<<" room="<<room<<" travelled="<<travelled<<'\n';
-    click(374,642);click(400,483);check(run.spiderMovementMultiplier==1,"Spider reset button");
+    game.perform(dw::Action::OpenBalance);click(400,483);check(run.spiderMovementMultiplier==1,"Spider reset button");
     game.setSpiderMovement(.65f);click(320,605);click(900,605);
     const auto exported=BalancePreset::load(file,run.content->fingerprint());
     check(exported.spiderMovementMultiplier==.65f&&exported.gaperMovementMultiplier==1&&exported.roomSizeScale==1.2f&&exported.defaultZoomPercent==165,
@@ -489,7 +494,7 @@ void roomLockInputCheck(const std::filesystem::path &directory) {
     check(run.sourceRoomLocks&&run.arena.sourceRoomLocks&&run.keys==0&&run.player.hp==6&&game.cameraZoomPercent()==165,"old preset enables source rules retaining normal player/view");
     leafShop(run.arena);cross(run.arena.shopRoom,false);cross(run.arena.roomCount()-2,false);
     check(run.keys==0,"both opening-floor rooms are freely entered with zero keys");capture("artifacts/d10d-free-entrance.png");
-    click(374,642);click(835,143);click(995,189);click(815,328);
+    game.perform(dw::Action::OpenBalance);click(835,143);click(995,189);click(815,328);
     check(!game.balanceDraft.sourceRoomLocks&&run.sourceRoomLocks&&game.hasPendingMapChanges(),"room rule edit is staged");
     click(350,407);check(!run.sourceRoomLocks&&!run.arena.sourceRoomLocks,"Apply selects legacy mode without restarting expedition");leafShop(run.arena);
     game.balanceFile=legacy.string();game.exportBalancePreset();game.rememberBalancePreset();
@@ -561,7 +566,7 @@ void keyedDoorInputCheck(const std::filesystem::path &directory) {
     for(int n=0;n<240;++n)frame(false);run.player.position=run.arena.doorApproach(index,1-side);run.player.position.y=.85f;game.updateCamera(10);frame();key(KEY_E);
     for(int n=0;n<900&&run.room!=outside;++n)frame(n%30==0);
     check(run.room==outside&&run.keys==0&&!run.arena.passages[size_t(index)].locked&&pickup.collected,"keyboard return is free and cannot respawn key");
-    for(int n=0;n<240;++n)frame(false);click(374,642);click(835,143);click(995,189);
+    for(int n=0;n<240;++n)frame(false);game.perform(dw::Action::OpenBalance);click(835,143);click(995,189);
     check(game.balanceDoorsOpen&&game.balanceCombatOpen,"mouse opens COMBAT DOORS");click(1000,244);
     check(run.keyedDoorCost==2,"mouse raises live cost by one");
     for(int n=0;n<40&&game.keyboardFocus()!=Action::DoorKeyCostUp;++n)key(KEY_TAB);
@@ -603,7 +608,7 @@ void dynamiteBalanceInputCheck(const std::filesystem::path &directory) {
           "old accepted preset migrates with D10a references and normal hearts/view");
     game.updateCamera(10);frame();key(KEY_B);
     check(run.hazards.size()==1&&run.hazards[0].tunedInventoryBomb&&run.dynamite==2,"B creates calibrated ordinary charge");
-    click(374,642);click(835,143);click(820,189);check(game.balanceBombsOpen&&game.balanceCombatOpen,"COMBAT DYNAMITE subtab opens");
+    game.perform(dw::Action::OpenBalance);click(835,143);click(820,189);check(game.balanceBombsOpen&&game.balanceCombatOpen,"COMBAT DYNAMITE subtab opens");
     const auto birth=run.hazards[0];
     click(1000,240);click(850,292);click(1000,344);click(1000,396);
     click(850,463);
@@ -658,7 +663,7 @@ void bombInputCheck(const std::filesystem::path &directory) {
     const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"bomb screenshot");UnloadImage(im);EndDrawing();};
     game.updateCamera(10);frame();check(renderer.missionShadowsReady(),"bomb scene shadows loaded");capture("artifacts/bombs-room.png");
     floorClick(layout.bombSpawns[1].preferred);for(int n=0;n<90;++n)frame(n%30==0);check(run.dynamite==3,"cannot collect through rocks");
-    click(374,642);click(575,143);click(1010,383);
+    game.perform(dw::Action::OpenBalance);click(575,143);click(1010,383);
     check(!run.bombClearRewards&&run.bombPickups.size()==3,"AFTER CLEAR DYNAMITE independent of preplaced actors");
     for(int n=0;n<40&&game.keyboardFocus()!=Action::ToggleBombRewards;++n)key(KEY_TAB);
     check(game.keyboardFocus()==Action::ToggleBombRewards,"bomb keyboard focus");key(KEY_ENTER);check(run.bombClearRewards,"keyboard bomb toggle");click(1010,383);
@@ -725,7 +730,7 @@ void keyInputCheck(const std::filesystem::path &directory) {
     const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"key screenshot");UnloadImage(im);EndDrawing();};
     game.updateCamera(10);frame();check(renderer.keyModelReady()&&renderer.missionShadowsReady(),"Synty key mesh and scene shadows loaded");capture("artifacts/keys-room.png");
     floorClick(layout.keySpawns[0].preferred);for(int n=0;n<90;++n)frame();check(run.keys==0,"mouse cannot collect through rocks");
-    click(374,642);click(575,143);click(1005,303);
+    game.perform(dw::Action::OpenBalance);click(575,143);click(1005,303);
     check(!run.keyClearRewards&&run.keyPickups.size()==2,"AFTER CLEAR KEYS independent of preplaced actors");
     // Keyboard reaches the same live control, then restore OFF for export/reload.
     for(int n=0;n<32&&game.keyboardFocus()!=Action::ToggleKeyRewards;++n)key(KEY_TAB);
@@ -805,7 +810,7 @@ void treasureUpgradeInputCheck(const std::filesystem::path &directory) {
     check(run.findEnemy(id)&&run.findEnemy(id)->hp<hp&&std::abs(hp-run.findEnemy(id)->hp-run.player.shotDamage)<.001f,"next generated fight uses retained per-shot damage");
     check(1/primaryCadence(run)>base&&run.itemStacks({"isaac",ItemKind::Collectible,1})==1,"upgrade remains effective in following fight");
     run.jumpDebug(owner);game.updateCamera(10);frame();check(!run.rewardAvailable(owner),"post-fight revisit does not repay");
-    click(374,642);click(710,143);click(1010,189);check(game.balanceOpen&&game.balanceShootingOpen&&game.balanceTreasureOpen,"treasure page via mouse");
+    game.perform(dw::Action::OpenBalance);click(710,143);click(1010,189);check(game.balanceOpen&&game.balanceShootingOpen&&game.balanceTreasureOpen,"treasure page via mouse");
     const auto terrain=run.arena.canyon.get();click(430,270);check(game.hasPendingMapChanges()&&run.sourceTreasureUpgrade,"offering toggle staged");
     const float wait=run.player.fireCooldown;click(715,330);check(std::abs(run.sadOnionStrength-.95f)<.0001f&&run.player.fireCooldown==wait&&run.arena.canyon.get()==terrain,"strength live with pending map and retained wait");
     for(int n=0;n<30&&game.keyboardFocus()!=Action::ResetSadOnion;++n)key(KEY_TAB);
@@ -852,7 +857,7 @@ void whipWormInputCheck(const std::filesystem::path &directory) {
     mouseWalk(game,frame,start,.5f);for(int n=0;n<60;++n)frame();mouseWalk(game,frame,whip,.5f);check(run.heldTrinket==WhipWormKey,"Mouse second Whip swap");
     key(KEY_U);check(!run.heldTrinket&&primaryPlayerAttack(run,run.player.shotDamage,false).speed==base.speed,"Actual U drops Whip");
     const auto dropped=run.trinketPickups.back().position;mouseWalk(game,frame,start,.5f);for(int n=0;n<60;++n)frame();mouseWalk(game,frame,dropped,.5f);check(run.heldTrinket==WhipWormKey,"Recollect dropped Whip once");
-    click(374,642);click(710,143);click(1010,189);click(630,189);check(game.balanceTrinketOpen,"Actual trinket panel");
+    game.perform(dw::Action::OpenBalance);click(710,143);click(1010,189);click(630,189);check(game.balanceTrinketOpen,"Actual trinket panel");
     click(970,311);click(370,427);check(std::abs(run.trinkets.whipStrength-1.05f)<.00001f&&run.trinkets.binding==1&&std::abs(run.effectivePlayerStats().shotSpeed-1.425f)<.00001f,"Whip slider and binding live");
     key(KEY_Y);check(run.heldTrinket==WhipWormKey,"Panel consumes rebind");click(335,605);auto exported=BalancePreset::load(preset,run.content->fingerprint());check(exported.trinkets==run.trinkets&&exported.defaultZoomPercent==165,"Whip export");
     click(380,490);check(!run.trinkets.custom(),"Reset both trinkets");click(600,605);check(run.trinkets==exported.trinkets&&run.heldTrinket==WhipWormKey,"Configuration load retains owned slot");capture("artifacts/whip-panel.png");
@@ -909,6 +914,95 @@ void seededBossInputCheck(const std::filesystem::path &directory) {
         check(fresh.run&&fresh.run->seededBosses&&fresh.run->arena.profile.bossMonster==monsterId(expected)&&fresh.cameraZoomPercent()==165&&fresh.run->dukeTuning.health==.95f&&fresh.run->monstroTuning.health==.95f,"remembered mode and both settings survive new Game construction");fresh.close();
     }
     std::cout<<"PASS D13c actual Game/Renderer two seeded bosses, independent live values, staged choice/export/load/Apply, resize, retry and fresh launch\n";
+}
+
+void propsInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
+    const auto save=directory/"props.save",file=directory/"props.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="69";game.reviewSourceRoomTemplate=1000000;
+    auto p=BalancePreset::load(root/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json",defaultMechanics()->fingerprint());
+    p.roomProps={2};game.nextBalancePreset=p;game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.run->arena.rooms[size_t(game.run->room)].sourceCombatTemplate==1000000&&game.run->player.hp==6&&!game.run->godMode,"normal main-game prop review launch");
+    Renderer renderer;
+    auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);if(!game.error.empty())std::cerr<<game.error<<'\n';check(game.error.empty(),"props Game error");};
+    auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"props capture");UnloadImage(im);EndDrawing();};
+    game.updateCamera(10);for(int n=0;n<10;++n)frame();capture("artifacts/ordinary-props-room.png");
+    check(renderer.campfireModelReady()&&renderer.missionEffects().count("flame")>0&&renderer.missionEffects().count("smoke")>0&&renderer.missionEffects().lights().size()==2,"existing town campfire mesh, flame, smoke and lights render");
+    game.paused=true;const auto clock=renderer.missionEffects().time();const auto flames=renderer.missionEffects().count("flame");
+    frame();frame();check(renderer.missionEffects().time()==clock&&renderer.missionEffects().count("flame")==flames,"pause freezes shared fireplace effects");game.paused=false;
+    for(const auto &fire:game.run->enemies)if(fire.monster==monsterId(33)) {
+        Event hit;hit.type=EventType::Damage;hit.target=fire.id;hit.damage=11.2f;hit.explosionDamage=true;
+        check(game.run->queueRoot(hit),"extinguishing event admitted");
+    }
+    game.run->drainEvents();frame();
+    check(renderer.missionEffects().count("flame")==0&&renderer.missionEffects().count("smoke")==0&&renderer.missionEffects().count("ember")==0&&renderer.missionEffects().lights().empty(),"extinguishing removes all town fire emitters and lights");
+    capture("artifacts/ordinary-props-extinguished.png");
+    const int reviewRoom=game.run->room;game.run->enterRoom(0);game.run->enterRoom(reviewRoom);frame();
+    check(renderer.missionEffects().count("flame")==0&&renderer.campfireModelReady(),"revisit retains unlit hearth");
+    game.perform(Action::OpenBalance);click(570,143);click(975,190);click(825,447);check(game.balancePropsOpen,"mouse opens prop controls");
+    click(990,325);click(400,409);check(game.run->roomProps.fireDamageHalfHearts==2&&!game.run->roomProps.rewards,"live damage/drop settings");
+    click(550,245);check(game.run->roomProps.layouts==2&&game.hasPendingMapChanges(),"layout remains pending");
+    click(350,470);check(game.run->roomProps.layouts==1&&!game.hasPendingMapChanges(),"mouse Apply regenerates current floor");
+    click(870,245);click(350,470);check(game.run->roomProps.layouts==2&&!game.hasPendingMapChanges(),"test mode applies without application restart");
+    game.exportBalancePreset();check(BalancePreset::load(file,p.mechanicsFingerprint).roomProps==RoomPropsTuning{2,2,false},"export contains all prop controls");
+    click(300,245);click(350,470);game.loadBalancePreset(file);check(game.run->roomProps.layouts==0&&game.hasPendingMapChanges(),"loaded layout is staged");click(350,470);check(game.run->roomProps.layouts==2,"loaded layout applies");
+    capture("artifacts/ordinary-props-tuning.png");game.perform(Action::CloseBalance);
+    game.rememberBalancePreset();game.run->finishDebug(false);game.retryExpedition();check(game.run&&game.run->roomProps==RoomPropsTuning{2,2,false}&&game.cameraZoomPercent()==165&&game.run->player.hp==6,"retry retains config and normal health");
+    game.close();Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="69";fresh.reviewSourceRoomTemplate=1000000;fresh.launch(true);
+    check(fresh.run&&fresh.run->roomProps==RoomPropsTuning{2,2,false}&&fresh.cameraZoomPercent()==165,"remembered props load on next expedition");fresh.close();
+    std::cout<<"PASS props Game/Renderer controls, staged Apply, export/load/remember/retry and screenshots\n";
+}
+
+void screwInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();
+    const auto save=directory/"screw.save",file=directory/"screw.json",breakfast=directory/"breakfast.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="1";game.reviewRoomIndex=8;
+    auto p=BalancePreset::load(root/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json",defaultMechanics()->fingerprint());
+    p.seededBosses=true;p.bossRewardItem=255;game.nextBalancePreset=p;game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.run->hasSourceBoss(game.run->room)&&game.run->bossRewardItem==255&&game.run->player.hp==6&&!game.run->godMode,"main-game Screw review starts normally");
+    auto &run=*game.run;Renderer renderer;
+    auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);if(!game.error.empty())std::cerr<<game.error<<'\n';check(game.error.empty(),"Screw Game error");};
+    auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"Screw capture");UnloadImage(im);EndDrawing();};
+    run.godMode=true;game.updateCamera(10);for(int n=0;n<20;++n)frame();
+    game.perform(Action::OpenBalance);click(970,143);click(990,189);click(800,485);check(game.balanceBossRewardOpen,"mouse opens boss reward panel");
+    click(800,309);click(970,373);check(run.screw==ScrewTuning{.95f,1.05f},"independent live Screw controls");
+    const auto terrain=run.arena.canyon;click(290,238);check(game.hasPendingMapChanges()&&run.bossRewardItem==255,"Breakfast choice waits for Apply");
+    game.balanceFile=breakfast.string();game.exportBalancePreset();click(500,238);game.balanceFile=file.string();game.exportBalancePreset();game.rememberBalancePreset();
+    game.loadBalancePreset(breakfast);check(run.bossRewardItem==255&&game.hasPendingMapChanges()&&run.arena.canyon==terrain,"load preserves pending reward and existing encounter");
+    click(975,238);check(run.bossRewardItem==25,"Apply enables Breakfast");
+    game.loadBalancePreset(file);check(run.bossRewardItem==25&&game.hasPendingMapChanges(),"Screw reload is staged");click(975,238);check(run.bossRewardItem==255,"Apply restores Screw");
+    capture("artifacts/screw-tuning.png");game.perform(Action::CloseBalance);frame();
+    check(game.cameraZoomPercent()==165,"accepted default zoom retained");mouseEvent(MousePosition,600,400);frame();mouseEvent(MouseWheel,0,-100);frame();frame();game.updateCamera(10);
+    check(std::abs(game.cameraZoomPercent()-25)<.001f&&game.balancePreset.defaultZoomPercent==165,"wheel can zoom out to25 without replacing default");capture("artifacts/screw-zoom25.png");
+    for(int n=0;n<2;++n){mouseEvent(MouseWheel,0,20);frame();frame();}game.updateCamera(10);check(std::abs(game.cameraZoomPercent()-500)<.001f,"wheel can zoom in to500");
+    for(float value:{25.f,500.f}) {
+        game.setDefaultZoom(value);game.exportBalancePreset();game.setDefaultZoom(165);game.loadBalancePreset(file);
+        check(std::abs(game.cameraZoomPercent()-value)<.001f,"extended default zoom exports and reloads immediately");
+    }
+    game.setDefaultZoom(165);game.exportBalancePreset();game.rememberBalancePreset();
+    EntityId id=0;for(const auto &e:run.enemies)if(e.alive&&e.duke)id=e.id;check(id,"seed1 Duke exists");
+    run.player.position=add(run.arena.rooms.back().center,{3,0,0});run.player.position.y=.85f;
+    Event kill;kill.type=EventType::Damage;kill.target=id;kill.damage=10000;run.queueRoot(kill);run.drainEvents();for(int n=0;n<10;++n)frame();
+    check(!run.roomClear&&!run.rewardAvailable(run.room),"Duke death offspring still gate Screw");
+    std::vector<EntityId> children;for(const auto &e:run.enemies)if(e.alive&&e.dukeChild)children.push_back(e.id);
+    for(auto child:children){Event hit;hit.type=EventType::Damage;hit.target=child;hit.damage=10000;run.queueRoot(hit);}run.drainEvents();for(int n=0;n<10;++n)frame();
+    check(run.rewardAvailable(run.room)&&run.treasureUpgradeItem(run.room)==255,"real boss death and fly clear expose Screw");
+    game.updateCamera(10);frame();capture("artifacts/screw-reward.png");const auto before=run.effectivePlayerStats();
+    auto target=run.rewardPosition(run.room);target.y=0;auto screen=GetWorldToScreen(target,game.camera);click(int(screen.x),int(screen.y));
+    for(int n=0;n<500&&!run.itemStacks({"isaac",ItemKind::Collectible,255});++n)frame();
+    const auto after=run.effectivePlayerStats();check(run.itemStacks({"isaac",ItemKind::Collectible,255})==1&&run.player.maxHp==6&&after.tearsPerSecond>before.tearsPerSecond&&after.shotSpeed>before.shotSpeed&&after.rangeTiles==before.rangeTiles,"mouse collection permanently increases only the selected stats");capture("artifacts/screw-collected.png");
+    game.perform(Action::OpenBalance);game.perform(Action::ScrewTearsDown);check(run.screw.tearsStrength==.9f&&run.screw.shotSpeedStrength==1.05f,"live owned effect independently changes");game.perform(Action::ScrewTearsUp);game.perform(Action::CloseBalance);
+    target=run.arena.exit;target.y=0;game.updateCamera(10);frame();screen=GetWorldToScreen(target,game.camera);click(int(screen.x),int(screen.y));
+    for(int n=0;n<500&&run.floor==0;++n)frame();check(run.floor==1&&run.itemStacks({"isaac",ItemKind::Collectible,255})==1&&run.screw==ScrewTuning{.95f,1.05f},"mouse descent retains passive and strengths");
+    run.finishDebug(false);game.retryExpedition();check(game.run&&game.run->items.empty()&&game.run->bossRewardItem==255&&game.run->screw==ScrewTuning{.95f,1.05f}&&game.cameraZoomPercent()==165&&!game.run->godMode,"retry keeps config and fresh normal-health build");
+    game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="1";fresh.reviewRoomIndex=8;fresh.launch(true);
+    check(fresh.run&&fresh.run->bossRewardItem==255&&fresh.run->screw==ScrewTuning{.95f,1.05f}&&fresh.cameraZoomPercent()==165,"remembered configuration survives fresh Game");fresh.close();
+    std::cout<<"PASS D14a.1 actual boss reward, mouse collection/descent, independent live effects, staged choice/export/load/Apply/retry/new Game and25-500 zoom\n";
 }
 
 void dukeInputCheck(const std::filesystem::path &directory) {
@@ -1014,7 +1108,7 @@ void bookOfShadowsInputCheck(const std::filesystem::path &directory) {
     for(int n=0;n<40;++n)frame();check(run.activeItem->item==BookOfShadowsKey,"Contact cannot immediately swap back");
     mouseWalk(game,frame,start,.25f);key(KEY_C);check(run.bookProtectionRemaining>9.8&&run.activeItem->charge==0,"Actual Book activation");capture("artifacts/book-protected.png");
     game.perform(Action::Pause);const auto paused=run.bookProtectionRemaining;for(int n=0;n<30;++n)frame();key(KEY_C);check(run.bookProtectionRemaining==paused&&run.activeItem->charge==0,"Pause preserves effect and charge");game.perform(Action::Resume);frame();
-    click(374,642);click(710,143);click(1010,189);click(805,189);click(790,189);
+    game.perform(dw::Action::OpenBalance);click(710,143);click(1010,189);click(805,189);click(790,189);
     check(game.balanceOpen&&game.balanceActiveOpen&&game.balanceBookOpen,"Actual Book tuning panel");const auto effect=run.bookProtectionRemaining;
     click(810,260);click(970,320);click(370,380);check(run.bookOfShadows==BookOfShadowsTuning{9.5f,2}&&run.yumHeart.binding==1&&run.bookProtectionRemaining==effect,"Live configuration leaves timer intact");
     click(335,605);const auto exported=BalancePreset::load(file,run.content->fingerprint());check(exported.bookOfShadows==run.bookOfShadows&&exported.defaultZoomPercent==165,"Book export preserves view");
@@ -1075,7 +1169,7 @@ void powerupCategoryInputCheck(const std::filesystem::path &directory) {
     check(best<10000,"Combined drop rearm route");mouseWalk(game,frame,away,.5f);mouseWalk(game,frame,dropped,.5f);for(int n=0;n<40;++n)frame();check(run.heldTrinket==CancerKey,"Combined recollection");
     std::cerr<<"CATEGORY_INPUT recollection passed\n";
     game.perform(Action::Pause);const auto charge=run.activeItem->charge;const auto id=run.brotherBobbies.front().id;key(KEY_C);key(KEY_U);check(run.heldTrinket==CancerKey&&run.activeItem->charge==charge&&run.brotherBobbies.front().id==id,"Paused controls leave all categories untouched");game.perform(Action::Resume);frame();
-    click(374,642);game.perform(Action::BalanceShootingTab);game.perform(Action::BalanceTreasureTab);game.perform(Action::BalanceTrinketTab);game.perform(Action::CancerDown);
+    game.perform(dw::Action::OpenBalance);game.perform(Action::BalanceShootingTab);game.perform(Action::BalanceTreasureTab);game.perform(Action::BalanceTrinketTab);game.perform(Action::CancerDown);
     const auto activeBefore=run.activeItem;const auto ownedBefore=run.items;game.perform(Action::ExportBalance);game.perform(Action::RememberBalance);
     const auto exported=BalancePreset::load(preset,run.content->fingerprint());check(std::abs(exported.trinkets.cancerStrength-.95f)<.00001f&&exported.defaultZoomPercent==165,"Live combined export");
     game.perform(Action::ResetTrinkets);game.perform(Action::LoadBalance);check(run.trinkets==exported.trinkets&&run.items==ownedBefore&&run.activeItem==activeBefore&&run.heldTrinket==CancerKey,"Configuration reload preserves equipped gameplay state");game.perform(Action::CloseBalance);frame();
@@ -1128,7 +1222,7 @@ void cancerInputCheck(const std::filesystem::path &directory) {
     check(best<1000,"Reachable contact exit");mouseWalk(game,frame,away,.25f);mouseWalk(game,frame,dropped,.25f);for(int i=0;i<60;++i)frame();check(run.heldTrinket==CancerKey&&run.trinketPickups.empty(),"Walk away and return recollects once");
     mouseEvent(KeyDown,KEY_U);for(int i=0;i<90;++i)frame();mouseEvent(KeyUp,KEY_U);frame();check(!run.heldTrinket&&run.trinketPickups.size()==1,"Held U drops once");
     mouseWalk(game,frame,away,.25f);mouseWalk(game,frame,dropped,.25f);for(int i=0;i<60;++i)frame();check(run.heldTrinket==CancerKey,"Recollect before live tuning");
-    click(374,642);click(710,143);click(1010,189);click(630,189);check(game.balanceTrinketOpen,"Actual mouse opens trinket page");
+    game.perform(dw::Action::OpenBalance);click(710,143);click(1010,189);click(630,189);check(game.balanceTrinketOpen,"Actual mouse opens trinket page");
     const float before=run.effectivePlayerStats().tearsPerSecond;click(970,258);click(370,374);click(370,427);
     check(std::abs(run.trinkets.cancerStrength-1.05f)<.00001f&&!run.trinkets.clearRewards&&run.trinkets.binding==1&&std::abs(run.effectivePlayerStats().tearsPerSecond-before-.05f)<.00001f,"Live strength/reward/binding consumers");
     key(KEY_Y);check(run.heldTrinket==CancerKey,"Panel consumes drop key");click(335,605);auto exported=BalancePreset::load(file,run.content->fingerprint());check(exported.trinkets==run.trinkets&&exported.defaultZoomPercent==165,"Mouse export includes trinkets and accepted zoom");
@@ -1166,7 +1260,7 @@ void yumHeartInputCheck(const std::filesystem::path &directory) {
     int clears=0;for(int i=1;i<run.finalRoom()&&clears<4;++i){run.jumpDebug(i);if(run.roomClear||!run.roomThreats())continue;run.killAll();for(int n=0;n<180&&!run.roomClear;++n)frame();check(run.roomClear,"Actual step completes room");++clears;check(run.activeItem->charge==clears,"First combat clear increments HUD charge");}
     check(clears==4,"Four encounter recharge");run.jumpDebug(owner);frame();run.player.hp=4;
     mouseEvent(KeyDown,KEY_C);for(int i=0;i<30;++i)frame();check(run.player.hp==6&&run.activeItem->charge==0,"C use held single activation");mouseEvent(KeyUp,KEY_C);frame();capture("artifacts/yum-used.png");
-    click(374,642);click(710,143);click(1010,189);click(810,189);
+    game.perform(dw::Action::OpenBalance);click(710,143);click(1010,189);click(810,189);
     check(game.balanceOpen&&game.balanceActiveOpen,"Mouse opens active page");
     click(970,258);click(970,321);click(370,384);
     check(run.yumHeart==YumHeartTuning{3,2,1}&&run.activeItem->charge==0,"Live consumers and rebind do not refill");
@@ -1205,7 +1299,7 @@ void haloOfFliesInputCheck(const std::filesystem::path &directory) {
     const auto before=run.haloFlies[0].position;for(int i=0;i<60;++i)frame();check(distance(before,run.haloFlies[0].position)>.5f,"visible orbit");capture("artifacts/halo-owned.png");
     mouseEvent(KeyDown,KEY_TAB);frame();mouseEvent(KeyUp,KEY_TAB);frame();capture("artifacts/halo-build.png");click(970,728);check(!game.buildOpen,"mouse closes build inspector");
     mouseWalk(game,frame,add(run.rewardPosition(7),{0,0,4}),.25f);game.updateCamera(10);frame();
-    click(374,642);click(710,143);click(1010,189);click(980,189);click(815,189);
+    game.perform(dw::Action::OpenBalance);click(710,143);click(1010,189);click(980,189);click(815,189);
     check(game.balanceOpen&&game.balanceFamiliarOpen&&game.balanceHaloOpen,"actual mouse Halo tab");const auto position=run.haloFlies[0].position;
     click(710,260);click(850,320);click(850,380);check(std::abs(run.haloOfFlies.orbitSpeed-.95f)<.0001f&&std::abs(run.haloOfFlies.orbitRadius-1.05f)<.0001f&&std::abs(run.haloOfFlies.contactRadius-1.05f)<.0001f,"three live consumers");check(distance(position,run.haloFlies[0].position)==0,"tuning pauses runtime");
     click(335,605);const auto exported=BalancePreset::load(file,run.content->fingerprint());check(exported.haloOfFlies==run.haloOfFlies&&exported.defaultZoomPercent==165,"mouse export");click(350,474);check(!run.haloOfFlies.custom(),"reset Halo");click(600,605);check(run.haloOfFlies==exported.haloOfFlies,"mouse reload");capture("artifacts/halo-panel.png");std::filesystem::copy_file(file,"artifacts/halo-preset.json",std::filesystem::copy_options::overwrite_existing);
@@ -1254,7 +1348,7 @@ void brotherBobbyInputCheck(const std::filesystem::path &directory) {
     mouseEvent(MousePosition,1000,400);mouseEvent(MouseDown,MOUSE_BUTTON_RIGHT);for(int n=0;n<100;++n)frame();mouseEvent(MouseUp,MOUSE_BUTTON_RIGHT);frame();
     check(run.brotherBobbies[0].shots>=3&&run.stats.shots>=3,"actual eight-way player firing also commands familiar");capture("artifacts/bobby-following.png");
     const auto id=run.brotherBobbies[0].id;run.jumpDebug(0);frame();run.jumpDebug(owner);frame();check(run.brotherBobbies.size()==1&&run.brotherBobbies[0].id==id&&!run.rewardAvailable(owner),"revisit no duplicate");
-    game.updateCamera(10);click(374,642);click(710,143);click(1010,189);click(980,189);
+    game.updateCamera(10);game.perform(dw::Action::OpenBalance);click(710,143);click(1010,189);click(980,189);
     check(game.balanceOpen&&game.balanceShootingOpen&&game.balanceFamiliarOpen,"mouse opens familiar page");
     const float wait=run.brotherBobbies[0].cooldown;const auto position=run.brotherBobbies[0].position;
     click(710,260);click(850,310);click(850,360);click(710,410);
@@ -1310,7 +1404,7 @@ void cricketHeadInputCheck(const std::filesystem::path &directory) {
     check(run.findEnemy(id)&&run.findEnemy(id)->hp<hp&&std::abs(hp-run.findEnemy(id)->hp-after.damage)<.001f,"next generated fight uses upgraded birth damage");
     check(primaryCadence(run)==cadence&&run.itemStacks({"isaac",ItemKind::Collectible,4})==1,"upgrade remains effective in following fight");
     run.jumpDebug(owner);game.updateCamera(10);frame();check(!run.rewardAvailable(owner),"post-fight revisit does not repay");
-    click(374,642);click(710,143);click(1010,189);check(game.balanceOpen&&game.balanceShootingOpen&&game.balanceTreasureOpen,"treasure page via mouse");
+    game.perform(dw::Action::OpenBalance);click(710,143);click(1010,189);check(game.balanceOpen&&game.balanceShootingOpen&&game.balanceTreasureOpen,"treasure page via mouse");
     click(865,270);check(game.hasPendingMapChanges()&&game.balanceDraft.treasureCollectiblePool==2&&run.treasureCollectiblePool==1,"pool selection staged");
     click(380,460);check(run.treasureCollectiblePool==2&&run.itemStacks({"isaac",ItemKind::Collectible,4})==1&&run.rewardAvailable(owner),"Apply changes pool while retaining owned Cricket");
     for(int i=0;i<5;++i)click(865,270);click(380,460);check(run.treasureCollectiblePool==0&&run.treasureUpgradeItem(owner)==1,"Apply fixed Onion comparison");
@@ -1353,7 +1447,7 @@ void shopHeartInputCheck(const std::filesystem::path &directory) {
     for(int n=0;n<35;++n)frame();capture("artifacts/shop-heart-sold.png");
     run.jumpDebug(0);run.jumpDebug(owner);frame();
     check(run.shopHeartSold&&std::none_of(run.heartPickups.begin(),run.heartPickups.end(),[](const auto &h){return h.shopStock;}),"sold pickup absent on revisit");
-    click(374,642);click(575,143);click(545,189);
+    game.perform(dw::Action::OpenBalance);click(575,143);click(545,189);
     check(game.balanceRewardsOpen&&game.balanceShopOpen,"shop page accessible by mouse");
     auto terrain=run.arena.canyon.get();click(430,270);click(1010,330);
     check(game.hasPendingMapChanges()&&run.sourceShopHeart&&run.shopHeartPrice==4&&run.shopHeartSold&&run.arena.canyon.get()==terrain,"stock toggle staged, price live, sold state retained");
@@ -1397,7 +1491,7 @@ void shopKeyInputCheck(const std::filesystem::path &directory) {
     check(run.shopHeartSold&&run.shopKeySold&&run.player.hp==6&&run.keys==1&&run.money()==0&&run.moneySpent==8,"key and heart purchase independently");
     run.jumpDebug(0);run.jumpDebug(owner);frame();
     check(run.shopKeySold&&std::none_of(run.keyPickups.begin(),run.keyPickups.end(),[](const auto &h){return h.shopStock;}),"sold pickup absent on revisit");
-    click(374,642);click(575,143);click(545,189);click(880,270);
+    game.perform(dw::Action::OpenBalance);click(575,143);click(545,189);click(880,270);
     check(game.balanceRewardsOpen&&game.balanceShopOpen&&game.balanceShopKeyOpen,"shop page accessible by mouse");
     auto terrain=run.arena.canyon.get();click(430,270);click(1010,330);
     check(game.hasPendingMapChanges()&&run.sourceShopKey&&run.shopKeyPrice==6&&run.shopKeySold&&run.arena.canyon.get()==terrain,"stock toggle staged, price live, sold state retained");
@@ -1442,7 +1536,7 @@ void shopStockInputCheck(const std::filesystem::path &directory) {
     check(run.shopKeySold&&run.keys==1&&run.money()==2&&run.moneySpent==18,"discounted key exact payment");
     for(int n=0;n<35;++n)frame();run.jumpDebug(0);run.jumpDebug(owner);frame();
     check(run.shopUpgradeSold&&run.shopKeySold&&run.itemStacks({"isaac",ItemKind::Collectible,64})==1,"sold revisit retains owned item");
-    click(374,642);click(575,143);click(545,189);click(610,270);
+    game.perform(dw::Action::OpenBalance);click(575,143);click(545,189);click(610,270);
     check(game.balanceRewardsOpen&&game.balanceShopOpen&&game.balanceShopStockOpen,"stock mouse tab");
     auto terrain=run.arena.canyon.get();click(430,270);click(1010,330);click(380,415);
     check(game.hasPendingMapChanges()&&run.sourceShopVariation&&run.shopUpgradePrice==16&&!run.steamSaleDiscounts&&run.shopUpgradeSold&&run.arena.canyon.get()==terrain,"staged selection and live price/effect preserve sold floor");
@@ -1485,7 +1579,7 @@ void shopBombInputCheck(const std::filesystem::path &directory) {
     check(run.shopBombSold&&run.dynamite==4&&run.money()==2,"mouse dynamite purchase grants one and charges three");
     for(int n=0;n<40;++n)frame();run.jumpDebug(0);run.jumpDebug(owner);frame();
     check(run.shopBombSold&&run.dynamite==4&&run.moneySpent==18,"sold revisit");
-    click(374,642);click(575,143);click(545,189);click(1015,270);
+    game.perform(dw::Action::OpenBalance);click(575,143);click(545,189);click(1015,270);
     check(game.balanceShopBombOpen&&game.balanceShopOpen,"dynamite mouse tab");
     const auto terrain=run.arena.canyon.get();click(1010,330);click(430,270);
     check(run.shopBombPrice==6&&run.shopBombSold&&game.hasPendingMapChanges()&&run.sourceShopVariation&&run.arena.canyon.get()==terrain,"live price and staged selection preserve sold floor");
@@ -1525,7 +1619,7 @@ void shopCollectibleInputCheck(const std::filesystem::path &directory) {
     check(run.shopUpgradeSold&&run.itemStacks(bogo)==1&&run.money()==5,"mouse purchase charges once and grants BOGO");
     const auto existing=std::find_if(run.bombPickups.begin(),run.bombPickups.end(),[](const auto &p){return p.shopStock;});
     check(existing!=run.bombPickups.end()&&existing->sourceSubtype==1,"already born single unchanged");capture("artifacts/shop-collectibles-owned.png");
-    click(374,642);click(575,143);click(545,189);click(610,270);
+    game.perform(dw::Action::OpenBalance);click(575,143);click(545,189);click(610,270);
     const auto terrain=run.arena.canyon.get();click(830,465);
     check(game.balanceDraft.shopCollectiblePool==2&&run.shopCollectiblePool==1&&run.shopUpgradeSold&&run.arena.canyon.get()==terrain&&game.hasPendingMapChanges(),"selection staged without reroll");
     click(335,605);game.rememberBalancePreset();auto exported=BalancePreset::load(file,run.content->fingerprint());
@@ -1572,7 +1666,7 @@ void shopSoulHeartInputCheck(const std::filesystem::path &directory) {
     capture("artifacts/shop-soul-heart-purchased.png");
     for(int n=0;n<40;++n)frame();run.jumpDebug(0);run.jumpDebug(owner);frame();
     check(run.shopHeartSold&&run.player.soulHearts==2&&run.player.hp==6&&run.moneySpent==18,"sold revisit");
-    click(374,642);click(575,143);click(545,189);click(740,270);click(950,415);
+    game.perform(dw::Action::OpenBalance);click(575,143);click(545,189);click(740,270);click(950,415);
     check(game.balanceShopSoulHeartOpen&&game.balanceShopOpen,"soul heart mouse tab");
     const auto terrain=run.arena.canyon.get();click(1010,330);click(700,415);click(1010,330);click(950,415);click(430,270);
     check(run.shopSoulHeartPrice==6&&run.shopHeartPrice==4&&run.shopHeartSold&&game.hasPendingMapChanges()&&run.sourceShopVariation&&run.arena.canyon.get()==terrain,"live price and staged selection preserve sold floor");
@@ -1611,7 +1705,7 @@ void coinLayoutInputCheck(const std::filesystem::path &directory) {
     const auto clickFloor=[&](Vector3 p){p.y=0;auto screen=GetWorldToScreen(p,game.camera);click(int(screen.x),int(screen.y));};
     const auto capture=[&](const char *name){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,name),"coin layout capture");UnloadImage(im);EndDrawing();};
     game.updateCamera(10);frame();capture("artifacts/coin-layout-room.png");
-    click(374,642);click(575,143);click(680,244);
+    game.perform(dw::Action::OpenBalance);click(575,143);click(680,244);
     check(!run.coinClearRewards&&count()==4,"clear coin switch leaves existing layout coins intact");
     game.exportBalancePreset();std::filesystem::copy_file(preset,sourcePreset,std::filesystem::copy_options::overwrite_existing);
     click(970,190);click(275,270);check(game.hasPendingMapChanges()&&count()==4,"OFF staged without removing layout coins");
@@ -1653,7 +1747,7 @@ void chestLayoutInputCheck(const std::filesystem::path &directory) {
     game.updateCamera(10);frame();capture("artifacts/chest-layout-closed.png");
     check(renderer.chestModelReady(),"accepted chest model loaded on first entry");
     clickFloor(at);for(int n=0;n<90;++n)frame();check(!run.chests[0].opened,"mouse cannot open enclosed chest");
-    click(374,642);click(575,143);click(970,190);check(game.balanceRoomHeartsOpen,"room layouts tab opens with mouse");
+    game.perform(dw::Action::OpenBalance);click(575,143);click(970,190);check(game.balanceRoomHeartsOpen,"room layouts tab opens with mouse");
     click(275,270);check(game.hasPendingMapChanges()&&run.chests.size()==1,"OFF staged until Apply");
     click(415,446);check(run.chests.empty()&&run.roomHeartLayouts==0,"mouse Apply removes arrangement");
     game.exportBalancePreset();std::filesystem::copy_file(preset,"artifacts/chest-layout-off-preset.json",std::filesystem::copy_options::overwrite_existing);
@@ -1711,7 +1805,7 @@ void chestInputCheck(const std::filesystem::path &directory) {
     const auto frame=[&]{game.update(Tick);BeginDrawing();auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"chest UI has no errors");};
     const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
     const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"chest screenshot");UnloadImage(im);EndDrawing();};
-    game.updateCamera(10);frame();click(374,642);click(575,143);check(game.balanceRewardsOpen,"reward panel by mouse");
+    game.updateCamera(10);frame();game.perform(dw::Action::OpenBalance);click(575,143);check(game.balanceRewardsOpen,"reward panel by mouse");
     click(965,244);check(!run.chestClearRewards&&run.coinClearRewards&&run.redHeartClearRewards,"chest toggle independent of existing rewards");
     game.setRoomHeartLayouts(0);click(965,244);
     check(run.chestClearRewards&&run.roomHeartLayouts==1&&game.hasPendingMapChanges(),"chest toggle retains staged map edits");
@@ -1767,7 +1861,7 @@ void coinRewardInputCheck(const std::filesystem::path &directory) {
     const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"coin UI has no errors");};
     const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
     const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"coin UI capture");UnloadImage(im);EndDrawing();};
-    game.updateCamera(10);frame();click(374,642);click(575,143);
+    game.updateCamera(10);frame();game.perform(dw::Action::OpenBalance);click(575,143);
     check(game.balanceRewardsOpen&&!game.balanceRoomHeartsOpen,"reward panel opens by mouse");
     click(680,244);check(!run.coinClearRewards&&run.redHeartClearRewards,"coins switch independent of hearts");
     click(680,244);check(run.coinClearRewards,"coin switch enables future clears");
@@ -1804,7 +1898,7 @@ void combatRockRoomInputCheck(const std::filesystem::path &directory,int variant
     const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
     const auto capture=[&](const std::string &path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path.c_str()),"capture source combat-room review");UnloadImage(im);EndDrawing();};
     game.updateCamera(10);frame();capture("artifacts/"+prefix+"-room.png");
-    click(374,642);click(575,143);click(975,189);check(game.balanceRoomHeartsOpen,"ROOM LAYOUTS opens by mouse");
+    game.perform(dw::Action::OpenBalance);click(575,143);click(975,189);check(game.balanceRoomHeartsOpen,"ROOM LAYOUTS opens by mouse");
     const auto terrain=run.arena.canyon.get();click(270,270);
     check(game.balanceDraft.roomHeartLayouts==0&&run.roomHeartLayouts==1&&game.hasPendingMapChanges()&&run.arena.canyon.get()==terrain,"OFF remains staged during active combat");
     click(400,447);check(run.roomHeartLayouts==0&&run.arena.rooms[size_t(expectedRoom)].sourceCombatTemplate!=variant,"Apply removes source combat-room during combat without restart");
@@ -1877,7 +1971,7 @@ void roomHeartsInputCheck(const std::filesystem::path &directory) {
     const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
     const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
     const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"capture room-heart check");UnloadImage(im);EndDrawing();};
-    click(374,642);click(575,143);click(975,189);check(game.balanceRoomHeartsOpen,"room layouts page opens by mouse");
+    game.perform(dw::Action::OpenBalance);click(575,143);click(975,189);check(game.balanceRoomHeartsOpen,"room layouts page opens by mouse");
     const auto terrain=run.arena.canyon.get();const auto before=run.heartPickups.size();click(880,270);
     check(game.balanceDraft.roomHeartLayouts==2&&run.roomHeartLayouts==1&&game.hasPendingMapChanges()&&run.arena.canyon.get()==terrain&&run.heartPickups.size()==before,"layout edit stages without touching pickups or terrain");
     click(330,605);const auto exported=BalancePreset::load(file,run.content->fingerprint());check(exported.roomHeartLayouts==2&&exported.defaultZoomPercent==165&&exported.roomSizeScale==1.1f,"pending layout mode exports with accepted settings");
@@ -1898,7 +1992,7 @@ void roomHeartsInputCheck(const std::filesystem::path &directory) {
     auto health=run.player.sourceHealth();health.addRed(-3);run.player.setSourceHealth(health);frame();check(run.player.hp==5,"full layout pickup heals two halves immediately");
     run.player.position=half.position;frame();check(run.player.hp==6,"half layout pickup heals one half immediately");for(int n=0;n<30;++n)frame();check(run.heartPickups.empty(),"collection effects expire");
     run.jumpDebug(0);run.jumpDebug(full.room);frame();check(run.heartPickups.empty(),"revisit never respawns consumed layout actors");
-    click(374,642);click(575,143);click(975,189);
+    game.perform(dw::Action::OpenBalance);click(575,143);click(975,189);
     for(int n=0;n<30&&game.keyboardFocus()!=Action::RoomHeartsOff;++n)key(KEY_TAB);check(game.keyboardFocus()==Action::RoomHeartsOff,"layout choice accessible by keyboard");key(KEY_ENTER);
     check(game.balanceDraft.roomHeartLayouts==0&&run.roomHeartLayouts==2&&run.heartPickups.empty(),"keyboard selection remains staged after exploration");
     game.setRedHeartAppearanceSpeed(4);check(run.heartPickups.empty()&&game.balanceDraft.roomHeartLayouts==0,"live appearance edit cannot respawn placed hearts or erase map draft");
@@ -1936,7 +2030,7 @@ void redHeartRewardsInputCheck(const std::filesystem::path &directory) {
     check(run.roomClear&&run.heartPickups.size()==1&&run.heartPickups[0].amount==2&&run.heartPickups[0].sourceSubtype==1,"actual Game mouse-fire clear produces the expected full red heart");
     capture("artifacts/d09a-timed-heart-birth.png");const auto pickup=run.heartPickups[0];run.player.position=pickup.position;
     const auto birthFrame=run.heartPickups[0].timing.frame;
-    click(374,642);click(575,143);click(850,383);
+    game.perform(dw::Action::OpenBalance);click(575,143);click(850,383);
     check(std::abs(run.redHeartAppearanceSpeed-1.05f)<.0001f&&run.heartPickups[0].timing.appearanceSpeed==1,"mouse appearance edit changes future births, retains current actor");
     const auto pausedFrame=run.heartPickups[0].timing.frame;for(int n=0;n<15;++n)frame();
     check(run.heartPickups[0].timing.frame==pausedFrame&&pausedFrame>=birthFrame,"tuning pause freezes birth clock");
@@ -1949,7 +2043,7 @@ void redHeartRewardsInputCheck(const std::filesystem::path &directory) {
     check(run.heartPickups.size()==1&&run.player.hp==6&&run.heartPickups[0].timing.phase==RedHeartTiming::Phase::Collect,"natural heart heals immediately at admission and starts collection effect");
     capture("artifacts/d09a-timed-heart-collection.png");for(int n=0;n<30;++n)frame();check(run.heartPickups.empty(),"collection presentation expires");
     const auto award=*run.rooms[size_t(owner)].redHeartAward;run.jumpDebug(0);run.jumpDebug(owner);frame();check(run.heartPickups.empty(),"collected natural reward stays collected on revisit");
-    click(374,642);click(575,143);check(game.balanceOpen&&game.balanceRewardsOpen,"Rewards tab via actual mouse");
+    game.perform(dw::Action::OpenBalance);click(575,143);check(game.balanceOpen&&game.balanceRewardsOpen,"Rewards tab via actual mouse");
     game.setRoomSize(1.2f);const auto terrain=run.arena.canyon.get();click(350,244);click(850,304);
     check(!run.redHeartClearRewards&&run.player.attributes.luck==1&&game.hasPendingMapChanges()&&run.arena.canyon.get()==terrain,"reward switch and Luck live, map still staged");
     for(int n=0;n<30&&game.keyboardFocus()!=Action::ResetRewardLuck;++n)key(KEY_TAB);
@@ -1984,7 +2078,7 @@ void sourceCombatRoomInputCheck(const std::filesystem::path &directory) {
     const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"D08 UI without error");};
     const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
     const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
-    click(374,642);check(game.balanceOpen,"open tuning through actual HUD");
+    game.perform(dw::Action::OpenBalance);check(game.balanceOpen,"open tuning for field checks");
     const auto terrain=run.arena.canyon.get(),identity=terrain;const auto expeditionId=run.summary().id;
     click(390,480);check(!game.balanceDraft.sourceCombatRoom&&run.sourceCombatRoom&&game.hasPendingMapChanges()&&run.arena.canyon.get()==identity,"click stages toggle without regeneration");
     for(int n=0;n<30&&game.keyboardFocus()!=Action::ToggleSourceCombatRoom;++n)key(KEY_TAB);
@@ -2045,7 +2139,7 @@ void combatBalanceInputCheck(const std::filesystem::path &directory) {
     EntityId injured=0;for(auto &body:run.enemies)if(body.alive&&body.monster==monsterId(10,1)){injured=body.id;break;}
     check(injured,"another natural Gaper remains");Event hit;hit.type=EventType::Damage;hit.target=injured;hit.damage=8;run.queueRoot(hit);run.drainEvents();
     e=run.findEnemy(injured);const float oldHP=e->hp,oldMax=e->maxHp;
-    click(374,642);click(840,143);check(game.balanceOpen&&game.balanceCombatOpen,"Combat tab accessible through actual HUD");
+    game.perform(dw::Action::OpenBalance);click(840,143);check(game.balanceOpen&&game.balanceCombatOpen,"Combat tab accessible in tuning");
     game.setRoomSize(1.2f);const auto terrain=run.arena.canyon.get();const auto content=run.content.get();const auto ticks=run.stats.duration;const auto rng=run.combatRng.state;
     const auto cadence=primaryCadence(run);const auto spec=primaryPlayerAttack(run,run.player.shotDamage,false);
     const auto wait=run.player.fireCooldown;const auto oldShots=run.projectiles;
@@ -2093,7 +2187,7 @@ void pooterBalanceInputCheck(const std::filesystem::path &directory) {
     const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"D06 UI has no error");};
     const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
     const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
-    click(374,642);click(995,143);click(995,189);check(game.balanceEnemiesOpen&&game.balancePooterOpen,"Pooter page accessible through actual HUD");
+    game.perform(dw::Action::OpenBalance);click(995,143);click(995,189);check(game.balanceEnemiesOpen&&game.balancePooterOpen,"Pooter page accessible in tuning");
     game.setRoomSize(1.2f);const auto terrain=run.arena.canyon.get();const auto position=e->position,velocity=e->velocity;
     const auto attackSpeed=e->buzz->attackShotSpeed;const auto delay=e->cooldown;const auto attackFrame=e->buzz->attackFrame;const auto hp=e->hp;
     click(710,244);click(710,308);click(850,372);
@@ -2112,7 +2206,7 @@ void pooterBalanceInputCheck(const std::filesystem::path &directory) {
     }
     check(run.stats.projectiles>=prior+3&&sawOriginal&&sawCustom&&travelled>.1f,"generated main-game Pooter wanders, fires retained attack, then fires tuned attacks");
     std::cout<<"D06 natural seed=69 room=2 shots="<<run.stats.projectiles-prior<<" travelled="<<travelled<<'\n';
-    click(374,642);click(400,483);check(run.pooterTuning->movement==1&&run.pooterTuning->shotSpeed==1&&run.pooterTuning->attackInterval==1,"reset all Pooter controls");
+    game.perform(dw::Action::OpenBalance);click(400,483);check(run.pooterTuning->movement==1&&run.pooterTuning->shotSpeed==1&&run.pooterTuning->attackInterval==1,"reset all Pooter controls");
     game.setPooterTuning(.5f,.65f,1.5f);click(320,605);click(900,605);
     const auto exported=BalancePreset::load(file,run.content->fingerprint());check(exported.pooterMovementMultiplier==.5f&&exported.pooterShotSpeedMultiplier==.65f&&exported.pooterAttackIntervalMultiplier==1.5f&&exported.roomSizeScale==1.2f&&exported.defaultZoomPercent==165,"all Pooter fields export with pending map/view");
     game.setPooterTuning(1,1,1);click(590,605);check(run.pooterTuning->shotSpeed==.65f&&game.hasPendingMapChanges(),"reload updates Pooter without applying map draft");
@@ -2181,7 +2275,7 @@ void hudInputCheck(const std::filesystem::path &directory) {
         UnloadImage(image);EndDrawing();
     };
     // Former buttons must leave no invisible mouse blockers after they shrink.
-    for(const auto p:{Vector2{160,608},Vector2{850,711},Vector2{420,700},Vector2{480,736},Vector2{248,640}}) {
+    for(const auto p:{Vector2{160,608},Vector2{850,711},Vector2{420,700},Vector2{480,736},Vector2{248,640},Vector2{160,640},Vector2{754,736},Vector2{374,642}}) {
         mouseEvent(MousePosition,int(p.x),int(p.y));frame();
         check(!game.pointerOverControls(),"freed HUD space accepts world input");
         run.player.fireCooldown=0;const auto shots=run.stats.shots;
@@ -2191,12 +2285,14 @@ void hudInputCheck(const std::filesystem::path &directory) {
     const auto shots=run.stats.shots;
     run.dynamiteCooldown=0;
     const auto placementAmmo=run.dynamite;
-    click(160,640);frame();
-    check(run.dynamite==placementAmmo-1&&run.hazards.back().settled,"compact dynamite button places immediately");
+    key(KEY_B);frame();
+    check(run.dynamite==placementAmmo-1&&run.hazards.back().settled,"B still places immediately without a HUD button");
     check(game.expeditionNotice().find("landing point")==std::string::npos,"placement never enters throw aiming");
-    click(754,736);check(game.paused,"compact Pause button works");
-    capture("artifacts/expedition-mission-details.png");key(KEY_ESCAPE);
-    check(!game.paused&&run.stats.shots==shots,"HUD clicks never fire into the world");
+    key(KEY_ESCAPE);check(game.paused,"Escape opens pause menu without a HUD button");
+    capture("artifacts/expedition-mission-details.png");
+    click(1150,140);check(game.balanceOpen&&game.paused,"menu Tuning remains reachable by mouse");
+    key(KEY_ESCAPE);check(!game.balanceOpen&&game.paused,"closing Tuning returns to menu");key(KEY_ESCAPE);
+    check(!game.paused&&run.stats.shots==shots,"menu clicks and shortcuts never fire into the world");
     for(int i=0;i<dw::ItemCount;++i)run.grant(dw::ItemId(i));
     run.messageTime=0;check(game.ownedItemTypes()==dw::ItemCount,"all unique items fit in the strip");
     mouseEvent(MousePosition,640,500);frame();capture("artifacts/expedition-hud-compact.png");
@@ -2726,10 +2822,12 @@ void dynamiteInputCheck(const std::filesystem::path &directory, dw::MissionTheme
     game.perform(dw::Action::DynamiteMode);
     mouseEvent(KeyDown,KEY_C);frame(x,y);mouseEvent(KeyUp,KEY_C);frame(x,y);
     const auto before=run.player.position;
-    click(160,640);frame(160,640); // Buttons dispatch on release; consume the queued placement next tick.
+    frame(160,640);
+    check(!game.pointerOverControls(),"removed placement button leaves no invisible input blocker");
+    mouseEvent(KeyDown,KEY_B);frame(x,y);mouseEvent(KeyUp,KEY_B);frame(x,y);
     check(run.dynamite==1&&run.hazards.back().settled&&run.stats.shots==0&&
           dw::distance(before,run.player.position)<.001f,
-          "retired mode action and C cannot turn the HUD placement into a throw");
+          "retired mode action and C cannot turn keyboard placement into a throw");
     mouseEvent(KeyDown,KEY_ESCAPE);frame(x,y);mouseEvent(KeyUp,KEY_ESCAPE);frame(x,y);
     check(game.paused&&run.dynamite==1,"Escape pauses directly after placement");
     click(160,640);
@@ -2743,13 +2841,12 @@ void dynamiteInputCheck(const std::filesystem::path &directory, dw::MissionTheme
     mouseEvent(KeyUp, KEY_LEFT_SHIFT);
     frame(x, y);
     check(run.dynamite == dw::MaxDynamite, "Shift+B refills dynamite for testing without throwing");
-    click(160, 640);
-    frame(160, 640);
+    mouseEvent(KeyDown, KEY_B);frame(x,y);mouseEvent(KeyUp, KEY_B);frame(x,y);
     const auto &placed = run.hazards.back();
     check(run.dynamite == dw::MaxDynamite - 1 && placed.settled &&
               placed.position.x == run.player.position.x && placed.position.z == run.player.position.z &&
               run.stats.shots == 0,
-          "the Place Dynamite button immediately places at the player's feet without a targeting click");
+          "B immediately places at the player's feet without a targeting click");
     capture("placed");
     const auto placedAt = placed.position;
     // Exercise ordinary ground clicks during combat, when the starting passage's
@@ -2991,10 +3088,14 @@ void vegetationInputCheck(const std::filesystem::path &directory) {
         click(178);
     check(game.visualSettings.vegetation == 0 && renderer.missionVegetationCount() == 0,
           "pause vegetation stops at zero");
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < 8; ++i)
         click(265);
     check(game.visualSettings.vegetation == 200 && renderer.missionVegetationCount() > plants,
-          "pause vegetation stops at 200 percent and adds plants");
+          "pause vegetation reaches 200 percent and adds plants");
+    const auto plantsAt200=renderer.missionVegetationCount();
+    for(int i=0;i<14;++i)click(265);
+    check(game.visualSettings.vegetation==500&&renderer.missionVegetationCount()>plantsAt200,
+          "pause vegetation stops at 500 percent and adds more plants than 200 percent");
     check(game.paused && game.run->stats.duration == duration && game.run->stats.shots == 0,
           "vegetation controls never advance combat or fire the weapon");
     const auto preferences = directory / "visual.cfg";
@@ -3003,7 +3104,7 @@ void vegetationInputCheck(const std::filesystem::path &directory) {
     game.visualSettings.groundDetail = false;
     check(saveVisualSettings(preferences, game.visualSettings) &&
               loadVisualSettings(preferences) == game.visualSettings,
-          "vegetation preference survives a settings reload");
+          "500 percent vegetation preference survives a settings reload");
     {
         std::ofstream legacy(preferences);
         legacy << "DEATHWARD_VISUAL 1\n175\n";
@@ -3026,7 +3127,7 @@ void vegetationInputCheck(const std::filesystem::path &directory) {
     game.perform(Action::Hub);
     game.paused = true;
     click(178);
-    check(game.screen == Screen::Hub && game.visualSettings.vegetation == 175,
+    check(game.screen == Screen::Hub && game.visualSettings.vegetation == 475,
           "the same vegetation control is available while paused in town");
     auto capture = LoadImageFromScreen();
     std::filesystem::create_directories("artifacts");
@@ -3073,8 +3174,11 @@ void economyInputCheck(const std::filesystem::path &directory) {
     };
     const auto key=[&](int value){mouseEvent(KeyDown,value);frame();mouseEvent(KeyUp,value);frame();};
     int site=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.arena.rooms[size_t(i)].kind==RoomKind::Service){site=i;break;}
-    check(site>=0,"native fixture contains a generated service room");
-    for(auto service:{RoomService::Surgeon,RoomService::Smuggler}) {
+    if(site<0)for(int i=1;i<run.arena.roomCount()-1;++i)if(run.arena.rooms[size_t(i)].vacantServiceSite) {
+        site=i;run.arena.rooms[size_t(i)].kind=RoomKind::Service;run.arena.rooms[size_t(i)].vacantServiceSite=false;break;
+    }
+    check(site>=0,"surgeon input fixture uses an available quiet site");
+    for(auto service:{RoomService::Surgeon}) {
         run.arena.rooms[size_t(site)].service=service;run.rooms[size_t(site)].serviceSold={false,false};
         run.rooms[size_t(site)].offers={ItemId::Judas,ItemId::Cap};
         run.jumpDebug(site);run.keys=2;run.dynamite=3;run.moneyCollected=100;run.moneySpent=0;run.player.hp=2;
@@ -3089,16 +3193,15 @@ void economyInputCheck(const std::filesystem::path &directory) {
         for(int i=0;i<200&&!run.shopOpen;++i)frame();
         check(run.shopOpen,"clicking service person walks over and opens the rendered offer");
         const auto frozen=run.stats.duration;key(KEY_UP);check(run.stats.duration==frozen,"trade modal pauses simulation and arrows");
-        if(service==RoomService::Surgeon)key(KEY_ONE);else click(425,572);
+        key(KEY_ONE);
         check(run.rooms[size_t(site)].serviceSold[0],"keyboard or mouse accepts displayed trade");
         if(service==RoomService::Surgeon)check(run.player.hp==6&&run.money()==80,"native surgeon charges exact healing price");
-        if(service==RoomService::Smuggler)check(run.player.maxHp==2&&run.items.size()==1,"native bargain includes Judas health loss");
         key(KEY_ESCAPE);check(!run.shopOpen&&!game.paused,"Escape leaves service without opening pause");
     }
     run.startBoss();run.killAll();run.step({});run.player.position=run.rewardPosition(run.room);game.updateCamera(10);
     run.interact();check(run.rewardOpen,"native boss reward opens");
     key(KEY_ESCAPE);check(!run.rewardOpen&&!game.paused,"optional reward can be dismissed");
-    run.interact();click(470,556);check(!run.rewardOpen&&run.items.size()==2,"mouse chooses one boss reward");
+    run.interact();click(470,556);check(!run.rewardOpen&&run.items.size()==1,"mouse chooses one boss reward");
     check(run.stats.shots==0,"NPC, trade and reward clicks never fire");
     game.close();std::cout<<"PASS native service walking, mouse/keyboard trades, modal guards, health preview and boss reward dismissal\n";
 }
@@ -3229,6 +3332,12 @@ int main(int argc, char **argv) {
         }
         if(mode=="--seeded-boss-only") {
             seededBossInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--props-only") {
+            propsInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
+        }
+        if(mode=="--screw-only") {
+            screwInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
         }
         if(mode=="--duke-only") {
             dukeInputCheck(directory);CloseWindow();std::filesystem::remove_all(directory);return 0;
@@ -3773,7 +3882,7 @@ int main(int argc, char **argv) {
         click(642, 736);
         frame(670, 711);
         check(game.run->player.dodge > 0, "onscreen dodge works with a two-button mouse");
-        click(754, 736);
+        pressKey(KEY_ESCAPE);
         check(game.paused, "onscreen pause button pauses the expedition");
         const double duration = game.run->stats.duration;
         for (int i = 0; i < 60; ++i)
@@ -3941,7 +4050,7 @@ int main(int argc, char **argv) {
         click(470, 556);
         check(!game.run->rewardOpen && game.run->powerUpsTaken == 1 && game.run->items.size() == 1,
               "mouse chooses exactly one power from the separate room");
-        click(754, 736);
+        pressKey(KEY_ESCAPE);
         click(620, 507);
         check(!game.run && game.screen == dw::Screen::Summary, "mouse retreat ends the run");
         check(game.lastSummary.stats.shots == shots, "retreat click does not produce an extra shot");

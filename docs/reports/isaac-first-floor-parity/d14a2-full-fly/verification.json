@@ -1,0 +1,49 @@
+{
+  "status": "developer-verified; scoped human encounter accepted",
+  "native_cases": 82,
+  "focused_suites": [
+    "full_fly_delivery",
+    "buzzing_flies",
+    "ordinary_room_props",
+    "balance_preset_contract"
+  ],
+  "generated_witness_cases": 8,
+  "generated_size_seed_cases": 12,
+  "game_checks": [
+    "actual two-enemy encounter",
+    "mouse tuning",
+    "reset",
+    "export/load/remember",
+    "map regeneration",
+    "retry",
+    "six shots per death",
+    "revisit",
+    "fresh Game launch"
+  ],
+  "cli_checks": [
+    "schema5 original accepted preset",
+    "schema48 independent overrides"
+  ],
+  "review": {
+    "seed": 1,
+    "displayed_room": 5,
+    "template": 704,
+    "zoom": 165,
+    "health_half_hearts": 6,
+    "god_mode": false
+  },
+  "adaptations": [
+    "retained canyon geometry and eight-direction controls/dodge",
+    "D04 player-relative spatial scale",
+    "fixed recorded-room allocation outside native13x7 pool",
+    "DW random stream and flight collision/recoil normal",
+    "authored3D hull/rendering"
+  ],
+  "remaining": [
+    "full native actor/scheduler/RNG/collision/champion/status equivalence",
+    "native source704 procedural selection",
+    "remaining D14a actors/items/special rooms",
+    "live expedition save/resume"
+  ],
+  "original_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf"
+}

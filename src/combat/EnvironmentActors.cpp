@@ -39,6 +39,7 @@ void Simulation::reconcileEnvironmentActors() {
                 if(e.hp<=1)state.destructionPending=true;
             }
             state.hits=state.baseLoss=0;state.explosiveHit=false;state.accumulatedDamage=0;
+            if(state.spent&&p.kind==EnvironmentActorKind::Fireplace&&!e.railCarrier)resolvePropReward(state.propReward,state.dropSeed?state.dropSeed:uint32_t(e.id)^0x46495245u,true);
             if(state.spent){particleEffect(ParticleEffect::Dirt,e.position,{0,1,0},.5f);checkpointNeeded=true;}
         }
         if(!state.destructionPending)continue;
@@ -69,7 +70,7 @@ void Simulation::updateEnvironmentActor(Enemy &e,float dt) {
         // A mounted fireplace is above flooded ground; a floor fireplace goes out.
         if(!e.railCarrier&&arena.rooms[size_t(room)].flooded){state.spent=true;e.hp=1;e.phase=1;return;}
         if(!e.railCarrier&&segmentSphere(playerStepStart_,player.position,e.position,e.radius+.48f)<=1&&arena.sight(e.position,player.position))
-            hurtPlayer(p.contact,{0,0,e.id,-1});
+            hurtPlayer(float(roomProps.fireDamageHalfHearts)*10,{0,0,e.id,-1});
         Hazard fire;fire.kind=HazardKind::Fire;fire.position=fire.origin=e.position;fire.radius=e.radius;
         fire.delay=0;fire.duration=1;fire.damage=p.contact;fire.harmsMonsters=true;fire.monsterDamageInterval=p.contactInterval;
         fire.context={nextChain_++,0,e.id,-1};exposeMonstersToFire(fire);

@@ -7,7 +7,7 @@
 
 namespace dw {
 struct VisualSettings {
-    static constexpr int MaxVegetation = 200;
+    static constexpr int MaxVegetation = 500;
     int vegetation = 100;
     bool groundDetail = true;
     bool canyonRiver = true;

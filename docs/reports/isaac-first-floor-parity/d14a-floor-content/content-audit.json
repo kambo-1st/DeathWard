@@ -1,0 +1,2734 @@
+{
+  "snapshot": "docs/reports/isaac-first-floor-parity/d14a-floor-content/source-floor-profile.json",
+  "snapshot_sha256": "d1298bb4773c3c7cee59a6993f78c714098aee0ad5bc294d5809fc876ae7c3a7",
+  "source_files": [
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+      "templates": 1300
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/01.basement.stb",
+      "sha256": "524406fcb10c6275995292c0bd024cfc43d3d30c32b233e55d4d514573d963b0",
+      "templates": 1181
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/13.blue womb.stb",
+      "sha256": "a1835568f691082ec26ff1db2e2a009c992ec2c9724813155a8cb37ebbf93e02",
+      "templates": 30
+    }
+  ],
+  "verified_profile": "Repentance1.7.9b / Normal / Basement I / Isaac character0",
+  "descriptor_count": 12,
+  "role_counts": {
+    "boss": 1,
+    "super-secret": 1,
+    "shop": 1,
+    "treasure": 1,
+    "sacrifice": 1,
+    "secret": 1,
+    "ultra-secret": 1,
+    "ordinary": 5
+  },
+  "exact_stb_matches": 12,
+  "total_spawn_slots": 163,
+  "rooms": [
+    {
+      "native_list_index": 0,
+      "native_grid_index": 30,
+      "dimension": 0,
+      "role": "boss",
+      "template": "5.2012.13",
+      "source": {
+        "type": 5,
+        "variant": 2012,
+        "subtype": 13,
+        "difficulty": 1,
+        "shape_metadata_only": 1,
+        "width_metadata_only": 13,
+        "height_metadata_only": 7,
+        "title": "The Duke of Flies",
+        "source_weight": 1.0,
+        "allowed_doors": [
+          [
+            6,
+            -1,
+            true
+          ],
+          [
+            6,
+            7,
+            true
+          ],
+          [
+            -1,
+            3,
+            true
+          ],
+          [
+            13,
+            3,
+            true
+          ]
+        ],
+        "slots": [
+          {
+            "x": 0,
+            "y": 0,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 5,
+            "y": 1,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 11,
+            "y": 1,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 6,
+            "y": 3,
+            "choices": [
+              {
+                "type": 67,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 7,
+            "y": 3,
+            "choices": [
+              {
+                "type": 18,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 8,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          }
+        ],
+        "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb"
+      },
+      "spawn_seed": 2514600356,
+      "content_counts": {
+        "1000.0.0": 4,
+        "1500.0.0": 2,
+        "18.0.0": 1,
+        "67.0.0": 1
+      },
+      "singleton_slots": true,
+      "exact_stb_content_match": true
+    },
+    {
+      "native_list_index": 1,
+      "native_grid_index": 6,
+      "dimension": 0,
+      "role": "super-secret",
+      "template": "8.14.20",
+      "source": {
+        "type": 8,
+        "variant": 14,
+        "subtype": 20,
+        "difficulty": 1,
+        "shape_metadata_only": 1,
+        "width_metadata_only": 13,
+        "height_metadata_only": 7,
+        "title": "",
+        "source_weight": 1.0,
+        "allowed_doors": [
+          [
+            6,
+            -1,
+            true
+          ],
+          [
+            6,
+            7,
+            true
+          ],
+          [
+            -1,
+            3,
+            true
+          ],
+          [
+            13,
+            3,
+            true
+          ]
+        ],
+        "slots": [
+          {
+            "x": 4,
+            "y": 3,
+            "choices": [
+              {
+                "type": 6,
+                "variant": 4,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 8,
+            "y": 3,
+            "choices": [
+              {
+                "type": 6,
+                "variant": 2,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          }
+        ],
+        "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb"
+      },
+      "spawn_seed": 2681287266,
+      "content_counts": {
+        "6.2.0": 1,
+        "6.4.0": 1
+      },
+      "singleton_slots": true,
+      "exact_stb_content_match": true
+    },
+    {
+      "native_list_index": 2,
+      "native_grid_index": 20,
+      "dimension": 0,
+      "role": "shop",
+      "template": "2.0.0",
+      "source": {
+        "type": 2,
+        "variant": 0,
+        "subtype": 0,
+        "difficulty": 1,
+        "shape_metadata_only": 1,
+        "width_metadata_only": 13,
+        "height_metadata_only": 7,
+        "title": "Shop L1",
+        "source_weight": 1.0,
+        "allowed_doors": [
+          [
+            6,
+            -1,
+            true
+          ],
+          [
+            6,
+            7,
+            true
+          ],
+          [
+            -1,
+            3,
+            true
+          ],
+          [
+            13,
+            3,
+            true
+          ]
+        ],
+        "slots": [
+          {
+            "x": 3,
+            "y": 0,
+            "choices": [
+              {
+                "type": 6,
+                "variant": 8,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 1,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 5,
+            "y": 1,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 6,
+            "y": 1,
+            "choices": [
+              {
+                "type": 17,
+                "variant": 1,
+                "subtype": 0,
+                "weight": 0.5
+              },
+              {
+                "type": 17,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 0.5
+              }
+            ]
+          },
+          {
+            "x": 7,
+            "y": 1,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 11,
+            "y": 1,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 5,
+            "y": 4,
+            "choices": [
+              {
+                "type": 5,
+                "variant": 150,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 7,
+            "y": 4,
+            "choices": [
+              {
+                "type": 5,
+                "variant": 150,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          }
+        ],
+        "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb"
+      },
+      "spawn_seed": 1247876511,
+      "content_counts": {
+        "1000.0.0": 4,
+        "17.0.0": 1,
+        "17.1.0": 1,
+        "5.150.0": 2,
+        "6.8.0": 1
+      },
+      "singleton_slots": false,
+      "exact_stb_content_match": true
+    },
+    {
+      "native_list_index": 3,
+      "native_grid_index": 46,
+      "dimension": 0,
+      "role": "treasure",
+      "template": "4.6.0",
+      "source": {
+        "type": 4,
+        "variant": 6,
+        "subtype": 0,
+        "difficulty": 1,
+        "shape_metadata_only": 1,
+        "width_metadata_only": 13,
+        "height_metadata_only": 7,
+        "title": "",
+        "source_weight": 1.0,
+        "allowed_doors": [
+          [
+            13,
+            3,
+            true
+          ],
+          [
+            -1,
+            3,
+            true
+          ],
+          [
+            6,
+            7,
+            true
+          ],
+          [
+            6,
+            -1,
+            true
+          ]
+        ],
+        "slots": [
+          {
+            "x": 4,
+            "y": 3,
+            "choices": [
+              {
+                "type": 5,
+                "variant": 20,
+                "subtype": 1,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 6,
+            "y": 3,
+            "choices": [
+              {
+                "type": 5,
+                "variant": 100,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 8,
+            "y": 3,
+            "choices": [
+              {
+                "type": 5,
+                "variant": 20,
+                "subtype": 1,
+                "weight": 1.0
+              }
+            ]
+          }
+        ],
+        "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb"
+      },
+      "spawn_seed": 835929943,
+      "content_counts": {
+        "5.100.0": 1,
+        "5.20.1": 2
+      },
+      "singleton_slots": true,
+      "exact_stb_content_match": true
+    },
+    {
+      "native_list_index": 4,
+      "native_grid_index": 85,
+      "dimension": 0,
+      "role": "sacrifice",
+      "template": "13.7.0",
+      "source": {
+        "type": 13,
+        "variant": 7,
+        "subtype": 0,
+        "difficulty": 1,
+        "shape_metadata_only": 1,
+        "width_metadata_only": 13,
+        "height_metadata_only": 7,
+        "title": " (copy)",
+        "source_weight": 1.0,
+        "allowed_doors": [
+          [
+            6,
+            -1,
+            true
+          ],
+          [
+            6,
+            7,
+            true
+          ],
+          [
+            -1,
+            3,
+            true
+          ],
+          [
+            13,
+            3,
+            true
+          ]
+        ],
+        "slots": [
+          {
+            "x": 0,
+            "y": 0,
+            "choices": [
+              {
+                "type": 4500,
+                "variant": 1,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 0,
+            "choices": [
+              {
+                "type": 1002,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 1,
+            "choices": [
+              {
+                "type": 1002,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 11,
+            "y": 1,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 6,
+            "y": 3,
+            "choices": [
+              {
+                "type": 1930,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1940,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1002,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 11,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1002,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1300,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          }
+        ],
+        "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb"
+      },
+      "spawn_seed": 2731255046,
+      "content_counts": {
+        "1000.0.0": 1,
+        "1002.0.0": 4,
+        "1300.0.0": 1,
+        "1930.0.0": 1,
+        "1940.0.0": 1,
+        "4500.1.0": 1
+      },
+      "singleton_slots": true,
+      "exact_stb_content_match": true
+    },
+    {
+      "native_list_index": 5,
+      "native_grid_index": 33,
+      "dimension": 0,
+      "role": "secret",
+      "template": "7.8.0",
+      "source": {
+        "type": 7,
+        "variant": 8,
+        "subtype": 0,
+        "difficulty": 1,
+        "shape_metadata_only": 1,
+        "width_metadata_only": 13,
+        "height_metadata_only": 7,
+        "title": "",
+        "source_weight": 1.0,
+        "allowed_doors": [
+          [
+            6,
+            7,
+            true
+          ],
+          [
+            -1,
+            3,
+            true
+          ],
+          [
+            6,
+            -1,
+            true
+          ],
+          [
+            13,
+            3,
+            true
+          ]
+        ],
+        "slots": [
+          {
+            "x": 0,
+            "y": 0,
+            "choices": [
+              {
+                "type": 3000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 6,
+            "y": 0,
+            "choices": [
+              {
+                "type": 1940,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 0,
+            "choices": [
+              {
+                "type": 3000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 5,
+            "y": 1,
+            "choices": [
+              {
+                "type": 1940,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 6,
+            "y": 1,
+            "choices": [
+              {
+                "type": 17,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 7,
+            "y": 1,
+            "choices": [
+              {
+                "type": 1940,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 6,
+            "y": 2,
+            "choices": [
+              {
+                "type": 1940,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 4,
+            "y": 4,
+            "choices": [
+              {
+                "type": 5,
+                "variant": 20,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 6,
+            "y": 4,
+            "choices": [
+              {
+                "type": 5,
+                "variant": 20,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 8,
+            "y": 4,
+            "choices": [
+              {
+                "type": 5,
+                "variant": 20,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 6,
+            "choices": [
+              {
+                "type": 3000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 6,
+            "choices": [
+              {
+                "type": 3000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          }
+        ],
+        "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb"
+      },
+      "spawn_seed": 985072297,
+      "content_counts": {
+        "17.0.0": 1,
+        "1940.0.0": 4,
+        "3000.0.0": 4,
+        "5.20.0": 3
+      },
+      "singleton_slots": true,
+      "exact_stb_content_match": true
+    },
+    {
+      "native_list_index": 6,
+      "native_grid_index": 22,
+      "dimension": 0,
+      "role": "ultra-secret",
+      "template": "29.1.0",
+      "source": {
+        "type": 29,
+        "variant": 1,
+        "subtype": 0,
+        "difficulty": 1,
+        "shape_metadata_only": 1,
+        "width_metadata_only": 13,
+        "height_metadata_only": 7,
+        "title": "",
+        "source_weight": 1.0,
+        "allowed_doors": [
+          [
+            6,
+            -1,
+            true
+          ],
+          [
+            -1,
+            3,
+            true
+          ],
+          [
+            13,
+            3,
+            true
+          ],
+          [
+            6,
+            7,
+            true
+          ]
+        ],
+        "slots": [
+          {
+            "x": 0,
+            "y": 0,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 0,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 2,
+            "y": 0,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 3,
+            "y": 0,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 4,
+            "y": 0,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 5,
+            "y": 0,
+            "choices": [
+              {
+                "type": 1900,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 7,
+            "y": 0,
+            "choices": [
+              {
+                "type": 1900,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 8,
+            "y": 0,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 9,
+            "y": 0,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 10,
+            "y": 0,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 11,
+            "y": 0,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 0,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 1,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 1,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 2,
+            "choices": [
+              {
+                "type": 1900,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 2,
+            "choices": [
+              {
+                "type": 1900,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 6,
+            "y": 3,
+            "choices": [
+              {
+                "type": 5,
+                "variant": 100,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 4,
+            "choices": [
+              {
+                "type": 1900,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 4,
+            "choices": [
+              {
+                "type": 1900,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 5,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 5,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 6,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 6,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 2,
+            "y": 6,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 3,
+            "y": 6,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 4,
+            "y": 6,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 5,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1900,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 7,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1900,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 8,
+            "y": 6,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 9,
+            "y": 6,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 10,
+            "y": 6,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 11,
+            "y": 6,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 6,
+            "choices": [
+              {
+                "type": 4000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          }
+        ],
+        "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb"
+      },
+      "spawn_seed": 3715483099,
+      "content_counts": {
+        "1900.0.0": 8,
+        "4000.0.0": 24,
+        "5.100.0": 1
+      },
+      "singleton_slots": true,
+      "exact_stb_content_match": true
+    },
+    {
+      "native_list_index": 7,
+      "native_grid_index": 84,
+      "dimension": 0,
+      "role": "ordinary",
+      "template": "1.2.0",
+      "source": {
+        "type": 1,
+        "variant": 2,
+        "subtype": 0,
+        "difficulty": 1,
+        "shape_metadata_only": 1,
+        "width_metadata_only": 13,
+        "height_metadata_only": 7,
+        "title": "Start Room",
+        "source_weight": 1.0,
+        "allowed_doors": [
+          [
+            6,
+            -1,
+            true
+          ],
+          [
+            13,
+            3,
+            true
+          ],
+          [
+            6,
+            7,
+            true
+          ],
+          [
+            -1,
+            3,
+            true
+          ]
+        ],
+        "slots": [],
+        "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb"
+      },
+      "spawn_seed": 3382453641,
+      "content_counts": {},
+      "singleton_slots": true,
+      "exact_stb_content_match": true
+    },
+    {
+      "native_list_index": 8,
+      "native_grid_index": 58,
+      "dimension": 0,
+      "role": "ordinary",
+      "template": "1.704.0",
+      "source": {
+        "type": 1,
+        "variant": 704,
+        "subtype": 0,
+        "difficulty": 5,
+        "shape_metadata_only": 5,
+        "width_metadata_only": 13,
+        "height_metadata_only": 14,
+        "title": "New Room (copy)",
+        "source_weight": 1.0,
+        "allowed_doors": [
+          [
+            6,
+            -1,
+            true
+          ],
+          [
+            6,
+            14,
+            true
+          ]
+        ],
+        "slots": [
+          {
+            "x": 6,
+            "y": 5,
+            "choices": [
+              {
+                "type": 249,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 6,
+            "y": 8,
+            "choices": [
+              {
+                "type": 249,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          }
+        ],
+        "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/01.basement.stb"
+      },
+      "spawn_seed": 4285633627,
+      "content_counts": {
+        "249.0.0": 2
+      },
+      "singleton_slots": true,
+      "exact_stb_content_match": true
+    },
+    {
+      "native_list_index": 9,
+      "native_grid_index": 45,
+      "dimension": 0,
+      "role": "ordinary",
+      "template": "1.51.0",
+      "source": {
+        "type": 1,
+        "variant": 51,
+        "subtype": 0,
+        "difficulty": 1,
+        "shape_metadata_only": 1,
+        "width_metadata_only": 13,
+        "height_metadata_only": 7,
+        "title": "",
+        "source_weight": 1.0,
+        "allowed_doors": [
+          [
+            6,
+            -1,
+            true
+          ],
+          [
+            6,
+            7,
+            true
+          ],
+          [
+            -1,
+            3,
+            true
+          ],
+          [
+            13,
+            3,
+            true
+          ]
+        ],
+        "slots": [
+          {
+            "x": 0,
+            "y": 0,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 11,
+            "y": 0,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 0,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 6,
+            "y": 2,
+            "choices": [
+              {
+                "type": 10,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 6,
+            "y": 4,
+            "choices": [
+              {
+                "type": 10,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          }
+        ],
+        "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/01.basement.stb"
+      },
+      "spawn_seed": 2960478434,
+      "content_counts": {
+        "10.0.0": 2,
+        "1000.0.0": 2,
+        "1500.0.0": 4
+      },
+      "singleton_slots": true,
+      "exact_stb_content_match": true
+    },
+    {
+      "native_list_index": 10,
+      "native_grid_index": 44,
+      "dimension": 0,
+      "role": "ordinary",
+      "template": "1.505.0",
+      "source": {
+        "type": 1,
+        "variant": 505,
+        "subtype": 0,
+        "difficulty": 5,
+        "shape_metadata_only": 1,
+        "width_metadata_only": 13,
+        "height_metadata_only": 7,
+        "title": "New Room",
+        "source_weight": 1.0,
+        "allowed_doors": [
+          [
+            6,
+            7,
+            false
+          ],
+          [
+            -1,
+            3,
+            false
+          ],
+          [
+            6,
+            -1,
+            true
+          ],
+          [
+            13,
+            3,
+            true
+          ]
+        ],
+        "slots": [
+          {
+            "x": 0,
+            "y": 0,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 0,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 0,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 1,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 1,
+            "choices": [
+              {
+                "type": 244,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 2,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 2,
+            "y": 2,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 3,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 4,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 4,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 2,
+            "y": 4,
+            "choices": [
+              {
+                "type": 244,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 3,
+            "y": 4,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 2,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 3,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 4,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 5,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 6,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 7,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 8,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 9,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 10,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 11,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 5,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 2,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 3,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 4,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 5,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 6,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 7,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 8,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 9,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 10,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 11,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1000,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          }
+        ],
+        "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/01.basement.stb"
+      },
+      "spawn_seed": 3160044225,
+      "content_counts": {
+        "1000.0.0": 36,
+        "244.0.0": 2
+      },
+      "singleton_slots": true,
+      "exact_stb_content_match": true
+    },
+    {
+      "native_list_index": 11,
+      "native_grid_index": 18,
+      "dimension": 0,
+      "role": "ordinary",
+      "template": "1.414.0",
+      "source": {
+        "type": 1,
+        "variant": 414,
+        "subtype": 0,
+        "difficulty": 5,
+        "shape_metadata_only": 8,
+        "width_metadata_only": 26,
+        "height_metadata_only": 14,
+        "title": "New Room",
+        "source_weight": 1.0,
+        "allowed_doors": [
+          [
+            -1,
+            3,
+            true
+          ],
+          [
+            6,
+            -1,
+            true
+          ],
+          [
+            26,
+            3,
+            true
+          ],
+          [
+            6,
+            14,
+            true
+          ],
+          [
+            19,
+            -1,
+            true
+          ],
+          [
+            19,
+            14,
+            true
+          ],
+          [
+            -1,
+            10,
+            true
+          ],
+          [
+            26,
+            10,
+            true
+          ]
+        ],
+        "slots": [
+          {
+            "x": 0,
+            "y": 0,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 0,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 24,
+            "y": 0,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 25,
+            "y": 0,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 1,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 1,
+            "choices": [
+              {
+                "type": 14,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 24,
+            "y": 1,
+            "choices": [
+              {
+                "type": 14,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 25,
+            "y": 1,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 13,
+            "y": 2,
+            "choices": [
+              {
+                "type": 18,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 3,
+            "choices": [
+              {
+                "type": 18,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 4,
+            "y": 4,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 21,
+            "y": 4,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 11,
+            "y": 5,
+            "choices": [
+              {
+                "type": 18,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 5,
+            "choices": [
+              {
+                "type": 14,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 14,
+            "y": 5,
+            "choices": [
+              {
+                "type": 18,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 9,
+            "y": 6,
+            "choices": [
+              {
+                "type": 18,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 13,
+            "y": 6,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 14,
+            "y": 6,
+            "choices": [
+              {
+                "type": 14,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 16,
+            "y": 6,
+            "choices": [
+              {
+                "type": 18,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 8,
+            "y": 7,
+            "choices": [
+              {
+                "type": 18,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 11,
+            "y": 7,
+            "choices": [
+              {
+                "type": 14,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 7,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 13,
+            "y": 7,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 17,
+            "y": 7,
+            "choices": [
+              {
+                "type": 18,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 11,
+            "y": 8,
+            "choices": [
+              {
+                "type": 18,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 13,
+            "y": 8,
+            "choices": [
+              {
+                "type": 14,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 14,
+            "y": 8,
+            "choices": [
+              {
+                "type": 18,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 4,
+            "y": 9,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 21,
+            "y": 9,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 13,
+            "y": 10,
+            "choices": [
+              {
+                "type": 18,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 12,
+            "y": 11,
+            "choices": [
+              {
+                "type": 18,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 12,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 12,
+            "choices": [
+              {
+                "type": 14,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 24,
+            "y": 12,
+            "choices": [
+              {
+                "type": 14,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 25,
+            "y": 12,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 0,
+            "y": 13,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 1,
+            "y": 13,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 24,
+            "y": 13,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          },
+          {
+            "x": 25,
+            "y": 13,
+            "choices": [
+              {
+                "type": 1500,
+                "variant": 0,
+                "subtype": 0,
+                "weight": 1.0
+              }
+            ]
+          }
+        ],
+        "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/01.basement.stb"
+      },
+      "spawn_seed": 3850768387,
+      "content_counts": {
+        "14.0.0": 8,
+        "1500.0.0": 20,
+        "18.0.0": 12
+      },
+      "singleton_slots": true,
+      "exact_stb_content_match": true
+    }
+  ],
+  "actor_dependencies": [
+    {
+      "identity": "10.0.0",
+      "name": "Frowning Gaper",
+      "occurrences": 2,
+      "registry": {
+        "name": "Frowning Gaper",
+        "file": "assets/mechanics/gapers.mechanics"
+      },
+      "scoped_acceptance": "Existing controller; Frowning-specific production movement/activation acceptance open."
+    },
+    {
+      "identity": "14.0.0",
+      "name": "Pooter",
+      "occurrences": 8,
+      "registry": {
+        "name": "Pooter",
+        "file": "assets/mechanics/buzz_flies.mechanics"
+      },
+      "scoped_acceptance": "Scoped D06 accepted; captured mixed formation is not enabled."
+    },
+    {
+      "identity": "18.0.0",
+      "name": "Attack Fly",
+      "occurrences": 13,
+      "registry": {
+        "name": "Attack Fly",
+        "file": "assets/mechanics/buzz_flies.mechanics"
+      },
+      "scoped_acceptance": "Existing Attack Fly; D13b accepted Duke offspring, not full standalone actor/formation acceptance."
+    },
+    {
+      "identity": "244.0.0",
+      "name": "Round Worm",
+      "occurrences": 2,
+      "registry": null,
+      "scoped_acceptance": "Not enabled in the current regular-enemy registry; separate actor delivery required."
+    },
+    {
+      "identity": "249.0.0",
+      "name": "Full Fly",
+      "occurrences": 2,
+      "registry": null,
+      "scoped_acceptance": "Not enabled in the current regular-enemy registry; separate actor delivery required."
+    },
+    {
+      "identity": "67.0.0",
+      "name": "The Duke Of Flies",
+      "occurrences": 1,
+      "registry": {
+        "name": "Duke of Flies",
+        "file": "assets/mechanics/duke.mechanics"
+      },
+      "scoped_acceptance": "Scoped D13b accepted; captured initial fly/obstacle arrangement is not enabled."
+    }
+  ],
+  "unresolved_pickup_slots": [
+    {
+      "native_list_index": 2,
+      "x": 5,
+      "y": 4,
+      "template_identity": "5.150.0",
+      "reason": "Native factory/category/pool result is not established by this unvisited config slot."
+    },
+    {
+      "native_list_index": 2,
+      "x": 7,
+      "y": 4,
+      "template_identity": "5.150.0",
+      "reason": "Native factory/category/pool result is not established by this unvisited config slot."
+    },
+    {
+      "native_list_index": 3,
+      "x": 6,
+      "y": 3,
+      "template_identity": "5.100.0",
+      "reason": "Native factory/category/pool result is not established by this unvisited config slot."
+    },
+    {
+      "native_list_index": 5,
+      "x": 4,
+      "y": 4,
+      "template_identity": "5.20.0",
+      "reason": "Native factory/category/pool result is not established by this unvisited config slot."
+    },
+    {
+      "native_list_index": 5,
+      "x": 6,
+      "y": 4,
+      "template_identity": "5.20.0",
+      "reason": "Native factory/category/pool result is not established by this unvisited config slot."
+    },
+    {
+      "native_list_index": 5,
+      "x": 8,
+      "y": 4,
+      "template_identity": "5.20.0",
+      "reason": "Native factory/category/pool result is not established by this unvisited config slot."
+    },
+    {
+      "native_list_index": 6,
+      "x": 6,
+      "y": 3,
+      "template_identity": "5.100.0",
+      "reason": "Native factory/category/pool result is not established by this unvisited config slot."
+    }
+  ],
+  "full_floor_gameplay_accepted": false,
+  "source_shapes_and_connections_are_metadata_only": true,
+  "limits": [
+    "Registry presence is not actor acceptance.",
+    "Candidate counts are not full live factory/offspring/champion counts.",
+    "No current production complete-room registry entry covers these captured combat templates.",
+    "Room count is descriptor count, not floor-cell area or a procedural-count proof.",
+    "Unvisited item identities, prices, shop unlock level, source starting inventory and rewards remain unverified."
+  ]
+}

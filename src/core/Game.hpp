@@ -89,6 +89,7 @@ enum class Action {
     BalanceCombatTab, CombatDamageDown, CombatDamageUp, RegularHealthDown, RegularHealthUp, ResetCombat,
     BalanceChasersTab,
     BalancePooterTab,
+    BalanceFullFlyTab,FullFlyMovementDown,FullFlyMovementUp,FullFlyShotDown,FullFlyShotUp,ResetFullFly,
     PooterMovementDown, PooterMovementUp, PooterShotDown, PooterShotUp, PooterDelayDown, PooterDelayUp, ResetPooter,
     GaperMovementDown,
     GaperMovementUp,
@@ -135,7 +136,7 @@ enum class Action {
     BalanceDamageHealthTab, BalanceBombsTab, BombFuseDown, BombFuseUp,
     BombRadiusDown, BombRadiusUp, BombDamageDown, BombDamageUp,
     BombSelfDamageDown, BombSelfDamageUp, ResetInventoryBombs, ToggleRockBlastShielding,
-    BalanceDoorsTab, DoorKeyCostDown, DoorKeyCostUp, ResetKeyedDoors, ToggleSourceRoomLocks, BalanceTreasureTab, ToggleTreasureUpgrade, SadOnionDown, SadOnionUp, ResetSadOnion, BalanceShopTab, ToggleShopHeart, ShopHeartPriceDown, ShopHeartPriceUp, ResetShopHeartPrice, BalanceShopHeartTab, BalanceShopKeyTab, ToggleShopKey, ShopKeyPriceDown, ShopKeyPriceUp, ResetShopKeyPrice, BalanceShopStockTab, ToggleShopVariation, ToggleSteamSaleDiscounts, ShopUpgradePriceDown, ShopUpgradePriceUp, ResetShopUpgradePrice, BalanceShopBombTab, ShopBombPriceDown, ShopBombPriceUp, ResetShopBombPrice, BalanceShopRedHeartTab, BalanceShopSoulHeartTab, ShopSoulHeartPriceDown, ShopSoulHeartPriceUp, ResetShopSoulHeartPrice, CycleShopCollectiblePool, CycleTreasureCollectiblePool, CricketHeadDown, CricketHeadUp, ResetCricketHead, BalanceFamiliarTab, BobbyMovementDown, BobbyMovementUp, BobbyIntervalDown, BobbyIntervalUp, BobbyDamageDown, BobbyDamageUp, BobbyShotDown, BobbyShotUp, ResetBrotherBobby, BalanceActiveTab, YumHealingDown, YumHealingUp, YumRechargeDown, YumRechargeUp, CycleActiveBinding, ResetYumHeart, UseActiveItem, BalanceTrinketTab, CancerDown, CancerUp, ToggleTrinketRewards, CycleTrinketBinding, ResetTrinkets, DropTrinket, ReviewPowerupFight, ReviewPowerupBoss, WhipDown, WhipUp, BalanceHaloTab, HaloSpeedDown, HaloSpeedUp, HaloRadiusDown, HaloRadiusUp, HaloContactDown, HaloContactUp, ResetHalo, BalanceBookTab, BookDurationDown, BookDurationUp, BookRechargeDown, BookRechargeUp, ResetBook, BalanceMonstroTab, ToggleMonstro, MonstroHealthDown, MonstroHealthUp, MonstroMovementDown, MonstroMovementUp, MonstroShotDown, MonstroShotUp, ResetMonstro, ToggleDuke, SelectLegacyBoss, SelectSeededBosses, CycleBossTuning
+    BalanceDoorsTab, DoorKeyCostDown, DoorKeyCostUp, ResetKeyedDoors, ToggleSourceRoomLocks, BalanceTreasureTab, ToggleTreasureUpgrade, SadOnionDown, SadOnionUp, ResetSadOnion, BalanceShopTab, ToggleShopHeart, ShopHeartPriceDown, ShopHeartPriceUp, ResetShopHeartPrice, BalanceShopHeartTab, BalanceShopKeyTab, ToggleShopKey, ShopKeyPriceDown, ShopKeyPriceUp, ResetShopKeyPrice, BalanceShopStockTab, ToggleShopVariation, ToggleSteamSaleDiscounts, ShopUpgradePriceDown, ShopUpgradePriceUp, ResetShopUpgradePrice, BalanceShopBombTab, ShopBombPriceDown, ShopBombPriceUp, ResetShopBombPrice, BalanceShopRedHeartTab, BalanceShopSoulHeartTab, ShopSoulHeartPriceDown, ShopSoulHeartPriceUp, ResetShopSoulHeartPrice, CycleShopCollectiblePool, CycleTreasureCollectiblePool, CricketHeadDown, CricketHeadUp, ResetCricketHead, BalanceFamiliarTab, BobbyMovementDown, BobbyMovementUp, BobbyIntervalDown, BobbyIntervalUp, BobbyDamageDown, BobbyDamageUp, BobbyShotDown, BobbyShotUp, ResetBrotherBobby, BalanceActiveTab, YumHealingDown, YumHealingUp, YumRechargeDown, YumRechargeUp, CycleActiveBinding, ResetYumHeart, UseActiveItem, BalanceTrinketTab, CancerDown, CancerUp, ToggleTrinketRewards, CycleTrinketBinding, ResetTrinkets, DropTrinket, ReviewPowerupFight, ReviewPowerupBoss, WhipDown, WhipUp, BalanceHaloTab, HaloSpeedDown, HaloSpeedUp, HaloRadiusDown, HaloRadiusUp, HaloContactDown, HaloContactUp, ResetHalo, BalanceBookTab, BookDurationDown, BookDurationUp, BookRechargeDown, BookRechargeUp, ResetBook, BalanceMonstroTab, ToggleMonstro, MonstroHealthDown, MonstroHealthUp, MonstroMovementDown, MonstroMovementUp, MonstroShotDown, MonstroShotUp, ResetMonstro, ToggleDuke, SelectLegacyBoss, SelectSeededBosses, CycleBossTuning, BalanceBossRewardTab, SelectBreakfastReward, SelectScrewReward, ScrewTearsDown, ScrewTearsUp, ScrewShotDown, ScrewShotUp, ResetScrew, BalancePropsTab, PropsOff, PropsSource, PropsTest, FireDamageDown, FireDamageUp, TogglePropRewards
 };
 class Game {
   public:
@@ -167,6 +168,9 @@ class Game {
     bool balanceBookOpen = false, balanceHaloOpen = false, balanceFamiliarOpen = false, balanceActiveOpen = false, balanceTrinketOpen = false;
     bool balanceMonstroOpen=false;
     bool balanceDukeValues=false; // Which boss is edited, independent of staged pool selection.
+    bool balanceBossRewardOpen = false;
+    bool balancePropsOpen=false;
+    bool balanceFullFlyOpen=false;
     bool balanceEnemiesOpen = false, balancePooterOpen = false, balanceCombatOpen = false, balanceRewardsOpen = false, balanceRoomHeartsOpen = false, balanceTreasureOpen = false, balanceShopOpen=false, balanceShopKeyOpen=false, balanceShopStockOpen=false, balanceShopBombOpen=false, balanceShopSoulHeartOpen=false;
     bool balanceBombsOpen=false, balanceDoorsOpen=false;
     BalancePreset balancePreset, balanceDraft;

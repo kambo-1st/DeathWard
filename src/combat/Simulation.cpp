@@ -1,3 +1,5 @@
+#include "world/SourceFullFlyRoom.hpp"
+#include "world/SourcePropRooms.hpp"
 #include "items/SadOnion.hpp"
 #include "items/CricketHead.hpp"
 #include "world/SourceTreasureStock.hpp"
@@ -21,8 +23,8 @@
 
 namespace dw {
 Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, MissionTheme theme,
-                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library, float requestedRoomScale, int roomMinimum, int roomMaximum, float requestedRouteScale, bool requestedSourceRoom, int requestedHeartLayouts, bool requestedCoins, bool requestedRoomLocks, bool requestedTreasureUpgrade, bool requestedShopHeart, bool requestedShopKey, bool requestedShopVariation, int requestedCollectiblePool, int requestedTreasurePool, MonstroTuning requestedMonstro,DukeTuning requestedDuke,bool requestedSeededBosses)
-    : content(library ? std::move(library) : defaultMechanics()), expedition(seed,tutorial,account,pacing),floor(level),roomSizeScale(requestedRoomScale),routeLengthScale(requestedRouteScale),sourceRoomLocks(requestedRoomLocks),sourceTreasureUpgrade(requestedTreasureUpgrade),monstroTuning(requestedMonstro),dukeTuning(requestedDuke),seededBosses(requestedSeededBosses),treasureCollectiblePool(requestedTreasurePool),sourceShopHeart(requestedShopHeart),sourceShopKey(requestedShopKey),sourceShopVariation(requestedShopVariation),shopCollectiblePool(requestedCollectiblePool),sourceCombatRoom(requestedSourceRoom),roomHeartLayouts(requestedHeartLayouts),roomMinHalfTiles(roomMinimum),roomMaxHalfTiles(roomMaximum),
+                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library, float requestedRoomScale, int roomMinimum, int roomMaximum, float requestedRouteScale, bool requestedSourceRoom, int requestedHeartLayouts, bool requestedCoins, bool requestedRoomLocks, bool requestedTreasureUpgrade, bool requestedShopHeart, bool requestedShopKey, bool requestedShopVariation, int requestedCollectiblePool, int requestedTreasurePool, MonstroTuning requestedMonstro,DukeTuning requestedDuke,bool requestedSeededBosses,int requestedBossReward,RoomPropsTuning requestedProps)
+    : content(library ? std::move(library) : defaultMechanics()), expedition(seed,tutorial,account,pacing),floor(level),roomSizeScale(requestedRoomScale),routeLengthScale(requestedRouteScale),sourceRoomLocks(requestedRoomLocks),sourceTreasureUpgrade(requestedTreasureUpgrade),monstroTuning(requestedMonstro),dukeTuning(requestedDuke),bossRewardItem(requestedBossReward),roomProps(requestedProps),seededBosses(requestedSeededBosses),treasureCollectiblePool(requestedTreasurePool),sourceShopHeart(requestedShopHeart),sourceShopKey(requestedShopKey),sourceShopVariation(requestedShopVariation),shopCollectiblePool(requestedCollectiblePool),sourceCombatRoom(requestedSourceRoom),roomHeartLayouts(requestedHeartLayouts),roomMinHalfTiles(roomMinimum),roomMaxHalfTiles(roomMaximum),
       arena(expedition.floorSeed(level), theme, canyonRiver, tutorial, expedition.storyAt(level),
             expedition.roomsOnFloor(level),[&]{auto dimensions=expedition.dimensionsOnFloor(level);
                 dimensions.roomSizeScale=roomSizeScale;dimensions.routeLengthScale=routeLengthScale;
@@ -32,13 +34,13 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
                     dimensions.smallerRooms=true;dimensions.minHalfTiles=roomMinHalfTiles;dimensions.maxHalfTiles=roomMaxHalfTiles;
                 }
                 return dimensions;}(),
-            [&]{requestedMonstro.validate();requestedDuke.validate();auto profile=theme==MissionTheme::Canyon?content->configureFloor(expedition.profileOnFloor(level),expedition.floorSeed(level)):FloorProfile{};
+            [&]{requestedProps.validate();validateBossRewardItem(requestedBossReward);requestedMonstro.validate();requestedDuke.validate();auto profile=theme==MissionTheme::Canyon?content->configureFloor(expedition.profileOnFloor(level),expedition.floorSeed(level)):FloorProfile{};
                 const int chosen=openingBossType(expedition.floorSeed(level),requestedSeededBosses,requestedMonstro.enabled,requestedDuke.enabled);
                 if(chosen&&level==0&&!tutorial&&profile.active()&&content->monsterBoss(monsterId(chosen))) {
                     profile.boss=BossKind::Isaac;profile.bossMonster=monsterId(chosen);profile.bossForm=BossForm::Normal;
                     profile.doubleBossRoom=false;profile.bossRails.reset();
                 }
-                return profile;}(),sourceCombatRoom,roomHeartLayouts,sourceRoomLocks),
+                return profile;}(),sourceCombatRoom,roomHeartLayouts,sourceRoomLocks,requestedProps.layouts),
       encounterRng(expedition.floorSeed(level) ^ 0x454e434f554e5445ULL),
       rewardRng(expedition.floorSeed(level) ^ 0x5245574152445354ULL),
       combatRng(expedition.floorSeed(level) ^ 0x434f4d424154524eULL), seed_(expedition.floorSeed(level)),
@@ -49,8 +51,8 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
     coinClearRewards=requestedCoins;
     surveyTutorial=tutorial;
     rooms.resize(arena.rooms.size());
-    rescued = world.minersRescued;
-    altarDestroyed = world.altarDestroyed;
+    // Retired objective fields remain readable in historical campaign saves.
+    rescued = altarDestroyed = false;
     bossKilled = theme == MissionTheme::Canyon ? world.flags.contains("canyon_cleared") : world.bossDefeated;
     followup = bossKilled;
     if(surveyTutorial||testimony())rescued=altarDestroyed=bossKilled=followup=false;
@@ -66,7 +68,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
     for (int index = 0; index < arena.roomCount(); ++index) {
         if(arena.profile.active()) {
             rooms[size_t(index)].offers=drawItemOffers(arena.rooms[size_t(index)].kind==RoomKind::Boss?
-                ItemPool::Boss:arena.rooms[size_t(index)].service==RoomService::Smuggler?ItemPool::Bargain:ItemPool::Armory,seed_^uint64_t(index+1)*0x9e3779b97f4a7c15ULL,*content);
+                ItemPool::Boss:ItemPool::Armory,seed_^uint64_t(index+1)*0x9e3779b97f4a7c15ULL,*content);
             continue;
         }
         if (arena.rooms[size_t(index)].kind != RoomKind::Power)
@@ -108,10 +110,12 @@ bool Simulation::canUseFloorExit() const {
 bool Simulation::canResizeRooms() const {
     return !arena.rooms.empty(); // Explicit testing control; exploration/combat do not lock it.
 }
-void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScale,std::optional<bool> sourceRoom,std::optional<int> heartLayouts,std::optional<bool> roomLocks,std::optional<bool> treasureUpgrade, std::optional<bool> shopHeart, std::optional<bool> shopKey, std::optional<bool> shopVariation, std::optional<int> collectiblePool, std::optional<int> treasurePool, std::optional<MonstroTuning> monstro,std::optional<DukeTuning> duke,std::optional<bool> seeded) {
+void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScale,std::optional<bool> sourceRoom,std::optional<int> heartLayouts,std::optional<bool> roomLocks,std::optional<bool> treasureUpgrade, std::optional<bool> shopHeart, std::optional<bool> shopKey, std::optional<bool> shopVariation, std::optional<int> collectiblePool, std::optional<int> treasurePool, std::optional<MonstroTuning> monstro,std::optional<DukeTuning> duke,std::optional<bool> seeded,std::optional<int> reward,std::optional<RoomPropsTuning> props) {
+    const auto propChoice=props.value_or(roomProps);propChoice.validate();
     const auto boss=monstro.value_or(monstroTuning);boss.validate();
     const auto flies=duke.value_or(dukeTuning);flies.validate();
     const bool seededChoice=seeded.value_or(seededBosses);
+    const int rewardChoice=reward.value_or(bossRewardItem);validateBossRewardItem(rewardChoice);
     const bool treasure=treasureUpgrade.value_or(sourceTreasureUpgrade);
     const bool shop=shopHeart.value_or(sourceShopHeart);
     const bool keyStock=shopKey.value_or(sourceShopKey);
@@ -123,11 +127,11 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     const bool locks=roomLocks.value_or(sourceRoomLocks);
     const bool enabled=sourceRoom.value_or(sourceCombatRoom);
     const int heartMode=heartLayouts.value_or(roomHeartLayouts);
-    if(seededChoice==seededBosses&&flies.enabled==dukeTuning.enabled&&boss.enabled==monstroTuning.enabled&&treasureChoice==treasureCollectiblePool&&pool==shopCollectiblePool&&variation==sourceShopVariation&&keyStock==sourceShopKey&&shop==sourceShopHeart&&treasure==sourceTreasureUpgrade&&locks==sourceRoomLocks&&heartMode==roomHeartLayouts&&enabled==sourceCombatRoom&&scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
+    if(propChoice.layouts==roomProps.layouts&&rewardChoice==bossRewardItem&&seededChoice==seededBosses&&flies.enabled==dukeTuning.enabled&&boss.enabled==monstroTuning.enabled&&treasureChoice==treasureCollectiblePool&&pool==shopCollectiblePool&&variation==sourceShopVariation&&keyStock==sourceShopKey&&shop==sourceShopHeart&&treasure==sourceTreasureUpgrade&&locks==sourceRoomLocks&&heartMode==roomHeartLayouts&&enabled==sourceCombatRoom&&scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
     if(!canResizeRooms())throw std::runtime_error("No floor to resize");
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
-                    expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice,boss,flies,seededChoice);
-    next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
+                    expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice,boss,flies,seededChoice,rewardChoice,propChoice);
+    next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
     next.haloOfFlies=haloOfFlies;next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
@@ -206,8 +210,8 @@ bool Simulation::advanceFloor() {
     if(!floorExitRequested||lastFloor()||dead||!canUseFloorExit())return false;
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
-                    expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool,monstroTuning,dukeTuning,seededBosses);
-    next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
+                    expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool,monstroTuning,dukeTuning,seededBosses,bossRewardItem,roomProps);
+    next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
     next.haloOfFlies=haloOfFlies;next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
@@ -430,14 +434,16 @@ bool Simulation::hasSourceTreasure(int index) const {
 SourcePlayerStats Simulation::effectivePlayerStats() const {
     auto result=player.attributes;
     result.damage=cricketHeadDamage(result.damage,itemStacks({"isaac",ItemKind::Collectible,4}),cricketHeadStrength);
-    result.tearsPerSecond=sadOnionTears(result.tearsPerSecond,itemStacks({"isaac",ItemKind::Collectible,1}),sadOnionStrength);
+    result.tearsPerSecond=ordinaryItemTears(result.tearsPerSecond,.7f*float(itemStacks({"isaac",ItemKind::Collectible,1}))*sadOnionStrength+
+        .5f*float(itemStacks({"isaac",ItemKind::Collectible,255}))*screw.tearsStrength);
     result.tearsPerSecond=cancerTears(result.tearsPerSecond,heldTrinket==CancerKey,trinkets.cancerStrength);
+    result.shotSpeed=screwShotSpeed(result.shotSpeed,itemStacks({"isaac",ItemKind::Collectible,255}),screw.shotSpeedStrength);
     result.shotSpeed=whipShotSpeed(result.shotSpeed,heldTrinket==WhipWormKey,trinkets.whipStrength);
     return result;
 }
 int Simulation::treasureUpgradeItem(int index) const {
     if(!hasSourceTreasure(index))return 0;
-    if(hasSourceBoss(index))return 25;
+    if(hasSourceBoss(index))return bossRewardItem;
     if(powerupReview&&powerupReview->treasureRoom==index&&powerupReview->collected<4)
         return PowerupReviewState::Offerings[size_t(powerupReview->collected)];
     if(activeReviewRoom==index&&activeReviewCollected<2)return activeReviewCollected?58:45;
@@ -501,7 +507,7 @@ bool Simulation::collectTreasureUpgrade() {
         progress.activePickupContact=true;
     }
     checkpointNeeded=true;
-    announce(definition->name+" / "+(activeCapacity(item)?"ACTIVE ITEM":(item.number==8||item.number==10)?"FAMILIAR":item.number==25?"HEALTH UP":item.number==4?"DAMAGE UP":"TEARS UP"),3);
+    announce(definition->name+" / "+(activeCapacity(item)?"ACTIVE ITEM":(item.number==8||item.number==10)?"FAMILIAR":item.number==25?"HEALTH UP":item.number==255?"TEARS / SHOT SPEED UP":item.number==4?"DAMAGE UP":"TEARS UP"),3);
     return true;
 }
 bool Simulation::rewardAvailable(int index) const {
@@ -794,10 +800,14 @@ bool Simulation::enterSourceRoomReview(int variant) {
         if(layout.sourceHeartTemplate!=variant&&layout.sourceCombatTemplate!=variant)continue;
         // A known combat-record heart layer at a protected objective/key site
         // does not contain the complete combat record and cannot review it.
-        if(sourceCombatRockRoom(variant)&&layout.sourceCombatTemplate!=variant)continue;
+        if((variant==FullFlyRoomTemplate||sourcePropRoom(variant)||sourceCombatRockRoom(variant))&&layout.sourceCombatTemplate!=variant)continue;
         if(variant==SourceChestRockRoom&&layout.sourceObstacleTemplate!=variant)continue;
         if((variant==SourceCoinRockRoom||variant==SourceKeyRockRoom||variant==SourceBombRockRoom)&&layout.sourceObstacleTemplate!=variant)continue;
         auto reviewStart=layout.entry;
+        if(variant==PropReviewRoom) {
+            const auto near=sourceHeartCell(layout,6,3);
+            if(!arena.blocked(near,.48f)&&!arena.path(layout.entry,near,.48f).empty())reviewStart=near;
+        }
         if(variant==SourceCoinRockRoom) {
             // Review-only approach keeps the four coins visible at the user's
             // retained zoom, without starting within their collection radius.
@@ -814,7 +824,7 @@ bool Simulation::enterSourceRoomReview(int variant) {
         }
         cancelMove();player.position=reviewStart;
         enterRoom(i);player.aim=layout.exit;
-        announce("ROOM REVIEW / Source "+std::to_string(variant)+" / "+roomName(),6);
+        announce(variant==PropReviewRoom?"FIRE / POOP TEST / Shoot or place dynamite. Fire hurts on touch.":"ROOM REVIEW / Source "+std::to_string(variant)+" / "+roomName(),6);
         return true;
     }
     return false;
@@ -920,21 +930,6 @@ void Simulation::interact() {
         offerReward();
         return;
     }
-    if (legacyObjectives() && !rescued && distance(player.position, arena.miners) < 2.6f) {
-        audioCues.push(AudioCueKind::Pickup, arena.miners);
-        rescued = true;
-        checkpointNeeded = true;
-        announce("Six miners escape through the old shaft. Mary will remember.", 5);
-        return;
-    }
-    if (legacyObjectives() && !altarDestroyed && distance(player.position, arena.altar) < 2.6f) {
-        audioCues.push(AudioCueKind::Explosion, arena.altar);
-        altarDestroyed = true;
-        checkpointNeeded = true;
-        effectVisual(arena.altar, 3, 0, 0.8f);
-        announce("The altar breaks. Something loses your scent.", 5);
-        return;
-    }
     if (canUseFloorExit() && distance(player.position, arena.exit) < 2.8f) {
         if(lastFloor())finished=true;
         else floorExitRequested=true;
@@ -971,9 +966,7 @@ RunSummary Simulation::summary() const {
     s.expedition = surveyTutorial?SurveyExpeditionTitle:testimony()?RourkeExpeditionTitle:missionTheme(arena.theme).title;
     s.startingContext = CampaignStore::worldContext(startingWorld_);
     if(powerupReview)s.startingContext+=" / PW-C01 CATEGORY REVIEW: staged test offerings and direct travel";
-    s.rescued = legacyObjectives()&&rescued;
-    s.altarDestroyed = legacyObjectives()&&altarDestroyed;
-    s.bossKilled = legacyObjectives()&&bossKilled&&(lastFloor()||debugVictory_);
+    s.bossKilled = !surveyTutorial&&!testimony()&&bossKilled&&(lastFloor()||debugVictory_);
     s.surveyRecovered = surveyTutorial&&surveyRecovered;
     s.stats = stats;
     s.items = items;
@@ -1060,6 +1053,7 @@ void Simulation::createProjectile(const Event &event) {
     p.gravity=event.projectileGravity;p.blastRadius=event.projectileBlastRadius;p.blastDamage=event.projectileBlastDamage;
     p.flightRetention=event.projectileFlightRetention;p.blastPlayerDamage=event.projectileBlastPlayerDamage;
     if(event.pooterFlight)p.pooterFlight.emplace();
+    p.fullFlyDeathShot=event.fullFlyDeathShot;
     p.sourceTimeScale=std::isfinite(event.projectileTimeScale)?std::clamp(event.projectileTimeScale,.05f,1.f):1;
     p.fireWave=event.fireWave;
     p.sourceBurst=event.projectileBurst;
@@ -1275,6 +1269,12 @@ void Simulation::process(const Event &e) {
                     child.alive=false;
             }
             if(target->duke)dukeDeath(*target,e.debugExecution);
+            if(target->monster==monsterId(249)&&!e.debugExecution) {
+                if(!target->buzz)target->buzz.emplace();
+                target->buzz->fullFlyDeathPending=true;target->buzz->fullFlyDeathIndex=0;
+                target->buzz->fullFlyDeathSpeed=fullFlyTuning.shotSpeed;
+                flushFullFlyDeath(*target);
+            }
             if(content->deathBlast(target->monster)&&!e.debugExecution) {
                 target->deathBlastPending=true;queueDeathBlast(*target);
             }
@@ -1922,6 +1922,7 @@ void Simulation::step(const Input &input, float dt) {
     updateTrinkets(dt);
     updateOrdinaryBombs(dt);
     updateChestSupplies(dt);
+    deliverPropRewards();
     updateChests(dt);
     updateHaloOfFlies(dt);
     updateBrotherBobby(input,dt);
@@ -1965,6 +1966,7 @@ void Simulation::step(const Input &input, float dt) {
     // projectile ownership must survive death and inactive-room round trips.
     std::erase_if(enemies, [this](const Enemy &e) {
         if(e.duke&&(e.duke->deathPending||!e.duke->pending.empty()))return false;
+        if(e.buzz&&e.buzz->fullFlyDeathPending)return false;
         if(e.championDeathPending||e.chargeDeathPending||(e.creature&&e.creature->deathPending))return false;
         if(e.charmContact&&e.charmContact->pending)return false;
         if(e.headShooter&&!e.headShooter->pendingShots.empty())return false;
@@ -1982,7 +1984,7 @@ void Simulation::step(const Input &input, float dt) {
         return;
     if (!roomClear && roomThreats() == 0 && std::none_of(enemies.begin(),enemies.end(),[](const Enemy &e){return e.championDeathPending||e.chargeDeathPending||(e.creature&&e.creature->deathPending);}) && queue_.empty() && pendingMonsters_.empty()&&!environmentActionsPending()&&
         std::none_of(projectiles.begin(),projectiles.end(),[](const auto &p){return !p.cancelled&&p.hostile&&p.flightRetention>0;})&&
-        std::none_of(enemies.begin(),enemies.end(),[](const auto &e){return e.deathBlastPending||(e.duke&&(e.duke->deathPending||!e.duke->pending.empty()))||(e.headShooter&&!e.headShooter->pendingShots.empty())||(e.leper&&e.leper->pendingCreep)||(e.leperFlesh&&!e.leperFlesh->pendingShots.empty())||(e.headless&&!e.headless->pendingShots.empty())||(e.faceless&&!e.faceless->pendingShots.empty())||(e.danny&&!e.danny->pendingShots.empty())||(e.hardy&&!e.hardy->pendingShots.empty())||(e.slide&&!e.slide->deathShot.empty())||(e.maw&&e.maw->deathPending)||(e.spitty&&e.spitty->deathPending)||(e.linkedHead&&e.linkedHead->deathPending)||(e.landingCreep&&!e.landingCreep->pending.empty())||(e.knight&&e.knight->pendingImpact);})&&
+        std::none_of(enemies.begin(),enemies.end(),[](const auto &e){return (e.buzz&&e.buzz->fullFlyDeathPending)||e.deathBlastPending||(e.duke&&(e.duke->deathPending||!e.duke->pending.empty()))||(e.headShooter&&!e.headShooter->pendingShots.empty())||(e.leper&&e.leper->pendingCreep)||(e.leperFlesh&&!e.leperFlesh->pendingShots.empty())||(e.headless&&!e.headless->pendingShots.empty())||(e.faceless&&!e.faceless->pendingShots.empty())||(e.danny&&!e.danny->pendingShots.empty())||(e.hardy&&!e.hardy->pendingShots.empty())||(e.slide&&!e.slide->deathShot.empty())||(e.maw&&e.maw->deathPending)||(e.spitty&&e.spitty->deathPending)||(e.linkedHead&&e.linkedHead->deathPending)||(e.landingCreep&&!e.landingCreep->pending.empty())||(e.knight&&e.knight->pendingImpact);})&&
         (!rooms[size_t(room)].plateObjective||platesComplete()))
         clearRoom();
 }
