@@ -43,7 +43,12 @@ inline int sourceTwoCollectibleChoice(uint32_t seed,int first,int second) {
     const float draw=float(state)*0x1.fffffcp-33f*2.f;
     return draw<1.f?first:draw<2.f?second:0;
 }
-inline int sourceShopCollectibleChoice(uint32_t seed) {return sourceTwoCollectibleChoice(seed,64,250);}
+inline int sourceShopCollectibleChoice(uint32_t seed,bool includePurse=false) {
+    if(!includePurse)return sourceTwoCollectibleChoice(seed,64,250);
+    uint32_t state=seed?seed:1;state^=state>>1;state^=state<<11;state^=state>>6;
+    const float draw=float(state)*0x1.fffffcp-33f*3.f;
+    return draw<1?64:draw<2?195:draw<3?250:0;
+}
 inline uint32_t canyonShopCollectibleSeed(uint64_t floorSeed) {
     uint64_t mixed=floorSeed^0x4954454dULL;
     mixed=(mixed^(mixed>>30))*0xbf58476d1ce4e5b9ULL;

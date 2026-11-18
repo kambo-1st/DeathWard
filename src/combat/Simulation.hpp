@@ -1,3 +1,4 @@
+#include "combat/Pills.hpp"
 #pragma once
 #include "combat/Monstro.hpp"
 #include "combat/Duke.hpp"
@@ -920,7 +921,7 @@ struct Input {
     std::optional<Vector3> moveTarget;
     std::optional<std::pair<int, int>> doorTarget;
     std::optional<Vector3> dynamiteTarget;
-    bool placeDynamite = false, useActive = false, dropTrinket = false;
+    bool placeDynamite = false, useActive = false, dropTrinket = false, usePill = false, dropPill = false;
     bool fire = false, dodge = false, interact = false, standStill = false;
 };
 struct EncounterPlan {
@@ -1196,6 +1197,15 @@ class Simulation {
     bool beginPowerupReview();
     bool beginTrinketReview();
     bool visitPowerupReviewEncounter(bool bossRoom=false);
+    PillTuning pillTuning{};
+    PillState pills{};
+    std::vector<PillPickup> pillPickups;
+    std::vector<PendingPursePill> pendingPursePills;
+    bool spawnPill(Vector3 at,int color,uint32_t seed,bool idle=false);
+    bool usePill();
+    bool dropPill();
+    int resolvedPillEffect(int color) const;
+    std::string heldPillName() const;
     TrinketTuning trinkets{};
     std::optional<ItemKey> heldTrinket;
     bool dropTrinket();
@@ -1789,6 +1799,11 @@ class Simulation {
     double haloPhase_=0;
     void updateBrotherBobby(const Input &input,float dt);
     float brotherBobbyClock_=0;
+    uint32_t purseRng_=1;
+    bool pillUseHeld_=false,pillDropHeld_=false;
+    void queuePursePills();
+    void deliverPursePills();
+    void updatePills(float dt);
     bool activeInputHeld_=false, trinketInputHeld_=false;
     void updateTrinkets(float dt);
     std::set<int> activeChargeClears_; // Floor-local ledger survives testing regeneration.

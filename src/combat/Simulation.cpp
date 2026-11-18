@@ -49,6 +49,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
     if(account!=WitnessAccount::None&&account!=WitnessAccount::Rourke)
         throw std::invalid_argument("This testimony has not been authored yet.");
     if(treasureCollectiblePool<0||treasureCollectiblePool>7)throw std::invalid_argument("Invalid treasure pool");
+    pills=PillState(expedition.seed);purseRng_=uint32_t(expedition.seed^0x434f494e50555253ULL)|1U;
     coinClearRewards=requestedCoins;
     surveyTutorial=tutorial;
     rooms.resize(arena.rooms.size());
@@ -124,7 +125,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     const int treasureChoice=treasurePool.value_or(treasureCollectiblePool);
     if(treasureChoice<0||treasureChoice>7)throw std::invalid_argument("Invalid treasure pool");
     const int pool=collectiblePool.value_or(shopCollectiblePool);
-    if(pool<0||pool>2)throw std::invalid_argument("Invalid shop collectible pool");
+    if(pool<0||pool>3)throw std::invalid_argument("Invalid shop collectible pool");
     const bool locks=roomLocks.value_or(sourceRoomLocks);
     const bool enabled=sourceRoom.value_or(sourceCombatRoom);
     const int heartMode=heartLayouts.value_or(roomHeartLayouts);
@@ -132,6 +133,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     if(!canResizeRooms())throw std::runtime_error("No floor to resize");
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
                     expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice,boss,flies,seededChoice,rewardChoice,propChoice);
+    next.pills=pills;next.pillTuning=pillTuning;next.purseRng_=purseRng_;next.pillUseHeld_=pillUseHeld_;next.pillDropHeld_=pillDropHeld_;
     next.momsEyeChanceMultiplier=momsEyeChanceMultiplier;next.roundWormTuning=roundWormTuning;next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
@@ -175,6 +177,8 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
         }
     }
     if(!std::isfinite(best))throw std::runtime_error("Resized room has no safe player position");
+    next.pendingPursePills=pendingPursePills;
+    for(auto &pill:next.pendingPursePills){pill.room=std::clamp(pill.room,0,next.arena.roomCount()-1);pill.origin=next.arena.rooms[size_t(pill.room)].center;}
     next.player=player;next.player.position=position;next.player.aim=add(position,sub(player.aim,player.position));
     next.redHeartAppearanceSpeed=redHeartAppearanceSpeed;
     next.enterRoom(targetRoom);
@@ -212,6 +216,7 @@ bool Simulation::advanceFloor() {
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
                     expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool,monstroTuning,dukeTuning,seededBosses,bossRewardItem,roomProps);
+    next.pills=pills;next.pillTuning=pillTuning;next.purseRng_=purseRng_;next.pillUseHeld_=pillUseHeld_;next.pillDropHeld_=pillDropHeld_;
     next.momsEyeChanceMultiplier=momsEyeChanceMultiplier;next.roundWormTuning=roundWormTuning;next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
@@ -328,6 +333,7 @@ void Simulation::grant(const ItemKey &item) {
         activeItem=ActiveItemState{item,activeCapacity(item)};
     }
     items.push_back(item);
+    if(item==ItemKey{"isaac",ItemKind::Collectible,195})queuePursePills();
     if(item==ItemKey{"isaac",ItemKind::Collectible,25}) {
         auto health=player.sourceHealth();health.addMaxRed(2);health.addRed(4);
         applyPlayerHealth(std::move(health));
@@ -434,9 +440,14 @@ bool Simulation::hasSourceTreasure(int index) const {
 }
 SourcePlayerStats Simulation::effectivePlayerStats() const {
     auto result=player.attributes;
+    const auto &p=pills.consumed;const float strength=pillTuning.statStrength;
+    if(strength>0&&(p[13]||p[14]))result.speed=std::clamp(result.speed+(.15f*p[14]-.12f*p[13])*strength,.1f,2.f);
+    if(strength>0&&(p[11]||p[12]))result.rangeTiles=std::max(1.f,result.rangeTiles+(1.25f*p[12]-p[11])*strength);
+    if(strength>0&&(p[47]||p[48]))result.shotSpeed=std::clamp(result.shotSpeed+.15f*(p[48]-p[47])*strength,.6f,2.f);
+    result.luck+=(p[18]-p[17])*strength;
     result.damage=cricketHeadDamage(result.damage,itemStacks({"isaac",ItemKind::Collectible,4}),cricketHeadStrength);
     result.tearsPerSecond=ordinaryItemTears(result.tearsPerSecond,.7f*float(itemStacks({"isaac",ItemKind::Collectible,1}))*sadOnionStrength+
-        .5f*float(itemStacks({"isaac",ItemKind::Collectible,255}))*screw.tearsStrength);
+        .5f*float(itemStacks({"isaac",ItemKind::Collectible,255}))*screw.tearsStrength+(.5f*p[16]-.4f*p[15])*strength);
     result.tearsPerSecond=cancerTears(result.tearsPerSecond,heldTrinket==CancerKey,trinkets.cancerStrength);
     result.shotSpeed=screwShotSpeed(result.shotSpeed,itemStacks({"isaac",ItemKind::Collectible,255}),screw.shotSpeedStrength);
     result.shotSpeed=whipShotSpeed(result.shotSpeed,heldTrinket==WhipWormKey,trinkets.whipStrength);
@@ -1371,7 +1382,7 @@ void Simulation::collectChains() {
     }
 }
 void Simulation::updatePlayer(const Input &input, float dt) {
-    const float walkSpeed = player.walkingSpeed();
+    const float walkSpeed = WalkingPace(Player::AcceptedWalkingPace).worldSpeed(effectivePlayerStats());
     const auto shooting = canonicalShooting ? AcceptedPlayerShooting.resolve(effectivePlayerStats())
                                            : ResolvedPlayerShooting{0,0,0};
     const Vector3 previousPosition = player.position;
@@ -1910,6 +1921,9 @@ void Simulation::updateProjectiles(float dt) {
 void Simulation::step(const Input &input, float dt) {
     if (rewardOpen || shopOpen || letterOpen || storyOpen!=StoryRoom::None || floorExitRequested || finished || dead)
         return;
+    const bool takePill=input.usePill&&!pillUseHeld_;pillUseHeld_=input.usePill;
+    const bool leavePill=input.dropPill&&!pillDropHeld_;pillDropHeld_=input.dropPill;
+    if(leavePill)dropPill();else if(takePill)usePill();
     const bool activate=input.useActive&&!activeInputHeld_;activeInputHeld_=input.useActive;
     if(activate)useActiveItem();
     const bool drop=input.dropTrinket&&!trinketInputHeld_;trinketInputHeld_=input.dropTrinket;
@@ -1945,6 +1959,7 @@ void Simulation::step(const Input &input, float dt) {
     updateHeartPickups(dt);
     updateOrdinaryKeys(dt);
     updateTrinkets(dt);
+    updatePills(dt);
     updateOrdinaryBombs(dt);
     updateChestSupplies(dt);
     deliverPropRewards();

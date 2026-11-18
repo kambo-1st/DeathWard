@@ -1,0 +1,211 @@
+{
+  "result": "developer-checks-pass",
+  "human_acceptance": "scoped-accepted; see human-acceptance.json",
+  "accepted_previous_commit": "96b32557",
+  "source_version": "Repentance1.7.9b",
+  "native_cases": {
+    "colors": 515,
+    "purse": 8,
+    "stats": 40,
+    "health": 60
+  },
+  "animations": 13,
+  "source_timing": {
+    "appear": 36,
+    "drop": 26,
+    "collect": 15,
+    "hz": 30
+  },
+  "generated_sizes": [
+    {
+      "scale": 0.75,
+      "minimum": 5,
+      "maximum": 5
+    },
+    {
+      "scale": 0.95,
+      "minimum": 7,
+      "maximum": 9
+    },
+    {
+      "scale": 1.5,
+      "minimum": 10,
+      "maximum": 10
+    }
+  ],
+  "actual_game_review": true,
+  "death_retry": true,
+  "preset_schema": 53,
+  "fresh_cli_cases": 3,
+  "regression_suites": 7,
+  "corrected_findings": [
+    "Pill notice overlapped HUD: moved above held slot",
+    "Duplicate shooting navigation entry trapped keyboard focus: removed duplicate",
+    "Historical shop assertion assumed only two pool entries: expanded to three supported entries",
+    "Historical shop negative-preset fixture used obsolete catalog hash: changed to current tested hash",
+    "Timing unit check now advances exact per-frame partitions instead of one imprecise large float duration"
+  ],
+  "mechanics_fingerprint": "983f9891046b7e94",
+  "presets": [
+    {
+      "path": "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+      "sha256": "22e143a736697ccc780ab31bde3c3a1f7ac0d88392e9bf7aa45055ccd3895604",
+      "unchanged": true
+    },
+    {
+      "path": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a7/campaign.save.balance/export.json",
+      "sha256": "4b80348d2e4a1550fd0dd0f7be50cd6743fd6c6b3a87f49e2398c004ff253a4a",
+      "unchanged": true
+    }
+  ],
+  "unfinished": [
+    "D14a.8 checkpoint commit",
+    "Full native effect pool, unusual/horse/golden pills, use/cache/modifiers/factory/physics/RNG",
+    "Temperance15 and machine; full recorded shop layout",
+    "Remaining special rooms and complete recorded-floor allocation/review",
+    "Full expedition save/resume",
+    "Deferred pixel/performance work"
+  ],
+  "interactive": {
+    "pid": 299607,
+    "args": [
+      "stdbuf",
+      "-oL",
+      "-eL",
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--expedition",
+      "--seed",
+      "2",
+      "--review-shop-stock",
+      "--mute",
+      "--balance-preset",
+      "/home/kambo/.local/share/deathward/reviews/first-floor-d14a8/campaign.save.balance/export.json",
+      "--save",
+      "/home/kambo/.local/share/deathward/reviews/first-floor-d14a8/campaign.save"
+    ],
+    "started_at_utc": "2026-11-18T22:14:50.438028+00:00",
+    "preset_sha256": "973642defa556c5eec3f2b8ae03415a715fb5a1b7b44af41b3ebf132b54bd028",
+    "god_mode": false,
+    "review_overrides": [
+      "20 test coins",
+      "four red half-hearts"
+    ],
+    "displayed_room": 7,
+    "selection": "Natural restricted shop pool; DW seed2; purse195 costs15 coins",
+    "retained_user_settings": {
+      "pills": {
+        "purse_count": 4,
+        "stat_strength": 1,
+        "binding": 0
+      },
+      "moms_eye_chance_multiplier": 1,
+      "attack_fly_movement_multiplier": 1,
+      "frowning_movement_multiplier": 1,
+      "round_worm": {
+        "cycle_speed": 1,
+        "shot_speed": 1
+      },
+      "full_fly": {
+        "movement": 1,
+        "shot_speed": 1
+      },
+      "room_props": {
+        "layouts": 1,
+        "fire_damage_half_hearts": 1,
+        "rewards": true
+      },
+      "boss_reward_item": 255,
+      "screw": {
+        "tears_strength": 1,
+        "shot_speed_strength": 1
+      },
+      "seeded_bosses": false,
+      "duke": {
+        "enabled": true,
+        "health": 1,
+        "movement": 1,
+        "fly_speed": 1
+      },
+      "monstro": {
+        "enabled": true,
+        "health": 1,
+        "movement": 1,
+        "shot_speed": 1
+      },
+      "book_of_shadows": {
+        "duration": 10,
+        "recharge": 1
+      },
+      "halo_of_flies": {
+        "orbit_speed": 1,
+        "orbit_radius": 1,
+        "contact_radius": 1
+      },
+      "trinkets": {
+        "cancer_strength": 1,
+        "clear_rewards": true,
+        "binding": 0,
+        "whip_strength": 1
+      },
+      "yum_heart": {
+        "healing": 2,
+        "recharge": 1,
+        "binding": 0
+      },
+      "brother_bobby": {
+        "movement": 1,
+        "interval": 1,
+        "damage": 1,
+        "shot_speed": 1
+      },
+      "player_speed": 1.1,
+      "room_size_scale": 1,
+      "room_min_half_tiles": 7,
+      "room_max_half_tiles": 9,
+      "route_length_scale": 0.26,
+      "default_zoom_percent": 165,
+      "tears_per_second": 1.9272734,
+      "shot_speed": 1.05,
+      "range_tiles": 6.5,
+      "gaper_movement_multiplier": 1,
+      "spider_movement_multiplier": 1,
+      "pooter_movement_multiplier": 1,
+      "pooter_shot_speed_multiplier": 1,
+      "pooter_attack_interval_multiplier": 1,
+      "player_damage": 3.5,
+      "regular_health_multiplier": 1,
+      "source_combat_room": true,
+      "red_heart_clear_rewards": true,
+      "player_luck": 0,
+      "red_heart_appearance_speed": 1,
+      "room_heart_layouts": 1,
+      "coin_clear_rewards": true,
+      "bomb_clear_rewards": true,
+      "key_clear_rewards": true,
+      "chest_clear_rewards": true,
+      "inventory_bombs": {
+        "fuse_multiplier": 1,
+        "radius_multiplier": 1,
+        "damage": 100,
+        "self_damage_half_hearts": -1,
+        "rocks_block_blast": false
+      },
+      "keyed_door_cost": 1,
+      "source_room_locks": true,
+      "source_treasure_upgrade": true,
+      "sad_onion_strength": 1,
+      "source_shop_heart": true,
+      "shop_heart_price": 3,
+      "source_shop_key": true,
+      "shop_key_price": 5,
+      "source_shop_variation": true,
+      "steam_sale_discounts": true,
+      "shop_soul_heart_price": 5,
+      "shop_bomb_price": 5,
+      "shop_upgrade_price": 15,
+      "shop_collectible_pool": 1,
+      "treasure_collectible_pool": 1,
+      "cricket_head_strength": 1
+    }
+  }
+}

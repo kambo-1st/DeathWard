@@ -1,0 +1,975 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "scope": "Highest available DLC override before base animation metadata. No sprite artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/005.071_Pill Blue-Blue.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a8-coin-purse/animations/005.071_Pill Blue-Blue.anm2",
+      "sha256": "96a282122ad6bf5a20faef3bf68508b549fd908822f7556b0f1cce73773ab7e9",
+      "checksum": "0x5f08e8f5",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/21/2015 10:54:52 AM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "15",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Sparkle",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUD",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUDSmall",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/005.072_Pill White-Blue.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a8-coin-purse/animations/005.072_Pill White-Blue.anm2",
+      "sha256": "7e6c81f14ef574f662e6d5a0676a8f2fbb24a7c0e152dadb88f0becb13edbb1b",
+      "checksum": "0x2c3607b3",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/21/2015 10:54:52 AM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "15",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Sparkle",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUD",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUDSmall",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/005.073_Pill Orange-Orange.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a8-coin-purse/animations/005.073_Pill Orange-Orange.anm2",
+      "sha256": "bb5dd312ba62f26b56d6143ded360a48572b0d321960298f4a7fb025fb3d3a77",
+      "checksum": "0xfaa49533",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/21/2015 10:54:52 AM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "15",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Sparkle",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUD",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUDSmall",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/005.074_Pill White-White.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a8-coin-purse/animations/005.074_Pill White-White.anm2",
+      "sha256": "6662d885433c758108096a72825f29cb928230c393e5ef7a859a5115783ec22d",
+      "checksum": "0xce72abfd",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/21/2015 10:54:52 AM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "15",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Sparkle",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUD",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUDSmall",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/005.075_Pill Dots-Red.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a8-coin-purse/animations/005.075_Pill Dots-Red.anm2",
+      "sha256": "2455b71cb036e75a413b4ad8a35bbb680f7f8b58cf5771c15cc0a259af46e157",
+      "checksum": "0xf68a5c40",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/21/2015 10:54:52 AM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "15",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Sparkle",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUD",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUDSmall",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/005.076_Pill Pink-Red.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a8-coin-purse/animations/005.076_Pill Pink-Red.anm2",
+      "sha256": "1b0a2722ef08aad2f59996813d9df279fd6dac7e0c9462a519b81e435b4a4beb",
+      "checksum": "0xae39b122",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/21/2015 10:54:52 AM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "15",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Sparkle",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUD",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUDSmall",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/005.077_Pill Blue-Cadetblue.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a8-coin-purse/animations/005.077_Pill Blue-Cadetblue.anm2",
+      "sha256": "d4feb1857d6789fa83da23761212bcc2fda272c9632759df3411380984f7892a",
+      "checksum": "0xbf036132",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/21/2015 10:54:52 AM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "15",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Sparkle",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUD",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUDSmall",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/005.078_Pill Yellow-Orange.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a8-coin-purse/animations/005.078_Pill Yellow-Orange.anm2",
+      "sha256": "f73c3b124f4c862e14d82c3a5425db3e52474a5397c87207fd086097ec158665",
+      "checksum": "0x5a5dda56",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/21/2015 10:54:52 AM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "15",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Sparkle",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUD",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUDSmall",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/005.079_Pill Dots-White.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a8-coin-purse/animations/005.079_Pill Dots-White.anm2",
+      "sha256": "807e3e3922edd9b32ff2f06c4b1b30b37f670a2a004eedeb5438da938422cee6",
+      "checksum": "0x84752fbe",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/21/2015 10:54:52 AM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "15",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Sparkle",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUD",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUDSmall",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/005.080_Pill White-Azure.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a8-coin-purse/animations/005.080_Pill White-Azure.anm2",
+      "sha256": "46f1e9a7adfd515b2706c9e44b0a211d52ced2054925d5168020064a84775941",
+      "checksum": "0x13a8c963",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/21/2015 10:54:52 AM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "15",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Sparkle",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUD",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUDSmall",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/005.081_Pill Black-Yellow.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a8-coin-purse/animations/005.081_Pill Black-Yellow.anm2",
+      "sha256": "90484cda25442915b05c96c159af3c5d64ea572056182a45c53e0659296901fb",
+      "checksum": "0xf1816c2e",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/21/2015 10:54:52 AM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "15",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Sparkle",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUD",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUDSmall",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/005.082_Pill White-Black.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a8-coin-purse/animations/005.082_Pill White-Black.anm2",
+      "sha256": "59c13580996b808693c23d477de3301f6568ca171386d520dda7802e29520b22",
+      "checksum": "0xa3bf1ee1",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/21/2015 10:54:52 AM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "15",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Sparkle",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUD",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUDSmall",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/005.083_Pill White-Yellow.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a8-coin-purse/animations/005.083_Pill White-Yellow.anm2",
+      "sha256": "2ad077a73101cf01eae14f4a381f399adb0b3a40eed270ce3f16c34d1f0e63eb",
+      "checksum": "0xa72740c",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/21/2015 10:54:52 AM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "15",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Sparkle",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUD",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUDSmall",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

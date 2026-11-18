@@ -344,7 +344,7 @@ int main(int argc, char **argv) {
                          "Town pack to edit (with --editor)\n  --save PATH          Separate campaign file\n "
                          " --balance-preset PATH  Load and remember player/enemy/view/map settings\n "
                          " --seed NUMBER        Repeatable expedition seed\n "
-                         " --review-shop-stock     Steam Sale stock review: 20 test coins (compatible seed 7)\n"
+                         " --review-shop-stock     Shop stock review: 20 test coins, four red half-hearts\n"
                          " --review-shop-key       Key + heart shop test: 2 red hearts, zero keys, at least 8 coins\n"
                          " --review-shop-purchase  Shop test start: 2 red hearts and at least 3 coins; repeats on retry\n"
                          " --review-actives        Labelled Yum Heart / Book of Shadows swap review\n"

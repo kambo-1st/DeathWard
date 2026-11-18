@@ -1,0 +1,96 @@
+{
+  "version": "Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "item": {
+    "description": "#MOMS_COIN_PURSE_DESCRIPTION",
+    "gfx": "Collectibles_195_MomsCoinPurse.png",
+    "id": "195",
+    "name": "#MOMS_COIN_PURSE_NAME"
+  },
+  "shop_entry": {
+    "Id": "195",
+    "Weight": "1",
+    "DecreaseBy": "1",
+    "RemoveOn": "0.1"
+  },
+  "color_cases": 515,
+  "purse_cases": 8,
+  "stat_cases": 40,
+  "health_cases": 60,
+  "windows": [
+    {
+      "name": "purse-dispatch",
+      "start": "0x72b944",
+      "end": "0x72b995",
+      "sha256": "bc28ddc9d53d1ceaca62f6e80b12c33b1715097750062f451194f43bb8e2eb37"
+    },
+    {
+      "name": "purse-requests",
+      "start": "0x72bb2b",
+      "end": "0x72bbda",
+      "sha256": "8e0fb6c8b079a4897a6bae7e463c4193e851ae4053db59610a4a7b49d342461c"
+    },
+    {
+      "name": "pill-color",
+      "start": "0x702590",
+      "end": "0x702704",
+      "sha256": "35da169dddf635121c6f1a836364b2f0a27f53a833b8bb582a521875e8eeafe6"
+    },
+    {
+      "name": "low-health-conversion",
+      "start": "0x702888",
+      "end": "0x7028b5",
+      "sha256": "3d5dfe59b1558820930a59cf9996a29b448b5ac91b4a16ec39f62d7e47168285"
+    },
+    {
+      "name": "health-down-safety",
+      "start": "0x7876f0",
+      "end": "0x78778f",
+      "sha256": "73d2f7419c132ed943a6219920be730ea2980d49cfeac90d709022f4825267b6"
+    },
+    {
+      "name": "health-effects",
+      "start": "0x788353",
+      "end": "0x78851e",
+      "sha256": "b3a0afb34218a1160f7eeddf01da8e675fdbb4ce6eb384825d50aef9f6ee7651"
+    },
+    {
+      "name": "tears-counter",
+      "start": "0x72f8d8",
+      "end": "0x72f922",
+      "sha256": "70e5674bc3f7cea8466e4f9275026780c4f85a47a32a88540e7cf3fb4b7a515d"
+    },
+    {
+      "name": "range-counter",
+      "start": "0x732e47",
+      "end": "0x732e93",
+      "sha256": "9fd054bb2c0d79547d6413e674499faaf48f3adc0d6a18f5120f87efd0dc5b30"
+    },
+    {
+      "name": "speed-counter",
+      "start": "0x7339e7",
+      "end": "0x733a33",
+      "sha256": "463de3ef00fb7fa488a7c6f57b4b32b2a99d6d8874a1e94da6a964e32702183d"
+    },
+    {
+      "name": "luck-counter",
+      "start": "0x739bd1",
+      "end": "0x739c09",
+      "sha256": "9439c74dd9b63c93953322bfe6756addb9d2aeffbf796b47b968261f36c9a199"
+    },
+    {
+      "name": "use-identification",
+      "start": "0x7878c5",
+      "end": "0x7878cd",
+      "sha256": "04c96089c4ba77ea732360d317dc15ff3f22332d93999202f73acb4f55364aa0"
+    },
+    {
+      "name": "use-counter",
+      "start": "0x787f26",
+      "end": "0x787f47",
+      "sha256": "bbd43a4e2e079d83c2f5837597af59d58d55a213db266e396512cdc95c45b918"
+    }
+  ],
+  "scope": "Purse new-pickup gate/count/seed requests with world position and actor factories hosted; original color RNG with gold/horse gates off and absent mod callback; original stat-cache slices with supplied counters and other modifiers absent, before final cache callbacks/caps; original ordinary health APIs and low-capacity Health Down gate. Not native pool generation, full use wrapper, pickup factory, actors, scheduler or RNG order.",
+  "full_native_acceptance": false
+}

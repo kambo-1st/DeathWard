@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 43: source_shop_collectibles
+1/2 Test #43: source_shop_collectibles .........   Passed    7.41 sec
+    Start 44: source_shop_stock
+2/2 Test #44: source_shop_stock ................   Passed   30.41 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =  37.83 sec

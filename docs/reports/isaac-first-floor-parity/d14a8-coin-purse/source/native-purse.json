@@ -1,0 +1,90 @@
+[
+  {
+    "seed": 1,
+    "new_pickup": false,
+    "spawn_seeds": [],
+    "ordinals": []
+  },
+  {
+    "seed": 1,
+    "new_pickup": true,
+    "spawn_seeds": [
+      2081,
+      6292001,
+      2185800989,
+      2787287581
+    ],
+    "ordinals": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "seed": 42,
+    "new_pickup": false,
+    "spawn_seeds": [],
+    "ordinals": []
+  },
+  {
+    "seed": 42,
+    "new_pickup": true,
+    "spawn_seeds": [
+      131039,
+      136348208,
+      2281776420,
+      3267033000
+    ],
+    "ordinals": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "seed": 12345,
+    "new_pickup": false,
+    "spawn_seeds": [],
+    "ordinals": []
+  },
+  {
+    "seed": 12345,
+    "new_pickup": true,
+    "spawn_seeds": [
+      21234725,
+      823189711,
+      4004095978,
+      1939143215
+    ],
+    "ordinals": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "seed": 4294967295,
+    "new_pickup": false,
+    "spawn_seeds": [],
+    "ordinals": []
+  },
+  {
+    "seed": 4294967295,
+    "new_pickup": true,
+    "spawn_seeds": [
+      2181038080,
+      3222011904,
+      4090112000,
+      4026532080
+    ],
+    "ordinals": [
+      0,
+      1,
+      2,
+      3
+    ]
+  }
+]

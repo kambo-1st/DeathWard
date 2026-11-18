@@ -12,11 +12,12 @@ inline float sourceOrdinaryTears(float tearStat) {
     return 30.f/(delay+1.f);
 }
 inline float ordinaryItemTears(float baseRate,float contribution) {
-    if(!std::isfinite(baseRate)||baseRate<0||!std::isfinite(contribution)||contribution<0)
+    if(!std::isfinite(baseRate)||baseRate<0||!std::isfinite(contribution))
         throw std::invalid_argument("Invalid ordinary Tears base or contribution");
     // Preserve disabled fire and custom rates beyond the ordinary source cap.
     // No-owned-item evaluation must leave the accepted base bit-for-bit intact.
-    if(contribution==0||baseRate==0||baseRate>=5)return baseRate;
+    if(contribution==0||baseRate==0||(baseRate>=5&&contribution>0))return baseRate;
+    const float customExcess=std::max(0.f,baseRate-5.f);baseRate=std::min(baseRate,5.f);
     const float delay=30.f/baseRate-1.f;
     float raw;
     if(baseRate>=30.f/11.f) {
@@ -27,7 +28,7 @@ inline float ordinaryItemTears(float baseRate,float contribution) {
         const float root=(-1.3f+std::sqrt(1.69f-4.f*q))*.5f;
         raw=(root*root-1.f)/1.3f;
     }
-    return sourceOrdinaryTears(raw+contribution);
+    return sourceOrdinaryTears(raw+contribution)+customExcess;
 }
 inline float sadOnionTears(float baseRate,std::size_t copies,float strength=1) {
     if(!std::isfinite(strength)||strength<0||strength>2)throw std::invalid_argument("Invalid Sad Onion strength");

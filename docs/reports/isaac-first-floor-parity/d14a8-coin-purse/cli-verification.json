@@ -1,0 +1,80 @@
+{
+  "result": "pass",
+  "cases": [
+    {
+      "case": "schema48-original",
+      "result": "pass",
+      "schema": 48,
+      "args": [
+        "stdbuf",
+        "-oL",
+        "-eL",
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "2",
+        "--review-shop-stock",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+        "--save",
+        "/tmp/deathward-d14a8-cli-xivuvjx4/campaign.save"
+      ],
+      "balance": "BALANCE duke=0 duke_hp=1 duke_movement=1 duke_flies=1 monstro=1 boss_policy=fixed opening_boss=20 boss_hp=1 boss_movement=1 boss_shots=1 speed=1.1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=1.05 range=6.5 purse_count=4 pill_strength=1 pill_key=F moms_eye_chance=1 attack_fly_movement=1 frowning_movement=1 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 whip_strength=1 cancer_strength=1 trinket_rewards=1 trinket_key=U book_duration=10 book_recharge=1 yum_healing=2 yum_recharge=1 active_key=C halo_orbit_speed=1 halo_orbit_radius=1 halo_contact_radius=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 boss_reward=25 screw_tears=1 round_worm_cycle=1 round_worm_shots=1 full_fly_movement=1 full_fly_shots=1 screw_shots=1 revision=7519fe9252d0482a profile=custom",
+      "review": "SHOP_STOCK_REVIEW room=7 upgrade_item=195 upgrade_slot=1 key_slot=-1 bomb_slot=-1 heart_kind=red heart_slot=0 sale_slot=-1 coins=20 price=15 god=0",
+      "preset_sha256": "22e143a736697ccc780ab31bde3c3a1f7ac0d88392e9bf7aa45055ccd3895604",
+      "preset_unchanged": true,
+      "termination": "Owned validation process terminated after startup assertions; not a gameplay shutdown/resume check"
+    },
+    {
+      "case": "schema52-latest",
+      "result": "pass",
+      "schema": 52,
+      "args": [
+        "stdbuf",
+        "-oL",
+        "-eL",
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "2",
+        "--review-shop-stock",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/.local/share/deathward/reviews/first-floor-d14a7/campaign.save.balance/export.json",
+        "--save",
+        "/tmp/deathward-d14a8-cli-d9o838a9/campaign.save"
+      ],
+      "balance": "BALANCE duke=1 duke_hp=1 duke_movement=1 duke_flies=1 monstro=1 boss_policy=fixed opening_boss=67 boss_hp=1 boss_movement=1 boss_shots=1 speed=1.1 room_size=1 routes=0.26 zoom=165 tears=1.92727 shot_speed=1.05 range=6.5 purse_count=4 pill_strength=1 pill_key=F moms_eye_chance=1 attack_fly_movement=1 frowning_movement=1 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 whip_strength=1 cancer_strength=1 trinket_rewards=1 trinket_key=U book_duration=10 book_recharge=1 yum_healing=2 yum_recharge=1 active_key=C halo_orbit_speed=1 halo_orbit_radius=1 halo_contact_radius=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 boss_reward=255 screw_tears=1 round_worm_cycle=1 round_worm_shots=1 full_fly_movement=1 full_fly_shots=1 screw_shots=1 revision=98129e4e70c3844f profile=custom",
+      "review": "SHOP_STOCK_REVIEW room=7 upgrade_item=195 upgrade_slot=1 key_slot=-1 bomb_slot=-1 heart_kind=red heart_slot=0 sale_slot=-1 coins=20 price=15 god=0",
+      "preset_sha256": "4b80348d2e4a1550fd0dd0f7be50cd6743fd6c6b3a87f49e2398c004ff253a4a",
+      "preset_unchanged": true,
+      "termination": "Owned validation process terminated after startup assertions; not a gameplay shutdown/resume check"
+    },
+    {
+      "case": "schema53-purse",
+      "result": "pass",
+      "schema": 53,
+      "args": [
+        "stdbuf",
+        "-oL",
+        "-eL",
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "2",
+        "--review-shop-stock",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a8-coin-purse/review-preset.json",
+        "--save",
+        "/tmp/deathward-d14a8-cli-5srjlwi5/campaign.save"
+      ],
+      "balance": "BALANCE duke=1 duke_hp=1 duke_movement=1 duke_flies=1 monstro=1 boss_policy=fixed opening_boss=67 boss_hp=1 boss_movement=1 boss_shots=1 speed=1.1 room_size=1 routes=0.26 zoom=165 tears=1.92727 shot_speed=1.05 range=6.5 purse_count=4 pill_strength=1 pill_key=F moms_eye_chance=1 attack_fly_movement=1 frowning_movement=1 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 whip_strength=1 cancer_strength=1 trinket_rewards=1 trinket_key=U book_duration=10 book_recharge=1 yum_healing=2 yum_recharge=1 active_key=C halo_orbit_speed=1 halo_orbit_radius=1 halo_contact_radius=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 boss_reward=255 screw_tears=1 round_worm_cycle=1 round_worm_shots=1 full_fly_movement=1 full_fly_shots=1 screw_shots=1 revision=98129e4e70c3844f profile=custom",
+      "review": "SHOP_STOCK_REVIEW room=7 upgrade_item=195 upgrade_slot=1 key_slot=-1 bomb_slot=-1 heart_kind=red heart_slot=0 sale_slot=-1 coins=20 price=15 god=0",
+      "preset_sha256": "973642defa556c5eec3f2b8ae03415a715fb5a1b7b44af41b3ebf132b54bd028",
+      "preset_unchanged": true,
+      "termination": "Owned validation process terminated after startup assertions; not a gameplay shutdown/resume check"
+    }
+  ]
+}

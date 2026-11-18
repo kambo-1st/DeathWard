@@ -106,3 +106,7 @@ end
 # D14a.7: ordinary backward-shot passive; no other weapon families enabled.
 item "isaac:collectible:55" "Mom's Eye" "BACKWARD SHOTS" "A chance to fire an extra shot behind you. Luck increases the chance. Extra copies do not stack."
 end
+
+# D14a.8: bounded health/stat pill dependency; no card or machine behavior.
+item "isaac:collectible:195" "Mom's Coin Purse" "FOUR PILLS" "Spawns four random pills. Hold one pill at a time; using it reveals its effect for this expedition."
+end

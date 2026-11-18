@@ -1,0 +1,7 @@
+PASS 515 native colors, 40 stat contributions (explicit adapter caps), 60 health states
+PASS purse capacity/retry, appear/collect timing, unknown/identified, swap/drop rearming, use edge and health safety
+PASS actual speed/shots, signed Tears, owned modifier ordering, live strength and immutable base/waits/projectiles
+PASS schema52/53 migration/roundtrip and invalid export/import
+PASS natural shop seed=2 room=7 size=0.75 range=5-5 purchase, placement, Apply, descent and retry
+PASS natural shop seed=2 room=7 size=0.95 range=7-9 purchase, placement, Apply, descent and retry
+PASS natural shop seed=2 room=7 size=1.5 range=10-10 purchase, placement, Apply, descent and retry

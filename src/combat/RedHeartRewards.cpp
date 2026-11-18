@@ -15,7 +15,7 @@ void Simulation::resolveRedHeartClearAward() {
     // The native descriptor seed mapping is not claimed by this conversion.
     Random seed(seed_^0x4845415254415744ULL^(uint64_t(room+1)*0x9e3779b97f4a7c15ULL));
     RedHeartClearAward result;result.seed=uint32_t(seed.next());if(!result.seed)result.seed=1;
-    result.luck=player.attributes.luck;
+    result.luck=effectivePlayerStats().luck;
     SourceAwardRng rng{result.seed};result.variant=sourceOrdinaryRoomAward(rng,result.luck);
     if(result.variant==10||result.variant==20||result.variant==30||result.variant==40) {
         // Ordinary native spawning draws the pickup init seed after selection

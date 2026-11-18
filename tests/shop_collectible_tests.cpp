@@ -70,15 +70,15 @@ void transactions() {
     std::cout<<"PASS purchases / immutable births / cap / repeat / Apply / next-floor effect\n";
 }
 void layouts() {
-    int count=0;bool sale=false,bogo=false;
-    for(uint64_t seed:{4ULL,7ULL,18ULL,26ULL})for(auto dims:{std::tuple{.75f,5,5},std::tuple{1.1f,7,9},std::tuple{1.5f,10,10}}) {
+    int count=0;bool sale=false,bogo=false,purse=false;
+    for(uint64_t seed:{2ULL,4ULL,7ULL,18ULL,26ULL})for(auto dims:{std::tuple{.75f,5,5},std::tuple{1.1f,7,9},std::tuple{1.5f,10,10}}) {
         const auto [size,low,high]=dims;auto s=make(seed,1,size,low,high);enter(s);
-        check(s.shopVariationActive()&&(s.shopUpgradeItem==64||s.shopUpgradeItem==250),"eligible natural choice");
+        check(s.shopVariationActive()&&(s.shopUpgradeItem==64||s.shopUpgradeItem==195||s.shopUpgradeItem==250),"eligible natural choice");
         auto at=s.shopUpgradePosition();check(!s.arena.blocked(at,.48f)&&!s.arena.path(s.player.position,at,.48f).empty(),"reachable upgrade");
-        sale|=s.shopUpgradeItem==64;bogo|=s.shopUpgradeItem==250;
+        sale|=s.shopUpgradeItem==64;bogo|=s.shopUpgradeItem==250;purse|=s.shopUpgradeItem==195;
         if(size==1.1f)std::cout<<"WITNESS seed="<<seed<<" item="<<s.shopUpgradeItem<<" bomb="<<s.shopBombOffered()<<" room="<<s.room+1<<'\n';++count;
     }
-    check(sale&&bogo,"both natural choices in recorded seeds");std::cout<<"PASS "<<count<<" size/selection cases\n";
+    check(sale&&bogo&&purse,"all three natural choices in recorded seeds");std::cout<<"PASS "<<count<<" size/selection cases\n";
 }
 void presets() {
     const auto root=std::filesystem::path(__FILE__).parent_path().parent_path();

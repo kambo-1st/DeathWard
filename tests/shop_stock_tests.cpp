@@ -161,7 +161,7 @@ void presets() {
         check(p.shopBombPrice==5&&p.defaultZoomPercent==165&&p.playerSpeed==1,"exact old catalog/schema migration retains accepted view/speed");
     }
     BalancePreset valid{1,hash};const auto bytes=valid.json();
-    for(auto [from,to]:{std::pair{"\"shop_upgrade_price\": 15, \"shop_collectible_pool\"","\"shop_upgrade_price\": 15.5, \"shop_collectible_pool\""},std::pair{"\"source_shop_variation\": true","\"source_shop_variation\": 1"},std::pair{"\"shop_bomb_price\": 5, \"shop_upgrade_price\"","\"shop_bomb_price\": 5.5, \"shop_upgrade_price\""},std::pair{"1058a67f0b03cff3","bad-catalog"}}) {
+    for(auto [from,to]:{std::pair{"\"shop_upgrade_price\": 15, \"shop_collectible_pool\"","\"shop_upgrade_price\": 15.5, \"shop_collectible_pool\""},std::pair{"\"source_shop_variation\": true","\"source_shop_variation\": 1"},std::pair{"\"shop_bomb_price\": 5, \"shop_upgrade_price\"","\"shop_bomb_price\": 5.5, \"shop_upgrade_price\""},std::pair{hash.c_str(),"bad-catalog"}}) {
         auto invalid=bytes;const auto at=invalid.find(from);check(at!=std::string::npos,"negative fixture located");invalid.replace(at,std::string(from).size(),to);
         std::ofstream(file)<<invalid;bool rejected=false;try{(void)BalancePreset::load(file,hash);}catch(...){rejected=true;}check(rejected,"invalid preset fails closed");
     }

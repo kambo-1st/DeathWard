@@ -60,14 +60,15 @@ bool Simulation::collectShopUpgrade() {
     const ItemKey item{"isaac",ItemKind::Collectible,uint32_t(shopUpgradeItem)};
     if(!content->item(item)||money()<uint64_t(price))return false;
     moneySpent+=uint64_t(price);shopUpgradeSold=true;grant(item);
-    announce(shopUpgradeItem==250?"BOGO BOMBS / NEW DYNAMITE PICKUPS DOUBLE":"STEAM SALE / SHOP DISCOUNT",3);checkpointNeeded=true;return true;
+    announce(shopUpgradeItem==195?"MOM'S COIN PURSE / PILLS SPAWNED":shopUpgradeItem==250?"BOGO BOMBS / NEW DYNAMITE PICKUPS DOUBLE":"STEAM SALE / SHOP DISCOUNT",3);checkpointNeeded=true;return true;
 }
 void Simulation::prepareShop() {
     shopHeartKind=HeartKind::Red;
     shopUpgradeItem=64;
-    if(shopCollectiblePool==2)shopUpgradeItem=250;
+    if(shopCollectiblePool==3)shopUpgradeItem=195;
+    else if(shopCollectiblePool==2)shopUpgradeItem=250;
     else if(shopCollectiblePool==1) {
-        const int chosen=sourceShopCollectibleChoice(canyonShopCollectibleSeed(seed_));
+        const int chosen=sourceShopCollectibleChoice(canyonShopCollectibleSeed(seed_),true);
         // Explicit bounded fallback for an empty numeric selection; no reroll.
         if(chosen)shopUpgradeItem=chosen;
     }
@@ -83,7 +84,7 @@ void Simulation::prepareShop() {
             shopDiscountSlot=stock.discountSlot;
         }
         // No category reroll. Other pairs retain the explicit previous fixed-pair fallback.
-        // Collectibles use the explicit restricted two-entry pool above.
+        // Collectibles use the explicit restricted three-entry pool above.
     }
     Random rng(seed_ ^ 0x53484f5053544f43ULL);
     std::array<ItemId, ItemCount> pool{};

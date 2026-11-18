@@ -255,7 +255,7 @@ void Game::finish(EndReason reason) {
     resetPointerInput();
 }
 void Game::resetPointerInput() {
-    placeDynamiteQueued_ = activeQueued_ = trinketQueued_ = false;
+    placeDynamiteQueued_ = activeQueued_ = trinketQueued_ = pillUseQueued_ = pillDropQueued_ = false;
     cameraDragging_ = false;
     leftCommand_ = LeftCommand::None;
     attackTarget_ = hoveredEnemy = 0;
@@ -277,7 +277,7 @@ void Game::perform(Action action) {
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
            (action<Action::BalanceDamageHealthTab||action>Action::ResetYumHeart)&&
            (action<Action::BalanceTrinketTab||action>Action::ResetTrinkets)&&action!=Action::WhipDown&&action!=Action::WhipUp&&
-           (action<Action::BalanceHaloTab||action>Action::TogglePropRewards))return;
+           (action<Action::BalanceHaloTab||action>Action::ResetPills))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -292,7 +292,7 @@ void Game::perform(Action action) {
         case Action::CloseBalance:
             balanceOpen=balancePathEditing=false;accumulator=0;resetPointerInput();break;
         case Action::BalanceWorldTab:balanceRewardsOpen=balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
-        case Action::BalanceShootingTab:balanceTrinketOpen=false;balanceActiveOpen=balanceFamiliarOpen=balanceTreasureOpen=false;balanceShootingOpen=true;balanceEnemiesOpen=balanceRewardsOpen=balanceCombatOpen=false;break;
+        case Action::BalanceShootingTab:balancePillsOpen=false;balanceTrinketOpen=false;balanceActiveOpen=balanceFamiliarOpen=balanceTreasureOpen=false;balanceShootingOpen=true;balanceEnemiesOpen=balanceRewardsOpen=balanceCombatOpen=false;break;
         case Action::BalanceEnemiesTab:balanceAttackFlyOpen=false;balanceFrowningOpen=false;balanceRoundWormOpen=balanceFullFlyOpen=false;balanceMonstroOpen=false;balanceEnemiesOpen=true;balanceShootingOpen=balanceRewardsOpen=balanceCombatOpen=false;balancePooterOpen=false;break;
         case Action::BalanceRewardsTab:balanceShopOpen=false;balanceRewardsOpen=true;balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
         case Action::BalanceShopTab:balancePropsOpen=false;balanceShopOpen=true;balanceShopKeyOpen=balanceShopStockOpen=balanceShopBombOpen=balanceShopSoulHeartOpen=false;break;
@@ -312,7 +312,7 @@ void Game::perform(Action action) {
             preset.shopSoulHeartPrice=action==Action::ResetShopSoulHeartPrice?5:std::clamp(preset.shopSoulHeartPrice+(action==Action::ShopSoulHeartPriceUp?1:-1),0,15);
             applyBalance(std::move(preset));balanceNotice="Unsold soul-heart base price updated. Sold stock stays sold. Export to keep edits.";break;
         }
-        case Action::BalanceFamiliarTab:balanceHaloOpen=false;balanceTrinketOpen=false;balanceActiveOpen=false;balanceFamiliarOpen=true;balanceTreasureOpen=false;break;
+        case Action::BalanceFamiliarTab:balancePillsOpen=false;balanceHaloOpen=false;balanceTrinketOpen=false;balanceActiveOpen=false;balanceFamiliarOpen=true;balanceTreasureOpen=false;break;
         case Action::BalanceHaloTab:balanceHaloOpen=true;balanceFamiliarOpen=true;balanceActiveOpen=balanceTrinketOpen=balanceTreasureOpen=false;break;
         case Action::HaloSpeedDown:case Action::HaloSpeedUp:
         case Action::HaloRadiusDown:case Action::HaloRadiusUp:
@@ -339,7 +339,7 @@ void Game::perform(Action action) {
             }
             applyBalance(std::move(preset));balanceNotice="Following updates next tick. New shots use edits; current waits and flying shots stay fixed.";break;
         }
-        case Action::BalanceActiveTab:balanceBookOpen=false;balanceTrinketOpen=false;balanceActiveOpen=true;balanceFamiliarOpen=balanceTreasureOpen=false;break;
+        case Action::BalanceActiveTab:balancePillsOpen=false;balanceBookOpen=false;balanceTrinketOpen=false;balanceActiveOpen=true;balanceFamiliarOpen=balanceTreasureOpen=false;break;
         case Action::BalanceBookTab:balanceBookOpen=true;balanceActiveOpen=true;balanceTrinketOpen=balanceFamiliarOpen=balanceTreasureOpen=false;break;
         case Action::BookDurationDown:case Action::BookDurationUp:case Action::BookRechargeDown:case Action::BookRechargeUp:case Action::ResetBook: {
             auto preset=balancePreset;auto &t=preset.bookOfShadows;
@@ -360,7 +360,19 @@ void Game::perform(Action action) {
             applyBalance(std::move(preset));activeQueued_=false;
             balanceNotice="Healing applies on next use; recharge on future first combat clears. Existing charge stays unchanged.";break;
         }
-        case Action::BalanceTrinketTab:balanceTrinketOpen=true;balanceActiveOpen=balanceFamiliarOpen=balanceTreasureOpen=false;break;
+        case Action::BalancePillsTab:
+            balanceShootingOpen=balancePillsOpen=true;
+            balanceEnemiesOpen=balanceRewardsOpen=balanceCombatOpen=balanceTrinketOpen=balanceActiveOpen=balanceFamiliarOpen=balanceTreasureOpen=false;break;
+        case Action::PurseCountDown:case Action::PurseCountUp:case Action::PillStrengthDown:case Action::PillStrengthUp:case Action::CyclePillBinding:case Action::ResetPills: {
+            auto preset=balancePreset;auto &t=preset.pills;
+            if(action==Action::ResetPills)t={};
+            else if(action==Action::CyclePillBinding)t.binding=(t.binding+1)%2;
+            else if(action==Action::PurseCountDown||action==Action::PurseCountUp)t.purseCount=std::clamp(t.purseCount+(action==Action::PurseCountUp?1:-1),1,8);
+            else t.statStrength=std::clamp(std::round((t.statStrength+(action==Action::PillStrengthUp?.05f:-.05f))*100)/100,0.f,2.f);
+            applyBalance(std::move(preset));pillUseQueued_=pillDropQueued_=false;
+            balanceNotice="Count applies to future purses. Stat strength changes consumed effects live; flying shots keep their settings.";break;
+        }
+        case Action::BalanceTrinketTab:balancePillsOpen=false;balanceTrinketOpen=true;balanceActiveOpen=balanceFamiliarOpen=balanceTreasureOpen=false;break;
         case Action::WhipDown:case Action::WhipUp:case Action::CancerDown:case Action::CancerUp:case Action::ToggleTrinketRewards:
         case Action::CycleTrinketBinding:case Action::ResetTrinkets: {
             auto preset=balancePreset;auto &t=preset.trinkets;
@@ -387,7 +399,7 @@ void Game::perform(Action action) {
             applyBalance(std::move(preset));balanceNotice="Cricket strength applies to new attacks. Flying shots retain their damage and size.";break;
         }
         case Action::CycleShopCollectiblePool:
-            balanceDraft.shopCollectiblePool=(balanceDraft.shopCollectiblePool+1)%3;
+            balanceDraft.shopCollectiblePool=(balanceDraft.shopCollectiblePool+1)%4;
             balanceNotice="Collectible selection pending / Apply resets this floor";
             break;
         case Action::ToggleShopVariation:
@@ -420,7 +432,7 @@ void Game::perform(Action action) {
             applyBalance(std::move(preset));
             balanceNotice="Unsold heart price updated. Sold stock stays sold. Export or Use next expedition to keep edits.";break;
         }
-        case Action::BalanceTreasureTab:balanceMomsEyeOpen=false;balanceTrinketOpen=false;balanceActiveOpen=balanceFamiliarOpen=false;balanceTreasureOpen=true;break;
+        case Action::BalanceTreasureTab:balancePillsOpen=false;balanceMomsEyeOpen=false;balanceTrinketOpen=false;balanceActiveOpen=balanceFamiliarOpen=false;balanceTreasureOpen=true;break;
         case Action::ToggleTreasureUpgrade:
             balanceDraft.sourceTreasureUpgrade=!balanceDraft.sourceTreasureUpgrade;
             balanceNotice="Treasure offering pending. APPLY MAP CHANGES resets this floor; player/build retained.";break;
@@ -841,6 +853,10 @@ void Game::perform(Action action) {
         case Action::ReviewPowerupFight:case Action::ReviewPowerupBoss:
             if(run&&!paused&&run->visitPowerupReviewEncounter(action==Action::ReviewPowerupBoss)){resetPointerInput();accumulator=0;updateCamera(10);checkpoint();}
             break;
+        case Action::UsePill:case Action::DropPill:
+            if(run&&!paused&&!run->dead&&!run->finished&&!run->rewardOpen&&!run->shopOpen) {
+                if(action==Action::UsePill)pillUseQueued_=true;else pillDropQueued_=true;
+            }break;
         case Action::DropTrinket:
             if(run&&!paused&&!run->dead&&!run->finished&&!run->rewardOpen&&!run->shopOpen)trinketQueued_=true;
             break;
@@ -1099,7 +1115,7 @@ bool Game::pointerOverControls() const {
     const bool live=run&&!paused&&!run->dead&&!run->rewardOpen&&!run->shopOpen;
     return (run&&(run->surveyTutorial||run->testimony())&&x>=964&&x<=1256&&y>=22&&y<=153)||
            (live&&(((reviewActives||reviewTrinkets)&&over(expeditionHud::categoryReview(reviewActives&&run->activeReviewCollected>=2&&run->roomClear)))||(run->powerupReview&&over(expeditionHud::categoryReview(run->roomClear&&run->powerupReview->collected==4)))||
-               (run->heldTrinket&&over(expeditionHud::Trinket))||(run->activeItem&&over(expeditionHud::Active))||over(expeditionHud::Dodge)||
+               (run->pills.held&&(over(expeditionHud::PillUse)||over(expeditionHud::PillDrop)))||(run->heldTrinket&&over(expeditionHud::Trinket))||(run->activeItem&&over(expeditionHud::Active))||over(expeditionHud::Dodge)||
                (ownedItemTypes()>0&&over(expeditionHud::items(ownedItemTypes())))))||
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||
            (debug && debugPanelOpen && x >= 24 && x <= 539 && y >= 133 && y <= 592);
@@ -1182,6 +1198,8 @@ std::vector<Action> Game::menuActions() const {
             std::vector<Action>{Action::PooterMovementDown,Action::PooterMovementUp,Action::PooterShotDown,Action::PooterShotUp,Action::PooterDelayDown,Action::PooterDelayUp,Action::ResetPooter}:
             balanceEnemiesOpen?
             std::vector<Action>{Action::BalanceFrowningTab,Action::BalanceFullFlyTab,Action::GaperMovementDown,Action::GaperMovementUp,Action::GaperMovementReset,Action::SpiderMovementDown,Action::SpiderMovementUp,Action::SpiderMovementReset}:
+            balanceShootingOpen&&balancePillsOpen?
+            std::vector<Action>{Action::PurseCountDown,Action::PurseCountUp,Action::PillStrengthDown,Action::PillStrengthUp,Action::CyclePillBinding,Action::ResetPills}:
             balanceShootingOpen&&balanceTrinketOpen?
             std::vector<Action>{Action::BalanceTreasureTab,Action::CancerDown,Action::CancerUp,Action::WhipDown,Action::WhipUp,Action::ToggleTrinketRewards,Action::CycleTrinketBinding,Action::ResetTrinkets}:
             balanceShootingOpen&&balanceActiveOpen&&balanceBookOpen?
@@ -1197,7 +1215,7 @@ std::vector<Action> Game::menuActions() const {
             balanceShootingOpen&&balanceTreasureOpen?
             std::vector<Action>{Action::BalanceMomsEyeTab,Action::BalanceTrinketTab,Action::BalanceActiveTab,Action::BalanceFamiliarTab,Action::ToggleTreasureUpgrade,Action::SadOnionDown,Action::SadOnionUp,Action::ResetSadOnion,Action::CycleTreasureCollectiblePool,Action::CricketHeadDown,Action::CricketHeadUp,Action::ResetCricketHead,Action::ApplyMapChanges}:
             balanceShootingOpen?
-            std::vector<Action>{Action::BalanceTreasureTab,Action::TearsDown,Action::TearsUp,Action::ShotSpeedDown,Action::ShotSpeedUp,Action::RangeDown,Action::RangeUp,Action::ResetShooting}:
+            std::vector<Action>{Action::BalancePillsTab,Action::BalanceTreasureTab,Action::TearsDown,Action::TearsUp,Action::ShotSpeedDown,Action::ShotSpeedUp,Action::RangeDown,Action::RangeUp,Action::ResetShooting}:
             std::vector<Action>{Action::SpeedDown,Action::SpeedUp,Action::DefaultZoomDown,Action::DefaultZoomUp,Action::DefaultZoomCurrent,Action::DefaultZoomReset,
                 Action::RoomSizeDown,Action::RoomSizeUp,Action::RoomMinDown,Action::RoomMinUp,Action::RoomMaxDown,Action::RoomMaxUp,Action::RoomRangeAuto,
                 Action::RouteLengthDown,Action::RouteLengthUp,Action::ApplyMapChanges,Action::ToggleSourceCombatRoom,Action::ResetBalance};
@@ -1646,6 +1664,9 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
         input.useActive=activeQueued_;
         trinketQueued_=trinketQueued_||IsKeyPressed(balancePreset.trinkets.binding==1?KEY_Y:KEY_U);
         input.dropTrinket=trinketQueued_;
+        pillUseQueued_=pillUseQueued_||IsKeyPressed(balancePreset.pills.binding?KEY_N:KEY_F);
+        pillDropQueued_=pillDropQueued_||IsKeyPressed(balancePreset.pills.binding?KEY_COMMA:KEY_H);
+        input.usePill=pillUseQueued_;input.dropPill=pillDropQueued_;
         input.placeDynamite = placeDynamiteQueued_;
         accumulator += std::min(dt, 0.1f) * (slow ? 0.2f : 1.0f);
         while (accumulator >= Tick) {
@@ -1653,6 +1674,7 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
             accumulator -= Tick;
             input.useActive=activeQueued_=false;
             input.dropTrinket=trinketQueued_=false;
+            input.usePill=pillUseQueued_=false;input.dropPill=pillDropQueued_=false;
             input.dodge = input.interact = false;
             input.placeDynamite = placeDynamiteQueued_ = false;
             input.moveTarget.reset();

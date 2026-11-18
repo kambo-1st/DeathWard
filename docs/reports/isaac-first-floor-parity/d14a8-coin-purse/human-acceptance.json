@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-18",
+  "user_statement": "nice its awesome! Whats next?",
+  "status": "scoped-human-acceptance",
+  "scope": "Main-game Mom's Coin Purse and bounded health/stat pill handoff. This acknowledges the playtest, not independent verification of all effects or full native equivalence.",
+  "next_selected": "User: Nice commit and go! Commit accepted D14a.8, then D14a.9 Temperance15 and blood-donation machine.",
+  "next_proposed": "Commit the accepted D14a.8 checkpoint, then D14a.9 Temperance15 and its blood-donation machine dependency, with a short main-game check. Neither is selected by this request for next steps."
+}
