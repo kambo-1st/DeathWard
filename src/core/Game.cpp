@@ -372,8 +372,14 @@ void Game::perform(Action action) {
             applyBalance(std::move(preset));trinketQueued_=false;
             balanceNotice="Owned effect changes next attack; current wait and flying shots stay fixed. Rewards apply to future first clears.";break;
         }
+        case Action::BalanceMomsEyeTab:balanceMomsEyeOpen=true;balanceTreasureOpen=true;break;
+        case Action::MomsEyeChanceDown:case Action::MomsEyeChanceUp:case Action::ResetMomsEye: {
+            auto p=balancePreset;
+            p.momsEyeChanceMultiplier=action==Action::ResetMomsEye?1:std::clamp(std::round((p.momsEyeChanceMultiplier+(action==Action::MomsEyeChanceUp?.05f:-.05f))*100)/100,0.f,2.f);
+            applyBalance(p);balanceNotice="Mom's Eye chance applies to the next volley. Flying shots retain their settings.";break;
+        }
         case Action::CycleTreasureCollectiblePool:
-            balanceDraft.treasureCollectiblePool=(balanceDraft.treasureCollectiblePool+1)%7;
+            balanceDraft.treasureCollectiblePool=(balanceDraft.treasureCollectiblePool+1)%8;
             balanceNotice="Treasure selection pending / Apply resets this floor";break;
         case Action::CricketHeadDown:case Action::CricketHeadUp:case Action::ResetCricketHead: {
             auto preset=balancePreset;
@@ -414,7 +420,7 @@ void Game::perform(Action action) {
             applyBalance(std::move(preset));
             balanceNotice="Unsold heart price updated. Sold stock stays sold. Export or Use next expedition to keep edits.";break;
         }
-        case Action::BalanceTreasureTab:balanceTrinketOpen=false;balanceActiveOpen=balanceFamiliarOpen=false;balanceTreasureOpen=true;break;
+        case Action::BalanceTreasureTab:balanceMomsEyeOpen=false;balanceTrinketOpen=false;balanceActiveOpen=balanceFamiliarOpen=false;balanceTreasureOpen=true;break;
         case Action::ToggleTreasureUpgrade:
             balanceDraft.sourceTreasureUpgrade=!balanceDraft.sourceTreasureUpgrade;
             balanceNotice="Treasure offering pending. APPLY MAP CHANGES resets this floor; player/build retained.";break;
@@ -1186,8 +1192,10 @@ std::vector<Action> Game::menuActions() const {
             std::vector<Action>{Action::BalanceTreasureTab,Action::BalanceFamiliarTab,Action::HaloSpeedDown,Action::HaloSpeedUp,Action::HaloRadiusDown,Action::HaloRadiusUp,Action::HaloContactDown,Action::HaloContactUp,Action::ResetHalo}:
             balanceShootingOpen&&balanceFamiliarOpen?
             std::vector<Action>{Action::BalanceTreasureTab,Action::BalanceHaloTab,Action::BobbyMovementDown,Action::BobbyMovementUp,Action::BobbyIntervalDown,Action::BobbyIntervalUp,Action::BobbyDamageDown,Action::BobbyDamageUp,Action::BobbyShotDown,Action::BobbyShotUp,Action::ResetBrotherBobby}:
+            balanceShootingOpen&&balanceTreasureOpen&&balanceMomsEyeOpen?
+            std::vector<Action>{Action::MomsEyeChanceDown,Action::MomsEyeChanceUp,Action::RewardLuckDown,Action::RewardLuckUp,Action::ResetMomsEye,Action::BalanceTreasureTab}:
             balanceShootingOpen&&balanceTreasureOpen?
-            std::vector<Action>{Action::BalanceTrinketTab,Action::BalanceActiveTab,Action::BalanceFamiliarTab,Action::ToggleTreasureUpgrade,Action::SadOnionDown,Action::SadOnionUp,Action::ResetSadOnion,Action::CycleTreasureCollectiblePool,Action::CricketHeadDown,Action::CricketHeadUp,Action::ResetCricketHead,Action::ApplyMapChanges}:
+            std::vector<Action>{Action::BalanceMomsEyeTab,Action::BalanceTrinketTab,Action::BalanceActiveTab,Action::BalanceFamiliarTab,Action::ToggleTreasureUpgrade,Action::SadOnionDown,Action::SadOnionUp,Action::ResetSadOnion,Action::CycleTreasureCollectiblePool,Action::CricketHeadDown,Action::CricketHeadUp,Action::ResetCricketHead,Action::ApplyMapChanges}:
             balanceShootingOpen?
             std::vector<Action>{Action::BalanceTreasureTab,Action::TearsDown,Action::TearsUp,Action::ShotSpeedDown,Action::ShotSpeedUp,Action::RangeDown,Action::RangeUp,Action::ResetShooting}:
             std::vector<Action>{Action::SpeedDown,Action::SpeedUp,Action::DefaultZoomDown,Action::DefaultZoomUp,Action::DefaultZoomCurrent,Action::DefaultZoomReset,

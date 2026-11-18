@@ -1,6 +1,7 @@
 #include "world/SourceFullFlyRoom.hpp"
 #include "world/SourcePropRooms.hpp"
 #include "items/SadOnion.hpp"
+#include "items/MomsEye.hpp"
 #include "items/CricketHead.hpp"
 #include "world/SourceTreasureStock.hpp"
 #include "combat/Simulation.hpp"
@@ -40,14 +41,14 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
                     profile.boss=BossKind::Isaac;profile.bossMonster=monsterId(chosen);profile.bossForm=BossForm::Normal;
                     profile.doubleBossRoom=false;profile.bossRails.reset();
                 }
-                return profile;}(),sourceCombatRoom,roomHeartLayouts,sourceRoomLocks,requestedProps.layouts),
+                return profile;}(),sourceCombatRoom,roomHeartLayouts,sourceRoomLocks,requestedProps.layouts,requestedTreasureUpgrade?requestedTreasurePool:-1),
       encounterRng(expedition.floorSeed(level) ^ 0x454e434f554e5445ULL),
       rewardRng(expedition.floorSeed(level) ^ 0x5245574152445354ULL),
       combatRng(expedition.floorSeed(level) ^ 0x434f4d424154524eULL), seed_(expedition.floorSeed(level)),
       runId_(runId), canyonRiver_(canyonRiver), startingWorld_(world) {
     if(account!=WitnessAccount::None&&account!=WitnessAccount::Rourke)
         throw std::invalid_argument("This testimony has not been authored yet.");
-    if(treasureCollectiblePool<0||treasureCollectiblePool>6)throw std::invalid_argument("Invalid treasure pool");
+    if(treasureCollectiblePool<0||treasureCollectiblePool>7)throw std::invalid_argument("Invalid treasure pool");
     coinClearRewards=requestedCoins;
     surveyTutorial=tutorial;
     rooms.resize(arena.rooms.size());
@@ -121,7 +122,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     const bool keyStock=shopKey.value_or(sourceShopKey);
     const bool variation=shopVariation.value_or(sourceShopVariation);
     const int treasureChoice=treasurePool.value_or(treasureCollectiblePool);
-    if(treasureChoice<0||treasureChoice>6)throw std::invalid_argument("Invalid treasure pool");
+    if(treasureChoice<0||treasureChoice>7)throw std::invalid_argument("Invalid treasure pool");
     const int pool=collectiblePool.value_or(shopCollectiblePool);
     if(pool<0||pool>2)throw std::invalid_argument("Invalid shop collectible pool");
     const bool locks=roomLocks.value_or(sourceRoomLocks);
@@ -131,7 +132,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     if(!canResizeRooms())throw std::runtime_error("No floor to resize");
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
                     expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice,boss,flies,seededChoice,rewardChoice,propChoice);
-    next.roundWormTuning=roundWormTuning;next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
+    next.momsEyeChanceMultiplier=momsEyeChanceMultiplier;next.roundWormTuning=roundWormTuning;next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
     next.haloOfFlies=haloOfFlies;next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
@@ -211,7 +212,7 @@ bool Simulation::advanceFloor() {
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
                     expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool,monstroTuning,dukeTuning,seededBosses,bossRewardItem,roomProps);
-    next.roundWormTuning=roundWormTuning;next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
+    next.momsEyeChanceMultiplier=momsEyeChanceMultiplier;next.roundWormTuning=roundWormTuning;next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
     next.haloOfFlies=haloOfFlies;next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
@@ -448,9 +449,7 @@ int Simulation::treasureUpgradeItem(int index) const {
         return PowerupReviewState::Offerings[size_t(powerupReview->collected)];
     if(activeReviewRoom==index&&activeReviewCollected<2)return activeReviewCollected?58:45;
     if(rooms[size_t(index)].droppedActive)return int(rooms[size_t(index)].droppedActive->item.number);
-    const int choice=treasureCollectiblePool==0?1:treasureCollectiblePool==2?4:treasureCollectiblePool==3?8:treasureCollectiblePool==4?45:treasureCollectiblePool==5?10:treasureCollectiblePool==6?58:
-        sourceTreasureChoice(canyonTreasureSeed(seed_,index),true,true,true,true);
-    return choice?choice:1; // Empty numeric draw: fixed fallback, never reroll.
+    return sourceTreasureItem(treasureCollectiblePool,canyonTreasureSeed(seed_,index));
 }
 bool Simulation::useActiveItem() {
     if(!activeItem||!activeCapacity(activeItem->item)||activeItem->charge!=activeCapacity(activeItem->item)||
@@ -797,13 +796,17 @@ bool Simulation::enterSourceRoomReview(int variant) {
     if(variant<0||room!=0||floor!=0||stats.duration!=0)return false;
     for(int i=1;i<arena.roomCount();++i) {
         const auto &layout=arena.rooms[size_t(i)];
-        if(layout.sourceHeartTemplate!=variant&&layout.sourceCombatTemplate!=variant)continue;
+        if(layout.sourceHeartTemplate!=variant&&layout.sourceCombatTemplate!=variant&&!(variant==RecordedMomsEyeReview&&layout.sourceTreasureTemplate==6))continue;
         // A known combat-record heart layer at a protected objective/key site
         // does not contain the complete combat record and cannot review it.
         if((variant==FullFlyRoomTemplate||sourcePropRoom(variant)||sourceCombatRockRoom(variant))&&layout.sourceCombatTemplate!=variant)continue;
         if(variant==SourceChestRockRoom&&layout.sourceObstacleTemplate!=variant)continue;
         if((variant==SourceCoinRockRoom||variant==SourceKeyRockRoom||variant==SourceBombRockRoom)&&layout.sourceObstacleTemplate!=variant)continue;
         auto reviewStart=layout.entry;
+        if(variant==RecordedMomsEyeReview) {
+            auto at=add(layout.center,{0,0,3});
+            if(!arena.blocked(at,.55f)&&!arena.path(layout.entry,at,.48f).empty())reviewStart=at;
+        }
         if(variant==RecordedDukeRoom) {
             // Review-only approach: show the boss immediately at the retained
             // zoom, without landing inside props or an initial actor.
@@ -836,7 +839,7 @@ bool Simulation::enterSourceRoomReview(int variant) {
         }
         cancelMove();player.position=reviewStart;
         enterRoom(i);player.aim=layout.exit;
-        announce(variant==PropReviewRoom?"FIRE / POOP TEST / Shoot or place dynamite. Fire hurts on touch.":"ROOM REVIEW / Source "+std::to_string(variant)+" / "+roomName(),6);
+        announce(variant==RecordedMomsEyeReview?"TREASURE REVIEW / MOM'S EYE":variant==PropReviewRoom?"FIRE / POOP TEST / Shoot or place dynamite. Fire hurts on touch.":"ROOM REVIEW / Source "+std::to_string(variant)+" / "+roomName(),6);
         return true;
     }
     return false;
@@ -1541,6 +1544,15 @@ void Simulation::updatePlayer(const Input &input, float dt) {
             }
             if(!arena.clear(player.position,e.position,e.attack->radius))e.position=player.position;
             e.origin=e.position;
+            accept(e);
+        }
+        if(itemStacks({"isaac",ItemKind::Collectible,55})&&
+           momsEyeBackward(effectivePlayerStats().luck,uint32_t(combatRng.next()),momsEyeChanceMultiplier)) {
+            // One extra ordinary shot per successful volley, independent of
+            // forward pellet count. Retain the resolved birth specification.
+            e.direction=rotateY(aim,Pi);e.position=player.position;
+            if(canonicalShooting)e.attack->inheritedVelocity=reviewTearInheritance(player.velocity,e.direction);
+            e.origin=e.position;e.context.sourceItem=ItemKey{"isaac",ItemKind::Collectible,55};
             accept(e);
         }
         e.direction=aim;e.position=add(player.position,mul(aim,.7f));

@@ -1,4 +1,7 @@
 #include "world/Dungeon.hpp"
+#include "world/SourceTreasureStock.hpp"
+#include "world/SourceHeartRockRoom.hpp"
+#include "world/SourceRoomSelection.hpp"
 #include "world/ShopCartGeometry.hpp"
 #include "world/PedestalGeometry.hpp"
 #include "world/SourceCombatRoom.hpp"
@@ -84,7 +87,7 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
 } // namespace
 
 Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tutorial, StoryRoom story,
-             int requestedRooms, FloorDimensions dimensions, FloorProfile floorProfile, bool sourceCombatRoom,int roomHeartLayouts,bool requestedRoomLocks,int propLayouts)
+             int requestedRooms, FloorDimensions dimensions, FloorProfile floorProfile, bool sourceCombatRoom,int roomHeartLayouts,bool requestedRoomLocks,int propLayouts,int treasurePool)
     : visualSeed(seed), theme(missionTheme), profile(floorProfile) {
     if(roomHeartLayouts<0||roomHeartLayouts>2)throw std::invalid_argument("Invalid room-heart layout mode");
     if(dimensions.minHalfTiles<5||dimensions.maxHalfTiles<dimensions.minHalfTiles||dimensions.maxHalfTiles>10||
@@ -482,6 +485,22 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
         if(chosen>=0)rooms[size_t(chosen)].sourceCombatTemplate=BasementGaperTemplate;
     }
     if(!tutorial)prepareRoomHeartLayouts(seed,roomHeartLayouts,propLayouts);
+    if(!tutorial&&profile.active()&&profile.floor==0&&theme==MissionTheme::Canyon&&roomHeartLayouts==1&&treasurePool>=0) {
+        for(int i=0;i<roomCount();++i) {
+            auto &site=rooms[size_t(i)];if(site.kind!=RoomKind::Power)continue;
+            const auto seed=canyonTreasureSeed(visualSeed,i);
+            if(sourceTreasureItem(treasurePool,seed)!=55)continue;
+            site.sourceTreasureTemplate=6;site.sourceRoomSelectionSeed=seed;
+            site.sourceRoomSpawnSeed=sourceRoomDescriptorSeeds(seed).spawn;
+            auto state=site.sourceRoomSpawnSeed;
+            for(int slot=0;slot<3;++slot) {
+                sourceRoomSpawnRandom(state); // Include the middle collectible slot.
+                if(slot==1)continue;
+                const int x=slot==0?4:8;
+                site.coinSpawns.push_back({sourceHeartCell(site,x,3),state,x,3,slot,1,1});
+            }
+        }
+    }
     rebuildWalls();
     if (theme == MissionTheme::Canyon) {
         buildCanyon(*this, canyonRiver);

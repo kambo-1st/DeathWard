@@ -54,6 +54,7 @@ struct RoomLayout {
     // not automatically a flooded room: dry banks must remain dry gameplay.
     bool flooded = false;
     int sourceCombatTemplate = -1; // Recorded opening-floor encounter, -1 = generated pool.
+    int sourceTreasureTemplate=-1; // Recorded type4 content, independent of ordinary template IDs.
     int sourceHeartTemplate=-1; // Heart layer only; not a full source encounter.
     int sourceObstacleTemplate=-1; // Selected complete rock/pickup arrangement.
     uint32_t sourceRoomSelectionSeed=0, sourceRoomSpawnSeed=0;
@@ -140,7 +141,7 @@ struct Arena {
     Arena() = default;
     explicit Arena(uint64_t seed, MissionTheme missionTheme = MissionTheme::Mine, bool canyonRiver = true,
                    bool tutorial = false, StoryRoom story = StoryRoom::None, int rooms = RoomCount,
-                   FloorDimensions dimensions = {}, FloorProfile profile = {}, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool sourceRoomLocks = false,int propLayouts=0);
+                   FloorDimensions dimensions = {}, FloorProfile profile = {}, bool sourceCombatRoom = false, int roomHeartLayouts = 0, bool sourceRoomLocks = false,int propLayouts=0,int treasurePool=-1);
     bool sourceRoomLocks = false; // Ordinary source lock policy adapted to canyon connections.
     void applyRoomLockPolicy();
     void prepareRoomHeartLayouts(uint64_t seed,int mode,int propLayouts=0);

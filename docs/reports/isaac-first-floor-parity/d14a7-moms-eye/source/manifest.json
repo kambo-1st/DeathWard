@@ -1,0 +1,47 @@
+{
+  "version": "Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "item": {
+    "description": "#MOMS_EYE_DESCRIPTION",
+    "gfx": "Collectibles_055_MomsEye.png",
+    "id": "55",
+    "name": "#MOMS_EYE_NAME"
+  },
+  "treasure_pool_entry": {
+    "Id": "55",
+    "Weight": "1",
+    "DecreaseBy": "1",
+    "RemoveOn": "0.1"
+  },
+  "gate_cases": 632,
+  "vector_cases": 24,
+  "windows": [
+    {
+      "name": "ordinary-inventory-and-gate",
+      "start": "0x74ad55",
+      "end": "0x74ae4d",
+      "sha256": "6f62c85da5f35c2ae329c22c019ceb292ec792d91be91fa041e999f9872d3098"
+    },
+    {
+      "name": "ordinary-weapon-config-call",
+      "start": "0x959e6f",
+      "end": "0x959e9f",
+      "sha256": "9170adb930f2f7bb73f66476262c0e8ef32a70bee0eb41c80a6b0efe71585ec7"
+    },
+    {
+      "name": "rear-vector-queue",
+      "start": "0x95a6f7",
+      "end": "0x95a85a",
+      "sha256": "0d3e403e487a0c436074118ec860c099daea025102ff3bf9903aa45ba451fa30"
+    },
+    {
+      "name": "rear-tear-request",
+      "start": "0x95af34",
+      "end": "0x95b085",
+      "sha256": "432ee22d862e8c7ff654d536a72cfecfbc77cdbfa78403284f98ebd9b8ad667f"
+    }
+  ],
+  "formula": "float32(0.5 + float32(0.1 * Luck)) > float32(uint32 RNG) * 2^-32; one Boolean ownership check and one RNG draw, copies do not stack",
+  "scope": "Ordinary weapon1 branch with other items/effects absent. Original HasCollectible helpers execute; only global RNG call supplies a chosen word. Backward vector arithmetic executes separately for eight supplied directions. Caller/tear-request assembly preserved; full native tear factory, modifiers, weapon wrappers, global RNG order and physics remain unaccepted.",
+  "full_native_acceptance": false
+}

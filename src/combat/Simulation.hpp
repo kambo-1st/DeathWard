@@ -1188,6 +1188,7 @@ class Simulation {
     float roomSizeScale = 1, routeLengthScale = 1;
     bool sourceRoomLocks = false; // Staged generation setting; legacy direct fixtures stay unchanged.
     bool sourceTreasureUpgrade = false;
+    float momsEyeChanceMultiplier=1;
     float sadOnionStrength = 1, cricketHeadStrength = 1;
     BrotherBobbyTuning brotherBobby{};
     HaloOfFliesTuning haloOfFlies{};

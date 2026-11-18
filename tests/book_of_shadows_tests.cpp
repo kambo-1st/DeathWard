@@ -77,6 +77,6 @@ void persistenceAndReview(){
 }
 }
 int main(int argc,char **){try{
- if(argc>1){std::set<int> seen;for(int seed=1;seed<100;++seed){auto s=make(seed,1);const int room=treasure(s),item=s.treasureUpgradeItem(room);if(seen.insert(item).second||seed==38||seed==11)std::cout<<"WITNESS seed="<<seed<<" room="<<room+1<<" item="<<item<<'\n';}return seen.size()==6?0:1;}
+ if(argc>1){std::set<int> seen;for(int seed=1;seed<100;++seed){auto s=make(seed,1);const int room=treasure(s),item=s.treasureUpgradeItem(room);if(seen.insert(item).second||seed==38||seed==11)std::cout<<"WITNESS seed="<<seed<<" room="<<room+1<<" item="<<item<<'\n';}return seen.size()==7?0:1;}
  lifecycle();timerAndDamage();nativeCharge();persistenceAndReview();return 0;
 }catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

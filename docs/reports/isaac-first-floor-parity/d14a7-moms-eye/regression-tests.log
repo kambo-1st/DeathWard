@@ -1,0 +1,24 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  35: book_of_shadows
+1/5 Test  #35: book_of_shadows ..................   Passed    4.22 sec
+    Start  38: cricket_head_treasure
+2/5 Test  #38: cricket_head_treasure ............   Passed    5.39 sec
+    Start  39: treasure_upgrade
+3/5 Test  #39: treasure_upgrade .................***Failed   13.65 sec
+PASS 27 generated geometry/route collection cases
+PASS 16-direction keyboard/dodge/click routing, persistent collision, safe Apply and legacy offering
+FAIL: audited additive catalog hash including Screw and Full Fly
+
+    Start 192: recorded_duke_room_delivery
+4/5 Test #192: recorded_duke_room_delivery ......   Passed    3.09 sec
+    Start 198: screw_boss_reward
+5/5 Test #198: screw_boss_reward ................   Passed    2.84 sec
+
+80% tests passed, 1 tests failed out of 5
+
+Total Test time (real) =  29.20 sec
+
+The following tests FAILED:
+	 39 - treasure_upgrade (Failed)
+Errors while running CTest

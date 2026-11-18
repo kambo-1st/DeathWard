@@ -2863,15 +2863,30 @@ Action Renderer::balancePanel(const Game &game) {
         }
         if(button(Action::ResetBrotherBobby,"RESET FAMILIAR",205,453,290,40))return Action::ResetBrotherBobby;
         text("Owned "+std::to_string(game.run?game.run->itemStacks({"isaac",ItemKind::Collectible,8}):0)+" / own shots; unaffected by player weapon upgrades",515,468,13,Teal);
+    } else if(game.balanceTreasureOpen&&game.balanceMomsEyeOpen) {
+        text("MOM'S EYE",205,182,22,Gold);
+        text("CHANCE MULTIPLIER",205,245,18,Gold);
+        text(decimal(game.balancePreset.momsEyeChanceMultiplier*100)+"%",485,240,24,Paper);
+        if(button(Action::MomsEyeChanceDown,"- 5%",760,235,130,40))return Action::MomsEyeChanceDown;
+        if(button(Action::MomsEyeChanceUp,"+ 5%",905,235,130,40))return Action::MomsEyeChanceUp;
+        text("LUCK",205,320,18,Gold);text(decimal(game.balancePreset.playerLuck),485,315,24,Paper);
+        if(button(Action::RewardLuckDown,"- 1",760,310,130,40))return Action::RewardLuckDown;
+        if(button(Action::RewardLuckUp,"+ 1",905,310,130,40))return Action::RewardLuckUp;
+        const float chance=std::clamp((.5f+.1f*game.balancePreset.playerLuck)*game.balancePreset.momsEyeChanceMultiplier,0.f,1.f);
+        text("BACKWARD SHOT CHANCE "+decimal(chance*100)+"% / NEXT VOLLEY",205,382,16,Teal);
+        text("One extra shot on success. Extra copies do not stack. Aim and cadence stay unchanged.",205,416,13,Paper);
+        if(button(Action::ResetMomsEye,"RESET CHANCE",205,468,350,35))return Action::ResetMomsEye;
+        if(button(Action::BalanceTreasureTab,"BACK TO TREASURE",585,468,490,35))return Action::BalanceTreasureTab;
     } else if(game.balanceTreasureOpen) {
         text("TREASURE",205,182,22,Gold);
+        if(button(Action::BalanceMomsEyeTab,"MOM'S EYE",365,169,170,40))return Action::BalanceMomsEyeTab;
         if(button(Action::BalanceTrinketTab,"TRINKETS",545,169,170,40))return Action::BalanceTrinketTab;
         if(button(Action::BalanceActiveTab,"ACTIVES",725,169,170,40))return Action::BalanceActiveTab;
         if(button(Action::BalanceFamiliarTab,"FAMILIARS",905,169,170,40))return Action::BalanceFamiliarTab;
         text("One upgrade per opening-floor treasure pedestal. Touch it to collect once.",205,220,14,Paper);
         if(button(Action::ToggleTreasureUpgrade,game.balanceDraft.sourceTreasureUpgrade?"COLLECTIBLE PEDESTAL":"LEGACY RELIC CHOICES",205,252,490,40,game.balanceDraft.sourceTreasureUpgrade))return Action::ToggleTreasureUpgrade;
         const int treasurePool=game.balanceDraft.treasureCollectiblePool;
-        if(button(Action::CycleTreasureCollectiblePool,treasurePool==1?"POOL: SIX ITEMS":treasurePool==6?"TEST: BOOK OF SHADOWS":treasurePool==5?"TEST: HALO OF FLIES":treasurePool==4?"TEST: YUM HEART":treasurePool==3?"TEST: BROTHER BOBBY":treasurePool==2?"TEST: CRICKET'S HEAD":"TEST: SAD ONION",720,252,355,40))return Action::CycleTreasureCollectiblePool;
+        if(button(Action::CycleTreasureCollectiblePool,treasurePool==1?"POOL: SEVEN ITEMS":treasurePool==7?"RECORDED: MOM'S EYE":treasurePool==6?"TEST: BOOK OF SHADOWS":treasurePool==5?"TEST: HALO OF FLIES":treasurePool==4?"TEST: YUM HEART":treasurePool==3?"TEST: BROTHER BOBBY":treasurePool==2?"TEST: CRICKET'S HEAD":"TEST: SAD ONION",720,252,355,40))return Action::CycleTreasureCollectiblePool;
         text("SAD ONION STRENGTH",205,324,18,Gold);
         text(decimal(game.balancePreset.sadOnionStrength*100)+"%",470,319,24,Paper);
         if(button(Action::SadOnionDown,"- 5%",650,310,130,40))return Action::SadOnionDown;

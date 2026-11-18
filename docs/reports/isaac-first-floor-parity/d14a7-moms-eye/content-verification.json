@@ -1,0 +1,13 @@
+{
+  "template": "4.6.0",
+  "slots": 3,
+  "source": {
+    "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+    "sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+    "templates": 1300
+  },
+  "result": "STB and recorded floor match",
+  "collectible_resolution": "Live observed55, not hardcoded in STB",
+  "live_evidence": "../d14a-floor-content/treasure-verification.json",
+  "native_selection_claimed": false
+}

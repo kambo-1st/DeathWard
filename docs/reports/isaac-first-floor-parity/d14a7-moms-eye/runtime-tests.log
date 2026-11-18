@@ -1,0 +1,7 @@
+PASS 632 native Luck/ownership gate comparisons
+PASS eight-direction actual volleys, no-copy/copy gates, snapshot/cadence and rear hit
+PASS treasure seed=11 room=8 scale=0.75 two pennies/item/revisit/Apply/descent
+PASS treasure seed=11 room=8 scale=1.1 two pennies/item/revisit/Apply/descent
+PASS treasure seed=11 room=8 scale=1.5 two pennies/item/revisit/Apply/descent
+PASS schema52 round-trip, older additive migrations and atomic invalid rejection
+PASS SOURCE/OFF/test and fixed offering review boundaries

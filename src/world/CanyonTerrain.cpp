@@ -212,10 +212,10 @@ void buildCanyon(Arena &arena, bool river) {
             room.obstacles.push_back({{r.center.x - radius, 0, r.center.z - radius},
                                       {r.center.x + radius, r.height, r.center.z + radius}});
         }
-        if(room.sourceCombatTemplate>=0||room.sourceObstacleTemplate>=0)rocks.resize(previousRocks);
+        if(room.sourceCombatTemplate>=0||room.sourceObstacleTemplate>=0||room.sourceTreasureTemplate>=0)rocks.resize(previousRocks);
     }
     // Selected source rooms provide their own cover. Exclude generated outcrops before baking terrain.
-    for(auto &room:arena.rooms)if(room.sourceCombatTemplate>=0||room.sourceObstacleTemplate>=0)room.obstacles.clear();
+    for(auto &room:arena.rooms)if(room.sourceCombatTemplate>=0||room.sourceObstacleTemplate>=0||room.sourceTreasureTemplate>=0)room.obstacles.clear();
     // A centered treasure pedestal needs room for the player's whole footprint,
     // including diagonal approaches and the outcrop's irregular silhouette.
     // Filter after all seeded draws; other rooms keep their original cover.

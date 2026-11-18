@@ -1,0 +1,30 @@
+{
+  "pid": 4183021,
+  "args": [
+    "stdbuf",
+    "-oL",
+    "-eL",
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "0",
+    "--review-source-room",
+    "4000006",
+    "--mute",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a7/campaign.save.balance/export.json",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a7/campaign.save"
+  ],
+  "started_at_utc": "2026-11-18T21:38:18.901020+00:00",
+  "preset_sha256": "bb1f76f6c94d150be0e0c493613a8581c0f0a9dde06d4588a6ddc35389543f46",
+  "normal_health": true,
+  "god_mode": false,
+  "review_overrides": [],
+  "retained_user_room_size": 0.95,
+  "retained_zoom": 165,
+  "source_room": "4.6.0",
+  "displayed_room": 8,
+  "selection": "natural restricted pool, DW seed0",
+  "original_presets_unchanged": true
+}

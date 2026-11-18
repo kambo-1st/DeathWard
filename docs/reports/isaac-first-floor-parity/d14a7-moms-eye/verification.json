@@ -1,0 +1,59 @@
+{
+  "result": "developer-checks-pass",
+  "human_acceptance": "scoped-accepted; see human-acceptance.json",
+  "accepted_previous_commit": "5741f7cd",
+  "source_version": "Repentance1.7.9b",
+  "native_gate_cases": 632,
+  "native_vector_cases": 24,
+  "source_slots": 3,
+  "generated_size_cases": [
+    0.75,
+    1.1,
+    1.5
+  ],
+  "actual_game_review": true,
+  "death_retry": true,
+  "preset_schema": 52,
+  "fresh_cli_cases": 3,
+  "regression_suites": 5,
+  "regression_note": "Initial treasure suite rejected obsolete catalog hash. Independently computed new hash pinned and corrected suite passed.",
+  "mechanics_fingerprint": "ff9ac597a5f92395",
+  "interactive": {
+    "pid": 4183021,
+    "args": [
+      "stdbuf",
+      "-oL",
+      "-eL",
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--expedition",
+      "--seed",
+      "0",
+      "--review-source-room",
+      "4000006",
+      "--mute",
+      "--balance-preset",
+      "/home/kambo/.local/share/deathward/reviews/first-floor-d14a7/campaign.save.balance/export.json",
+      "--save",
+      "/home/kambo/.local/share/deathward/reviews/first-floor-d14a7/campaign.save"
+    ],
+    "started_at_utc": "2026-11-18T21:38:18.901020+00:00",
+    "preset_sha256": "bb1f76f6c94d150be0e0c493613a8581c0f0a9dde06d4588a6ddc35389543f46",
+    "normal_health": true,
+    "god_mode": false,
+    "review_overrides": [],
+    "retained_user_room_size": 0.95,
+    "retained_zoom": 165,
+    "source_room": "4.6.0",
+    "displayed_room": 8,
+    "selection": "natural restricted pool, DW seed0",
+    "original_presets_unchanged": true
+  },
+  "unfinished": [
+    "human D14a.7 review",
+    "full native weapon/factory/cache/global RNG/physics equivalence",
+    "recorded shop and special-room dependencies",
+    "complete recorded-floor allocation and review",
+    "full expedition save/resume",
+    "deferred pixel/performance work"
+  ]
+}

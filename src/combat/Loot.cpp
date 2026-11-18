@@ -24,7 +24,7 @@ void Simulation::prepareMoney() {
         const auto &layout = arena.rooms[size_t(index)];
         if(coinClearRewards&&floor==0&&!surveyTutorial&&arena.profile.active()&&arena.theme==MissionTheme::Canyon&&
            layout.kind==RoomKind::Combat&&layout.story==StoryRoom::None)continue;
-        if(layout.sourceCombatTemplate>=0||layout.sourceObstacleTemplate>=0)continue;
+        if(layout.sourceCombatTemplate>=0||layout.sourceObstacleTemplate>=0||layout.sourceTreasureTemplate>=0)continue;
         const int maximum = std::clamp(int(layout.usableArea() / 260), 1, 4);
         const int count = index == 0 ? 1 + int(rng.bounded(2)) : int(rng.bounded(maximum + 1));
         for (int pile = 0; pile < count; ++pile)

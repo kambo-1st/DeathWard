@@ -42,8 +42,8 @@ build/deathward --expedition --seed 11 --review-source-room 2012 --mute --balanc
 
 Full native actor/RNG/scheduler/factory/physics equivalence; native full-floor allocation; the recorded treasure/shop/special rooms; full expedition save/resume. Pixel/performance work stays deferred.
 
-Next, checkpoint this accepted delivery. The proposed **D14a.7** is recorded treasure4.6.0 with Mom's Eye55 and two pennies, including verified Mom's Eye firing/Luck behavior while retaining eight-direction controls and live/export/load settings. That item delivery is not started or selected by this handoff.
+D14a.6 is now committed as `5741f7cd`. The user subsequently selected **D14a.7**, recorded treasure4.6.0 with Mom's Eye55 and two pennies; see [its current report](../d14a7-moms-eye/README.md).
 
 ## Human acceptance, 2026-11-18
 
-The user accepted the scoped handoff with “lookss awesome! Whats next?” See `human-acceptance.json`. This is not a claim of full native equivalence or that every checklist action was reported complete. D14a.6 remains uncommitted; the next-step question does not select D14a.7 or request a commit.
+The user accepted the scoped handoff with “lookss awesome! Whats next?” See `human-acceptance.json`. This is not a claim of full native equivalence or that every checklist action was reported complete. The subsequent “coool, lets go!” selected the proposed commit and D14a.7. D14a.6 is committed as `5741f7cd`; this does not expand its scoped acceptance.

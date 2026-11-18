@@ -102,3 +102,7 @@ end
 # D14a.1: recorded boss reward; native raw Tears and Shot Speed contributions.
 item "isaac:collectible:255" "Screw" "TEARS / SHOT SPEED" "Raises Tears and Shot Speed permanently. Copies stack."
 end
+
+# D14a.7: ordinary backward-shot passive; no other weapon families enabled.
+item "isaac:collectible:55" "Mom's Eye" "BACKWARD SHOTS" "A chance to fire an extra shot behind you. Luck increases the chance. Extra copies do not stack."
+end

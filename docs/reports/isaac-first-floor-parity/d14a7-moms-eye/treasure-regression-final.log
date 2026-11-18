@@ -1,0 +1,8 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 39: treasure_upgrade
+1/1 Test #39: treasure_upgrade .................   Passed   13.03 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =  13.03 sec
