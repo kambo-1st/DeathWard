@@ -57,6 +57,7 @@ struct RoomLayout {
     int sourceHeartTemplate=-1; // Heart layer only; not a full source encounter.
     int sourceObstacleTemplate=-1; // Selected complete rock/pickup arrangement.
     uint32_t sourceRoomSelectionSeed=0, sourceRoomSpawnSeed=0;
+    float sourcePropCellOverride=0; // Uniform content fit against finished canyon terrain; never changes room geometry.
     std::vector<RoomHeartSpawn> heartSpawns;
     std::vector<RoomChestSpawn> chestSpawns;
     std::vector<RoomCoinSpawn> coinSpawns;
@@ -144,6 +145,7 @@ struct Arena {
     void applyRoomLockPolicy();
     void prepareRoomHeartLayouts(uint64_t seed,int mode,int propLayouts=0);
     void prepareSourceHeartRocks();
+    bool fitRecordedPropRoom(); // False requests terrain restoration after a rejected candidate.
     bool ordinaryRockBlastClear(Vector3 from, Vector3 to) const;
     void sealRoom(int index);
     Vector3 doorPosition(int passage, int side) const;

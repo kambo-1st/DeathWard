@@ -1,0 +1,27 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 192: frowning_room_delivery
+    Start 191: mixed_fly_room_large_size
+    Start 190: mixed_fly_room_medium_size
+    Start 189: mixed_fly_room_user_size
+1/5 Test #189: mixed_fly_room_user_size .........   Passed    1.20 sec
+    Start 195: ordinary_room_props
+2/5 Test #192: frowning_room_delivery ...........***Failed    1.90 sec
+PASS 360 native trajectory states offset=0,0 errors=2.86102e-06,6.07967e-05
+PASS 360 native trajectory states offset=30,-17 errors=0.000190735,0.000875235
+PASS 360 native trajectory states offset=-63,28 errors=0.000175476,0.000875235
+PASS 288 native supplied phase states; full Slow scheduler not certified
+PASS independent movement/live boundaries, 30/60/120Hz, contact/dodge and floor transition
+FAIL real shots destroy poop and resolve reward once
+
+3/5 Test #190: mixed_fly_room_medium_size .......   Passed    1.94 sec
+4/5 Test #191: mixed_fly_room_large_size ........   Passed    2.19 sec
+5/5 Test #195: ordinary_room_props ..............   Passed    4.51 sec
+
+80% tests passed, 1 tests failed out of 5
+
+Total Test time (real) =   5.72 sec
+
+The following tests FAILED:
+	192 - frowning_room_delivery (Failed)
+Errors while running CTest

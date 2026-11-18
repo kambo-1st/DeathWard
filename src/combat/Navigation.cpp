@@ -109,7 +109,8 @@ std::vector<Vector3> floorPath(const Arena &arena, Vector3 from, Vector3 target,
 // This is canyon navigation, not native AI; every edge retains full collision.
 std::vector<Vector3> sourceRockPath(const Arena &arena,int index,Vector3 from,Vector3 target,float radius) {
     const auto &layout=arena.rooms[size_t(index)];
-    const float step=sourceHeartCellSize(layout)*.5f;
+    const auto *props=sourcePropRoom(layout.sourceObstacleTemplate);
+    const float step=(props?sourcePropCellSize(layout,*props):sourceHeartCellSize(layout))*.5f;
     const Vector3 origin{layout.center.x-step*.5f,0,layout.center.z-step*.5f};
     std::set<FloorCell> cells;
     for(int x=int(std::floor((layout.bounds.min.x-origin.x-FloorTile)/step));x<int(std::ceil((layout.bounds.max.x-origin.x+FloorTile)/step));++x)

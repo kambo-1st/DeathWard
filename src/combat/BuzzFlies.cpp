@@ -5,7 +5,7 @@
 namespace dw {
 void Simulation::updateBuzzFly(Enemy &e,float dt) {
     auto p=*content->buzzFly(e.monster);
-    const bool tuned=tunedPooter(e);
+    const bool tuned=tunedPooter(e), attack=tunedAttackFly(e);
     const bool full=e.monster==monsterId(249);
     const bool fullSkatole=full&&!e.friendly&&itemStacks(ItemKey{"isaac",ItemKind::Collectible,9})>0;
     if(tuned) {
@@ -18,6 +18,12 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
             p.shot->speed*=p.scale/authoredScale*pooterTuning->shotSpeed;
             p.shot->cooldownFrames=std::max(1,int(std::round(p.shot->cooldownFrames*pooterTuning->attackInterval)));
         }
+    }
+    if(attack) {
+        const float authoredScale=p.scale;
+        p.scale=GaperMovementScale;
+        p.jitter*=*attackFlyMovementMultiplier;p.edge*=*attackFlyMovementMultiplier;
+        p.speedCap*=p.scale/authoredScale * *attackFlyMovementMultiplier;
     }
     if(e.dukeChild||full)p.scale=GaperMovementScale;
     if(full){p.jitter*=fullFlyTuning.movement;p.edge*=fullFlyTuning.movement;}
@@ -52,7 +58,7 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
         if(e.stateTime<=0)e.state=EnemyState::Ready;
         return;
     }
-    const int sourceUpdates=sourceControllerUpdates(r.clock,dt,tuned||full||bool(e.dukeChild)||(nativeBurstWanderReview&&e.monster==monsterId(14)));
+    const int sourceUpdates=sourceControllerUpdates(r.clock,dt,tuned||attack||full||bool(e.dukeChild)||(nativeBurstWanderReview&&e.monster==monsterId(14)));
     for(int sourceUpdate=0;sourceUpdate<sourceUpdates;++sourceUpdate) {++r.tick;
         if(r.healingTicks>0) {
             e.hp=std::min(e.maxHp,e.hp+e.maxHp/float(r.healingDivisor));--r.healingTicks;
@@ -151,7 +157,7 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
                 }
                 if(r.diesOnContact)friction*=r.contactRetention;
                 const float distance=length(delta);
-                if(distance>c.deadzone)r.momentum=add(r.momentum,mul(unit(delta),std::min((distance-c.deadzone)*c.gain,c.force)*e.championSpeed/friction));
+                if(distance>c.deadzone)r.momentum=add(r.momentum,mul(unit(delta),std::min((distance-c.deadzone)*c.gain,c.force)*e.championSpeed*(attack?*attackFlyMovementMultiplier:1.f)/friction));
                 }
             }
         // Ordinary Fly/Pooter discard their temporary dung-search target. Their
@@ -228,6 +234,7 @@ bool Simulation::flushFullFlyDeath(Enemy &e) {
 void Simulation::prepareDung() {
     if(!content->dung()||!arena.profile.active())return;
     const auto &p=*content->dung();
+    const float halfWidth=p.halfWidth*DungFootprintScale;
     if(arena.profile.band<p.firstBand||arena.profile.band>p.lastBand)return;
     Random rng(seed_^0x44554e4750524f50ULL);
     std::vector<int> candidates;
@@ -239,14 +246,14 @@ void Simulation::prepareDung() {
         if(placed>=p.count)break;
         const auto &layout=arena.rooms[size_t(index)];
         for(int attempt=0;attempt<100;++attempt) {
-            const float margin=p.halfWidth+1;
+            const float margin=halfWidth+1;
             if(layout.bounds.max.x-layout.bounds.min.x<margin*2||layout.bounds.max.z-layout.bounds.min.z<margin*2)break;
             Vector3 at{rng.real(layout.bounds.min.x+margin,layout.bounds.max.x-margin),.85f,rng.real(layout.bounds.min.z+margin,layout.bounds.max.z-margin)};
-            Box box{{at.x-p.halfWidth,0,at.z-p.halfWidth},{at.x+p.halfWidth,p.height,at.z+p.halfWidth}};
-            bool clear=!arena.reservedSupplyCache(at,p.halfWidth+1)&&!arena.blocked(at,p.halfWidth+.6f);
+            const Box box=dungBounds({{at.x-p.halfWidth,0,at.z-p.halfWidth},{at.x+p.halfWidth,p.height,at.z+p.halfWidth}});
+            bool clear=!arena.reservedSupplyCache(at,halfWidth+1)&&!arena.blocked(at,halfWidth+.6f);
             if(arena.supplyCache.room>=0&&(sphereBox(arena.supplyCache.approach,1.5f,box)||
                 segmentBox(arena.supplyCache.approach,arena.supplyCache.reward,box,.6f).hit))clear=false;
-            for(const auto &prop:arena.breakables)if(sphereBox(at,p.halfWidth+1,prop.bounds))clear=false;
+            for(const auto &prop:arena.breakables)if(sphereBox(at,halfWidth+1,prop.bounds))clear=false;
             for(const auto &key:arena.keys)if(sphereBox(key.position,1.5f,box))clear=false;
             for(auto dest:{layout.entry,layout.exit,layout.objective})
                 if(sphereBox(dest,1.4f,box)||segmentBox(layout.center,dest,box,1.25f).hit)clear=false;
@@ -260,7 +267,7 @@ void Simulation::prepareDung() {
             }
             if(!clear||arena.path(layout.center,at,.48f).empty())continue;
             Breakable prop;prop.id=0xd0000000ULL+uint64_t(index);prop.lootSeed=seed_^prop.id;
-            prop.kind=BreakableKind::Dung;prop.room=index;prop.bounds=dungBounds(box);prop.rewardPosition=at;prop.health=p.hits;prop.initialHealth=p.hits;
+            prop.kind=BreakableKind::Dung;prop.room=index;prop.bounds=box;prop.rewardPosition=at;prop.health=p.hits;prop.initialHealth=p.hits;
             arena.breakables.push_back(prop);arena.rebuildWalls();++placed;break;
         }
     }

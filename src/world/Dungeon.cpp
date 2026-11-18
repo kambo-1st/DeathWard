@@ -483,8 +483,10 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
     }
     if(!tutorial)prepareRoomHeartLayouts(seed,roomHeartLayouts,propLayouts);
     rebuildWalls();
-    if (theme == MissionTheme::Canyon)
+    if (theme == MissionTheme::Canyon) {
         buildCanyon(*this, canyonRiver);
+        if(!fitRecordedPropRoom())buildCanyon(*this,canyonRiver);
+    }
     dressStoryRoom();
     if(profile.active()) { dressFloor(); prepareBossArena(); }
     if(profile.bossRails)prepareRailArena();

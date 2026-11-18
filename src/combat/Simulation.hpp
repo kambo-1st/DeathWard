@@ -1305,6 +1305,9 @@ class Simulation {
     std::optional<float> gaperMovementMultiplier;
     // D14a.4 separately enables ordinary Frowning 10.0.0 in the main game.
     std::optional<float> frowningMovementMultiplier;
+    // D14a.5 ordinary room Attack Flies; boss/Hive offspring retain their own policy.
+    std::optional<float> attackFlyMovementMultiplier;
+    bool tunedAttackFly(const Enemy &e) const { return attackFlyMovementMultiplier && e.monster==monsterId(18) && !e.dukeChild && !e.summoner; }
     bool tunedFrowning(const Enemy &e) const { return frowningMovementMultiplier && e.monster==monsterId(10); }
     bool tunedGaper(const Enemy &e) const { return tunedFrowning(e) || (gaperMovementMultiplier && e.monster==monsterId(10,1)); }
     float gaperDrive(const Enemy &e) const { return tunedFrowning(e) ? *frowningMovementMultiplier : gaperMovementMultiplier.value_or(1); }

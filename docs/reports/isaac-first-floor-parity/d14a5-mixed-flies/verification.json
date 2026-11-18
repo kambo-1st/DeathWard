@@ -1,0 +1,94 @@
+{
+  "status": "developer_checks_pass_human_pending",
+  "recorded_at_utc": "2026-11-18T20:31:19.358951+00:00",
+  "base_commit": "7bb4fb449dfc9cee72d119ed6009743771655016",
+  "checks": {
+    "native_force_cases": 63,
+    "actual_simulation_comparisons": 567,
+    "source_slots": 40,
+    "source_counts": {
+      "pooter": 8,
+      "attack_fly": 12,
+      "poop": 20
+    },
+    "source_size_shape_connections_implemented": false,
+    "native_floor_selection_claimed": false,
+    "generated_room_cases": [
+      {
+        "seed": 11,
+        "room": 5,
+        "scale": 1.1,
+        "range": [
+          7,
+          9
+        ]
+      },
+      {
+        "seed": 31,
+        "room": 5,
+        "scale": 1.2,
+        "range": [
+          8,
+          9
+        ]
+      },
+      {
+        "seed": 1,
+        "room": 5,
+        "scale": 1.5,
+        "range": [
+          10,
+          10
+        ]
+      }
+    ],
+    "regression_ctest_completed": 7,
+    "regression_ctest_parent_exit": 143,
+    "remaining_buzzing_suite_separate_rerun": "pass",
+    "actual_game_renderer": "pass",
+    "cli_schema_versions": [
+      5,
+      48,
+      50,
+      51
+    ],
+    "cli_result": "pass",
+    "human_acceptance": false,
+    "full_native_actor_acceptance": false,
+    "original_preset_unchanged": true,
+    "original_preset_sha256": "22e143a736697ccc780ab31bde3c3a1f7ac0d88392e9bf7aa45055ccd3895604",
+    "review_preset_copy": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a5/campaign.save.balance/export.json"
+  },
+  "source_file_sha256": {
+    "src/combat/BuzzFlies.cpp": "ba386939650ead97ca421870e3f4c8767c8eb653e5dc0690ba310a20bb29c4ff",
+    "src/combat/Encounters.cpp": "0532ef12e35e74163c6b4280d1864cf3c7b0803d864505a8877253af81505269",
+    "src/combat/FloorEncounters.cpp": "fceb74618b3601369ea64102e8cc4d294180ffdc33762a4a77e52f6edb9670fb",
+    "src/combat/Navigation.cpp": "75b22bff8384d83a83d79137cb5d1596ab53c61e8e7635f1ffd7045afab14641",
+    "src/combat/Simulation.cpp": "6c52a612183774ddb49a0bb78cca212329a43d6ba3941737a9c160ddb0019d06",
+    "src/combat/Simulation.hpp": "f36c544416512193be2c46e95470dfeeb8785200e60cc36cedaa68bd80144e97",
+    "src/core/BalancePreset.cpp": "e7e4d0f1f1245af5bec8af4c623f510b6bf56793e3208b0d918117175db7863f",
+    "src/core/BalancePreset.hpp": "72e240ae99ecf99554f5c1a1866bc85bce2aeaf423d6f8583480ff72c7fb5bc1",
+    "src/core/Game.cpp": "bafde4d25b04e0df0bc82459e498c12ddceb7f39631dc66cd44710a7fcf3a7ee",
+    "src/core/Game.hpp": "0383c59079d08b2ac679ae12e85d4891e546058ff7ee42fa78798302dc251ea7",
+    "src/core/GameTuning.cpp": "a13b5aa80279fe1948837c78c266ac2a8da3e350447db9bffa13789dde4ed0e6",
+    "src/render/Renderer.cpp": "ce98bb3f9da4e01b0d95b82cb00d02cac46d34404082897e7c75161ac6e38459",
+    "src/world/Dungeon.cpp": "69091bc9c7b6f4978a172bd5e97ed996f4b560198601cf576663d8aa00c87805",
+    "src/world/Dungeon.hpp": "30abb8b832ce2e411d19c90b657cfb76ef0955cb4cec46d06d71424dd69674f3",
+    "src/world/RoomHeartLayouts.cpp": "5bec50a2acc57d6718913559960a51073782ddb3907d0169e17916be2204a48d",
+    "src/world/SourcePropRooms.hpp": "22ace7829b4def40a4c4c5c8cdb5bae234c9d732080b2863eab23afd9bb942b2",
+    "tests/mixed_fly_room_tests.cpp": "1a83e92e928c4bd6f57bb2633d6119d38be39b99b437da2c29589e87a685d6bd",
+    "tests/balance_preset_tests.cpp": "02912138c3c11b6da8fbbafb4e0811f2f39ad977c556cf7e852a6418a3254a57",
+    "scripts/isaac-reference/capture-attack-fly-room.py": "028c44293758bfcc3c7c41c88fc6ed9deb02a517124707899fde8eebf28d4159",
+    "CMakeLists.txt": "c05e0507dd2388f30695233a3996854c0f12c758e05dcb0aad200b1662d9091f"
+  },
+  "remaining": [
+    "human mixed-room pressure/placement review",
+    "native full actor/physics/RNG/scheduler acceptance",
+    "recorded Duke initial arrangement",
+    "remaining recorded treasure/shop/special-room dependencies",
+    "complete-floor review and gameplay save/resume",
+    "deferred pixel/performance work"
+  ],
+  "presentation_follow_up": "wider-poop-2/verification.json",
+  "human_follow_up": "human-acceptance.json"
+}

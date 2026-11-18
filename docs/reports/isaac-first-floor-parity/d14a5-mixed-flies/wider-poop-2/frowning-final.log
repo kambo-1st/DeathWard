@@ -1,0 +1,9 @@
+PASS 360 native trajectory states offset=0,0 errors=2.86102e-06,6.07967e-05
+PASS 360 native trajectory states offset=30,-17 errors=0.000190735,0.000875235
+PASS 360 native trajectory states offset=-63,28 errors=0.000175476,0.000875235
+PASS 288 native supplied phase states; full Slow scheduler not certified
+PASS independent movement/live boundaries, 30/60/120Hz, contact/dodge and floor transition
+PASS source51 seed=456 room=6 size=0.75 range=5-5 live route/real kills/poop/revisit/Apply
+PASS source51 seed=456 room=6 size=1.1 range=7-9 live route/real kills/poop/revisit/Apply
+PASS source51 seed=1205 room=6 size=1.5 range=10-10 live route/real kills/poop/revisit/Apply
+PASS schema50 export/load, older migrations and invalid-value rejection

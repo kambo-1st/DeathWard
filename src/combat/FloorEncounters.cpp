@@ -13,7 +13,7 @@ EncounterPlan Simulation::floorEncounter(int index) const {
         result.budget=result.spent=2;return result;
     }
     if(const auto *props=sourcePropRoom(r.sourceCombatTemplate)) {
-        for(const auto &slot:props->entries)if(slot.type==10||slot.type==14)result.monsters.push_back(monsterId(slot.type,slot.variant));
+        for(const auto &slot:props->entries)if(slot.type==10||slot.type==14||slot.type==18)result.monsters.push_back(monsterId(slot.type,slot.variant));
         result.originalMonsters=result.monsters;result.budget=result.spent=int(result.monsters.size());return result;
     }
     const auto *source=sourceCombatRockRoom(r.sourceCombatTemplate);

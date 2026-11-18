@@ -1,0 +1,29 @@
+{
+  "status": "developer_checks_pass_human_width_review_pending",
+  "recorded_at_utc": "2026-11-18T20:37:02.651085+00:00",
+  "presentation_footprint_before": 0.7,
+  "presentation_footprint_after": 1.05,
+  "presentation_height_before_and_after": 1.05,
+  "rendered_room_width": 1.04526,
+  "rendered_room_height": 1.155,
+  "rendered_room_source_cell": 0.995483,
+  "source_room": 414,
+  "seed": 11,
+  "displayed_room": 5,
+  "piles": 20,
+  "enemies": 20,
+  "zoom": 165,
+  "half_hearts": 6,
+  "god_mode": false,
+  "geometry_and_prop_suites": 5,
+  "legacy_buzz_fly_dung_suite": "pass",
+  "actual_game_renderer": "pass",
+  "original_preset_unchanged": true,
+  "source_file_sha256": {
+    "src/world/DungGeometry.hpp": "05557adf13fa2c5792ac89290dfd3da876ead98d704642a6d7103f5972cf5d18",
+    "src/world/RoomHeartLayouts.cpp": "ed87ef4a228cf5feec5583544554fcc5bb319b5d536ddf05e06554ba95b2f3ef",
+    "src/combat/BuzzFlies.cpp": "da1524c26bd8c36dac9d0c15c899acd375d6dca95014035d920eaea7e9e42c78",
+    "src/render/Renderer.cpp": "8799f3bd2b3d457d593bf9a1cf7e8c4f0a652916d8759c3c8fe141b7df50d1f0"
+  },
+  "remaining": "Human acceptance of wider piles and mixed-room pressure; broader D14a/native-equivalence work remains unfinished."
+}

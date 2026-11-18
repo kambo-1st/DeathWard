@@ -1,0 +1,17 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 189: frowning_room_delivery
+    Start 177: pooter_gameplay
+    Start 190: round_worm_delivery
+    Start 195: duke_boss_loop
+1/8 Test #195: duke_boss_loop ...................   Passed    2.79 sec
+    Start 191: full_fly_delivery
+2/8 Test #190: round_worm_delivery ..............   Passed    3.77 sec
+    Start 105: buzzing_flies
+3/8 Test #189: frowning_room_delivery ...........   Passed    5.78 sec
+    Start 192: ordinary_room_props
+4/8 Test #191: full_fly_delivery ................   Passed    5.14 sec
+    Start 150: balance_preset_contract
+5/8 Test #150: balance_preset_contract ..........   Passed    0.27 sec
+6/8 Test #192: ordinary_room_props ..............   Passed    5.06 sec
+7/8 Test #177: pooter_gameplay ..................   Passed   15.43 sec

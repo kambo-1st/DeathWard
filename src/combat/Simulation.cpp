@@ -197,7 +197,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     for(auto &enemy:next.charmFollowers_){enemy.id=next.nextEntity_++;enemy.summoner=enemy.componentOwner=0;}
     next.restoreCharmFollowers();next.dead=dead;next.finished=finished;
     next.godMode=godMode;next.limits=limits;next.canonicalShooting=canonicalShooting;
-    next.gaperMovementMultiplier=gaperMovementMultiplier;next.frowningMovementMultiplier=frowningMovementMultiplier;
+    next.gaperMovementMultiplier=gaperMovementMultiplier;next.frowningMovementMultiplier=frowningMovementMultiplier;next.attackFlyMovementMultiplier=attackFlyMovementMultiplier;
     next.spiderMovementMultiplier=spiderMovementMultiplier;
     next.pooterTuning=pooterTuning;
     next.inventoryBombTuning=inventoryBombTuning;
@@ -216,7 +216,7 @@ bool Simulation::advanceFloor() {
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
     next.haloOfFlies=haloOfFlies;next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
     next.canonicalShooting=canonicalShooting;
-    next.gaperMovementMultiplier=gaperMovementMultiplier;next.frowningMovementMultiplier=frowningMovementMultiplier;
+    next.gaperMovementMultiplier=gaperMovementMultiplier;next.frowningMovementMultiplier=frowningMovementMultiplier;next.attackFlyMovementMultiplier=attackFlyMovementMultiplier;
     next.spiderMovementMultiplier=spiderMovementMultiplier;
     next.pooterTuning=pooterTuning;
     next.inventoryBombTuning=inventoryBombTuning;

@@ -100,7 +100,16 @@ void generation(uint64_t seed,uint64_t largeSeed) {
         const auto prop=std::find_if(s.arena.breakables.begin(),s.arena.breakables.end(),[&](const auto &b){return b.room==room&&b.kind==BreakableKind::Dung;});check(prop!=s.arena.breakables.end(),"poop exists");
         const auto id=prop->id;const auto at=prop->rewardPosition;
         bool shot=false;for(auto dir:std::array<Vector3,4>{{{0,0,-1},{0,0,1},{1,0,0},{-1,0,0}}}){const float standOff=std::max(prop->bounds.max.x-prop->bounds.min.x,prop->bounds.max.z-prop->bounds.min.z)*.5f+.9f;auto p=add(at,mul(dir,standOff));if(s.arena.roomAt(p)==room&&!s.arena.blocked(p,.48f)){s.player.position=p;Input in;in.fire=true;in.aim=at;for(int n=0;n<360&&!prop->destroyed;++n)s.step(in);if(prop->destroyed){shot=true;break;}}}
-        check(shot&&prop->propReward.resolved&&!s.arena.blocked(at,.48f),"real shots destroy poop and resolve reward once");const auto reward=prop->propReward.seed;
+        check(shot&&prop->destroyed&&prop->propReward.resolved,"real shots destroy poop and resolve reward once");
+        // Wider adjacent piles can still cover the destroyed pile's centre.
+        // Clear those real neighbours before expecting player-sized access.
+        for(auto &other:s.arena.breakables)if(other.room==room&&other.solid()&&sphereBox(at,.48f,other.bounds)) {
+            check(other.kind==BreakableKind::Dung,"only an adjacent source pile screens the opened centre");
+            Input in;in.fire=true;in.aim=other.rewardPosition;
+            for(int n=0;n<360&&!other.destroyed;++n)s.step(in);
+            check(other.destroyed&&other.propReward.resolved,"real shots clear the adjacent wider pile");
+        }
+        check(!s.arena.blocked(at,.48f),"destroyed piles open physical access");const auto reward=prop->propReward.seed;
         s.enterRoom(0);s.enterRoom(room);check(s.roomThreats()==0,"revisit stays clear");auto p=std::find_if(s.arena.breakables.begin(),s.arena.breakables.end(),[&](const auto &b){return b.id==id;});check(p->destroyed&&p->propReward.seed==reward,"revisit keeps destruction/reward identity");
         s.frowningMovementMultiplier=.65f;s.resizeRooms(dims[0],int(dims[1]),int(dims[2]),.26f,std::nullopt,0);check(s.frowningMovementMultiplier==.65f&&s.arena.rooms[size_t(room)].sourceCombatTemplate!=51,"OFF Apply retains movement");s.resizeRooms(dims[0],int(dims[1]),int(dims[2]),.26f,std::nullopt,1);check(s.arena.rooms[size_t(room)].sourceCombatTemplate==51&&s.roomEnemies(room).size()==2,"SOURCE Apply restores source51");
         std::cout<<"PASS source51 seed="<<seed<<" room="<<room+1<<" size="<<dims[0]<<" range="<<dims[1]<<'-'<<dims[2]<<" live route/real kills/poop/revisit/Apply\n";

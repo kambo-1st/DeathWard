@@ -1,0 +1,3 @@
+PASS 63 native force cases / 567 actual Simulation states across tuning and frame partitions
+PASS independent movement, cadence/partitions, contact/dodge and floor transition
+PASS schema51 round trip, migration and invalid-value rejection

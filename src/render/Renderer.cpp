@@ -1,3 +1,4 @@
+#include "world/DungGeometry.hpp"
 #include "render/Renderer.hpp"
 #include "core/ExpeditionHud.hpp"
 #include "items/Items.hpp"
@@ -118,9 +119,10 @@ void breakableModel(const Breakable &p,float time,Color stone,unsigned char alph
                 {-.1f,0,.20f},{.30f,0,.18f},{.01f,0,.01f}}};
             constexpr std::array<float,5> sizes{.055f,.08f,.04f,.06f,.045f};
             const float angle=float(p.id%29)*2.399963f;
+            const float remnantScale=DungRemnantFootprintScale/DungFootprintScale;
             for(size_t i=0;i<offsets.size();++i) {
-                const auto at=add(base,rotateY({offsets[i].x*size.x,0,offsets[i].z*size.z},angle));
-                const float radius=std::min(.18f,size.x*sizes[i]);
+                const auto at=add(base,rotateY({offsets[i].x*size.x*remnantScale,0,offsets[i].z*size.z*remnantScale},angle));
+                const float radius=std::min(.18f,size.x*remnantScale*sizes[i]);
                 rlPushMatrix();rlTranslatef(at.x,.02f+radius*.3f,at.z);
                 rlScalef(radius,radius*.4f,radius*.75f);
                 DrawSphereEx({},1,3,6,i%2?dry:dirt);rlPopMatrix();
@@ -2451,7 +2453,7 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::BalanceDoorsTab,"DOORS",920,175,155,28,game.balanceDoorsOpen))return Action::BalanceDoorsTab;
     }
     if(game.balanceEnemiesOpen) {
-        if(button(Action::BalanceChasersTab,"GAPER / SPIDER",470,175,240,28,!game.balancePooterOpen&&!game.balanceMonstroOpen&&!game.balanceFullFlyOpen&&!game.balanceRoundWormOpen&&!game.balanceFrowningOpen))return Action::BalanceChasersTab;
+        if(button(Action::BalanceChasersTab,"GAPER / SPIDER",470,175,240,28,!game.balancePooterOpen&&!game.balanceMonstroOpen&&!game.balanceFullFlyOpen&&!game.balanceRoundWormOpen&&!game.balanceFrowningOpen&&!game.balanceAttackFlyOpen))return Action::BalanceChasersTab;
         if(button(Action::BalancePooterTab,"POOTER",730,175,150,28,game.balancePooterOpen))return Action::BalancePooterTab;
     }
     if(game.balanceEnemiesOpen&&button(Action::BalanceMonstroTab,"BOSSES",905,175,170,28,game.balanceMonstroOpen))return Action::BalanceMonstroTab;
@@ -2645,6 +2647,18 @@ Action Renderer::balancePanel(const Game &game) {
         text(duke?"Health keeps injury fraction. Movement and fly speed apply live.":"Health keeps damage taken proportionally. New volleys use new shot speed.",205,442,13,Teal);
         if(button(Action::ResetMonstro,"RESET BOSS VALUES",205,468,350,35))return Action::ResetMonstro;
         if(button(Action::BalanceBossRewardTab,game.balanceDraft.bossRewardItem==255?"REWARD: SCREW >":"REWARD: BREAKFAST >",585,468,490,35))return Action::BalanceBossRewardTab;
+    } else if(game.balanceEnemiesOpen&&game.balanceAttackFlyOpen) {
+        text("ATTACK FLY",205,185,22,Gold);
+        text("MOVEMENT",205,248,18,Paper);
+        text(decimal(game.balancePreset.attackFlyMovementMultiplier*100)+"%",490,240,28,Paper);
+        if(button(Action::AttackFlyMovementDown,"- 5%",650,235,130,40))return Action::AttackFlyMovementDown;
+        if(button(Action::AttackFlyMovementUp,"+ 5%",795,235,130,40))return Action::AttackFlyMovementUp;
+        text("Ordinary room flies. 100% uses the accepted base-player scale.",205,310,14,Teal);
+        text("10 - 200%. Applies at the next steering tick; momentum is retained.",205,350,14,Muted);
+        text("Duke offspring and Full Fly have independent controls.",205,384,14,Muted);
+        text("Mixed encounter: SOURCE ROOM LAYOUTS + PROPS, in compatible rooms.",205,422,13,Teal);
+        if(button(Action::AttackFlyMovementReset,"RESET ATTACK FLY TO 100%",205,466,450,36))return Action::AttackFlyMovementReset;
+        if(button(Action::BalanceFullFlyTab,"FULL FLY >",865,466,210,36))return Action::BalanceFullFlyTab;
     } else if(game.balanceEnemiesOpen&&game.balanceFrowningOpen) {
         text("FROWNING GAPER",205,185,22,Gold);
         text("MOVEMENT",205,248,18,Paper);
@@ -2676,6 +2690,7 @@ Action Renderer::balancePanel(const Game &game) {
     } else if(game.balanceEnemiesOpen&&game.balanceFullFlyOpen) {
         const auto &t=game.balancePreset.fullFly;
         text("FULL FLY",205,185,22,Gold);
+        if(button(Action::BalanceAttackFlyTab,"ATTACK FLY >",865,348,210,28))return Action::BalanceAttackFlyTab;
         const float values[]={t.movement,t.shotSpeed};
         const char *labels[]={"MOVEMENT","DEATH SHOT SPEED"};
         for(int i=0;i<2;++i) {

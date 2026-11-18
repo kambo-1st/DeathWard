@@ -1,0 +1,39 @@
+{
+  "result": "pass",
+  "cases": [
+    {
+      "case": "schema5",
+      "result": "pass",
+      "balance": "BALANCE duke=0 duke_hp=1 duke_movement=1 duke_flies=1 monstro=1 boss_policy=fixed opening_boss=20 boss_hp=1 boss_movement=1 boss_shots=1 speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 attack_fly_movement=1 frowning_movement=1 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 whip_strength=1 cancer_strength=1 trinket_rewards=1 trinket_key=U book_duration=10 book_recharge=1 yum_healing=2 yum_recharge=1 active_key=C halo_orbit_speed=1 halo_orbit_radius=1 halo_contact_radius=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 boss_reward=25 screw_tears=1 round_worm_cycle=1 round_worm_shots=1 full_fly_movement=1 full_fly_shots=1 screw_shots=1 revision=d102de7bceb9075d profile=custom",
+      "pid": 4121913,
+      "preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+      "direct_source_review": false
+    },
+    {
+      "case": "schema48",
+      "result": "pass",
+      "balance": "BALANCE duke=0 duke_hp=1 duke_movement=1 duke_flies=1 monstro=1 boss_policy=fixed opening_boss=20 boss_hp=1 boss_movement=1 boss_shots=1 speed=1.1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=1.05 range=6.5 attack_fly_movement=1 frowning_movement=1 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 whip_strength=1 cancer_strength=1 trinket_rewards=1 trinket_key=U book_duration=10 book_recharge=1 yum_healing=2 yum_recharge=1 active_key=C halo_orbit_speed=1 halo_orbit_radius=1 halo_contact_radius=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 boss_reward=25 screw_tears=1 round_worm_cycle=1 round_worm_shots=1 full_fly_movement=1 full_fly_shots=1 screw_shots=1 revision=6006933ccb5cea7f profile=custom",
+      "pid": 4121927,
+      "preset_sha256": "22e143a736697ccc780ab31bde3c3a1f7ac0d88392e9bf7aa45055ccd3895604",
+      "direct_source_review": true
+    },
+    {
+      "case": "schema50",
+      "result": "pass",
+      "balance": "BALANCE duke=0 duke_hp=1 duke_movement=1 duke_flies=1 monstro=1 boss_policy=fixed opening_boss=20 boss_hp=1 boss_movement=1 boss_shots=1 speed=1.1 room_size=1.11 routes=0.26 zoom=165 tears=1.92727 shot_speed=1.05 range=6.5 attack_fly_movement=1 frowning_movement=0.95 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 whip_strength=1 cancer_strength=1 trinket_rewards=1 trinket_key=U book_duration=10 book_recharge=1 yum_healing=2 yum_recharge=1 active_key=C halo_orbit_speed=1 halo_orbit_radius=1 halo_contact_radius=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 boss_reward=25 screw_tears=1 round_worm_cycle=1 round_worm_shots=1 full_fly_movement=1 full_fly_shots=1 screw_shots=1 revision=907de57afb43f218 profile=custom",
+      "pid": 4121937,
+      "preset_sha256": "68566db206d5e3dbac401ba1b361809911925c3312d587fed6aec7335d554d93",
+      "direct_source_review": false
+    },
+    {
+      "case": "schema51",
+      "result": "pass",
+      "balance": "BALANCE duke=0 duke_hp=1 duke_movement=1 duke_flies=1 monstro=1 boss_policy=fixed opening_boss=20 boss_hp=1 boss_movement=1 boss_shots=1 speed=1.1 room_size=1.11 routes=0.26 zoom=165 tears=1.92727 shot_speed=1.05 range=6.5 attack_fly_movement=0.95 frowning_movement=1 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 whip_strength=1 cancer_strength=1 trinket_rewards=1 trinket_key=U book_duration=10 book_recharge=1 yum_healing=2 yum_recharge=1 active_key=C halo_orbit_speed=1 halo_orbit_radius=1 halo_contact_radius=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 boss_reward=25 screw_tears=1 round_worm_cycle=1 round_worm_shots=1 full_fly_movement=1 full_fly_shots=1 screw_shots=1 revision=21fcf57ca2d5bafe profile=custom",
+      "pid": 4121947,
+      "preset_sha256": "b5e24c037a78bb2eb73a14df062040baf236034d8443d6d080d052fc11c02390",
+      "direct_source_review": false
+    }
+  ],
+  "original_preset_sha256": "22e143a736697ccc780ab31bde3c3a1f7ac0d88392e9bf7aa45055ccd3895604",
+  "original_preset_unchanged": true
+}

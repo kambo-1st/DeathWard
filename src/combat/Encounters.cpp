@@ -221,12 +221,14 @@ void Simulation::spawnRoomEnemies() {
         return;
     }
     if(const auto *source=sourcePropRoom(layout.sourceCombatTemplate)) {
-        for(const auto &slot:source->entries)if(slot.type==1400||slot.type==10||slot.type==14) {
+        for(const auto &slot:source->entries)if(slot.type==1400||slot.type==10||slot.type==14||slot.type==18) {
             const auto id=monsterId(slot.type==1400?33:slot.type,slot.variant);
-            const auto at=sourceHeartCell(layout,slot.x,slot.y);
+            const auto at=sourcePropCell(layout,*source,slot.x,slot.y);
             const auto *definition=content->monster(id);
-            if(!definition||arena.blocked(at,definition->radius)||!roomSpawnClear(at,definition->radius)||!spawnMonster(id,at))
-                throw std::runtime_error("Ordinary prop room placement is obstructed");
+            // Source flyers use ordinary flight admission/height above props.
+            // Wider piles may cover their ground projection without blocking flight.
+            if(!definition||(definition->flying?arena.flightBlocked(at,definition->radius,room):arena.blocked(at,definition->radius))||!roomSpawnClear(at,definition->radius)||!spawnMonster(id,at))
+                throw std::runtime_error("Source prop room "+std::to_string(source->variant)+" slot "+std::to_string(slot.ordinal)+" placement is obstructed (room "+std::to_string(room+1)+", cell "+std::to_string(slot.x)+","+std::to_string(slot.y)+")");
             if(enemies.back().environment)enemies.back().environment->dropSeed=propSlotSeed(layout.sourceRoomSpawnSeed,slot.ordinal);
         }
         return;

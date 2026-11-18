@@ -89,6 +89,7 @@ enum class Action {
     BalanceCombatTab, CombatDamageDown, CombatDamageUp, RegularHealthDown, RegularHealthUp, ResetCombat,
     BalanceChasersTab,
     BalancePooterTab,
+    BalanceAttackFlyTab,AttackFlyMovementDown,AttackFlyMovementUp,AttackFlyMovementReset,
     BalanceFrowningTab,FrowningMovementDown,FrowningMovementUp,FrowningMovementReset,
     BalanceRoundWormTab,RoundWormCycleDown,RoundWormCycleUp,RoundWormShotDown,RoundWormShotUp,ResetRoundWorm,
     BalanceFullFlyTab,FullFlyMovementDown,FullFlyMovementUp,FullFlyShotDown,FullFlyShotUp,ResetFullFly,
@@ -172,7 +173,7 @@ class Game {
     bool balanceDukeValues=false; // Which boss is edited, independent of staged pool selection.
     bool balanceBossRewardOpen = false;
     bool balancePropsOpen=false;
-    bool balanceFullFlyOpen=false,balanceRoundWormOpen=false,balanceFrowningOpen=false;
+    bool balanceFullFlyOpen=false,balanceRoundWormOpen=false,balanceFrowningOpen=false,balanceAttackFlyOpen=false;
     bool balanceEnemiesOpen = false, balancePooterOpen = false, balanceCombatOpen = false, balanceRewardsOpen = false, balanceRoomHeartsOpen = false, balanceTreasureOpen = false, balanceShopOpen=false, balanceShopKeyOpen=false, balanceShopStockOpen=false, balanceShopBombOpen=false, balanceShopSoulHeartOpen=false;
     bool balanceBombsOpen=false, balanceDoorsOpen=false;
     BalancePreset balancePreset, balanceDraft;

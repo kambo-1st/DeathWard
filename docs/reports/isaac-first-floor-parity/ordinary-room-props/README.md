@@ -73,3 +73,10 @@ Ordinary piles now use 70% of their original width/depth and 105% of their origi
 The user reported that the first height change was not visible. A temporary actual Game/Renderer comparison keeps the room, camera, zoom, clock and intact health identical and changes only the pile height. Generated bounds confirmed 0.77 → 0.9625 world units (+25%), retaining width 1.83379. At 1440×900 and 165% zoom the tip moved only about six screen pixels; the screenshots confirm a subtle silhouette change. See the historical `poop-height-before.png`, `poop-height-current.png` and `poop-height-audit.log`. The user subsequently selected +50% from the short version: current full height is 1.155 world units. The user subsequently accepted this taller appearance.
 
 The selected +50% build and ordinary prop suite pass. A fresh actual Game/Renderer comparison confirms unchanged width and full heights 0.77 → 1.155, with about twelve screen pixels of tip movement at the same 1440×900/165% view. See `poop-height-50-before.png`, `poop-height-50-current.png` and `poop-height-50-audit.log`. The user accepted these proportions ("ok, nice now") and selected the separate [heart/dynamite HUD adjustment](../../expedition-heart-dynamite-hud/README.md). Broader prop/parity gaps above remain open.
+
+
+## Wider piles requested during D14a.5, 2026-11-18
+
+The later user request supersedes the70% intact footprint above: ordinary piles now use105% authored width/depth, retaining105% height and the earlier small destroyed crumbs. Rendering and collision use the same wider bounds, including legacy placement reservations and the source414 terrain-fit check. See [the D14a.5 follow-up](../d14a5-mixed-flies/README.md#wider-poop--requested-follow-up-2026-11-18). Developer geometry and render checks pass; human acceptance of this new width is pending.
+
+The subsequent second width request increases the intact footprint to131.25% of authored size, retaining105% height and the small remnants. See [the second D14a.5 width adjustment](../d14a5-mixed-flies/README.md#second-width-increase--requested-follow-up-2026-11-18). Human acceptance remains pending.

@@ -1,0 +1,18 @@
+{
+  "result": "pass",
+  "slots": 40,
+  "counts": {
+    "1500": 20,
+    "14": 8,
+    "18": 12
+  },
+  "source_shape_metadata_only": 8,
+  "source_dimensions_metadata_only": [
+    26,
+    14
+  ],
+  "cpp_entries_exact_match": true,
+  "native_weighted_floor_allocation": false,
+  "adaptation": "one complete candidate after source704 allocation; finished-terrain uniform fit, physical doorway clearance and whole-record rejection; no source outline or doors imposed",
+  "source_room_sha256": "ae4212f5c0d9e4fafe9fc964ffa73231cbf28865a8239119f4531914a08f3476"
+}

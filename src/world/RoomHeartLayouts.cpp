@@ -160,6 +160,30 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode,int propLayouts) {
         layout.sourceRoomSpawnSeed=sourceRoomDescriptorSeeds(layout.sourceRoomSelectionSeed).spawn;
         break;
     }
+    // Source414 is shape8/26x14, outside the native13x7 selector pool.
+    // Add one complete recorded arrangement to a remaining compatible site.
+    // Testing resize may remove this encounter; it never truncates its roster.
+    if(mode==1&&propLayouts==1)for(auto it=eligible.rbegin();it!=eligible.rend();++it) {
+        const int index=*it;auto &layout=rooms[size_t(index)];
+        if(layout.kind!=RoomKind::Combat||index==2||index==3||layout.sourceCombatTemplate>=0||layout.sourceObstacleTemplate>=0||
+           !layout.heartSpawns.empty()||std::any_of(keys.begin(),keys.end(),[&](const auto &key){return key.room==index;}))continue;
+        const auto &source=*sourcePropRoom(414);const float cell=sourcePropCellSize(layout,source);
+        if(cell<.95f)continue; // Adjacent .45-radius actors must have physical clearance.
+        bool fits=true;
+        for(const auto &slot:source.entries) {
+            const auto at=sourcePropCell(layout,source,slot.x,slot.y);
+            const float radius=slot.type==1500?dungClearanceRadius(cell):.45f;
+            for(int p:layout.passages) {
+                const auto &passage=passages[size_t(p)];const int side=passage.rooms[0]==index?0:1;
+                if(sphereBox(at,radius,passage.gates[size_t(side)])||distance(at,doorApproach(p,side))<radius+2.5f)fits=false;
+            }
+        }
+        if(!fits)continue;
+        layout.sourceCombatTemplate=layout.sourceObstacleTemplate=414;
+        layout.kind=RoomKind::Combat;
+        // Keep original heart metadata/seeds until the terrain fit succeeds.
+        break;
+    }
     if(propLayouts==2)for(int index:eligible) {
         if(index==2||index==3||std::any_of(keys.begin(),keys.end(),[&](const auto &key){return key.room==index;}))continue;
         auto &layout=rooms[size_t(index)];
@@ -171,16 +195,52 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode,int propLayouts) {
         break;
     }
 }
+bool Arena::fitRecordedPropRoom() {
+    for(int index=0;index<roomCount();++index) {
+        auto &layout=rooms[size_t(index)];if(layout.sourceCombatTemplate!=414)continue;
+        const auto &source=*sourcePropRoom(414);
+        const float initial=sourcePropCellSize(layout,source);
+        // Fit the complete arrangement uniformly. Native cell identities/order
+        // stay unchanged; all physical bodies and doorway landings must fit.
+        for(int percent=100;percent>0;--percent) {
+            const float cell=initial*percent/100;if(cell<.95f)break;
+            layout.sourcePropCellOverride=cell;bool fits=true;
+            for(const auto &slot:source.entries) {
+                const auto at=sourcePropCell(layout,source,slot.x,slot.y);
+                const float radius=slot.type==1500?dungClearanceRadius(cell):.45f;
+                if(roomAt(at)!=index||blocked(at,radius)){fits=false;break;}
+                for(int p:layout.passages) {
+                    const auto &passage=passages[size_t(p)];const int side=passage.rooms[0]==index?0:1;
+                    if(sphereBox(at,radius,passage.gates[size_t(side)])||distance(at,doorApproach(p,side))<radius+2.5f)fits=false;
+                }
+                if(!fits)break;
+            }
+            if(!fits)continue;
+            layout.sourceHeartTemplate=414;
+            Random allocation(visualSeed^0x4d49584544464c59ULL^uint64_t(index));
+            layout.sourceRoomSelectionSeed=uint32_t(allocation.next());
+            if(!layout.sourceRoomSelectionSeed)layout.sourceRoomSelectionSeed=1;
+            layout.sourceRoomSpawnSeed=sourceRoomDescriptorSeeds(layout.sourceRoomSelectionSeed).spawn;
+            return true;
+        }
+        // Ordinary content and its original metadata/seeds remain available.
+        // Caller restores the omitted procedural terrain before dressing/spawning.
+        layout.sourceCombatTemplate=layout.sourceObstacleTemplate=-1;layout.sourcePropCellOverride=0;
+        return false;
+    }
+    return true;
+}
 void Arena::prepareSourceHeartRocks() {
     for(int index=0;index<roomCount();++index) {
         const auto &layout=rooms[size_t(index)];
         if(const auto *source=sourcePropRoom(layout.sourceObstacleTemplate)) {
-            const float half=sourceHeartCellSize(layout)*.5f;
+            const float half=sourcePropCellSize(layout,*source)*.5f;
             for(const auto &slot:source->entries)if(slot.type==1000||slot.type==1500) {
-                const auto at=sourceHeartCell(layout,slot.x,slot.y);
+                const auto at=sourcePropCell(layout,*source,slot.x,slot.y);
                 Breakable prop;prop.room=index;prop.kind=slot.type==1500?BreakableKind::Dung:BreakableKind::CrackedRock;
-                prop.sourceGridIndex=(slot.y+1)*15+slot.x+1;
-                prop.id=0x535243000000ULL+uint64_t(index)*256+uint64_t(prop.sourceGridIndex);
+                prop.sourceGridIndex=(slot.y+1)*(source->width+2)+slot.x+1;
+                // Large source grids need a separate namespace/stride; preserve old IDs.
+                prop.id=(source->width>13?0x535244000000ULL+uint64_t(index)*512:0x535243000000ULL+uint64_t(index)*256)+uint64_t(prop.sourceGridIndex);
                 prop.bounds={{at.x-half,0,at.z-half},{at.x+half,slot.type==1500?1.1f:1.35f,at.z+half}};
                 if(prop.kind==BreakableKind::Dung)prop.bounds=dungBounds(prop.bounds);
                 prop.rewardPosition=at;prop.paid=slot.type!=1500;

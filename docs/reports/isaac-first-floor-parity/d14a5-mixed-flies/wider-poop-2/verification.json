@@ -1,0 +1,31 @@
+{
+  "status": "developer_checks_pass_human_width_review_pending",
+  "recorded_at_utc": "2026-11-18T20:48:59.379226+00:00",
+  "presentation_footprint_before": 1.05,
+  "presentation_footprint_after": 1.3125,
+  "presentation_height_before_and_after": 1.05,
+  "rendered_room_width_before": 1.04526,
+  "rendered_room_width_after": 1.28938,
+  "rendered_width_increase_percent": 23.354954748100944,
+  "rendered_room_height": 1.155,
+  "rendered_room_source_cell": 0.982385,
+  "source_room": 414,
+  "seed": 11,
+  "displayed_room": 5,
+  "piles": 20,
+  "enemies": 20,
+  "zoom": 165,
+  "half_hearts": 6,
+  "god_mode": false,
+  "geometry_ctest_passes": 4,
+  "frowning_fixture_failure": "Neighbouring wider pile still covered the destroyed pile centre; diagnostics confirmed target destroyed/reward resolved, clear terrain, one solid neighbour.",
+  "frowning_corrected_physical_shooting_check": "pass at three sizes; real shots destroy covering neighbour before checking access",
+  "legacy_buzz_fly_dung_suite": "pass",
+  "actual_game_renderer": "pass",
+  "source_file_sha256": {
+    "src/world/DungGeometry.hpp": "64a090541c382500212c59c83a6955c1ff275ea73a47ea697822745ad936a0fa",
+    "src/combat/Encounters.cpp": "665209d7160ec174852c51e5f220dc328937946d8831dde0380951315ab9f203",
+    "tests/frowning_room_tests.cpp": "a8d2db17a5c94c3812de69b7c976d646d58a534769ed2c1515da421f914275ac"
+  },
+  "remaining": "Human acceptance of the wider presentation and mixed-room pressure; broader D14a/native equivalence work remains unfinished."
+}
