@@ -327,7 +327,7 @@ void Simulation::stepFearMotion(Enemy &e,Vector3 &momentum) {
     auto p=*profile->fear;auto &r=e.statuses->flee;
     if(tunedGaper(e)) {
         p.scale=GaperMovementScale;
-        p.wanderForce*=*gaperMovementMultiplier;p.pathForce*=*gaperMovementMultiplier;
+        p.wanderForce*=gaperDrive(e);p.pathForce*=gaperDrive(e);
     }
     // Headless .75 friction precedes EvadeTarget, but AddVelocity divides by
     // accumulated friction; the impulse cancels that factor. Gaper applies

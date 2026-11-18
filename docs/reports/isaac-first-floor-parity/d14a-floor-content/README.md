@@ -12,8 +12,8 @@ There are **12 descriptors**: entrance, four ordinary combat rooms, one shop, on
 | --- | --- | --- | --- |
 | Entrance | 1.2.0 | Empty start room | Frozen-floor role mapping not implemented |
 | Combat | 1.704.0 | Two Full Flies249.0.0 | D14a.2 now enables Full Fly and the two-enemy arrangement; developer checks pass and scoped human acceptance is recorded |
-| Combat | 1.51.0 | Two Frowning Gapers10.0.0, two plain rocks, four poop grids | Existing Frowning controller is not the scoped D04 accepted ordinary variant; arrangement and poop interaction need work |
-| Combat | 1.505.0 | Two Round Worms244.0.0,36 plain rocks | Round Worm is absent from the active enemy registry; arrangement not enabled |
+| Combat | 1.51.0 | Two Frowning Gapers10.0.0, two plain rocks, four poop grids | D14a.4 now enables the distinct Frowning movement/Head consumer and this arrangement; developer checks pass and scoped human acceptance is recorded |
+| Combat | 1.505.0 | Two Round Worms244.0.0,36 plain rocks | D14a.3 now enables Round Worm and this arrangement; scoped user acceptance recorded and committed as00313e5b |
 | Combat | 1.414.0 | Eight Pooters14.0.0,12 Attack Flies18.0.0,20 poop grids | Scoped Pooter exists; this mixed encounter, standalone fly pressure and obstacles are not accepted |
 | Boss | 5.2012.13 | Duke67.0.0 plus one initial Attack Fly, four rocks and two poop grids; **observed clear reward: Screw255** | Accepted Duke loop exists; exact initial arrangement remains unfinished; Screw reward/effect is the selected D14a.1 implementation |
 | Treasure | 4.6.0 | **Observed: Mom’s Eye55 and two pennies**, uncollected after the same-seed restart | Mom’s Eye is not in the active collectible registry; effect and complete arrangement remain unfinished |

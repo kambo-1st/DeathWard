@@ -9,12 +9,12 @@ void Simulation::updateGaper(Enemy &e,float dt) {
         p.scale=GaperMovementScale;
         // Source force and friction remain in immutable content. This explicit
         // live override changes pursuit drive, preserving existing momentum.
-        p.force*=*gaperMovementMultiplier;p.awakeForce*=*gaperMovementMultiplier;
+        p.force*=gaperDrive(e);p.awakeForce*=gaperDrive(e);
     }
     if(!e.gaper)e.gaper=GaperRuntime{};
     auto &r=*e.gaper;
     const float timeScale=enemyTimeScale(e);
-    const bool nativeHead=nativeGaperPursuit&&p.frowning;
+    const bool nativeHead=(nativeGaperPursuit||tunedFrowning(e))&&p.frowning;
     e.age+=dt;e.flash=std::max(0.f,e.flash-dt);e.fireContactCooldown=std::max(0.f,e.fireContactCooldown-dt);
     r.momentum=mul(horizontal(e.velocity),1/(p.scale*30));
     if(e.state==EnemyState::Stunned) {

@@ -1303,7 +1303,11 @@ class Simulation {
     // player's current Speed stat: pinned player steady step * 60 Hz.
     static constexpr float GaperMovementScale = float(Player::AcceptedWalkingPace / (4.414238452911377 * 60));
     std::optional<float> gaperMovementMultiplier;
-    bool tunedGaper(const Enemy &e) const { return gaperMovementMultiplier && e.monster==monsterId(10,1); }
+    // D14a.4 separately enables ordinary Frowning 10.0.0 in the main game.
+    std::optional<float> frowningMovementMultiplier;
+    bool tunedFrowning(const Enemy &e) const { return frowningMovementMultiplier && e.monster==monsterId(10); }
+    bool tunedGaper(const Enemy &e) const { return tunedFrowning(e) || (gaperMovementMultiplier && e.monster==monsterId(10,1)); }
+    float gaperDrive(const Enemy &e) const { return tunedFrowning(e) ? *frowningMovementMultiplier : gaperMovementMultiplier.value_or(1); }
     // D05 shares D04's fixed base-player anchor. The override changes drive,
     // not perception, the committed destination, idle timing or current velocity.
     std::optional<float> spiderMovementMultiplier;

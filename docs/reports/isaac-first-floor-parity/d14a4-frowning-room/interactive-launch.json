@@ -1,0 +1,23 @@
+{
+  "pid": 4107888,
+  "argv": [
+    "stdbuf",
+    "-oL",
+    "-eL",
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "456",
+    "--review-source-room",
+    "51",
+    "--mute",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a4/campaign.save"
+  ],
+  "started_utc": "2026-11-18T19:58:18.943753+00:00",
+  "direct_review_ready": true,
+  "preset_sha256": "22e143a736697ccc780ab31bde3c3a1f7ac0d88392e9bf7aa45055ccd3895604",
+  "human_accepted": false
+}

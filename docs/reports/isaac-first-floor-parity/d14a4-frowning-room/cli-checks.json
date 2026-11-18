@@ -1,0 +1,30 @@
+[
+  {
+    "case": "schema5",
+    "normal_cli_direct_entry": true,
+    "room": 6,
+    "frowning_movement": 1,
+    "exit": "stopped own validation process after startup check"
+  },
+  {
+    "case": "schema48",
+    "normal_cli_direct_entry": true,
+    "room": 6,
+    "frowning_movement": 1,
+    "exit": "stopped own validation process after startup check"
+  },
+  {
+    "case": "schema49",
+    "normal_cli_direct_entry": true,
+    "room": 6,
+    "frowning_movement": 1,
+    "exit": "stopped own validation process after startup check"
+  },
+  {
+    "case": "schema50",
+    "normal_cli_direct_entry": true,
+    "room": 6,
+    "frowning_movement": 0.95,
+    "exit": "stopped own validation process after startup check"
+  }
+]

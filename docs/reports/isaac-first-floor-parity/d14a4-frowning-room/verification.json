@@ -1,0 +1,79 @@
+{
+  "date": "2026-11-18",
+  "delivery": "D14a.4",
+  "implementation": "enabled in main game",
+  "human_accepted": true,
+  "previous_accepted_commit": "00313e5b",
+  "main_build": "pass",
+  "focused_suites": {
+    "frowning_room_delivery": "pass",
+    "gaper_family": "pass",
+    "gaper_gameplay": "pass",
+    "gaper_trajectories": "pass",
+    "gaper_trajectories_substeps": "pass",
+    "balance_preset_contract": "pass",
+    "round_worm_delivery": "pass",
+    "full_fly_delivery": "pass",
+    "ordinary_room_props": "pass"
+  },
+  "native_comparisons": {
+    "frowning_trajectory_cases": 2,
+    "states_per_offset": 360,
+    "world_offsets": 3,
+    "position_bound": 0.002,
+    "velocity_bound": 0.005,
+    "supplied_head_cases": 6,
+    "head_states": 288,
+    "full_native_actor_acceptance": false
+  },
+  "natural_room_cases": [
+    {
+      "seed": 456,
+      "room": 6,
+      "size": 0.75,
+      "range": [
+        5,
+        5
+      ]
+    },
+    {
+      "seed": 456,
+      "room": 6,
+      "size": 1.1,
+      "range": [
+        7,
+        9
+      ]
+    },
+    {
+      "seed": 1205,
+      "room": 6,
+      "size": 1.5,
+      "range": [
+        10,
+        10
+      ]
+    }
+  ],
+  "actual_game_renderer": "mouse tuning/reset/export/load/remember, staged Apply, direct retry, awakening, clear/revisit, fresh expedition passed",
+  "floor_transition": "Simulation completion fixture retains tuning",
+  "normal_cli_schemas": [
+    5,
+    48,
+    49,
+    50
+  ],
+  "original_user_preset_sha256": "22e143a736697ccc780ab31bde3c3a1f7ac0d88392e9bf7aa45055ccd3895604",
+  "retained_user_values": {
+    "speed": 1.1,
+    "shot_speed": 1.05,
+    "zoom": 165,
+    "routes": 0.26
+  },
+  "remaining": [
+    "full native actor/selection/factory/physics/status/lifecycle acceptance",
+    "remaining recorded-floor encounters/items/special rooms and complete allocation",
+    "gameplay save/resume"
+  ],
+  "human_acceptance_record": "human-acceptance.json"
+}

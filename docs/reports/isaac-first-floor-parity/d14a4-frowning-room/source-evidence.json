@@ -1,0 +1,46 @@
+{
+  "source": "Installed The Binding of Isaac: Repentance 1.7.9b",
+  "references": [
+    {
+      "path": "docs/reports/isaac-first-floor-parity/gaper-trajectories/native-trajectories.csv",
+      "sha256": "b3f36a5349d4c578087c5850b438400b91801282c465626b988da2b193d6d893"
+    },
+    {
+      "path": "docs/reports/isaac-first-floor-parity/gaper-trajectories/manifest.json",
+      "sha256": "b02ac5cfe8cc568f869faafb05351e0004f1dd459e72a5e99d049b67506dee10"
+    },
+    {
+      "path": "docs/reports/isaac-first-floor-parity/frowning-phase-review/native-phases.csv",
+      "sha256": "24fe6a71c08a213e80ab3d40b467e9a7018310ce3d3d712267e977e5f101e587"
+    },
+    {
+      "path": "docs/reports/isaac-first-floor-parity/frowning-phase-review/manifest.json",
+      "sha256": "9a93b9231165d26f121f19c9d9146f0eb2e0ed627fe7852bce2e85cabe31425f"
+    },
+    {
+      "path": "docs/reports/isaac-first-floor-parity/d14a-floor-content/content-audit.json",
+      "sha256": "e5646cd58026b7f285d51e7c495217e978d6defcbd21fac93be0fe034c2a186f"
+    },
+    {
+      "path": "assets/mechanics/gapers.mechanics",
+      "sha256": "ba8152209d0c7acb8344c508f76fe8a2ff2dab6580cd3624ecf729b798833fbb"
+    }
+  ],
+  "source_room": "1.51.0",
+  "source_base_hp": 10,
+  "source_stage_hp": 0,
+  "deathward_hp_unit": 3.2,
+  "retained_internal_hp": 32,
+  "closed_force": 0.600000024,
+  "awake_force": 0.720000029,
+  "pursuit_retention": 0.7,
+  "head_frames": 20,
+  "npc_updates_per_second": 30,
+  "movement_conversion": "accepted base walking 4.8 / (native player steady step 4.414238452911377 * 60)",
+  "geometry": "retained canyon rooms, route geometry and dynamic source-cell placement; not native room geometry",
+  "limits": [
+    "Existing pinned supplied trajectories and Head evaluations; no new full native wrapper capture",
+    "Existing DW obstacle navigation, body radius, contact, RNG, statuses and headless lifecycle remain adaptations/unaccepted",
+    "Complete recorded-floor allocation is not enabled by this room batch"
+  ]
+}

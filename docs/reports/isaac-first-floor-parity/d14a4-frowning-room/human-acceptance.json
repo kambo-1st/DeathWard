@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-18",
+  "delivery": "D14a.4",
+  "verdict": "scoped human acceptance",
+  "user_message": "ok, it looks good... commit, whats then next?",
+  "scope": "Main-game Frowning Gaper and recorded source1.51.0 encounter",
+  "commit_requested": true,
+  "full_native_actor_accepted": false,
+  "next_proposed": "D14a.5 mixed Pooter/Attack Fly/poop arrangement; not selected by this request for next steps"
+}

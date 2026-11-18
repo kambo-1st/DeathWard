@@ -2451,7 +2451,7 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::BalanceDoorsTab,"DOORS",920,175,155,28,game.balanceDoorsOpen))return Action::BalanceDoorsTab;
     }
     if(game.balanceEnemiesOpen) {
-        if(button(Action::BalanceChasersTab,"GAPER / SPIDER",470,175,240,28,!game.balancePooterOpen&&!game.balanceMonstroOpen&&!game.balanceFullFlyOpen&&!game.balanceRoundWormOpen))return Action::BalanceChasersTab;
+        if(button(Action::BalanceChasersTab,"GAPER / SPIDER",470,175,240,28,!game.balancePooterOpen&&!game.balanceMonstroOpen&&!game.balanceFullFlyOpen&&!game.balanceRoundWormOpen&&!game.balanceFrowningOpen))return Action::BalanceChasersTab;
         if(button(Action::BalancePooterTab,"POOTER",730,175,150,28,game.balancePooterOpen))return Action::BalancePooterTab;
     }
     if(game.balanceEnemiesOpen&&button(Action::BalanceMonstroTab,"BOSSES",905,175,170,28,game.balanceMonstroOpen))return Action::BalanceMonstroTab;
@@ -2645,6 +2645,18 @@ Action Renderer::balancePanel(const Game &game) {
         text(duke?"Health keeps injury fraction. Movement and fly speed apply live.":"Health keeps damage taken proportionally. New volleys use new shot speed.",205,442,13,Teal);
         if(button(Action::ResetMonstro,"RESET BOSS VALUES",205,468,350,35))return Action::ResetMonstro;
         if(button(Action::BalanceBossRewardTab,game.balanceDraft.bossRewardItem==255?"REWARD: SCREW >":"REWARD: BREAKFAST >",585,468,490,35))return Action::BalanceBossRewardTab;
+    } else if(game.balanceEnemiesOpen&&game.balanceFrowningOpen) {
+        text("FROWNING GAPER",205,185,22,Gold);
+        text("MOVEMENT",205,248,18,Paper);
+        text(decimal(game.balancePreset.frowningMovementMultiplier*100)+"%",490,240,28,Paper);
+        if(button(Action::FrowningMovementDown,"- 5%",650,235,130,40))return Action::FrowningMovementDown;
+        if(button(Action::FrowningMovementUp,"+ 5%",795,235,130,40))return Action::FrowningMovementUp;
+        text("100%: about 45% of base player pace, rising to 54% after waking.",205,310,14,Teal);
+        text("10 - 200%. Applies at the next steering tick.",205,350,14,Muted);
+        text("Current momentum and awakening are retained. Ordinary Gaper is independent.",205,384,13,Muted);
+        text("Recorded room uses SOURCE ROOM LAYOUTS + PROPS / Apply map changes.",205,422,13,Teal);
+        if(button(Action::FrowningMovementReset,"RESET FROWNING TO 100%",205,466,450,36))return Action::FrowningMovementReset;
+        if(button(Action::BalanceChasersTab,"GAPER / SPIDER >",805,466,270,36))return Action::BalanceChasersTab;
     } else if(game.balanceEnemiesOpen&&game.balanceRoundWormOpen) {
         const auto &t=game.balancePreset.roundWorm;
         text("ROUND WORM",205,185,22,Gold);
@@ -2709,6 +2721,7 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::GaperMovementDown,"- 5%",650,224,130,40))return Action::GaperMovementDown;
         if(button(Action::GaperMovementUp,"+ 5%",795,224,130,40))return Action::GaperMovementUp;
         text("100% reference: pursuit at about 38% of base player pace.",205,278,14,Teal);
+        if(button(Action::BalanceFrowningTab,"FROWNING >",930,339,145,40))return Action::BalanceFrowningTab;
         text("ORDINARY SPIDER",205,309,22,Gold);
         text("BURST MOVEMENT",205,353,18,Paper);
         text(decimal(game.balancePreset.spiderMovementMultiplier*100)+"%",450,345,28,Paper);

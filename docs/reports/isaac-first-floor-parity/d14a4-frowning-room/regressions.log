@@ -1,0 +1,22 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 116: gaper_family
+1/8 Test #116: gaper_family .....................   Passed    0.58 sec
+    Start 150: balance_preset_contract
+2/8 Test #150: balance_preset_contract ..........   Passed    0.21 sec
+    Start 175: gaper_gameplay
+3/8 Test #175: gaper_gameplay ...................   Passed    1.09 sec
+    Start 178: gaper_trajectories
+4/8 Test #178: gaper_trajectories ...............   Passed    1.78 sec
+    Start 179: gaper_trajectories_substeps
+5/8 Test #179: gaper_trajectories_substeps ......   Passed    1.77 sec
+    Start 189: round_worm_delivery
+6/8 Test #189: round_worm_delivery ..............   Passed    2.98 sec
+    Start 190: full_fly_delivery
+7/8 Test #190: full_fly_delivery ................   Passed    3.82 sec
+    Start 191: ordinary_room_props
+8/8 Test #191: ordinary_room_props ..............   Passed    4.10 sec
+
+100% tests passed, 0 tests failed out of 8
+
+Total Test time (real) =  16.33 sec
