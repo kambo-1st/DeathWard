@@ -1,0 +1,7 @@
+DEATHWARD_MECHANICS 1
+# D14a.3 ordinary 244.0.0 only: native HP10/stage0, retained x3.2 HP unit.
+# Source controller/animation evidence: d14a3-round-worm/source/manifest.json.
+# Stationary surfaced body; hidden relocation and one aimed mode0 shot.
+monster 244.0.0 "Round Worm" Burrow None Worm 32 0 .39 1 0 1 0 1 0 1 legacy
+stage_health 244.0.0 10 0 3.2
+regular_health 244.0.0

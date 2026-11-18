@@ -2,6 +2,7 @@
 #include "combat/Monstro.hpp"
 #include "combat/Duke.hpp"
 #include "combat/FullFly.hpp"
+#include "combat/RoundWorm.hpp"
 #include "world/OpeningBossSelection.hpp"
 #include "items/Screw.hpp"
 #include "combat/BrotherBobby.hpp"
@@ -563,6 +564,7 @@ struct Enemy {
     std::optional<MemBrainRuntime> memBrain;
     std::optional<SlideRuntime> slide;
     std::optional<LumpRuntime> lump;
+    std::optional<RoundWormRuntime> roundWorm;
     std::optional<LeechRuntime> leech;
     std::optional<MaskArmorRuntime> maskArmor;
     std::optional<KnightRuntime> knight;
@@ -1202,6 +1204,7 @@ class Simulation {
     MonstroTuning monstroTuning{false};
     DukeTuning dukeTuning{};
     FullFlyTuning fullFlyTuning{};
+    RoundWormTuning roundWormTuning{};
     int bossRewardItem=25; // Staged fixed supported reward; old configurations keep Breakfast.
     ScrewTuning screw{};
     RoomPropsTuning roomProps{0};
@@ -1719,6 +1722,9 @@ class Simulation {
     void memBrainDeath(const Enemy &enemy);
     bool shootCyst(Enemy &enemy);
     void updateLump(Enemy &enemy,float dt);
+    void updateRoundWorm(Enemy &enemy,float dt);
+    bool roundWormDestinationClear(const Enemy &enemy,Vector3 point) const;
+    bool shootRoundWorm(Enemy &enemy);
     bool lumpDestinationClear(const Enemy &enemy,Vector3 point,bool occupancy) const;
     void chooseLumpDestination(Enemy &enemy);
     bool shootLump(Enemy &enemy);

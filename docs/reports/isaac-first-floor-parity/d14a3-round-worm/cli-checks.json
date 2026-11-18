@@ -1,0 +1,17 @@
+[
+  {
+    "case": "schema48",
+    "loaded": true,
+    "exit": "stopped after verified direct-entry log"
+  },
+  {
+    "case": "schema49",
+    "loaded": true,
+    "exit": "stopped after verified direct-entry log"
+  },
+  {
+    "case": "schema5",
+    "loaded": true,
+    "exit": "stopped after verified direct-entry log"
+  }
+]

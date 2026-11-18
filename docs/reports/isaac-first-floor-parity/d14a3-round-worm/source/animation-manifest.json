@@ -1,0 +1,59 @@
+{
+  "archive": "afterbirthp.a",
+  "archive_sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+  "source": "resources/gfx/244.000_Round Worm.anm2",
+  "sha256": "4eb59f09f9d0df47637516c8c055cfa78c545c269e6a92854f7e9a38dbb0a817",
+  "events": [
+    {
+      "Name": "Shoot",
+      "Id": "0"
+    },
+    {
+      "Name": "PreShoot",
+      "Id": "1"
+    }
+  ],
+  "animations": [
+    {
+      "attributes": {
+        "Name": "Idle",
+        "FrameNum": "16",
+        "Loop": "true"
+      },
+      "triggers": []
+    },
+    {
+      "attributes": {
+        "Name": "Appear",
+        "FrameNum": "17",
+        "Loop": "false"
+      },
+      "triggers": []
+    },
+    {
+      "attributes": {
+        "Name": "DigOut",
+        "FrameNum": "61",
+        "Loop": "false"
+      },
+      "triggers": [
+        {
+          "EventId": "1",
+          "AtFrame": "30"
+        },
+        {
+          "EventId": "0",
+          "AtFrame": "38"
+        }
+      ]
+    },
+    {
+      "attributes": {
+        "Name": "DigIn",
+        "FrameNum": "17",
+        "Loop": "false"
+      },
+      "triggers": []
+    }
+  ]
+}

@@ -131,7 +131,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     if(!canResizeRooms())throw std::runtime_error("No floor to resize");
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
                     expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice,boss,flies,seededChoice,rewardChoice,propChoice);
-    next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
+    next.roundWormTuning=roundWormTuning;next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
     next.haloOfFlies=haloOfFlies;next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
@@ -211,7 +211,7 @@ bool Simulation::advanceFloor() {
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
                     expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool,monstroTuning,dukeTuning,seededBosses,bossRewardItem,roomProps);
-    next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
+    next.roundWormTuning=roundWormTuning;next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
     next.yumHeart=yumHeart;next.activeItem=activeItem;next.activeInputHeld_=activeInputHeld_;
     next.haloOfFlies=haloOfFlies;next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
@@ -1151,6 +1151,7 @@ void Simulation::process(const Event &e) {
             if(e.execution){target->alive=false;effectVisual(target->position,.5f,1);}
             break;
         }
+        if(target->roundWorm&&target->roundWorm->phase==RoundWormPhase::Hidden&&!e.execution)break;
         if(target->dyingEggy()&&!e.execution)break;
         if(target->environment){damageEnvironmentActor(*target,e);break;}
         if(content->hornfelDecoy(target->monster)){damageHornfelDecoy(*target,e);break;}

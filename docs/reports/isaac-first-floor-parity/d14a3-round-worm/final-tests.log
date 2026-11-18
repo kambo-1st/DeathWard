@@ -1,0 +1,20 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  33: whip_worm_trinket
+1/7 Test  #33: whip_worm_trinket ................   Passed    5.90 sec
+    Start  39: treasure_upgrade
+2/7 Test  #39: treasure_upgrade .................   Passed    8.63 sec
+    Start 150: balance_preset_contract
+3/7 Test #150: balance_preset_contract ..........   Passed    0.13 sec
+    Start 161: source_room_coverage
+4/7 Test #161: source_room_coverage .............   Passed    2.98 sec
+    Start 188: round_worm_delivery
+5/7 Test #188: round_worm_delivery ..............   Passed    2.11 sec
+    Start 189: full_fly_delivery
+6/7 Test #189: full_fly_delivery ................   Passed    2.60 sec
+    Start 190: ordinary_room_props
+7/7 Test #190: ordinary_room_props ..............   Passed    2.80 sec
+
+100% tests passed, 0 tests failed out of 7
+
+Total Test time (real) =  25.14 sec

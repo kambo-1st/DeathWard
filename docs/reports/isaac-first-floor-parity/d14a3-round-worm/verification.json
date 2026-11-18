@@ -1,0 +1,49 @@
+{
+  "native_executed_cases": 68,
+  "cpp_numeric_comparisons": 61,
+  "source_room": "1.505.0",
+  "seed": 445,
+  "displayed_room": 2,
+  "native_hp": {
+    "base": 10,
+    "stage": 0
+  },
+  "internal_health_unit": 3.2,
+  "enemies": 2,
+  "plain_rocks": 36,
+  "room_sizes": [
+    [
+      0.75,
+      5,
+      5
+    ],
+    [
+      1.1,
+      7,
+      9
+    ],
+    [
+      1.5,
+      10,
+      10
+    ]
+  ],
+  "schema": 49,
+  "human_accepted": false,
+  "full_native_acceptance": false,
+  "retained_exceptions": [
+    "canyon size/shape/connections",
+    "eight-direction movement/firing",
+    "universal dodge"
+  ],
+  "remaining": [
+    "recorded Frowning arrangement",
+    "mixed Pooter/Attack Fly arrangement",
+    "exact Duke room contents",
+    "Mom’s Eye treasure",
+    "Mom’s Coin Purse and Temperance shop dependencies",
+    "unresolved special-room pickups",
+    "complete-floor allocation and human review",
+    "later gameplay save/resume"
+  ]
+}

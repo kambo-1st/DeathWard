@@ -72,6 +72,7 @@ add_library(deathward_core
     src/combat/Mirrors.cpp
     src/combat/Leeches.cpp
     src/combat/Lumps.cpp
+    src/combat/RoundWorm.cpp
     src/combat/AdultLeeches.cpp
     src/combat/Dips.cpp
     src/combat/MemBrains.cpp
@@ -1183,6 +1184,10 @@ if(BUILD_TESTING)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(deathward_round_worm_tests tests/round_worm_tests.cpp)
+    target_link_libraries(deathward_round_worm_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_round_worm_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
+    add_test(NAME round_worm_delivery COMMAND deathward_round_worm_tests)
     add_executable(deathward_full_fly_tests tests/full_fly_tests.cpp)
     target_link_libraries(deathward_full_fly_tests PRIVATE deathward_core)
     target_compile_definitions(deathward_full_fly_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")

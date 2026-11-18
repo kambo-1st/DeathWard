@@ -18,8 +18,8 @@ EncounterPlan Simulation::floorEncounter(int index) const {
     }
     const auto *source=sourceCombatRockRoom(r.sourceCombatTemplate);
     if(r.sourceCombatTemplate==47||source) {
-        const int count=source?int(source->gapers.size()):2;
-        result.monsters.assign(size_t(count),monsterId(10,1));
+        const int count=source?int(source->enemies.size()):2;
+        result.monsters.assign(size_t(count),source?monsterId(source->enemyType,source->enemyVariant):monsterId(10,1));
         result.originalMonsters=result.monsters;result.budget=result.spent=count;return result;
     }
     Random rng(seed_^0x464c4f4f52475250ULL^(uint64_t(index+1)*0x9e3779b97f4a7c15ULL));

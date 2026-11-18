@@ -2451,7 +2451,7 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::BalanceDoorsTab,"DOORS",920,175,155,28,game.balanceDoorsOpen))return Action::BalanceDoorsTab;
     }
     if(game.balanceEnemiesOpen) {
-        if(button(Action::BalanceChasersTab,"GAPER / SPIDER",470,175,240,28,!game.balancePooterOpen&&!game.balanceMonstroOpen))return Action::BalanceChasersTab;
+        if(button(Action::BalanceChasersTab,"GAPER / SPIDER",470,175,240,28,!game.balancePooterOpen&&!game.balanceMonstroOpen&&!game.balanceFullFlyOpen&&!game.balanceRoundWormOpen))return Action::BalanceChasersTab;
         if(button(Action::BalancePooterTab,"POOTER",730,175,150,28,game.balancePooterOpen))return Action::BalancePooterTab;
     }
     if(game.balanceEnemiesOpen&&button(Action::BalanceMonstroTab,"BOSSES",905,175,170,28,game.balanceMonstroOpen))return Action::BalanceMonstroTab;
@@ -2645,6 +2645,22 @@ Action Renderer::balancePanel(const Game &game) {
         text(duke?"Health keeps injury fraction. Movement and fly speed apply live.":"Health keeps damage taken proportionally. New volleys use new shot speed.",205,442,13,Teal);
         if(button(Action::ResetMonstro,"RESET BOSS VALUES",205,468,350,35))return Action::ResetMonstro;
         if(button(Action::BalanceBossRewardTab,game.balanceDraft.bossRewardItem==255?"REWARD: SCREW >":"REWARD: BREAKFAST >",585,468,490,35))return Action::BalanceBossRewardTab;
+    } else if(game.balanceEnemiesOpen&&game.balanceRoundWormOpen) {
+        const auto &t=game.balancePreset.roundWorm;
+        text("ROUND WORM",205,185,22,Gold);
+        const float values[]={t.cycleSpeed,t.shotSpeed};
+        const char *labels[]={"CYCLE SPEED","SHOT SPEED"};
+        for(int i=0;i<2;++i) {
+            const float y=235+i*70;const auto down=Action(int(Action::RoundWormCycleDown)+i*2),up=Action(int(down)+1);
+            text(labels[i],205,y+12,18,Paper);text(decimal(values[i]*100)+"%",490,y+7,26,Paper);
+            if(button(down,"- 5%",650,y,130,40))return down;
+            if(button(up,"+ 5%",795,y,130,40))return up;
+        }
+        text("10 - 200%. Cycle speed applies when the next phase begins.",205,380,14,Muted);
+        text("Shot speed applies at emergence; current attacks retain their setting.",205,409,14,Muted);
+        text("Recorded two-worm encounter uses SOURCE ROOM LAYOUTS / Apply map changes.",205,438,13,Teal);
+        if(button(Action::ResetRoundWorm,"RESET ROUND WORM TO 100%",205,466,410,36))return Action::ResetRoundWorm;
+        if(button(Action::BalanceFullFlyTab,"FULL FLY >",865,466,210,36))return Action::BalanceFullFlyTab;
     } else if(game.balanceEnemiesOpen&&game.balanceFullFlyOpen) {
         const auto &t=game.balancePreset.fullFly;
         text("FULL FLY",205,185,22,Gold);
@@ -2660,6 +2676,7 @@ Action Renderer::balancePanel(const Game &game) {
         text("Six death shots use the setting at death; flying shots retain their speed.",205,409,14,Muted);
         text("Recorded two-fly encounter uses SOURCE ROOM LAYOUTS / Apply map changes.",205,438,13,Teal);
         if(button(Action::ResetFullFly,"RESET FULL FLY TO 100%",205,466,410,36))return Action::ResetFullFly;
+        if(button(Action::BalanceRoundWormTab,"ROUND WORM >",865,466,210,36))return Action::BalanceRoundWormTab;
     } else if(game.balanceEnemiesOpen&&game.balancePooterOpen) {
         const auto &p=game.balancePreset;
         text("ORDINARY POOTER",205,185,22,Gold);

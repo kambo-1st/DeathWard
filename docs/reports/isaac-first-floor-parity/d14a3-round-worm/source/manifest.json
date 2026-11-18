@@ -1,0 +1,76 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "entity": {
+    "anm2path": "244.000_Round Worm.anm2",
+    "baseHP": "10",
+    "boss": "0",
+    "champion": "1",
+    "collisionDamage": "1",
+    "collisionMass": "100",
+    "collisionRadius": "13",
+    "friction": "1",
+    "id": "244",
+    "name": "#ROUND_WORM",
+    "numGridCollisionPoints": "12",
+    "portrait": "97",
+    "reroll": "true",
+    "shadowSize": "0",
+    "stageHP": "0",
+    "variant": "0"
+  },
+  "constants": {
+    "0xb6a974": 10.0,
+    "0xb6a940": 8.0,
+    "0xb6abec": 250.0,
+    "0xb6aa8c": 60.0,
+    "0xb6ad38": 10000.0,
+    "0xb6ada0": 1000000.0
+  },
+  "windows": [
+    {
+      "name": "controller",
+      "start": "0x52b370",
+      "end": "0x52d034",
+      "sha256": "b7bd662d162d3927cbf86dd1d3ac9f35f771f3457deb9d873ed6439d1ed5bbdf"
+    },
+    {
+      "name": "dispatch",
+      "start": "0x699d1f",
+      "end": "0x699d2b",
+      "sha256": "632a6b504acb66093ef46430c2cd7b2a114f83c45efceb5c6a068a02e4a6532a"
+    }
+  ],
+  "numeric": {
+    "path": "/mnt/c/Windows/SysWOW64/ucrtbase.dll",
+    "sha256": "e4f8f92eef00ff6a0c6d418af756a59d5a4b818d0d1de0d96cc193b4d6759432",
+    "image_base": "0x10000000",
+    "links": {
+      "_libm_sse2_sin_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa0653c",
+        "export": "0x10093a60"
+      },
+      "_libm_sse2_pow_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06540",
+        "export": "0x10092be0"
+      },
+      "_libm_sse2_cos_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06568",
+        "export": "0x100905d0"
+      }
+    },
+    "calls": {
+      "_libm_sse2_cos_precise": 0,
+      "_libm_sse2_sin_precise": 0,
+      "_libm_sse2_pow_precise": 0
+    },
+    "x87_control_word": "0x027f",
+    "mxcsr": "0x1f80",
+    "scope": "Original local x86 UCRT numeric instructions for finite ordinary inputs. Loader-style IAT resolution in emulated memory only; no host math or instruction substitutions. DLL initialization/OS error paths and live process loader selection are not claimed."
+  },
+  "native_cases": 68,
+  "scope": "Ordinary 244.0.0 only. Original shot normalization/speed, ten-native-player-step lead, relocation range/parity and supplied animation-end transitions. DW physical placement, random stream, animation scheduler and whole actor remain explicit acceptance gaps.",
+  "full_native_acceptance": false
+}

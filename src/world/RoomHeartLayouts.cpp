@@ -131,7 +131,7 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode,int propLayouts) {
         }
         if(mode==1&&sourceCombatRockRoom(layout.sourceHeartTemplate)&&index!=2&&index!=3&&
            std::none_of(keys.begin(),keys.end(),[&](const auto &key){return key.room==index;})) {
-            // Complete selected Gaper/rock record. Legacy miners/altar
+            // Complete selected enemy/rock record. Legacy miners/altar
             // rooms and mandatory key sites retain their existing composition;
             // their selected metadata and RNG sequence are never rerolled.
             layout.sourceCombatTemplate=layout.sourceObstacleTemplate=layout.sourceHeartTemplate;

@@ -1,0 +1,8 @@
+case,pending_damage,playing,state,collision,visible
+dig_in_finished,0,0,4,0,0
+dig_in_finished,5,0,4,0,0
+dig_in_finished,9.9,0,4,0,0
+dig_in_finished,10,0,8,4,1
+dig_in_finished,11,0,8,4,1
+dig_out,0,0,6,4,1
+dig_out,0,1,8,4,1

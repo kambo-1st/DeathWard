@@ -22,8 +22,8 @@ void verify(uint64_t seed,int variant,float size,int lo,int hi,bool live) {
     const auto &source=*sourceCombatRockRoom(variant);const auto layout=r.arena.rooms[size_t(index)];
     const std::string tag="source="+std::to_string(variant)+" seed="+std::to_string(seed)+" size="+std::to_string(size);
     check(index!=2&&index!=3&&layout.story==StoryRoom::None&&layout.sourceObstacleTemplate==variant,"compatible complete room "+tag);
-    const auto &enemies=r.roomEnemies(index);check(enemies.size()==source.gapers.size()&&r.floorEncounter(index).monsters.size()==enemies.size(),"exact roster and budget "+tag);
-    for(size_t i=0;i<enemies.size();++i){const auto &e=enemies[i];auto cell=source.gapers[i];
+    const auto &enemies=r.roomEnemies(index);check(enemies.size()==source.enemies.size()&&r.floorEncounter(index).monsters.size()==enemies.size(),"exact roster and budget "+tag);
+    for(size_t i=0;i<enemies.size();++i){const auto &e=enemies[i];auto cell=source.enemies[i];
         check(e.monster==monsterId(10,1)&&e.champion<0&&e.maxHp==32,"accepted ordinary identity and HP "+tag);
         check(planarDistance(e.position,sourceHeartCell(layout,cell[0],cell[1]))<.001f&&!r.arena.blocked(e.position,e.radius),"legal source placement "+tag);
         route(r.arena,layout.entry,e.position,e.radius,tag);route(r.arena,e.position,layout.entry,e.radius,tag);
@@ -33,8 +33,8 @@ void verify(uint64_t seed,int variant,float size,int lo,int hi,bool live) {
     for(const auto &m:r.moneyPickups)check(r.arena.roomAt(m.position)!=index,"no initial random coins "+tag);
     for(auto p:layout.passages)route(r.arena,layout.entry,r.arena.doorApproach(p,r.arena.passages[size_t(p)].rooms[0]==index?0:1),.48f,tag);
     route(r.arena,r.arena.rooms[0].entry,layout.entry,.48f,"cross-room "+tag);
-    check(r.enterSourceRoomReview(variant)&&r.room==index&&r.livingEnemies()==source.gapers.size(),"direct ordinary review "+tag);
-    if(live){r.godMode=true;std::vector<bool> reached(source.gapers.size());std::vector<EntityId> ids;for(const auto &e:r.enemies)ids.push_back(e.id);
+    check(r.enterSourceRoomReview(variant)&&r.room==index&&r.livingEnemies()==source.enemies.size(),"direct ordinary review "+tag);
+    if(live){r.godMode=true;std::vector<bool> reached(source.enemies.size());std::vector<EntityId> ids;for(const auto &e:r.enemies)ids.push_back(e.id);
         for(int n=0;n<3600;++n){r.step({});for(size_t i=0;i<reached.size();++i)if(auto *e=r.findEnemy(ids[i]);e&&planarDistance(e->position,r.player.position)<1.5f){reached[i]=true;e->alive=false;}}
         // Retire each arriving actor to isolate route completion from crowd blocking.
         check(std::all_of(reached.begin(),reached.end(),[](bool b){return b;}),"all live Gapers reach entry "+tag);
@@ -43,7 +43,7 @@ void verify(uint64_t seed,int variant,float size,int lo,int hi,bool live) {
         r.resizeRooms(size,lo,hi,.26f,std::nullopt,0);check(r.arena.rooms[size_t(index)].sourceCombatTemplate!=variant,"OFF removes complete content "+tag);
         r.resizeRooms(size,lo,hi,.26f,std::nullopt,1);check(r.arena.rooms[size_t(index)].sourceCombatTemplate==variant&&r.player.hp==4&&r.player.attributes.speed==.8f&&r.summary().id==id,"Apply restores while keeping player/identity "+tag);
     }
-    std::cout<<"PASS "<<tag<<" room="<<index+1<<" gapers="<<source.gapers.size()<<" rocks="<<source.rocks.size()<<" live="<<live<<'\n';
+    std::cout<<"PASS "<<tag<<" room="<<index+1<<" gapers="<<source.enemies.size()<<" rocks="<<source.rocks.size()<<" live="<<live<<'\n';
 }
 void fightAndRevisit() {
     auto r=create(review::seed(109),1.1f,7,9);r.redHeartClearRewards=r.coinClearRewards=true;const int index=review::room(109);

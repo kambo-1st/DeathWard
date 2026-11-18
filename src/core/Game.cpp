@@ -293,7 +293,7 @@ void Game::perform(Action action) {
             balanceOpen=balancePathEditing=false;accumulator=0;resetPointerInput();break;
         case Action::BalanceWorldTab:balanceRewardsOpen=balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
         case Action::BalanceShootingTab:balanceTrinketOpen=false;balanceActiveOpen=balanceFamiliarOpen=balanceTreasureOpen=false;balanceShootingOpen=true;balanceEnemiesOpen=balanceRewardsOpen=balanceCombatOpen=false;break;
-        case Action::BalanceEnemiesTab:balanceFullFlyOpen=false;balanceMonstroOpen=false;balanceEnemiesOpen=true;balanceShootingOpen=balanceRewardsOpen=balanceCombatOpen=false;balancePooterOpen=false;break;
+        case Action::BalanceEnemiesTab:balanceRoundWormOpen=balanceFullFlyOpen=false;balanceMonstroOpen=false;balanceEnemiesOpen=true;balanceShootingOpen=balanceRewardsOpen=balanceCombatOpen=false;balancePooterOpen=false;break;
         case Action::BalanceRewardsTab:balanceShopOpen=false;balanceRewardsOpen=true;balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
         case Action::BalanceShopTab:balancePropsOpen=false;balanceShopOpen=true;balanceShopKeyOpen=balanceShopStockOpen=balanceShopBombOpen=balanceShopSoulHeartOpen=false;break;
         case Action::BalanceShopHeartTab:balanceShopKeyOpen=balanceShopStockOpen=balanceShopBombOpen=balanceShopSoulHeartOpen=false;break;
@@ -501,11 +501,11 @@ void Game::perform(Action action) {
             setCombatBalance(balancePreset.playerDamage,std::clamp(std::round((balancePreset.regularHealthMultiplier+(action==Action::RegularHealthUp?.05f:-.05f))*100)/100,
                              BalancePreset::MinRegularHealth,BalancePreset::MaxRegularHealth));break;
         case Action::ResetCombat:setCombatBalance(BalancePreset::ReferenceDamage,BalancePreset::ReferenceRegularHealth);break;
-        case Action::BalanceChasersTab:balanceFullFlyOpen=false;balanceMonstroOpen=false;balancePooterOpen=false;break;
-        case Action::BalanceMonstroTab:balanceFullFlyOpen=false;
+        case Action::BalanceChasersTab:balanceRoundWormOpen=balanceFullFlyOpen=false;balanceMonstroOpen=false;balancePooterOpen=false;break;
+        case Action::BalanceMonstroTab:balanceRoundWormOpen=balanceFullFlyOpen=false;
             balanceMonstroOpen=true;balancePooterOpen=false;balanceBossRewardOpen=false;
             balanceDukeValues=openingBossType(run?run->expedition.floorSeed(0):0,balancePreset.seededBosses,balancePreset.monstro.enabled,balancePreset.duke.enabled)==67;break;
-        case Action::BalanceBossRewardTab:balanceFullFlyOpen=false;balanceEnemiesOpen=balanceMonstroOpen=balanceBossRewardOpen=true;balancePooterOpen=false;break;
+        case Action::BalanceBossRewardTab:balanceRoundWormOpen=balanceFullFlyOpen=false;balanceEnemiesOpen=balanceMonstroOpen=balanceBossRewardOpen=true;balancePooterOpen=false;break;
         case Action::SelectBreakfastReward:case Action::SelectScrewReward:
             balanceDraft.bossRewardItem=action==Action::SelectScrewReward?255:25;
             balanceNotice="Boss reward pending: Apply map changes regenerates this floor.";break;
@@ -543,7 +543,7 @@ void Game::perform(Action action) {
                 *v=std::clamp(std::round((*v+(offset%2?.05f:-.05f))*100)/100,.1f,3.f);}
             applyBalance(p);balanceNotice="Boss health keeps injury fraction; movement live; new volleys use new speed.";break;
         }
-        case Action::BalancePooterTab:balanceFullFlyOpen=false;balanceMonstroOpen=false;balancePooterOpen=true;break;
+        case Action::BalancePooterTab:balanceRoundWormOpen=balanceFullFlyOpen=false;balanceMonstroOpen=false;balancePooterOpen=true;break;
         case Action::PooterMovementDown:case Action::PooterMovementUp:
             setPooterTuning(std::clamp(std::round((balancePreset.pooterMovementMultiplier+(action==Action::PooterMovementUp?.05f:-.05f))*100)/100,
                            BalancePreset::MinPooterMovement,BalancePreset::MaxPooterMovement),balancePreset.pooterShotSpeedMultiplier,balancePreset.pooterAttackIntervalMultiplier);break;
@@ -554,7 +554,20 @@ void Game::perform(Action action) {
             setPooterTuning(balancePreset.pooterMovementMultiplier,balancePreset.pooterShotSpeedMultiplier,std::clamp(std::round((balancePreset.pooterAttackIntervalMultiplier+(action==Action::PooterDelayUp?.05f:-.05f))*100)/100,
                            BalancePreset::MinPooterInterval,BalancePreset::MaxPooterInterval));break;
         case Action::ResetPooter:setPooterTuning(1,1,1);break;
-        case Action::BalanceFullFlyTab:balanceFullFlyOpen=true;balanceMonstroOpen=balancePooterOpen=false;break;
+        case Action::BalanceRoundWormTab:balanceFullFlyOpen=false;balanceRoundWormOpen=true;balanceMonstroOpen=balancePooterOpen=false;break;
+        case Action::RoundWormCycleDown:case Action::RoundWormCycleUp:
+        case Action::RoundWormShotDown:case Action::RoundWormShotUp:case Action::ResetRoundWorm: {
+            auto p=balancePreset;
+            if(action==Action::ResetRoundWorm)p.roundWorm={};
+            else {
+                const bool movement=action==Action::RoundWormCycleDown||action==Action::RoundWormCycleUp;
+                const bool up=action==Action::RoundWormCycleUp||action==Action::RoundWormShotUp;
+                float &v=movement?p.roundWorm.cycleSpeed:p.roundWorm.shotSpeed;
+                v=std::clamp(std::round((v+(up?.05f:-.05f))*100)/100,.1f,2.f);
+            }
+            applyBalance(std::move(p));balanceNotice="Round Worm cycle: next phase. Shot speed: next emergence; active attacks retained.";break;
+        }
+        case Action::BalanceFullFlyTab:balanceRoundWormOpen=false;balanceFullFlyOpen=true;balanceMonstroOpen=balancePooterOpen=false;break;
         case Action::FullFlyMovementDown:case Action::FullFlyMovementUp:
         case Action::FullFlyShotDown:case Action::FullFlyShotUp:case Action::ResetFullFly: {
             auto p=balancePreset;
@@ -1133,8 +1146,10 @@ std::vector<Action> Game::menuActions() const {
             std::vector<Action>{Action::SelectBreakfastReward,Action::SelectScrewReward,Action::ScrewTearsDown,Action::ScrewTearsUp,Action::ScrewShotDown,Action::ScrewShotUp,Action::ResetScrew,Action::ApplyMapChanges}:
             balanceEnemiesOpen&&balanceMonstroOpen?
             std::vector<Action>{Action::CycleBossTuning,Action::SelectSeededBosses,Action::SelectLegacyBoss,Action::ToggleMonstro,Action::ToggleDuke,Action::MonstroHealthDown,Action::MonstroHealthUp,Action::MonstroMovementDown,Action::MonstroMovementUp,Action::MonstroShotDown,Action::MonstroShotUp,Action::ResetMonstro,Action::BalanceBossRewardTab,Action::ApplyMapChanges}:
+            balanceEnemiesOpen&&balanceRoundWormOpen?
+            std::vector<Action>{Action::RoundWormCycleDown,Action::RoundWormCycleUp,Action::RoundWormShotDown,Action::RoundWormShotUp,Action::ResetRoundWorm,Action::BalanceFullFlyTab}:
             balanceEnemiesOpen&&balanceFullFlyOpen?
-            std::vector<Action>{Action::FullFlyMovementDown,Action::FullFlyMovementUp,Action::FullFlyShotDown,Action::FullFlyShotUp,Action::ResetFullFly}:
+            std::vector<Action>{Action::FullFlyMovementDown,Action::FullFlyMovementUp,Action::FullFlyShotDown,Action::FullFlyShotUp,Action::ResetFullFly,Action::BalanceRoundWormTab}:
             balanceEnemiesOpen&&balancePooterOpen?
             std::vector<Action>{Action::PooterMovementDown,Action::PooterMovementUp,Action::PooterShotDown,Action::PooterShotUp,Action::PooterDelayDown,Action::PooterDelayUp,Action::ResetPooter}:
             balanceEnemiesOpen?

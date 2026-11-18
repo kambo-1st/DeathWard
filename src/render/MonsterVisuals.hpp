@@ -395,6 +395,25 @@ inline void drawPeepModel(const Enemy &e,bool drawShadow=true) {
     }
 }
 inline void drawMonsterModel(const Enemy &e, const MonsterDefinition &d, bool drawShadow = true, const ChargeDefinition *charge=nullptr) {
+    if(e.roundWorm) {
+        const auto &r=*e.roundWorm;const float visible=r.visibility();if(visible<=0)return;
+        const auto face=length(e.facing)>.01f?e.facing:Vector3{0,0,1};
+        const Vector3 side{-face.z,0,face.x};
+        auto at=[&](float x,float y,float z){return add(Vector3{e.position.x,e.position.y-.85f+y*visible,e.position.z},add(mul(side,x),mul(face,z)));};
+        const Color skin=e.flash>0?Color{245,233,206,255}:Color{177,124,94,255};
+        if(drawShadow)DrawCircle3D(at(0,.04f,0),e.radius*1.1f,{1,0,0},90,{43,34,35,90});
+        // Upright segmented burrower, with a readable mouth before the shot.
+        for(int n=0;n<3;++n) {
+            const float y=.18f+float(n)*.23f;
+            DrawCylinderEx(at(0,y-.15f,0),at(0,y+.13f,0),e.radius*(1-float(n)*.08f),e.radius*(.94f-float(n)*.08f),8,
+                n==1?ColorBrightness(skin,-.12f):skin);
+        }
+        DrawSphereEx(at(0,.83f,.02f),e.radius*.88f,6,8,skin);
+        const bool opening=r.phase==RoundWormPhase::DigOut&&r.frame>=30&&r.frame<=40;
+        DrawSphereEx(at(0,.77f,.31f),opening?.18f:.1f,5,8,Color{48,29,29,255});
+        for(float x:{-.16f,.16f})DrawSphereEx(at(x,.96f,.24f),.055f,4,6,Color{35,27,26,255});
+        return;
+    }
     const int type = e.monster.type, variant = e.monster.variant;
     const std::array<Color, 8> palette{{{177, 92, 85, 255},
                                         {127, 57, 56, 255},
@@ -1383,6 +1402,7 @@ inline void drawMonsterWarning(const Enemy &e, const Simulation &run) {
     if(e.adultLeech)return; // Body pose, falling silhouette and audio signal its attacks.
     if(e.slide)return; // Squirt body squash telegraphs its committed slide.
     if(e.memBrain)return; // Body hop and recovery telegraph the radial packet.
+    if(e.roundWorm)return;
     if(e.lump)return; // Mouth/Hide/Appear poses carry the source warning, without an aim laser.
     if(e.vis)return; // Distinct mouths show every committed lane and charge on the body.
     if(e.spitty)return; // The mouth telegraphs its committed facing; no destination-aimed laser.

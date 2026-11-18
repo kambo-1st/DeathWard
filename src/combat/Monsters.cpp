@@ -118,6 +118,7 @@ EntityId Simulation::spawnMonster(MonsterId id, Vector3 position,EntityId owner,
     if(content->adultLeech(id)){e.adultLeech=AdultLeechRuntime{};e.cooldown=0;e.facing={1,0,0};}
     if(content->slide(id)){e.slide=SlideRuntime{};e.cooldown=0;}
     if(content->memBrain(id)){e.memBrain=MemBrainRuntime{};e.cooldown=0;}
+    if(id==monsterId(244))e.roundWorm=RoundWormRuntime{};
     if(content->lump(id)){e.lump=LumpRuntime{};e.lump->anchor=e.position;e.cooldown=0;}
     if(content->baby(id)){e.baby=BabyRuntime{};e.cooldown=0;}
     if(content->vis(id)){e.vis=VisRuntime{};e.cooldown=0;e.facing={0,0,1};}
@@ -561,6 +562,7 @@ void Simulation::updateMonster(Enemy &e, float dt) {
     if(content->faceless(e.monster)){updateFaceless(e,dt);return;}
     if(content->slide(e.monster)){updateSlide(e,dt);return;}
     if(content->memBrain(e.monster)){updateMemBrain(e,dt);return;}
+    if(e.roundWorm){updateRoundWorm(e,dt);return;}
     if(content->lump(e.monster)){updateLump(e,dt);return;}
     if(content->leech(e.monster)){updateLeech(e,dt);return;}
     if(e.returningBody){updateReturningBody(e,dt);return;}
