@@ -1,0 +1,71 @@
+{
+  "status": "developer_checks_pass_scoped_human_accepted",
+  "date": "2026-11-18",
+  "base_commit": "598cbc77",
+  "source_slots": 8,
+  "source_counts": {
+    "duke": 1,
+    "initial_attack_fly": 1,
+    "rocks": 4,
+    "poop": 2
+  },
+  "runtime_size_cases": [
+    {
+      "seed": 11,
+      "scale": 0.75,
+      "range": [
+        5,
+        5
+      ],
+      "room": 9
+    },
+    {
+      "seed": 11,
+      "scale": 1.1,
+      "range": [
+        7,
+        9
+      ],
+      "room": 9
+    },
+    {
+      "seed": 11,
+      "scale": 1.5,
+      "range": [
+        10,
+        10
+      ],
+      "room": 9
+    }
+  ],
+  "checks": {
+    "source_stb": "exact match",
+    "runtime": "runtime-tests-final.log",
+    "game_renderer": "game-review-final.log",
+    "focused_regressions": 7,
+    "cli": "cli-verification.json",
+    "build": "pass",
+    "diff_check": "pass"
+  },
+  "human_acceptance": true,
+  "native_full_actor_acceptance": false,
+  "native_floor_selection_claimed": false,
+  "original_preset_sha256": "22e143a736697ccc780ab31bde3c3a1f7ac0d88392e9bf7aa45055ccd3895604",
+  "source_file_sha256": {
+    "src/world/SourcePropRooms.hpp": "3f607b451be5b8f771251c776a0d961e32df717d548f986334b67adfb201297b",
+    "src/world/RoomHeartLayouts.cpp": "a296972da4c51fb891bbdb09ae1da4ca24cb4ad986df9ba8ce6bc3a7b063d8ab",
+    "src/combat/Encounters.cpp": "485cd2c6fb7ebe6a223efcf9f47a203e3b0644ce6ed48995e13e0fdedb79778c",
+    "src/combat/Simulation.cpp": "12e1d25c0a0c8f6a142db2bfefd835e3f40e667dbdee2c5657863dd1fdcaef85",
+    "tests/recorded_duke_room_tests.cpp": "250d7e4d48f6a8aaff38c8fca230e9539e53844f310af8a50c2072c8ebc370d2",
+    "tests/duke_loop_tests.cpp": "cdbd4e232a3f6efd41d2557066f801cd4b5763f2be8e464c99dedc192764fb0e",
+    "tests/seeded_boss_tests.cpp": "b90a85d7be7a5fb55b2daf2efccba29d235ad36286347fc5df4734bc6069788f",
+    "CMakeLists.txt": "4b25353c8a505efcf724aaf6df8329194406d0dba526df494295dff5cdd397fa"
+  },
+  "remaining": [
+    "native actor/factory/RNG/scheduler/physics and floor-selection equivalence",
+    "recorded treasure/shop/special rooms",
+    "complete-floor integration and gameplay save/resume",
+    "deferred pixel/performance work"
+  ],
+  "human_acceptance_evidence": "human-acceptance.json"
+}

@@ -54,7 +54,9 @@ void fullLoop() {
   if(seed==1) {
    check(!s.rewardAvailable(s.room)&&!s.canUseFloorExit(),"seeded Duke death keeps remaining flies as a gate");
    std::vector<EntityId> children;for(const auto&e:s.enemies)if(e.alive&&e.dukeChild)children.push_back(e.id);
-   check(children.size()==6,"seeded Duke retains six ordinary death flies");for(auto id:children)damage(s,id,10000);frames(s,3);
+   check(children.size()==6,"seeded Duke retains six ordinary death flies");for(auto id:children)damage(s,id,10000);
+   // Recorded initial flies also participate in the ordinary room-clear gate.
+   for(const auto &e:s.enemies)if(e.alive&&e.monster==monsterId(18)&&!e.dukeChild)damage(s,e.id,10000);frames(s,3);
   }
   check(s.rewardAvailable(s.room)&&s.canUseFloorExit()&&s.arena.bossRewardPedestal,"selected boss death/offspring clear unlocks single reward and exit");
   s.player.position=pedestalGeometry::approach(s.rewardPosition(s.room),{1,0,0},.85f);

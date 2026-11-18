@@ -1,0 +1,28 @@
+{
+  "pid": 4136418,
+  "args": [
+    "stdbuf",
+    "-oL",
+    "-eL",
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "11",
+    "--review-source-room",
+    "2012",
+    "--mute",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a6/campaign.save.balance/export.json",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a6/campaign.save"
+  ],
+  "started_at_utc": "2026-11-18T21:11:21.215664+00:00",
+  "preset_sha256": "8f8a261d89cc6c2210ccdd1da1dd58bc9445155094dfc3033a6ee58c42ef5562",
+  "normal_health": true,
+  "god_mode": false,
+  "review_overrides": [
+    "fixed Duke",
+    "Screw boss reward"
+  ],
+  "original_preset_unchanged": true
+}

@@ -1,0 +1,51 @@
+{
+  "result": "pass",
+  "cases": [
+    {
+      "case": "schema48-original",
+      "result": "pass",
+      "args": [
+        "stdbuf",
+        "-oL",
+        "-eL",
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "11",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+        "--save",
+        "/tmp/deathward-d14a6-cli-1795036200694468913/campaign.save"
+      ],
+      "balance": "BALANCE duke=0 duke_hp=1 duke_movement=1 duke_flies=1 monstro=1 boss_policy=fixed opening_boss=20 boss_hp=1 boss_movement=1 boss_shots=1 speed=1.1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=1.05 range=6.5 attack_fly_movement=1 frowning_movement=1 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 whip_strength=1 cancer_strength=1 trinket_rewards=1 trinket_key=U book_duration=10 book_recharge=1 yum_healing=2 yum_recharge=1 active_key=C halo_orbit_speed=1 halo_orbit_radius=1 halo_contact_radius=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 boss_reward=25 screw_tears=1 round_worm_cycle=1 round_worm_shots=1 full_fly_movement=1 full_fly_shots=1 screw_shots=1 revision=6006933ccb5cea7f profile=custom",
+      "review": null,
+      "preset_sha256": "22e143a736697ccc780ab31bde3c3a1f7ac0d88392e9bf7aa45055ccd3895604"
+    },
+    {
+      "case": "schema51-duke",
+      "result": "pass",
+      "args": [
+        "stdbuf",
+        "-oL",
+        "-eL",
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "11",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a6-duke-room/review-preset.json",
+        "--save",
+        "/tmp/deathward-d14a6-cli-1795036201360723578/campaign.save",
+        "--review-source-room",
+        "2012"
+      ],
+      "balance": "BALANCE duke=1 duke_hp=1 duke_movement=1 duke_flies=1 monstro=1 boss_policy=fixed opening_boss=67 boss_hp=1 boss_movement=1 boss_shots=1 speed=1.1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=1.05 range=6.5 attack_fly_movement=1 frowning_movement=1 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 bomb_fuse=1 bomb_radius=1 bomb_damage=100 bomb_self=-1 treasure_upgrade=1 treasure_pool=1 whip_strength=1 cancer_strength=1 trinket_rewards=1 trinket_key=U book_duration=10 book_recharge=1 yum_healing=2 yum_recharge=1 active_key=C halo_orbit_speed=1 halo_orbit_radius=1 halo_contact_radius=1 bobby_movement=1 bobby_interval=1 bobby_damage=1 bobby_shot_speed=1 cricket_strength=1 onion_strength=1 shop_collectible_pool=1 shop_stock=1 shop_upgrade_price=15 steam_sale=1 shop_heart=1 shop_key=1 shop_soul_heart_price=5 shop_bomb_price=5 shop_key_price=5 shop_heart_price=3 room_locks=1 key_cost=1 rock_shielding=0 bomb_rewards=1 key_rewards=1 chest_rewards=1 coin_rewards=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 boss_reward=255 screw_tears=1 round_worm_cycle=1 round_worm_shots=1 full_fly_movement=1 full_fly_shots=1 screw_shots=1 revision=c59e9c8580097d29 profile=custom",
+      "review": "ROOM_REVIEW requested=2012 room=9 template=2012 selection_seed=364336253 spawn_seed=70174284 chest_slots=0 chests=0 bomb_slots=0 layout_bombs=0 key_slots=0 layout_keys=0 coin_slots=0 layout_coins=0 hp=6 god=0",
+      "preset_sha256": "8f8a261d89cc6c2210ccdd1da1dd58bc9445155094dfc3033a6ee58c42ef5562"
+    }
+  ],
+  "original_preset_sha256": "22e143a736697ccc780ab31bde3c3a1f7ac0d88392e9bf7aa45055ccd3895604",
+  "original_preset_unchanged": true
+}

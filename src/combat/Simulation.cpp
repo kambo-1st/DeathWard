@@ -804,6 +804,18 @@ bool Simulation::enterSourceRoomReview(int variant) {
         if(variant==SourceChestRockRoom&&layout.sourceObstacleTemplate!=variant)continue;
         if((variant==SourceCoinRockRoom||variant==SourceKeyRockRoom||variant==SourceBombRockRoom)&&layout.sourceObstacleTemplate!=variant)continue;
         auto reviewStart=layout.entry;
+        if(variant==RecordedDukeRoom) {
+            // Review-only approach: show the boss immediately at the retained
+            // zoom, without landing inside props or an initial actor.
+            for(int n=0;n<16;++n) {
+                auto at=add(layout.center,rotateY({6,0,0},n*Pi/8));at.y=.85f;
+                if(arena.roomAt(at)!=i||arena.blocked(at,.55f)||!arena.clear(at,layout.center,.48f)||
+                   arena.path(layout.entry,at,.48f).empty())continue;
+                const auto &residents=roomEnemies(i);
+                if(std::any_of(residents.begin(),residents.end(),[&](const auto &e){return e.alive&&planarDistance(at,e.position)<e.radius+2.5f;}))continue;
+                reviewStart=at;break;
+            }
+        }
         if(variant==PropReviewRoom) {
             const auto near=sourceHeartCell(layout,6,3);
             if(!arena.blocked(near,.48f)&&!arena.path(layout.entry,near,.48f).empty())reviewStart=near;

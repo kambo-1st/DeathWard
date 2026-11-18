@@ -1,0 +1,4 @@
+PASS Duke arrangement seed=11 scale=0.75 room=9 initial fly gate, real shots, props, reward/revisit/descent
+PASS Duke arrangement seed=11 scale=1.1 room=9 initial fly gate, real shots, props, reward/revisit/descent
+PASS Duke arrangement seed=11 scale=1.5 room=9 initial fly gate, real shots, props, reward/revisit/descent
+PASS SOURCE/PROPS/boss boundaries and unrestricted Apply

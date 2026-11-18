@@ -23,6 +23,12 @@ Vector3 heartCell(const RoomLayout &layout,int x,int y) {
 void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode,int propLayouts) {
     if(mode<0||mode>2)throw std::invalid_argument("Invalid room-heart layout mode");
     if((!mode&&propLayouts!=2)||profile.floor!=0||!profile.active()||theme!=MissionTheme::Canyon)return;
+    // The recorded boss content is selected only for the existing opening-floor
+    // Duke choice. SOURCE/PROPS and boss choice already have staged persistence.
+    if(mode==1&&propLayouts==1&&profile.bossMonster==monsterId(67)) {
+        auto &boss=rooms.back();
+        boss.sourceCombatTemplate=boss.sourceObstacleTemplate=RecordedDukeRoom;
+    }
     std::vector<int> eligible;
     for(int i=1;i<roomCount()-1;++i) {
         const auto &layout=rooms[size_t(i)];
@@ -137,7 +143,7 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode,int propLayouts) {
             layout.sourceCombatTemplate=layout.sourceObstacleTemplate=layout.sourceHeartTemplate;
             layout.kind=RoomKind::Combat;
         }
-        if(mode==1&&propLayouts&&sourcePropRoom(layout.sourceHeartTemplate)&&index!=2&&index!=3&&
+        if(mode==1&&propLayouts&&sourcePropRoom(layout.sourceHeartTemplate)&&sourcePropRoom(layout.sourceHeartTemplate)->type==1&&index!=2&&index!=3&&
            std::none_of(keys.begin(),keys.end(),[&](const auto &key){return key.room==index;})) {
             layout.sourceCombatTemplate=layout.sourceObstacleTemplate=layout.sourceHeartTemplate;
             layout.kind=layout.sourceHeartTemplate==26?RoomKind::Empty:RoomKind::Combat;
@@ -196,9 +202,13 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode,int propLayouts) {
     }
 }
 bool Arena::fitRecordedPropRoom() {
+    bool retained=true;
     for(int index=0;index<roomCount();++index) {
-        auto &layout=rooms[size_t(index)];if(layout.sourceCombatTemplate!=414)continue;
-        const auto &source=*sourcePropRoom(414);
+        auto &layout=rooms[size_t(index)];
+        const int variant=layout.sourceCombatTemplate;
+        if(variant!=414&&variant!=RecordedDukeRoom)continue;
+        const auto &source=*sourcePropRoom(variant);
+        bool accepted=false;
         const float initial=sourcePropCellSize(layout,source);
         // Fit the complete arrangement uniformly. Native cell identities/order
         // stay unchanged; all physical bodies and doorway landings must fit.
@@ -207,7 +217,8 @@ bool Arena::fitRecordedPropRoom() {
             layout.sourcePropCellOverride=cell;bool fits=true;
             for(const auto &slot:source.entries) {
                 const auto at=sourcePropCell(layout,source,slot.x,slot.y);
-                const float radius=slot.type==1500?dungClearanceRadius(cell):.45f;
+                // Duke gets a conservative2-unit terrain margin around its1.615-unit body.
+                const float radius=slot.type==1500?dungClearanceRadius(cell):slot.type==1000?cell*.7071067812f:slot.type==67?2.f:.45f;
                 if(roomAt(at)!=index||blocked(at,radius)){fits=false;break;}
                 for(int p:layout.passages) {
                     const auto &passage=passages[size_t(p)];const int side=passage.rooms[0]==index?0:1;
@@ -215,20 +226,29 @@ bool Arena::fitRecordedPropRoom() {
                 }
                 if(!fits)break;
             }
+            if(fits&&variant==RecordedDukeRoom) {
+                // Keep the retained floor exit and central reward approach free.
+                for(const auto &slot:source.entries)if(slot.type>=1000) {
+                    const auto at=sourcePropCell(layout,source,slot.x,slot.y);
+                    const float clearance=(slot.type==1500?dungClearanceRadius(cell):cell*.7071067812f)+.8f;
+                    if(planarDistance(at,layout.exit)<clearance||planarDistance(at,layout.center)<clearance)fits=false;
+                }
+            }
             if(!fits)continue;
-            layout.sourceHeartTemplate=414;
-            Random allocation(visualSeed^0x4d49584544464c59ULL^uint64_t(index));
+            layout.sourceHeartTemplate=variant;
+            Random allocation(visualSeed^(variant==RecordedDukeRoom?0x44554b45524f4f4dULL:0x4d49584544464c59ULL)^uint64_t(index));
             layout.sourceRoomSelectionSeed=uint32_t(allocation.next());
             if(!layout.sourceRoomSelectionSeed)layout.sourceRoomSelectionSeed=1;
             layout.sourceRoomSpawnSeed=sourceRoomDescriptorSeeds(layout.sourceRoomSelectionSeed).spawn;
-            return true;
+            accepted=true;break;
         }
+        if(accepted)continue;
         // Ordinary content and its original metadata/seeds remain available.
         // Caller restores the omitted procedural terrain before dressing/spawning.
         layout.sourceCombatTemplate=layout.sourceObstacleTemplate=-1;layout.sourcePropCellOverride=0;
-        return false;
+        retained=false;
     }
-    return true;
+    return retained;
 }
 void Arena::prepareSourceHeartRocks() {
     for(int index=0;index<roomCount();++index) {

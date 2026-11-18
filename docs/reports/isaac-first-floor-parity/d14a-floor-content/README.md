@@ -15,7 +15,7 @@ There are **12 descriptors**: entrance, four ordinary combat rooms, one shop, on
 | Combat | 1.51.0 | Two Frowning Gapers10.0.0, two plain rocks, four poop grids | D14a.4 now enables the distinct Frowning movement/Head consumer and this arrangement; developer checks pass and scoped human acceptance is recorded |
 | Combat | 1.505.0 | Two Round Worms244.0.0,36 plain rocks | D14a.3 now enables Round Worm and this arrangement; scoped user acceptance recorded and committed as00313e5b |
 | Combat | 1.414.0 | Eight Pooters14.0.0,12 Attack Flies18.0.0,20 poop grids | D14a.5 now enables the complete mixed encounter and ordinary Attack Fly scale/tuning; developer checks pass, human pressure/full native acceptance remain open |
-| Boss | 5.2012.13 | Duke67.0.0 plus one initial Attack Fly, four rocks and two poop grids; **observed clear reward: Screw255** | Accepted Duke loop exists; exact initial arrangement remains unfinished; Screw reward/effect is the selected D14a.1 implementation |
+| Boss | 5.2012.13 | Duke67.0.0 plus one initial Attack Fly, four rocks and two poop grids; **observed clear reward: Screw255** | D14a.6 now enables the exact eight-slot starting arrangement with canyon spatial fitting; developer checks pass and scoped human acceptance is recorded; full native acceptance remains open; Screw reward/effect is D14a.1 |
 | Treasure | 4.6.0 | **Observed: Mom’s Eye55 and two pennies**, uncollected after the same-seed restart | Mom’s Eye is not in the active collectible registry; effect and complete arrangement remain unfinished |
 | Shop | 2.0.0, source title Shop L1 | **Observed: Mom’s Coin Purse195 for15coins; Temperance card15 for5coins**, still present | Both exact offerings/effects and the complete layout remain unsupported; slot/prop interactions remain open |
 | Secret | 7.8.0 | Three unresolved penny subtypes plus props/grids | Hidden access and complete interaction/content support remain open |
@@ -60,3 +60,5 @@ After that, deliver Full Fly249 and Round Worm244 individually in their recorded
 D14a.2 update: the user selected smaller batches. Full Fly/source704 is implemented, developer-verified and scoped human-accepted; see [its report](../d14a2-full-fly/README.md). This supersedes the earlier Full Fly registry/dependency gap only. The complete recorded floor, remaining actors/items/special rooms and human full-floor acceptance remain unfinished.
 
 D14a.5 update: complete recorded source414 content and ordinary Attack Fly movement/tuning are enabled in the main game; see [the scoped report](../d14a5-mixed-flies/README.md). Human review and the remaining full-floor work are unfinished.
+
+D14a.6 update: the recorded Duke starting arrangement is enabled and developer-verified; see [its report](../d14a6-duke-room/README.md). The user accepted the scoped handoff on 2026-11-18; complete recorded-floor integration and full native acceptance remain unfinished.

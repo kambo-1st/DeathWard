@@ -129,7 +129,7 @@ void world() {
 }
 Simulation generated(float scale=1.1f,int lo=7,int hi=9) {
  return Simulation(69,17,{},MissionTheme::Canyon,true,false,WitnessAccount::None,0,ExpeditionPacing::Compact,
-    defaultMechanics(),scale,lo,hi,.26f,true,1,true,true,true,true,true,true,1,1,MonstroTuning{},DukeTuning{true});
+    defaultMechanics(),scale,lo,hi,.26f,true,1,true,true,true,true,true,true,1,1,MonstroTuning{},DukeTuning{true},false,25,RoomPropsTuning{0}); // Legacy bare arena; recorded contents have their own delivery test.
 }
 void hit(Simulation &s,EntityId id,float amount,bool area=false) {
  Event e;e.type=EventType::Damage;e.target=id;e.damage=amount;e.areaDamage=area;s.queueRoot(e);s.drainEvents();

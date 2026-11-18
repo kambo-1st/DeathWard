@@ -142,6 +142,7 @@ int Simulation::roomEnemyCount(int index) const {
     const auto &layout = arena.rooms.at(size_t(index));
     if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power || layout.kind == RoomKind::Shop || layout.kind==RoomKind::Service)
         return 0;
+    if(layout.sourceCombatTemplate==RecordedDukeRoom)return 2;
     if(surveyTutorial)return index==1?2:3;
     if(arena.profile.active())return layout.kind==RoomKind::Boss?1:int(floorEncounter(index).monsters.size());
     if (layout.kind == RoomKind::Boss && arena.theme == MissionTheme::Mine && !followup)
@@ -221,7 +222,7 @@ void Simulation::spawnRoomEnemies() {
         return;
     }
     if(const auto *source=sourcePropRoom(layout.sourceCombatTemplate)) {
-        for(const auto &slot:source->entries)if(slot.type==1400||slot.type==10||slot.type==14||slot.type==18) {
+        for(const auto &slot:source->entries)if(slot.type==1400||slot.type==10||slot.type==14||slot.type==18||slot.type==67) {
             const auto id=monsterId(slot.type==1400?33:slot.type,slot.variant);
             const auto at=sourcePropCell(layout,*source,slot.x,slot.y);
             const auto *definition=content->monster(id);
