@@ -1,0 +1,65 @@
+{
+  "presets_unchanged": true,
+  "cases": [
+    {
+      "name": "schema48-original",
+      "path": "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+      "args": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "68",
+        "--smoke",
+        "--frames",
+        "2",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+        "--save",
+        "/tmp/deathward-keeper-cli-qmkpsblr/campaign.save"
+      ],
+      "exit_code": 0,
+      "sha256": "22e143a736697ccc780ab31bde3c3a1f7ac0d88392e9bf7aa45055ccd3895604"
+    },
+    {
+      "name": "schema55-latest",
+      "path": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a10/campaign.save.balance/export.json",
+      "args": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "68",
+        "--smoke",
+        "--frames",
+        "2",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/.local/share/deathward/reviews/first-floor-d14a10/campaign.save.balance/export.json",
+        "--save",
+        "/tmp/deathward-keeper-cli-5r6fkz6g/campaign.save"
+      ],
+      "exit_code": 0,
+      "sha256": "d7bd92f0b9eb3dd2c7b6d167f25a99ce9d3325933dba4e261b6e63d6965b397b"
+    },
+    {
+      "name": "schema56-current",
+      "path": "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a11-shopkeeper/review-preset.json",
+      "args": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "68",
+        "--smoke",
+        "--frames",
+        "2",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a11-shopkeeper/review-preset.json",
+        "--save",
+        "/tmp/deathward-keeper-cli-2opp5t2y/campaign.save"
+      ],
+      "exit_code": 0,
+      "sha256": "a23770805b8b2e311ab087105c3e3a499c1a49a0d305d15344e1820ae6006256"
+    }
+  ]
+}

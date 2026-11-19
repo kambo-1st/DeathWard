@@ -1,0 +1,32 @@
+{
+  "pid": 1098904,
+  "args": [
+    "stdbuf",
+    "-oL",
+    "-eL",
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "68",
+    "--review-shop-stock",
+    "--mute",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a11/campaign.save.balance/export.json",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a11/rerun-20261119-180114/campaign.save"
+  ],
+  "started_at_utc": "2026-11-19T18:01:14.779422+00:00",
+  "log": "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a11-shopkeeper/interactive-rerun-20261119-180114.log",
+  "preset_sha256": "a23770805b8b2e311ab087105c3e3a499c1a49a0d305d15344e1820ae6006256",
+  "default_zoom_percent": 165,
+  "expected_displayed_room": 7,
+  "expected_source_drop": "two coins",
+  "forced_drop": false,
+  "review_overrides": [
+    "20 test coins",
+    "four red half-hearts"
+  ],
+  "god_mode": false,
+  "human_acceptance": "pending",
+  "window_verified": "DeathWard | The consequences remain \u2014 1440x900"
+}

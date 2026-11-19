@@ -1,0 +1,77 @@
+{
+  "date": "2026-11-19",
+  "accepted_previous_commit": "22a86e73",
+  "native_drop_comparisons": 4120,
+  "native_rng_initialization_cases": 6,
+  "source_executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "core_suites": {
+    "passed": 5,
+    "names": [
+      "shopkeeper_delivery",
+      "recorded_shop_delivery",
+      "balance_preset_contract",
+      "temperance_delivery",
+      "inventory_bomb_tuning"
+    ]
+  },
+  "room_sizes": [
+    {
+      "scale": 0.75,
+      "range": [
+        5,
+        5
+      ]
+    },
+    {
+      "scale": 1,
+      "range": [
+        7,
+        9
+      ]
+    },
+    {
+      "scale": 1.5,
+      "range": [
+        10,
+        10
+      ]
+    }
+  ],
+  "test_modes": [
+    "source",
+    "nothing",
+    "two coins",
+    "two spiders",
+    "Steam Sale"
+  ],
+  "game_renderer": "passed; actual mouse Keeper tab, B key, outcomes/purchase/revisit/live/export/load/remember/Apply/retry; positioning and menu actions supplied where noted in game-review.cpp",
+  "cli_schemas": [
+    48,
+    55,
+    56
+  ],
+  "natural_review": {
+    "seed": 68,
+    "displayed_room": 7,
+    "drop": "two coins",
+    "forced_keeper_outcome": false,
+    "review_overrides": [
+      "20 test coins",
+      "four red half-hearts"
+    ],
+    "god_mode": false
+  },
+  "latest_user_preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a10/campaign.save.balance/export.json",
+  "latest_user_preset_sha256": "d7bd92f0b9eb3dd2c7b6d167f25a99ce9d3325933dba4e261b6e63d6965b397b",
+  "retained_settings_exact": true,
+  "original_d02_sha256": "22e143a736697ccc780ab31bde3c3a1f7ac0d88392e9bf7aa45055ccd3895604",
+  "full_native_acceptance": false,
+  "human_acceptance": "accepted scoped seed68 handoff; see human-acceptance.json",
+  "remaining": [
+    "Head of the Keeper429 and Coupon521",
+    "native full damage/factory/profile/RNG/deal behavior and thrown Spider arrival",
+    "donation gates and blood-machine explosions",
+    "special rooms/full recorded floor",
+    "live expedition save/resume"
+  ]
+}

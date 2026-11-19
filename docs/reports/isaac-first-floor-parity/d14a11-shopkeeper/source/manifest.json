@@ -1,0 +1,46 @@
+{
+  "baseline": "Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "cases": 4120,
+  "windows": [
+    {
+      "name": "entity-drop-rng-init",
+      "start": "0x6819e6",
+      "end": "0x681a26",
+      "sha256": "5b105469121a283b4a723b32fc2e362246722c15db49502580b85655f0fd3a66"
+    },
+    {
+      "name": "ordinary-drops",
+      "start": "0x698988",
+      "end": "0x698b6d",
+      "sha256": "efd3013a8b87ed88ae424d2ca318c889d477d7fe2b31626eb489c392c92b2fca"
+    },
+    {
+      "name": "drop-tail",
+      "start": "0x698d72",
+      "end": "0x698d98",
+      "sha256": "3d0652a982b53ff2c81e1ae00abf7f026e718f6ae74dc78fa7a6e93299f86dcf"
+    },
+    {
+      "name": "keeper-controller",
+      "start": "0x698fb0",
+      "end": "0x6994cd",
+      "sha256": "9312061f19f345073c4227af4c31b767ea6774363631697acf54d7164f95cca8"
+    },
+    {
+      "name": "vulnerable-query",
+      "start": "0x684630",
+      "end": "0x6846da",
+      "sha256": "8e1900e822077b3115cd069d9d6633edb23c1b307ceb9366cc0d719f8c99e616"
+    }
+  ],
+  "scope": "Original ordinary variant1 numeric/RNG/drop decisions and seed requests. Item availability is supplied; collection append is observed. Six original entity-initialization slices verify DropRNG=InitSeed and shift tuple4/3/17. DW descriptor seed and factory order remain adaptations. Full damage/factory/spider trajectory/physics/keeper scheduler/unlocks/global RNG are not accepted.",
+  "production_eligible_items": [
+    64
+  ],
+  "unimplemented_rare_items": [
+    429,
+    521
+  ],
+  "full_native_acceptance": false
+}

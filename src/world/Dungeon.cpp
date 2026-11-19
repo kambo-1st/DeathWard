@@ -700,7 +700,7 @@ bool Arena::contains(Vector3 p) const {
 }
 bool Arena::blocked(Vector3 p, float radius) const {
     if(bossRewardPedestal&&pedestalGeometry::intersects(p,p,*bossRewardPedestal,radius))return true;
-    for(const auto &room:rooms)if(room.kind==RoomKind::Shop&&sphereBox(p,radius,shopCartGeometry::bounds(room.center)))return true;
+    for(const auto &room:rooms)if(room.kind==RoomKind::Shop&&!room.keeper.destroyed&&sphereBox(p,radius,shopCartGeometry::bounds(room.center)))return true;
     for(const auto &room:rooms)if(room.kind==RoomKind::Power&&
         pedestalGeometry::intersects(p,p,room.objective,radius))return true;
     if(rails)for(auto pit:rails->pits){pit.min.y=-100;pit.max.y=100;if(sphereBox(p,radius,pit))return true;}
@@ -716,7 +716,7 @@ bool Arena::blocked(Vector3 p, float radius) const {
 }
 bool Arena::clear(Vector3 from, Vector3 to, float radius) const {
     if(radius>.25f&&bossRewardPedestal&&pedestalGeometry::intersects(from,to,*bossRewardPedestal,radius))return false;
-    if(radius>.25f)for(const auto &room:rooms)if(room.kind==RoomKind::Shop&&segmentBox(from,to,shopCartGeometry::bounds(room.center),radius).hit)return false;
+    if(radius>.25f)for(const auto &room:rooms)if(room.kind==RoomKind::Shop&&!room.keeper.destroyed&&segmentBox(from,to,shopCartGeometry::bounds(room.center),radius).hit)return false;
     // Low treasure pedestals block grounded bodies, like chests, not sight/tears.
     if(radius>.25f)for(const auto &room:rooms)if(room.kind==RoomKind::Power&&
         pedestalGeometry::intersects(from,to,room.objective,radius))return false;

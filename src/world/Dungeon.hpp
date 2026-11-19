@@ -1,4 +1,5 @@
 #pragma once
+#include "world/ShopKeeper.hpp"
 #include "world/RoomProps.hpp"
 #include "core/Types.hpp"
 #include "world/CanyonTerrain.hpp"
@@ -54,6 +55,7 @@ struct RoomLayout {
     // not automatically a flooded room: dry banks must remain dry gameplay.
     bool flooded = false;
     int sourceCombatTemplate = -1; // Recorded opening-floor encounter, -1 = generated pool.
+    ShopKeeperState keeper{};
     int sourceShopTemplate=-1; // Type2 recorded observed shop contents; keeper uses the merchant wagon adapter.
     int sourceTreasureTemplate=-1; // Recorded type4 content, independent of ordinary template IDs.
     int sourceHeartTemplate=-1; // Heart layer only; not a full source encounter.

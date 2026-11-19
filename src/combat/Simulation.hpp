@@ -510,6 +510,7 @@ struct Enemy {
     int spawnerType=0; // Original creator type; survives detachment and removal of the creator.
     EntityId formation = 0; // Independent group identity; survives its founding member.
     std::vector<Vector3> path;
+    bool keeperSpawn=false; // Live shop offspring persist through cleared-room revisits.
     MonsterId monster{};
     int generation = 0;
     float auxiliary = 0, trailTime = 0, lift = 0;
@@ -1198,6 +1199,7 @@ class Simulation {
     bool beginPowerupReview();
     bool beginTrinketReview();
     bool visitPowerupReviewEncounter(bool bossRoom=false);
+    KeeperTuning keeperTuning{};
     BloodMachineTuning bloodMachineTuning{};
     std::vector<BloodMachine> bloodMachines;
     std::vector<BloodReward> pendingBloodRewards;
@@ -1487,6 +1489,9 @@ class Simulation {
     void prepareDung();
     void resolvePropReward(PropRewardState &reward,uint32_t seed,bool fire);
     void deliverPropRewards();
+    bool keeperBlastHit(const Event &e)const;
+    void damageKeeper(float internalDamage);
+    void deliverKeeperDrops();
     void updateBoomFly(Enemy &enemy,float dt);
     void updateLobWalker(Enemy &enemy,float dt);
     void updateHeadShooter(Enemy &enemy,float dt);

@@ -834,7 +834,7 @@ std::optional<RayCollision> Renderer::pickScenery(const Simulation &run, const C
     westernScene_.prepare(run.arena);
     westernScene_.setPlayerOcclusion(camera, run.player.position);
     auto best=westernScene_.pick(ray, run.player.position);
-    for(const auto &room:run.arena.rooms)if(room.kind==RoomKind::Shop) {
+    for(const auto &room:run.arena.rooms)if(room.kind==RoomKind::Shop&&!room.keeper.destroyed) {
         const auto box=shopCartGeometry::bounds(room.center);
         const auto hit=GetRayCollisionBox(ray,{box.min,box.max});
         if(hit.hit&&(!best.hit||hit.distance<best.distance))best=hit;
@@ -1066,7 +1066,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     };
     if(run.arena.shopRoom>=0)shopCartModel_.prepare();
     const auto drawShopCarts=[&](Shader shader,Texture2D shadowMap) {
-        for(const auto &site:run.arena.rooms)if(site.kind==RoomKind::Shop&&distance(run.player.position,site.center)<60)
+        for(const auto &site:run.arena.rooms)if(site.kind==RoomKind::Shop&&!site.keeper.destroyed&&distance(run.player.position,site.center)<60)
             shopCartModel_.draw(site.center,shader,shadowMap);
     };
     if(!run.chests.empty())chestModel_.prepare();
@@ -1255,8 +1255,12 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         DrawCylinderEx(add(p,{.43f,1.1f,0}),add(p,{.53f,1.5f+lever,.15f}),.045f,.045f,6,Gold);
         DrawSphereEx(add(p,{.53f,1.5f+lever,.15f}),.1f,5,8,Rust);
     }
+    for(const auto &site:run.arena.rooms)if(site.kind==RoomKind::Shop&&site.keeper.destroyed&&distance(run.player.position,site.center)<60) {
+        for(int i=0;i<3;++i)DrawCube(add(site.center,{float(i-1)*.6f,.06f,float(i%2)*.7f}),1.8f,.12f,.2f,Color{69,44,33,255});
+    }
     for(const auto &item:run.machineCollectibles)if(item.room==run.room) {
         auto p=item.position;p.y=.7f+.06f*std::sin(float(run.stats.duration)*3);shadow(p,.5f);
+        if(item.item==64){DrawCube(p,.82f,1.02f,.16f,Gold);DrawSphereEx(add(p,{-.17f,.23f,-.1f}),.09f,6,8,Paper);DrawSphereEx(add(p,{.17f,-.23f,-.1f}),.09f,6,8,Paper);DrawCylinderEx(add(p,{-.21f,-.29f,-.1f}),add(p,{.21f,.29f,-.1f}),.035f,.035f,6,Paper);continue;}
         const Color color=item.item==58?Color{66,52,103,255}:Rust;
         DrawCube(p,.55f,.65f,.25f,color);DrawCubeWires(p,.55f,.65f,.25f,Gold);
         if(item.item==135){DrawCylinderEx(add(p,{.4f,-.6f,0}),add(p,{.4f,.5f,0}),.035f,.035f,6,Gold);DrawLine3D(add(p,{.4f,.5f,0}),add(p,{0,.4f,0}),Gold);}
@@ -2513,9 +2517,10 @@ Action Renderer::balancePanel(const Game &game) {
     }
     if(game.balanceEnemiesOpen&&button(Action::BalanceMonstroTab,"BOSSES",905,175,170,28,game.balanceMonstroOpen))return Action::BalanceMonstroTab;
     if(game.balanceRewardsOpen) {
-        if(button(Action::BalanceShopTab,"SHOP",470,175,150,28,game.balanceShopOpen))return Action::BalanceShopTab;
-        if(button(Action::BalanceClearHeartsTab,"AFTER CLEAR",650,175,200,28,!game.balancePropsOpen&&!game.balanceRoomHeartsOpen&&!game.balanceShopOpen))return Action::BalanceClearHeartsTab;
-        if(button(Action::BalanceRoomHeartsTab,"ROOM LAYOUTS",875,175,200,28,game.balanceRoomHeartsOpen))return Action::BalanceRoomHeartsTab;
+        if(button(Action::BalanceShopTab,"SHOP",470,175,100,28,game.balanceShopOpen))return Action::BalanceShopTab;
+        if(button(Action::BalanceClearHeartsTab,"AFTER CLEAR",580,175,170,28,!game.balancePropsOpen&&!game.balanceRoomHeartsOpen&&!game.balanceShopOpen))return Action::BalanceClearHeartsTab;
+        if(button(Action::BalanceRoomHeartsTab,"ROOM LAYOUTS",760,175,180,28,game.balanceRoomHeartsOpen))return Action::BalanceRoomHeartsTab;
+        if(game.balanceShopOpen&&button(Action::BalanceKeeperTab,"KEEPER",950,175,125,28,game.balanceKeeperOpen))return Action::BalanceKeeperTab;
         if(game.balancePropsOpen) {
             const auto &p=game.balancePreset.roomProps;const int mode=game.balanceDraft.roomProps.layouts;
             text("FIRE / POOP",205,184,22,Gold);
@@ -2531,6 +2536,17 @@ Action Renderer::balancePanel(const Game &game) {
             text("Future destructions only; existing rolls stay fixed.",680,404,12,Muted);
             if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,449,420,40))return Action::ApplyMapChanges;
             text(game.hasPendingMapChanges()?"PENDING / RESETS FLOOR":"MAP SETTINGS APPLIED",655,465,14,Muted);
+        } else if(game.balanceShopOpen&&game.balanceKeeperOpen) {
+            const auto &t=game.balancePreset.keeper;
+            text("KEEPER",205,184,22,Gold);
+            text("Dynamite destroys the wagon. Stock remains for sale.",205,225,15,Paper);
+            if(button(Action::ToggleKeeperDestruction,t.destructible?"DESTRUCTION: ON":"DESTRUCTION: OFF",205,267,420,40))return Action::ToggleKeeperDestruction;
+            if(button(Action::ToggleKeeperRewards,t.rewards?"DROPS: ON":"DROPS: OFF",655,267,420,40))return Action::ToggleKeeperRewards;
+            const char *modes[]={"SOURCE ROLLS","TEST: NOTHING","TEST: TWO COINS","TEST: TWO SPIDERS","TEST: STEAM SALE"};
+            if(button(Action::CycleKeeperOutcome,modes[t.outcome],205,330,870,40))return Action::CycleKeeperOutcome;
+            text("Future destruction only. Existing drops stay fixed; no resurrection or reroll.",205,396,14,Muted);
+            text("Recorded shop only. Head of the Keeper / Coupon drops are not supported yet.",205,426,13,Muted);
+            if(button(Action::ResetKeeper,"RESET KEEPER",205,463,420,36))return Action::ResetKeeper;
         } else if(game.balanceShopOpen) {
             const bool key=game.balanceShopKeyOpen,stock=game.balanceShopStockOpen,bomb=game.balanceShopBombOpen,soul=game.balanceShopSoulHeartOpen;
             text(soul?"SHOP SOUL HEART":bomb?"SHOP DYNAMITE":stock?"SHOP STOCK":key?"SHOP KEY":"SHOP HEART",205,184,22,Gold);

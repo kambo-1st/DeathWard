@@ -96,7 +96,7 @@ void Simulation::updateBloodMachines(float dt) {
         }
         if(m.phase!=BloodMachine::Phase::Broken&&m.elapsed+1e-6>=38){m.phase=BloodMachine::Phase::Idle;m.elapsed=0;}
     }
-    deliverBloodRewards();
+    deliverKeeperDrops();deliverBloodRewards();
     bool admitted=false;
     std::erase_if(machineCollectibles,[&](MachineCollectible &p){
         if(p.room!=room)return false;
@@ -114,7 +114,7 @@ void Simulation::updateBloodMachines(float dt) {
             announce(std::string(activeName(item))+" / ACTIVE SWAPPED",3);return false;
         }
         grant(item);if(supportedActive(item))activeItem->charge=p.charge;
-        announce(item.number==119?"BLOOD BAG / HEALTH + SPEED":std::string(activeName(item))+" / ACTIVE ITEM",3);checkpointNeeded=true;return true;
+        announce(item.number==64?"STEAM SALE / SHOP DISCOUNT":item.number==119?"BLOOD BAG / HEALTH + SPEED":std::string(activeName(item))+" / ACTIVE ITEM",3);checkpointNeeded=true;return true;
     });
 }
 }

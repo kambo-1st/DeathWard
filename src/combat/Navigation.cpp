@@ -196,7 +196,7 @@ std::vector<Vector3> Arena::path(Vector3 from, Vector3 target, float radius) con
     for(const auto &room:rooms)if(room.kind==RoomKind::Power)
         navigationWalls.push_back(pedestalGeometry::bounds(room.objective));
     if(bossRewardPedestal)navigationWalls.push_back(pedestalGeometry::bounds(*bossRewardPedestal));
-    for(const auto &room:rooms)if(room.kind==RoomKind::Shop)navigationWalls.push_back(shopCartGeometry::bounds(room.center));
+    for(const auto &room:rooms)if(room.kind==RoomKind::Shop&&!room.keeper.destroyed)navigationWalls.push_back(shopCartGeometry::bounds(room.center));
     auto valid = [&](Vector3 p) { return contains(p) && !blocked(p, radius); };
     // A click on solid cover lands at its nearest walkable edge.
     if (blocked(target, radius)) {
@@ -333,7 +333,7 @@ void Simulation::requestMove(Vector3 target, bool interactAtDestination) {
         movePath_=arena.path(player.position,target,.48f);return;
     }
     const auto &site=arena.rooms[size_t(room)];
-    if(site.kind==RoomKind::Shop&&std::abs(target.x-site.center.x)<shopCartGeometry::HalfWidth+.2f&&
+    if(site.kind==RoomKind::Shop&&!site.keeper.destroyed&&std::abs(target.x-site.center.x)<shopCartGeometry::HalfWidth+.2f&&
        std::abs(target.z-site.center.z)<shopCartGeometry::HalfDepth+.2f) {
         float best=std::numeric_limits<float>::infinity();
         for(float side:{-1.f,1.f}) {
