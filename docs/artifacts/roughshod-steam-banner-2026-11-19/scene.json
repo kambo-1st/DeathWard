@@ -1,0 +1,271 @@
+{
+  "title": "ROUGHSHOD",
+  "resolution": [
+    2560,
+    1440
+  ],
+  "samples": 64,
+  "camera": {
+    "position": [
+      0,
+      -15,
+      5.2
+    ],
+    "target": [
+      0,
+      7,
+      2.8
+    ],
+    "lens": 45
+  },
+  "hero": {
+    "position": [
+      3.05,
+      -2.0,
+      0.03
+    ],
+    "scale": 3.45,
+    "yaw_degrees": 165,
+    "idle_frame": 28,
+    "wrist_outward_degrees": 25,
+    "index_curl_degrees": 22
+  },
+  "wagon": {
+    "position": [
+      -5.3,
+      8.7,
+      0
+    ],
+    "scale": 1.05,
+    "yaw_degrees": -15
+  },
+  "title_width_fraction": 0.57,
+  "title_position": [
+    -3.3,
+    0.55,
+    -9
+  ],
+  "world_strength": 0.45,
+  "sun_energy": 1.7,
+  "revision": 8,
+  "gun": {
+    "scale": 0.85,
+    "palm_grip_local": [
+      -0.0225846171,
+      0.0765022337,
+      0.0397141427
+    ],
+    "source_grip_local": [
+      0,
+      -4,
+      -3
+    ]
+  },
+  "base_scene": "history/v2/roughshod-banner.blend",
+  "cart_focus": {
+    "foreground_cactus_position": [
+      -6.2,
+      2.3,
+      0
+    ],
+    "trail_supplies_origin": [
+      -3.8,
+      2.6,
+      0
+    ],
+    "trail_supplies_position": [
+      -4.0,
+      4.5,
+      0
+    ],
+    "trail_supplies_scale": 0.8
+  },
+  "cart_story": {
+    "crate_position": [
+      -3.25,
+      4.7,
+      0
+    ],
+    "crate_rotation_degrees": [
+      12,
+      -5,
+      20
+    ],
+    "crate_scale": [
+      1.65,
+      1.5,
+      1.0
+    ],
+    "spill": [
+      {
+        "position": [
+          -3.56,
+          4.63,
+          0
+        ],
+        "scale": [
+          1.05,
+          1.05,
+          1.05
+        ],
+        "rotation_degrees": [
+          12,
+          -5,
+          20
+        ],
+        "support": "crate floor"
+      },
+      {
+        "position": [
+          -3.0,
+          4.85,
+          0
+        ],
+        "scale": [
+          0.95,
+          0.95,
+          0.95
+        ],
+        "rotation_degrees": [
+          12,
+          -5,
+          24
+        ],
+        "support": "crate floor"
+      },
+      {
+        "position": [
+          -3.3,
+          4.65,
+          0
+        ],
+        "scale": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "rotation_degrees": [
+          3,
+          8,
+          -35
+        ],
+        "support": "lower sacks"
+      },
+      {
+        "position": [
+          -2.75,
+          3.55,
+          0
+        ],
+        "scale": [
+          1.1,
+          1.1,
+          1.1
+        ],
+        "rotation_degrees": [
+          0,
+          0,
+          15
+        ],
+        "support": "sand"
+      },
+      {
+        "position": [
+          -2.1,
+          3.95,
+          0
+        ],
+        "scale": [
+          0.95,
+          0.95,
+          0.95
+        ],
+        "rotation_degrees": [
+          0,
+          0,
+          65
+        ],
+        "support": "sand"
+      },
+      {
+        "position": [
+          -1.62,
+          4.2,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation_degrees": [
+          0,
+          0,
+          -20
+        ],
+        "support": "sand"
+      },
+      {
+        "position": [
+          -1.05,
+          3.85,
+          0
+        ],
+        "scale": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "rotation_degrees": [
+          0,
+          0,
+          40
+        ],
+        "support": "sand"
+      },
+      {
+        "position": [
+          -2.2,
+          3.45,
+          0
+        ],
+        "scale": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "rotation_degrees": [
+          0,
+          0,
+          -55
+        ],
+        "support": "sand"
+      }
+    ]
+  },
+  "wheel_tracks": {
+    "bend_start": 1.25,
+    "bend_radius": 7.0,
+    "end_angle_degrees": 105,
+    "end_fade_degrees": 20,
+    "rear_start": -2.3,
+    "rear_fade_length": 0.45,
+    "half_width": 0.035,
+    "edge_softness": 0.026,
+    "darkness": 0.6,
+    "rut_depth": 0.018,
+    "grain_variation": 0.2
+  },
+  "ground_noise": {
+    "grain_scale": 65.0,
+    "grain_strength": 0.28,
+    "patch_scale": 0.65,
+    "patch_strength": 0.65,
+    "scuff_scale": 3.5,
+    "scuff_strength": 0.22,
+    "bump_depth": 0.006,
+    "bump_strength": 0.4,
+    "near_detail_distance": 32,
+    "far_detail_distance": 110
+  }
+}

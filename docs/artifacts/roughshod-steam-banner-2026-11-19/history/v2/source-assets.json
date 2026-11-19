@@ -1,0 +1,615 @@
+{
+  "source_sha256": {
+    "assets/western/western.glb": "9524898254be1113b9b761d6bd4c72c9966150411dd8c950801bf8dc79896f37",
+    "assets/props/shop-cart/shop-cart.glb": "fdc33bfe8e65417cf7f77192f9c66a287f6e61d676f11fcf66411251cc459f08",
+    "assets/bandit/bandit.glb": "05065568f5740dc741debb916162915d9151a4ec8b93ea00fbf5f8515bcc1ea8",
+    "assets/town/source/Models/SM_Wep_Revolver_01.fbx": "0f1860eb2115f5ce0d5622bd519ba8a7669916631729b27b5a3543642b16ac7e",
+    "assets/town/source/Textures/PolygonWestern_Texture_01_A.png": "dee4b31bac06e9f67050abf8ab7ae343d265563d1714d4fc46bf0e87ad235b03",
+    "assets/ui/deathward-display/DeathWardDisplay-Regular.otf": "8a959b9e8bbaed9dbd02e3dc284389c303ae6ee358b0a5d9102b270a75be8ae9"
+  },
+  "blender": "3.6.23",
+  "only_repo_meshes": true,
+  "visible_meshes": [
+    {
+      "object": "BanditMesh",
+      "source_asset": "assets/bandit/bandit.glb",
+      "source_object": "BanditMesh",
+      "vertices": 5049
+    },
+    {
+      "object": "Bones near trail skull",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "bones",
+      "vertices": 372
+    },
+    {
+      "object": "Canvas supply sacks",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "sacks",
+      "vertices": 4938
+    },
+    {
+      "object": "Canyon cactus",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "flower_cactus",
+      "vertices": 2796
+    },
+    {
+      "object": "desert_grass \u00b7 05",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "desert_grass",
+      "vertices": 320
+    },
+    {
+      "object": "desert_grass \u00b7 07",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "desert_grass",
+      "vertices": 320
+    },
+    {
+      "object": "desert_grass \u00b7 09",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "desert_grass",
+      "vertices": 320
+    },
+    {
+      "object": "desert_grass \u00b7 10",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "desert_grass",
+      "vertices": 320
+    },
+    {
+      "object": "desert_grass \u00b7 12",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "desert_grass",
+      "vertices": 320
+    },
+    {
+      "object": "desert_grass \u00b7 20",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "desert_grass",
+      "vertices": 320
+    },
+    {
+      "object": "desert_grass \u00b7 24",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "desert_grass",
+      "vertices": 320
+    },
+    {
+      "object": "desert_grass \u00b7 26",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "desert_grass",
+      "vertices": 320
+    },
+    {
+      "object": "desert_grass \u00b7 33",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "desert_grass",
+      "vertices": 320
+    },
+    {
+      "object": "desert_grass \u00b7 44",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "desert_grass",
+      "vertices": 320
+    },
+    {
+      "object": "desert_grass \u00b7 45",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "desert_grass",
+      "vertices": 320
+    },
+    {
+      "object": "desert_grass \u00b7 57",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "desert_grass",
+      "vertices": 320
+    },
+    {
+      "object": "desert_grass \u00b7 63",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "desert_grass",
+      "vertices": 320
+    },
+    {
+      "object": "Distant cactus",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "cactus_a",
+      "vertices": 1932
+    },
+    {
+      "object": "Distant mesa",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "cliff_cap",
+      "vertices": 5033
+    },
+    {
+      "object": "Far left mesa",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "cliff_cap",
+      "vertices": 5033
+    },
+    {
+      "object": "Far right mesa",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "cliff_cap",
+      "vertices": 5033
+    },
+    {
+      "object": "Far wagon hitching rail",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "fence",
+      "vertices": 338
+    },
+    {
+      "object": "Foreground cactus",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "cactus_a",
+      "vertices": 1932
+    },
+    {
+      "object": "Foreground trail crate",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "crate",
+      "vertices": 1022
+    },
+    {
+      "object": "Foreground trail satchels",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "sacks",
+      "vertices": 4938
+    },
+    {
+      "object": "grass_b \u00b7 01",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 03",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 06",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 14",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 15",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 19",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 22",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 23",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 29",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 30",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 35",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 42",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 43",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 46",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 48",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 49",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 51",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 55",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 56",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "grass_b \u00b7 60",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "green_bush \u00b7 08",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "green_bush \u00b7 17",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "green_bush \u00b7 21",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "green_bush \u00b7 27",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "green_bush \u00b7 31",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "green_bush \u00b7 36",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "green_bush \u00b7 38",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "green_bush \u00b7 40",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "green_bush \u00b7 47",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "green_bush \u00b7 52",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "green_bush \u00b7 53",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "green_bush \u00b7 54",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "green_bush \u00b7 61",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "green_bush \u00b7 62",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "green_bush \u00b7 64",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "Hitching rail barrel",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "barrel",
+      "vertices": 970
+    },
+    {
+      "object": "Lantern on barrel",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "lantern",
+      "vertices": 914
+    },
+    {
+      "object": "Lantern on trail crate",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "lantern",
+      "vertices": 914
+    },
+    {
+      "object": "Merchant firewood",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "woodpile",
+      "vertices": 2100
+    },
+    {
+      "object": "Midground cactus",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "cactus_b",
+      "vertices": 2272
+    },
+    {
+      "object": "Right framing rock",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_b",
+      "vertices": 451
+    },
+    {
+      "object": "Right middle canyon",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "cliff_wall",
+      "vertices": 5635
+    },
+    {
+      "object": "Right near escarpment",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "cliff_pillar",
+      "vertices": 825
+    },
+    {
+      "object": "rock_a \u00b7 02",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_a",
+      "vertices": 472
+    },
+    {
+      "object": "rock_a \u00b7 13",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_a",
+      "vertices": 472
+    },
+    {
+      "object": "rock_a \u00b7 16",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_a",
+      "vertices": 472
+    },
+    {
+      "object": "rock_a \u00b7 18",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_a",
+      "vertices": 472
+    },
+    {
+      "object": "rock_a \u00b7 25",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_a",
+      "vertices": 472
+    },
+    {
+      "object": "rock_a \u00b7 28",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_a",
+      "vertices": 472
+    },
+    {
+      "object": "rock_a \u00b7 34",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_a",
+      "vertices": 472
+    },
+    {
+      "object": "rock_a \u00b7 37",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_a",
+      "vertices": 472
+    },
+    {
+      "object": "rock_a \u00b7 41",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_a",
+      "vertices": 472
+    },
+    {
+      "object": "rock_a \u00b7 50",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_a",
+      "vertices": 472
+    },
+    {
+      "object": "rock_a \u00b7 58",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_a",
+      "vertices": 472
+    },
+    {
+      "object": "rock_a \u00b7 59",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_a",
+      "vertices": 472
+    },
+    {
+      "object": "Sand floor / source atlas",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "floor",
+      "vertices": 4
+    },
+    {
+      "object": "shop_cart",
+      "source_asset": "assets/props/shop-cart/shop-cart.glb",
+      "source_object": "shop_cart",
+      "vertices": 13304
+    },
+    {
+      "object": "SM_Wep_Revolver_01",
+      "source_asset": "assets/town/source/Models/SM_Wep_Revolver_01.fbx",
+      "source_object": "SM_Wep_Revolver_01",
+      "vertices": 422
+    },
+    {
+      "object": "SM_Wep_Revolver_01_Cylander",
+      "source_asset": "assets/town/source/Models/SM_Wep_Revolver_01.fbx",
+      "source_object": "SM_Wep_Revolver_01_Cylander",
+      "vertices": 206
+    },
+    {
+      "object": "SM_Wep_Revolver_01_Hammer",
+      "source_asset": "assets/town/source/Models/SM_Wep_Revolver_01.fbx",
+      "source_object": "SM_Wep_Revolver_01_Hammer",
+      "vertices": 52
+    },
+    {
+      "object": "SM_Wep_Revolver_01_Trigger",
+      "source_asset": "assets/town/source/Models/SM_Wep_Revolver_01.fbx",
+      "source_object": "SM_Wep_Revolver_01_Trigger",
+      "vertices": 24
+    },
+    {
+      "object": "Supply corner bush",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "green_bush",
+      "vertices": 507
+    },
+    {
+      "object": "Supply corner grass",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "grass_b",
+      "vertices": 660
+    },
+    {
+      "object": "Supply crate lower",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "crate",
+      "vertices": 1022
+    },
+    {
+      "object": "Supply crate upper",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "crate",
+      "vertices": 1022
+    },
+    {
+      "object": "Trail cactus cluster A",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "cactus_b",
+      "vertices": 2272
+    },
+    {
+      "object": "Trail cactus cluster B",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "cactus_a",
+      "vertices": 1932
+    },
+    {
+      "object": "Trail cactus rock",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_b",
+      "vertices": 451
+    },
+    {
+      "object": "Trail skull",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "skull",
+      "vertices": 786
+    },
+    {
+      "object": "Trail stones A",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_a",
+      "vertices": 472
+    },
+    {
+      "object": "Trail stones B",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "rock_a",
+      "vertices": 472
+    },
+    {
+      "object": "Trail stones grass",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "desert_grass",
+      "vertices": 320
+    },
+    {
+      "object": "Wagon fence",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "fence",
+      "vertices": 338
+    },
+    {
+      "object": "Wagon spare barrel",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "barrel",
+      "vertices": 970
+    },
+    {
+      "object": "Wagon supply barrel",
+      "source_asset": "assets/western/western.glb",
+      "source_object": "barrel",
+      "vertices": 970
+    }
+  ],
+  "material_adaptation": "Original base atlas and UVs; matte roughness for rendered game appearance; scene lighting and editable font title added."
+}

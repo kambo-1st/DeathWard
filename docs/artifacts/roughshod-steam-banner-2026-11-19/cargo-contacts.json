@@ -1,0 +1,127 @@
+{
+  "revision": 8,
+  "method": "Mesh underside / support-surface vertical sampling; 70x70 grid plus mesh vertices. Tiny cloth/sand embed for firm visible contact.",
+  "sacks": [
+    {
+      "object": "STORY \u00b7 spilled supply sack 01",
+      "support": "crate interior floor",
+      "vertical_adjustment": 0.28125733947753906,
+      "minimum_sampled_gap": -0.003999233245849609,
+      "contact_xy": [
+        -3.4786208357129778,
+        4.447247954777309
+      ],
+      "world_position": [
+        -3.559999942779541,
+        4.630000114440918,
+        0.2812573313713074
+      ]
+    },
+    {
+      "object": "STORY \u00b7 spilled supply sack 02",
+      "support": "crate interior floor",
+      "vertical_adjustment": 0.33086318588256836,
+      "minimum_sampled_gap": -0.004000186920166016,
+      "contact_xy": [
+        -2.9354353836604528,
+        4.695702375684466
+      ],
+      "world_position": [
+        -3.0,
+        4.849999904632568,
+        0.33086317777633667
+      ]
+    },
+    {
+      "object": "STORY \u00b7 spilled supply sack 03",
+      "support": "STORY \u00b7 spilled supply sack 02",
+      "vertical_adjustment": 0.49779386138916015,
+      "minimum_sampled_gap": -0.004000186920166016,
+      "contact_xy": [
+        -3.1712603194372995,
+        4.803388404846191
+      ],
+      "world_position": [
+        -3.299999952316284,
+        4.650000095367432,
+        0.49779385328292847
+      ]
+    },
+    {
+      "object": "STORY \u00b7 spilled supply sack 04",
+      "support": "Sand floor / source atlas",
+      "vertical_adjustment": 0.00870184326171875,
+      "minimum_sampled_gap": -0.006000041961669922,
+      "contact_xy": [
+        -2.6213767528533936,
+        3.331523895263672
+      ],
+      "world_position": [
+        -2.75,
+        3.549999952316284,
+        0.008701843209564686
+      ]
+    },
+    {
+      "object": "STORY \u00b7 spilled supply sack 05",
+      "support": "Sand floor / source atlas",
+      "vertical_adjustment": 0.0032878341674804686,
+      "minimum_sampled_gap": -0.006000041961669922,
+      "contact_xy": [
+        -1.8840564489364624,
+        3.913811445236206
+      ],
+      "world_position": [
+        -2.0999999046325684,
+        3.950000047683716,
+        0.0032878341153264046
+      ]
+    },
+    {
+      "object": "STORY \u00b7 spilled supply sack 06",
+      "support": "Sand floor / source atlas",
+      "vertical_adjustment": 0.005092185974121094,
+      "minimum_sampled_gap": -0.005999565124511719,
+      "contact_xy": [
+        -1.6381371021270752,
+        3.970235824584961
+      ],
+      "world_position": [
+        -1.6200000047683716,
+        4.199999809265137,
+        0.00509218592196703
+      ]
+    },
+    {
+      "object": "STORY \u00b7 spilled supply sack 07",
+      "support": "Sand floor / source atlas",
+      "vertical_adjustment": -0.003930526733398438,
+      "minimum_sampled_gap": -0.006000518798828125,
+      "contact_xy": [
+        -0.9075652956962585,
+        3.7520580291748047
+      ],
+      "world_position": [
+        -1.0499999523162842,
+        3.8499999046325684,
+        -0.003930526785552502
+      ]
+    },
+    {
+      "object": "STORY \u00b7 spilled supply sack 08",
+      "support": "Sand floor / source atlas",
+      "vertical_adjustment": -0.003930526733398438,
+      "minimum_sampled_gap": -0.006000041961669922,
+      "contact_xy": [
+        -2.309983253479004,
+        3.316643476486206
+      ],
+      "world_position": [
+        -2.200000047683716,
+        3.450000047683716,
+        -0.003930526785552502
+      ]
+    }
+  ],
+  "human_visual_acceptance": "accepted revision 8; see human-acceptance.json"
+}

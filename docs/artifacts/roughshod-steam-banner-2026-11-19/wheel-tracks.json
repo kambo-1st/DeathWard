@@ -1,0 +1,71 @@
+{
+  "source_cart": "assets/props/shop-cart/shop-cart.glb",
+  "source_wheel_bounds": [
+    {
+      "min": [
+        -0.3230618458313008,
+        0.0006463506781471731,
+        -1.1807835550747672
+      ],
+      "max": [
+        0.7130589115093431,
+        1.0312143155938058,
+        -0.9466278655792644
+      ]
+    },
+    {
+      "min": [
+        -2.174723349953773,
+        0.0,
+        0.48970472596061626
+      ],
+      "max": [
+        -1.0061547473930503,
+        1.168568398632405,
+        0.7335677141220169
+      ]
+    },
+    {
+      "min": [
+        -2.1747225801501506,
+        0.0,
+        -1.1897084029715488
+      ],
+      "max": [
+        -1.0061539775894282,
+        1.168568398632405,
+        -0.9458457207026244
+      ]
+    },
+    {
+      "min": [
+        -0.48529418375904493,
+        0.0006463506781471731,
+        0.4908299056735591
+      ],
+      "max": [
+        0.5508265588604403,
+        1.0312143155938058,
+        0.7249854429329292
+      ]
+    }
+  ],
+  "source_wheel_spacing": 1.6794132590293884,
+  "world_wheel_spacing": 1.763383921980858,
+  "path_control": "WHEEL TRACKS \u00b7 path control",
+  "material": "SAND \u00b7 original atlas + carriage wheel tracks",
+  "method": "Original sand atlas plus paired straight/curved shallow shader ruts; no image input or added mesh.",
+  "configuration": {
+    "bend_start": 1.25,
+    "bend_radius": 7.0,
+    "end_angle_degrees": 105,
+    "end_fade_degrees": 20,
+    "rear_start": -2.3,
+    "rear_fade_length": 0.45,
+    "half_width": 0.035,
+    "edge_softness": 0.026,
+    "darkness": 0.6,
+    "rut_depth": 0.018,
+    "grain_variation": 0.2
+  }
+}

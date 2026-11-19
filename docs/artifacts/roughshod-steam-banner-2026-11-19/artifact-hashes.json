@@ -1,0 +1,121 @@
+{
+  "revision": 8,
+  "files": {
+    "roughshod-banner.png": {
+      "sha256": "7b5fb557e69f47eeef3d1f604a9f6858e725ce9f7a4ae5bd7ca83451d8539bb9",
+      "bytes": 3971704
+    },
+    "cart-story-detail.png": {
+      "sha256": "c7b89bdb1b8054af8d46f71406d6d10db79c1660dc0a343df9c24674814ed743",
+      "bytes": 1362364
+    },
+    "roughshod-banner.blend": {
+      "sha256": "183c13aa3ceff6459d7bc0bcfe042bca5a2a1b32b7105c1915d50518f832cded",
+      "bytes": 6837559
+    },
+    "thumbnail-320x180.png": {
+      "sha256": "cdb727ccc6afd49f1a2ad21d8b37b091a76961bb366540f9abe4ccd1c7efa0be",
+      "bytes": 81892
+    },
+    "roughshod-preview.png": {
+      "sha256": "56409ea926b5f4152f62b6dd7a8393398f5bf7bff1fa38b095771d58420bbd40",
+      "bytes": 1029844
+    },
+    "hand-detail.png": {
+      "sha256": "e7498c6f9a90d211d9182e473fba1990ace7ae7eb90c762fc7c1b2956eee7201",
+      "bytes": 605162
+    },
+    "README.md": {
+      "sha256": "8ac8c8da0d46130d656cd2f8ebe52b593c4a46cd7214ffc458686d1e89eff1f4",
+      "bytes": 9837
+    },
+    "scene.json": {
+      "sha256": "d2075b2d54e9f4fae3f16d6e4be2977a56b7faf6a7beb3d5e62ae434a250c471",
+      "bytes": 4280
+    },
+    "build_scene.py": {
+      "sha256": "3fd6964541b03136ee7f8405c5dbf438376851cff198382d9c6fdc1a48a4fcae",
+      "bytes": 5935
+    },
+    "story.py": {
+      "sha256": "ecd05c4d48849bad07a6fc15e11981e216c3e9438af0e652d4ed909c7932f3c0",
+      "bytes": 6524
+    },
+    "cargo_contacts.py": {
+      "sha256": "a035e5f6888db01284e9ad326e87dec50a6efa51ba9015198e97081b5baa9dd1",
+      "bytes": 2839
+    },
+    "cargo-contacts.json": {
+      "sha256": "0cc410dab5f2ceaa9862c48b804032f835c588e34194e9e61e8193fbbb5b6ed5",
+      "bytes": 3604
+    },
+    "wheel_tracks.py": {
+      "sha256": "429a2e59c27fecd98487b7d347b596400d5d22401bc71487e2dda31c607b154f",
+      "bytes": 7536
+    },
+    "wheel-tracks.json": {
+      "sha256": "d41bf7fae32990f83e71f26974234eeb3afb6f348dfb0e396cd70d3073311989",
+      "bytes": 1617
+    },
+    "ground_noise.py": {
+      "sha256": "26d68a2473f533ae025cd7e95ec2302bb5fa21f1c6c5472337921a8b749b424a",
+      "bytes": 5395
+    },
+    "ground-noise.json": {
+      "sha256": "f04d42c5aff61d1587ca3902bb5751987154afdf8526e6b07b2c5146aca0ebd9",
+      "bytes": 692
+    },
+    "render_master.py": {
+      "sha256": "afe0c1101e10cba7bbf11e1a9fc9be52890e378ab9abe899cae87a0392dfda24",
+      "bytes": 400
+    },
+    "capture_cart.py": {
+      "sha256": "b0e126c1d0e980b860dbb06b80b5d0782221f91ef6a5d85f32ba7d3f914c2245",
+      "bytes": 566
+    },
+    "capture_preview.py": {
+      "sha256": "7ad0b986dc64ac0dfa466bf29a2f3a098a836f7378ef06421458dc07e43f8adf",
+      "bytes": 604
+    },
+    "capture_thumbnail.py": {
+      "sha256": "1660b9b5811489c0d238607d0f54f264f06de94d10617d72f0229db1c0dd4db3",
+      "bytes": 405
+    },
+    "capture_hand.py": {
+      "sha256": "044cad0fb2eb7fde2e280f8bb6cf97681bdaf86a6341c1fa3742785b4873c479",
+      "bytes": 801
+    },
+    "verify_scene.py": {
+      "sha256": "d9367bf32cb088aa6172b30ee2fa2011936db9238284e1fb710aa4cf264ea4f6",
+      "bytes": 5412
+    },
+    "source-assets.json": {
+      "sha256": "42be90a63299a94b57163ca6ce271206d48a712738cf692bc9ec175ef0582618",
+      "bytes": 24148
+    },
+    "verification.json": {
+      "sha256": "29ae0d8f5ee05a971e67da4e3f5676f7f82b650b95e1989c0f4fe9a73a559603",
+      "bytes": 7774
+    },
+    "restoration-check.json": {
+      "sha256": "16e155386f010bc379ced3c1f87187b65b90d3ee745b8c21b8ea9b1d9b599a93",
+      "bytes": 1791
+    },
+    "history/v2/roughshod-banner.blend": {
+      "sha256": "48b836135a7a8eab6d6d9aabdad83a9420f8d540c333c3540ef8c1ad113e2e96",
+      "bytes": 6898907
+    },
+    ".gitignore": {
+      "sha256": "3ec8a39efa72daa97193b761e5ef7c59170b1e0b9718f2f6e76ea15af50f8582",
+      "bytes": 254
+    },
+    "human-acceptance.json": {
+      "sha256": "17ae088891c0698079dcf7d80b2fa541f1703913bae3282c4f62ff0d430a63de",
+      "bytes": 433
+    },
+    "history/v2/source-assets.json": {
+      "sha256": "e17fbff0e518384a7eb2a902cfcf3f6ed39be3d1b7b14fd4b3d93581096faffe",
+      "bytes": 17189
+    }
+  }
+}

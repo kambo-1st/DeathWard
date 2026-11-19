@@ -1,0 +1,10 @@
+# Keep local render logs and duplicate historical handoffs outside Git.
+/*.log
+/render-process.json
+/render-complete.json
+/roughshod-preview.blend
+/history/*
+!/history/v2/
+/history/v2/*
+!/history/v2/roughshod-banner.blend
+!/history/v2/source-assets.json

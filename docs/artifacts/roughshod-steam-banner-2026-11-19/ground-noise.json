@@ -1,0 +1,21 @@
+{
+  "material": "SAND \u00b7 original atlas + carriage wheel tracks",
+  "source_floor": "assets/western/western.glb",
+  "method": "World-space fine grains, broad sand-color patches and shallow bump, layered under existing wheel-track color and normal treatment.",
+  "source_atlas_and_uvs_preserved": true,
+  "wheel_tracks_preserved": true,
+  "new_geometry": false,
+  "bitmap_inputs_added": 0,
+  "configuration": {
+    "grain_scale": 65.0,
+    "grain_strength": 0.28,
+    "patch_scale": 0.65,
+    "patch_strength": 0.65,
+    "scuff_scale": 3.5,
+    "scuff_strength": 0.22,
+    "bump_depth": 0.006,
+    "bump_strength": 0.4,
+    "near_detail_distance": 32,
+    "far_detail_distance": 110
+  }
+}

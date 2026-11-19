@@ -1,0 +1,254 @@
+{
+  "revision": 8,
+  "game_font_exact_sha256": "8a959b9e8bbaed9dbd02e3dc284389c303ae6ee358b0a5d9102b270a75be8ae9",
+  "left_edge_cliff_and_stone_removed": true,
+  "restored_from": "history/v2/roughshod-banner.blend",
+  "enemy_or_spider_objects": 0,
+  "composition_change": "sacks settled on actual sand, crate floor and lower cargo surfaces; sand, wheel tracks and composition retained",
+  "cargo_contacts_rechecked_from_saved_meshes": true,
+  "hand_fit": "palm-aligned original gun, outward wrist, curled index; visually reviewed in close-up",
+  "title": "ROUGHSHOD",
+  "render_resolution": [
+    2560,
+    1440
+  ],
+  "render_samples": 64,
+  "editable_font_objects": 2,
+  "shared_title_shadow": true,
+  "rig_bones": 48,
+  "visible_repo_mesh_instances": 109,
+  "packed_used_images": 6,
+  "packed_font": true,
+  "external_linked_libraries": 0,
+  "source_asset_hashes_unchanged": true,
+  "relocated_blend_opens": true,
+  "render_with_invalidated_external_image_font_paths": true,
+  "generated_bitmap_inputs": 0,
+  "human_visual_acceptance": "accepted revision 8; see human-acceptance.json",
+  "steam_crop_package": "not yet prepared",
+  "cargo_contacts": {
+    "revision": 8,
+    "method": "Mesh underside / support-surface vertical sampling; 70x70 grid plus mesh vertices. Tiny cloth/sand embed for firm visible contact.",
+    "sacks": [
+      {
+        "object": "STORY \u00b7 spilled supply sack 01",
+        "support": "crate interior floor",
+        "vertical_adjustment": 0.28125733947753906,
+        "minimum_sampled_gap": -0.003999233245849609,
+        "contact_xy": [
+          -3.4786208357129778,
+          4.447247954777309
+        ],
+        "world_position": [
+          -3.559999942779541,
+          4.630000114440918,
+          0.2812573313713074
+        ]
+      },
+      {
+        "object": "STORY \u00b7 spilled supply sack 02",
+        "support": "crate interior floor",
+        "vertical_adjustment": 0.33086318588256836,
+        "minimum_sampled_gap": -0.004000186920166016,
+        "contact_xy": [
+          -2.9354353836604528,
+          4.695702375684466
+        ],
+        "world_position": [
+          -3.0,
+          4.849999904632568,
+          0.33086317777633667
+        ]
+      },
+      {
+        "object": "STORY \u00b7 spilled supply sack 03",
+        "support": "STORY \u00b7 spilled supply sack 02",
+        "vertical_adjustment": 0.49779386138916015,
+        "minimum_sampled_gap": -0.004000186920166016,
+        "contact_xy": [
+          -3.1712603194372995,
+          4.803388404846191
+        ],
+        "world_position": [
+          -3.299999952316284,
+          4.650000095367432,
+          0.49779385328292847
+        ]
+      },
+      {
+        "object": "STORY \u00b7 spilled supply sack 04",
+        "support": "Sand floor / source atlas",
+        "vertical_adjustment": 0.00870184326171875,
+        "minimum_sampled_gap": -0.006000041961669922,
+        "contact_xy": [
+          -2.6213767528533936,
+          3.331523895263672
+        ],
+        "world_position": [
+          -2.75,
+          3.549999952316284,
+          0.008701843209564686
+        ]
+      },
+      {
+        "object": "STORY \u00b7 spilled supply sack 05",
+        "support": "Sand floor / source atlas",
+        "vertical_adjustment": 0.0032878341674804686,
+        "minimum_sampled_gap": -0.006000041961669922,
+        "contact_xy": [
+          -1.8840564489364624,
+          3.913811445236206
+        ],
+        "world_position": [
+          -2.0999999046325684,
+          3.950000047683716,
+          0.0032878341153264046
+        ]
+      },
+      {
+        "object": "STORY \u00b7 spilled supply sack 06",
+        "support": "Sand floor / source atlas",
+        "vertical_adjustment": 0.005092185974121094,
+        "minimum_sampled_gap": -0.005999565124511719,
+        "contact_xy": [
+          -1.6381371021270752,
+          3.970235824584961
+        ],
+        "world_position": [
+          -1.6200000047683716,
+          4.199999809265137,
+          0.00509218592196703
+        ]
+      },
+      {
+        "object": "STORY \u00b7 spilled supply sack 07",
+        "support": "Sand floor / source atlas",
+        "vertical_adjustment": -0.003930526733398438,
+        "minimum_sampled_gap": -0.006000518798828125,
+        "contact_xy": [
+          -0.9075652956962585,
+          3.7520580291748047
+        ],
+        "world_position": [
+          -1.0499999523162842,
+          3.8499999046325684,
+          -0.003930526785552502
+        ]
+      },
+      {
+        "object": "STORY \u00b7 spilled supply sack 08",
+        "support": "Sand floor / source atlas",
+        "vertical_adjustment": -0.003930526733398438,
+        "minimum_sampled_gap": -0.006000041961669922,
+        "contact_xy": [
+          -2.309983253479004,
+          3.316643476486206
+        ],
+        "world_position": [
+          -2.200000047683716,
+          3.450000047683716,
+          -0.003930526785552502
+        ]
+      }
+    ],
+    "human_visual_acceptance": "pending"
+  },
+  "ground_noise": {
+    "material": "SAND \u00b7 original atlas + carriage wheel tracks",
+    "source_floor": "assets/western/western.glb",
+    "method": "World-space fine grains, broad sand-color patches and shallow bump, layered under existing wheel-track color and normal treatment.",
+    "source_atlas_and_uvs_preserved": true,
+    "wheel_tracks_preserved": true,
+    "new_geometry": false,
+    "bitmap_inputs_added": 0,
+    "configuration": {
+      "grain_scale": 65.0,
+      "grain_strength": 0.28,
+      "patch_scale": 0.65,
+      "patch_strength": 0.65,
+      "scuff_scale": 3.5,
+      "scuff_strength": 0.22,
+      "bump_depth": 0.006,
+      "bump_strength": 0.4,
+      "near_detail_distance": 32,
+      "far_detail_distance": 110
+    }
+  },
+  "wheel_tracks": {
+    "source_cart": "assets/props/shop-cart/shop-cart.glb",
+    "source_wheel_bounds": [
+      {
+        "min": [
+          -0.3230618458313008,
+          0.0006463506781471731,
+          -1.1807835550747672
+        ],
+        "max": [
+          0.7130589115093431,
+          1.0312143155938058,
+          -0.9466278655792644
+        ]
+      },
+      {
+        "min": [
+          -2.174723349953773,
+          0.0,
+          0.48970472596061626
+        ],
+        "max": [
+          -1.0061547473930503,
+          1.168568398632405,
+          0.7335677141220169
+        ]
+      },
+      {
+        "min": [
+          -2.1747225801501506,
+          0.0,
+          -1.1897084029715488
+        ],
+        "max": [
+          -1.0061539775894282,
+          1.168568398632405,
+          -0.9458457207026244
+        ]
+      },
+      {
+        "min": [
+          -0.48529418375904493,
+          0.0006463506781471731,
+          0.4908299056735591
+        ],
+        "max": [
+          0.5508265588604403,
+          1.0312143155938058,
+          0.7249854429329292
+        ]
+      }
+    ],
+    "source_wheel_spacing": 1.6794132590293884,
+    "world_wheel_spacing": 1.763383921980858,
+    "path_control": "WHEEL TRACKS \u00b7 path control",
+    "material": "SAND \u00b7 original atlas + carriage wheel tracks",
+    "method": "Original sand atlas plus paired straight/curved shallow shader ruts; no image input or added mesh.",
+    "configuration": {
+      "bend_start": 1.25,
+      "bend_radius": 7.0,
+      "end_angle_degrees": 105,
+      "end_fade_degrees": 20,
+      "rear_start": -2.3,
+      "rear_fade_length": 0.45,
+      "half_width": 0.035,
+      "edge_softness": 0.026,
+      "darkness": 0.6,
+      "rut_depth": 0.018,
+      "grain_variation": 0.2
+    }
+  },
+  "visual_review": {
+    "master": "inspected final render",
+    "cart_detail": "inspected; exterior sacks rest on sand, interior cargo supported by the crate floor and lower sacks",
+    "thumbnail": "inspected at 320x180",
+    "human_acceptance": "accepted revision 8"
+  }
+}
