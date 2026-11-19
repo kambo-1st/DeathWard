@@ -1,6 +1,6 @@
 # D14a.9 — Temperance and blood donation
 
-Selected by “Nice commit and go!” after scoped D14a.8 acceptance. The accepted Mom’s Coin Purse/pill checkpoint is committed as `340fc763`. This delivery adds Temperance15, an ordinary blood-donation machine, and its two break rewards to the main game. Developer checks pass. The user accepted the scoped main-game handoff on 2026-11-19 (“nice it works, whats next?”); see `human-acceptance.json`. This delivery’s checkpoint commit remains pending.
+Selected by “Nice commit and go!” after scoped D14a.8 acceptance. The accepted Mom’s Coin Purse/pill checkpoint is committed as `340fc763`. This delivery adds Temperance15, an ordinary blood-donation machine, and its two break rewards to the main game. Developer checks pass. The user accepted the scoped main-game handoff on 2026-11-19 (“nice it works, whats next?”); see `human-acceptance.json`. This delivery is committed as `26435e27`.
 
 ## Short human check
 
@@ -64,6 +64,6 @@ The click test caught the retained0.04world-unit arrival tolerance just outside 
 
 ## Unfinished / next proposed
 
-Scoped human handoff acceptance is recorded; the D14a.9 commit remains pending. Full machine explosion destruction, native factory/damage flags/scheduler/physics/unlocks/pools/RNG, special characters/Hard/Greed and unusual synergies remain open. The full pill/card catalogs, complete recorded shop layout, remaining special rooms/full-floor allocation and live expedition save/resume remain unfinished; pixel/performance work is deferred.
+Scoped human handoff acceptance is recorded; D14a.9 is committed as `26435e27`. Full machine explosion destruction, native factory/damage flags/scheduler/physics/unlocks/pools/RNG, special characters/Hard/Greed and unusual synergies remain open. The full pill/card catalogs, full native shop behavior, remaining special rooms/full-floor allocation and live expedition save/resume remain unfinished; pixel/performance work is deferred. D14a.10 now enables the recorded rocks/stock arrangement with an explicit keeper-wagon adapter; its human review is pending.
 
-After this accepted playtest, proposed next is to checkpoint the accepted delivery and finish the recorded shop arrangement using its now-enabled Purse/Temperance dependencies. No unrelated bulk parity is authorized by this report.
+The user selected the recorded shop continuation with “ok, conitnue”; see [D14a.10](../d14a10-recorded-shop/README.md) for the enabled arrangement and remaining keeper behavior. No unrelated bulk parity is authorized by this report.

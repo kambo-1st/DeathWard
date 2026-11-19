@@ -3,13 +3,13 @@
   "user_statement": "nice it works, whats next?",
   "status": "scoped-human-acceptance",
   "scope": "Acknowledgment of the main-game Temperance/donation review. This is not independent acceptance of every reward branch or full native machine equivalence.",
-  "commit": null,
+  "commit": "26435e27",
   "next_selected": "User: ok, conitnue. Commit accepted D14a.9 and implement the complete recorded shop arrangement as the next small main-game delivery.",
   "next_proposed": "Commit accepted D14a.9, then integrate the complete recorded shop2.0.0 arrangement with its now-supported Purse195/Temperance15 dependencies, prices, relative content placement and access/purchase/revisit checks. Preserve canyon geometry, controls, user settings and live/export/load boundaries.",
   "unfinished": [
-    "D14a.9 checkpoint commit",
     "machine explosion destruction and full native actor equivalence",
     "complete recorded shop/special rooms/full-floor allocation",
     "live expedition save/resume"
-  ]
+  ],
+  "followup_report": "../d14a10-recorded-shop/README.md"
 }

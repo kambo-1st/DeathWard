@@ -1,3 +1,4 @@
+#include "world/SourceRecordedShop.hpp"
 #include "world/Dungeon.hpp"
 #include "world/SourceTreasureStock.hpp"
 #include "world/SourceHeartRockRoom.hpp"
@@ -87,7 +88,7 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
 } // namespace
 
 Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tutorial, StoryRoom story,
-             int requestedRooms, FloorDimensions dimensions, FloorProfile floorProfile, bool sourceCombatRoom,int roomHeartLayouts,bool requestedRoomLocks,int propLayouts,int treasurePool)
+             int requestedRooms, FloorDimensions dimensions, FloorProfile floorProfile, bool sourceCombatRoom,int roomHeartLayouts,bool requestedRoomLocks,int propLayouts,int treasurePool,bool recordedShop)
     : visualSeed(seed), theme(missionTheme), profile(floorProfile) {
     if(roomHeartLayouts<0||roomHeartLayouts>2)throw std::invalid_argument("Invalid room-heart layout mode");
     if(dimensions.minHalfTiles<5||dimensions.maxHalfTiles<dimensions.minHalfTiles||dimensions.maxHalfTiles>10||
@@ -483,6 +484,13 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
             if(chosen<0||r.depth<rooms[size_t(chosen)].depth)chosen=i;
         }
         if(chosen>=0)rooms[size_t(chosen)].sourceCombatTemplate=BasementGaperTemplate;
+    }
+    if(recordedShop&&!tutorial&&theme==MissionTheme::Canyon&&profile.active()&&profile.floor==0&&shopRoom>=0&&roomHeartLayouts==1&&propLayouts==1) {
+        auto &site=rooms[size_t(shopRoom)];
+        if(site.kind==RoomKind::Shop&&site.story==StoryRoom::None) {
+            site.sourceShopTemplate=0;site.sourceRoomSelectionSeed=canyonShopStockSeed(seed);
+            site.sourceRoomSpawnSeed=sourceRoomDescriptorSeeds(site.sourceRoomSelectionSeed).spawn;
+        }
     }
     if(!tutorial)prepareRoomHeartLayouts(seed,roomHeartLayouts,propLayouts);
     if(!tutorial&&profile.active()&&profile.floor==0&&theme==MissionTheme::Canyon&&roomHeartLayouts==1&&treasurePool>=0) {

@@ -18,15 +18,16 @@
   "three_size_cases": true,
   "cli_cases": 3,
   "human_acceptance": true,
-  "new_delivery_committed": false,
+  "new_delivery_committed": true,
   "full_native_equivalence": false,
   "save_scope": "Campaign12 interruption summary, not full live resume",
   "unfinished": [
-    "D14a.9 checkpoint commit",
     "machine explosion destruction",
     "full native actor/cache/physics/profile/pools/RNG",
     "complete recorded shop and special rooms/floor allocation",
     "live expedition resume"
   ],
-  "human_acceptance_scope": "See human-acceptance.json; full native equivalence remains false."
+  "human_acceptance_scope": "See human-acceptance.json; full native equivalence remains false.",
+  "commit": "26435e27",
+  "followup_report": "../d14a10-recorded-shop/README.md"
 }

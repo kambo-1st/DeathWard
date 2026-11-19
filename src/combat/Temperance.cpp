@@ -6,7 +6,9 @@ Vector3 Simulation::shopCardPosition()const {
 }
 void Simulation::deliverShopCard() {
     if(!hasSourceShop(room)||shopCardSlot<0||shopCardSold||shopCardDelivered)return;
-    if(spawnPill(shopCardPosition(),TemperanceCard,uint32_t(seed_^0x54454d504552414eULL)|1U,true)){
+    const auto &site=arena.rooms[size_t(room)];
+    const auto seed=site.sourceShopTemplate==0?recordedShopSlotSeed(site,7):uint32_t(seed_^0x54454d504552414eULL)|1U;
+    if(spawnPill(shopCardPosition(),TemperanceCard,seed,true)){
         pillPickups.back().shopStock=true;shopCardDelivered=true;
     }
 }

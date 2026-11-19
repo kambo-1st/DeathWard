@@ -1,0 +1,21 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  44: source_shop_stock
+      Start 192: recorded_duke_room_delivery
+      Start  43: source_shop_collectibles
+ 1/10 Test #192: recorded_duke_room_delivery ......   Passed    2.41 sec
+      Start 195: coin_purse_pill_delivery
+ 2/10 Test #195: coin_purse_pill_delivery .........   Passed    2.19 sec
+      Start 194: temperance_delivery
+ 3/10 Test  #43: source_shop_collectibles .........   Passed    6.72 sec
+      Start 196: moms_eye_treasure_delivery
+ 4/10 Test #194: temperance_delivery ..............   Passed    2.22 sec
+      Start  30: inventory_bomb_tuning
+ 5/10 Test  #30: inventory_bomb_tuning ............   Passed    0.33 sec
+      Start 150: balance_preset_contract
+ 6/10 Test #150: balance_preset_contract ..........   Passed    0.19 sec
+      Start  41: source_shop_stock_reference
+ 7/10 Test  #41: source_shop_stock_reference ......   Passed    0.00 sec
+      Start 193: recorded_shop_delivery
+ 8/10 Test #196: moms_eye_treasure_delivery .......   Passed    2.92 sec
+ 9/10 Test #193: recorded_shop_delivery ...........   Passed    3.56 sec

@@ -1,0 +1,6 @@
+PASS exact eight source stacks and weighted keeper metadata
+PASS recorded shop seed6 scale=0.75 range=5-5 purchase/consumption/demolition/revisit/Apply/descent
+PASS recorded shop seed6 scale=1 range=7-9 purchase/consumption/demolition/revisit/Apply/descent
+PASS recorded shop seed6 scale=1.5 range=10-10 purchase/consumption/demolition/revisit/Apply/descent
+PASS SOURCE/props/stock/pool/review/Apply boundaries and schema54 migration
+COVERAGE minimum size admitted=23 safely rejected=0

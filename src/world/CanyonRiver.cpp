@@ -130,7 +130,7 @@ void planInteriorRiver(const Arena &arena, CanyonTerrain &field) {
     std::erase_if(links,[&](int index) {
         const auto &p=arena.passages[size_t(index)];
         const auto &room=arena.rooms[size_t(p.rooms[0]==0?p.rooms[1]:p.rooms[0])];
-        return room.sourceCombatTemplate>=0||room.sourceObstacleTemplate>=0||room.sourceTreasureTemplate>=0;
+        return room.sourceCombatTemplate>=0||room.sourceObstacleTemplate>=0||room.sourceTreasureTemplate>=0||room.sourceShopTemplate>=0;
     });
     if (links.size() < 2)
         return;

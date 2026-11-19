@@ -1,3 +1,4 @@
+#include "world/SourceRecordedShop.hpp"
 #include "world/SourceFullFlyRoom.hpp"
 #include "world/SourcePropRooms.hpp"
 #include "world/Dungeon.hpp"
@@ -205,6 +206,30 @@ bool Arena::fitRecordedPropRoom() {
     bool retained=true;
     for(int index=0;index<roomCount();++index) {
         auto &layout=rooms[size_t(index)];
+        if(layout.sourceShopTemplate==0) {
+            const float initial=recordedShopCellSize(layout);bool accepted=false;
+            const auto originalWalls=walls;
+            for(int percent=100;percent>0;--percent) {
+                const float cell=initial*percent/100;if(cell<1.05f)break;
+                layout.sourcePropCellOverride=cell;walls=originalWalls;bool fits=true;
+                const float half=recordedShopRockHalf(layout);
+                for(const auto &slot:RecordedShopSlots)if(slot.type==1000) {
+                    const auto at=recordedShopCell(layout,slot.x,slot.y);
+                    if(blocked(at,half+.3f)||roomAt(at)!=index){fits=false;break;}
+                    for(int p:layout.passages)for(const auto &gate:passages[size_t(p)].gates)if(sphereBox(at,half+1.f,gate))fits=false;
+                    if(!fits)break;
+                    walls.push_back({{at.x-half,0,at.z-half},{at.x+half,1.35f,at.z+half}});
+                }
+                if(fits)for(int x:{5,7}) {
+                    const auto at=recordedShopCell(layout,x,4);
+                    if(blocked(at,.55f)||roomAt(at)!=index||path(layout.entry,at,.48f).empty()){fits=false;break;}
+                }
+                if(fits){accepted=true;break;}
+            }
+            walls=originalWalls;
+            if(!accepted){layout.sourceShopTemplate=-1;layout.sourcePropCellOverride=0;retained=false;}
+            continue;
+        }
         const int variant=layout.sourceCombatTemplate;
         if(variant!=414&&variant!=RecordedDukeRoom)continue;
         const auto &source=*sourcePropRoom(variant);
@@ -253,6 +278,19 @@ bool Arena::fitRecordedPropRoom() {
 void Arena::prepareSourceHeartRocks() {
     for(int index=0;index<roomCount();++index) {
         const auto &layout=rooms[size_t(index)];
+        if(layout.sourceShopTemplate==0) {
+            const float half=recordedShopRockHalf(layout);
+            for(const auto &slot:RecordedShopSlots)if(slot.type==1000) {
+                const auto at=recordedShopCell(layout,slot.x,slot.y);
+                Breakable rock;rock.room=index;rock.kind=BreakableKind::CrackedRock;
+                rock.sourceGridIndex=(slot.y+1)*15+slot.x+1;
+                rock.id=0x535243000000ULL+uint64_t(index)*256+uint64_t(rock.sourceGridIndex);
+                rock.bounds={{at.x-half,0,at.z-half},{at.x+half,1.35f,at.z+half}};
+                rock.rewardPosition=at;rock.paid=true;rock.health=rock.initialHealth=1;
+                rock.lootSeed=recordedShopSlotSeed(layout,slot.ordinal);breakables.push_back(rock);
+            }
+            rebuildWalls();continue;
+        }
         if(const auto *source=sourcePropRoom(layout.sourceObstacleTemplate)) {
             const float half=sourcePropCellSize(layout,*source)*.5f;
             for(const auto &slot:source->entries)if(slot.type==1000||slot.type==1500) {

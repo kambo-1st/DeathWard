@@ -1,3 +1,4 @@
+#include "world/SourceRecordedShop.hpp"
 #include "world/SourceFullFlyRoom.hpp"
 #include "world/SourcePropRooms.hpp"
 #include "items/SadOnion.hpp"
@@ -41,7 +42,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
                     profile.boss=BossKind::Isaac;profile.bossMonster=monsterId(chosen);profile.bossForm=BossForm::Normal;
                     profile.doubleBossRoom=false;profile.bossRails.reset();
                 }
-                return profile;}(),sourceCombatRoom,roomHeartLayouts,sourceRoomLocks,requestedProps.layouts,requestedTreasureUpgrade?requestedTreasurePool:-1),
+                return profile;}(),sourceCombatRoom,roomHeartLayouts,sourceRoomLocks,requestedProps.layouts,requestedTreasureUpgrade?requestedTreasurePool:-1,requestedShopHeart&&requestedShopVariation&&matchesRecordedShop(expedition.floorSeed(level),requestedCollectiblePool)),
       encounterRng(expedition.floorSeed(level) ^ 0x454e434f554e5445ULL),
       rewardRng(expedition.floorSeed(level) ^ 0x5245574152445354ULL),
       combatRng(expedition.floorSeed(level) ^ 0x434f4d424154524eULL), seed_(expedition.floorSeed(level)),
@@ -155,7 +156,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     auto terrainSafe=[&](Vector3 point) {
         if(next.arena.roomAt(point)!=targetRoom||next.arena.blocked(point,.48f))return false;
         const auto &layout=next.arena.rooms[size_t(targetRoom)];
-        if(layout.sourceObstacleTemplate>=0&&next.arena.path(layout.entry,point,.48f).empty())return false;
+        if((layout.sourceObstacleTemplate>=0||layout.sourceShopTemplate>=0)&&next.arena.path(layout.entry,point,.48f).empty())return false;
         return true;
     };
     auto safe=[&](Vector3 point) {
@@ -816,13 +817,17 @@ bool Simulation::enterSourceRoomReview(int variant) {
     if(variant<0||room!=0||floor!=0||stats.duration!=0)return false;
     for(int i=1;i<arena.roomCount();++i) {
         const auto &layout=arena.rooms[size_t(i)];
-        if(layout.sourceHeartTemplate!=variant&&layout.sourceCombatTemplate!=variant&&!(variant==RecordedMomsEyeReview&&layout.sourceTreasureTemplate==6))continue;
+        if(layout.sourceHeartTemplate!=variant&&layout.sourceCombatTemplate!=variant&&!(variant==RecordedMomsEyeReview&&layout.sourceTreasureTemplate==6)&&!(variant==RecordedShopReview&&layout.sourceShopTemplate==0))continue;
         // A known combat-record heart layer at a protected objective/key site
         // does not contain the complete combat record and cannot review it.
         if((variant==FullFlyRoomTemplate||sourcePropRoom(variant)||sourceCombatRockRoom(variant))&&layout.sourceCombatTemplate!=variant)continue;
         if(variant==SourceChestRockRoom&&layout.sourceObstacleTemplate!=variant)continue;
         if((variant==SourceCoinRockRoom||variant==SourceKeyRockRoom||variant==SourceBombRockRoom)&&layout.sourceObstacleTemplate!=variant)continue;
         auto reviewStart=layout.entry;
+        if(variant==RecordedShopReview) {
+            auto at=recordedShopCell(layout,6,4);at.z+=2;
+            if(!arena.blocked(at,.55f)&&!arena.path(layout.entry,at,.48f).empty())reviewStart=at;
+        }
         if(variant==RecordedMomsEyeReview) {
             auto at=add(layout.center,{0,0,3});
             if(!arena.blocked(at,.55f)&&!arena.path(layout.entry,at,.48f).empty())reviewStart=at;
@@ -859,7 +864,7 @@ bool Simulation::enterSourceRoomReview(int variant) {
         }
         cancelMove();player.position=reviewStart;
         enterRoom(i);player.aim=layout.exit;
-        announce(variant==RecordedMomsEyeReview?"TREASURE REVIEW / MOM'S EYE":variant==PropReviewRoom?"FIRE / POOP TEST / Shoot or place dynamite. Fire hurts on touch.":"ROOM REVIEW / Source "+std::to_string(variant)+" / "+roomName(),6);
+        announce(variant==RecordedShopReview?"RECORDED SHOP / PURSE AND TEMPERANCE":variant==RecordedMomsEyeReview?"TREASURE REVIEW / MOM'S EYE":variant==PropReviewRoom?"FIRE / POOP TEST / Shoot or place dynamite. Fire hurts on touch.":"ROOM REVIEW / Source "+std::to_string(variant)+" / "+roomName(),6);
         return true;
     }
     return false;

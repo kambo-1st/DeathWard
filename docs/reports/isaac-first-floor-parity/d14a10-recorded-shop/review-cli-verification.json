@@ -1,0 +1,48 @@
+{
+  "cases": [
+    {
+      "name": "stock",
+      "args": [
+        "stdbuf",
+        "-oL",
+        "-eL",
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "6",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a10-recorded-shop/review-preset.json",
+        "--save",
+        "/tmp/deathward-recorded-shop-cli-review-ghu0txc1/campaign.save",
+        "--review-shop-stock"
+      ],
+      "startup_passed": true,
+      "intentionally_terminated": true,
+      "exit_code": -15
+    },
+    {
+      "name": "source",
+      "args": [
+        "stdbuf",
+        "-oL",
+        "-eL",
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "6",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a10-recorded-shop/review-preset.json",
+        "--save",
+        "/tmp/deathward-recorded-shop-cli-review-g6bdgj78/campaign.save",
+        "--review-source-room",
+        "2000000"
+      ],
+      "startup_passed": true,
+      "intentionally_terminated": true,
+      "exit_code": -15
+    }
+  ],
+  "mutually_exclusive_flags_preserved": true
+}

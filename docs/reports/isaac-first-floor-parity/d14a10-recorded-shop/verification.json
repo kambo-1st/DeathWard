@@ -1,0 +1,70 @@
+{
+  "status": "developer checks passed; scoped human handoff accepted",
+  "accepted_previous_commit": "26435e27",
+  "delivery": "D14a.10 recorded shop2.0.0 arrangement with retained wagon keeper adapter",
+  "new_delivery_committed": false,
+  "human_acceptance": true,
+  "source": {
+    "stacks": 8,
+    "rocks": 4,
+    "weighted_keeper_choices": 2,
+    "observed_keeper": "17.1.4",
+    "observed_stock": [
+      {
+        "item": "195",
+        "price": 15
+      },
+      {
+        "card": "15",
+        "price": 5
+      }
+    ],
+    "donation_actor_observed": false,
+    "donation_gate_verified": false
+  },
+  "simulation_sizes": [
+    {
+      "scale": 0.75,
+      "minimum": 5,
+      "maximum": 5
+    },
+    {
+      "scale": 1,
+      "minimum": 7,
+      "maximum": 9
+    },
+    {
+      "scale": 1.5,
+      "minimum": 10,
+      "maximum": 10
+    }
+  ],
+  "minimum_size_coverage": {
+    "seeds_scanned": 1024,
+    "matching": 23,
+    "admitted": 23,
+    "rejected": 0
+  },
+  "focused_suites": 10,
+  "focused_suites_passed": true,
+  "ctest_completed": 9,
+  "ctest_interruption_exit_code": 143,
+  "remaining_shop_stock_standalone_exit_code": 0,
+  "main_game_renderer_passed": true,
+  "cli_cases": 3,
+  "preset_schema": 55,
+  "mechanics_fingerprint": "6e7b8382ade04b60",
+  "original_exports_unchanged": true,
+  "full_native_equivalence": false,
+  "unfinished": [
+    "D14a.10 checkpoint commit",
+    "native keeper destruction and drops",
+    "donation machine factory/unlock gates",
+    "blood-machine explosion destruction",
+    "full native shop pools, selection, RNG, factory and physics",
+    "remaining special rooms and complete recorded-floor allocation",
+    "live expedition save/resume"
+  ],
+  "review_cli_startup_cases": 2,
+  "review_cli_modes": "stock with test funds; source-room with normal health/no test coins; each invoked alone"
+}

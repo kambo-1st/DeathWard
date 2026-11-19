@@ -1,0 +1,152 @@
+{
+  "pid": 663447,
+  "args": [
+    "stdbuf",
+    "-oL",
+    "-eL",
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "6",
+    "--review-shop-stock",
+    "--mute",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a10/campaign.save.balance/export.json",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a10/campaign.save"
+  ],
+  "started_at_utc": "2026-11-19T06:17:18.516939+00:00",
+  "preset_sha256": "d7bd92f0b9eb3dd2c7b6d167f25a99ce9d3325933dba4e261b6e63d6965b397b",
+  "god_mode": false,
+  "review_overrides": [
+    "20 test coins",
+    "four red half-hearts"
+  ],
+  "displayed_room": 7,
+  "selection": "Natural restricted shop pool: DW seed6, Mom's Coin Purse195/15coins and Temperance15/5coins",
+  "retained_user_settings": {
+    "temperance": {
+      "card_price": 5,
+      "health_cost": 1,
+      "cycle_speed": 1,
+      "payout_scale": 1,
+      "break_scale": 1,
+      "blood_bag_strength": 1,
+      "iv_cooldown": 0.5,
+      "outcome": 0
+    },
+    "pills": {
+      "purse_count": 4,
+      "stat_strength": 1,
+      "binding": 0
+    },
+    "moms_eye_chance_multiplier": 1,
+    "attack_fly_movement_multiplier": 1,
+    "frowning_movement_multiplier": 1,
+    "round_worm": {
+      "cycle_speed": 1,
+      "shot_speed": 1
+    },
+    "full_fly": {
+      "movement": 1,
+      "shot_speed": 1
+    },
+    "room_props": {
+      "layouts": 1,
+      "fire_damage_half_hearts": 1,
+      "rewards": true
+    },
+    "boss_reward_item": 255,
+    "screw": {
+      "tears_strength": 1,
+      "shot_speed_strength": 1
+    },
+    "seeded_bosses": false,
+    "duke": {
+      "enabled": true,
+      "health": 1,
+      "movement": 1,
+      "fly_speed": 1
+    },
+    "monstro": {
+      "enabled": true,
+      "health": 1,
+      "movement": 1,
+      "shot_speed": 1
+    },
+    "book_of_shadows": {
+      "duration": 10,
+      "recharge": 1
+    },
+    "halo_of_flies": {
+      "orbit_speed": 1,
+      "orbit_radius": 1,
+      "contact_radius": 1
+    },
+    "trinkets": {
+      "cancer_strength": 1,
+      "clear_rewards": true,
+      "binding": 0,
+      "whip_strength": 1
+    },
+    "yum_heart": {
+      "healing": 2,
+      "recharge": 1,
+      "binding": 0
+    },
+    "brother_bobby": {
+      "movement": 1,
+      "interval": 1,
+      "damage": 1,
+      "shot_speed": 1
+    },
+    "player_speed": 1.1,
+    "room_size_scale": 1,
+    "room_min_half_tiles": 7,
+    "room_max_half_tiles": 9,
+    "route_length_scale": 0.26,
+    "default_zoom_percent": 165,
+    "tears_per_second": 1.9272734,
+    "shot_speed": 1.05,
+    "range_tiles": 6.5,
+    "gaper_movement_multiplier": 1,
+    "spider_movement_multiplier": 1,
+    "pooter_movement_multiplier": 1,
+    "pooter_shot_speed_multiplier": 1,
+    "pooter_attack_interval_multiplier": 1,
+    "player_damage": 3.5,
+    "regular_health_multiplier": 1,
+    "source_combat_room": true,
+    "red_heart_clear_rewards": true,
+    "player_luck": 0,
+    "red_heart_appearance_speed": 1,
+    "room_heart_layouts": 1,
+    "coin_clear_rewards": true,
+    "bomb_clear_rewards": true,
+    "key_clear_rewards": true,
+    "chest_clear_rewards": true,
+    "inventory_bombs": {
+      "fuse_multiplier": 1,
+      "radius_multiplier": 1,
+      "damage": 100,
+      "self_damage_half_hearts": -1,
+      "rocks_block_blast": false
+    },
+    "keyed_door_cost": 1,
+    "source_room_locks": true,
+    "source_treasure_upgrade": true,
+    "sad_onion_strength": 1,
+    "source_shop_heart": true,
+    "shop_heart_price": 3,
+    "source_shop_key": true,
+    "shop_key_price": 5,
+    "source_shop_variation": true,
+    "steam_sale_discounts": true,
+    "shop_soul_heart_price": 5,
+    "shop_bomb_price": 5,
+    "shop_upgrade_price": 15,
+    "shop_collectible_pool": 1,
+    "treasure_collectible_pool": 1,
+    "cricket_head_strength": 1
+  }
+}

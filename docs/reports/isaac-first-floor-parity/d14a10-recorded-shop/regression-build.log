@@ -1,0 +1,44 @@
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_temperance_tests
+[ 94%] Building CXX object CMakeFiles/deathward_temperance_tests.dir/tests/temperance_tests.cpp.o
+[100%] Linking CXX executable deathward_temperance_tests
+[100%] Built target deathward_temperance_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_coin_purse_tests
+[100%] Building CXX object CMakeFiles/deathward_coin_purse_tests.dir/tests/coin_purse_tests.cpp.o
+[100%] Linking CXX executable deathward_coin_purse_tests
+[100%] Built target deathward_coin_purse_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_balance_preset_tests
+[100%] Building CXX object CMakeFiles/deathward_balance_preset_tests.dir/tests/balance_preset_tests.cpp.o
+[100%] Linking CXX executable deathward_balance_preset_tests
+[100%] Built target deathward_balance_preset_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_shop_stock_tests
+[100%] Building CXX object CMakeFiles/deathward_shop_stock_tests.dir/tests/shop_stock_tests.cpp.o
+[100%] Linking CXX executable deathward_shop_stock_tests
+[100%] Built target deathward_shop_stock_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_shop_collectible_tests
+[100%] Building CXX object CMakeFiles/deathward_shop_collectible_tests.dir/tests/shop_collectible_tests.cpp.o
+[100%] Linking CXX executable deathward_shop_collectible_tests
+[100%] Built target deathward_shop_collectible_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_shop_stock_reference_tests
+[100%] Linking CXX executable deathward_shop_stock_reference_tests
+[100%] Built target deathward_shop_stock_reference_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_recorded_duke_room_tests
+[100%] Building CXX object CMakeFiles/deathward_recorded_duke_room_tests.dir/tests/recorded_duke_room_tests.cpp.o
+[100%] Linking CXX executable deathward_recorded_duke_room_tests
+[100%] Built target deathward_recorded_duke_room_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_moms_eye_tests
+[100%] Building CXX object CMakeFiles/deathward_moms_eye_tests.dir/tests/moms_eye_tests.cpp.o
+[100%] Linking CXX executable deathward_moms_eye_tests
+[100%] Built target deathward_moms_eye_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_inventory_bomb_tuning_tests
+[100%] Building CXX object CMakeFiles/deathward_inventory_bomb_tuning_tests.dir/tests/inventory_bomb_tuning_tests.cpp.o
+[100%] Linking CXX executable deathward_inventory_bomb_tuning_tests
+[100%] Built target deathward_inventory_bomb_tuning_tests

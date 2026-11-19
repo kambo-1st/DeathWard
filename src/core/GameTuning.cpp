@@ -1,3 +1,4 @@
+#include "world/SourceRecordedShop.hpp"
 #include "core/Game.hpp"
 #include "world/ShopCartGeometry.hpp"
 #include <iostream>
@@ -283,7 +284,10 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     if(reviewShopPurchase||reviewShopKeyPurchase||reviewShopStock) {
         const int shop=candidate->arena.shopRoom;
         if(!candidate->hasSourceShop(shop)||(reviewShopKeyPurchase&&!candidate->shopKeyOffered())||(reviewShopPurchase&&!candidate->shopHeartOffered())||(reviewShopStock&&!candidate->shopVariationActive()))throw std::runtime_error("Shop review requires the requested opening-floor stock; use its recorded seed and stock settings");
-        candidate->player.position=shopCartGeometry::reviewStart(candidate->arena.rooms[size_t(shop)].center);
+        const auto &site=candidate->arena.rooms[size_t(shop)];
+        auto start=site.sourceShopTemplate==0?add(recordedShopCell(site,6,4),{0,0,2}):shopCartGeometry::reviewStart(site.center);
+        if(candidate->arena.roomAt(start)!=shop||candidate->arena.blocked(start,.55f)||candidate->arena.path(site.entry,start,.48f).empty())start=site.entry;
+        candidate->player.position=start;
         candidate->player.hp=4;
         const uint64_t funds=reviewShopStock?20:reviewShopKeyPurchase?8:3;
         if(reviewShopKeyPurchase||reviewShopStock)candidate->keys=0;
@@ -306,13 +310,13 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     if(reviewTrinkets)std::cout<<"TRINKET_REVIEW room="<<run->room+1<<" pickups="<<run->trinketPickups.size()<<" owned="<<run->items.size()<<" held="<<bool(run->heldTrinket)<<" hp="<<run->player.hp<<" god="<<run->godMode<<'\n';
     if(reviewPowerups)std::cout<<"CATEGORY_REVIEW room="<<run->room+1<<" staged_offerings=1,4,8,45 trinket=39 owned="<<run->items.size()<<" hp="<<run->player.hp<<" god="<<run->godMode<<'\n';
     if(reviewRoomIndex)std::cout<<"ROOM_REVIEW room="<<run->room+1<<" hp="<<run->player.hp<<" god="<<run->godMode<<'\n';
-    if(reviewShopStock)std::cout<<"SHOP_STOCK_REVIEW room="<<run->room+1<<" card_slot="<<run->shopCardSlot<<" card_price="<<run->shopPrice(run->bloodMachineTuning.cardPrice,run->shopCardSlot)<<" upgrade_item="<<run->shopUpgradeItem<<" upgrade_slot="<<run->shopUpgradeSlot<<" key_slot="<<run->shopKeySlot<<" bomb_slot="<<run->shopBombSlot<<" heart_kind="<<(run->shopHeartKind==HeartKind::Soul?"soul":"red")<<" heart_slot="<<run->shopHeartSlot<<" sale_slot="<<run->shopDiscountSlot<<" coins="<<run->money()<<" price="<<run->shopPrice(run->shopUpgradePrice,run->shopUpgradeSlot)<<" god="<<run->godMode<<'\n';
+    if(reviewShopStock)std::cout<<"SHOP_STOCK_REVIEW room="<<run->room+1<<" recorded_shop="<<(run->arena.rooms[size_t(run->room)].sourceShopTemplate==0)<<" card_slot="<<run->shopCardSlot<<" card_price="<<run->shopPrice(run->bloodMachineTuning.cardPrice,run->shopCardSlot)<<" upgrade_item="<<run->shopUpgradeItem<<" upgrade_slot="<<run->shopUpgradeSlot<<" key_slot="<<run->shopKeySlot<<" bomb_slot="<<run->shopBombSlot<<" heart_kind="<<(run->shopHeartKind==HeartKind::Soul?"soul":"red")<<" heart_slot="<<run->shopHeartSlot<<" sale_slot="<<run->shopDiscountSlot<<" coins="<<run->money()<<" price="<<run->shopPrice(run->shopUpgradePrice,run->shopUpgradeSlot)<<" god="<<run->godMode<<'\n';
     if(reviewShopKeyPurchase)std::cout<<"SHOP_KEY_REVIEW room="<<run->room+1<<" keys="<<run->keys<<" coins="<<run->money()<<" key_price="<<run->shopKeyPrice<<" heart_price="<<run->shopHeartPrice<<" god="<<run->godMode<<'\n';
     if(reviewShopPurchase)std::cout<<"SHOP_REVIEW room="<<run->room+1<<" hp="<<run->player.hp<<" coins="<<run->money()<<" price="<<run->shopHeartPrice<<" god="<<run->godMode<<'\n';
     if(reviewSourceRoomTemplate) {
         const auto &layout=run->arena.rooms[size_t(run->room)];
         std::cout<<"ROOM_REVIEW requested="<<*reviewSourceRoomTemplate<<" room="<<run->room+1
-                 <<" template="<<(layout.sourceTreasureTemplate>=0?layout.sourceTreasureTemplate:layout.sourceHeartTemplate>=0?layout.sourceHeartTemplate:layout.sourceCombatTemplate)
+                 <<" template="<<(layout.sourceShopTemplate>=0?RecordedShopReview:layout.sourceTreasureTemplate>=0?layout.sourceTreasureTemplate:layout.sourceHeartTemplate>=0?layout.sourceHeartTemplate:layout.sourceCombatTemplate)
                  <<" selection_seed="<<layout.sourceRoomSelectionSeed<<" spawn_seed="<<layout.sourceRoomSpawnSeed
                  <<" chest_slots="<<layout.chestSpawns.size()<<" chests="<<run->chests.size()
                  <<" bomb_slots="<<layout.bombSpawns.size()<<" layout_bombs="<<std::count_if(run->bombPickups.begin(),run->bombPickups.end(),[&](const auto &bomb){return bomb.placedInLayout&&bomb.room==run->room;})
