@@ -277,7 +277,7 @@ void Game::perform(Action action) {
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
            (action<Action::BalanceDamageHealthTab||action>Action::ResetYumHeart)&&
            (action<Action::BalanceTrinketTab||action>Action::ResetTrinkets)&&action!=Action::WhipDown&&action!=Action::WhipUp&&
-           (action<Action::BalanceHaloTab||action>Action::ResetPills))return;
+           (action<Action::BalanceHaloTab||action>Action::ResetTemperance))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -360,7 +360,28 @@ void Game::perform(Action action) {
             applyBalance(std::move(preset));activeQueued_=false;
             balanceNotice="Healing applies on next use; recharge on future first combat clears. Existing charge stays unchanged.";break;
         }
+        case Action::BalanceTemperanceTab:balanceTemperanceOpen=true;balanceBloodRewardsOpen=false;balancePillsOpen=balanceShootingOpen=true;break;
+        case Action::BalanceBloodRewardsTab:balanceBloodRewardsOpen=!balanceBloodRewardsOpen;break;
+        case Action::CardPriceDown:case Action::CardPriceUp:case Action::BloodCostDown:case Action::BloodCostUp:
+        case Action::BloodCycleDown:case Action::BloodCycleUp:case Action::BloodBreakDown:case Action::BloodBreakUp:
+        case Action::BloodPayoutDown:case Action::BloodPayoutUp:case Action::BloodBagDown:case Action::BloodBagUp:
+        case Action::IvCooldownDown:case Action::IvCooldownUp:case Action::CycleBloodOutcome:case Action::ResetTemperance: {
+            auto preset=balancePreset;auto &t=preset.temperance;
+            const auto adjust=[](float v,bool up,float low,float high){return std::clamp(std::round((v+(up?.05f:-.05f))*100)/100,low,high);};
+            if(action==Action::ResetTemperance)t={};
+            else if(action==Action::CycleBloodOutcome)t.outcome=(t.outcome+1)%4;
+            else if(action==Action::CardPriceDown||action==Action::CardPriceUp)t.cardPrice=std::clamp(t.cardPrice+(action==Action::CardPriceUp?1:-1),0,30);
+            else if(action==Action::BloodCostDown||action==Action::BloodCostUp)t.healthCost=std::clamp(t.healthCost+(action==Action::BloodCostUp?1:-1),0,4);
+            else if(action==Action::BloodCycleDown||action==Action::BloodCycleUp)t.cycleSpeed=adjust(t.cycleSpeed,action==Action::BloodCycleUp,.25f,4);
+            else if(action==Action::BloodBreakDown||action==Action::BloodBreakUp)t.breakScale=adjust(t.breakScale,action==Action::BloodBreakUp,0,3);
+            else if(action==Action::BloodPayoutDown||action==Action::BloodPayoutUp)t.payoutScale=adjust(t.payoutScale,action==Action::BloodPayoutUp,0,3);
+            else if(action==Action::BloodBagDown||action==Action::BloodBagUp)t.bloodBagStrength=adjust(t.bloodBagStrength,action==Action::BloodBagUp,0,2);
+            else t.ivCooldown=adjust(t.ivCooldown,action==Action::IvCooldownUp,.1f,3);
+            applyBalance(std::move(preset));
+            balanceNotice="Price: unsold cards. Cost: next donation. Cycle/rolls: next cycle. Blood Bag Speed: live. IV cooldown: next use.";break;
+        }
         case Action::BalancePillsTab:
+            balanceTemperanceOpen=false;
             balanceShootingOpen=balancePillsOpen=true;
             balanceEnemiesOpen=balanceRewardsOpen=balanceCombatOpen=balanceTrinketOpen=balanceActiveOpen=balanceFamiliarOpen=balanceTreasureOpen=false;break;
         case Action::PurseCountDown:case Action::PurseCountUp:case Action::PillStrengthDown:case Action::PillStrengthUp:case Action::CyclePillBinding:case Action::ResetPills: {
@@ -1198,8 +1219,12 @@ std::vector<Action> Game::menuActions() const {
             std::vector<Action>{Action::PooterMovementDown,Action::PooterMovementUp,Action::PooterShotDown,Action::PooterShotUp,Action::PooterDelayDown,Action::PooterDelayUp,Action::ResetPooter}:
             balanceEnemiesOpen?
             std::vector<Action>{Action::BalanceFrowningTab,Action::BalanceFullFlyTab,Action::GaperMovementDown,Action::GaperMovementUp,Action::GaperMovementReset,Action::SpiderMovementDown,Action::SpiderMovementUp,Action::SpiderMovementReset}:
+            balanceShootingOpen&&balancePillsOpen&&balanceTemperanceOpen&&balanceBloodRewardsOpen?
+            std::vector<Action>{Action::BalancePillsTab,Action::BalanceBloodRewardsTab,Action::BloodPayoutDown,Action::BloodPayoutUp,Action::BloodBagDown,Action::BloodBagUp,Action::IvCooldownDown,Action::IvCooldownUp,Action::CycleBloodOutcome,Action::ResetTemperance}:
+            balanceShootingOpen&&balancePillsOpen&&balanceTemperanceOpen?
+            std::vector<Action>{Action::BalancePillsTab,Action::BalanceBloodRewardsTab,Action::CardPriceDown,Action::CardPriceUp,Action::BloodCostDown,Action::BloodCostUp,Action::BloodCycleDown,Action::BloodCycleUp,Action::BloodBreakDown,Action::BloodBreakUp,Action::ResetTemperance}:
             balanceShootingOpen&&balancePillsOpen?
-            std::vector<Action>{Action::PurseCountDown,Action::PurseCountUp,Action::PillStrengthDown,Action::PillStrengthUp,Action::CyclePillBinding,Action::ResetPills}:
+            std::vector<Action>{Action::BalanceTemperanceTab,Action::PurseCountDown,Action::PurseCountUp,Action::PillStrengthDown,Action::PillStrengthUp,Action::CyclePillBinding,Action::ResetPills}:
             balanceShootingOpen&&balanceTrinketOpen?
             std::vector<Action>{Action::BalanceTreasureTab,Action::CancerDown,Action::CancerUp,Action::WhipDown,Action::WhipUp,Action::ToggleTrinketRewards,Action::CycleTrinketBinding,Action::ResetTrinkets}:
             balanceShootingOpen&&balanceActiveOpen&&balanceBookOpen?

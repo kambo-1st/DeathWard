@@ -1,4 +1,5 @@
 #include "combat/Pills.hpp"
+#include "combat/Temperance.hpp"
 #pragma once
 #include "combat/Monstro.hpp"
 #include "combat/Duke.hpp"
@@ -1197,6 +1198,14 @@ class Simulation {
     bool beginPowerupReview();
     bool beginTrinketReview();
     bool visitPowerupReviewEncounter(bool bossRoom=false);
+    BloodMachineTuning bloodMachineTuning{};
+    std::vector<BloodMachine> bloodMachines;
+    std::vector<BloodReward> pendingBloodRewards;
+    std::vector<MachineCollectible> machineCollectibles;
+    double ivBagCooldown=0;
+    int shopCardSlot=-1;bool shopCardSold=false,shopCardDelivered=false;
+    bool spawnBloodMachine(Vector3 at,uint32_t seed);
+    Vector3 shopCardPosition()const;
     PillTuning pillTuning{};
     PillState pills{};
     std::vector<PillPickup> pillPickups;
@@ -1799,6 +1808,9 @@ class Simulation {
     double haloPhase_=0;
     void updateBrotherBobby(const Input &input,float dt);
     float brotherBobbyClock_=0;
+    uint32_t temperanceRng_=1;bool ivBagAvailable_=true;
+    bool useTemperance();bool useIvBag();bool payBlood(bool portable);
+    void updateBloodMachines(float dt);void deliverBloodRewards();void deliverShopCard();
     uint32_t purseRng_=1;
     bool pillUseHeld_=false,pillDropHeld_=false;
     void queuePursePills();

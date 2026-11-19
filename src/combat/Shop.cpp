@@ -72,15 +72,17 @@ void Simulation::prepareShop() {
         // Explicit bounded fallback for an empty numeric selection; no reroll.
         if(chosen)shopUpgradeItem=chosen;
     }
+    shopCardSlot=-1;shopCardSold=shopCardDelivered=false;
     shopHeartSlot=1;shopKeySlot=0;shopUpgradeSlot=shopDiscountSlot=shopBombSlot=-1;
     if(hasSourceShop(arena.shopRoom)&&sourceShopVariation) {
         const auto stock=sourceShopStock(canyonShopStockSeed(seed_)); // Supplied basic shop level0.
         const int a=stock.categories[0],b=stock.categories[1];
-        if((a==8&&(b==0||b==1||b==3||b==4))||(b==8&&(a==0||a==1||a==3||a==4))) {
+        if((a==8&&(b==0||b==1||b==3||b==4||b==6))||(b==8&&(a==0||a==1||a==3||a==4||a==6))) {
             shopUpgradeSlot=a==8?0:1;
             shopHeartKind=(a==4||b==4)?HeartKind::Soul:HeartKind::Red;
             shopHeartSlot=(a==0||a==4)?0:(b==0||b==4)?1:-1;shopKeySlot=a==3?0:b==3?1:-1;
             shopBombSlot=a==1?0:b==1?1:-1;
+            shopCardSlot=a==6?0:b==6?1:-1;
             shopDiscountSlot=stock.discountSlot;
         }
         // No category reroll. Other pairs retain the explicit previous fixed-pair fallback.

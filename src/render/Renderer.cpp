@@ -1239,12 +1239,40 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             DrawLine3D(add(p,{0,.25f*scale,0}),add(p,{.16f*scale,.42f*scale,0}),Gold);
         }
     }
+    for(const auto &m:run.bloodMachines)if(m.room==run.room) {
+        auto p=m.position;p.y=0;shadow(p,.8f);
+        const bool broken=m.phase==BloodMachine::Phase::Broken;
+        DrawCube(add(p,{0,.12f,0}),1.1f,.24f,1.1f,Color{74,48,35,255});
+        if(broken){DrawCube(add(p,{.1f,.3f,0}),.7f,.35f,.7f,Rust);continue;}
+        DrawCube(add(p,{0,.7f,0}),.85f,1.2f,.85f,Color{98,64,42,255});
+        DrawCylinderEx(add(p,{0,1.25f,0}),add(p,{0,1.9f,0}),.28f,.28f,8,Color{156,39,38,255});
+        DrawCylinderEx(add(p,{0,1.9f,0}),add(p,{0,2.02f,0}),.34f,.34f,8,Gold);
+        DrawCube(add(p,{0,.9f,-.45f}),.45f,.35f,.08f,Paper);
+        DrawCube(add(p,{0,.9f,-.5f}),.1f,.25f,.04f,Rust);DrawCube(add(p,{0,.9f,-.5f}),.28f,.08f,.04f,Rust);
+        DrawCube(add(p,{0,.9f,.45f}),.45f,.35f,.08f,Paper);
+        DrawCube(add(p,{0,.9f,.5f}),.1f,.25f,.04f,Rust);DrawCube(add(p,{0,.9f,.5f}),.28f,.08f,.04f,Rust);
+        const float lever=m.phase==BloodMachine::Phase::Idle?0:.18f*std::sin(float(m.elapsed));
+        DrawCylinderEx(add(p,{.43f,1.1f,0}),add(p,{.53f,1.5f+lever,.15f}),.045f,.045f,6,Gold);
+        DrawSphereEx(add(p,{.53f,1.5f+lever,.15f}),.1f,5,8,Rust);
+    }
+    for(const auto &item:run.machineCollectibles)if(item.room==run.room) {
+        auto p=item.position;p.y=.7f+.06f*std::sin(float(run.stats.duration)*3);shadow(p,.5f);
+        const Color color=item.item==58?Color{66,52,103,255}:Rust;
+        DrawCube(p,.55f,.65f,.25f,color);DrawCubeWires(p,.55f,.65f,.25f,Gold);
+        if(item.item==135){DrawCylinderEx(add(p,{.4f,-.6f,0}),add(p,{.4f,.5f,0}),.035f,.035f,6,Gold);DrawLine3D(add(p,{.4f,.5f,0}),add(p,{0,.4f,0}),Gold);}
+    }
     for(const auto &pickup:run.pillPickups)if(pickup.room==run.room&&pickup.timing.phase!=PillTiming::Phase::Gone) {
         static constexpr Color colors[13][2]={{{68,116,182,255},{68,116,182,255}},{{228,226,211,255},{68,116,182,255}},{{216,124,43,255},{216,124,43,255}},{{228,226,211,255},{228,226,211,255}},{{177,49,44,255},{177,49,44,255}},{{220,126,163,255},{177,49,44,255}},{{68,116,182,255},{210,176,55,255}},{{210,176,55,255},{216,124,43,255}},{{228,226,211,255},{210,176,55,255}},{{228,226,211,255},{228,226,211,255}},{{166,166,162,255},{166,166,162,255}},{{67,139,83,255},{67,139,83,255}},{{210,176,55,255},{210,176,55,255}}};
         auto p=pickup.position;p.y=.35f;float scale=1;
         if(pickup.timing.phase==PillTiming::Phase::Appear)p.y+=1.2f*(1-std::min(1.f,float(pickup.timing.frame)/PillTiming::DropFrame));
-        if(pickup.timing.phase==PillTiming::Phase::Collect){scale=std::max(0.f,1-float(pickup.timing.frame)/PillTiming::CollectFrames);p.y+=1-scale;}
+        if(pickup.timing.phase==PillTiming::Phase::Collect){scale=std::max(0.f,1-float(pickup.timing.frame)/(pickup.timing.card?16:PillTiming::CollectFrames));p.y+=1-scale;}
         shadow(p,.45f*scale);
+        if(pickup.color==TemperanceCard){
+            p.y+=.32f*scale;DrawCube(p,.52f*scale,.75f*scale,.08f*scale,ColorAlpha(Paper,scale));
+            DrawCubeWires(p,.52f*scale,.75f*scale,.08f*scale,ColorAlpha(Gold,scale));
+            DrawSphereEx(add(p,{0,0,-.06f*scale}),.13f*scale,6,8,ColorAlpha(Rust,scale));
+            DrawSphereEx(add(p,{0,0,.06f*scale}),.13f*scale,6,8,ColorAlpha(Rust,scale));continue;
+        }
         for(int half=0;half<2;++half){const float side=half?1.f:-1.f;const auto end=add(p,{side*.22f*scale,0,0});const auto c=ColorAlpha(colors[pickup.color-1][half],scale);
             DrawCylinderEx(p,end,.17f*scale,.17f*scale,8,c);DrawSphereEx(end,.17f*scale,6,8,c);}
         if(pickup.color==5||pickup.color==10)for(float x:{-.22f,.05f,.22f})DrawSphereEx(add(p,{x*scale,.16f*scale,0}),.045f*scale,4,5,ColorAlpha(pickup.color==5?Paper:Color{85,126,176,255},scale));
@@ -2059,6 +2087,12 @@ Action Renderer::expedition(const Game &game) {
             text(price==0?"FREE":std::to_string(price)+" COINS",x+8,y+(name?23:5),14,Gold);
         };
         if(run.hasSourceShop(run.room)&&run.shopVariationActive()&&!run.shopUpgradeSold)priceTag(run.shopUpgradePosition(),run.shopPrice(run.shopUpgradePrice,run.shopUpgradeSlot),run.shopUpgradeItem==195?"MOM'S COIN PURSE":run.shopUpgradeItem==250?"BOGO BOMBS":"STEAM SALE");
+        for(const auto &card:run.pillPickups)if(card.shopStock&&card.room==run.room&&card.timing.collectible())priceTag(card.position,run.shopPrice(run.bloodMachineTuning.cardPrice,run.shopCardSlot),"XIV / TEMPERANCE");
+        for(const auto &m:run.bloodMachines)if(m.room==run.room&&m.phase==BloodMachine::Phase::Idle&&planarDistance(m.position,run.player.position)<3){
+            panel(420,558,440,48,Panel);
+            text("DONATE "+std::to_string(run.bloodMachineTuning.healthCost)+" HALF-HEART",438,565,16,Gold);
+            text("STEP AWAY TO STOP",438,586,13,Paper);break;
+        }
         for(const auto &heart:run.heartPickups)if(heart.shopStock&&heart.room==run.room&&heart.timing.collectible())priceTag(heart.position,run.shopPrice(run.shopHeartBasePrice(),run.shopHeartSlot));
         for(const auto &key:run.keyPickups)if(key.shopStock&&key.room==run.room&&key.timing.collectible())priceTag(key.position,run.shopPrice(run.shopKeyPrice,run.shopKeySlot));
         for(const auto &bomb:run.bombPickups)if(bomb.shopStock&&bomb.room==run.room&&bomb.timing.collectible())priceTag(bomb.position,run.shopPrice(run.shopBombPrice,run.shopBombSlot));
@@ -2171,7 +2205,9 @@ Action Renderer::expedition(const Game &game) {
         if(run.activeItem) {
             const auto r=expeditionHud::Active;
             const int capacity=activeCapacity(run.activeItem->item);
-            if(control(Action::UseActiveItem,std::string(run.yumHeart.keyName())+" / "+activeName(run.activeItem->item)+" "+std::to_string(run.activeItem->charge)+"/"+std::to_string(capacity),r,run.activeItem->charge==capacity))controls=Action::UseActiveItem;
+            const bool portable=run.activeItem->item==IvBagKey;
+            const std::string status=portable?(run.ivBagCooldown<=1e-7?" READY":" WAIT"):" "+std::to_string(run.activeItem->charge)+"/"+std::to_string(capacity);
+            if(control(Action::UseActiveItem,std::string(run.yumHeart.keyName())+" / "+activeName(run.activeItem->item)+status,r,portable?run.ivBagCooldown<=1e-7:run.activeItem->charge==capacity))controls=Action::UseActiveItem;
             for(int i=0;i<capacity;++i)DrawRectangleRec({(r.x+3+i*(r.width-6)/capacity)*sx_,(r.y+r.height-4)*sy_,(r.width-10)*sx_/capacity,3*sy_},i<run.activeItem->charge?Teal:Border);
         }
         if(run.bookProtectionRemaining>1e-7) {
@@ -2802,9 +2838,36 @@ Action Renderer::balancePanel(const Game &game) {
         if(game.run)for(size_t i=0;i<game.run->arena.rooms.size();++i)
             if(game.run->arena.rooms[i].sourceCombatTemplate==47)sourceRoom="Active: room "+std::to_string(i+1)+" / two Gapers";
         text(sourceRoom,610,474,13,Teal);
+    } else if(game.balancePillsOpen&&game.balanceTemperanceOpen) {
+        const auto &t=game.balancePreset.temperance;
+        text("TEMPERANCE / BLOOD DONATION",205,182,22,Gold);
+        if(button(Action::BalancePillsTab,"BACK",945,169,130,40))return Action::BalancePillsTab;
+        text("One shared card / pill slot. Touch the machine to donate; step away to stop.",205,218,13,Muted);
+        const auto row=[&](const char *name,std::string value,float y,Action down,Action up,const char *step){
+            text(name,205,y+12,17,Gold);text(value,570,y+9,20,Paper);
+            if(button(down,std::string("- ")+step,760,y,130,36))return down;
+            if(button(up,std::string("+ ")+step,905,y,130,36))return up;
+            return Action::None;
+        };
+        Action a=Action::None;
+        if(!game.balanceBloodRewardsOpen) {
+            a=row("CARD PRICE",std::to_string(t.cardPrice)+" COINS",242,Action::CardPriceDown,Action::CardPriceUp,"1");if(a!=Action::None)return a;
+            a=row("DONATION COST",std::to_string(t.healthCost)+" HALF-HEARTS",294,Action::BloodCostDown,Action::BloodCostUp,"1");if(a!=Action::None)return a;
+            a=row("CYCLE SPEED",decimal(t.cycleSpeed*100)+"%",346,Action::BloodCycleDown,Action::BloodCycleUp,"5%");if(a!=Action::None)return a;
+            a=row("BREAK CHANCE",decimal(t.breakScale*100)+"%",398,Action::BloodBreakDown,Action::BloodBreakUp,"5%");if(a!=Action::None)return a;
+        }else {
+            a=row("COIN PAYOUT",decimal(t.payoutScale*100)+"%",242,Action::BloodPayoutDown,Action::BloodPayoutUp,"5%");if(a!=Action::None)return a;
+            a=row("BLOOD BAG SPEED",decimal(t.bloodBagStrength*100)+"%",294,Action::BloodBagDown,Action::BloodBagUp,"5%");if(a!=Action::None)return a;
+            a=row("IV BAG COOLDOWN",decimal(t.ivCooldown)+" s",346,Action::IvCooldownDown,Action::IvCooldownUp,"0.05 s");if(a!=Action::None)return a;
+            const char *modes[]={"OUTCOME: SOURCE ROLLS","TEST: COINS ONLY","TEST: BREAK / BLOOD BAG","TEST: BREAK / IV BAG"};
+            if(button(Action::CycleBloodOutcome,modes[t.outcome],205,398,830,36))return Action::CycleBloodOutcome;
+        }
+        if(button(Action::BalanceBloodRewardsTab,game.balanceBloodRewardsOpen?"MACHINE SETTINGS":"REWARDS / TESTING",205,465,350,36))return Action::BalanceBloodRewardsTab;
+        if(button(Action::ResetTemperance,"RESET TEMPERANCE",685,465,350,36))return Action::ResetTemperance;
     } else if(game.balancePillsOpen) {
         const auto &t=game.balancePreset.pills;
         text("PILLS / MOM'S COIN PURSE",205,182,22,Gold);
+        if(button(Action::BalanceTemperanceTab,"TEMPERANCE",740,169,190,40))return Action::BalanceTemperanceTab;
         if(button(Action::BalanceShootingTab,"BACK",945,169,130,40))return Action::BalanceShootingTab;
         text("Health and stat pills. Hold one; use it to reveal its color for this expedition.",205,218,13,Muted);
         text("PILLS PER PURSE",205,250,18,Gold);text(std::to_string(t.purseCount),560,247,22,Paper);
@@ -3081,8 +3144,8 @@ Action Renderer::draw(const Game &game) {
             {"W A S D","Move relative to the camera"},{"Arrow keys","Fire; combine two for diagonal shots"},
             {"Space","Dodge in your movement / facing direction"},{"E / Enter","Use nearby doors, evidence, trades and exits"},
             {"B","Place dynamite at your feet"},
-            {game.balancePreset.pills.useKey(),"Use held pill; reveals its effect for this expedition"},
-            {game.balancePreset.pills.dropKey(),"Drop held pill; rebind in Tuning / Shooting / Pills"},
+            {game.balancePreset.pills.useKey(),"Use held card or pill; pills reveal their effect"},
+            {game.balancePreset.pills.dropKey(),"Drop held card or pill; rebind in Tuning / Shooting / Pills"},
             {game.balancePreset.trinkets.keyName(),"Drop held trinket; rebind in Tuning / Shooting / Trinkets"},
             {game.balancePreset.yumHeart.keyName(),"Use active item; rebind in Tuning / Shooting / Actives"},
             {"Q / R","Rotate the camera"},{"Page Up / Down","Zoom in / out"},{"Insert / Delete","Tilt the camera"},

@@ -1,0 +1,65 @@
+{
+  "presets_unchanged": true,
+  "cases": [
+    {
+      "name": "schema48-original",
+      "path": "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+      "args": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "6",
+        "--smoke",
+        "--frames",
+        "2",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+        "--save",
+        "/tmp/deathward-temperance-cli-3in9jzd7/campaign.save"
+      ],
+      "exit_code": 0,
+      "sha256": "22e143a736697ccc780ab31bde3c3a1f7ac0d88392e9bf7aa45055ccd3895604"
+    },
+    {
+      "name": "schema53-latest",
+      "path": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a8/campaign.save.balance/export.json",
+      "args": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "6",
+        "--smoke",
+        "--frames",
+        "2",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/.local/share/deathward/reviews/first-floor-d14a8/campaign.save.balance/export.json",
+        "--save",
+        "/tmp/deathward-temperance-cli-rdjofjs_/campaign.save"
+      ],
+      "exit_code": 0,
+      "sha256": "973642defa556c5eec3f2b8ae03415a715fb5a1b7b44af41b3ebf132b54bd028"
+    },
+    {
+      "name": "schema54-current",
+      "path": "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a9-temperance/review-preset.json",
+      "args": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "6",
+        "--smoke",
+        "--frames",
+        "2",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a9-temperance/review-preset.json",
+        "--save",
+        "/tmp/deathward-temperance-cli-zua4wq82/campaign.save"
+      ],
+      "exit_code": 0,
+      "sha256": "0a34566cbaa53b499d655c208b20db95f5178b4910cae710740803f3c8f47cac"
+    }
+  ]
+}

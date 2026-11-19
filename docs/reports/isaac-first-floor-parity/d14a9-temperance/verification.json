@@ -1,0 +1,32 @@
+{
+  "status": "developer-verified; scoped human handoff accepted",
+  "accepted_previous_commit": "340fc763",
+  "current_delivery": "D14a.9 Temperance15 / ordinary blood donation / Blood Bag119 / IV Bag135",
+  "native_cases": {
+    "machine_payout": 1040,
+    "iv_coin_draw": 256,
+    "card_use": 4,
+    "contact": 6,
+    "blood_bag_speed": 5,
+    "card_price": 30,
+    "bounded_category_dispatch": 6
+  },
+  "cpp_native_comparisons": 1301,
+  "focused_suites": 9,
+  "focused_suites_passed": true,
+  "main_game_renderer_passed": true,
+  "three_size_cases": true,
+  "cli_cases": 3,
+  "human_acceptance": true,
+  "new_delivery_committed": false,
+  "full_native_equivalence": false,
+  "save_scope": "Campaign12 interruption summary, not full live resume",
+  "unfinished": [
+    "D14a.9 checkpoint commit",
+    "machine explosion destruction",
+    "full native actor/cache/physics/profile/pools/RNG",
+    "complete recorded shop and special rooms/floor allocation",
+    "live expedition resume"
+  ],
+  "human_acceptance_scope": "See human-acceptance.json; full native equivalence remains false."
+}

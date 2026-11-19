@@ -1,0 +1,105 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "card": {
+    "type": "tarot",
+    "pickup": "1",
+    "description": "#TEMPERANCE_DESCRIPTION",
+    "id": "15",
+    "name": "#TEMPERANCE_NAME",
+    "announcer": "370",
+    "announcerdelay": "60",
+    "mimiccharge": "6"
+  },
+  "items": [
+    {
+      "cache": "speed",
+      "achievement": "147",
+      "description": "#BLOOD_BAG_DESCRIPTION",
+      "gfx": "Collectibles_119_BloodBag.png",
+      "hearts": "10",
+      "id": "119",
+      "maxhearts": "2",
+      "name": "#BLOOD_BAG_NAME"
+    },
+    {
+      "cooldown": "15",
+      "description": "#IV_BAG_DESCRIPTION",
+      "gfx": "Collectibles_135_IVBag.png",
+      "id": "135",
+      "maxcharges": "0",
+      "name": "#IV_BAG_NAME"
+    }
+  ],
+  "cases": {
+    "machine": 1040,
+    "iv_coins": 256,
+    "card": 4,
+    "contact": 6,
+    "blood_bag_speed": 5
+  },
+  "windows": [
+    {
+      "name": "card",
+      "start": "0x777b99",
+      "end": "0x777bfe",
+      "sha256": "0d736b26dfefe920c19215c1018297e13a613ff87619ca5d11089db7b5e320eb"
+    },
+    {
+      "name": "card-spawn",
+      "start": "0x777a93",
+      "end": "0x777aab",
+      "sha256": "7cdb8c1c17d33bcedfba14a827034e8d3ed5bd654988a6a39eb49ec6f07d7ace"
+    },
+    {
+      "name": "contact-payment",
+      "start": "0x63e928",
+      "end": "0x63ea6a",
+      "sha256": "b5c3ddd7582a798de17f2c1499a2de4216250da6904b0c5f6338389c6ddf71da"
+    },
+    {
+      "name": "payment-state",
+      "start": "0x63ee09",
+      "end": "0x63ee8d",
+      "sha256": "54f4f00d12f9100bc850a4e20563e8306f8d22283b17d5ac60ee259efcaf52d0"
+    },
+    {
+      "name": "payout",
+      "start": "0x63b411",
+      "end": "0x63b892",
+      "sha256": "7cc5685b3740894d353571729704d6b29d61f64e9d9add121fa3545bb069fe29"
+    },
+    {
+      "name": "cooldown",
+      "start": "0x639fae",
+      "end": "0x639fd2",
+      "sha256": "31710d70f810e56b8c9532a763d2e1fb4aa923dd5f19b81015af2dff8229f8bd"
+    },
+    {
+      "name": "prize-admission",
+      "start": "0x63aa21",
+      "end": "0x63ab31",
+      "sha256": "abcb4760d5907f3e78866bda5b4cfa3c50628e83d6521c40a7bc6d4effa5416f"
+    },
+    {
+      "name": "prize-finish",
+      "start": "0x63e3fe",
+      "end": "0x63e448",
+      "sha256": "75d98b7765e988804094e42f7b233581cacfd4093f17cc0d2060e212f19f10b8"
+    },
+    {
+      "name": "iv-bag",
+      "start": "0x5a355b",
+      "end": "0x5a3762",
+      "sha256": "30515d0675a57838701df5d619c46496d7027bff50deca8f83063a9cc85def08"
+    },
+    {
+      "name": "blood-bag-speed",
+      "start": "0x733a6f",
+      "end": "0x733b26",
+      "sha256": "22b47a371520cf37d101acbc9a326c003d52963000fb1074c74faa89d1588f7a"
+    }
+  ],
+  "scope": "Normal ordinary Isaac; original RNG/selection with supplied unlock/pool inputs; Child's Heart pool absent. Original card spawn and damage request slices with hosted world/factory/virtual damage. Not full native use/damage/factory/scheduler/global-RNG/character/synergy acceptance.",
+  "full_native_acceptance": false
+}

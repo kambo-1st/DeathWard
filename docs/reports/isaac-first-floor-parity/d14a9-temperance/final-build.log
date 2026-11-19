@@ -1,0 +1,28 @@
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Temperance.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Navigation.cpp.o
+[  0%] Linking CXX static library libdeathward_core.a
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_temperance_tests
+[100%] Linking CXX executable deathward_temperance_tests
+[100%] Built target deathward_temperance_tests
+[  8%] Built target glfw
+[ 12%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 83%] Built target deathward_core
+[ 87%] Built target deathward_cloth
+[ 91%] Built target deathward_skinning
+[ 91%] Built target deathward_particles
+[ 91%] Built target deathward_mission_lighting
+[ 91%] Built target deathward_runtime_assets
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/render/Renderer.cpp.o
+In file included from /home/kambo/workspace/DeathWard/src/render/Renderer.hpp:12,
+                 from /home/kambo/workspace/DeathWard/src/render/Renderer.cpp:2:
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp: In member function ‘bool dw::KeyModel::prepare()’:
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp:31:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   31 |         if(attempted_)return ready();attempted_=true;
+      |         ^~
+/home/kambo/workspace/DeathWard/src/render/KeyModel.hpp:31:38: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   31 |         if(attempted_)return ready();attempted_=true;
+      |                                      ^~~~~~~~~~
+[ 91%] Linking CXX executable deathward
+[100%] Built target deathward

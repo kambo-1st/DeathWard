@@ -110,3 +110,10 @@ end
 # D14a.8: bounded health/stat pill dependency; no card or machine behavior.
 item "isaac:collectible:195" "Mom's Coin Purse" "FOUR PILLS" "Spawns four random pills. Hold one pill at a time; using it reveals its effect for this expedition."
 end
+
+# D14a.9: selected blood-machine break rewards only; no broader item pools.
+item "isaac:collectible:119" "Blood Bag" "HEALTH + SPEED" "Adds a red-heart container, heals up to five red hearts and increases Speed by 0.3."
+end
+item "isaac:collectible:135" "IV Bag" "ACTIVE" "Trade health for coins. Unlimited uses with a short cooldown. Replaces the held active item."
+category active
+end

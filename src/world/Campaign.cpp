@@ -137,6 +137,7 @@ RunSummary readSummary(std::istream &in, int version) {
         if(occupied) {
             std::string key;int charge=-1;in>>std::quoted(key)>>charge;
             s.activeItem=ActiveItemState{parseItemKey(key),charge};s.activeItem->validate();
+            if(version<12&&s.activeItem->item==IvBagKey)throw std::runtime_error("Unsupported saved active item");
             if(version<11&&s.activeItem->item==BookOfShadowsKey)throw std::runtime_error("Unsupported saved active item");
             if(std::count(s.items.begin(),s.items.end(),s.activeItem->item)!=1)
                 throw std::runtime_error("Active slot ownership disagrees with saved inventory");
@@ -217,7 +218,7 @@ void saveAtomic(const std::filesystem::path &path, const Campaign &c) {
         std::ofstream out(temp, std::ios::binary | std::ios::trunc);
         if (!out)
             throw std::runtime_error("Cannot create save: " + temp.string());
-        out << "DEATHWARD 11 " << checksum(payload) << '\n' << payload;
+        out << "DEATHWARD 12 " << checksum(payload) << '\n' << payload;
         out.flush();
         if (!out)
             throw std::runtime_error("Cannot write campaign save");
@@ -259,7 +260,7 @@ CampaignStore::CampaignStore(std::filesystem::path path) : path_(std::move(path)
     in >> magic >> version >> hash;
     in.get();
     std::string payload((std::istreambuf_iterator<char>(in)), {});
-    if (magic != "DEATHWARD" || version < 1 || version > 11 || checksum(payload) != hash)
+    if (magic != "DEATHWARD" || version < 1 || version > 12 || checksum(payload) != hash)
         throw std::runtime_error("Campaign save is damaged or unsupported. Original file was preserved: " +
                                  path_.string());
     campaign_ = deserialize(payload, version);

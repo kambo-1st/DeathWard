@@ -1,0 +1,170 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "scope": "Highest available DLC override before base animation metadata. No sprite artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/005.301_Tarot Card.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a9-temperance/animations/005.301_Tarot Card.anm2",
+      "sha256": "66c5ff488f30a4cd559181f3be08349612d4ef02a25928438e70630432714ea2",
+      "checksum": "0x7800642d",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/21/2015 11:03:53 AM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "16",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "35",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Sparkle",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUD",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HUDSmall",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/006.002_Blood Donation Machine.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a9-temperance/animations/006.002_Blood Donation Machine.anm2",
+      "sha256": "4868d8b39eb9b5d6657dfed02b1125fd9d45d40f428f1d9078b7db0c33d931bb",
+      "checksum": "0x8ddd414f",
+      "info": {
+        "CreatedBy": "Unknown",
+        "CreatedOn": "06/07/2015 5:03:27 PM",
+        "Version": "1",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Prize",
+          "Id": "0"
+        },
+        {
+          "Name": "Explosion",
+          "Id": "1"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "1",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Initiate",
+            "FrameNum": "8",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Wiggle",
+            "FrameNum": "18",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Prize",
+            "FrameNum": "8",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "3"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Death",
+            "FrameNum": "8",
+            "Loop": "true"
+          },
+          "triggers": [
+            {
+              "EventId": "1",
+              "AtFrame": "0"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Broken",
+            "FrameNum": "1",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

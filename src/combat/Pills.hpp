@@ -1,5 +1,6 @@
 #pragma once
 #include "combat/RedHeartTiming.hpp"
+#include "combat/Temperance.hpp"
 #include "raylib.h"
 #include <array>
 #include <cstdint>
@@ -47,19 +48,19 @@ struct PillState {
 struct PillTiming {
     enum class Phase {Idle,Appear,Collect,Gone};
     static constexpr int AppearFrames=36,DropFrame=26,CollectFrames=15;
-    Phase phase=Phase::Idle;int frame=0;double remainder=0;bool collision=true;
-    void appear(){phase=Phase::Appear;frame=0;remainder=0;collision=false;}
+    Phase phase=Phase::Idle;int frame=0;double remainder=0;bool collision=true,card=false;
+    void appear(bool isCard=false){card=isCard;phase=Phase::Appear;frame=0;remainder=0;collision=false;}
     void collect(){phase=Phase::Collect;frame=0;remainder=0;collision=false;}
     bool collectible()const{return collision&&phase!=Phase::Collect&&phase!=Phase::Gone;}
     void advance(float dt){
         if(!(dt>0)||!std::isfinite(dt)||phase==Phase::Idle||phase==Phase::Gone)return;
         remainder+=double(dt)*30;
         while(remainder+1e-7>=1){remainder=std::max(0.,remainder-1);++frame;
-            if(phase==Phase::Appear){collision=sourcePickupAppearanceGate(true,frame<AppearFrames,frame==DropFrame,collision);if(frame>=AppearFrames){phase=Phase::Idle;frame=0;remainder=0;break;}}
-            else if(frame>=CollectFrames){phase=Phase::Gone;remainder=0;break;}
+            if(phase==Phase::Appear){collision=sourcePickupAppearanceGate(true,frame<(card?35:AppearFrames),frame==DropFrame,collision);if(frame>=(card?35:AppearFrames)){phase=Phase::Idle;frame=0;remainder=0;break;}}
+            else if(frame>=(card?16:CollectFrames)){phase=Phase::Gone;remainder=0;break;}
         }
     }
 };
-struct PillPickup {Vector3 position{};int room=-1,color=1;uint32_t seed=1;bool contactBlocked=false;PillTiming timing{};};
+struct PillPickup {Vector3 position{};int room=-1,color=1;uint32_t seed=1;bool contactBlocked=false,shopStock=false;PillTiming timing{};};
 struct PendingPursePill {Vector3 origin{};int room=-1,color=1,ordinal=0;uint32_t seed=1;};
 }

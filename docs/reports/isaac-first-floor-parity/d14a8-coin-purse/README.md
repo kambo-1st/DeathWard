@@ -51,7 +51,7 @@ The configuration is persistent; full live expedition save/resume remains D18 wo
 
 ## Verification and unfinished work
 
-See `verification.json`, `game-review.cpp`, `tests/coin_purse_tests.cpp`, native CSV/JSON evidence and the rendered captures for the final check results. Scoped human acceptance is recorded; the D14a.8 checkpoint commit remains pending.
+See `verification.json`, `game-review.cpp`, `tests/coin_purse_tests.cpp`, native CSV/JSON evidence and the rendered captures for the final check results. Scoped human acceptance is recorded; the D14a.8 checkpoint is committed as `340fc763`. The subsequent selected Temperance delivery is tracked in `../d14a9-temperance/README.md`.
 
 Still unfinished: the full pill pool and unusual/horse/golden effects; native full use/cache/modifier/factory/physics/RNG behavior; the recorded shop's Temperance15/machine and complete layout; remaining special rooms and full recorded-floor allocation/review; full expedition save/resume. Pixel/performance work remains deferred.
 

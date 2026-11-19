@@ -1,0 +1,7 @@
+hurt_counter,requests_damage,after_hurt_counter
+0,1,0
+1,1,0
+14,1,0
+15,0,15
+30,0,30
+60,0,60

@@ -1,0 +1,8 @@
+PASS 1040 native payout/RNG cases, 256 IV draws, 5 Blood Bag speed cases
+PASS card/pill swap/drop/use/timing, collision and denied-placement retention
+PASS real payment, red-first health, native event timing, snapshots, hurt/dodge/Book and death
+PASS Blood Bag health/live speed, break/collider, IV active swaps/cooldown and pending capacity recovery
+PASS schema53/54 and invalid atomic export
+PASS natural card shop seed=6 scale=0.75 range=5-5 purchase/click/Apply/floor
+PASS natural card shop seed=6 scale=1 range=7-9 purchase/click/Apply/floor
+PASS natural card shop seed=6 scale=1.5 range=10-10 purchase/click/Apply/floor

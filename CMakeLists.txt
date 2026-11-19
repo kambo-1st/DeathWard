@@ -142,6 +142,7 @@ add_library(deathward_core
     src/world/CanyonRoad.cpp
     src/world/RoomGraph.cpp
     src/combat/PowerupReview.cpp
+    src/combat/Temperance.cpp
     src/combat/Pills.cpp
     src/combat/Trinkets.cpp
     src/combat/Keys.cpp
@@ -1195,6 +1196,11 @@ if(BUILD_TESTING)
     add_executable(deathward_recorded_duke_room_tests tests/recorded_duke_room_tests.cpp)
     target_link_libraries(deathward_recorded_duke_room_tests PRIVATE deathward_core)
     add_test(NAME recorded_duke_room_delivery COMMAND deathward_recorded_duke_room_tests)
+    add_executable(deathward_temperance_tests tests/temperance_tests.cpp)
+    target_link_libraries(deathward_temperance_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_temperance_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
+    add_test(NAME temperance_delivery COMMAND deathward_temperance_tests 6)
+
     add_executable(deathward_coin_purse_tests tests/coin_purse_tests.cpp)
     target_link_libraries(deathward_coin_purse_tests PRIVATE deathward_core)
     target_compile_definitions(deathward_coin_purse_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")

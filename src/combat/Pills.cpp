@@ -10,9 +10,9 @@ void Simulation::queuePursePills() {
     checkpointNeeded=true;
 }
 bool Simulation::spawnPill(Vector3 at,int color,uint32_t seed,bool idle) {
-    if(color<1||color>13||!seed||pillPickups.size()>=1024||dead||finished||!std::isfinite(at.x)||!std::isfinite(at.y)||!std::isfinite(at.z)||arena.blocked(at,.35f))return false;
+    if(((color<1||color>13)&&color!=TemperanceCard)||!seed||pillPickups.size()>=1024||dead||finished||!std::isfinite(at.x)||!std::isfinite(at.y)||!std::isfinite(at.z)||arena.blocked(at,.35f))return false;
     const int owner=arena.roomAt(at);if(owner<0)return false;
-    PillPickup p;p.position=at;p.room=owner;p.color=color;p.seed=seed;if(!idle)p.timing.appear();pillPickups.push_back(p);checkpointNeeded=true;return true;
+    PillPickup p;p.position=at;p.room=owner;p.color=color;p.seed=seed;p.timing.card=color==TemperanceCard;if(!idle)p.timing.appear(color==TemperanceCard);pillPickups.push_back(p);checkpointNeeded=true;return true;
 }
 void Simulation::deliverPursePills() {
     std::erase_if(pendingPursePills,[&](const PendingPursePill &p){
@@ -35,11 +35,13 @@ int Simulation::resolvedPillEffect(int color) const {
     return effect==6&&player.maxHp<=2?7:effect; // Original ordinary red-health character safety gate.
 }
 std::string Simulation::heldPillName() const {
-    if(!pills.held)return "EMPTY PILL SLOT";
+    if(!pills.held)return "EMPTY CONSUMABLE SLOT";
+    if(pills.held==TemperanceCard)return "XIV / TEMPERANCE";
     return pills.known(pills.held)?pillEffectName(resolvedPillEffect(pills.held)):"UNKNOWN PILL";
 }
 bool Simulation::usePill() {
     if(!pills.held||dead||finished||player.totalHealth()<=0||rewardOpen||shopOpen||letterOpen||storyOpen!=StoryRoom::None||floorExitRequested)return false;
+    if(pills.held==TemperanceCard)return useTemperance();
     const int effect=resolvedPillEffect(pills.held);if(effect<0)return false;
     auto health=player.sourceHealth();
     switch(effect){case 2:health.addSoul(4);break;case 5:health.addRed(health.redCapacity());break;case 6:health.addMaxRed(-2);break;case 7:health.addMaxRed(2);break;default:break;}
@@ -50,7 +52,7 @@ bool Simulation::usePill() {
 bool Simulation::dropPill() {
     if(!pills.held||dead||finished||player.totalHealth()<=0||rewardOpen||shopOpen||letterOpen||storyOpen!=StoryRoom::None||floorExitRequested)return false;
     if(!spawnPill(player.position,pills.held,1))return false;
-    pillPickups.back().contactBlocked=true;pills.held=0;checkpointNeeded=true;announce("PILL DROPPED / WALK AWAY TO PICK IT UP AGAIN",2);return true;
+    pillPickups.back().contactBlocked=true;pills.held=0;checkpointNeeded=true;announce("CONSUMABLE DROPPED / WALK AWAY TO PICK IT UP AGAIN",2);return true;
 }
 void Simulation::updatePills(float dt) {
     deliverPursePills();bool admitted=false;
@@ -61,8 +63,13 @@ void Simulation::updatePills(float dt) {
         const bool touching=planarDistance(player.position,p.position)<1;
         if(!touching){p.contactBlocked=false;return false;}
         if(p.contactBlocked||admitted||!p.timing.collectible()||dead||player.totalHealth()<=0||!arena.clear(player.position,p.position,.1f))return false;
+        if(p.shopStock){
+            const int price=shopPrice(bloodMachineTuning.cardPrice,shopCardSlot);
+            if(shopCardSold||money()<uint64_t(price)||!roomClear||roomThreats())return false;
+            moneySpent+=uint64_t(price);shopCardSold=true;p.shopStock=false;
+        }
         const int previous=pills.held;pills.held=p.color;admitted=true;
-        if(previous){p.color=previous;p.contactBlocked=true;p.timing.appear();}else p.timing.collect();
+        if(previous){p.color=previous;p.contactBlocked=true;p.timing.appear(previous==TemperanceCard);}else p.timing.collect();
         audioCues.push(AudioCueKind::Pickup,p.position);announce(heldPillName()+" / "+pillTuning.useKey()+" USE / "+pillTuning.dropKey()+" DROP",3);checkpointNeeded=true;return false;
     });
     if(admitted)for(auto &p:pillPickups)if(p.room==room&&planarDistance(player.position,p.position)<1)p.contactBlocked=true;

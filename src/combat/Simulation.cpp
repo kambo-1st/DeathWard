@@ -49,6 +49,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
     if(account!=WitnessAccount::None&&account!=WitnessAccount::Rourke)
         throw std::invalid_argument("This testimony has not been authored yet.");
     if(treasureCollectiblePool<0||treasureCollectiblePool>7)throw std::invalid_argument("Invalid treasure pool");
+    temperanceRng_=uint32_t(expedition.seed^0x54454d504552414eULL)|1U;
     pills=PillState(expedition.seed);purseRng_=uint32_t(expedition.seed^0x434f494e50555253ULL)|1U;
     coinClearRewards=requestedCoins;
     surveyTutorial=tutorial;
@@ -133,6 +134,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     if(!canResizeRooms())throw std::runtime_error("No floor to resize");
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
                     expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice,boss,flies,seededChoice,rewardChoice,propChoice);
+    next.bloodMachineTuning=bloodMachineTuning;next.ivBagCooldown=ivBagCooldown;next.temperanceRng_=temperanceRng_;next.ivBagAvailable_=ivBagAvailable_;
     next.pills=pills;next.pillTuning=pillTuning;next.purseRng_=purseRng_;next.pillUseHeld_=pillUseHeld_;next.pillDropHeld_=pillDropHeld_;
     next.momsEyeChanceMultiplier=momsEyeChanceMultiplier;next.roundWormTuning=roundWormTuning;next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
@@ -177,6 +179,8 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
         }
     }
     if(!std::isfinite(best))throw std::runtime_error("Resized room has no safe player position");
+    next.pendingBloodRewards=pendingBloodRewards;
+    for(auto &r:next.pendingBloodRewards){r.room=std::clamp(r.room,0,next.arena.roomCount()-1);r.origin=next.arena.rooms[size_t(r.room)].center;}
     next.pendingPursePills=pendingPursePills;
     for(auto &pill:next.pendingPursePills){pill.room=std::clamp(pill.room,0,next.arena.roomCount()-1);pill.origin=next.arena.rooms[size_t(pill.room)].center;}
     next.player=player;next.player.position=position;next.player.aim=add(position,sub(player.aim,player.position));
@@ -216,6 +220,7 @@ bool Simulation::advanceFloor() {
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
                     expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool,monstroTuning,dukeTuning,seededBosses,bossRewardItem,roomProps);
+    next.bloodMachineTuning=bloodMachineTuning;next.ivBagCooldown=ivBagCooldown;next.temperanceRng_=temperanceRng_;next.ivBagAvailable_=ivBagAvailable_;
     next.pills=pills;next.pillTuning=pillTuning;next.purseRng_=purseRng_;next.pillUseHeld_=pillUseHeld_;next.pillDropHeld_=pillDropHeld_;
     next.momsEyeChanceMultiplier=momsEyeChanceMultiplier;next.roundWormTuning=roundWormTuning;next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
@@ -329,11 +334,12 @@ void Simulation::grant(const ItemKey &item) {
     if (!definition || items.size() >= 256)
         return;
     if(definition->category==CollectibleCategory::Active) {
-        if(!activeCapacity(item)||activeItem)return;
+        if(!supportedActive(item)||activeItem)return;
         activeItem=ActiveItemState{item,activeCapacity(item)};
     }
     items.push_back(item);
     if(item==ItemKey{"isaac",ItemKind::Collectible,195})queuePursePills();
+    if(item==ItemKey{"isaac",ItemKind::Collectible,119}) {auto health=player.sourceHealth();health.addMaxRed(2);health.addRed(10);applyPlayerHealth(std::move(health));}
     if(item==ItemKey{"isaac",ItemKind::Collectible,25}) {
         auto health=player.sourceHealth();health.addMaxRed(2);health.addRed(4);
         applyPlayerHealth(std::move(health));
@@ -440,8 +446,10 @@ bool Simulation::hasSourceTreasure(int index) const {
 }
 SourcePlayerStats Simulation::effectivePlayerStats() const {
     auto result=player.attributes;
+    const int bloodBags=int(itemStacks({"isaac",ItemKind::Collectible,119}));
     const auto &p=pills.consumed;const float strength=pillTuning.statStrength;
-    if(strength>0&&(p[13]||p[14]))result.speed=std::clamp(result.speed+(.15f*p[14]-.12f*p[13])*strength,.1f,2.f);
+    const float speedBonus=.3f*bloodBags*bloodMachineTuning.bloodBagStrength+(.15f*p[14]-.12f*p[13])*strength;
+    if(speedBonus!=0)result.speed=std::clamp(result.speed+speedBonus,.1f,2.f);
     if(strength>0&&(p[11]||p[12]))result.rangeTiles=std::max(1.f,result.rangeTiles+(1.25f*p[12]-p[11])*strength);
     if(strength>0&&(p[47]||p[48]))result.shotSpeed=std::clamp(result.shotSpeed+.15f*(p[48]-p[47])*strength,.6f,2.f);
     result.luck+=(p[18]-p[17])*strength;
@@ -463,10 +471,11 @@ int Simulation::treasureUpgradeItem(int index) const {
     return sourceTreasureItem(treasureCollectiblePool,canyonTreasureSeed(seed_,index));
 }
 bool Simulation::useActiveItem() {
-    if(!activeItem||!activeCapacity(activeItem->item)||activeItem->charge!=activeCapacity(activeItem->item)||
+    if(!activeItem||!supportedActive(activeItem->item)||activeItem->charge!=activeCapacity(activeItem->item)||
        dead||finished||player.totalHealth()<=0||rewardOpen||shopOpen||letterOpen||
        storyOpen!=StoryRoom::None||floorExitRequested)return false;
     activeItem->validate();
+    if(activeItem->item==IvBagKey)return useIvBag();
     if(activeItem->item==BookOfShadowsKey) {
         bookOfShadows.validate();
         // Native repeated temporary-effect application adds duration. Swapping
@@ -491,9 +500,9 @@ bool Simulation::collectTreasureUpgrade() {
        shopOpen||rewardOpen||player.totalHealth()<=0||!arena.sight(player.position,at))return false;
     const ItemKey item{"isaac",ItemKind::Collectible,uint32_t(treasureUpgradeItem(room))};
     const auto *definition=content->item(item);if(!definition)return false;
-    if(items.size()>=256&&!(activeCapacity(item)&&activeItem))return false;
+    if(items.size()>=256&&!(supportedActive(item)&&activeItem))return false;
     const bool first=!progress.rewardTaken&&!(activeReviewRoom==room&&activeReviewCollected>0);
-    if(activeCapacity(item)) {
+    if(supportedActive(item)) {
         const auto incoming=(activeReviewRoom==room&&activeReviewCollected<2)?ActiveItemState{item,activeCapacity(item)}:
             progress.droppedActive.value_or(ActiveItemState{item,activeCapacity(item)});
         incoming.validate();
@@ -517,7 +526,7 @@ bool Simulation::collectTreasureUpgrade() {
         progress.activePickupContact=true;
     }
     checkpointNeeded=true;
-    announce(definition->name+" / "+(activeCapacity(item)?"ACTIVE ITEM":(item.number==8||item.number==10)?"FAMILIAR":item.number==25?"HEALTH UP":item.number==255?"TEARS / SHOT SPEED UP":item.number==4?"DAMAGE UP":"TEARS UP"),3);
+    announce(definition->name+" / "+(supportedActive(item)?"ACTIVE ITEM":(item.number==8||item.number==10)?"FAMILIAR":item.number==25?"HEALTH UP":item.number==255?"TEARS / SHOT SPEED UP":item.number==4?"DAMAGE UP":"TEARS UP"),3);
     return true;
 }
 bool Simulation::rewardAvailable(int index) const {
@@ -1960,6 +1969,7 @@ void Simulation::step(const Input &input, float dt) {
     updateOrdinaryKeys(dt);
     updateTrinkets(dt);
     updatePills(dt);
+    updateBloodMachines(dt);
     updateOrdinaryBombs(dt);
     updateChestSupplies(dt);
     deliverPropRewards();

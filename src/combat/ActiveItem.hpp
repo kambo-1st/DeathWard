@@ -8,18 +8,20 @@ inline constexpr int YumHeartCharges=4;
 inline const ItemKey YumHeartKey{"isaac",ItemKind::Collectible,45};
 inline constexpr int BookOfShadowsCharges=3;
 inline const ItemKey BookOfShadowsKey{"isaac",ItemKind::Collectible,58};
+inline const ItemKey IvBagKey{"isaac",ItemKind::Collectible,135};
+inline bool supportedActive(const ItemKey &item){return item==YumHeartKey||item==BookOfShadowsKey||item==IvBagKey;}
 inline int activeCapacity(const ItemKey &item) {
     return item==YumHeartKey?YumHeartCharges:item==BookOfShadowsKey?BookOfShadowsCharges:0;
 }
 inline const char *activeName(const ItemKey &item) {
-    return item==BookOfShadowsKey?"BOOK OF SHADOWS":"YUM HEART";
+    return item==IvBagKey?"IV BAG":item==BookOfShadowsKey?"BOOK OF SHADOWS":"YUM HEART";
 }
 struct ActiveItemState {
     ItemKey item=YumHeartKey;
     int charge=YumHeartCharges;
     bool operator==(const ActiveItemState &) const = default;
     void validate() const {
-        if(!activeCapacity(item)||charge<0||charge>activeCapacity(item))
+        if(!supportedActive(item)||charge<0||charge>activeCapacity(item))
             throw std::runtime_error("Invalid active item or charge");
     }
 };

@@ -1,0 +1,43 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "prices": 30,
+  "category_cases": [
+    {
+      "slot": 0,
+      "category": 6,
+      "variant": 300,
+      "subtype": 15
+    },
+    {
+      "slot": 1,
+      "category": 6,
+      "variant": 300,
+      "subtype": 15
+    },
+    {
+      "slot": 2,
+      "category": 6,
+      "variant": 300,
+      "subtype": 15
+    },
+    {
+      "slot": 3,
+      "category": 6,
+      "variant": 300,
+      "subtype": 15
+    },
+    {
+      "slot": 4,
+      "category": 6,
+      "variant": 300,
+      "subtype": 15
+    },
+    {
+      "slot": 5,
+      "category": 6,
+      "variant": 300,
+      "subtype": 15
+    }
+  ],
+  "scope": "Original pricing and category6 dispatch through the GetCard return. Stops before later subtype wrappers. Host returns15 from GetCard; full pool, sale, factory, placement and contact wrappers are not verified."
+}
