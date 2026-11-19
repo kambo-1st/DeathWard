@@ -1,4 +1,5 @@
 #pragma once
+#include "combat/BloodMachineExplosions.hpp"
 #include "core/Types.hpp"
 #include <cstdint>
 #include <stdexcept>
@@ -32,10 +33,13 @@ struct BloodMachine {
     Vector3 position{};int room=-1;uint32_t rng=1;
     enum class Phase{Idle,Initiate,Prize,Broken};Phase phase=Phase::Idle;
     double elapsed=0;float cycleSpeed=1,payoutScale=1,breakScale=1;int outcome=0;bool paid=false;
+    bool blastDestroyed=false;
+    BloodExplosionDrops blastDrops{};int blastDelivered=0,blastOutcome=0;
 };
 inline Box bloodMachineBody(Vector3 at){return {{at.x-.55f,-.2f,at.z-.55f},{at.x+.55f,2.1f,at.z+.55f}};}
 struct BloodReward {
     Vector3 origin{};int room=-1,item=0,subtype=1,ordinal=0;uint32_t seed=1;
+    int variant=20; // Existing rewards are coins/items; explosion hearts use10.
 };
 struct MachineCollectible {
     Vector3 position{};int room=-1,item=119,charge=0;float age=0;bool contactBlocked=false;

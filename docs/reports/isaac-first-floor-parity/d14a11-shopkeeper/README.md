@@ -2,6 +2,8 @@
 
 The user accepted D14a.10 ("it its works focus on next") and selected its proposed continuation. The accepted recorded-shop checkpoint is committed as `22a86e73`. This delivery adds keeper demolition to that arrangement, using the retained merchant wagon. The user accepted the scoped seed68 handoff ("it works, next!") and selected the checkpoint plus blood-machine explosion continuation. See `human-acceptance.json`; full native shop acceptance remains open.
 
+Accepted checkpoint commit: `a09da6e8`. The selected machine continuation is now enabled; see [D14a.12](../d14a12-blood-machine-explosions/README.md). Its human review remains pending.
+
 ## Main-game behavior
 
 An ordinary dynamite blast can destroy the recorded shop keeper/wagon. Its five source HP stays separate from outgoing internal damage (×3.2); ordinary shots do not damage it. Destruction removes the wagon and its physical/navigation obstruction, leaves small charred debris, and resolves its drops once. Shop stock remains for sale. Existing legacy merchant arrangements are unchanged.

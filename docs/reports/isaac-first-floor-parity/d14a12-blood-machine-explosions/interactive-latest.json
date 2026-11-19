@@ -1,0 +1,23 @@
+{
+  "launched": "2026-11-19T19:22:40.383043+01:00",
+  "pid": 1172771,
+  "args": [
+    "stdbuf",
+    "-oL",
+    "-eL",
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "68",
+    "--review-shop-stock",
+    "--mute",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a12/campaign.save.balance/export.json",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a12/playtest-20261119-192240/campaign.save"
+  ],
+  "save": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a12/playtest-20261119-192240/campaign.save",
+  "preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a12/campaign.save.balance/export.json",
+  "preset_sha256": "b2a8d958a76379201d55cea3106818e7ce7432e5dde7fdfd6bc69a676d868c47",
+  "log": "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a12-blood-machine-explosions/interactive-latest.log"
+}

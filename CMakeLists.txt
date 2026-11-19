@@ -143,6 +143,7 @@ add_library(deathward_core
     src/world/RoomGraph.cpp
     src/combat/PowerupReview.cpp
     src/combat/Temperance.cpp
+    src/combat/BloodMachineExplosions.cpp
     src/combat/ShopKeeper.cpp
     src/combat/Pills.cpp
     src/combat/Trinkets.cpp
@@ -1201,6 +1202,10 @@ add_executable(deathward_shopkeeper_tests tests/shopkeeper_tests.cpp)
 target_link_libraries(deathward_shopkeeper_tests PRIVATE deathward_core)
 target_compile_definitions(deathward_shopkeeper_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
 add_test(NAME shopkeeper_delivery COMMAND deathward_shopkeeper_tests)
+    add_executable(deathward_blood_machine_explosion_tests tests/blood_machine_explosion_tests.cpp)
+    target_link_libraries(deathward_blood_machine_explosion_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_blood_machine_explosion_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
+    add_test(NAME blood_machine_explosion_delivery COMMAND deathward_blood_machine_explosion_tests)
     add_executable(deathward_recorded_shop_tests tests/recorded_shop_tests.cpp)
     target_link_libraries(deathward_recorded_shop_tests PRIVATE deathward_core)
     target_compile_definitions(deathward_recorded_shop_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")

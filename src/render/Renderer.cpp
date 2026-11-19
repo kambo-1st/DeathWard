@@ -1243,7 +1243,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         auto p=m.position;p.y=0;shadow(p,.8f);
         const bool broken=m.phase==BloodMachine::Phase::Broken;
         DrawCube(add(p,{0,.12f,0}),1.1f,.24f,1.1f,Color{74,48,35,255});
-        if(broken){DrawCube(add(p,{.1f,.3f,0}),.7f,.35f,.7f,Rust);continue;}
+        if(broken){DrawCube(add(p,{.1f,.3f,0}),.7f,.35f,.7f,m.blastDestroyed?Color{50,35,30,255}:Rust);continue;}
         DrawCube(add(p,{0,.7f,0}),.85f,1.2f,.85f,Color{98,64,42,255});
         DrawCylinderEx(add(p,{0,1.25f,0}),add(p,{0,1.9f,0}),.28f,.28f,8,Color{156,39,38,255});
         DrawCylinderEx(add(p,{0,1.9f,0}),add(p,{0,2.02f,0}),.34f,.34f,8,Gold);
@@ -2856,7 +2856,8 @@ Action Renderer::balancePanel(const Game &game) {
         text(sourceRoom,610,474,13,Teal);
     } else if(game.balancePillsOpen&&game.balanceTemperanceOpen) {
         const auto &t=game.balancePreset.temperance;
-        text("TEMPERANCE / BLOOD DONATION",205,182,22,Gold);
+        text("TEMPERANCE / BLOOD",205,182,22,Gold);
+        if(button(Action::BalanceBloodExplosionsTab,"EXPLOSIONS",740,169,190,40,game.balanceBloodExplosionsOpen))return Action::BalanceBloodExplosionsTab;
         if(button(Action::BalancePillsTab,"BACK",945,169,130,40))return Action::BalancePillsTab;
         text("One shared card / pill slot. Touch the machine to donate; step away to stop.",205,218,13,Muted);
         const auto row=[&](const char *name,std::string value,float y,Action down,Action up,const char *step){
@@ -2866,7 +2867,15 @@ Action Renderer::balancePanel(const Game &game) {
             return Action::None;
         };
         Action a=Action::None;
-        if(!game.balanceBloodRewardsOpen) {
+        if(game.balanceBloodExplosionsOpen) {
+            const auto &bomb=game.balancePreset.bloodExplosions;
+            if(button(Action::ToggleBloodDestruction,bomb.destructible?"DESTRUCTION: ON":"DESTRUCTION: OFF",205,258,400,40))return Action::ToggleBloodDestruction;
+            if(button(Action::ToggleBloodExplosionRewards,bomb.rewards?"DROPS: ON":"DROPS: OFF",635,258,400,40))return Action::ToggleBloodExplosionRewards;
+            const char *modes[]={"SOURCE ROLLS","TEST: NOTHING","TEST: FULL RED HEART","TEST: TWO PENNIES"};
+            if(button(Action::CycleBloodExplosionOutcome,modes[bomb.outcome],205,325,830,40))return Action::CycleBloodExplosionOutcome;
+            text("Bombing can release hearts or coins. It does not award Blood Bag or IV Bag.",205,391,13,Muted);
+            text("Future blasts only. Current drops stay fixed; broken machines stay broken.",205,420,13,Muted);
+        } else if(!game.balanceBloodRewardsOpen) {
             a=row("CARD PRICE",std::to_string(t.cardPrice)+" COINS",242,Action::CardPriceDown,Action::CardPriceUp,"1");if(a!=Action::None)return a;
             a=row("DONATION COST",std::to_string(t.healthCost)+" HALF-HEARTS",294,Action::BloodCostDown,Action::BloodCostUp,"1");if(a!=Action::None)return a;
             a=row("CYCLE SPEED",decimal(t.cycleSpeed*100)+"%",346,Action::BloodCycleDown,Action::BloodCycleUp,"5%");if(a!=Action::None)return a;
@@ -2878,8 +2887,13 @@ Action Renderer::balancePanel(const Game &game) {
             const char *modes[]={"OUTCOME: SOURCE ROLLS","TEST: COINS ONLY","TEST: BREAK / BLOOD BAG","TEST: BREAK / IV BAG"};
             if(button(Action::CycleBloodOutcome,modes[t.outcome],205,398,830,36))return Action::CycleBloodOutcome;
         }
+        if(game.balanceBloodExplosionsOpen) {
+            if(button(Action::BalanceTemperanceTab,"MACHINE SETTINGS",205,465,350,36))return Action::BalanceTemperanceTab;
+            if(button(Action::ResetBloodExplosions,"RESET EXPLOSIONS",685,465,350,36))return Action::ResetBloodExplosions;
+        } else {
         if(button(Action::BalanceBloodRewardsTab,game.balanceBloodRewardsOpen?"MACHINE SETTINGS":"REWARDS / TESTING",205,465,350,36))return Action::BalanceBloodRewardsTab;
         if(button(Action::ResetTemperance,"RESET TEMPERANCE",685,465,350,36))return Action::ResetTemperance;
+        }
     } else if(game.balancePillsOpen) {
         const auto &t=game.balancePreset.pills;
         text("PILLS / MOM'S COIN PURSE",205,182,22,Gold);

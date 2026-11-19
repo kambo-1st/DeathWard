@@ -277,7 +277,7 @@ void Game::perform(Action action) {
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
            (action<Action::BalanceDamageHealthTab||action>Action::ResetYumHeart)&&
            (action<Action::BalanceTrinketTab||action>Action::ResetTrinkets)&&action!=Action::WhipDown&&action!=Action::WhipUp&&
-           (action<Action::BalanceHaloTab||action>Action::ResetKeeper))return;
+           (action<Action::BalanceHaloTab||action>Action::ResetBloodExplosions))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -369,8 +369,19 @@ void Game::perform(Action action) {
             applyBalance(std::move(preset));activeQueued_=false;
             balanceNotice="Healing applies on next use; recharge on future first combat clears. Existing charge stays unchanged.";break;
         }
-        case Action::BalanceTemperanceTab:balanceTemperanceOpen=true;balanceBloodRewardsOpen=false;balancePillsOpen=balanceShootingOpen=true;break;
-        case Action::BalanceBloodRewardsTab:balanceBloodRewardsOpen=!balanceBloodRewardsOpen;break;
+        case Action::BalanceTemperanceTab:balanceBloodExplosionsOpen=false;balanceTemperanceOpen=true;balanceBloodRewardsOpen=false;balancePillsOpen=balanceShootingOpen=true;break;
+        case Action::BalanceBloodRewardsTab:balanceBloodExplosionsOpen=false;balanceBloodRewardsOpen=!balanceBloodRewardsOpen;break;
+        case Action::BalanceBloodExplosionsTab:balanceBloodExplosionsOpen=true;balanceBloodRewardsOpen=false;break;
+        case Action::ToggleBloodDestruction:case Action::ToggleBloodExplosionRewards:
+        case Action::CycleBloodExplosionOutcome:case Action::ResetBloodExplosions: {
+            auto preset=balancePreset;auto &t=preset.bloodExplosions;
+            if(action==Action::ResetBloodExplosions)t={};
+            else if(action==Action::ToggleBloodDestruction)t.destructible=!t.destructible;
+            else if(action==Action::ToggleBloodExplosionRewards)t.rewards=!t.rewards;
+            else t.outcome=(t.outcome+1)%4;
+            applyBalance(std::move(preset));
+            balanceNotice="Future explosions only. Existing drops stay fixed; destroyed machines stay destroyed.";break;
+        }
         case Action::CardPriceDown:case Action::CardPriceUp:case Action::BloodCostDown:case Action::BloodCostUp:
         case Action::BloodCycleDown:case Action::BloodCycleUp:case Action::BloodBreakDown:case Action::BloodBreakUp:
         case Action::BloodPayoutDown:case Action::BloodPayoutUp:case Action::BloodBagDown:case Action::BloodBagUp:
@@ -1231,10 +1242,12 @@ std::vector<Action> Game::menuActions() const {
             std::vector<Action>{Action::PooterMovementDown,Action::PooterMovementUp,Action::PooterShotDown,Action::PooterShotUp,Action::PooterDelayDown,Action::PooterDelayUp,Action::ResetPooter}:
             balanceEnemiesOpen?
             std::vector<Action>{Action::BalanceFrowningTab,Action::BalanceFullFlyTab,Action::GaperMovementDown,Action::GaperMovementUp,Action::GaperMovementReset,Action::SpiderMovementDown,Action::SpiderMovementUp,Action::SpiderMovementReset}:
+            balanceShootingOpen&&balancePillsOpen&&balanceTemperanceOpen&&balanceBloodExplosionsOpen?
+            std::vector<Action>{Action::BalancePillsTab,Action::BalanceTemperanceTab,Action::ToggleBloodDestruction,Action::ToggleBloodExplosionRewards,Action::CycleBloodExplosionOutcome,Action::ResetBloodExplosions}:
             balanceShootingOpen&&balancePillsOpen&&balanceTemperanceOpen&&balanceBloodRewardsOpen?
-            std::vector<Action>{Action::BalancePillsTab,Action::BalanceBloodRewardsTab,Action::BloodPayoutDown,Action::BloodPayoutUp,Action::BloodBagDown,Action::BloodBagUp,Action::IvCooldownDown,Action::IvCooldownUp,Action::CycleBloodOutcome,Action::ResetTemperance}:
+            std::vector<Action>{Action::BalancePillsTab,Action::BalanceBloodExplosionsTab,Action::BalanceBloodRewardsTab,Action::BloodPayoutDown,Action::BloodPayoutUp,Action::BloodBagDown,Action::BloodBagUp,Action::IvCooldownDown,Action::IvCooldownUp,Action::CycleBloodOutcome,Action::ResetTemperance}:
             balanceShootingOpen&&balancePillsOpen&&balanceTemperanceOpen?
-            std::vector<Action>{Action::BalancePillsTab,Action::BalanceBloodRewardsTab,Action::CardPriceDown,Action::CardPriceUp,Action::BloodCostDown,Action::BloodCostUp,Action::BloodCycleDown,Action::BloodCycleUp,Action::BloodBreakDown,Action::BloodBreakUp,Action::ResetTemperance}:
+            std::vector<Action>{Action::BalancePillsTab,Action::BalanceBloodExplosionsTab,Action::BalanceBloodRewardsTab,Action::CardPriceDown,Action::CardPriceUp,Action::BloodCostDown,Action::BloodCostUp,Action::BloodCycleDown,Action::BloodCycleUp,Action::BloodBreakDown,Action::BloodBreakUp,Action::ResetTemperance}:
             balanceShootingOpen&&balancePillsOpen?
             std::vector<Action>{Action::BalanceTemperanceTab,Action::PurseCountDown,Action::PurseCountUp,Action::PillStrengthDown,Action::PillStrengthUp,Action::CyclePillBinding,Action::ResetPills}:
             balanceShootingOpen&&balanceTrinketOpen?

@@ -1,0 +1,78 @@
+{
+  "date": "2026-11-19",
+  "delivery": "D14a.12 blood-machine explosion destruction",
+  "prior_accepted_commit": "a09da6e8",
+  "enabled_in_main_game": true,
+  "human_acceptance": true,
+  "full_native_acceptance": false,
+  "build": "cmake --build build -j 6 --target deathward deathward_blood_machine_explosion_tests deathward_balance_preset_tests deathward_temperance_tests deathward_shopkeeper_tests deathward_recorded_shop_tests",
+  "native": {
+    "damage_gates": 90,
+    "ordered_drop_rng_cases": 1030,
+    "recapture_check": "passed"
+  },
+  "ctest": {
+    "passed": 5,
+    "failed": 0,
+    "log": "ctest.log"
+  },
+  "simulation": {
+    "room_sizes": [
+      [
+        0.75,
+        5,
+        5
+      ],
+      [
+        1,
+        7,
+        9
+      ],
+      [
+        1.5,
+        10,
+        10
+      ]
+    ],
+    "real_dynamite": true,
+    "ordinary_shots_ignored": true,
+    "zero_damage_explosion": true,
+    "donation_cycle_cancel": true,
+    "resolved_rewards_retained": true,
+    "all_reachable_heart_subtypes": true,
+    "capacity_deferred": true,
+    "full_queue_apply_preserves": true,
+    "revisit": true,
+    "apply": true,
+    "next_floor": true
+  },
+  "game_renderer": {
+    "passed": true,
+    "mouse_and_keyboard": true,
+    "F_and_B_input": true,
+    "source_outcome": true,
+    "preset_export_load_remember": true,
+    "pending_map_preserved": true,
+    "apply": true,
+    "retry": true
+  },
+  "cli": "cli-verification.json",
+  "review": {
+    "seed": 68,
+    "displayed_room": 7,
+    "zoom": 165,
+    "test_coins": 20,
+    "red_half_hearts": 4,
+    "god": false,
+    "source_rolls": true,
+    "preset_sha256": "b2a8d958a76379201d55cea3106818e7ce7432e5dde7fdfd6bc69a676d868c47"
+  },
+  "limitations": [
+    "Prior DW donation RNG history retained; native post-donation seed equivalence unverified",
+    "Hosted native position/factory calls; grounded canyon placement and existing pickup timing",
+    "Rare-gates-off subtype profile; Daemons Tail absent",
+    "Native donation eligibility, full wrapper/physics/profile/global RNG, remaining special rooms/full-floor allocation and live expedition resume open",
+    "Scoped human acceptance recorded; full native equivalence remains open"
+  ],
+  "human_acceptance_record": "human-acceptance.json"
+}

@@ -1201,6 +1201,7 @@ class Simulation {
     bool visitPowerupReviewEncounter(bool bossRoom=false);
     KeeperTuning keeperTuning{};
     BloodMachineTuning bloodMachineTuning{};
+    BloodExplosionTuning bloodExplosionTuning{};
     std::vector<BloodMachine> bloodMachines;
     std::vector<BloodReward> pendingBloodRewards;
     std::vector<MachineCollectible> machineCollectibles;
@@ -1492,6 +1493,9 @@ class Simulation {
     bool keeperBlastHit(const Event &e)const;
     void damageKeeper(float internalDamage);
     void deliverKeeperDrops();
+    std::vector<size_t> bloodMachineBlastTargets(const Event &e)const;
+    void destroyBloodMachine(size_t index);
+    void deliverBloodExplosionDrops();
     void updateBoomFly(Enemy &enemy,float dt);
     void updateLobWalker(Enemy &enemy,float dt);
     void updateHeadShooter(Enemy &enemy,float dt);

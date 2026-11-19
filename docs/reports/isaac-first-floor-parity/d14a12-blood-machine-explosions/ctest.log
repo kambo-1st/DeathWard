@@ -1,0 +1,16 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 150: balance_preset_contract
+1/5 Test #150: balance_preset_contract ............   Passed    0.18 sec
+    Start 193: shopkeeper_delivery
+2/5 Test #193: shopkeeper_delivery ................   Passed    6.30 sec
+    Start 194: blood_machine_explosion_delivery
+3/5 Test #194: blood_machine_explosion_delivery ...   Passed    1.87 sec
+    Start 195: recorded_shop_delivery
+4/5 Test #195: recorded_shop_delivery .............   Passed    3.33 sec
+    Start 196: temperance_delivery
+5/5 Test #196: temperance_delivery ................   Passed    2.03 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =  13.72 sec

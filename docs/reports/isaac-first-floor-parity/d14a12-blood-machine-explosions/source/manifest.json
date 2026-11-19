@@ -1,0 +1,45 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "gate_cases": 90,
+  "drop_cases": 1030,
+  "windows": [
+    {
+      "name": "damage-gate",
+      "start": "0x640070",
+      "end": "0x6400d9",
+      "sha256": "40022711942583b264e9d9d7f293d6db5351fa181c6064ffbc8de9821dde95cf"
+    },
+    {
+      "name": "damage-state",
+      "start": "0x64087e",
+      "end": "0x640916",
+      "sha256": "c93e8a23d27747e0c85280453e95a39afe307326ee1f39bf933da96006c9ce99"
+    },
+    {
+      "name": "damage-tail",
+      "start": "0x640df4",
+      "end": "0x640f0b",
+      "sha256": "b5ae27a3c884a762d3a8a39cbcb6e41fdd71abea0ce043e5f007b2cac9baf63f"
+    },
+    {
+      "name": "destroy-setup",
+      "start": "0x63f660",
+      "end": "0x63f6c3",
+      "sha256": "a8f89256a5e7554d4b47368e0d218be88815e810cc8a0454a2a43898f4fb4976"
+    },
+    {
+      "name": "blood-drops",
+      "start": "0x63f841",
+      "end": "0x63f93e",
+      "sha256": "f750f76e378ef6864da1b91706e986d17a38c7c2960129d317f41f6e5fe0166f"
+    }
+  ],
+  "rng_shifts": [
+    4,
+    3,
+    17
+  ],
+  "scope": "Ordinary blood machine variant2. Original explosion-flag/state gates stop before visual spawning; original destruction selector executes with absent Daemons Tail and hosted position/factory calls. Output variants and per-pickup init seeds are observed. Full native damage wrapper, visual effects, thrown pickup arrival, RNG streams after DW donation cycles, profile and scheduler are not accepted.",
+  "full_native_acceptance": false
+}

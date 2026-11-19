@@ -1,5 +1,7 @@
 # D14a.9 — Temperance and blood donation
 
+D14a.12 follow-up: ordinary blood-machine explosion destruction is now enabled; see [current evidence and remaining limits](../d14a12-blood-machine-explosions/README.md). Historical gaps below describe the original D14a.9 checkpoint.
+
 Selected by “Nice commit and go!” after scoped D14a.8 acceptance. The accepted Mom’s Coin Purse/pill checkpoint is committed as `340fc763`. This delivery adds Temperance15, an ordinary blood-donation machine, and its two break rewards to the main game. Developer checks pass. The user accepted the scoped main-game handoff on 2026-11-19 (“nice it works, whats next?”); see `human-acceptance.json`. This delivery is committed as `26435e27`.
 
 ## Short human check

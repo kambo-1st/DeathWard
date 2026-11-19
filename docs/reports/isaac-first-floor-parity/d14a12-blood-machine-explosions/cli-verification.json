@@ -1,0 +1,65 @@
+{
+  "presets_unchanged": true,
+  "cases": [
+    {
+      "name": "schema48-original",
+      "path": "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+      "args": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "68",
+        "--smoke",
+        "--frames",
+        "2",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+        "--save",
+        "/tmp/deathward-blood-blast-cli-2gvr91ra/campaign.save"
+      ],
+      "exit_code": 0,
+      "sha256": "22e143a736697ccc780ab31bde3c3a1f7ac0d88392e9bf7aa45055ccd3895604"
+    },
+    {
+      "name": "schema56-latest",
+      "path": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a11/campaign.save.balance/export.json",
+      "args": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "68",
+        "--smoke",
+        "--frames",
+        "2",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/.local/share/deathward/reviews/first-floor-d14a11/campaign.save.balance/export.json",
+        "--save",
+        "/tmp/deathward-blood-blast-cli-3omjvyz0/campaign.save"
+      ],
+      "exit_code": 0,
+      "sha256": "a23770805b8b2e311ab087105c3e3a499c1a49a0d305d15344e1820ae6006256"
+    },
+    {
+      "name": "schema57-current",
+      "path": "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a12-blood-machine-explosions/review-preset.json",
+      "args": [
+        "/home/kambo/workspace/DeathWard/build/deathward",
+        "--expedition",
+        "--seed",
+        "68",
+        "--smoke",
+        "--frames",
+        "2",
+        "--mute",
+        "--balance-preset",
+        "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a12-blood-machine-explosions/review-preset.json",
+        "--save",
+        "/tmp/deathward-blood-blast-cli-nd6vmrlj/campaign.save"
+      ],
+      "exit_code": 0,
+      "sha256": "b2a8d958a76379201d55cea3106818e7ce7432e5dde7fdfd6bc69a676d868c47"
+    }
+  ]
+}

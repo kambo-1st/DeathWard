@@ -54,14 +54,27 @@ bool Simulation::useIvBag() {
 }
 void Simulation::deliverBloodRewards() {
     std::erase_if(pendingBloodRewards,[&](const BloodReward &p){
-        if(p.room!=room||(p.item?machineCollectibles.size()>=256:moneyPickups.size()>=1024))return false;
+        if(p.room!=room||(p.item?machineCollectibles.size()>=256:p.variant==10?heartPickups.size()>=1024:moneyPickups.size()>=1024))return false;
         for(int ring=0;ring<6;++ring)for(int step=0;step<16;++step){
             const float a=(step+p.ordinal*4)*Pi/8;auto at=add(p.origin,{std::cos(a)*(1.6f+ring*.5f),0,std::sin(a)*(1.6f+ring*.5f)});at.y=.85f;
             if(arena.roomAt(at)!=room||arena.blocked(at,.48f)||arena.reservedSupplyCache(at,.6f)||arena.path(player.position,at,.48f).empty())continue;
             bool crowded=false;for(const auto &v:machineCollectibles)if(v.room==room&&planarDistance(at,v.position)<1.2f)crowded=true;
             for(const auto &v:moneyPickups)if(arena.roomAt(v.position)==room&&planarDistance(at,v.position)<.75f)crowded=true;
+            for(const auto &v:heartPickups)if(v.room==room&&planarDistance(at,v.position)<.75f)crowded=true;
             if(crowded)continue;
             if(p.item)machineCollectibles.push_back({at,room,p.item,0});
+            else if(p.variant==10) {
+                HeartKind kind=HeartKind::Red;int amount=2;
+                switch(p.subtype) {
+                case 1:break;case 2:amount=1;break;case 5:amount=4;break;
+                case 3:kind=HeartKind::Soul;break;case 4:kind=HeartKind::Eternal;amount=1;break;
+                case 6:kind=HeartKind::Black;break;case 10:kind=HeartKind::Blended;break;
+                default:return false;
+                }
+                if(!spawnHeartPickup(kind,at,amount))continue;
+                heartPickups.back().sourceSubtype=p.subtype;
+                heartPickups.back().timing.appear(redHeartAppearanceSpeed);
+            }
             else {MoneyPickup coin{at,sourceOrdinaryCoinValue(p.subtype),0,true};coin.sourceSubtype=p.subtype;coin.room=room;coin.timing.appear(1);moneyPickups.push_back(coin);}
             checkpointNeeded=true;return true;
         }return false;
@@ -96,7 +109,7 @@ void Simulation::updateBloodMachines(float dt) {
         }
         if(m.phase!=BloodMachine::Phase::Broken&&m.elapsed+1e-6>=38){m.phase=BloodMachine::Phase::Idle;m.elapsed=0;}
     }
-    deliverKeeperDrops();deliverBloodRewards();
+    deliverKeeperDrops();deliverBloodExplosionDrops();deliverBloodRewards();
     bool admitted=false;
     std::erase_if(machineCollectibles,[&](MachineCollectible &p){
         if(p.room!=room)return false;

@@ -136,7 +136,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
                     expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice,boss,flies,seededChoice,rewardChoice,propChoice);
     next.keeperTuning=keeperTuning;
-    next.bloodMachineTuning=bloodMachineTuning;next.ivBagCooldown=ivBagCooldown;next.temperanceRng_=temperanceRng_;next.ivBagAvailable_=ivBagAvailable_;
+    next.bloodExplosionTuning=bloodExplosionTuning;next.bloodMachineTuning=bloodMachineTuning;next.ivBagCooldown=ivBagCooldown;next.temperanceRng_=temperanceRng_;next.ivBagAvailable_=ivBagAvailable_;
     next.pills=pills;next.pillTuning=pillTuning;next.purseRng_=purseRng_;next.pillUseHeld_=pillUseHeld_;next.pillDropHeld_=pillDropHeld_;
     next.momsEyeChanceMultiplier=momsEyeChanceMultiplier;next.roundWormTuning=roundWormTuning;next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;
@@ -182,6 +182,13 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     }
     if(!std::isfinite(best))throw std::runtime_error("Resized room has no safe player position");
     next.pendingBloodRewards=pendingBloodRewards;
+    // Preserve already resolved destruction drops that were waiting behind a full queue.
+    for(const auto &m:bloodMachines)if(m.blastDestroyed) {
+        for(int i=m.blastDelivered;i<m.blastDrops.count;++i) {
+            const auto &d=m.blastDrops.entries[size_t(i)];const auto choice=sourceOrdinaryPickup(d.seed,d.variant);
+            next.pendingBloodRewards.push_back({m.position,m.room,0,m.blastOutcome>1?1:choice.subtype,i,d.seed,d.variant});
+        }
+    }
     for(auto &r:next.pendingBloodRewards){r.room=std::clamp(r.room,0,next.arena.roomCount()-1);r.origin=next.arena.rooms[size_t(r.room)].center;}
     next.pendingPursePills=pendingPursePills;
     for(auto &pill:next.pendingPursePills){pill.room=std::clamp(pill.room,0,next.arena.roomCount()-1);pill.origin=next.arena.rooms[size_t(pill.room)].center;}
@@ -223,7 +230,7 @@ bool Simulation::advanceFloor() {
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
                     expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool,monstroTuning,dukeTuning,seededBosses,bossRewardItem,roomProps);
     next.keeperTuning=keeperTuning;
-    next.bloodMachineTuning=bloodMachineTuning;next.ivBagCooldown=ivBagCooldown;next.temperanceRng_=temperanceRng_;next.ivBagAvailable_=ivBagAvailable_;
+    next.bloodExplosionTuning=bloodExplosionTuning;next.bloodMachineTuning=bloodMachineTuning;next.ivBagCooldown=ivBagCooldown;next.temperanceRng_=temperanceRng_;next.ivBagAvailable_=ivBagAvailable_;
     next.pills=pills;next.pillTuning=pillTuning;next.purseRng_=purseRng_;next.pillUseHeld_=pillUseHeld_;next.pillDropHeld_=pillDropHeld_;
     next.momsEyeChanceMultiplier=momsEyeChanceMultiplier;next.roundWormTuning=roundWormTuning;next.fullFlyTuning=fullFlyTuning;next.screw=screw;next.trinkets=trinkets;next.heldTrinket=heldTrinket;next.trinketInputHeld_=trinketInputHeld_;
     next.bookOfShadows=bookOfShadows;next.bookProtectionRemaining=bookProtectionRemaining;

@@ -1,0 +1,7 @@
+PASS 1030 native ordered drops/RNG and 90 damage/state cases
+PASS zero-damage blasts, all machine phases, no duplicate or delayed donation, gates and cover
+PASS heart kinds, timing/healing, capacity and resolved donation boundaries
+PASS canyon size=0.75 card purchase / use / real dynamite / revisit / Apply / floor
+PASS canyon size=1 card purchase / use / real dynamite / revisit / Apply / floor
+PASS canyon size=1.5 card purchase / use / real dynamite / revisit / Apply / floor
+PASS blood-machine explosion delivery
