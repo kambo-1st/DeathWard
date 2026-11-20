@@ -68,6 +68,7 @@ void Simulation::updatePills(float dt) {
             if(shopCardSold||money()<uint64_t(price)||!roomClear||roomThreats())return false;
             moneySpent+=uint64_t(price);shopCardSold=true;p.shopStock=false;
         }
+        if(p.upgradedShopSlot>=0){if(!payUpgradedShop(p.upgradedShopSlot))return false;p.upgradedShopSlot=-1;}
         const int previous=pills.held;pills.held=p.color;admitted=true;
         if(previous){p.color=previous;p.contactBlocked=true;p.timing.appear(previous==TemperanceCard);}else p.timing.collect();
         audioCues.push(AudioCueKind::Pickup,p.position);announce(heldPillName()+" / "+pillTuning.useKey()+" USE / "+pillTuning.dropKey()+" DROP",3);checkpointNeeded=true;return false;

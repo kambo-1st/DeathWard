@@ -1,0 +1,25 @@
+{
+  "status": "developer-passed-scoped-human-accepted",
+  "ctest_suites": 9,
+  "native_threshold_cases": 32,
+  "native_level_cases": 16,
+  "source_slot_positions": 20,
+  "room_sizes": [
+    0.75,
+    1,
+    1.5
+  ],
+  "levels": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cli_loads": 4,
+  "game_renderer": "passed",
+  "accepted_checkpoint": "ad0241f7",
+  "user_preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a14/campaign.save.balance/export.json",
+  "user_preset_sha256": "f53d96b28114040e27b73bfecc89c2db58b60c1de5330dbb94f2328884b6e190",
+  "human_acceptance": "human-acceptance.json"
+}

@@ -24,6 +24,7 @@ struct WorldState {
     uint64_t completed = 0;
     uint64_t money = 0;
     uint32_t donationBank=0;
+    uint16_t donationUnlocks=0;
     std::set<std::string> flags;
     std::array<Npc, 5> npcs{
         {{"Sheriff Cole"}, {"Mary Bell"}, {"Father Gabriel"}, {"Silas Reed"}, {"Dr. Whitmore"}}};
@@ -42,6 +43,7 @@ struct RunSummary {
     uint64_t moneyCollected = 0;
     uint64_t moneySpent = 0;
     uint32_t donationBank=0;
+    uint16_t donationUnlocks=0;
     std::vector<ItemKey> items;
     std::optional<ActiveItemState> activeItem;
     std::optional<ItemKey> heldTrinket;

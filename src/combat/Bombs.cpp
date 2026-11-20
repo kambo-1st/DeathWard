@@ -35,6 +35,7 @@ void Simulation::updateOrdinaryBombs(float dt) {
             moneySpent+=uint64_t(price);shopBombSold=true;
             announce("DYNAMITE / "+std::to_string(price)+" COINS",2);
         }
+        if(p.upgradedShopSlot>=0&&!payUpgradedShop(p.upgradedShopSlot))return false;
         dynamite=std::min(MaxDynamite,dynamite+sourceOrdinaryBombValue(p.sourceSubtype));
         p.timing.collect();audioCues.push(AudioCueKind::Pickup,p.position);
         checkpointNeeded=true;return false;

@@ -27,6 +27,8 @@ void Simulation::updateCoinDonation(float dt) {
                 m.frame+=m.cycle.cycleSpeed;
                 if(m.frame+1e-7<m.payoutFrame)continue;
                 const auto result=sourceDonation(m.rng,donation.bank,donation.deposits,m.held,m.cycle.jamScale,m.cycle.outcome);
+                const int previousLevel=donationShopLevel(donation.unlocks);
+                donation.unlocks|=donationMilestonesAt(donation.bank%1000+1);
                 ++donation.bank;++donation.deposits;donation.luck+=result.luck;
                 m.cooldown=result.cooldown;m.phase=CoinDonationMachine::Phase::Idle;
                 if(donation.bank%1000==999)m.held=0;
@@ -38,6 +40,7 @@ void Simulation::updateCoinDonation(float dt) {
                     donation.jammed=true;m.phase=CoinDonationMachine::Phase::Jammed;
                     announce("DONATION MACHINE JAMMED / BANK SAVED",4);
                 } else announce("DONATED 1 COIN / BANK "+std::to_string(donation.bank%1000)+(result.luck?" / LUCK +1":""),2);
+                if(donationShopLevel(donation.unlocks)>previousLevel)announce("SHOP UPGRADE "+std::to_string(donationShopLevel(donation.unlocks))+" EARNED / NEXT EXPEDITION",5);
                 checkpointNeeded=true;
                 if(m.phase==CoinDonationMachine::Phase::Jammed||m.phase==CoinDonationMachine::Phase::Destroyed)break;
                 continue;

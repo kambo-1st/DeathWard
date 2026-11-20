@@ -277,7 +277,7 @@ void Game::perform(Action action) {
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
            (action<Action::BalanceDamageHealthTab||action>Action::ResetYumHeart)&&
            (action<Action::BalanceTrinketTab||action>Action::ResetTrinkets)&&action!=Action::WhipDown&&action!=Action::WhipUp&&
-           (action<Action::BalanceHaloTab||action>Action::ResetCoinDonation))return;
+           (action<Action::BalanceHaloTab||action>Action::ShopLevelEarned))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -295,7 +295,11 @@ void Game::perform(Action action) {
         case Action::BalanceShootingTab:balancePillsOpen=false;balanceTrinketOpen=false;balanceActiveOpen=balanceFamiliarOpen=balanceTreasureOpen=false;balanceShootingOpen=true;balanceEnemiesOpen=balanceRewardsOpen=balanceCombatOpen=false;break;
         case Action::BalanceEnemiesTab:balanceAttackFlyOpen=false;balanceFrowningOpen=false;balanceRoundWormOpen=balanceFullFlyOpen=false;balanceMonstroOpen=false;balanceEnemiesOpen=true;balanceShootingOpen=balanceRewardsOpen=balanceCombatOpen=false;balancePooterOpen=false;break;
         case Action::BalanceRewardsTab:balanceShopOpen=false;balanceRewardsOpen=true;balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
-        case Action::BalanceCoinDonationTab:balancePropsOpen=false;balanceKeeperOpen=false;balanceRewardsOpen=balanceShopOpen=balanceCoinDonationOpen=true;break;
+        case Action::BalanceShopProgressTab:balancePropsOpen=balanceKeeperOpen=false;balanceRewardsOpen=balanceShopOpen=balanceCoinDonationOpen=balanceShopProgressOpen=true;break;
+        case Action::ShopLevelDown:case Action::ShopLevelUp:case Action::ShopLevelEarned:
+            balanceDraft.shopLevelOverride=action==Action::ShopLevelEarned?-1:std::clamp(balanceDraft.shopLevelOverride+(action==Action::ShopLevelUp?1:-1),-1,4);
+            balanceNotice="Shop level staged. APPLY MAP CHANGES resets this floor; earned milestones stay fixed.";break;
+        case Action::BalanceCoinDonationTab:balanceShopProgressOpen=false;balancePropsOpen=false;balanceKeeperOpen=false;balanceRewardsOpen=balanceShopOpen=balanceCoinDonationOpen=true;break;
         case Action::ToggleCoinDonation:case Action::ToggleDonationDestruction:case Action::DonationCycleDown:case Action::DonationCycleUp:
         case Action::DonationJamDown:case Action::DonationJamUp:case Action::CycleDonationOutcome:case Action::ResetCoinDonation: {
             auto preset=balancePreset;auto &t=preset.coinDonation;
@@ -1215,8 +1219,10 @@ std::vector<Action> Game::menuActions() const {
             actions.push_back(Action::BalanceShopRedHeartTab);actions.push_back(Action::BalanceShopSoulHeartTab);
         }
         if(balanceRewardsOpen&&balanceShopOpen){actions.push_back(Action::BalanceKeeperTab);actions.push_back(Action::BalanceCoinDonationTab);}
-        const std::vector<Action> page=balanceRewardsOpen&&balanceShopOpen&&balanceCoinDonationOpen?
-            std::vector<Action>{Action::ToggleCoinDonation,Action::ToggleDonationDestruction,Action::DonationCycleDown,Action::DonationCycleUp,Action::DonationJamDown,Action::DonationJamUp,Action::CycleDonationOutcome,Action::ResetCoinDonation}:
+        const std::vector<Action> page=balanceRewardsOpen&&balanceShopOpen&&balanceCoinDonationOpen&&balanceShopProgressOpen?
+            std::vector<Action>{Action::BalanceCoinDonationTab,Action::ShopLevelDown,Action::ShopLevelUp,Action::ShopLevelEarned,Action::ApplyMapChanges}:
+            balanceRewardsOpen&&balanceShopOpen&&balanceCoinDonationOpen?
+            std::vector<Action>{Action::BalanceShopProgressTab,Action::ToggleCoinDonation,Action::ToggleDonationDestruction,Action::DonationCycleDown,Action::DonationCycleUp,Action::DonationJamDown,Action::DonationJamUp,Action::CycleDonationOutcome,Action::ResetCoinDonation}:
             balanceRewardsOpen&&balanceShopOpen&&balanceKeeperOpen?
             std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::ToggleKeeperDestruction,Action::ToggleKeeperRewards,Action::CycleKeeperOutcome,Action::ResetKeeper}:
             balanceRewardsOpen&&balanceShopOpen&&balanceShopStockOpen?

@@ -50,7 +50,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
     if(account!=WitnessAccount::None&&account!=WitnessAccount::Rourke)
         throw std::invalid_argument("This testimony has not been authored yet.");
     if(treasureCollectiblePool<0||treasureCollectiblePool>7)throw std::invalid_argument("Invalid treasure pool");
-    donation.bank=world.donationBank;
+    donation.bank=world.donationBank;donation.unlocks=world.donationUnlocks;
     temperanceRng_=uint32_t(expedition.seed^0x54454d504552414eULL)|1U;
     pills=PillState(expedition.seed);purseRng_=uint32_t(expedition.seed^0x434f494e50555253ULL)|1U;
     coinClearRewards=requestedCoins;
@@ -116,7 +116,9 @@ bool Simulation::canUseFloorExit() const {
 bool Simulation::canResizeRooms() const {
     return !arena.rooms.empty(); // Explicit testing control; exploration/combat do not lock it.
 }
-void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScale,std::optional<bool> sourceRoom,std::optional<int> heartLayouts,std::optional<bool> roomLocks,std::optional<bool> treasureUpgrade, std::optional<bool> shopHeart, std::optional<bool> shopKey, std::optional<bool> shopVariation, std::optional<int> collectiblePool, std::optional<int> treasurePool, std::optional<MonstroTuning> monstro,std::optional<DukeTuning> duke,std::optional<bool> seeded,std::optional<int> reward,std::optional<RoomPropsTuning> props) {
+void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScale,std::optional<bool> sourceRoom,std::optional<int> heartLayouts,std::optional<bool> roomLocks,std::optional<bool> treasureUpgrade, std::optional<bool> shopHeart, std::optional<bool> shopKey, std::optional<bool> shopVariation, std::optional<int> collectiblePool, std::optional<int> treasurePool, std::optional<MonstroTuning> monstro,std::optional<DukeTuning> duke,std::optional<bool> seeded,std::optional<int> reward,std::optional<RoomPropsTuning> props,std::optional<int> requestedShopLevel) {
+    const int levelChoice=requestedShopLevel.value_or(shopLevelOverride);
+    if(levelChoice < -1||levelChoice>4)throw std::invalid_argument("Invalid shop level");
     const auto propChoice=props.value_or(roomProps);propChoice.validate();
     const auto boss=monstro.value_or(monstroTuning);boss.validate();
     const auto flies=duke.value_or(dukeTuning);flies.validate();
@@ -133,11 +135,11 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     const bool locks=roomLocks.value_or(sourceRoomLocks);
     const bool enabled=sourceRoom.value_or(sourceCombatRoom);
     const int heartMode=heartLayouts.value_or(roomHeartLayouts);
-    if(propChoice.layouts==roomProps.layouts&&rewardChoice==bossRewardItem&&seededChoice==seededBosses&&flies.enabled==dukeTuning.enabled&&boss.enabled==monstroTuning.enabled&&treasureChoice==treasureCollectiblePool&&pool==shopCollectiblePool&&variation==sourceShopVariation&&keyStock==sourceShopKey&&shop==sourceShopHeart&&treasure==sourceTreasureUpgrade&&locks==sourceRoomLocks&&heartMode==roomHeartLayouts&&enabled==sourceCombatRoom&&scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
+    if((levelChoice<0?donationShopLevel(donation.unlocks):levelChoice)==shopLevel&&levelChoice==shopLevelOverride&&propChoice.layouts==roomProps.layouts&&rewardChoice==bossRewardItem&&seededChoice==seededBosses&&flies.enabled==dukeTuning.enabled&&boss.enabled==monstroTuning.enabled&&treasureChoice==treasureCollectiblePool&&pool==shopCollectiblePool&&variation==sourceShopVariation&&keyStock==sourceShopKey&&shop==sourceShopHeart&&treasure==sourceTreasureUpgrade&&locks==sourceRoomLocks&&heartMode==roomHeartLayouts&&enabled==sourceCombatRoom&&scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
     if(!canResizeRooms())throw std::runtime_error("No floor to resize");
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
                     expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice,boss,flies,seededChoice,rewardChoice,propChoice);
-    next.coinDonationTuning=coinDonationTuning;next.donation=donation;next.coinDonationMachines.clear();next.syncMovementBodies();next.prepareCoinDonation();
+    next.coinDonationTuning=coinDonationTuning;next.donation=donation;next.shopLevelOverride=levelChoice;next.prepareShop();next.coinDonationMachines.clear();next.syncMovementBodies();next.prepareCoinDonation();
     next.keeperTuning=keeperTuning;
     next.bloodExplosionTuning=bloodExplosionTuning;next.bloodMachineTuning=bloodMachineTuning;next.ivBagCooldown=ivBagCooldown;next.temperanceRng_=temperanceRng_;next.ivBagAvailable_=ivBagAvailable_;
     next.pills=pills;next.pillTuning=pillTuning;next.purseRng_=purseRng_;next.pillUseHeld_=pillUseHeld_;next.pillDropHeld_=pillDropHeld_;
@@ -232,7 +234,7 @@ bool Simulation::advanceFloor() {
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
                     expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool,monstroTuning,dukeTuning,seededBosses,bossRewardItem,roomProps);
-    next.coinDonationTuning=coinDonationTuning;next.donation=donation;next.coinDonationMachines.clear();next.syncMovementBodies();next.prepareCoinDonation();
+    next.coinDonationTuning=coinDonationTuning;next.donation=donation;next.shopLevelOverride=shopLevelOverride;next.prepareShop();next.coinDonationMachines.clear();next.syncMovementBodies();next.prepareCoinDonation();
     next.keeperTuning=keeperTuning;
     next.bloodExplosionTuning=bloodExplosionTuning;next.bloodMachineTuning=bloodMachineTuning;next.ivBagCooldown=ivBagCooldown;next.temperanceRng_=temperanceRng_;next.ivBagAvailable_=ivBagAvailable_;
     next.pills=pills;next.pillTuning=pillTuning;next.purseRng_=purseRng_;next.pillUseHeld_=pillUseHeld_;next.pillDropHeld_=pillDropHeld_;
@@ -1028,7 +1030,7 @@ RunSummary Simulation::summary() const {
     s.mechanicsFingerprint=content->fingerprint();
     s.moneyCollected = moneyCollected;
     s.moneySpent = moneySpent;
-    s.donationBank=donation.bank;
+    s.donationBank=donation.bank;s.donationUnlocks=donation.unlocks;
     return s;
 }
 void Simulation::suppress(const Context &ctx, const std::string &reason) {
@@ -1983,7 +1985,7 @@ void Simulation::step(const Input &input, float dt) {
     collectKeys();
     admitBossPedestal();
     collectTreasureUpgrade();
-    collectShopUpgrade();
+    collectShopUpgrade();collectUpgradedShopItems();deliverUpgradedShop();
     updateMoney(dt);
     updateHeartPickups(dt);
     updateOrdinaryKeys(dt);

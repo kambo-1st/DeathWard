@@ -1,5 +1,7 @@
 # D14a — recorded first-floor content review
 
+**D14a.15 scoped acceptance, 2026-11-20:** accepted D14a.13/14 is committed as `ad0241f7`. Donation thresholds20/100/200/600 now unlock permanent shop levels1–4, independently of withdrawable bank. Default source stock positions increase2/3/4/5/6 with the corrected one-based native level input and retained canyon geometry. Existing supported stock uses ordinary payment/actors; battery/trinket outcomes remain unspawned without rerolling, milestone item mechanics remain pending. Schema59 stages/export/loads/remembers earned/test levels until Apply; campaign14 preserves flags across withdrawal/death/recovery/retry, with conservative old-save migration. Source48 numeric cases/20 coordinates, three room sizes, nine focused suites, actual Game/Renderer and four CLI loads pass. The user accepted the scoped playtest ("nice it works!"). No next implementation is selected by the subsequent plan-location question. See `docs/reports/isaac-first-floor-parity/d14a15-donation-milestones/README.md`. Full stock/pool/native/floor and live expedition-save acceptance remain open; pixel/performance work is deferred.
+
 **D14a.14 accepted / D14a.15 selected, 2026-11-20:** the user accepted the coin-donation playtest (“cool, next!”) and selected donation milestones and shop upgrades next. Preserve the bank, accepted settings, canyon layout and controls. Full native profile/factory/RNG/scheduler/physics, remaining special rooms/floor allocation and live expedition saves remain open.
 
 **D14a.14 enabled, 2026-11-19:** the user selected the playable coin-donation continuation after D14a.13. Matching opening-floor recorded shops now include the ordinary6.8 coin register with one-coin admission/event credit, campaign bank, source ordinary Luck/jam/cooldown/overflow arithmetic and explosion withdrawal. Jammed source machines ignore blasts. Campaign13 checkpoints bank changes through death/retry/interruption; Apply/floors retain expedition jam/exclusion/count and bank. Schema58 live/export/load/remember controls preserve the accepted preset and staged map edits; source57 remains untouched. Native1,280 deposits/2,048 withdrawals, eight focused suites, three room sizes and actual Game/Renderer controls, persistence and B-key dynamite pass. Owned Western register/crate models use ordinary mesh lighting/shadows. Human acceptance/commit, milestone unlock/shop-stock effects, full native profile/factory/RNG/scheduler/physics, remaining special rooms/full-floor allocation and live expedition saves remain open. See `docs/reports/isaac-first-floor-parity/d14a14-coin-donation/README.md`. Proposed next after acceptance: donation milestones/shop upgrades; bulk parity stays paused.
@@ -21,6 +23,28 @@
 Selected after scoped D13c acceptance, committed as `1003c611`, on 2026-11-17. **The live floor's descriptors and template contents are captured and cross-checked. Treasure is observed as Mom’s Eye55 plus two pennies; shop stock is Mom’s Coin Purse195 for15coins and Temperance card15 for5coins. The boss reward is now observed as Screw255. Other special-room outcomes, D14a gameplay integration and human acceptance remain unfinished.**
 
 The user supplied the paused game with "ready". Read-only capture confirms installed Repentance1.7.9b, Normal difficulty0, stage1/type0 and Isaac character0. The current source log identifies **2FFX 8XJH**, numeric starting seed3466870960 and stage seed1761530316. Its start-room spawn seed3382453641 matches the captured descriptor. Two independent captures preserve identical descriptor/config data at paused world frame82. No input, memory writes or configuration changes were sent to Isaac.
+
+## Delivery index
+
+These are D14a sub-deliveries. Each report records its own implementation, verification, acceptance and remaining gaps; inclusion here does not mean full native parity. D14a.15 is now scoped human-accepted.
+
+| ID | Report |
+| --- | --- |
+| D14a.1 | [Screw boss reward](../d14a1-screw-reward/README.md) |
+| D14a.2 | [Full Fly encounter](../d14a2-full-fly/README.md) |
+| D14a.3 | [Round Worm encounter](../d14a3-round-worm/README.md) |
+| D14a.4 | [Frowning Gaper room](../d14a4-frowning-room/README.md) |
+| D14a.5 | [Mixed flies and poop room](../d14a5-mixed-flies/README.md) |
+| D14a.6 | [Recorded Duke boss room](../d14a6-duke-room/README.md) |
+| D14a.7 | [Mom’s Eye and treasure room](../d14a7-moms-eye/README.md) |
+| D14a.8 | [Coin Purse and pills](../d14a8-coin-purse/README.md) |
+| D14a.9 | [Temperance and blood donation](../d14a9-temperance/README.md) |
+| D14a.10 | [Recorded shop arrangement](../d14a10-recorded-shop/README.md) |
+| D14a.11 | [Shopkeeper destruction and drops](../d14a11-shopkeeper/README.md) |
+| D14a.12 | [Blood-machine explosions](../d14a12-blood-machine-explosions/README.md) |
+| D14a.13 | [Coin-donation eligibility research](../d14a13-donation-eligibility/README.md) |
+| D14a.14 | [Playable coin donation and bank](../d14a14-coin-donation/README.md) |
+| D14a.15 | [Donation milestones and shop upgrades](../d14a15-donation-milestones/README.md) |
 
 ## Observed source content
 

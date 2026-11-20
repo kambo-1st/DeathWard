@@ -1039,15 +1039,14 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                 }
             }
         }
-        if(run.hasSourceShop(run.room)&&run.shopVariationActive()&&!run.shopUpgradeSold) {
-            const auto p=run.shopUpgradePosition();
+        const auto drawStockCollectible=[&](Vector3 p,int item) {
             const float y=1.1f+.08f*std::sin(float(run.stats.duration)*2);
-            if(run.shopUpgradeItem==195) {
+            if(item==195) {
                 DrawSphereEx({p.x,y,p.z},.48f,6,8,Color{114,65,43,255});
                 DrawCube({p.x,y+.33f,p.z},.68f,.16f,.26f,Gold);
                 DrawSphereEx({p.x-.12f,y+.47f,p.z},.09f,5,6,Gold);
                 DrawSphereEx({p.x+.12f,y+.47f,p.z},.09f,5,6,Gold);
-            } else if(run.shopUpgradeItem==250) {
+            } else if(item==250) {
                 // Paired sticks on a brass card distinguish the collectible
                 // from loose supplies while retaining the shared geometry.
                 DrawCube({p.x,y-.17f,p.z},1.2f,.13f,.9f,Gold);
@@ -1062,7 +1061,9 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                 DrawCylinderEx({p.x-.21f,y-.29f,p.z+face*.14f},{p.x+.21f,y+.29f,p.z+face*.14f},.035f,.035f,6,Paper);
             }
             }
-        }
+                };
+        if(run.hasSourceShop(run.room)&&run.shopVariationActive()&&!run.shopUpgradeSold)drawStockCollectible(run.shopUpgradePosition(),run.shopUpgradeItem);
+        if(run.hasSourceShop(run.room))for(const auto &offer:run.upgradedShop)if(offer.category==8&&!offer.sold)drawStockCollectible(offer.position,offer.item);
     };
     if(run.arena.shopRoom>=0)shopCartModel_.prepare();
     const auto drawShopCarts=[&](Shader shader,Texture2D shadowMap) {
@@ -2096,6 +2097,10 @@ Action Renderer::expedition(const Game &game) {
             text(price==0?"FREE":std::to_string(price)+" COINS",x+8,y+(name?23:5),14,Gold);
         };
         if(run.hasSourceShop(run.room)&&run.shopVariationActive()&&!run.shopUpgradeSold)priceTag(run.shopUpgradePosition(),run.shopPrice(run.shopUpgradePrice,run.shopUpgradeSlot),run.shopUpgradeItem==195?"MOM'S COIN PURSE":run.shopUpgradeItem==250?"BOGO BOMBS":"STEAM SALE");
+        if(run.hasSourceShop(run.room))for(const auto &offer:run.upgradedShop)if(offer.supported()&&!offer.sold&&offer.delivered) {
+            const char *name=offer.category==8?(offer.item==195?"MOM'S COIN PURSE":offer.item==250?"BOGO BOMBS":"STEAM SALE"):offer.category==6?"XIV / TEMPERANCE":offer.category==2?"PILL":nullptr;
+            priceTag(offer.position,run.upgradedShopPrice(offer.slot),name);
+        }
         for(const auto &card:run.pillPickups)if(card.shopStock&&card.room==run.room&&card.timing.collectible())priceTag(card.position,run.shopPrice(run.bloodMachineTuning.cardPrice,run.shopCardSlot),"XIV / TEMPERANCE");
         for(const auto &m:run.coinDonationMachines)if(m.room==run.room&&m.phase!=CoinDonationMachine::Phase::Destroyed) {
             auto at=m.position;at.y=2.2f;const auto screen=GetWorldToScreen(at,game.camera);
@@ -2548,6 +2553,19 @@ Action Renderer::balancePanel(const Game &game) {
             text("Future destructions only; existing rolls stay fixed.",680,404,12,Muted);
             if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,449,420,40))return Action::ApplyMapChanges;
             text(game.hasPendingMapChanges()?"PENDING / RESETS FLOOR":"MAP SETTINGS APPLIED",655,465,14,Muted);
+        } else if(game.balanceShopOpen&&game.balanceCoinDonationOpen&&game.balanceShopProgressOpen) {
+            const int flags=game.run?game.run->donation.unlocks:game.campaign.data().world.donationUnlocks;
+            const int earned=donationShopLevel(uint16_t(flags)),choice=game.balanceDraft.shopLevelOverride;
+            text("SHOP UPGRADES / EARNED LEVEL "+std::to_string(earned),205,218,22,Gold);
+            text("Earned at 20 / 100 / 200 / 600 donations. Withdrawals never remove upgrades.",205,260,14,Paper);
+            text(choice<0?"USE EARNED LEVEL":"TEST LEVEL "+std::to_string(choice),205,310,22,Paper);
+            if(button(Action::ShopLevelDown,"- 1",655,300,200,40))return Action::ShopLevelDown;
+            if(button(Action::ShopLevelUp,"+ 1",875,300,200,40))return Action::ShopLevelUp;
+            text("Default layouts: 2 / 3 / 4 / 5 / 6 stock positions. Changes apply on regeneration.",205,361,14,Muted);
+            text("Current shop level: "+std::to_string(game.run?game.run->shopLevel:earned),205,392,18,Gold);
+            if(button(Action::ShopLevelEarned,"USE EARNED LEVEL",655,390,420,36,choice<0))return Action::ShopLevelEarned;
+            if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,450,420,40))return Action::ApplyMapChanges;
+            if(button(Action::BalanceCoinDonationTab,"DONATION SETTINGS",655,450,420,40))return Action::BalanceCoinDonationTab;
         } else if(game.balanceShopOpen&&game.balanceCoinDonationOpen) {
             const auto &t=game.balancePreset.coinDonation;
             text("COIN DONATIONS / BANK "+std::to_string(game.run?game.run->donation.bank%1000:game.campaign.data().world.donationBank%1000),205,218,22,Gold);
@@ -2564,6 +2582,7 @@ Action Renderer::balancePanel(const Game &game) {
             text("Walk into the register: 1 coin each. Step away to stop. Jams last this expedition.",205,407,14,Paper);
             text("Bank saves with this campaign. Presets store controls; they do not overwrite the bank.",205,431,13,Muted);
             if(button(Action::ResetCoinDonation,"RESET DONATION SETTINGS",205,463,420,36))return Action::ResetCoinDonation;
+            if(button(Action::BalanceShopProgressTab,"SHOP UPGRADES",655,463,420,36))return Action::BalanceShopProgressTab;
         } else if(game.balanceShopOpen&&game.balanceKeeperOpen) {
             const auto &t=game.balancePreset.keeper;
             text("KEEPER",205,184,22,Gold);

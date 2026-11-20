@@ -24,9 +24,11 @@ void Simulation::updateOrdinaryKeys(float dt) {
         if(p.timing.phase==KeyTiming::Phase::Gone)return true;
         if(!p.timing.collectible()||dead||player.totalHealth()<=0||keys>=99||
            planarDistance(player.position,p.position)>=1||!arena.clear(player.position,p.position,.1f))return false;
+        if(p.upgradedShopSlot>=0&&!canBuyUpgradedShop(p.upgradedShopSlot))return false;
         if(p.shopStock&&(!hasSourceShop(room)||!shopKeyOffered()||!sourceShopKey||shopKeySold||!roomClear||roomThreats()||
            shopKeyPrice<0||shopKeyPrice>15||money()<uint64_t(shopPrice(shopKeyPrice,shopKeySlot))))return false;
         keys=std::min(99,keys+sourceOrdinaryKeyValue(p.sourceSubtype));
+        if(p.upgradedShopSlot>=0&&!payUpgradedShop(p.upgradedShopSlot))return false;
         if(p.shopStock) {
             moneySpent+=uint64_t(shopPrice(shopKeyPrice,shopKeySlot));shopKeySold=true;
             announce("KEY / "+std::to_string(shopPrice(shopKeyPrice,shopKeySlot))+" COINS",2);

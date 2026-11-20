@@ -88,6 +88,7 @@ void Simulation::prepareShop() {
         // No category reroll. Other pairs retain the explicit previous fixed-pair fallback.
         // Collectibles use the explicit restricted three-entry pool above.
     }
+    prepareUpgradedShop();
     Random rng(seed_ ^ 0x53484f5053544f43ULL);
     std::array<ItemId, ItemCount> pool{};
     const int available=surveyTutorial||expedition.pacing==ExpeditionPacing::Classic?LegacyItemCount:ItemCount;

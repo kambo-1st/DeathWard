@@ -1,0 +1,20 @@
+{
+  "pid": 1206047,
+  "created": "2026-11-20T08:12:34.759431+01:00",
+  "args": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "68",
+    "--review-shop-stock",
+    "--mute",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a15/campaign.save.balance/export.json",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a15/playtest-20261120-081234/campaign.save"
+  ],
+  "save": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a15/playtest-20261120-081234/campaign.save",
+  "preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a15/campaign.save.balance/export.json",
+  "preset_sha256": "0583cb6f3da19be301bd65f2d390e15dfca936d312019a29540513e2e03d0514",
+  "scope": "Isolated test campaign: bank19, earned level0, 20 labelled review coins, normal health, source jam rolls; donate one coin to reach20. All level overrides available under Donations/Shop Upgrades."
+}

@@ -142,7 +142,7 @@ std::vector<Vector3> Arena::path(Vector3 from, Vector3 target, float radius) con
         auto route=floorPath(*this,from,target,radius,floorCells);
         if(route.empty()) {
             const int start=roomAt(from),goal=roomAt(target);
-            const auto sourceRoom=[&](int i){return i>=0&&(sourcePropRoom(rooms[size_t(i)].sourceObstacleTemplate)||sourceCombatRockRoom(rooms[size_t(i)].sourceObstacleTemplate)||
+            const auto sourceRoom=[&](int i){return i>=0&&(rooms[size_t(i)].sourceShopTemplate>=0||sourcePropRoom(rooms[size_t(i)].sourceObstacleTemplate)||sourceCombatRockRoom(rooms[size_t(i)].sourceObstacleTemplate)||
                 rooms[size_t(i)].sourceObstacleTemplate==SourceChestRockRoom||
                 rooms[size_t(i)].sourceObstacleTemplate==SourceCoinRockRoom||
                 rooms[size_t(i)].sourceObstacleTemplate==SourceKeyRockRoom||

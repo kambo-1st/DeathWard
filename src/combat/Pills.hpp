@@ -61,6 +61,6 @@ struct PillTiming {
         }
     }
 };
-struct PillPickup {Vector3 position{};int room=-1,color=1;uint32_t seed=1;bool contactBlocked=false,shopStock=false;PillTiming timing{};};
+struct PillPickup {Vector3 position{};int room=-1,color=1;uint32_t seed=1;bool contactBlocked=false,shopStock=false;PillTiming timing{};int upgradedShopSlot=-1;};
 struct PendingPursePill {Vector3 origin{};int room=-1,color=1,ordinal=0;uint32_t seed=1;};
 }

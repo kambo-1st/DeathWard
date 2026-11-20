@@ -1,6 +1,7 @@
 #include "combat/Pills.hpp"
 #include "combat/Temperance.hpp"
 #include "combat/CoinDonation.hpp"
+#include "world/ShopProgress.hpp"
 #pragma once
 #include "combat/Monstro.hpp"
 #include "combat/Duke.hpp"
@@ -1125,11 +1126,11 @@ struct TrinketPickup {
 };
 struct OrdinaryKeyPickup {
     Vector3 position{};int room=-1,sourceSubtype=1;uint32_t seed=0;
-    KeyTiming timing{};bool placedInLayout=false,shopStock=false;
+    KeyTiming timing{};bool placedInLayout=false,shopStock=false;int upgradedShopSlot=-1;
 };
 struct OrdinaryBombPickup {
     Vector3 position{};int room=-1,sourceSubtype=1;uint32_t seed=0;
-    BombTiming timing{};bool placedInLayout=false,shopStock=false;
+    BombTiming timing{};bool placedInLayout=false,shopStock=false;int upgradedShopSlot=-1;
 };
 struct MoneyPickup {
     Vector3 position{};
@@ -1152,7 +1153,7 @@ struct ServiceOffer {
 };
 
 enum class HeartKind { Red, Soul, Black, Eternal, Golden, Bone, Rotten, Blended, Scared };
-struct HeartPickup {Vector3 position{};HeartKind kind=HeartKind::Red;int amount=2,room=0;int sourceSubtype=0;RedHeartTiming timing{};bool placedInLayout=false,shopStock=false;};
+struct HeartPickup {Vector3 position{};HeartKind kind=HeartKind::Red;int amount=2,room=0;int sourceSubtype=0;RedHeartTiming timing{};bool placedInLayout=false,shopStock=false;int upgradedShopSlot=-1;};
 struct BlueFlyRuntime {
     EntityId id=0,target=0;
     Vector3 position{},previous{},nativeVelocity{};
@@ -1250,6 +1251,12 @@ class Simulation {
     bool sourceShopKey=false, shopKeyDelivered=false, shopKeySold=false;
     bool sourceShopVariation=false, shopUpgradeSold=false, steamSaleDiscounts=true;
     int shopCollectiblePool=0, shopUpgradeItem=64; // 0 Steam Sale, 1 restricted pool, 2 BOGO test.
+    int shopLevelOverride=-1,shopLevel=0; // -1 earned;0-4 labelled test levels, staged until Apply.
+    std::vector<UpgradedShopOffer> upgradedShop;
+    void configureShopLevel(int level);
+    void prepareUpgradedShop();void deliverUpgradedShop();
+    bool canBuyUpgradedShop(int slot)const;bool payUpgradedShop(int slot);int upgradedShopPrice(int slot)const;
+    void collectUpgradedShopItems();
     int shopUpgradePrice=15;
     int shopBombPrice=5,shopBombSlot=-1;
     bool shopBombDelivered=false,shopBombSold=false;
@@ -1365,7 +1372,7 @@ class Simulation {
     bool canUseFloorExit() const;
     bool advanceFloor();
     bool canResizeRooms() const;
-    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1, std::optional<bool> sourceRoom = std::nullopt, std::optional<int> heartLayouts = std::nullopt, std::optional<bool> roomLocks = std::nullopt, std::optional<bool> treasureUpgrade = std::nullopt, std::optional<bool> shopHeart = std::nullopt, std::optional<bool> shopKey = std::nullopt, std::optional<bool> shopVariation = std::nullopt, std::optional<int> collectiblePool = std::nullopt, std::optional<int> treasurePool = std::nullopt, std::optional<MonstroTuning> monstro = std::nullopt, std::optional<DukeTuning> duke = std::nullopt, std::optional<bool> seededBosses = std::nullopt, std::optional<int> bossRewardItem = std::nullopt, std::optional<RoomPropsTuning> roomProps = std::nullopt);
+    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1, std::optional<bool> sourceRoom = std::nullopt, std::optional<int> heartLayouts = std::nullopt, std::optional<bool> roomLocks = std::nullopt, std::optional<bool> treasureUpgrade = std::nullopt, std::optional<bool> shopHeart = std::nullopt, std::optional<bool> shopKey = std::nullopt, std::optional<bool> shopVariation = std::nullopt, std::optional<int> collectiblePool = std::nullopt, std::optional<int> treasurePool = std::nullopt, std::optional<MonstroTuning> monstro = std::nullopt, std::optional<DukeTuning> duke = std::nullopt, std::optional<bool> seededBosses = std::nullopt, std::optional<int> bossRewardItem = std::nullopt, std::optional<RoomPropsTuning> roomProps = std::nullopt,std::optional<int> shopLevel=std::nullopt);
     int finalRoom() const { return arena.roomCount()-1; }
     Vector3 surveyPosition() const { return arena.rooms.back().objective; }
     bool canReturn() const { return lastFloor()&&canUseFloorExit(); }

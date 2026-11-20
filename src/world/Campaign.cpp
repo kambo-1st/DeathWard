@@ -1,4 +1,5 @@
 #include "world/Campaign.hpp"
+#include "world/ShopProgress.hpp"
 #include "platform/Browser.hpp"
 #include <cstdlib>
 #include <fstream>
@@ -51,7 +52,7 @@ void writeSummary(std::ostream &out, const RunSummary &s) {
         << std::quoted(s.startingContext) << ' ' << int(s.reason) << ' ' << s.rescued << ' ' << s.bossKilled
         << ' ' << s.altarDestroyed << ' ' << s.interrupted << ' ' << s.moneyCollected << ' ' << s.moneySpent
         << ' ' << s.surveyRecovered << ' ' << s.floor << ' ' << s.floorCount << ' ' << int(s.account)
-        << ' ' << int(s.pacing) << ' ' << std::quoted(s.mechanicsFingerprint) << ' ' << s.donationBank << '\n';
+        << ' ' << int(s.pacing) << ' ' << std::quoted(s.mechanicsFingerprint) << ' ' << s.donationBank << ' ' << s.donationUnlocks << '\n';
     writeStats(out, s.stats);
     out << s.items.size();
     for (auto id : s.items)
@@ -101,6 +102,8 @@ RunSummary readSummary(std::istream &in, int version) {
     s.reason = EndReason(reason);
     if(version>=7)in>>std::quoted(s.mechanicsFingerprint);
     if(version>=13){uint64_t bank=0;in>>bank;if(!in||bank>UINT32_MAX)throw std::runtime_error("Invalid donation bank");s.donationBank=uint32_t(bank);}
+    if(version>=14){unsigned flags=0;in>>flags;if(!in||flags>AllDonationMilestones)throw std::runtime_error("Invalid donation milestones");s.donationUnlocks=uint16_t(flags);}
+    else s.donationUnlocks=donationMilestonesAt(s.donationBank);
     readStats(in, s.stats);
     size_t n = count(in, 4096);
     for (size_t i = 0; i < n; ++i) {
@@ -158,7 +161,7 @@ std::string serialize(const Campaign &c) {
     const auto &w = c.world;
     out << c.nextRunId << ' ' << w.population << ' ' << w.prosperity << ' ' << w.law << ' ' << w.minersRescued
         << ' ' << w.bossDefeated << ' ' << w.mineOpen << ' ' << w.altarDestroyed << ' ' << w.mineDebt << ' '
-        << w.completed << ' ' << w.money << ' ' << w.donationBank << '\n';
+        << w.completed << ' ' << w.money << ' ' << w.donationBank << ' ' << w.donationUnlocks << '\n';
     out << w.flags.size() << '\n';
     for (const auto &flag : w.flags)
         out << std::quoted(flag) << '\n';
@@ -181,6 +184,8 @@ Campaign deserialize(const std::string &payload, int version) {
     if (version >= 2)
         in >> w.money;
     if(version>=13){uint64_t bank=0;in>>bank;if(!in||bank>UINT32_MAX)throw std::runtime_error("Invalid donation bank");w.donationBank=uint32_t(bank);}
+    if(version>=14){unsigned flags=0;in>>flags;if(!in||flags>AllDonationMilestones)throw std::runtime_error("Invalid donation milestones");w.donationUnlocks=uint16_t(flags);}
+    else w.donationUnlocks=donationMilestonesAt(w.donationBank);
     size_t n = count(in, 1024);
     for (size_t i = 0; i < n; ++i) {
         std::string flag;
@@ -199,6 +204,7 @@ Campaign deserialize(const std::string &payload, int version) {
     if (!in || c.nextRunId == 0 || w.population < 0 || w.prosperity < 0 || w.prosperity > 100 ||
         w.mineDebt < 0 || w.mineDebt > 50 || w.money > MaxMoney)
         throw std::runtime_error("Invalid campaign save");
+    if(version<14){for(const auto &s:c.history)w.donationUnlocks|=s.donationUnlocks;if(c.pending)w.donationUnlocks|=c.pending->donationUnlocks;}
     in >> std::ws;
     if (!in.eof())
         throw std::runtime_error("Unexpected data in save");
@@ -220,7 +226,7 @@ void saveAtomic(const std::filesystem::path &path, const Campaign &c) {
         std::ofstream out(temp, std::ios::binary | std::ios::trunc);
         if (!out)
             throw std::runtime_error("Cannot create save: " + temp.string());
-        out << "DEATHWARD 13 " << checksum(payload) << '\n' << payload;
+        out << "DEATHWARD 14 " << checksum(payload) << '\n' << payload;
         out.flush();
         if (!out)
             throw std::runtime_error("Cannot write campaign save");
@@ -262,7 +268,7 @@ CampaignStore::CampaignStore(std::filesystem::path path) : path_(std::move(path)
     in >> magic >> version >> hash;
     in.get();
     std::string payload((std::istreambuf_iterator<char>(in)), {});
-    if (magic != "DEATHWARD" || version < 1 || version > 13 || checksum(payload) != hash)
+    if (magic != "DEATHWARD" || version < 1 || version > 14 || checksum(payload) != hash)
         throw std::runtime_error("Campaign save is damaged or unsupported. Original file was preserved: " +
                                  path_.string());
     campaign_ = deserialize(payload, version);
@@ -283,7 +289,7 @@ uint64_t CampaignStore::begin(uint64_t seed, const std::string &expedition, Expe
     RunSummary s;
     s.id = next.nextRunId++;
     s.seed = seed;
-    s.donationBank=next.world.donationBank;
+    s.donationBank=next.world.donationBank;s.donationUnlocks=next.world.donationUnlocks;
     s.expedition = expedition;
     s.pacing = pacing;
     s.account = expedition==RourkeExpeditionTitle?WitnessAccount::Rourke:WitnessAccount::None;
@@ -291,6 +297,8 @@ uint64_t CampaignStore::begin(uint64_t seed, const std::string &expedition, Expe
     s.startingContext = worldContext(next.world);
     next.pending = s;
     next.world.donationBank=s.donationBank;
+    if(s.donationUnlocks>AllDonationMilestones)throw std::runtime_error("Invalid donation milestones");
+    next.world.donationUnlocks|=s.donationUnlocks;
     commit(std::move(next));
     return s.id;
 }
@@ -300,6 +308,8 @@ void CampaignStore::checkpoint(const RunSummary &s) {
     Campaign next = campaign_;
     next.pending = s;
     next.world.donationBank=s.donationBank;
+    if(s.donationUnlocks>AllDonationMilestones)throw std::runtime_error("Invalid donation milestones");
+    next.world.donationUnlocks|=s.donationUnlocks;
     commit(std::move(next));
 }
 RunSummary CampaignStore::resolve(const RunSummary &input, EndReason reason) {
@@ -319,6 +329,8 @@ RunSummary CampaignStore::resolve(const RunSummary &input, EndReason reason) {
         throw std::runtime_error("Invalid expedition spending");
     w.money = std::min(MaxMoney, w.money + s.moneyCollected - s.moneySpent);
     w.donationBank=s.donationBank;
+    if(s.donationUnlocks>AllDonationMilestones)throw std::runtime_error("Invalid donation milestones");
+    w.donationUnlocks|=s.donationUnlocks;
     if(s.account!=WitnessAccount::None) {
         note(std::string(accountName(s.account))+": the route has left questions that his story does not answer.");
         if(reason==EndReason::Victory&&s.account==WitnessAccount::Rourke&&s.floor+1==s.floorCount&&s.evidence.size()==4) {

@@ -27,7 +27,7 @@ inline DonationResult sourceDonation(uint32_t &seed,uint32_t bank,int deposits,i
 inline int sourceDonationWithdrawal(uint32_t &seed,uint32_t bank){return std::min(int(bank%1000),7+int(donationRandom(seed)%9));}
 struct DonationProgress {
     // Native persistent counter is cumulative; display and available bank use modulo1000.
-    uint32_t bank=0;int deposits=0,luck=0;bool jammed=false,excluded=false;
+    uint32_t bank=0;uint16_t unlocks=0;int deposits=0,luck=0;bool jammed=false,excluded=false;
 };
 struct CoinDonationMachine {
     Vector3 position{};int room=-1;uint32_t rng=1;

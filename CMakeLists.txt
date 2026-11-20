@@ -156,6 +156,7 @@ add_library(deathward_core
     src/combat/PlayerHealth.cpp
     src/combat/Simulation.cpp
     src/combat/Loot.cpp
+    src/combat/ShopProgress.cpp
     src/combat/Shop.cpp
     src/combat/Services.cpp
     src/combat/Dynamite.cpp
@@ -1207,6 +1208,10 @@ add_executable(deathward_shopkeeper_tests tests/shopkeeper_tests.cpp)
 target_link_libraries(deathward_shopkeeper_tests PRIVATE deathward_core)
 target_compile_definitions(deathward_shopkeeper_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
 add_test(NAME shopkeeper_delivery COMMAND deathward_shopkeeper_tests)
+    add_executable(deathward_donation_milestone_tests tests/donation_milestone_tests.cpp)
+    target_link_libraries(deathward_donation_milestone_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_donation_milestone_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
+    add_test(NAME donation_milestone_delivery COMMAND deathward_donation_milestone_tests)
     add_executable(deathward_coin_donation_tests tests/coin_donation_tests.cpp)
     target_link_libraries(deathward_coin_donation_tests PRIVATE deathward_core)
     target_compile_definitions(deathward_coin_donation_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")

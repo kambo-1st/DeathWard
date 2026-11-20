@@ -1,0 +1,864 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "thresholds": [
+    10,
+    20,
+    50,
+    100,
+    150,
+    200,
+    400,
+    600,
+    900,
+    999
+  ],
+  "achievement_ids": [
+    134,
+    151,
+    135,
+    152,
+    136,
+    153,
+    137,
+    154,
+    59,
+    138
+  ],
+  "achievements": [
+    {
+      "id": "134",
+      "text": "\"Blue Map\" has appeared in the basement",
+      "gfx": "Achievement_BlueMap.png"
+    },
+    {
+      "id": "151",
+      "text": "Store Upgrade lv.1",
+      "gfx": "Achievement_StoreUpgrade1.png"
+    },
+    {
+      "id": "135",
+      "text": "\"There's Options\" has appeared in the basement",
+      "gfx": "Achievement_TheresOptions.png"
+    },
+    {
+      "id": "152",
+      "text": "Store Upgrade lv.2",
+      "gfx": "Achievement_StoreUpgrade2.png"
+    },
+    {
+      "id": "136",
+      "text": "\"Black Candle\" has appeared in the basement",
+      "gfx": "Achievement_BlackCandle.png"
+    },
+    {
+      "id": "153",
+      "text": "Store Upgrade lv.3",
+      "gfx": "Achievement_StoreUpgrade3.png"
+    },
+    {
+      "id": "137",
+      "text": "\"Red Candle\" has appeared in the basement",
+      "gfx": "Achievement_RedCandle.png"
+    },
+    {
+      "id": "154",
+      "text": "Store Upgrade lv.4",
+      "gfx": "Achievement_StoreUpgrade4.png"
+    },
+    {
+      "id": "59",
+      "text": "\"The Blue Candle\" has appeared in the basement",
+      "gfx": "Achievement_BlueCandle.png"
+    },
+    {
+      "id": "138",
+      "text": "\"Stop Watch\" has appeared in the basement",
+      "gfx": "Achievement_Stopwatch.png"
+    }
+  ],
+  "achievement_xml_sha256": "7d3eb9582d761fe6d432d3c339b7e1268097e7da8968f45fa2a148cb3deca39b",
+  "rooms_source": {
+    "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+    "sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+    "templates": 1300
+  },
+  "layouts": [
+    {
+      "type": 2,
+      "variant": 0,
+      "subtype": 0,
+      "difficulty": 1,
+      "shape_metadata_only": 1,
+      "width_metadata_only": 13,
+      "height_metadata_only": 7,
+      "title": "Shop L1",
+      "source_weight": 1.0,
+      "allowed_doors": [
+        [
+          6,
+          -1,
+          true
+        ],
+        [
+          6,
+          7,
+          true
+        ],
+        [
+          -1,
+          3,
+          true
+        ],
+        [
+          13,
+          3,
+          true
+        ]
+      ],
+      "slots": [
+        {
+          "x": 3,
+          "y": 0,
+          "choices": [
+            {
+              "type": 6,
+              "variant": 8,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "choices": [
+            {
+              "type": 1000,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 5,
+          "y": 1,
+          "choices": [
+            {
+              "type": 1000,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 6,
+          "y": 1,
+          "choices": [
+            {
+              "type": 17,
+              "variant": 1,
+              "subtype": 0,
+              "weight": 0.5
+            },
+            {
+              "type": 17,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 0.5
+            }
+          ]
+        },
+        {
+          "x": 7,
+          "y": 1,
+          "choices": [
+            {
+              "type": 1000,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 11,
+          "y": 1,
+          "choices": [
+            {
+              "type": 1000,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 5,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 7,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        }
+      ],
+      "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb"
+    },
+    {
+      "type": 2,
+      "variant": 1,
+      "subtype": 1,
+      "difficulty": 1,
+      "shape_metadata_only": 1,
+      "width_metadata_only": 13,
+      "height_metadata_only": 7,
+      "title": "Shop L2",
+      "source_weight": 1.0,
+      "allowed_doors": [
+        [
+          6,
+          -1,
+          true
+        ],
+        [
+          6,
+          7,
+          true
+        ],
+        [
+          -1,
+          3,
+          true
+        ],
+        [
+          13,
+          3,
+          true
+        ]
+      ],
+      "slots": [
+        {
+          "x": 3,
+          "y": 0,
+          "choices": [
+            {
+              "type": 6,
+              "variant": 8,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "choices": [
+            {
+              "type": 1400,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 6,
+          "y": 1,
+          "choices": [
+            {
+              "type": 17,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 0.5
+            },
+            {
+              "type": 17,
+              "variant": 1,
+              "subtype": 0,
+              "weight": 0.5
+            }
+          ]
+        },
+        {
+          "x": 11,
+          "y": 1,
+          "choices": [
+            {
+              "type": 1400,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 4,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 6,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 8,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        }
+      ],
+      "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb"
+    },
+    {
+      "type": 2,
+      "variant": 2,
+      "subtype": 2,
+      "difficulty": 1,
+      "shape_metadata_only": 1,
+      "width_metadata_only": 13,
+      "height_metadata_only": 7,
+      "title": "Shop L3",
+      "source_weight": 1.0,
+      "allowed_doors": [
+        [
+          6,
+          -1,
+          true
+        ],
+        [
+          6,
+          7,
+          true
+        ],
+        [
+          -1,
+          3,
+          true
+        ],
+        [
+          13,
+          3,
+          true
+        ]
+      ],
+      "slots": [
+        {
+          "x": 3,
+          "y": 0,
+          "choices": [
+            {
+              "type": 6,
+              "variant": 8,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 5,
+          "y": 1,
+          "choices": [
+            {
+              "type": 1400,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 6,
+          "y": 1,
+          "choices": [
+            {
+              "type": 17,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 0.5
+            },
+            {
+              "type": 17,
+              "variant": 1,
+              "subtype": 0,
+              "weight": 0.5
+            }
+          ]
+        },
+        {
+          "x": 7,
+          "y": 1,
+          "choices": [
+            {
+              "type": 1400,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 3,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 5,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 7,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 9,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        }
+      ],
+      "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb"
+    },
+    {
+      "type": 2,
+      "variant": 3,
+      "subtype": 3,
+      "difficulty": 1,
+      "shape_metadata_only": 1,
+      "width_metadata_only": 13,
+      "height_metadata_only": 7,
+      "title": "Shop L4",
+      "source_weight": 1.0,
+      "allowed_doors": [
+        [
+          13,
+          3,
+          true
+        ],
+        [
+          -1,
+          3,
+          true
+        ],
+        [
+          6,
+          7,
+          true
+        ],
+        [
+          6,
+          -1,
+          true
+        ]
+      ],
+      "slots": [
+        {
+          "x": 0,
+          "y": 0,
+          "choices": [
+            {
+              "type": 1000,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "choices": [
+            {
+              "type": 6,
+              "variant": 8,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 12,
+          "y": 0,
+          "choices": [
+            {
+              "type": 1000,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 5,
+          "y": 1,
+          "choices": [
+            {
+              "type": 1400,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 6,
+          "y": 1,
+          "choices": [
+            {
+              "type": 17,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 0.5
+            },
+            {
+              "type": 17,
+              "variant": 1,
+              "subtype": 0,
+              "weight": 0.5
+            }
+          ]
+        },
+        {
+          "x": 7,
+          "y": 1,
+          "choices": [
+            {
+              "type": 1400,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 2,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 4,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 6,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 8,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 10,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 0,
+          "y": 6,
+          "choices": [
+            {
+              "type": 1000,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 12,
+          "y": 6,
+          "choices": [
+            {
+              "type": 1000,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        }
+      ],
+      "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb"
+    },
+    {
+      "type": 2,
+      "variant": 4,
+      "subtype": 4,
+      "difficulty": 1,
+      "shape_metadata_only": 1,
+      "width_metadata_only": 13,
+      "height_metadata_only": 7,
+      "title": "Shop L5",
+      "source_weight": 1.0,
+      "allowed_doors": [
+        [
+          6,
+          -1,
+          true
+        ],
+        [
+          6,
+          7,
+          true
+        ],
+        [
+          -1,
+          3,
+          true
+        ],
+        [
+          13,
+          3,
+          true
+        ]
+      ],
+      "slots": [
+        {
+          "x": 3,
+          "y": 0,
+          "choices": [
+            {
+              "type": 6,
+              "variant": 8,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "choices": [
+            {
+              "type": 1400,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 6,
+          "y": 1,
+          "choices": [
+            {
+              "type": 17,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 0.5
+            },
+            {
+              "type": 17,
+              "variant": 1,
+              "subtype": 0,
+              "weight": 0.5
+            }
+          ]
+        },
+        {
+          "x": 11,
+          "y": 1,
+          "choices": [
+            {
+              "type": 1400,
+              "variant": 0,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 4,
+          "y": 2,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 8,
+          "y": 2,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 3,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 5,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 7,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 9,
+          "y": 4,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 150,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        }
+      ],
+      "source_file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb"
+    }
+  ],
+  "windows": [
+    {
+      "name": "milestone-gates",
+      "start": "0x63da85",
+      "end": "0x63db69",
+      "sha256": "a4326d66b75229c83148197880c496ef9d4f80de31ea5c181aadaf7922360fab"
+    },
+    {
+      "name": "shop-level",
+      "start": "0x7b1717",
+      "end": "0x7b1834",
+      "sha256": "4d0b91d8e64decfd752cbe498faf61eb8318ca194546cf52050a468ccb433e08"
+    }
+  ],
+  "scope": "Original milestone calls and ordinary normal room level stores, supplied achievement bytes, profile special cases off. Default 2.variant.subtype0-4 STB stock coordinates; not full room allocation or pool equivalence."
+}

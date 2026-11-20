@@ -1,0 +1,28 @@
+DEATHWARD 13 9903928938567191051
+2 42 42 50 0 0 0 0 8 0 0 600
+1
+"mine_setback"
+"Sheriff Cole" "alive" 0
+"Mary Bell" "alive" 0
+"Father Gabriel" "alive" 0
+"Silas Reed" "alive" 0
+"Dr. Whitmore" "alive" 0
+0
+1
+1 68 "deathward-m1-61" "Redstone Canyon" "1 42 50 50 0 0 0 0 0 0 0 0
+0
+\"Sheriff Cole\" \"alive\" 0
+\"Mary Bell\" \"alive\" 0
+\"Father Gabriel\" \"alive\" 0
+\"Silas Reed\" \"alive\" 0
+\"Dr. Whitmore\" \"alive\" 0
+0
+0
+" 1 0 0 0 0 22 22 0 0 8 0 4 "6e7b8382ade04b60/balance-v13:1b40d313e8ac40e6" 2
+36937.785259788856 0 0 4 0 0 0 0 0 0 0 0 0 0 2 0
+1 "isaac:collectible:195"
+1
+"The expedition ends early. Mine closed; prosperity -8. A return can repair this."
+0
+0
+0

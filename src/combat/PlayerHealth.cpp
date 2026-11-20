@@ -124,10 +124,12 @@ void Simulation::updateHeartPickups(float dt) {
         if(pickup.timing.phase==RedHeartTiming::Phase::Gone)return true;
         if(!pickup.timing.collectible()||distance(player.position,pickup.position)>=1||
            !arena.clear(player.position,pickup.position,.1f))return false;
+        if(pickup.upgradedShopSlot>=0&&!canBuyUpgradedShop(pickup.upgradedShopSlot))return false;
         const int basePrice=shopHeartBasePrice();
         if(pickup.shopStock&&(!hasSourceShop(room)||!shopHeartOffered()||shopHeartSold||!roomClear||roomThreats()||
            pickup.kind!=shopHeartKind||basePrice<0||basePrice>15||money()<uint64_t(shopPrice(basePrice,shopHeartSlot))))return false;
         if(!collectHeart(pickup.kind,pickup.amount))return false;
+        if(pickup.upgradedShopSlot>=0)payUpgradedShop(pickup.upgradedShopSlot);
         if(pickup.shopStock) {
             moneySpent+=uint64_t(shopPrice(basePrice,shopHeartSlot));shopHeartSold=true;checkpointNeeded=true;
             announce(std::string(pickup.kind==HeartKind::Soul?"SOUL HEART / ":"RED HEART / ")+std::to_string(shopPrice(basePrice,shopHeartSlot))+" COINS",2);
