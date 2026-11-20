@@ -1,6 +1,6 @@
 # D14a.18 — armed bomb outcomes from ordinary shop grab bags
 
-Selected after the accepted D14a.17 checkpoint `1e3933d1`. Enabled and scoped human-accepted on2026-11-20 (“itasawesome commit and continue”). The user requested this checkpoint and selected golden-key bag outcomes next. Full native acceptance remains open.
+Selected after the accepted D14a.17 checkpoint `1e3933d1`. Enabled and scoped human-accepted on2026-11-20 (“itasawesome commit and continue”). Committed as `c7815541`. The selected golden-key continuation is now enabled and developer-verified; see [D14a.19](../d14a19-golden-keys/README.md). Its scoped human acceptance was recorded on2026-11-20; its checkpoint commit remains pending. Full native acceptance remains open.
 
 Ordinary bags retain their source contents selection and subtype odds. Bomb pickup subtype3 becomes Troll actor4.3; subtype5 becomes Megatroll actor4.4. They are lit hazards, not inventory ammunition. The existing shop payment and per-content delivery flags prevent repeat payment or duplicate hazards. Capacity delays keep the original request; inactive rooms pause admitted hazards; Apply resets floor actors while retaining configuration.
 
@@ -36,4 +36,4 @@ Replace338 with227 for the stationary Troll witness.  Buy the bag, step away fro
 
 ## Unfinished / next proposal
 
-Native contact/physics/seed/scheduler/modifier/complete actor equivalence; golden key outcomes and full card pool; remaining milestone items, special rooms and full-floor allocation/acceptance; live expedition save/resume. The user selected golden key outcomes from bags as the next small delivery. No automatic bulk parity work is resumed; pixel/performance work remains deferred.
+Native contact/physics/seed/scheduler/modifier/complete actor equivalence; golden key outcomes and full card pool; remaining milestone items, special rooms and full-floor allocation/acceptance; live expedition save/resume. The selected golden-key bag delivery is now enabled as D14a.19; other producers and full native acceptance remain open. No automatic bulk parity work is resumed; pixel/performance work remains deferred.

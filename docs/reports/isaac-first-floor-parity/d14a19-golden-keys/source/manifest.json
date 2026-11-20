@@ -1,0 +1,23 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "collection_cases": 12,
+  "spending_cases": 12,
+  "conditional_floor_cases": 8,
+  "windows": {
+    "collection": [
+      "0x6bf367",
+      "0x6c02a5 (branch exit)"
+    ],
+    "use_key": [
+      "0x726070",
+      "native return"
+    ],
+    "conditional_floor_flags": [
+      "0x76ae77",
+      "0x76ae92"
+    ]
+  },
+  "scope": "Golden key admitted collection, ordinary key spending and conditional floor flags.\nOriginal installed x86 instructions; supplied ordinary player fields. Earlier\ncollision callbacks/physics and complete floor callers remain outside scope.\n",
+  "duplicate_golden_and_99_cap": "Admitted key branch consumes and sets flag; previous ordinary collision gates remain a world adaptation.",
+  "full_native_acceptance": false
+}

@@ -1,0 +1,71 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "scope": "Highest available DLC override before base animation metadata. No sprite artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/005.032_Golden Key.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a19-golden-keys/animations/005.032_Golden Key.anm2",
+      "sha256": "78081bc4626f493e59102015c51efcd0598cd4afa1bf107cc3e819689c3c62bb",
+      "checksum": "0x9542a148",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "8/20/2015 5:13:04 PM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "12",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "42",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "33",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "25"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "DoorOpen",
+            "FrameNum": "88",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "original": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a18/campaign.save.balance/export.json",
+  "original_sha256": "9edd1f77929fcb3161c12c5f5541311522e34479af34e9ed55ded622ae001f7c",
+  "original_unchanged": true,
+  "new_copy": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a19/campaign.save.balance/export.json",
+  "new_sha256": "66c548b606fe953d7b8436425ab2017c92ddc5f59d853eb5a841a8d3e6709741",
+  "schema": 63,
+  "all_prior_resolved_settings_preserved": true,
+  "added": {
+    "grab_bags.golden_keys": true
+  }
+}

@@ -1,0 +1,18 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  46: keyed_door_spending
+1/6 Test  #46: keyed_door_spending ..............   Passed   19.29 sec
+    Start 150: balance_preset_contract
+2/6 Test #150: balance_preset_contract ..........   Passed    0.26 sec
+    Start 164: ordinary_key_gameplay
+3/6 Test #164: ordinary_key_gameplay ............   Passed    3.77 sec
+    Start 194: golden_key_delivery
+4/6 Test #194: golden_key_delivery ..............   Passed    8.88 sec
+    Start 195: bag_bomb_delivery
+5/6 Test #195: bag_bomb_delivery ................   Passed    4.19 sec
+    Start 196: shop_grab_bag_delivery
+6/6 Test #196: shop_grab_bag_delivery ...........   Passed    2.48 sec
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =  38.86 sec

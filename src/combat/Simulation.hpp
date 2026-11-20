@@ -1320,6 +1320,7 @@ class Simulation {
     std::vector<OrdinaryBombPickup> bombPickups;
     bool spawnOrdinaryBomb(Vector3 position,int subtype,uint32_t seed,bool preplaced=false);
     bool spawnOrdinaryKey(Vector3 position,int subtype,uint32_t seed,bool preplaced=false);
+    bool spawnGoldenKey(Vector3 position,uint32_t seed);
     bool chestClearRewards=false;
     bool spawnChest(Vector3 position,uint32_t seed);
     uint64_t moneyCollected = 0;
@@ -1332,6 +1333,7 @@ class Simulation {
     std::array<ItemKey, 2> offers{};
     std::vector<RoomProgress> rooms;
     int keys = 0, powerUpsTaken = 0;
+    bool goldenKey=false; // Floor-local resource, independent of the finite key counter.
     int dynamite = StartingDynamite;
     const SuppliedBomb *carriedBomb() const;
     EntityId spawnBombFlyHost(MonsterId child,Vector3 position,EntityId producer=0);

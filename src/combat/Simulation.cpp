@@ -149,7 +149,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     next.haloOfFlies=haloOfFlies;next.brotherBobby=brotherBobby;next.cricketHeadStrength=cricketHeadStrength;next.sadOnionStrength=sadOnionStrength;next.shopHeartPrice=shopHeartPrice;next.shopKeyPrice=shopKeyPrice;next.shopBombPrice=shopBombPrice;next.shopSoulHeartPrice=shopSoulHeartPrice;next.shopUpgradePrice=shopUpgradePrice;next.steamSaleDiscounts=steamSaleDiscounts;
     const int targetRoom=std::clamp(room,0,next.finalRoom());
     next.activeChargeClears_=activeChargeClears_;
-    next.items=items;next.keys=keys;next.powerUpsTaken=powerUpsTaken;
+    next.items=items;next.keys=keys;next.goldenKey=goldenKey;next.powerUpsTaken=powerUpsTaken;
     next.dynamite=dynamite;next.dynamiteCooldown=dynamiteCooldown;
     next.moneyCollected=moneyCollected;next.moneySpent=moneySpent;
     next.rescued=rescued;next.altarDestroyed=altarDestroyed;next.evidence=evidence;
@@ -262,6 +262,8 @@ bool Simulation::advanceFloor() {
     for(auto &progress:next.rooms)for(auto &enemy:progress.residents)enemy.observedShots=next.stats.shots;
     next.blueFlies=blueFlies;
     for(auto &fly:next.blueFlies){fly.id=next.nextEntity_++;fly.room=-1;}
+    // A successful descent expires the golden key; finite stock carries over.
+    next.goldenKey=false;
     next.items=items;next.keys=keys;next.dynamite=dynamite;next.dynamiteCooldown=dynamiteCooldown;
     next.moneyCollected=moneyCollected;next.moneySpent=moneySpent;
     next.rescued=rescued;next.altarDestroyed=altarDestroyed;next.evidence=evidence;
@@ -705,7 +707,8 @@ bool Simulation::useDoor(int passage, int side) {
     if(distance(player.position,approach)>3||!arena.clear(player.position,approach,.48f))return false;
     if (door.locked) {
         if(keyedDoorCost<0||keyedDoorCost>5)return false;
-        if (keys < keyedDoorCost) {
+        const int cost=goldenKey?0:keyedDoorCost;
+        if (!goldenKey&&keys < cost) {
             announce(std::to_string(keyedDoorCost)+(keyedDoorCost==1?" key needed.":" keys needed.")+" Search the open passages.", 3);
             return false;
         }
@@ -718,13 +721,13 @@ bool Simulation::useDoor(int passage, int side) {
         if(route.empty()||distance(route.back(),target)>.05f) {
             announce("The passage is blocked. No key spent.",3);return false;
         }
-        keys-=keyedDoorCost;
+        keys-=cost;
         door.locked=false;
         arena.walls.swap(opened.walls);arena.flightWalls.swap(opened.flightWalls);
         cancelMove();movePath_.swap(route);
         checkpointNeeded=true;
         audioCues.push(AudioCueKind::Door, player.position);
-        announce(keyedDoorCost==0?"Door unlocked. No key spent.":
+        announce(goldenKey?"Golden key / unlocked without spending a key.":cost==0?"Door unlocked. No key spent.":
                  "Door unlocked. "+std::to_string(keyedDoorCost)+(keyedDoorCost==1?" key spent.":" keys spent."),2);
         return true;
     }

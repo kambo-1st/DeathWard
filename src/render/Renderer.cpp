@@ -1105,7 +1105,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             } else if(key.timing.phase==KeyTiming::Phase::Collect) {
                 scale=std::max(0.f,1-key.timing.frame/KeyTiming::CollectFrames);at.y+=(1-scale)*.6f;
             } else if(key.timing.phase==KeyTiming::Phase::Gone)continue;
-            keyModel_.draw(at,scale,key.sourceSubtype==3,shader,shadowMap);
+            keyModel_.draw(at,scale,key.sourceSubtype==3,shader,shadowMap,key.sourceSubtype==2);
         }
         for(const auto &key:run.arena.keys)if(!key.collected&&run.rooms[size_t(key.room)].cleared&&distance(run.player.position,key.position)<=60) {
             auto at=key.position;at.y=.8f+.1f*std::sin(float(run.stats.duration)*3);
@@ -1957,7 +1957,7 @@ void Renderer::dungeonMap(const Game &game) {
         std::count_if(run.arena.rooms.begin(), run.arena.rooms.end(),
                       [](const RoomLayout &room) { return room.kind == RoomKind::Power; });
     text(run.surveyTutorial?"SURVEY TRAIL":
-             "KEYS " + std::to_string(run.keys) + "   POWERS " + std::to_string(run.powerUpsTaken) + " / " + std::to_string(totalPowers),
+             "KEYS " + std::to_string(run.keys) + (run.goldenKey?" + GOLD":"") + "   POWERS " + std::to_string(run.powerUpsTaken) + " / " + std::to_string(totalPowers),
          1053, 201, 11, Paper);
     text("MONEY " + number(run.money()), 1053, 216, 11, Gold);
     const auto &bounds = run.arena.bounds;
@@ -2291,7 +2291,7 @@ Action Renderer::expedition(const Game &game) {
     if(run.shopOpen&&!game.paused&&run.arena.rooms[size_t(run.room)].kind==RoomKind::Service) {
         panel(0,0,1280,800,Color{9,15,18,210});panel(200,120,880,580,Panel);
         text(roomServiceName(run.arena.rooms[size_t(run.room)].service),230,145,32,Paper);
-        text("COINS "+number(run.money())+" / KEYS "+std::to_string(run.keys)+" / DYNAMITE "+std::to_string(run.dynamite),230,198,16,Gold);
+        text("COINS "+number(run.money())+" / KEYS "+std::to_string(run.keys)+(run.goldenKey?" + GOLD":"")+" / DYNAMITE "+std::to_string(run.dynamite),230,198,16,Gold);
         text("Optional. Trades last for this expedition. Each offer is limited.",230,226,15,Muted);
         for(int i=0;i<2;++i) {
             const float x=230+float(i)*420;const auto offer=run.serviceOffer(i);const auto unavailable=run.shopUnavailable(i);
@@ -2571,7 +2571,8 @@ Action Renderer::balancePanel(const Game &game) {
         } else if(game.balanceShopOpen&&game.balanceGrabBagOpen) {
             const auto &t=game.balancePreset.grabBags;
             text("SHOP GRAB BAGS",205,218,22,Gold);
-            if(button(Action::ToggleGrabBags,t.enabled?"PURCHASES ON":"PURCHASES OFF",205,260,420,40,t.enabled))return Action::ToggleGrabBags;
+            if(button(Action::ToggleGrabBags,t.enabled?"PURCHASES ON":"PURCHASES OFF",205,260,270,40,t.enabled))return Action::ToggleGrabBags;
+            if(button(Action::ToggleBagGoldenKeys,t.goldenKeys?"GOLD KEYS ON":"GOLD KEYS OFF",505,260,270,40,t.goldenKeys))return Action::ToggleBagGoldenKeys;
             text("Base price: "+std::to_string(t.price)+" / source 7 coins",205,340,20,Paper);
             if(button(Action::GrabBagPriceDown,"- 1",655,325,200,40))return Action::GrabBagPriceDown;
             if(button(Action::GrabBagPriceUp,"+ 1",875,325,200,40))return Action::GrabBagPriceUp;
@@ -2581,8 +2582,8 @@ Action Renderer::balancePanel(const Game &game) {
             text("Megatroll movement: "+std::to_string(int(std::lround(t.bombMovement*100)))+"%",205,440,20,Paper);
             if(button(Action::BagBombMovementDown,"- 5%",655,425,200,40))return Action::BagBombMovementDown;
             if(button(Action::BagBombMovementUp,"+ 5%",875,425,200,40))return Action::BagBombMovementUp;
-            text("Bomb edits apply at birth. Lit bombs retain their fuse and movement.",205,480,14,Muted);
-            if(button(Action::ResetGrabBags,"RESET GRAB BAGS",655,260,420,40))return Action::ResetGrabBags;
+            text("Bomb edits apply at birth. Gold key drops pause while disabled.",205,480,14,Muted);
+            if(button(Action::ResetGrabBags,"RESET GRAB BAGS",805,260,270,40))return Action::ResetGrabBags;
         } else if(game.balanceShopOpen&&game.balanceBatteryOpen) {
             const auto &t=game.balancePreset.batteries;
             text("SHOP BATTERIES / ACTIVE ITEM RECHARGE",205,218,22,Gold);

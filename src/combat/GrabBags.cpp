@@ -75,9 +75,9 @@ void Simulation::updateGrabBags(float dt) {
         } else bag.timing.advance(dt);
         for(size_t i=0;i<bag.contents.size();++i){
             auto &d=bag.contents[i];if(d.delivered)continue;
-            // Rare keys remain recorded; Troll/Megatroll become armed hazards.
+            // Golden keys and Troll/Megatroll keep their resolved identities.
             const bool troll=d.variant==40&&(d.subtype==3||d.subtype==5);
-            if((d.variant==30&&!sourceOrdinaryKeyValue(d.subtype))||(d.variant==40&&!sourceOrdinaryBombValue(d.subtype)&&!troll))continue;
+            if((d.variant==30&&!sourceOrdinaryKeyValue(d.subtype)&&d.subtype!=2)||(d.variant==40&&!sourceOrdinaryBombValue(d.subtype)&&!troll))continue;
             for(int attempt=0;attempt<144;++attempt){
                 const float angle=float(i)*2.399963f+float(attempt%24)*2*Pi/24;
                 const float radius=1.6f+float(attempt/24)*.6f;
@@ -90,7 +90,7 @@ void Simulation::updateGrabBags(float dt) {
                 if(conflict||std::any_of(moneyPickups.begin(),moneyPickups.end(),near)||std::any_of(keyPickups.begin(),keyPickups.end(),near)||std::any_of(bombPickups.begin(),bombPickups.end(),near)||std::any_of(batteryPickups.begin(),batteryPickups.end(),near)||std::any_of(pillPickups.begin(),pillPickups.end(),near))continue;
                 bool born=false;
                 if(d.variant==20&&moneyPickups.size()<1024){MoneyPickup coin{at,sourceOrdinaryCoinValue(d.subtype),0,true};coin.sourceSubtype=d.subtype;coin.room=room;coin.timing.appear(1);moneyPickups.push_back(coin);born=true;}
-                else if(d.variant==30)born=spawnOrdinaryKey(at,d.subtype,d.seed);
+                else if(d.variant==30)born=d.subtype==2?spawnGoldenKey(at,d.seed):spawnOrdinaryKey(at,d.subtype,d.seed);
                 else if(troll)born=spawnBagBomb(at,d.subtype,d.seed);
                 else if(d.variant==40)born=spawnOrdinaryBomb(at,d.subtype,d.seed);
                 else if(d.variant==90)born=spawnBattery(at);

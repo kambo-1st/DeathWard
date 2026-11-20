@@ -38,7 +38,7 @@ public:
         if(!std::filesystem::is_regular_file(path)){TraceLog(LOG_ERROR,"Key model missing: %s",path.string().c_str());return false;}
         model_=LoadModel(path.string().c_str());return ready();
     }
-    void draw(Vector3 at,float scale,bool pair,Shader shader,Texture2D shadowMap) {
+    void draw(Vector3 at,float scale,bool pair,Shader shader,Texture2D shadowMap,bool golden=false) {
         if(scale<=0||!prepare())return;
         rlDrawRenderBatchActive();
         for(int k=0;k<(pair?2:1);++k) {
@@ -49,6 +49,11 @@ public:
             for(int i=0;i<model_.meshCount;++i) {
                 auto material=model_.materials[model_.meshMaterial[i]];
                 std::array<MaterialMap,12> maps;std::copy_n(material.maps,maps.size(),maps.begin());material.maps=maps.data();
+                if(golden) {
+                    // Reuse the owned mesh with a gold scene material; no source artwork.
+                    maps[MATERIAL_MAP_ALBEDO].texture={rlGetTextureIdDefault(),1,1,1,PIXELFORMAT_UNCOMPRESSED_R8G8B8A8};
+                    maps[MATERIAL_MAP_ALBEDO].color={255,202,55,255};
+                }
                 if(shader.id){material.shader=shader;maps[MATERIAL_MAP_METALNESS].texture=shadowMap;}
                 DrawMesh(model_.meshes[i],material,transform);
             }

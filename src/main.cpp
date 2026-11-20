@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
     std::filesystem::path balancePresetPath;
     std::string expeditionSeedText;
     std::optional<int> reviewSourceRoom,reviewRoom;
-    bool reviewActives=false,reviewTrinkets=false,reviewPowerups=false,reviewShopPurchase=false,reviewShopKeyPurchase=false,reviewShopStock=false,reviewShopBattery=false,reviewShopGrabBag=false;
+    bool reviewActives=false,reviewTrinkets=false,reviewPowerups=false,reviewShopPurchase=false,reviewShopKeyPurchase=false,reviewShopStock=false,reviewShopBattery=false,reviewShopGrabBag=false,reviewGoldenKey=false;
     std::optional<float> cinematicTime;
     std::string screenshot, scene = "combat";
     std::optional<dw::MonsterId> enemyScene;
@@ -109,6 +109,7 @@ int main(int argc, char **argv) {
             }
         }
         else if(arg=="--review-shop-grab-bag")reviewShopGrabBag=true;
+        else if(arg=="--review-golden-key"){reviewGoldenKey=true;reviewShopGrabBag=true;}
         else if(arg=="--review-shop-battery")reviewShopBattery=true;
         else if (arg == "--review-shop-stock")reviewShopStock=true;
         else if (arg == "--review-shop-key")reviewShopKeyPurchase=true;
@@ -348,6 +349,7 @@ int main(int argc, char **argv) {
                          " --seed NUMBER        Repeatable expedition seed\n "
                          " --review-shop-stock     Shop stock review: 20 test coins, four red half-hearts\n"
                          " --review-shop-grab-bag  Natural grab bag stock + 20 test coins (seed5)\n"
+                         " --review-golden-key    Natural gold-key bag + labelled test exit lock\n"
                          " --review-shop-battery   Natural battery stock + test Yum Heart/20 coins (seed15)\n"
                          " --review-shop-key       Key + heart shop test: 2 red hearts, zero keys, at least 8 coins\n"
                          " --review-shop-purchase  Shop test start: 2 red hearts and at least 3 coins; repeats on retry\n"
@@ -552,7 +554,7 @@ int main(int argc, char **argv) {
         game.expeditionPacing = expeditionPacing;
         if (smoke || benchmark) game.seedText = "1866";
         if(!expeditionSeedText.empty())game.seedText=expeditionSeedText;
-        game.reviewActives=reviewActives;game.reviewTrinkets=reviewTrinkets;game.reviewPowerups=reviewPowerups;game.reviewSourceRoomTemplate=reviewSourceRoom;game.reviewRoomIndex=reviewRoom;game.reviewShopPurchase=reviewShopPurchase;game.reviewShopKeyPurchase=reviewShopKeyPurchase;game.reviewShopStock=reviewShopStock;game.reviewShopBattery=reviewShopBattery;game.reviewShopGrabBag=reviewShopGrabBag;
+        game.reviewActives=reviewActives;game.reviewTrinkets=reviewTrinkets;game.reviewPowerups=reviewPowerups;game.reviewSourceRoomTemplate=reviewSourceRoom;game.reviewRoomIndex=reviewRoom;game.reviewShopPurchase=reviewShopPurchase;game.reviewShopKeyPurchase=reviewShopKeyPurchase;game.reviewShopStock=reviewShopStock;game.reviewShopBattery=reviewShopBattery;game.reviewShopGrabBag=reviewShopGrabBag;game.reviewGoldenKey=reviewGoldenKey;
         game.audioSettings = audioSettings; game.visualSettings = visualSettings; game.audioStatus = audioStatus;
         game.visualStyle = styleChoice.value_or(dw::VisualStyle::Original);
         auto savedAudioSettings = audioSettings;

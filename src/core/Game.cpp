@@ -277,7 +277,7 @@ void Game::perform(Action action) {
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
            (action<Action::BalanceDamageHealthTab||action>Action::ResetYumHeart)&&
            (action<Action::BalanceTrinketTab||action>Action::ResetTrinkets)&&action!=Action::WhipDown&&action!=Action::WhipUp&&
-           (action<Action::BalanceHaloTab||action>Action::BagBombMovementUp))return;
+           (action<Action::BalanceHaloTab||action>Action::ToggleBagGoldenKeys))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -296,9 +296,10 @@ void Game::perform(Action action) {
         case Action::BalanceEnemiesTab:balanceAttackFlyOpen=false;balanceFrowningOpen=false;balanceRoundWormOpen=balanceFullFlyOpen=false;balanceMonstroOpen=false;balanceEnemiesOpen=true;balanceShootingOpen=balanceRewardsOpen=balanceCombatOpen=false;balancePooterOpen=false;break;
         case Action::BalanceRewardsTab:balanceShopOpen=false;balanceRewardsOpen=true;balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
         case Action::BalanceGrabBagTab:balanceBatteryOpen=balancePropsOpen=balanceKeeperOpen=balanceCoinDonationOpen=false;balanceRewardsOpen=balanceShopOpen=balanceGrabBagOpen=true;break;
-        case Action::ToggleGrabBags:case Action::GrabBagPriceDown:case Action::GrabBagPriceUp:case Action::ResetGrabBags:case Action::BagBombFuseDown:case Action::BagBombFuseUp:case Action::BagBombMovementDown:case Action::BagBombMovementUp:{
+        case Action::ToggleGrabBags:case Action::GrabBagPriceDown:case Action::GrabBagPriceUp:case Action::ResetGrabBags:case Action::BagBombFuseDown:case Action::BagBombFuseUp:case Action::BagBombMovementDown:case Action::BagBombMovementUp:case Action::ToggleBagGoldenKeys:{
             auto p=balancePreset;auto &t=p.grabBags;
             if(action==Action::ToggleGrabBags)t.enabled=!t.enabled;
+            if(action==Action::ToggleBagGoldenKeys)t.goldenKeys=!t.goldenKeys;
             if(action==Action::GrabBagPriceDown)t.price=std::max(0,t.price-1);
             if(action==Action::GrabBagPriceUp)t.price=std::min(30,t.price+1);
             if(action==Action::BagBombFuseDown)t.bombFuse=std::max(.25f,std::round((t.bombFuse-.05f)*20)/20);
@@ -306,7 +307,7 @@ void Game::perform(Action action) {
             if(action==Action::BagBombMovementDown)t.bombMovement=std::max(.1f,std::round((t.bombMovement-.05f)*20)/20);
             if(action==Action::BagBombMovementUp)t.bombMovement=std::min(2.f,std::round((t.bombMovement+.05f)*20)/20);
             if(action==Action::ResetGrabBags)t=GrabBagTuning{};
-            applyBalance(std::move(p));balanceNotice="Price affects future purchases; bomb settings apply at birth. Existing contents and lit bombs stay fixed.";break;
+            applyBalance(std::move(p));balanceNotice="Price affects future purchases; bomb settings apply at birth. Gold key drops pause when disabled; collected gold keys last until descent.";break;
         }
         case Action::BalanceBatteryTab:balanceGrabBagOpen=false;balancePropsOpen=balanceKeeperOpen=balanceCoinDonationOpen=false;balanceRewardsOpen=balanceShopOpen=balanceBatteryOpen=true;break;
         case Action::ToggleBatteries:case Action::BatteryChargeDown:case Action::BatteryChargeUp:case Action::BatteryPriceDown:case Action::BatteryPriceUp:case Action::ResetBatteries:{
@@ -1244,7 +1245,7 @@ std::vector<Action> Game::menuActions() const {
         }
         if(balanceRewardsOpen&&balanceShopOpen){actions.push_back(Action::BalanceGrabBagTab);actions.push_back(Action::BalanceBatteryTab);actions.push_back(Action::BalanceKeeperTab);actions.push_back(Action::BalanceCoinDonationTab);}
         const std::vector<Action> page=balanceRewardsOpen&&balanceShopOpen&&balanceGrabBagOpen?
-            std::vector<Action>{Action::ToggleGrabBags,Action::GrabBagPriceDown,Action::GrabBagPriceUp,Action::BagBombFuseDown,Action::BagBombFuseUp,Action::BagBombMovementDown,Action::BagBombMovementUp,Action::ResetGrabBags}:
+            std::vector<Action>{Action::ToggleGrabBags,Action::ToggleBagGoldenKeys,Action::GrabBagPriceDown,Action::GrabBagPriceUp,Action::BagBombFuseDown,Action::BagBombFuseUp,Action::BagBombMovementDown,Action::BagBombMovementUp,Action::ResetGrabBags}:
             balanceRewardsOpen&&balanceShopOpen&&balanceBatteryOpen?
             std::vector<Action>{Action::ToggleBatteries,Action::BatteryChargeDown,Action::BatteryChargeUp,Action::BatteryPriceDown,Action::BatteryPriceUp,Action::ResetBatteries}:
             balanceRewardsOpen&&balanceShopOpen&&balanceCoinDonationOpen&&balanceShopProgressOpen?

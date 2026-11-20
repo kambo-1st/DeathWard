@@ -1,0 +1,26 @@
+{
+  "pid": 1224718,
+  "args": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "940",
+    "--review-golden-key",
+    "--mute",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a19/campaign.save.balance/export.json",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a19/playtest-20261120-221158/campaign.save"
+  ],
+  "save": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a19/playtest-20261120-221158/campaign.save",
+  "preset_sha256": "66c548b606fe953d7b8436425ab2017c92ddc5f59d853eb5a841a8d3e6709741",
+  "seed": 940,
+  "displayed_room": 7,
+  "zoom": 165,
+  "test_coins": 20,
+  "test_exit_lock": true,
+  "ordinary_keys": 0,
+  "god": false,
+  "native_floor_lock_policy_changed": false,
+  "status": "running at handoff"
+}

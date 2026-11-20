@@ -1,0 +1,10 @@
+PASS12 native collections / counts0..99 / duplicates /30,60,120Hz timing
+PASS12 native use cases /6 guarded failures / repeated and custom-cost use
+WITNESS seed940 scale=0.75 room=7 gold_seed=768641475
+PASS natural bag/payment/toggle/capacity/room/Apply/floor scale 0.75
+WITNESS seed940 scale=1 room=7 gold_seed=768641475
+PASS natural bag/payment/toggle/capacity/room/Apply/floor scale 1
+WITNESS seed940 scale=1.5 room=7 gold_seed=768641475
+PASS natural bag/payment/toggle/capacity/room/Apply/floor scale 1.5
+PASS schema62 migration/63 roundtrip and strict reference rejection
+PASS golden-key bag delivery
