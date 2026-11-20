@@ -5,9 +5,10 @@ void Simulation::configureShopLevel(int level){if(level < -1||level>4)throw std:
 
 void Simulation::prepareUpgradedShop() {
     upgradedShop.clear();shopLevel=shopLevelOverride<0?donationShopLevel(donation.unlocks):shopLevelOverride;
-    if(shopLevel==0||!hasSourceShop(arena.shopRoom)||!sourceShopVariation)return;
+    if(!hasSourceShop(arena.shopRoom)||!sourceShopVariation)return;
     const auto &site=arena.rooms[size_t(arena.shopRoom)];const int count=shopLevel+2;
     const auto stock=sourceShopStock(canyonShopStockSeed(seed_),shopLevel+1); // Native field is1-based.
+    if(shopLevel==0&&stock.categories[0]!=5&&stock.categories[1]!=5)return;
     std::vector<Vector3> positions;bool fits=false;
     for(int percent=100;percent>=50;--percent) {
         positions.clear();const float cell=std::max(1.1f,recordedShopCellSize(site)*percent/100);bool valid=true;
@@ -27,7 +28,7 @@ void Simulation::prepareUpgradedShop() {
     for(int i=0;i<count;++i) {
         auto descriptor=site;
         if(!descriptor.sourceRoomSpawnSeed)descriptor.sourceRoomSpawnSeed=canyonShopStockSeed(seed_); // Explicit DW fallback for unrecorded canyon shops.
-        const auto seed=recordedShopSlotSeed(descriptor,(shopLevel==3?6:4)+i);
+        const auto seed=recordedShopSlotSeed(descriptor,(shopLevel==0||shopLevel==3?6:4)+i);
         UpgradedShopOffer offer;offer.position=positions[size_t(i)];offer.category=stock.categories[size_t(i)];offer.slot=i;offer.seed=seed;
         if(offer.category==8){offer.item=firstCollectible?shopUpgradeItem:shopCollectiblePool==1?sourceShopCollectibleChoice(seed,true):shopUpgradeItem;firstCollectible=false;}
         upgradedShop.push_back(offer);
@@ -37,7 +38,7 @@ void Simulation::prepareUpgradedShop() {
 }
 int Simulation::upgradedShopPrice(int slot)const {
     const int category=upgradedShop.at(size_t(slot)).category;
-    const int base=category==8?shopUpgradePrice:category==0?shopHeartPrice:category==4?shopSoulHeartPrice:category==3?shopKeyPrice:category==1?shopBombPrice:category==6?bloodMachineTuning.cardPrice:5;
+    const int base=category==5?batteryTuning.price:category==8?shopUpgradePrice:category==0?shopHeartPrice:category==4?shopSoulHeartPrice:category==3?shopKeyPrice:category==1?shopBombPrice:category==6?bloodMachineTuning.cardPrice:5;
     return shopPrice(base,slot);
 }
 bool Simulation::canBuyUpgradedShop(int slot)const {
@@ -59,6 +60,7 @@ void Simulation::deliverUpgradedShop() {
         case 1:born=spawnOrdinaryBomb(offer.position,1,offer.seed,true);if(born)bombPickups.back().upgradedShopSlot=offer.slot;break;
         case 2:case 6:born=spawnPill(offer.position,offer.category==6?TemperanceCard:sourceOrdinaryPillColor(offer.seed),offer.seed,true);if(born)pillPickups.back().upgradedShopSlot=offer.slot;break;
         case 3:if(sourceShopKey){born=spawnOrdinaryKey(offer.position,1,offer.seed,true);if(born)keyPickups.back().upgradedShopSlot=offer.slot;}break;
+        case 5:born=spawnShopBattery(offer.position,offer.slot);break;
         case 8:born=true;break; // Existing collectible presentation; collection below.
         }
         if(born){offer.delivered=true;checkpointNeeded=true;}

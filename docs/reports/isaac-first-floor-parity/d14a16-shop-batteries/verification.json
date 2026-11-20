@@ -1,0 +1,18 @@
+{
+  "status": "developer-passed-scoped-human-accepted",
+  "ctest_suites": 11,
+  "native_collection_cases": 11,
+  "native_capacity_cases": 136,
+  "native_price_cases": 30,
+  "native_stock_cases": 6,
+  "room_sizes": [
+    0.75,
+    1,
+    1.5
+  ],
+  "cli_loads": 4,
+  "game_renderer": "passed",
+  "accepted_checkpoint": "a96ef565",
+  "user_preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a15/campaign.save.balance/export.json",
+  "user_preset_sha256": "0583cb6f3da19be301bd65f2d390e15dfca936d312019a29540513e2e03d0514"
+}

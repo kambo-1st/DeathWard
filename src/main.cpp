@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
     std::filesystem::path balancePresetPath;
     std::string expeditionSeedText;
     std::optional<int> reviewSourceRoom,reviewRoom;
-    bool reviewActives=false,reviewTrinkets=false,reviewPowerups=false,reviewShopPurchase=false,reviewShopKeyPurchase=false,reviewShopStock=false;
+    bool reviewActives=false,reviewTrinkets=false,reviewPowerups=false,reviewShopPurchase=false,reviewShopKeyPurchase=false,reviewShopStock=false,reviewShopBattery=false;
     std::optional<float> cinematicTime;
     std::string screenshot, scene = "combat";
     std::optional<dw::MonsterId> enemyScene;
@@ -108,6 +108,7 @@ int main(int argc, char **argv) {
                 std::cerr<<"--seed needs an unsigned whole number\n";return 2;
             }
         }
+        else if(arg=="--review-shop-battery")reviewShopBattery=true;
         else if (arg == "--review-shop-stock")reviewShopStock=true;
         else if (arg == "--review-shop-key")reviewShopKeyPurchase=true;
         else if (arg == "--review-shop-purchase")reviewShopPurchase=true;
@@ -345,6 +346,7 @@ int main(int argc, char **argv) {
                          " --balance-preset PATH  Load and remember player/enemy/view/map settings\n "
                          " --seed NUMBER        Repeatable expedition seed\n "
                          " --review-shop-stock     Shop stock review: 20 test coins, four red half-hearts\n"
+                         " --review-shop-battery   Natural battery stock + test Yum Heart/20 coins (seed15)\n"
                          " --review-shop-key       Key + heart shop test: 2 red hearts, zero keys, at least 8 coins\n"
                          " --review-shop-purchase  Shop test start: 2 red hearts and at least 3 coins; repeats on retry\n"
                          " --review-actives        Labelled Yum Heart / Book of Shadows swap review\n"
@@ -400,8 +402,8 @@ int main(int argc, char **argv) {
             return 2;
         }
     }
-    if(int(bool(reviewSourceRoom))+int(bool(reviewRoom))+int(reviewShopPurchase)+int(reviewShopKeyPurchase)+int(reviewShopStock)+int(reviewPowerups)+int(reviewTrinkets)+int(reviewActives)>1){std::cerr<<"Choose one review room option\n";return 2;}
-    if((reviewSourceRoom||reviewRoom||reviewShopPurchase||reviewShopKeyPurchase||reviewShopStock||reviewPowerups||reviewTrinkets||reviewActives)&&(!startExpedition||fullExperience||startEditor||startCinematic||intro||benchmark||practiceBatch||smoke)) {
+    if(int(bool(reviewSourceRoom))+int(bool(reviewRoom))+int(reviewShopPurchase)+int(reviewShopKeyPurchase)+int(reviewShopStock)+int(reviewShopBattery)+int(reviewPowerups)+int(reviewTrinkets)+int(reviewActives)>1){std::cerr<<"Choose one review room option\n";return 2;}
+    if((reviewSourceRoom||reviewRoom||reviewShopPurchase||reviewShopKeyPurchase||reviewShopStock||reviewShopBattery||reviewPowerups||reviewTrinkets||reviewActives)&&(!startExpedition||fullExperience||startEditor||startCinematic||intro||benchmark||practiceBatch||smoke)) {
         std::cerr<<"Room review requires --expedition without other launch modes\n";return 2;
     }
     if(practiceBatch&&(fullExperience||startEditor||startCinematic||intro||benchmark)){std::cerr<<"Practice mode requires ordinary gameplay or smoke capture\n";return 2;}
@@ -548,7 +550,7 @@ int main(int argc, char **argv) {
         game.expeditionPacing = expeditionPacing;
         if (smoke || benchmark) game.seedText = "1866";
         if(!expeditionSeedText.empty())game.seedText=expeditionSeedText;
-        game.reviewActives=reviewActives;game.reviewTrinkets=reviewTrinkets;game.reviewPowerups=reviewPowerups;game.reviewSourceRoomTemplate=reviewSourceRoom;game.reviewRoomIndex=reviewRoom;game.reviewShopPurchase=reviewShopPurchase;game.reviewShopKeyPurchase=reviewShopKeyPurchase;game.reviewShopStock=reviewShopStock;
+        game.reviewActives=reviewActives;game.reviewTrinkets=reviewTrinkets;game.reviewPowerups=reviewPowerups;game.reviewSourceRoomTemplate=reviewSourceRoom;game.reviewRoomIndex=reviewRoom;game.reviewShopPurchase=reviewShopPurchase;game.reviewShopKeyPurchase=reviewShopKeyPurchase;game.reviewShopStock=reviewShopStock;game.reviewShopBattery=reviewShopBattery;
         game.audioSettings = audioSettings; game.visualSettings = visualSettings; game.audioStatus = audioStatus;
         game.visualStyle = styleChoice.value_or(dw::VisualStyle::Original);
         auto savedAudioSettings = audioSettings;

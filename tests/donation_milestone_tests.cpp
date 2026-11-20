@@ -28,7 +28,7 @@ void levels(float scale,int lo,int hi){
  const auto expected=sourceShopStock(canyonShopStockSeed(68),level+1);s.moneyCollected=99;
  for(const auto &o:s.upgradedShop){check(o.category==expected.categories[size_t(o.slot)]&&o.seed!=0,"native category retained, nonzero actor seed");check(!s.arena.blocked(o.position,.48f)&&!s.arena.path(s.arena.rooms[size_t(s.room)].entry,o.position,.48f).empty(),"stock accessible");check(o.delivered==o.supported(),"unsupported outcomes omitted without reroll");}
  // Exercise real touch consumers, including payment/capacity and no duplicate collectible.
- for(size_t i=0;i<s.upgradedShop.size();++i){auto o=s.upgradedShop[i];if(!o.supported())continue;s.player.hp=2;s.moneyCollected=500;s.player.position=o.position;const auto before=s.moneySpent;const auto price=s.upgradedShopPrice(int(i));ticks(s,3);check(s.upgradedShop[i].sold&&s.moneySpent==before+price,"real pickup paid once");ticks(s,20);check(s.moneySpent==before+price,"contact cannot buy twice");}
+ for(size_t i=0;i<s.upgradedShop.size();++i){auto o=s.upgradedShop[i];if(!o.supported())continue;if(o.category==5){s.grant(YumHeartKey);s.useActiveItem();}s.player.hp=2;s.moneyCollected=500;s.player.position=o.position;const auto before=s.moneySpent;const auto price=s.upgradedShopPrice(int(i));ticks(s,3);check(s.upgradedShop[i].sold&&s.moneySpent==before+price,"real pickup paid once");ticks(s,20);check(s.moneySpent==before+price,"contact cannot buy twice");}
  s.enterRoom(0);s.enterRoom(s.arena.shopRoom);s.step({});for(auto &o:s.upgradedShop)if(o.supported())check(o.sold,"sold state retained on revisit");
  }
  std::cout<<"PASS stock geometry, categories, real purchases and revisit at size "<<scale<<'\n';

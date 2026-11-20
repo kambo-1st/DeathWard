@@ -1,0 +1,63 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "scope": "Highest available DLC override before base animation metadata. No sprite artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/005.090_LittleBattery.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a16-shop-batteries/animations/005.090_LittleBattery.anm2",
+      "sha256": "938120317d8499eb257d8a5529b827a12d9e6a4585572a6c96ce9cd3bd10ecd8",
+      "checksum": "0x1ffcbcb3",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "09.05.2019 13:45:03",
+        "Fps": "30",
+        "Version": "105"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "DropSound"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "15",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "36",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "26"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

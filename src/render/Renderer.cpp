@@ -1070,6 +1070,13 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         for(const auto &site:run.arena.rooms)if(site.kind==RoomKind::Shop&&!site.keeper.destroyed&&distance(run.player.position,site.center)<60)
             shopCartModel_.draw(site.center,shader,shadowMap);
     };
+    const auto drawBatteries=[&](Shader shader,Texture2D shadowMap){
+        for(const auto &p:run.batteryPickups)if(p.room==run.room&&p.timing.phase!=BatteryTiming::Phase::Gone){
+            auto at=p.position;at.y=.25f;float scale=1;
+            if(p.timing.phase==BatteryTiming::Phase::Collect){scale=std::max(0.f,1-float(p.timing.frame)/BatteryTiming::CollectFrames);at.y+=(1-scale)*.6f;}
+            batteryModel_.draw(at,scale,false,shader,shadowMap);
+        }
+    };
     const auto drawDonations=[&](Shader shader,Texture2D shadowMap) {
         for(const auto &m:run.coinDonationMachines)if(m.room==run.room&&m.phase!=CoinDonationMachine::Phase::Destroyed) {
             auto at=m.position;at.y=0;donationModel_.draw(at,shader,shadowMap);
@@ -1125,7 +1132,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         drawCampfires(meshDepth,{});
         drawShopCarts(meshDepth,{});
         drawChests(meshDepth,{});
-        drawKeys(meshDepth,{});drawDonations(meshDepth,{});
+        drawBatteries(meshDepth,{});drawKeys(meshDepth,{});drawDonations(meshDepth,{});
     });
     postProcess_.begin(WorldSky, distance(camera.position, camera.target), false, visualStyle);
     BeginMode3D(camera);
@@ -1233,7 +1240,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     drawShopCarts(lighting.actorShader(),lighting.texture());
     drawCampfires(lighting.actorShader(),lighting.texture());
     drawChests(lighting.actorShader(),lighting.texture());
-    drawKeys(lighting.actorShader(),lighting.texture());drawDonations(lighting.actorShader(),lighting.texture());
+    drawBatteries(lighting.actorShader(),lighting.texture());drawKeys(lighting.actorShader(),lighting.texture());drawDonations(lighting.actorShader(),lighting.texture());
     for(const auto &supply:run.chestSupplies)if(supply.bomb&&supply.room==run.room) {
         auto p=supply.position;p.y=.5f;
         const bool collecting=supply.timing.phase==CoinTiming::Phase::Collect;
@@ -2098,7 +2105,7 @@ Action Renderer::expedition(const Game &game) {
         };
         if(run.hasSourceShop(run.room)&&run.shopVariationActive()&&!run.shopUpgradeSold)priceTag(run.shopUpgradePosition(),run.shopPrice(run.shopUpgradePrice,run.shopUpgradeSlot),run.shopUpgradeItem==195?"MOM'S COIN PURSE":run.shopUpgradeItem==250?"BOGO BOMBS":"STEAM SALE");
         if(run.hasSourceShop(run.room))for(const auto &offer:run.upgradedShop)if(offer.supported()&&!offer.sold&&offer.delivered) {
-            const char *name=offer.category==8?(offer.item==195?"MOM'S COIN PURSE":offer.item==250?"BOGO BOMBS":"STEAM SALE"):offer.category==6?"XIV / TEMPERANCE":offer.category==2?"PILL":nullptr;
+            const char *name=offer.category==8?(offer.item==195?"MOM'S COIN PURSE":offer.item==250?"BOGO BOMBS":"STEAM SALE"):offer.category==6?"XIV / TEMPERANCE":offer.category==2?"PILL":offer.category==5?"BATTERY":nullptr;
             priceTag(offer.position,run.upgradedShopPrice(offer.slot),name);
         }
         for(const auto &card:run.pillPickups)if(card.shopStock&&card.room==run.room&&card.timing.collectible())priceTag(card.position,run.shopPrice(run.bloodMachineTuning.cardPrice,run.shopCardSlot),"XIV / TEMPERANCE");
@@ -2536,6 +2543,7 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::BalanceShopTab,"SHOP",470,175,90,28,game.balanceShopOpen))return Action::BalanceShopTab;
         if(button(Action::BalanceClearHeartsTab,"AFTER CLEAR",568,175,130,28,!game.balancePropsOpen&&!game.balanceRoomHeartsOpen&&!game.balanceShopOpen))return Action::BalanceClearHeartsTab;
         if(button(Action::BalanceRoomHeartsTab,"LAYOUTS",706,175,135,28,game.balanceRoomHeartsOpen))return Action::BalanceRoomHeartsTab;
+        if(game.balanceShopOpen&&button(Action::BalanceBatteryTab,"BATTERIES",205,175,250,28,game.balanceBatteryOpen))return Action::BalanceBatteryTab;
         if(game.balanceShopOpen&&button(Action::BalanceKeeperTab,"KEEPER",849,175,90,28,game.balanceKeeperOpen))return Action::BalanceKeeperTab;
         if(game.balanceShopOpen&&button(Action::BalanceCoinDonationTab,"DONATIONS",947,175,128,28,game.balanceCoinDonationOpen))return Action::BalanceCoinDonationTab;
         if(game.balancePropsOpen) {
@@ -2553,6 +2561,18 @@ Action Renderer::balancePanel(const Game &game) {
             text("Future destructions only; existing rolls stay fixed.",680,404,12,Muted);
             if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,449,420,40))return Action::ApplyMapChanges;
             text(game.hasPendingMapChanges()?"PENDING / RESETS FLOOR":"MAP SETTINGS APPLIED",655,465,14,Muted);
+        } else if(game.balanceShopOpen&&game.balanceBatteryOpen) {
+            const auto &t=game.balancePreset.batteries;
+            text("SHOP BATTERIES / ACTIVE ITEM RECHARGE",205,218,22,Gold);
+            if(button(Action::ToggleBatteries,t.enabled?"COLLECTION ON":"COLLECTION OFF",205,260,420,40,t.enabled))return Action::ToggleBatteries;
+            text("Charge added: "+std::to_string(t.charges)+" / source 6",205,325,20,Paper);
+            if(button(Action::BatteryChargeDown,"- 1",655,310,200,40))return Action::BatteryChargeDown;
+            if(button(Action::BatteryChargeUp,"+ 1",875,310,200,40))return Action::BatteryChargeUp;
+            text("Base price: "+std::to_string(t.price)+" / source 5 coins",205,380,20,Paper);
+            if(button(Action::BatteryPriceDown,"- 1",655,365,200,40))return Action::BatteryPriceDown;
+            if(button(Action::BatteryPriceUp,"+ 1",875,365,200,40))return Action::BatteryPriceUp;
+            text("Needs an active item below capacity. Full charge / IV Bag: no purchase.",205,430,14,Muted);
+            if(button(Action::ResetBatteries,"RESET BATTERIES",205,465,420,36))return Action::ResetBatteries;
         } else if(game.balanceShopOpen&&game.balanceCoinDonationOpen&&game.balanceShopProgressOpen) {
             const int flags=game.run?game.run->donation.unlocks:game.campaign.data().world.donationUnlocks;
             const int earned=donationShopLevel(uint16_t(flags)),choice=game.balanceDraft.shopLevelOverride;

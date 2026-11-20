@@ -39,8 +39,8 @@ void layouts() {
         }
         check(s.roomClear&&s.enemies.empty()&&room.passages.size()==1,"optional peaceful shop retained");++count;
     }
-    auto fallback=make(69);enter(fallback);
-    check(!fallback.shopVariationActive()&&fallback.shopKeyOffered()&&fallback.shopHeartOffered()&&fallback.shopDiscountSlot==-1,"unsupported native pair uses declared fixed fallback without sale reroll");
+    auto fallback=make(69);enter(fallback);fallback.step({});
+    check(fallback.upgradedShop.size()==2&&fallback.upgradedShop[0].category==8&&fallback.upgradedShop[1].category==5&&fallback.batteryPickups.size()==1,"previous battery fallback now preserves native collectible/battery stock");
     auto sale=make(22);enter(sale);check(sale.shopUpgradeSlot==0&&sale.shopDiscountSlot==0&&sale.shopPrice(15,0)==7,"native random sale slot discounts before ownership");
     touch(sale,sale.shopUpgradePosition());check(sale.moneySpent==7&&sale.shopPrice(5,1)==3,"random sale and owned effect do not multiply");
     std::cout<<"PASS "<<count<<" generated slot/clearance/access cases plus unsupported and random-sale witnesses\n";

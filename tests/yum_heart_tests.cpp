@@ -76,9 +76,14 @@ void persistence(){
     CampaignStore loaded(dir/"campaign.save");check(loaded.data().pending&&loaded.data().pending->activeItem==s.activeItem,"Campaign checkpoint records exact charge");loaded.recover();check(loaded.data().history.back().activeItem==s.activeItem,"Interrupted history retains slot; no live resume claim");
     std::ifstream input(dir/"campaign.save");const std::string bytes((std::istreambuf_iterator<char>(input)),{});const auto payload=bytes.substr(bytes.find('\n')+1);
     const auto fixture=[&](const char *name,int version,std::string body){uint64_t hash=14695981039346656037ULL;for(unsigned char c:body){hash^=c;hash*=1099511628211ULL;}std::ofstream(dir/name)<<"DEATHWARD "<<version<<' '<<hash<<'\n'<<body;};
-    auto legacy=payload;const std::string slot="1 \"isaac:collectible:45\" 2\n";const auto slotAt=legacy.find(slot);check(slotAt!=legacy.npos,"Slot serialization fixture");legacy.erase(slotAt,slot.size()+2);fixture("legacy.save",7,legacy);
+    auto legacy=payload;
+    // Schema13/14 added bank and milestone fields to world/summary headers. A version7
+    // fixture must remove those fields as well as the later active/trinket records.
+    const auto stripDonation=[&](size_t start){const auto end=legacy.find('\n',start);auto last=legacy.rfind(' ',end);last=legacy.rfind(' ',last-1);legacy.erase(last,end-last);};
+    stripDonation(0);const auto &history=loaded.data().history.back();const auto fingerprint="\""+history.mechanicsFingerprint+"\"";const auto tail=fingerprint+" "+std::to_string(history.donationBank)+" "+std::to_string(history.donationUnlocks)+"\n";const auto summaryTail=legacy.find(tail);check(summaryTail!=legacy.npos,"Summary tail fixture");legacy.replace(summaryTail,tail.size(),fingerprint+"\n");
+    const std::string slot="1 \"isaac:collectible:45\" 2\n";const auto slotAt=payload.find(slot);check(slotAt!=payload.npos,"Slot serialization fixture");legacy.erase(legacy.find(slot),slot.size()+2);fixture("legacy.save",7,legacy);
     CampaignStore old(dir/"legacy.save");check(!old.data().history.back().activeItem&&old.data().history.back().items==s.items,"Version7 migration keeps inventory without inventing charge");
-    auto corrupt=payload;corrupt.replace(slotAt,slot.size(),"1 \"isaac:collectible:45\" 9\n");fixture("bad.save",9,corrupt);rejected=false;try{CampaignStore invalid(dir/"bad.save");}catch(...){rejected=true;}check(rejected,"Out-of-range saved charge rejected");
+    auto corrupt=payload;corrupt.replace(slotAt,slot.size(),"1 \"isaac:collectible:45\" 9\n");std::istringstream header(bytes);std::string magic;int version=0;header>>magic>>version;fixture("bad.save",version,corrupt);rejected=false;try{CampaignStore invalid(dir/"bad.save");}catch(...){rejected=true;}check(rejected,"Out-of-range saved charge rejected");
     std::filesystem::remove_all(dir);std::cout<<"PASS preset validation/migration and campaign slot/charge checkpoint\n";
 }
 }

@@ -1,0 +1,8 @@
+{
+  "source": "Original procedural mesh, scripts/bake_battery.py",
+  "editable": "battery.blend",
+  "footprint": 0.6,
+  "height": 0.885,
+  "style": "Twelve-sided olive/brass cell, flat facets, ordinary scene materials and shadows",
+  "source_sprite_art_used": false
+}

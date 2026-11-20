@@ -12,6 +12,7 @@
 #include "combat/BrotherBobby.hpp"
 #include "combat/HaloOfFlies.hpp"
 #include "combat/ActiveItem.hpp"
+#include "combat/Batteries.hpp"
 #include "combat/Trinket.hpp"
 #include "combat/RedHeartTiming.hpp"
 #include "combat/CoinTiming.hpp"
@@ -1220,6 +1221,9 @@ class Simulation {
     PillTuning pillTuning{};
     PillState pills{};
     std::vector<PillPickup> pillPickups;
+    BatteryTuning batteryTuning{};std::vector<BatteryPickup> batteryPickups;
+    bool spawnShopBattery(Vector3 at,int slot);
+    void updateBatteries(float dt);
     std::vector<PendingPursePill> pendingPursePills;
     bool spawnPill(Vector3 at,int color,uint32_t seed,bool idle=false);
     bool usePill();

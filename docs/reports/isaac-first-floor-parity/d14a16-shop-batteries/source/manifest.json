@@ -1,0 +1,22 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "collection_cases": 11,
+  "capacity_cases": 136,
+  "price_cases": 30,
+  "stock_cases": 6,
+  "windows": [
+    {
+      "name": "battery-collection",
+      "start": "0x6c0cf5",
+      "end": "0x6c0dd7",
+      "sha256": "572a02baab0c958b349ab45f654c8011f61eaadebfe991b9afd63b7a5730fc0f"
+    },
+    {
+      "name": "add-charge",
+      "start": "0x758030",
+      "end": "0x7583ca",
+      "sha256": "e2674e1cc3549518e0aba299dad289bc577dfaf4d5f51dd64c8bbc0b1bfdff88"
+    }
+  ],
+  "scope": "Original ordinary battery collection branch and AddActiveCharge with supplied empty-inventory primary active state; HUD/audio skipped after charge write, stop before achievement/collect visual or rejection tail. Original ordinary stock category and price routines. No Battery passive, alternate slots, timed/item-specific capacities, full native contact/factory/shop payment scheduler/physics or profile acceptance."
+}

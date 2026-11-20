@@ -1,0 +1,20 @@
+{
+  "pid": 1210854,
+  "created": "2026-11-20T20:06:51.610633+01:00",
+  "args": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "15",
+    "--review-shop-battery",
+    "--mute",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a16/campaign.save.balance/export.json",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a16/playtest-20261120-200651/campaign.save"
+  ],
+  "save": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a16/playtest-20261120-200651/campaign.save",
+  "preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a16/campaign.save.balance/export.json",
+  "preset_sha256": "94354b08c6c2372d28e549210c4f948b71c35062ac9408513525bfe3b8ab89ff",
+  "scope": "Naturally selected basic battery/BOGO shop, seed15 displayed room7; isolated campaign, labelled test Yum Heart and20coins, four red half-hearts, god off, zoom165; C uses active, touch purchases for5coins only if charge can increase."
+}
