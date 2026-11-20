@@ -1,0 +1,24 @@
+{
+  "pid": 1219846,
+  "seed": 338,
+  "room": 7,
+  "rare_outcome": "Megatroll4.4 from5.40.5",
+  "save": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a18/playtest-20261120-204910/campaign.save",
+  "preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a18/campaign.save.balance/export.json",
+  "preset_sha256": "9edd1f77929fcb3161c12c5f5541311522e34479af34e9ed55ded622ae001f7c",
+  "arguments": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "338",
+    "--review-shop-grab-bag",
+    "--mute",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a18/campaign.save.balance/export.json",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a18/playtest-20261120-204910/campaign.save"
+  ],
+  "god_mode": false,
+  "coins": 20,
+  "human_acceptance": "pending"
+}

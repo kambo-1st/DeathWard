@@ -1547,7 +1547,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         } else {
             const Color tint=bomb.configured&&payload==EnemyBombPayload::Hot?Color{184,75,34,255}:
                 bomb.configured&&payload==EnemyBombPayload::Sad?Color{79,116,142,255}:Color{48,43,49,255};
-            DrawSphereEx(p,.25f,6,8,tint);
+            DrawSphereEx(p,bomb.bagBomb?.38f:.25f,6,8,bomb.bagBomb&&bomb.bagBomb->motion.variant==4?Rust:tint);
             if(bomb.configured&&payload==EnemyBombPayload::Hot)
                 DrawCylinderEx(add(p,{0,.1f,0}),add(p,{0,.65f,0}),.18f,0,5,Gold);
             if(bomb.configured&&payload==EnemyBombPayload::Sad)
@@ -2575,9 +2575,14 @@ Action Renderer::balancePanel(const Game &game) {
             text("Base price: "+std::to_string(t.price)+" / source 7 coins",205,340,20,Paper);
             if(button(Action::GrabBagPriceDown,"- 1",655,325,200,40))return Action::GrabBagPriceDown;
             if(button(Action::GrabBagPriceUp,"+ 1",875,325,200,40))return Action::GrabBagPriceUp;
-            text("Touch to buy and unpack. Supplies remain on the floor until collected.",205,400,14,Muted);
-            text("Edits affect future purchases. Existing contents and sold stock stay fixed.",205,430,14,Muted);
-            if(button(Action::ResetGrabBags,"RESET GRAB BAGS",205,465,420,36))return Action::ResetGrabBags;
+            text("Lit bomb fuse: "+std::to_string(int(std::lround(t.bombFuse*100)))+"%",205,390,20,Paper);
+            if(button(Action::BagBombFuseDown,"- 5%",655,375,200,40))return Action::BagBombFuseDown;
+            if(button(Action::BagBombFuseUp,"+ 5%",875,375,200,40))return Action::BagBombFuseUp;
+            text("Megatroll movement: "+std::to_string(int(std::lround(t.bombMovement*100)))+"%",205,440,20,Paper);
+            if(button(Action::BagBombMovementDown,"- 5%",655,425,200,40))return Action::BagBombMovementDown;
+            if(button(Action::BagBombMovementUp,"+ 5%",875,425,200,40))return Action::BagBombMovementUp;
+            text("Bomb edits apply at birth. Lit bombs retain their fuse and movement.",205,480,14,Muted);
+            if(button(Action::ResetGrabBags,"RESET GRAB BAGS",655,260,420,40))return Action::ResetGrabBags;
         } else if(game.balanceShopOpen&&game.balanceBatteryOpen) {
             const auto &t=game.balancePreset.batteries;
             text("SHOP BATTERIES / ACTIVE ITEM RECHARGE",205,218,22,Gold);

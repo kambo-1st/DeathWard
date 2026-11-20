@@ -139,6 +139,7 @@ void Simulation::updateEnemyBombs(float dt) {
     }
     for(auto &bomb:enemyBombs) {
         if(bomb.room!=room)continue;
+        if(bomb.bagBomb){updateBagBomb(bomb,dt);continue;}
         if(bomb.detonated){updateEnemyBombEffect(bomb,dt);continue;}
         auto &c=bomb.charge;const auto previous=c.position;
         if(!bomb.blastMarker)advanceDynamite(c,arena,std::min(dt,std::max(0.f,c.delay-c.age)));

@@ -1,0 +1,38 @@
+[
+  {
+    "case": "schema60",
+    "preset": "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a16-shop-batteries/review-preset.json",
+    "sha256": "94354b08c6c2372d28e549210c4f948b71c35062ac9408513525bfe3b8ab89ff",
+    "startup": "pass",
+    "zoom": 165,
+    "god": false,
+    "room": 7
+  },
+  {
+    "case": "schema61",
+    "preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a17/campaign.save.balance/export.json",
+    "sha256": "ab1f0e74a4daa0a23fdc0251b4d7b8c219acdec7a4207fe77ad9e3cae67cbd87",
+    "startup": "pass",
+    "zoom": 165,
+    "god": false,
+    "room": 7
+  },
+  {
+    "case": "schema62",
+    "preset": "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a18-bag-bombs/review-preset.json",
+    "sha256": "9edd1f77929fcb3161c12c5f5541311522e34479af34e9ed55ded622ae001f7c",
+    "startup": "pass",
+    "zoom": 165,
+    "god": false,
+    "room": 7
+  },
+  {
+    "case": "custom62",
+    "preset": "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a18-bag-bombs/test-custom-preset.json",
+    "sha256": "99b9bdd19ff41843ded6e4b5cc3594bbda843fda495a234ccecb16ff874e6694",
+    "startup": "pass",
+    "zoom": 165,
+    "god": false,
+    "room": 7
+  }
+]

@@ -5,9 +5,10 @@ namespace dw {
 struct GrabBagTuning {
     bool enabled=true;
     int price=7;
+    float bombFuse=1, bombMovement=1;
     bool operator==(const GrabBagTuning &)const=default;
     bool custom()const{return *this!=GrabBagTuning{};}
-    void validate()const{if(price<0||price>30)throw std::runtime_error("Invalid grab bag price");}
+    void validate()const{if(price<0||price>30||!std::isfinite(bombFuse)||bombFuse<.25f||bombFuse>4||!std::isfinite(bombMovement)||bombMovement<.1f||bombMovement>2)throw std::runtime_error("Invalid grab bag controls");}
 };
 // Ordinary5.69.1 contents: original DropRNG, weighted copied RNG, discarded
 // draw and spawn seed order. Source descriptor/factory mapping remains separate.

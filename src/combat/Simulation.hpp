@@ -14,6 +14,7 @@
 #include "combat/ActiveItem.hpp"
 #include "combat/Batteries.hpp"
 #include "combat/GrabBags.hpp"
+#include "combat/BagBomb.hpp"
 #include "combat/Trinket.hpp"
 #include "combat/RedHeartTiming.hpp"
 #include "combat/CoinTiming.hpp"
@@ -877,6 +878,7 @@ struct Hazard {
     float monsterDamageInterval = .5f;
 };
 struct EnemyBomb {
+    std::optional<BagBombRuntime> bagBomb;
     EntityId id=0,source=0,blastIgnore=0;
     MonsterId sourceMonster,ordnance;
     int room=0;
@@ -1225,6 +1227,8 @@ class Simulation {
     GrabBagTuning grabBagTuning{};
     std::vector<GrabBagPickup> grabBags;
     bool spawnShopGrabBag(Vector3 at,int slot);
+    bool spawnBagBomb(Vector3 at,int subtype,uint32_t seed);
+    void updateBagBomb(EnemyBomb &bomb,float dt);
     void updateGrabBags(float dt);
     bool spawnBattery(Vector3 at);
     BatteryTuning batteryTuning{};std::vector<BatteryPickup> batteryPickups;

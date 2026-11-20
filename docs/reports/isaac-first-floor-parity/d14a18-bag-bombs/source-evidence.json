@@ -1,0 +1,26 @@
+{
+  "source": "Installed Repentance1.7.9b",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "method": "Reused preserved original-code whole Bomb::Update traces; new C++ matches variants3/4 before their first blast. No new full live native capture.",
+  "cases": 48,
+  "states": 2568,
+  "compared": [
+    "position",
+    "velocity",
+    "next friction",
+    "countdown"
+  ],
+  "sha256": {
+    "docs/reports/isaac-first-floor-parity/troll-bombs/native-updates.csv": "8689f1077a80f8ee26aaea8c6fae2f11fabef50a208a08e9cef635f2dedfbb62",
+    "docs/reports/isaac-first-floor-parity/troll-bombs/manifest.json": "ee101a9a0a30614b1ecf186bb696e1cd0696a94ba9b96a5d98d91010f6c71073",
+    "docs/reports/isaac-first-floor-parity/troll-bombs/bomb_update.asm": "cc065816d53e6fd44db576f290acc373fbe821ef982bda0a324629ec3a5cb0d9",
+    "docs/reports/isaac-first-floor-parity/bomb-contacts/native-troll-conversion-intents.csv": "a69fbd60301535c653714d4a0de3e9e0194665cb2c44d19001e36b0c992675c9",
+    "docs/reports/isaac-first-floor-parity/d10a-dynamite/source/native-initialization.csv": "2dda6d1eb7c0f7701336326c063c9790a69e6cfeb7a53f70d0420e6778a81206"
+  },
+  "limitations": [
+    "native global MT conversion seed is adapted to the stored content seed",
+    "fixed accepted player-relative motion and D10 blast scale",
+    "canyon physical collision/contact response",
+    "post-blast animation, native recipients/modifiers and live scheduling not certified"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "status": "scoped-human-accepted",
+  "accepted_previous_commit": "1e3933d1",
+  "source_cases": 48,
+  "source_states": 2568,
+  "source_max_numeric_error": 0,
+  "focused_suites": 5,
+  "cli_loads": [
+    "60",
+    "61",
+    "62",
+    "custom62"
+  ],
+  "main_game_renderer": "pass",
+  "zoom": 165,
+  "natural_witnesses": [
+    {
+      "seed": 227,
+      "room": 7,
+      "subtype": 3
+    },
+    {
+      "seed": 338,
+      "room": 7,
+      "subtype": 5
+    }
+  ],
+  "native_full_acceptance": false,
+  "human_acceptance": "accepted",
+  "unrelated_work_preserved": true,
+  "original_preset_sha256": "ab1f0e74a4daa0a23fdc0251b4d7b8c219acdec7a4207fe77ad9e3cae67cbd87",
+  "interactive": {
+    "pid": 1219846,
+    "seed": 338,
+    "room": 7,
+    "rare_outcome": "Megatroll4.4 from5.40.5",
+    "save": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a18/playtest-20261120-204910/campaign.save",
+    "preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a18/campaign.save.balance/export.json",
+    "preset_sha256": "9edd1f77929fcb3161c12c5f5541311522e34479af34e9ed55ded622ae001f7c",
+    "arguments": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--expedition",
+      "--seed",
+      "338",
+      "--review-shop-grab-bag",
+      "--mute",
+      "--balance-preset",
+      "/home/kambo/.local/share/deathward/reviews/first-floor-d14a18/campaign.save.balance/export.json",
+      "--save",
+      "/home/kambo/.local/share/deathward/reviews/first-floor-d14a18/playtest-20261120-204910/campaign.save"
+    ],
+    "god_mode": false,
+    "coins": 20,
+    "human_acceptance": "accepted"
+  }
+}

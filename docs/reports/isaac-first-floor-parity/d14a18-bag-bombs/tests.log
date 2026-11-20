@@ -1,0 +1,16 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  92: enemy_bomb_payloads
+1/5 Test  #92: enemy_bomb_payloads ..............   Passed    0.65 sec
+    Start 150: balance_preset_contract
+2/5 Test #150: balance_preset_contract ..........   Passed    0.27 sec
+    Start 194: bag_bomb_delivery
+3/5 Test #194: bag_bomb_delivery ................   Passed    4.29 sec
+    Start 195: shop_grab_bag_delivery
+4/5 Test #195: shop_grab_bag_delivery ...........   Passed    2.47 sec
+    Start 196: shop_battery_delivery
+5/5 Test #196: shop_battery_delivery ............   Passed    2.46 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =  10.15 sec
