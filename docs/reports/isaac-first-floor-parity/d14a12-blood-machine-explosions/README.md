@@ -2,6 +2,8 @@
 
 The user accepted D14a.11 with “it works, next!” on 2026-11-19. That shopkeeper checkpoint is committed as `a09da6e8`. The selected continuation adds explosion destruction to ordinary Temperance blood-donation machines in the main game. The user accepted this scoped playtest with “nice it works, continue!”; see `human-acceptance.json`.
 
+Accepted checkpoint commit: `2e2f7e17`. See [D14a.13](../d14a13-donation-eligibility/README.md) for the next coin-machine gate findings and unresolved historical context.
+
 ## Enabled behavior
 
 An ordinary dynamite explosion breaks an unbroken blood machine, removes its collision/navigation obstruction and leaves a charred remnant. Ordinary shots do not damage it. Native destruction depends on the explosion flag, not on a positive damage amount or an HP threshold. Already broken machines cannot pay again.

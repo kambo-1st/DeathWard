@@ -1,0 +1,56 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "deposit_cases": 1280,
+  "withdrawal_cases": 2048,
+  "windows": [
+    {
+      "name": "deposit",
+      "start": "0x63d880",
+      "end": "0x63dda2",
+      "sha256": "2d2a1a7660c4dc08c8574df4eb63b79a6b2cb15cb0e900c873748049128b966f"
+    },
+    {
+      "name": "withdraw",
+      "start": "0x640070",
+      "end": "0x640586",
+      "sha256": "814116b489015405d5de957b81d0212a724f550b718bdb909f0dd30ac6305e04"
+    },
+    {
+      "name": "jam-immunity",
+      "start": "0x64087e",
+      "end": "0x64088d",
+      "sha256": "fcf149f06f5f80687c80a8c44c9de14485525ede4c48527cfa8f5919b536e692"
+    },
+    {
+      "name": "counters",
+      "start": "0x6d6c80",
+      "end": "0x6d6ca0",
+      "sha256": "c4a604171e3aec961f0bbae88e9dbdbe1d05e7519a1190cc03dbbee81742744b"
+    },
+    {
+      "name": "bank-store",
+      "start": "0x884e40",
+      "end": "0x884e87",
+      "sha256": "6e44296c09d60fda8f1fedd982c3d7d83fde6970d82b4085e3d3a6f85661dc9b"
+    },
+    {
+      "name": "luck-store",
+      "start": "0x776b60",
+      "end": "0x776b7f",
+      "sha256": "488fb8677e8546005195c40a573660dfa4ed2cf37d25a90d5a503de2b46ba1ee"
+    },
+    {
+      "name": "contact-animation",
+      "start": "0x63eff8",
+      "end": "0x63f04b",
+      "sha256": "fa2ce0ea810c347b1abb8195bce4f89b7b8ada0d38f25d0ea021e814d22c0516"
+    },
+    {
+      "name": "held-counter",
+      "start": "0x63e6b9",
+      "end": "0x63e6e1",
+      "sha256": "ef8a9e58310e2d47d336923571c4064b34d206ee429e380c6f2af8c5ef8d6b1e"
+    }
+  ],
+  "scope": "Original deposit counter arithmetic, normal RNG luck/jam decisions, held cooldown and overflow flag; original withdrawal count arithmetic. Bank/profile/achievement/visual endpoints hosted; bank-store assembly pinned separately. Overflow throwing loop hosted with 15 child seed draws; physical pickup factories, animation scheduling, contact counters and prior RNG history not fully executed. Ordinary Karma absent. Full native equivalence remains open."
+}

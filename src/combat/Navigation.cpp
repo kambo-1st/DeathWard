@@ -294,6 +294,18 @@ void Simulation::requestMove(Vector3 target, bool interactAtDestination) {
     }
     // A chest click means approach its reachable edge, not its blocked center.
     // Choose by actual path length so cover and other bodies still participate.
+    for(const auto &m:coinDonationMachines)if(m.room==room&&m.phase!=CoinDonationMachine::Phase::Destroyed&&planarDistance(target,m.position)<1) {
+        float best=std::numeric_limits<float>::infinity();
+        for(int side=0;side<8;++side){const float a=side*Pi/4;auto at=add(m.position,{std::cos(a)*1.06f,0,std::sin(a)*1.06f});
+            if(arena.blocked(at,.48f))continue;
+            auto route=arena.path(player.position,at,.48f);if(route.empty())continue;
+            float cost=0;auto previous=player.position;
+            for(auto next:route){cost+=planarDistance(previous,next);previous=next;}
+            if(cost<best){best=cost;movePath_=std::move(route);}
+        }
+        if(movePath_.empty())announce("That machine cannot be reached.",2);
+        return;
+    }
     for(const auto &m:bloodMachines)if(m.room==room&&m.phase!=BloodMachine::Phase::Broken&&planarDistance(target,m.position)<1) {
         float best=std::numeric_limits<float>::infinity();
         for(int side=0;side<8;++side){const float a=side*Pi/4;auto at=add(m.position,{std::cos(a)*1.06f,0,std::sin(a)*1.06f});

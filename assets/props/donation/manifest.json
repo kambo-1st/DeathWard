@@ -1,0 +1,18 @@
+{
+  "source": "Owned Synty Polygon Western; existing game assets",
+  "sources": [
+    {
+      "path": "assets/town/source/Models/SM_Prop_Crate_01.fbx",
+      "sha256": "5d6cea6d203a737f5a42978bcef1cb15ebd469f2bf02de271918a2c7d07ae49b"
+    },
+    {
+      "path": "assets/town/source/Models/SM_Prop_Cash_Register_01.fbx",
+      "sha256": "1c015b13ec06fa98525838fdea6c50f6ff02cd4dcc2e1d0cb254f892355aa03a"
+    }
+  ],
+  "texture": "assets/town/source/Textures/PolygonWestern_Texture_01_A.png",
+  "texture_sha256": "dee4b31bac06e9f67050abf8ab7ae343d265563d1714d4fc46bf0e87ad235b03",
+  "output_sha256": "2635bd34925f0b788e4b14a29001fbf7110138344a4b8c84ed7c4e6297ea7556",
+  "height": 1.932818297547652,
+  "scope": "Existing register on existing crate; original proportions and UVs. Grounded, ordinary game mesh lighting/shadows."
+}

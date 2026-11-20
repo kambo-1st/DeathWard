@@ -8,6 +8,9 @@ inline constexpr int RecordedShopReview=2000000; // Type2/template0; not normal-
 struct RecordedShopSlot {int ordinal,x,y,type,variant,subtype;};
 // Original STB slot order. The keeper slot also has a weight-.5 variant0 choice.
 // Recorded runtime: keeper17.1.4, purse195/card15, no donation machine actor.
+// D14a.13 verifies variant8's custom-run/restriction/jam initializer gates.
+// D14a.14 enables this slot in an ordinary eligible DW context. The old capture
+// lacks those gate inputs; its absence is not inferred from the numeric seed.
 inline constexpr std::array<RecordedShopSlot,8> RecordedShopSlots{{
     {0,3,0,6,8,0},{1,1,1,1000,0,0},{2,5,1,1000,0,0},{3,6,1,17,1,0},
     {4,7,1,1000,0,0},{5,11,1,1000,0,0},{6,5,4,5,150,0},{7,7,4,5,150,0}}};

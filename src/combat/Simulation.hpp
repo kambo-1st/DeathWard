@@ -1,5 +1,6 @@
 #include "combat/Pills.hpp"
 #include "combat/Temperance.hpp"
+#include "combat/CoinDonation.hpp"
 #pragma once
 #include "combat/Monstro.hpp"
 #include "combat/Duke.hpp"
@@ -1199,6 +1200,12 @@ class Simulation {
     bool beginPowerupReview();
     bool beginTrinketReview();
     bool visitPowerupReviewEncounter(bool bossRoom=false);
+    CoinDonationTuning coinDonationTuning{};
+    DonationProgress donation{};
+    std::vector<CoinDonationMachine> coinDonationMachines;
+    void prepareCoinDonation();void updateCoinDonation(float dt);
+    std::vector<size_t> coinDonationBlastTargets(const Event &e)const;
+    void destroyCoinDonation(size_t index);
     KeeperTuning keeperTuning{};
     BloodMachineTuning bloodMachineTuning{};
     BloodExplosionTuning bloodExplosionTuning{};

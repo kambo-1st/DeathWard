@@ -50,6 +50,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
     if(account!=WitnessAccount::None&&account!=WitnessAccount::Rourke)
         throw std::invalid_argument("This testimony has not been authored yet.");
     if(treasureCollectiblePool<0||treasureCollectiblePool>7)throw std::invalid_argument("Invalid treasure pool");
+    donation.bank=world.donationBank;
     temperanceRng_=uint32_t(expedition.seed^0x54454d504552414eULL)|1U;
     pills=PillState(expedition.seed);purseRng_=uint32_t(expedition.seed^0x434f494e50555253ULL)|1U;
     coinClearRewards=requestedCoins;
@@ -92,6 +93,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
     pendingMonsters_=std::move(rooms[0].pendingSpawns);
     prepareMoney();
     prepareShop();
+    prepareCoinDonation();
     prepareRoomHearts();
     enterRoom(0);
     if(surveyTutorial)announce("THE LOST SURVEY / One floor. Recover Bell's records and return to Fort Mercy.",6);
@@ -135,6 +137,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     if(!canResizeRooms())throw std::runtime_error("No floor to resize");
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
                     expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice,boss,flies,seededChoice,rewardChoice,propChoice);
+    next.coinDonationTuning=coinDonationTuning;next.donation=donation;next.coinDonationMachines.clear();next.syncMovementBodies();next.prepareCoinDonation();
     next.keeperTuning=keeperTuning;
     next.bloodExplosionTuning=bloodExplosionTuning;next.bloodMachineTuning=bloodMachineTuning;next.ivBagCooldown=ivBagCooldown;next.temperanceRng_=temperanceRng_;next.ivBagAvailable_=ivBagAvailable_;
     next.pills=pills;next.pillTuning=pillTuning;next.purseRng_=purseRng_;next.pillUseHeld_=pillUseHeld_;next.pillDropHeld_=pillDropHeld_;
@@ -229,6 +232,7 @@ bool Simulation::advanceFloor() {
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
                     expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool,monstroTuning,dukeTuning,seededBosses,bossRewardItem,roomProps);
+    next.coinDonationTuning=coinDonationTuning;next.donation=donation;next.coinDonationMachines.clear();next.syncMovementBodies();next.prepareCoinDonation();
     next.keeperTuning=keeperTuning;
     next.bloodExplosionTuning=bloodExplosionTuning;next.bloodMachineTuning=bloodMachineTuning;next.ivBagCooldown=ivBagCooldown;next.temperanceRng_=temperanceRng_;next.ivBagAvailable_=ivBagAvailable_;
     next.pills=pills;next.pillTuning=pillTuning;next.purseRng_=purseRng_;next.pillUseHeld_=pillUseHeld_;next.pillDropHeld_=pillDropHeld_;
@@ -462,6 +466,7 @@ SourcePlayerStats Simulation::effectivePlayerStats() const {
     if(speedBonus!=0)result.speed=std::clamp(result.speed+speedBonus,.1f,2.f);
     if(strength>0&&(p[11]||p[12]))result.rangeTiles=std::max(1.f,result.rangeTiles+(1.25f*p[12]-p[11])*strength);
     if(strength>0&&(p[47]||p[48]))result.shotSpeed=std::clamp(result.shotSpeed+.15f*(p[48]-p[47])*strength,.6f,2.f);
+    result.luck+=donation.luck;
     result.luck+=(p[18]-p[17])*strength;
     result.damage=cricketHeadDamage(result.damage,itemStacks({"isaac",ItemKind::Collectible,4}),cricketHeadStrength);
     result.tearsPerSecond=ordinaryItemTears(result.tearsPerSecond,.7f*float(itemStacks({"isaac",ItemKind::Collectible,1}))*sadOnionStrength+
@@ -1023,6 +1028,7 @@ RunSummary Simulation::summary() const {
     s.mechanicsFingerprint=content->fingerprint();
     s.moneyCollected = moneyCollected;
     s.moneySpent = moneySpent;
+    s.donationBank=donation.bank;
     return s;
 }
 void Simulation::suppress(const Context &ctx, const std::string &reason) {
@@ -1983,6 +1989,7 @@ void Simulation::step(const Input &input, float dt) {
     updateOrdinaryKeys(dt);
     updateTrinkets(dt);
     updatePills(dt);
+    updateCoinDonation(dt);
     updateBloodMachines(dt);
     updateOrdinaryBombs(dt);
     updateChestSupplies(dt);

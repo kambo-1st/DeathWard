@@ -1,0 +1,179 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "scope": "Highest available DLC override before base animation metadata. No sprite artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/006.008_DonationMachine.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/d14a14-coin-donation/animations/006.008_DonationMachine.anm2",
+      "sha256": "5e76ed1d4e4b72b3cac60fc71605f35bb5a57e09d5690eeea108328e78151e64",
+      "checksum": "0x7516e670",
+      "info": {
+        "CreatedBy": "Unknown",
+        "CreatedOn": "07.06.2014 12:00:28",
+        "Version": "6",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Prize",
+          "Id": "0"
+        },
+        {
+          "Name": "Explosion",
+          "Id": "1"
+        },
+        {
+          "Name": "CoinInsert",
+          "Id": "2"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "1",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Initiate",
+            "FrameNum": "8",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Wiggle",
+            "FrameNum": "18",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Prize",
+            "FrameNum": "10",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "0"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Death",
+            "FrameNum": "8",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "1",
+              "AtFrame": "0"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Broken",
+            "FrameNum": "1",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WiggleEnd",
+            "FrameNum": "7",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "CoinJam",
+            "FrameNum": "7",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "CoinJam2",
+            "FrameNum": "7",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "CoinJam3",
+            "FrameNum": "7",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "CoinJam4",
+            "FrameNum": "7",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "CoinInsert",
+            "FrameNum": "8",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "6"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "CoinInsert2",
+            "FrameNum": "6",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "4"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "CoinInsert3",
+            "FrameNum": "4",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "2"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

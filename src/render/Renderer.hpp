@@ -10,6 +10,7 @@
 #include "render/CampfireModel.hpp"
 #include "render/ShopCartModel.hpp"
 #include "render/KeyModel.hpp"
+#include "render/DonationModel.hpp"
 #include "render/MainFont.hpp"
 
 namespace dw {
@@ -48,7 +49,7 @@ class Renderer {
                    float deathTime = 0, float sandstorm = 0);
     void unload() {
         mainFont_.unload();
-        keyModel_.unload();
+        keyModel_.unload();donationModel_.unload();
         campfireModel_.unload();chestModel_.unload();shopCartModel_.unload();
         playerModel_.unload();
         animalModels_.unload();
@@ -70,6 +71,7 @@ class Renderer {
     ChestModel chestModel_;
     ShopCartModel shopCartModel_;
     KeyModel keyModel_;
+    DonationModel donationModel_;
     PlayerModel playerModel_;
     AnimalModels animalModels_;
     TownActorModels characterModels_;

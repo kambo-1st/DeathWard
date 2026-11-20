@@ -1,0 +1,6 @@
+{
+  "source": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a12/campaign.save.balance/export.json",
+  "source_sha256": "b2a8d958a76379201d55cea3106818e7ce7432e5dde7fdfd6bc69a676d868c47",
+  "source_unchanged": true,
+  "migration": "57 -> 58; new coin donation defaults; bank is campaign data, never a preset value"
+}

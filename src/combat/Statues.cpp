@@ -78,6 +78,7 @@ void Simulation::syncMovementBodies() {
     append(enemies);
     for(size_t n=0;n<rooms.size();++n)if(int(n)!=room)append(rooms[n].residents);
     for(const auto &chest:chests)arena.movementBodies.push_back(chestGeometry::body(chest.position));
+    for(const auto &m:coinDonationMachines)if(m.phase!=CoinDonationMachine::Phase::Destroyed)arena.movementBodies.push_back(coinDonationBody(m.position));
     for(const auto &m:bloodMachines)if(m.phase!=BloodMachine::Phase::Broken)arena.movementBodies.push_back(bloodMachineBody(m.position));
     refreshStatueAttraction();
 }

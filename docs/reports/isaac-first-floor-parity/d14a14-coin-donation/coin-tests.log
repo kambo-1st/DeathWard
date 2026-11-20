@@ -1,0 +1,7 @@
+PASS 3328 native numeric comparisons
+PASS admission, timing, jam, explosion, overflow and once-only accounting
+PASS natural shop / access / revisit / Apply / floor size 0.75
+PASS natural shop / access / revisit / Apply / floor size 1
+PASS natural shop / access / revisit / Apply / floor size 1.5
+PASS persistence, recovery, death, preset migration and atomic validation
+PASS coin donation delivery

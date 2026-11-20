@@ -48,6 +48,14 @@ public static class DeathWardLiveFloor {
     var raw=new byte[0xb8];Array.Copy(table,o,raw,0,raw.Length);
     rooms.Add(Row("list_index",i,"grid_index",BitConverter.ToInt32(table,o),"safe_grid_index",BitConverter.ToInt32(table,o+4),"dimension",U(table,o+0xc),"actual_doors",U(table,o+0x18),"decoration_seed",U(table,o+0x58),"spawn_seed",U(table,o+0x5c),"award_seed",U(table,o+0x60),"raw_descriptor_base64",Convert.ToBase64String(raw),"config",Config(h,config)));
    }
+   // D14a.13: capture the actual run context. A numeric seed does not prove
+   // Seeds::IsCustomRun. Offsets are pinned by coin-machine Init/restriction code.
+   long manager=U(h,moduleBase+0x7fd680);
+   var customRun=Read(h,game+0x1bb04,1);var runFlags=Read(h,game+0x1c3168,8);
+   var runRestriction=Read(h,game+0x1c31a0,1);var profileVector=Read(h,manager+0x20a9ac,8);var bank=Read(h,manager+0x31c,4);
+   var donationContext=Row("custom_run",customRun[0]!=0,"run_flag17",(U(runFlags,0)&(1u<<17))!=0,"run_flag18",(U(runFlags,0)&(1u<<18))!=0,
+    "run_byte1c31a0",runRestriction[0]!=0,"profile_vector_nonempty",U(profileVector,0)!=U(profileVector,4),"bank",BitConverter.ToInt32(bank,0),
+    "seed_effect_and_mod_policy_queries_captured",false,"scope","Raw pinned current-run fields; historical shop context and full query results are not inferred.");
    var actors=new List<object>();long actorList=U(h,room+0x125c);uint actorCount=U(h,room+0x1264);
    if(actorCount>4096)throw new Exception("Unexpected active actor count");
    for(uint i=0;i<actorCount;i++) {
@@ -58,7 +66,8 @@ public static class DeathWardLiveFloor {
     if(U(identity,0)==1)row.Add("character",U(h,actor+0x130c));actors.Add(row);
    }
    if(U(h,game+0x18190)!=room||U(h,game+0x1a30dc)!=frame||U(h,game+0x1815c)!=count||U(h,game)!=stage||!Equal(table,Read(h,start,table.Length)))throw new Exception("Floor changed during capture; pause and retry with a new output filename");
-   return Row("schema",1,"captured_utc",DateTime.UtcNow.ToString("o"),"pid",pid,"module_base",moduleBase,"stage",stage,"stage_type",stageType,"difficulty",difficulty,"stage_header_raw_base64",Convert.ToBase64String(Read(h,game,0x14)),"descriptor_count",count,"current_list_index",delta/0xb8,"world_frame",frame,"rooms",rooms,"current_room_actors",actors,"method","VM_READ only; no writes, injection, suspension, input or game-file edits","limits",new string[]{"Descriptor candidates do not prove resolved pickups, enemies or factory results in unvisited rooms.","Unlocks, seed text and initial inventory need independent confirmation.","Content capture only; source room shapes and connections are excluded from gameplay implementation.","Live field interpretation must be cross-checked against the pinned source configs and log."});
+   if(U(h,moduleBase+0x7fd680)!=manager||!Equal(customRun,Read(h,game+0x1bb04,1))||!Equal(runFlags,Read(h,game+0x1c3168,8))||!Equal(runRestriction,Read(h,game+0x1c31a0,1))||!Equal(profileVector,Read(h,manager+0x20a9ac,8))||!Equal(bank,Read(h,manager+0x31c,4)))throw new Exception("Donation context changed during capture; retry with a new output filename");
+   return Row("schema",2,"captured_utc",DateTime.UtcNow.ToString("o"),"pid",pid,"module_base",moduleBase,"stage",stage,"stage_type",stageType,"difficulty",difficulty,"stage_header_raw_base64",Convert.ToBase64String(Read(h,game,0x14)),"descriptor_count",count,"current_list_index",delta/0xb8,"world_frame",frame,"rooms",rooms,"current_room_actors",actors,"donation_context",donationContext,"method","VM_READ only; no writes, injection, suspension, input or game-file edits","limits",new string[]{"Descriptor candidates do not prove resolved pickups, enemies or factory results in unvisited rooms.","Unlocks, seed text and initial inventory need independent confirmation.","Content capture only; source room shapes and connections are excluded from gameplay implementation.","Live field interpretation must be cross-checked against the pinned source configs and log.","Donation context omits the seed-effect/mod-policy query internals; a fresh run cannot establish historical gate inputs."});
   }finally{CloseHandle(h);}
  }
 }

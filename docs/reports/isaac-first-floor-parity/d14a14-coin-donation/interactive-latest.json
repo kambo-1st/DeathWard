@@ -1,0 +1,24 @@
+{
+  "launched": "2026-11-19T21:37:22.791506+01:00",
+  "pid": 1181780,
+  "args": [
+    "stdbuf",
+    "-oL",
+    "-eL",
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "68",
+    "--review-shop-stock",
+    "--mute",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a14/campaign.save.balance/export.json",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a14/playtest-20261119-213722/campaign.save"
+  ],
+  "save": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a14/playtest-20261119-213722/campaign.save",
+  "preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a14/campaign.save.balance/export.json",
+  "preset_sha256": "f53d96b28114040e27b73bfecc89c2db58b60c1de5330dbb94f2328884b6e190",
+  "log": "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/d14a14-coin-donation/interactive-latest.log",
+  "review": "Coin donation register; source settings,20test coins,4red half-hearts,zoom165,god off; bank belongs to this campaign"
+}

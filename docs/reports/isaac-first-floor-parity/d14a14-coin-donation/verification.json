@@ -1,0 +1,19 @@
+{
+  "native_deposit_cases": 1280,
+  "native_withdrawal_cases": 2048,
+  "native_reproduction": "pass",
+  "ctest_suites": 8,
+  "ctest_failures": 0,
+  "canyon_sizes": [
+    0.75,
+    1,
+    1.5
+  ],
+  "actual_game_renderer": "pass",
+  "cli_cases": 4,
+  "human_acceptance": "pending",
+  "live_expedition_resume": false,
+  "milestone_unlocks": false,
+  "native_full_acceptance": false,
+  "interactive_pid": 1181780
+}

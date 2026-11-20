@@ -1,0 +1,34 @@
+{
+  "cases": [
+    {
+      "case": "schema48",
+      "preset_schema": 48,
+      "campaign_schema": 13,
+      "pass_": true,
+      "log": "/tmp/deathward-d14a14/cli/schema48.log"
+    },
+    {
+      "case": "schema57",
+      "preset_schema": 57,
+      "campaign_schema": 13,
+      "pass_": true,
+      "log": "/tmp/deathward-d14a14/cli/schema57.log"
+    },
+    {
+      "case": "schema58",
+      "preset_schema": 58,
+      "campaign_schema": 13,
+      "pass_": true,
+      "log": "/tmp/deathward-d14a14/cli/schema58.log"
+    },
+    {
+      "case": "campaign12",
+      "preset_schema": 58,
+      "campaign_schema": 13,
+      "pass_": true,
+      "log": "/tmp/deathward-d14a14/cli/campaign12.log"
+    }
+  ],
+  "legacy_campaign_original_unchanged": true,
+  "legacy_campaign_sha256": "ad7a42a2c6b29c2cf69d3c9f39c98d764c2894e5981a154982d1bc7e3361c92e"
+}

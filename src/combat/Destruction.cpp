@@ -134,6 +134,7 @@ void Simulation::resolveExplosion(const Event &e) {
     // Snapshot ALL recipients before any collision changes. Never let vector order
     // turn a single blast into a shot through the cover it has just destroyed.
     const bool keeperHit=keeperBlastHit(e);
+    const auto donationHits=coinDonationBlastTargets(e);
     const auto bloodMachineHits=bloodMachineBlastTargets(e);
     std::vector<EntityId> victims;
     for(const auto &enemy:enemies) {
@@ -171,6 +172,7 @@ void Simulation::resolveExplosion(const Event &e) {
     }
     if(playerHit)hurtPlayer(e.playerDamage,e.context,e.playerDamageHostile);
     if(keeperHit)damageKeeper(e.damage);
+    for(auto index:donationHits)destroyCoinDonation(index);
     for(auto index:bloodMachineHits)destroyBloodMachine(index);
     for(auto i:props)hitBreakable(arena.breakables[i],e.damage,
         e.demolition==Demolition::SpentDynamite||e.demolition==Demolition::SuppliedBomb||e.demolition==Demolition::EnemyBomb);

@@ -1,0 +1,90 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "version": "Repentance1.7.9b",
+  "cases": 1280,
+  "entity": {
+    "anm2path": "006.008_DonationMachine.anm2",
+    "baseHP": "0",
+    "boss": "0",
+    "champion": "0",
+    "collisionDamage": "0",
+    "collisionMass": "3",
+    "collisionRadius": "12",
+    "friction": "1",
+    "id": "6",
+    "name": "Donation Machine",
+    "numGridCollisionPoints": "24",
+    "shadowSize": "33",
+    "stageHP": "0",
+    "variant": "8"
+  },
+  "entity_xml_sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "windows": [
+    {
+      "name": "variant-dispatch",
+      "start": "0x639371",
+      "end": "0x63937a",
+      "sha256": "77618c283535e8dd2b34f15ee108c2e8727ecef5aee28fae1723fbd2d0fefe15"
+    },
+    {
+      "name": "coin-donation-initialization",
+      "start": "0x63937a",
+      "end": "0x63946b",
+      "sha256": "48d7cf5518b27723380903243e5795013bf5ecaf2d2865fa6a8e79e40962b5d7"
+    },
+    {
+      "name": "restriction-helper",
+      "start": "0x6d7180",
+      "end": "0x6d71ca",
+      "sha256": "6086dbdd401e92df026d5296019920d6a1be91d7d93a33c4f26ef79f35185ccc"
+    },
+    {
+      "name": "run-flag-query",
+      "start": "0x41c430",
+      "end": "0x41c475",
+      "sha256": "7e38f98abd78f27109c5e23d4ab7953feaf7d3d57654e839b553708d65b24443"
+    },
+    {
+      "name": "remove",
+      "start": "0x6848f0",
+      "end": "0x684948",
+      "sha256": "e5eb171c7518b5cc51b0091dd594f60198bee022ea49326984b9e66f442c5fc3"
+    },
+    {
+      "name": "factory-init-call",
+      "start": "0x6d0db2",
+      "end": "0x6d0dec",
+      "sha256": "a6c921811d7b35d7f0d4a662187e6372bfdecc613ea102daccdf33872a485210"
+    },
+    {
+      "name": "custom-run-binding",
+      "start": "0x80997f",
+      "end": "0x809989",
+      "sha256": "c3a6356bf624566f8c7b56fa12887e4be4aac6ccce2e505d22da1ad1bec75501"
+    },
+    {
+      "name": "custom-run-getter",
+      "start": "0x68f4d0",
+      "end": "0x68f4d3",
+      "sha256": "cd8c73a1813dd09771f20362f6e800d162b78599a9dd2da8ba1372fc969e1f5c"
+    },
+    {
+      "name": "overflow-flag-store",
+      "start": "0x63dcba",
+      "end": "0x63dcc9",
+      "sha256": "6803a64ce045f90c64b29625dd2d18ed5081f47cdfb98a311bf6c83c57a056be"
+    },
+    {
+      "name": "jam-flag-store",
+      "start": "0x63dd89",
+      "end": "0x63dda2",
+      "sha256": "3c784132cdae87439a7701f84e48e6803350f1979f106cdd1f4d2dd65b7a0fcf"
+    }
+  ],
+  "gameplay_changed": false,
+  "historical_capture_gate_inputs_known": false,
+  "scope": "Original ordinary variant8 initialization, counter display arithmetic, run-state bit queries, restriction helper and entity Remove stores. Seed-effect/mod-policy query results, visual calls, cosmetic RNG and removal-queue endpoint are hosted. No patches to decision instructions. Source initialization/factory entry and named custom-run binding are pinned; complete factory/base init, query internals, donation economy, scheduling and persistent bank are not accepted.",
+  "rule": "Remove if flag17 or custom run or any supplied restriction. Independently flag18 sets state3 (jammed). Bank value alone does not exclude the actor in this initializer.",
+  "source_profile_note": "Having a procedural numeric seed is not the same as IsCustomRun. Do not infer the flag from DeathWard --seed or the recorded Isaac seed text.",
+  "full_native_acceptance": false
+}

@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-19",
+  "accepted_prior_commit": "2e2f7e17",
+  "native_supplied_initialization_cases": 1280,
+  "native_recapture_check": true,
+  "reader_csharp_compilation": true,
+  "reader_live_capture_exercised": false,
+  "native_process_found": false,
+  "historical_context_known": false,
+  "gameplay_changed": false,
+  "new_tunables": false,
+  "preset_schema": 57,
+  "full_native_acceptance": false,
+  "source_manifest": "source/manifest.json",
+  "reader_sha256": "d9ce6facef7a365da88e0c87b3cacd206359afb1d6247354f5f5015ed7511d97",
+  "scope": "Verified bounded native gate rules and improved read-only capture; no coin donation economy enabled",
+  "remaining": [
+    "Historical source gate inputs",
+    "Full native factory/query/profile/scheduler acceptance",
+    "Coin donation bank/admission/jam/destruction/persistence gameplay",
+    "Remaining special rooms/full-floor allocation and expedition save/resume"
+  ]
+}

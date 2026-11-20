@@ -1069,6 +1069,11 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         for(const auto &site:run.arena.rooms)if(site.kind==RoomKind::Shop&&!site.keeper.destroyed&&distance(run.player.position,site.center)<60)
             shopCartModel_.draw(site.center,shader,shadowMap);
     };
+    const auto drawDonations=[&](Shader shader,Texture2D shadowMap) {
+        for(const auto &m:run.coinDonationMachines)if(m.room==run.room&&m.phase!=CoinDonationMachine::Phase::Destroyed) {
+            auto at=m.position;at.y=0;donationModel_.draw(at,shader,shadowMap);
+        }
+    };
     if(!run.chests.empty())chestModel_.prepare();
     const auto drawChests=[&](Shader shader,Texture2D shadowMap) {
         for(const auto &chest:run.chests)if(chest.room==run.room) {
@@ -1119,7 +1124,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         drawCampfires(meshDepth,{});
         drawShopCarts(meshDepth,{});
         drawChests(meshDepth,{});
-        drawKeys(meshDepth,{});
+        drawKeys(meshDepth,{});drawDonations(meshDepth,{});
     });
     postProcess_.begin(WorldSky, distance(camera.position, camera.target), false, visualStyle);
     BeginMode3D(camera);
@@ -1227,7 +1232,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     drawShopCarts(lighting.actorShader(),lighting.texture());
     drawCampfires(lighting.actorShader(),lighting.texture());
     drawChests(lighting.actorShader(),lighting.texture());
-    drawKeys(lighting.actorShader(),lighting.texture());
+    drawKeys(lighting.actorShader(),lighting.texture());drawDonations(lighting.actorShader(),lighting.texture());
     for(const auto &supply:run.chestSupplies)if(supply.bomb&&supply.room==run.room) {
         auto p=supply.position;p.y=.5f;
         const bool collecting=supply.timing.phase==CoinTiming::Phase::Collect;
@@ -2092,6 +2097,12 @@ Action Renderer::expedition(const Game &game) {
         };
         if(run.hasSourceShop(run.room)&&run.shopVariationActive()&&!run.shopUpgradeSold)priceTag(run.shopUpgradePosition(),run.shopPrice(run.shopUpgradePrice,run.shopUpgradeSlot),run.shopUpgradeItem==195?"MOM'S COIN PURSE":run.shopUpgradeItem==250?"BOGO BOMBS":"STEAM SALE");
         for(const auto &card:run.pillPickups)if(card.shopStock&&card.room==run.room&&card.timing.collectible())priceTag(card.position,run.shopPrice(run.bloodMachineTuning.cardPrice,run.shopCardSlot),"XIV / TEMPERANCE");
+        for(const auto &m:run.coinDonationMachines)if(m.room==run.room&&m.phase!=CoinDonationMachine::Phase::Destroyed) {
+            auto at=m.position;at.y=2.2f;const auto screen=GetWorldToScreen(at,game.camera);
+            const float x=screen.x/sx_-90,y=screen.y/sy_-45;panel(x,y,180,43,Panel);
+            text("COIN BANK "+std::to_string(run.donation.bank%1000),x+8,y+5,13,Gold);
+            text(m.phase==CoinDonationMachine::Phase::Jammed?"JAMMED":!run.coinDonationTuning.enabled?"DISABLED":"TOUCH: 1 COIN",x+8,y+23,13,Paper);
+        }
         for(const auto &m:run.bloodMachines)if(m.room==run.room&&m.phase==BloodMachine::Phase::Idle&&planarDistance(m.position,run.player.position)<3){
             panel(420,558,440,48,Panel);
             text("DONATE "+std::to_string(run.bloodMachineTuning.healthCost)+" HALF-HEART",438,565,16,Gold);
@@ -2517,10 +2528,11 @@ Action Renderer::balancePanel(const Game &game) {
     }
     if(game.balanceEnemiesOpen&&button(Action::BalanceMonstroTab,"BOSSES",905,175,170,28,game.balanceMonstroOpen))return Action::BalanceMonstroTab;
     if(game.balanceRewardsOpen) {
-        if(button(Action::BalanceShopTab,"SHOP",470,175,100,28,game.balanceShopOpen))return Action::BalanceShopTab;
-        if(button(Action::BalanceClearHeartsTab,"AFTER CLEAR",580,175,170,28,!game.balancePropsOpen&&!game.balanceRoomHeartsOpen&&!game.balanceShopOpen))return Action::BalanceClearHeartsTab;
-        if(button(Action::BalanceRoomHeartsTab,"ROOM LAYOUTS",760,175,180,28,game.balanceRoomHeartsOpen))return Action::BalanceRoomHeartsTab;
-        if(game.balanceShopOpen&&button(Action::BalanceKeeperTab,"KEEPER",950,175,125,28,game.balanceKeeperOpen))return Action::BalanceKeeperTab;
+        if(button(Action::BalanceShopTab,"SHOP",470,175,90,28,game.balanceShopOpen))return Action::BalanceShopTab;
+        if(button(Action::BalanceClearHeartsTab,"AFTER CLEAR",568,175,130,28,!game.balancePropsOpen&&!game.balanceRoomHeartsOpen&&!game.balanceShopOpen))return Action::BalanceClearHeartsTab;
+        if(button(Action::BalanceRoomHeartsTab,"LAYOUTS",706,175,135,28,game.balanceRoomHeartsOpen))return Action::BalanceRoomHeartsTab;
+        if(game.balanceShopOpen&&button(Action::BalanceKeeperTab,"KEEPER",849,175,90,28,game.balanceKeeperOpen))return Action::BalanceKeeperTab;
+        if(game.balanceShopOpen&&button(Action::BalanceCoinDonationTab,"DONATIONS",947,175,128,28,game.balanceCoinDonationOpen))return Action::BalanceCoinDonationTab;
         if(game.balancePropsOpen) {
             const auto &p=game.balancePreset.roomProps;const int mode=game.balanceDraft.roomProps.layouts;
             text("FIRE / POOP",205,184,22,Gold);
@@ -2536,6 +2548,22 @@ Action Renderer::balancePanel(const Game &game) {
             text("Future destructions only; existing rolls stay fixed.",680,404,12,Muted);
             if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,449,420,40))return Action::ApplyMapChanges;
             text(game.hasPendingMapChanges()?"PENDING / RESETS FLOOR":"MAP SETTINGS APPLIED",655,465,14,Muted);
+        } else if(game.balanceShopOpen&&game.balanceCoinDonationOpen) {
+            const auto &t=game.balancePreset.coinDonation;
+            text("COIN DONATIONS / BANK "+std::to_string(game.run?game.run->donation.bank%1000:game.campaign.data().world.donationBank%1000),205,218,22,Gold);
+            if(button(Action::ToggleCoinDonation,t.enabled?"DONATIONS: ON":"DONATIONS: OFF",205,255,420,36))return Action::ToggleCoinDonation;
+            if(button(Action::ToggleDonationDestruction,t.destructible?"DESTRUCTION: ON":"DESTRUCTION: OFF",655,255,420,36))return Action::ToggleDonationDestruction;
+            text("CYCLE "+std::to_string(int(std::round(t.cycleSpeed*100)))+"%",205,313,18,Paper);
+            if(button(Action::DonationCycleDown,"- 5%",440,300,110,36))return Action::DonationCycleDown;
+            if(button(Action::DonationCycleUp,"+ 5%",565,300,110,36))return Action::DonationCycleUp;
+            text("JAM "+std::to_string(int(std::round(t.jamScale*100)))+"%",205,357,18,Paper);
+            if(button(Action::DonationJamDown,"- 5%",440,344,110,36))return Action::DonationJamDown;
+            if(button(Action::DonationJamUp,"+ 5%",565,344,110,36))return Action::DonationJamUp;
+            const char *modes[]={"SOURCE JAM ROLLS","TEST: NEVER JAM","TEST: JAM NEXT DONATION"};
+            if(button(Action::CycleDonationOutcome,modes[t.outcome],705,300,370,80))return Action::CycleDonationOutcome;
+            text("Walk into the register: 1 coin each. Step away to stop. Jams last this expedition.",205,407,14,Paper);
+            text("Bank saves with this campaign. Presets store controls; they do not overwrite the bank.",205,431,13,Muted);
+            if(button(Action::ResetCoinDonation,"RESET DONATION SETTINGS",205,463,420,36))return Action::ResetCoinDonation;
         } else if(game.balanceShopOpen&&game.balanceKeeperOpen) {
             const auto &t=game.balancePreset.keeper;
             text("KEEPER",205,184,22,Gold);

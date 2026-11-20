@@ -1,5 +1,7 @@
 # D14a.10 — recorded shop arrangement
 
+D14a.13 follow-up: the coin donation initializer gates are now verified, while the historical inputs remain unknown. See [the gate report](../d14a13-donation-eligibility/README.md). This supersedes the earlier statement that the gates were wholly unverified; it does not enable the coin donation economy.
+
 Selected by “ok, conitnue” after scoped D14a.9 acceptance. The accepted Temperance/donation checkpoint is committed as `26435e27`. This delivery puts the recorded shop's four rocks and Purse/Temperance offerings into the main game, retaining the existing merchant wagon and canyon geometry. Developer checks pass; the user accepted the scoped handoff on 2026-11-19 ("it its works focus on next"). This accepted checkpoint is committed as `22a86e73`; see `human-acceptance.json`. Keeper destruction/drops are delivered separately in [D14a.11](../d14a11-shopkeeper/README.md); full native shop parity remains open.
 
 ## Playable check
