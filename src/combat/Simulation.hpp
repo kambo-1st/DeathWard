@@ -13,6 +13,7 @@
 #include "combat/HaloOfFlies.hpp"
 #include "combat/ActiveItem.hpp"
 #include "combat/Batteries.hpp"
+#include "combat/GrabBags.hpp"
 #include "combat/Trinket.hpp"
 #include "combat/RedHeartTiming.hpp"
 #include "combat/CoinTiming.hpp"
@@ -1221,6 +1222,11 @@ class Simulation {
     PillTuning pillTuning{};
     PillState pills{};
     std::vector<PillPickup> pillPickups;
+    GrabBagTuning grabBagTuning{};
+    std::vector<GrabBagPickup> grabBags;
+    bool spawnShopGrabBag(Vector3 at,int slot);
+    void updateGrabBags(float dt);
+    bool spawnBattery(Vector3 at);
     BatteryTuning batteryTuning{};std::vector<BatteryPickup> batteryPickups;
     bool spawnShopBattery(Vector3 at,int slot);
     void updateBatteries(float dt);

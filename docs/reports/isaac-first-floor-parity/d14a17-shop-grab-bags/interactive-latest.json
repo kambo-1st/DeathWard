@@ -1,0 +1,22 @@
+{
+  "pid": 1215119,
+  "seed": 5,
+  "displayed_room": 7,
+  "save": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a17/playtest-20261120-203027/campaign.save",
+  "preset": "/home/kambo/.local/share/deathward/reviews/first-floor-d14a17/campaign.save.balance/export.json",
+  "preset_sha256": "ab1f0e74a4daa0a23fdc0251b4d7b8c219acdec7a4207fe77ad9e3cae67cbd87",
+  "arguments": [
+    "/home/kambo/workspace/DeathWard/build/deathward",
+    "--expedition",
+    "--seed",
+    "5",
+    "--review-shop-grab-bag",
+    "--mute",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a17/campaign.save.balance/export.json",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d14a17/playtest-20261120-203027/campaign.save"
+  ],
+  "startup": "GRAB_BAG_REVIEW room=7 shop_level=0 coins=20 price=7 god=0",
+  "human_acceptance": "pending"
+}

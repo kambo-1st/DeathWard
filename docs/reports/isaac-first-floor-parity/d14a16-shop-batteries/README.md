@@ -4,7 +4,7 @@ Selected by the user's “ok, lets go!” after accepting D14a.15; the accepted 
 
 ## Enabled behavior
 
-Source-selected shop category5 now creates the ordinary battery5.90.1 in both compatible basic two-position shops and upgraded shops. There is no new category roll: previously unsupported battery outcomes now produce their actor. The remaining unsupported trinket category stays omitted. Retained canyon geometry, shop level, donation progress, player controls and accepted combat/map/view settings remain intact.
+Source-selected shop category5 now creates the ordinary battery5.90.1 in both compatible basic two-position shops and upgraded shops. There is no new category roll: previously unsupported battery outcomes now produce their actor. The remaining unsupported grab-bag category stays omitted at this checkpoint. Retained canyon geometry, shop level, donation progress, player controls and accepted combat/map/view settings remain intact.
 
 The ordinary reference price is5 coins, using the existing random-sale/Steam Sale rules. A touch purchase adds6 charges capped at the held active item's capacity. It pays only if charge increases: no active item, a fully charged item or IV Bag leaves both money and battery unchanged. Existing Yum Heart capacity4 and Book of Shadows capacity3 are retained. Charge can be used immediately with the existing active-item key. Purchase and charge happen once; sold stock stays sold on room revisit. Death/retry starts a new expedition with the applied configuration; this is not live expedition save/resume.
 
@@ -41,4 +41,6 @@ Interactive command/isolated save are recorded in `interactive-latest.json`. The
 3. Check5 coins are spent and Yum Heart returns to4/4; pressC again to verify reuse.
 4. Leave/revisit: the battery stays sold. Retry starts a fresh review shop.
 
-Unfinished: full trinket/card/pill/collectible stock coverage and native item-pool depletion/profile behavior; donation-unlocked item effects; special battery subtypes, non-shop producers, extra/alternate charge slots and battery modifiers; full native factory/contact/physics/scheduler equivalence; remaining special rooms/full-floor allocation and live expedition save/resume. Pixel/performance work remains deferred. Next selected small delivery: shop trinket stock with the already supported trinket effects, retaining explicit pool coverage. Bulk parity stays paused.
+Unfinished: full trinket/card/pill/collectible stock coverage and native item-pool depletion/profile behavior; donation-unlocked item effects; special battery subtypes, non-shop producers, extra/alternate charge slots and battery modifiers; full native factory/contact/physics/scheduler equivalence; remaining special rooms/full-floor allocation and live expedition save/resume. Pixel/performance work remains deferred. The initially selected shop-trinket proposal was corrected by the source audit; the user selected ordinary grab bags instead. Bulk parity stays paused.
+
+D14a.17 correction: the earlier label “trinket” for stock category7 was wrong. Original dispatch maps7 to ordinary Grab Bag5.69.1 (base7coins); actual trinkets use category11. This corrects the dependency report, not the accepted battery behavior. See [the grab-bag report](../d14a17-shop-grab-bags/README.md).

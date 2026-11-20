@@ -1,0 +1,58 @@
+[
+  {
+    "label": "schema58",
+    "pass_": true,
+    "input": "docs/reports/isaac-first-floor-parity/d14a14-coin-donation/review-preset.json",
+    "fields": {
+      "grab_bag_enabled": "1",
+      "grab_bag_price": "7",
+      "zoom": "165",
+      "speed": "1.1",
+      "room_size": "1",
+      "routes": "0.26"
+    },
+    "review": "GRAB_BAG_REVIEW room=7 shop_level=0 coins=20 price=7 god=0"
+  },
+  {
+    "label": "schema60",
+    "pass_": true,
+    "input": "docs/reports/isaac-first-floor-parity/d14a16-shop-batteries/review-preset.json",
+    "fields": {
+      "grab_bag_enabled": "1",
+      "grab_bag_price": "7",
+      "zoom": "165",
+      "speed": "1.1",
+      "room_size": "1",
+      "routes": "0.26"
+    },
+    "review": "GRAB_BAG_REVIEW room=7 shop_level=0 coins=20 price=7 god=0"
+  },
+  {
+    "label": "schema61",
+    "pass_": true,
+    "input": "docs/reports/isaac-first-floor-parity/d14a17-shop-grab-bags/review-preset.json",
+    "fields": {
+      "grab_bag_enabled": "1",
+      "grab_bag_price": "7",
+      "zoom": "165",
+      "speed": "1.1",
+      "room_size": "1",
+      "routes": "0.26"
+    },
+    "review": "GRAB_BAG_REVIEW room=7 shop_level=0 coins=20 price=7 god=0"
+  },
+  {
+    "label": "custom61",
+    "pass_": true,
+    "input": "docs/reports/isaac-first-floor-parity/d14a17-shop-grab-bags/test-custom-preset.json",
+    "fields": {
+      "grab_bag_enabled": "0",
+      "grab_bag_price": "8",
+      "zoom": "165",
+      "speed": "1.1",
+      "room_size": "1.01",
+      "routes": "0.26"
+    },
+    "review": "GRAB_BAG_REVIEW room=7 shop_level=0 coins=20 price=8 god=0"
+  }
+]

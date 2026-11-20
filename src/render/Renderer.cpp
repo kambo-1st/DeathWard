@@ -1071,9 +1071,15 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             shopCartModel_.draw(site.center,shader,shadowMap);
     };
     const auto drawBatteries=[&](Shader shader,Texture2D shadowMap){
+        for(const auto &p:run.grabBags)if(p.room==run.room&&p.timing.phase!=TrinketTiming::Phase::Gone){
+            auto at=p.position;at.y=.03f;float scale=1;
+            if(p.opened)scale=std::max(0.f,1-float(p.timing.frame)/TrinketTiming::CollectFrames);
+            grabBagModel_.draw(at,scale,false,shader,shadowMap);
+        }
         for(const auto &p:run.batteryPickups)if(p.room==run.room&&p.timing.phase!=BatteryTiming::Phase::Gone){
             auto at=p.position;at.y=.25f;float scale=1;
             if(p.timing.phase==BatteryTiming::Phase::Collect){scale=std::max(0.f,1-float(p.timing.frame)/BatteryTiming::CollectFrames);at.y+=(1-scale)*.6f;}
+            if(p.timing.phase==BatteryTiming::Phase::Appear)at.y+=1.2f*(1-std::min(1.f,float(p.timing.frame)/BatteryTiming::DropFrame));
             batteryModel_.draw(at,scale,false,shader,shadowMap);
         }
     };
@@ -2105,7 +2111,7 @@ Action Renderer::expedition(const Game &game) {
         };
         if(run.hasSourceShop(run.room)&&run.shopVariationActive()&&!run.shopUpgradeSold)priceTag(run.shopUpgradePosition(),run.shopPrice(run.shopUpgradePrice,run.shopUpgradeSlot),run.shopUpgradeItem==195?"MOM'S COIN PURSE":run.shopUpgradeItem==250?"BOGO BOMBS":"STEAM SALE");
         if(run.hasSourceShop(run.room))for(const auto &offer:run.upgradedShop)if(offer.supported()&&!offer.sold&&offer.delivered) {
-            const char *name=offer.category==8?(offer.item==195?"MOM'S COIN PURSE":offer.item==250?"BOGO BOMBS":"STEAM SALE"):offer.category==6?"XIV / TEMPERANCE":offer.category==2?"PILL":offer.category==5?"BATTERY":nullptr;
+            const char *name=offer.category==8?(offer.item==195?"MOM'S COIN PURSE":offer.item==250?"BOGO BOMBS":"STEAM SALE"):offer.category==6?"XIV / TEMPERANCE":offer.category==2?"PILL":offer.category==5?"BATTERY":offer.category==7?"GRAB BAG":nullptr;
             priceTag(offer.position,run.upgradedShopPrice(offer.slot),name);
         }
         for(const auto &card:run.pillPickups)if(card.shopStock&&card.room==run.room&&card.timing.collectible())priceTag(card.position,run.shopPrice(run.bloodMachineTuning.cardPrice,run.shopCardSlot),"XIV / TEMPERANCE");
@@ -2543,7 +2549,8 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::BalanceShopTab,"SHOP",470,175,90,28,game.balanceShopOpen))return Action::BalanceShopTab;
         if(button(Action::BalanceClearHeartsTab,"AFTER CLEAR",568,175,130,28,!game.balancePropsOpen&&!game.balanceRoomHeartsOpen&&!game.balanceShopOpen))return Action::BalanceClearHeartsTab;
         if(button(Action::BalanceRoomHeartsTab,"LAYOUTS",706,175,135,28,game.balanceRoomHeartsOpen))return Action::BalanceRoomHeartsTab;
-        if(game.balanceShopOpen&&button(Action::BalanceBatteryTab,"BATTERIES",205,175,250,28,game.balanceBatteryOpen))return Action::BalanceBatteryTab;
+        if(game.balanceShopOpen&&button(Action::BalanceBatteryTab,"BATTERIES",205,175,120,28,game.balanceBatteryOpen))return Action::BalanceBatteryTab;
+        if(game.balanceShopOpen&&button(Action::BalanceGrabBagTab,"GRAB BAGS",335,175,120,28,game.balanceGrabBagOpen))return Action::BalanceGrabBagTab;
         if(game.balanceShopOpen&&button(Action::BalanceKeeperTab,"KEEPER",849,175,90,28,game.balanceKeeperOpen))return Action::BalanceKeeperTab;
         if(game.balanceShopOpen&&button(Action::BalanceCoinDonationTab,"DONATIONS",947,175,128,28,game.balanceCoinDonationOpen))return Action::BalanceCoinDonationTab;
         if(game.balancePropsOpen) {
@@ -2561,6 +2568,16 @@ Action Renderer::balancePanel(const Game &game) {
             text("Future destructions only; existing rolls stay fixed.",680,404,12,Muted);
             if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,449,420,40))return Action::ApplyMapChanges;
             text(game.hasPendingMapChanges()?"PENDING / RESETS FLOOR":"MAP SETTINGS APPLIED",655,465,14,Muted);
+        } else if(game.balanceShopOpen&&game.balanceGrabBagOpen) {
+            const auto &t=game.balancePreset.grabBags;
+            text("SHOP GRAB BAGS",205,218,22,Gold);
+            if(button(Action::ToggleGrabBags,t.enabled?"PURCHASES ON":"PURCHASES OFF",205,260,420,40,t.enabled))return Action::ToggleGrabBags;
+            text("Base price: "+std::to_string(t.price)+" / source 7 coins",205,340,20,Paper);
+            if(button(Action::GrabBagPriceDown,"- 1",655,325,200,40))return Action::GrabBagPriceDown;
+            if(button(Action::GrabBagPriceUp,"+ 1",875,325,200,40))return Action::GrabBagPriceUp;
+            text("Touch to buy and unpack. Supplies remain on the floor until collected.",205,400,14,Muted);
+            text("Edits affect future purchases. Existing contents and sold stock stay fixed.",205,430,14,Muted);
+            if(button(Action::ResetGrabBags,"RESET GRAB BAGS",205,465,420,36))return Action::ResetGrabBags;
         } else if(game.balanceShopOpen&&game.balanceBatteryOpen) {
             const auto &t=game.balancePreset.batteries;
             text("SHOP BATTERIES / ACTIVE ITEM RECHARGE",205,218,22,Gold);

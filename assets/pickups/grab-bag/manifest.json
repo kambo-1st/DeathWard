@@ -1,0 +1,14 @@
+{
+  "source": "Owned Synty Polygon Western; existing game assets",
+  "sources": [
+    {
+      "path": "assets/town/source/Models/SM_Prop_Sack_01.fbx",
+      "sha256": "f975dc0721b7599124c4976a8dc5bc9ec7ff5af9400a2e1a8f3b625102d0d278"
+    }
+  ],
+  "texture": "assets/town/source/Textures/PolygonWestern_Texture_01_A.png",
+  "texture_sha256": "dee4b31bac06e9f67050abf8ab7ae343d265563d1714d4fc46bf0e87ad235b03",
+  "output_sha256": "44ad819338e7feca91f433058e6956843bb7b64bdfb04bb6a4cb1d68f55eec69",
+  "height": 0.7462877086009628,
+  "scope": "Existing single sack; original proportions and UVs. Grounded, ordinary game mesh lighting/shadows."
+}

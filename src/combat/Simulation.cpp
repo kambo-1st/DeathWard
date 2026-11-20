@@ -139,7 +139,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     if(!canResizeRooms())throw std::runtime_error("No floor to resize");
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
                     expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale,enabled,heartMode,coinClearRewards,locks,treasure,shop,keyStock,variation,pool,treasureChoice,boss,flies,seededChoice,rewardChoice,propChoice);
-    next.batteryTuning=batteryTuning;next.coinDonationTuning=coinDonationTuning;next.donation=donation;next.shopLevelOverride=levelChoice;next.prepareShop();next.coinDonationMachines.clear();next.syncMovementBodies();next.prepareCoinDonation();
+    next.grabBagTuning=grabBagTuning;next.batteryTuning=batteryTuning;next.coinDonationTuning=coinDonationTuning;next.donation=donation;next.shopLevelOverride=levelChoice;next.prepareShop();next.coinDonationMachines.clear();next.syncMovementBodies();next.prepareCoinDonation();
     next.keeperTuning=keeperTuning;
     next.bloodExplosionTuning=bloodExplosionTuning;next.bloodMachineTuning=bloodMachineTuning;next.ivBagCooldown=ivBagCooldown;next.temperanceRng_=temperanceRng_;next.ivBagAvailable_=ivBagAvailable_;
     next.pills=pills;next.pillTuning=pillTuning;next.purseRng_=purseRng_;next.pillUseHeld_=pillUseHeld_;next.pillDropHeld_=pillDropHeld_;
@@ -234,7 +234,7 @@ bool Simulation::advanceFloor() {
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
                     expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale,sourceCombatRoom,roomHeartLayouts,coinClearRewards,sourceRoomLocks,sourceTreasureUpgrade,sourceShopHeart,sourceShopKey,sourceShopVariation,shopCollectiblePool,treasureCollectiblePool,monstroTuning,dukeTuning,seededBosses,bossRewardItem,roomProps);
-    next.batteryTuning=batteryTuning;next.coinDonationTuning=coinDonationTuning;next.donation=donation;next.shopLevelOverride=shopLevelOverride;next.prepareShop();next.coinDonationMachines.clear();next.syncMovementBodies();next.prepareCoinDonation();
+    next.grabBagTuning=grabBagTuning;next.batteryTuning=batteryTuning;next.coinDonationTuning=coinDonationTuning;next.donation=donation;next.shopLevelOverride=shopLevelOverride;next.prepareShop();next.coinDonationMachines.clear();next.syncMovementBodies();next.prepareCoinDonation();
     next.keeperTuning=keeperTuning;
     next.bloodExplosionTuning=bloodExplosionTuning;next.bloodMachineTuning=bloodMachineTuning;next.ivBagCooldown=ivBagCooldown;next.temperanceRng_=temperanceRng_;next.ivBagAvailable_=ivBagAvailable_;
     next.pills=pills;next.pillTuning=pillTuning;next.purseRng_=purseRng_;next.pillUseHeld_=pillUseHeld_;next.pillDropHeld_=pillDropHeld_;
@@ -1990,7 +1990,7 @@ void Simulation::step(const Input &input, float dt) {
     updateHeartPickups(dt);
     updateOrdinaryKeys(dt);
     updateTrinkets(dt);
-    updatePills(dt);updateBatteries(dt);
+    updatePills(dt);updateBatteries(dt);updateGrabBags(dt);
     updateCoinDonation(dt);
     updateBloodMachines(dt);
     updateOrdinaryBombs(dt);

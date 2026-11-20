@@ -1,0 +1,29 @@
+{
+  "status": "developer-passed-scoped-human-accepted",
+  "ctest_suites": 6,
+  "native_contents_cases": 520,
+  "native_stock_cases": 48,
+  "native_price_cases": 48,
+  "room_sizes": [
+    0.75,
+    1,
+    1.5
+  ],
+  "game_renderer": "passed",
+  "cli_loads": 4,
+  "accepted_previous_checkpoint": "4763449d",
+  "human_review_seed": 5,
+  "displayed_room": 7,
+  "bag_seed": 3656583694,
+  "witness_contents": [
+    "coin20.1",
+    "bomb40.1"
+  ],
+  "known_unfinished": [
+    "Golden keys and special bomb subtypes recorded without spawning",
+    "Full card pool (existing Temperance adapter only)",
+    "Full native descriptor/profile/factory/physics/scheduler",
+    "Human acceptance",
+    "Full-floor allocation and live expedition saves"
+  ]
+}

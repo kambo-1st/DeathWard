@@ -13,7 +13,7 @@ inline int donationShopLevel(uint16_t flags) {
 }
 struct UpgradedShopOffer {
     Vector3 position{};int category=0,item=0,slot=0;uint32_t seed=1;bool sold=false,delivered=false;
-    bool supported()const{return category!=7;} // Full trinket-stock dependencies remain pending.
+    bool supported()const{return category>=0&&category<=8;} // Category7 is an ordinary grab bag; trinkets are category11.
 };
 // Default ordinary source2.level.level coordinates, separate from canyon adaptation.
 inline constexpr std::array<std::array<std::pair<int,int>,6>,5> SourceShopCells{{

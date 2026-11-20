@@ -1,0 +1,18 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  44: source_shop_stock
+    Start 196: donation_milestone_delivery
+    Start 195: shop_battery_delivery
+1/6 Test #195: shop_battery_delivery ............   Passed    2.28 sec
+    Start 150: balance_preset_contract
+2/6 Test #150: balance_preset_contract ..........   Passed    0.23 sec
+    Start  41: source_shop_stock_reference
+3/6 Test  #41: source_shop_stock_reference ......   Passed    0.00 sec
+    Start 194: shop_grab_bag_delivery
+4/6 Test #196: donation_milestone_delivery ......   Passed    4.11 sec
+5/6 Test #194: shop_grab_bag_delivery ...........   Passed    2.13 sec
+6/6 Test  #44: source_shop_stock ................   Passed   28.01 sec
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =  28.01 sec

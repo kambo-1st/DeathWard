@@ -1,0 +1,48 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "contents_cases": 520,
+  "stock_cases": 48,
+  "price_cases": 48,
+  "category7": "Grab Bag5.69.1",
+  "category11": "Trinket5.350",
+  "weights": {
+    "40": 15,
+    "30": 20,
+    "20": 15,
+    "90": 4,
+    "300": 4
+  },
+  "windows": [
+    {
+      "name": "contents",
+      "start": "0x6b3179",
+      "end": "0x6b3673",
+      "sha256": "09fbbe4dcee901f83a1179c8c1f2ab3946298a0b132acd3c66cb860ca02b1bc8"
+    },
+    {
+      "name": "collection",
+      "start": "0x6c1b65",
+      "end": "0x6c1dba",
+      "sha256": "8fae74306a8faf9e364a30612663a3d95d182d134ceb4c2c0781c3a3aeb41ad5"
+    },
+    {
+      "name": "stock-bag",
+      "start": "0x7d0649",
+      "end": "0x7d0669",
+      "sha256": "3c40a729acf81c311514cbcba332a24db36be9f3062942d59500d2074442858b"
+    },
+    {
+      "name": "stock-trinket",
+      "start": "0x7d0766",
+      "end": "0x7d0784",
+      "sha256": "0e53787470a76a3d6dd30b24761d1a024227759c7807b1486a09963de9e69160"
+    },
+    {
+      "name": "ordinary-price",
+      "start": "0x7d0d19",
+      "end": "0x7d0d33",
+      "sha256": "ced24da645d11db47e7e83f61c181ee25ae71cf2e52c9a852a1a3e939662f5a2"
+    }
+  ],
+  "scope": "Original ordinary subtype1 bag branch, native vector/weighted selection/RNG and all ordered spawn requests; append only is observed instead of creating entities. Supplied initial DropRNG4/3/17; descriptor mapping, downstream subtype/card pool, native actors/payment/physics/scheduler and special sacks are separate."
+}

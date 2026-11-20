@@ -8,7 +8,7 @@ void Simulation::prepareUpgradedShop() {
     if(!hasSourceShop(arena.shopRoom)||!sourceShopVariation)return;
     const auto &site=arena.rooms[size_t(arena.shopRoom)];const int count=shopLevel+2;
     const auto stock=sourceShopStock(canyonShopStockSeed(seed_),shopLevel+1); // Native field is1-based.
-    if(shopLevel==0&&stock.categories[0]!=5&&stock.categories[1]!=5)return;
+    if(shopLevel==0&&stock.categories[0]!=5&&stock.categories[1]!=5&&stock.categories[0]!=7&&stock.categories[1]!=7)return;
     std::vector<Vector3> positions;bool fits=false;
     for(int percent=100;percent>=50;--percent) {
         positions.clear();const float cell=std::max(1.1f,recordedShopCellSize(site)*percent/100);bool valid=true;
@@ -38,7 +38,7 @@ void Simulation::prepareUpgradedShop() {
 }
 int Simulation::upgradedShopPrice(int slot)const {
     const int category=upgradedShop.at(size_t(slot)).category;
-    const int base=category==5?batteryTuning.price:category==8?shopUpgradePrice:category==0?shopHeartPrice:category==4?shopSoulHeartPrice:category==3?shopKeyPrice:category==1?shopBombPrice:category==6?bloodMachineTuning.cardPrice:5;
+    const int base=category==7?grabBagTuning.price:category==5?batteryTuning.price:category==8?shopUpgradePrice:category==0?shopHeartPrice:category==4?shopSoulHeartPrice:category==3?shopKeyPrice:category==1?shopBombPrice:category==6?bloodMachineTuning.cardPrice:5;
     return shopPrice(base,slot);
 }
 bool Simulation::canBuyUpgradedShop(int slot)const {
@@ -60,6 +60,7 @@ void Simulation::deliverUpgradedShop() {
         case 1:born=spawnOrdinaryBomb(offer.position,1,offer.seed,true);if(born)bombPickups.back().upgradedShopSlot=offer.slot;break;
         case 2:case 6:born=spawnPill(offer.position,offer.category==6?TemperanceCard:sourceOrdinaryPillColor(offer.seed),offer.seed,true);if(born)pillPickups.back().upgradedShopSlot=offer.slot;break;
         case 3:if(sourceShopKey){born=spawnOrdinaryKey(offer.position,1,offer.seed,true);if(born)keyPickups.back().upgradedShopSlot=offer.slot;}break;
+        case 7:born=spawnShopGrabBag(offer.position,offer.slot);break;
         case 5:born=spawnShopBattery(offer.position,offer.slot);break;
         case 8:born=true;break; // Existing collectible presentation; collection below.
         }

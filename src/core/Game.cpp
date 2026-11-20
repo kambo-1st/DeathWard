@@ -277,7 +277,7 @@ void Game::perform(Action action) {
            (action<Action::CloseBalance||action>Action::EditBalancePath)&&
            (action<Action::BalanceDamageHealthTab||action>Action::ResetYumHeart)&&
            (action<Action::BalanceTrinketTab||action>Action::ResetTrinkets)&&action!=Action::WhipDown&&action!=Action::WhipUp&&
-           (action<Action::BalanceHaloTab||action>Action::ResetBatteries))return;
+           (action<Action::BalanceHaloTab||action>Action::ResetGrabBags))return;
         if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
@@ -295,7 +295,16 @@ void Game::perform(Action action) {
         case Action::BalanceShootingTab:balancePillsOpen=false;balanceTrinketOpen=false;balanceActiveOpen=balanceFamiliarOpen=balanceTreasureOpen=false;balanceShootingOpen=true;balanceEnemiesOpen=balanceRewardsOpen=balanceCombatOpen=false;break;
         case Action::BalanceEnemiesTab:balanceAttackFlyOpen=false;balanceFrowningOpen=false;balanceRoundWormOpen=balanceFullFlyOpen=false;balanceMonstroOpen=false;balanceEnemiesOpen=true;balanceShootingOpen=balanceRewardsOpen=balanceCombatOpen=false;balancePooterOpen=false;break;
         case Action::BalanceRewardsTab:balanceShopOpen=false;balanceRewardsOpen=true;balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
-        case Action::BalanceBatteryTab:balancePropsOpen=balanceKeeperOpen=balanceCoinDonationOpen=false;balanceRewardsOpen=balanceShopOpen=balanceBatteryOpen=true;break;
+        case Action::BalanceGrabBagTab:balanceBatteryOpen=balancePropsOpen=balanceKeeperOpen=balanceCoinDonationOpen=false;balanceRewardsOpen=balanceShopOpen=balanceGrabBagOpen=true;break;
+        case Action::ToggleGrabBags:case Action::GrabBagPriceDown:case Action::GrabBagPriceUp:case Action::ResetGrabBags:{
+            auto p=balancePreset;auto &t=p.grabBags;
+            if(action==Action::ToggleGrabBags)t.enabled=!t.enabled;
+            if(action==Action::GrabBagPriceDown)t.price=std::max(0,t.price-1);
+            if(action==Action::GrabBagPriceUp)t.price=std::min(30,t.price+1);
+            if(action==Action::ResetGrabBags)t=GrabBagTuning{};
+            applyBalance(std::move(p));balanceNotice="Grab bag settings apply to future purchases. Existing contents and sold stock stay fixed.";break;
+        }
+        case Action::BalanceBatteryTab:balanceGrabBagOpen=false;balancePropsOpen=balanceKeeperOpen=balanceCoinDonationOpen=false;balanceRewardsOpen=balanceShopOpen=balanceBatteryOpen=true;break;
         case Action::ToggleBatteries:case Action::BatteryChargeDown:case Action::BatteryChargeUp:case Action::BatteryPriceDown:case Action::BatteryPriceUp:case Action::ResetBatteries:{
             auto p=balancePreset;auto &t=p.batteries;
             if(action==Action::ToggleBatteries)t.enabled=!t.enabled;
@@ -306,11 +315,11 @@ void Game::perform(Action action) {
             if(action==Action::ResetBatteries)t=BatteryTuning{};
             applyBalance(std::move(p));balanceNotice="Battery settings apply to future purchases. Existing charge and sold stock stay unchanged.";break;
         }
-        case Action::BalanceShopProgressTab:balanceBatteryOpen=false;balancePropsOpen=balanceKeeperOpen=false;balanceRewardsOpen=balanceShopOpen=balanceCoinDonationOpen=balanceShopProgressOpen=true;break;
+        case Action::BalanceShopProgressTab:balanceGrabBagOpen=balanceBatteryOpen=false;balancePropsOpen=balanceKeeperOpen=false;balanceRewardsOpen=balanceShopOpen=balanceCoinDonationOpen=balanceShopProgressOpen=true;break;
         case Action::ShopLevelDown:case Action::ShopLevelUp:case Action::ShopLevelEarned:
             balanceDraft.shopLevelOverride=action==Action::ShopLevelEarned?-1:std::clamp(balanceDraft.shopLevelOverride+(action==Action::ShopLevelUp?1:-1),-1,4);
             balanceNotice="Shop level staged. APPLY MAP CHANGES resets this floor; earned milestones stay fixed.";break;
-        case Action::BalanceCoinDonationTab:balanceBatteryOpen=false;balanceShopProgressOpen=false;balancePropsOpen=false;balanceKeeperOpen=false;balanceRewardsOpen=balanceShopOpen=balanceCoinDonationOpen=true;break;
+        case Action::BalanceCoinDonationTab:balanceGrabBagOpen=balanceBatteryOpen=false;balanceShopProgressOpen=false;balancePropsOpen=false;balanceKeeperOpen=false;balanceRewardsOpen=balanceShopOpen=balanceCoinDonationOpen=true;break;
         case Action::ToggleCoinDonation:case Action::ToggleDonationDestruction:case Action::DonationCycleDown:case Action::DonationCycleUp:
         case Action::DonationJamDown:case Action::DonationJamUp:case Action::CycleDonationOutcome:case Action::ResetCoinDonation: {
             auto preset=balancePreset;auto &t=preset.coinDonation;
@@ -322,7 +331,7 @@ void Game::perform(Action action) {
             else t.outcome=(t.outcome+1)%3;
             applyBalance(std::move(preset));balanceNotice="Next donation / blast. Bank and existing jams stay fixed.";break;
         }
-        case Action::BalanceKeeperTab:balanceBatteryOpen=false;balanceCoinDonationOpen=false;balanceRewardsOpen=balanceShopOpen=balanceKeeperOpen=true;break;
+        case Action::BalanceKeeperTab:balanceGrabBagOpen=balanceBatteryOpen=false;balanceCoinDonationOpen=false;balanceRewardsOpen=balanceShopOpen=balanceKeeperOpen=true;break;
         case Action::ToggleKeeperDestruction:case Action::ToggleKeeperRewards:case Action::CycleKeeperOutcome:case Action::ResetKeeper: {
             auto preset=balancePreset;auto &t=preset.keeper;
             if(action==Action::ResetKeeper)t={};
@@ -331,7 +340,7 @@ void Game::perform(Action action) {
             else t.outcome=(t.outcome+1)%5;
             applyBalance(std::move(preset));balanceNotice="Next blast / destruction. Destroyed keepers and resolved drops stay fixed.";break;
         }
-        case Action::BalanceShopTab:balanceBatteryOpen=false;balanceCoinDonationOpen=false;balanceKeeperOpen=false;balancePropsOpen=false;balanceShopOpen=true;balanceShopKeyOpen=balanceShopStockOpen=balanceShopBombOpen=balanceShopSoulHeartOpen=false;break;
+        case Action::BalanceShopTab:balanceGrabBagOpen=balanceBatteryOpen=false;balanceCoinDonationOpen=false;balanceKeeperOpen=false;balancePropsOpen=false;balanceShopOpen=true;balanceShopKeyOpen=balanceShopStockOpen=balanceShopBombOpen=balanceShopSoulHeartOpen=false;break;
         case Action::BalanceShopHeartTab:balanceShopKeyOpen=balanceShopStockOpen=balanceShopBombOpen=balanceShopSoulHeartOpen=false;break;
         case Action::BalanceShopKeyTab:balanceShopKeyOpen=true;balanceShopStockOpen=balanceShopBombOpen=balanceShopSoulHeartOpen=false;break;
         case Action::BalanceShopStockTab:balanceKeeperOpen=false;balanceShopStockOpen=true;balanceShopKeyOpen=balanceShopBombOpen=balanceShopSoulHeartOpen=false;break;
@@ -1226,11 +1235,13 @@ std::vector<Action> Game::menuActions() const {
         std::vector<Action> actions{Action::CloseBalance,Action::BalanceWorldTab,Action::BalanceShootingTab,Action::BalanceCombatTab,Action::BalanceEnemiesTab,Action::BalanceRewardsTab};
         if(balanceEnemiesOpen){actions.push_back(Action::BalanceChasersTab);actions.push_back(Action::BalancePooterTab);actions.push_back(Action::BalanceMonstroTab);}
         if(balanceRewardsOpen)actions.push_back(Action::BalanceShopTab);
-        if(balanceRewardsOpen&&balanceShopOpen&&!balanceBatteryOpen&&!balanceCoinDonationOpen&&!balanceKeeperOpen&&!balanceShopStockOpen&&!balanceShopKeyOpen&&!balanceShopBombOpen) {
+        if(balanceRewardsOpen&&balanceShopOpen&&!balanceGrabBagOpen&&!balanceBatteryOpen&&!balanceCoinDonationOpen&&!balanceKeeperOpen&&!balanceShopStockOpen&&!balanceShopKeyOpen&&!balanceShopBombOpen) {
             actions.push_back(Action::BalanceShopRedHeartTab);actions.push_back(Action::BalanceShopSoulHeartTab);
         }
-        if(balanceRewardsOpen&&balanceShopOpen){actions.push_back(Action::BalanceBatteryTab);actions.push_back(Action::BalanceKeeperTab);actions.push_back(Action::BalanceCoinDonationTab);}
-        const std::vector<Action> page=balanceRewardsOpen&&balanceShopOpen&&balanceBatteryOpen?
+        if(balanceRewardsOpen&&balanceShopOpen){actions.push_back(Action::BalanceGrabBagTab);actions.push_back(Action::BalanceBatteryTab);actions.push_back(Action::BalanceKeeperTab);actions.push_back(Action::BalanceCoinDonationTab);}
+        const std::vector<Action> page=balanceRewardsOpen&&balanceShopOpen&&balanceGrabBagOpen?
+            std::vector<Action>{Action::ToggleGrabBags,Action::GrabBagPriceDown,Action::GrabBagPriceUp,Action::ResetGrabBags}:
+            balanceRewardsOpen&&balanceShopOpen&&balanceBatteryOpen?
             std::vector<Action>{Action::ToggleBatteries,Action::BatteryChargeDown,Action::BatteryChargeUp,Action::BatteryPriceDown,Action::BatteryPriceUp,Action::ResetBatteries}:
             balanceRewardsOpen&&balanceShopOpen&&balanceCoinDonationOpen&&balanceShopProgressOpen?
             std::vector<Action>{Action::BalanceCoinDonationTab,Action::ShopLevelDown,Action::ShopLevelUp,Action::ShopLevelEarned,Action::ApplyMapChanges}:

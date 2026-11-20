@@ -1,0 +1,10 @@
+PASS520 native contents and48 price comparisons
+WITNESS scale=0.75 displayed_room=7 bag_seed=3656583694 drops=20.1 40.1
+PASS purchase/live/discount/revisit/Apply/floor size 0.75
+WITNESS scale=1 displayed_room=7 bag_seed=3656583694 drops=20.1 40.1
+PASS purchase/live/discount/revisit/Apply/floor size 1
+WITNESS scale=1.5 displayed_room=7 bag_seed=3656583694 drops=20.1 40.1
+PASS purchase/live/discount/revisit/Apply/floor size 1.5
+PASS pending capacity and free battery recharge
+PASS60 migration,61 roundtrips and invalid rejection
+PASS shop grab bag delivery

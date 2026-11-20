@@ -1,0 +1,35 @@
+#include "combat/Simulation.hpp"
+#include "core/BalancePreset.hpp"
+#include <chrono>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+using namespace dw;
+namespace {
+const auto Root=std::filesystem::path(DEATHWARD_TEST_ROOT);
+void check(bool b,const char *why){if(!b)throw std::runtime_error(why);}
+void ticks(Simulation &s,int n){for(int i=0;i<n;++i)s.step({});}
+Simulation canyon(float scale=1,int lo=7,int hi=9,uint64_t seed=5){return Simulation(seed,1,{},MissionTheme::Canyon,true,false,WitnessAccount::None,0,ExpeditionPacing::Compact,defaultMechanics(),scale,lo,hi,.26f,true,1,true,true,true,true,true,true,1,1,MonstroTuning{},DukeTuning{true},false,255,RoomPropsTuning{1});}
+void native(){
+ const auto dir=Root/"docs/reports/isaac-first-floor-parity/d14a17-shop-grab-bags/source";std::ifstream f(dir/"native-contents.csv");check(bool(f),"native contents fixture");std::string line;std::getline(f,line);int rows=0;
+ while(std::getline(f,line)){std::replace(line.begin(),line.end(),',',' ');std::istringstream in(line);uint32_t seed;int count;in>>seed>>count;const auto drops=sourceGrabBagContents(seed);check(drops.size()==size_t(count),"native count");for(int i=0;i<3;++i){int v,sub;uint32_t init;in>>v>>sub>>init;if(i<count)check(drops[size_t(i)].variant==v&&drops[size_t(i)].subtype==sub&&drops[size_t(i)].seed==init,"native ordered variants and spawn seeds");}check(bool(in),"parse native row");++rows;}check(rows==520,"520 original branch cases");
+ f.close();f.open(dir/"native-prices.csv");std::getline(f,line);rows=0;while(std::getline(f,line)){std::replace(line.begin(),line.end(),',',' ');std::istringstream in(line);uint32_t seed;int slot,price;in>>seed>>slot>>price;check(bool(in)&&price==GrabBagTuning{}.price,"native seven-coin price");++rows;}check(rows==48,"48 native prices");
+ std::cout<<"PASS520 native contents and48 price comparisons\n";
+}
+void gameplay(float scale,int lo,int hi){
+ auto s=canyon(scale,lo,hi);s.jumpDebug(s.arena.shopRoom);s.step({});check(s.grabBags.size()==1&&s.upgradedShop.size()==2,"naturally selected basic shop bag");auto &bag=s.grabBags[0];const auto pos=bag.position;const auto seed=bag.seed;const int slot=bag.shopSlot;check(s.upgradedShopPrice(slot)==7,"unsold natural seven-coin price");check(!s.arena.path(s.player.position,pos,.48f).empty(),"bag reachable");
+ std::cout<<"WITNESS scale="<<scale<<" displayed_room="<<s.room+1<<" bag_seed="<<seed<<" drops=";for(auto d:bag.contents)std::cout<<d.variant<<'.'<<d.subtype<<' ';std::cout<<'\n';
+ s.player.position=pos;s.moneyCollected=6;ticks(s,3);check(!bag.opened&&s.moneySpent==0,"insufficient money retains bag");s.moneyCollected=30;s.grabBagTuning.enabled=false;ticks(s,3);check(!bag.opened,"live disable");s.grabBagTuning.enabled=true;s.grabBagTuning.price=9;ticks(s,2);check(bag.opened&&s.moneySpent==9&&s.upgradedShop[size_t(slot)].sold,"once-only live-price purchase");s.player.position=s.arena.rooms[size_t(s.room)].entry;ticks(s,65);check(s.moneySpent==9&&bag.timing.phase==TrinketTiming::Phase::Gone,"bag cleanup without repayment");
+ for(auto d:bag.contents)if((d.variant!=30||sourceOrdinaryKeyValue(d.subtype))&&(d.variant!=40||sourceOrdinaryBombValue(d.subtype)))check(d.delivered,"supported contents actually delivered");
+ const auto total=s.moneyPickups.size()+s.keyPickups.size()+s.bombPickups.size()+s.batteryPickups.size()+s.pillPickups.size();const int shop=s.room;s.enterRoom(0);s.enterRoom(shop);ticks(s,3);check(s.grabBags.size()==1&&s.grabBags[0].opened&&s.moneySpent==9,"sold bag stays sold on revisit");check(total==s.moneyPickups.size()+s.keyPickups.size()+s.bombPickups.size()+s.batteryPickups.size()+s.pillPickups.size(),"no duplicate contents");
+ s.resizeRooms(scale,lo,hi,.27f);s.jumpDebug(s.arena.shopRoom);ticks(s,3);check(s.grabBagTuning==GrabBagTuning{true,9}&&!s.grabBags[0].opened&&s.grabBags[0].seed==seed,"Apply restocks same seed with live settings retained");
+ s.grant({"isaac",ItemKind::Collectible,64});s.grabBagTuning.price=7;s.player.position=s.grabBags[0].position;const auto spent=s.moneySpent;ticks(s,2);check(s.moneySpent==spent+3,"seven-coin Steam Sale price is3");
+ s.jumpDebug(s.finalRoom());s.clearRoomDebug();s.step({});s.floorExitRequested=true;check(s.advanceFloor()&&s.grabBagTuning==GrabBagTuning{}&&s.grabBags.empty(),"next floor retains settings and removes prior actors");
+ std::cout<<"PASS purchase/live/discount/revisit/Apply/floor size "<<scale<<'\n';
+}
+void capacity(){auto s=canyon();s.jumpDebug(s.arena.shopRoom);s.step({});s.moneyCollected=30;s.moneyPickups.resize(1024);s.keyPickups.resize(1024);s.bombPickups.resize(1024);s.batteryPickups.resize(1024);s.pillPickups.resize(1024);s.player.position=s.grabBags[0].position;ticks(s,2);check(s.grabBags[0].opened&&s.moneySpent==7,"full pickup capacity still records paid contents");for(auto d:s.grabBags[0].contents)check(!d.delivered,"full capacity defers birth");s.moneyPickups.clear();s.keyPickups.clear();s.bombPickups.clear();s.batteryPickups.clear();s.pillPickups.clear();s.player.position=s.arena.rooms[size_t(s.room)].entry;ticks(s,3);for(auto d:s.grabBags[0].contents)if(d.variant==20||d.variant==90||d.variant==300||d.variant==30&&sourceOrdinaryKeyValue(d.subtype)||d.variant==40&&sourceOrdinaryBombValue(d.subtype))check(d.delivered,"same pending contents retried after capacity frees");check(s.moneySpent==7,"delayed delivery is not another purchase");
+ // Free bag batteries keep the ordinary active-charge gates and never charge coins.
+ s.grant(YumHeartKey);s.useActiveItem();const auto at=s.arena.rooms[size_t(s.room)].entry;check(s.spawnBattery(at),"free battery spawn");s.player.position=at;ticks(s,65);check(s.activeItem->charge==4&&s.moneySpent==7,"free battery charges without payment");std::cout<<"PASS pending capacity and free battery recharge\n";}
+void persistence(){const auto dir=std::filesystem::temp_directory_path()/("dw-grab-bag-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));std::filesystem::create_directories(dir);auto p=BalancePreset::load(Root/"docs/reports/isaac-first-floor-parity/d14a16-shop-batteries/review-preset.json",defaultMechanics()->fingerprint());check(p.grabBags==GrabBagTuning{}&&p.defaultZoomPercent==165,"schema60 migration preserves preset");for(bool enabled:{false,true})for(int price:{0,7,30}){p.grabBags={enabled,price};p.save(dir/"p.json");auto q=BalancePreset::load(dir/"p.json",p.mechanicsFingerprint);check(q.grabBags==p.grabBags&&q.revision()==p.revision(),"schema61 roundtrip");}auto bad=p;bad.grabBags.price=-1;bool rejected=false;try{bad.save(dir/"p.json");}catch(...){rejected=true;}check(rejected&&BalancePreset::load(dir/"p.json",p.mechanicsFingerprint).grabBags==p.grabBags,"invalid settings rejected atomically");std::filesystem::remove_all(dir);std::cout<<"PASS60 migration,61 roundtrips and invalid rejection\n";}
+}
+int main(){try{std::cout<<std::unitbuf;native();for(auto [s,l,h]:{std::tuple{.75f,5,5},std::tuple{1.f,7,9},std::tuple{1.5f,10,10}})gameplay(s,l,h);capacity();persistence();std::cout<<"PASS shop grab bag delivery\n";}catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

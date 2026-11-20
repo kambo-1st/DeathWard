@@ -157,6 +157,7 @@ add_library(deathward_core
     src/combat/Simulation.cpp
     src/combat/Loot.cpp
     src/combat/ShopProgress.cpp
+    src/combat/GrabBags.cpp
     src/combat/Batteries.cpp
     src/combat/Shop.cpp
     src/combat/Services.cpp
@@ -282,6 +283,8 @@ function(deathward_assets target)
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/props/campfire" "$<TARGET_FILE_DIR:deathward>/assets/props/campfire"
         VERBATIM)
     add_custom_command(TARGET deathward_runtime_assets POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:deathward>/assets/pickups/grab-bag"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/assets/pickups/grab-bag/grab-bag.glb" "$<TARGET_FILE_DIR:deathward>/assets/pickups/grab-bag/grab-bag.glb"
         COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:deathward>/assets/pickups/battery"
         COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/assets/pickups/battery/battery.glb" "$<TARGET_FILE_DIR:deathward>/assets/pickups/battery/battery.glb"
         COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:deathward>/assets/props/donation"
@@ -364,7 +367,7 @@ if(EMSCRIPTEN)
     list(APPEND web_assets ${web_audio})
     file(GLOB web_cast CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "assets/cinematic_cast/*.glb")
     list(APPEND web_assets ${web_cast} assets/train_opening/arrival.cinematic)
-    list(APPEND web_assets assets/pickups/battery/battery.glb assets/props/donation/donation.glb assets/props/campfire/campfire.glb assets/props/shop-cart/shop-cart.glb assets/pickups/chest/base.glb assets/pickups/chest/lid.glb assets/pickups/key/key.glb)
+    list(APPEND web_assets assets/pickups/grab-bag/grab-bag.glb assets/pickups/battery/battery.glb assets/props/donation/donation.glb assets/props/campfire/campfire.glb assets/props/shop-cart/shop-cart.glb assets/pickups/chest/base.glb assets/pickups/chest/lid.glb assets/pickups/key/key.glb)
     foreach(asset IN LISTS web_assets)
         target_link_options(deathward PRIVATE "SHELL:--preload-file '${CMAKE_CURRENT_SOURCE_DIR}/${asset}@/${asset}'")
         set_property(TARGET deathward APPEND PROPERTY LINK_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${asset}")
@@ -1211,6 +1214,10 @@ add_executable(deathward_shopkeeper_tests tests/shopkeeper_tests.cpp)
 target_link_libraries(deathward_shopkeeper_tests PRIVATE deathward_core)
 target_compile_definitions(deathward_shopkeeper_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
 add_test(NAME shopkeeper_delivery COMMAND deathward_shopkeeper_tests)
+    add_executable(deathward_shop_grab_bag_tests tests/shop_grab_bag_tests.cpp)
+    target_link_libraries(deathward_shop_grab_bag_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_shop_grab_bag_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
+    add_test(NAME shop_grab_bag_delivery COMMAND deathward_shop_grab_bag_tests)
     add_executable(deathward_shop_battery_tests tests/shop_battery_tests.cpp)
     target_link_libraries(deathward_shop_battery_tests PRIVATE deathward_core)
     target_compile_definitions(deathward_shop_battery_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")

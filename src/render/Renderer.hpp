@@ -11,6 +11,7 @@
 #include "render/ShopCartModel.hpp"
 #include "render/KeyModel.hpp"
 #include "render/BatteryModel.hpp"
+#include "render/GrabBagModel.hpp"
 #include "render/DonationModel.hpp"
 #include "render/MainFont.hpp"
 
@@ -50,7 +51,7 @@ class Renderer {
                    float deathTime = 0, float sandstorm = 0);
     void unload() {
         mainFont_.unload();
-        batteryModel_.unload();keyModel_.unload();donationModel_.unload();
+        grabBagModel_.unload();batteryModel_.unload();keyModel_.unload();donationModel_.unload();
         campfireModel_.unload();chestModel_.unload();shopCartModel_.unload();
         playerModel_.unload();
         animalModels_.unload();
@@ -72,6 +73,7 @@ class Renderer {
     ChestModel chestModel_;
     ShopCartModel shopCartModel_;
     BatteryModel batteryModel_;
+    GrabBagModel grabBagModel_;
     KeyModel keyModel_;
     DonationModel donationModel_;
     PlayerModel playerModel_;
